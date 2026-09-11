@@ -245,21 +245,29 @@ Control de acceso implementado mediante **RBAC** (Role-Based Access Control).
 
 La documentación de gestión y técnica completa se encuentra en la carpeta [`/docs`](./docs):
 
+### Fase 01 — Inicio
+
 | Documento | Descripción |
 |-----------|-------------|
-| 01. Selección del enfoque | Justificación del enfoque híbrido de gestión. |
-| 02. Acta de constitución | Objetivos, alcance, hitos y presupuesto. |
-| 03. Declaración de la visión | Propuesta de valor y diferenciadores del producto. |
-| 04. Supuestos y restricciones | Registro de supuestos, restricciones y estrategias de comunicación. |
-| 05. Registro de interesados | Matriz de poder/interés y estrategias por grupo. |
-| 06. Requisitos funcionales | Especificación BDD (RF-001 a RF-007). |
-| 07. Requisitos no funcionales | Escenarios de calidad bajo ISO/IEC 25010. |
-| 08. Usuarios | Perfiles, historias de uso y matriz RBAC. |
-| 09. Reglas de negocio | Políticas del sistema y matriz de trazabilidad. |
-| 10. Stack tecnológico | Evaluación multidimensional de alternativas. |
-| 11. Base de datos | Modelo conceptual, lógico (3FN) y DDL físico. |
-| 12. Modelo C4 | Arquitectura de software (contexto, contenedores, componentes). |
-| 13. Restricciones | Análisis multidimensional y cumplimiento normativo. |
+| [01. Selección del enfoque](./docs/01%20Inicio/01.%20Selección%20del%20enfoque%20del%20proyecto%20V_1_0_0.md) | Justificación del enfoque híbrido de gestión. |
+| [02. Acta de constitución](./docs/01%20Inicio/02.%20Acta%20de%20constitución%20V_1_0_0.md) | Objetivos, alcance, hitos y presupuesto. |
+| [03. Declaración de la visión](./docs/01%20Inicio/03.%20Declaración%20de%20la%20visión%20V_1_0_0.md) | Propuesta de valor y diferenciadores del producto. |
+| [04. Supuestos y restricciones](./docs/01%20Inicio/04.%20Registro%20de%20supuestos%20y%20restricciones%20V_1_0_0.md) | Registro de supuestos, restricciones y estrategias de comunicación. |
+| [05. Registro de interesados](./docs/01%20Inicio/05.%20Registro%20de%20interesados%20V_1_0_0.md) | Matriz de poder/interés y estrategias por grupo. |
+| [06. Requisitos funcionales](./docs/01%20Inicio/06.%20Requisitos%20funcionales%20V_1_0_0.md) | Especificación BDD (RF-001 a RF-007). |
+| [07. Requisitos no funcionales](./docs/01%20Inicio/07.%20Requisitos%20no%20funcionales%20V_1_0_0.md) | Escenarios de calidad bajo ISO/IEC 25010. |
+| [08. Usuarios](./docs/01%20Inicio/08.%20Usuarios%20V_1_0_0.md) | Perfiles, historias de uso y matriz RBAC. |
+| [09. Reglas de negocio](./docs/01%20Inicio/09.%20Reglas%20de%20negocio%20V_1_0_0.md) | Políticas del sistema y matriz de trazabilidad. |
+| [10. Stack tecnológico](./docs/01%20Inicio/10.%20Stack%20tecnológico%20V_1_0_0.md) | Evaluación multidimensional de alternativas. |
+| [11. Base de datos](./docs/01%20Inicio/11.%20Base%20de%20datos%20V_1_0_0.md) | Modelo conceptual, lógico (3FN) y DDL físico. |
+| [12. Modelo C4](./docs/01%20Inicio/12.%20Modelo%20C4%20V_1_0_0.md) | Arquitectura de software (contexto, contenedores, componentes). |
+| [13. Restricciones](./docs/01%20Inicio/13.%20Restricciones%20V_1_0_0.md) | Análisis multidimensional y cumplimiento normativo. |
+
+### Fase 02 — Planificación
+
+| Documento | Descripción |
+|-----------|-------------|
+| [01. Transformando a ágil](./docs/02%20Planificación/01.%20Transformando%20a%20ágil%20V_1_0_0.md) | Épicas, User Stories (US-001 a US-007), Enablers (EN-001 a EN-003), criterios BDD/Gherkin y DoD por sprint. |
 
 ---
 
