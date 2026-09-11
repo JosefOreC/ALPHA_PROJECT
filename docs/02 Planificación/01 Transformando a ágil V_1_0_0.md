@@ -34,7 +34,7 @@ Los seis Requisitos No Funcionales (RNF-001 a RNF-006) del documento `07. Requis
 | EP-04 | Visualización Cartográfica de Rutas | RF-004 | Alta |
 | EP-05 | Dashboard de Indicadores Operativos | RF-005 | Media |
 | EP-06 | Reportes de Sostenibilidad | RF-006 | Media |
-| EP-07 | Gestión de Conductores | RF-007 | Alta |
+| EP-07 | Gestión de Conductores | RF-007 | Media |
 
 ---
 
