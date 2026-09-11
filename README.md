@@ -5,6 +5,14 @@
 Sistema web de optimización de rutas de última milla que integra metaheurísticas (VRPTW / Green VRP), visualización cartográfica, indicadores de sostenibilidad y reoptimización dinámica para operaciones logísticas en Lima Metropolitana.
 
 ---
+## Equipo del Proyecto
+| Campo | Información |
+|---|---|
+| **Nombre del proyecto** | EcoLogística Lima – Optimizador de Rutas Sostenibles para DistriRápido S.A.C. |
+| **Integrantes** | Cueva Ricse, Alex Roberto<br>Ore Campos, Josef Pablo<br>Rojas Camayo, Valentino Jhan Pierre<br>Rojas Peña, William Mikeiel<br>Tovar Sánchez, Carlos Alberto |
+| **Director del Proyecto** | Ore Campos Josef Pablo |
+| **Fecha** | 26/08/2026 |
+| **Versión** | 1.0.0 |
 
 ## Tabla de contenidos
 
