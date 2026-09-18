@@ -25,7 +25,7 @@ Pasos sugeridos para configurar el proyecto (tipo **Scrum**, plantilla "Software
 
 ---
 
-## 3. Evidencia 1 — Roadmap del proyecto
+## 3. Roadmap del proyecto
 
 Alineación de las Épicas en la línea de tiempo, conforme al cronograma de iteraciones ya definido en `01. Selección del enfoque del proyecto V_1_0_0.md`:
 
@@ -40,7 +40,7 @@ Alineación de las Épicas en la línea de tiempo, conforme al cronograma de ite
 
 ---
 
-## 4. Evidencia 2 — Backlog priorizado
+## 4. Backlog priorizado
 
 El backlog completo, ya priorizado y estimado en Story Points, está en la sección 4 de `01 Transformando a ágil V_1_0_0.md`. Al cargarlo en Jira, el Backlog debe reflejar ese mismo orden y esas mismas estimaciones, agrupado por componente/Épica.
 
@@ -48,7 +48,7 @@ El backlog completo, ya priorizado y estimado en Story Points, está en la secci
 
 ---
 
-## 5. Evidencia 3 — Sprint Planning y Sprint Goal
+## 5. Sprint Planning y Sprint Goal
 
 ### Sprint 1 propuesto (2 semanas, corresponde al inicio de la Iteración 2)
 
@@ -72,13 +72,13 @@ El backlog completo, ya priorizado y estimado en Story Points, está en la secci
 
 ---
 
-## 6. Evidencia 4 — Tablero Scrum activo
+## 6.Tablero Scrum activo
 
 ![Tablero Scrum activo en Jira](./evidencias-jira/04-tablero-scrum.png)
 
 ---
 
-## 7. Evidencia 5 — Gestión de versiones / Release
+## 7. Gestión de versiones / Release
 
 Versión creada en Jira: **v1.0.0-MVP**, asociada a las Épicas EP-01, EP-02, EP-03 (parcial) y EP-07, correspondientes al alcance mínimo del PMV definido en el Acta de Constitución.
 
