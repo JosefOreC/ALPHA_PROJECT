@@ -90,6 +90,6 @@ Versión creada en Jira: **v1.0.0-MVP**, asociada a las Épicas EP-01, EP-02, EP
 
 | Versión | Fecha | Autor | Descripción del cambio |
 |---|---|---|---|
-| V_1_0_0 | 11/09/2026 | Equipo del proyecto | Configuración de artefactos Jira con Roadmap, backlog priorizado, Sprint Planning, tablero Scrum y Release v1.0.0-MVP, incluyendo evidencias reales. |
+| V_1_0_0 | 11/09/2026 | Tovar Sanchez Carlos Alberto | Configuración de artefactos Jira con Roadmap, backlog priorizado, Sprint Planning, tablero Scrum y Release v1.0.0-MVP, incluyendo evidencias reales. |
 
 [← Volver al README Principal](../../README.md)
