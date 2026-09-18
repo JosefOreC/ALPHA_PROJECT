@@ -58,6 +58,6 @@ Los riesgos RSK-01 a RSK-07 provienen de los riesgos macro R-01 a R-07 ya identi
 
 | Versión | Fecha | Autor | Descripción del cambio |
 |---|---|---|---|
-| V_1_0_0 | 11/09/2026 | Equipo del proyecto | Cuantificación de R-01 a R-07 del Acta de Constitución (RSK-01 a RSK-07) e incorporación de RSK-08 y RSK-09 identificados en la fase de planificación. |
+| V_1_0_0 | 11/09/2026 | Tovar Sanchez Carlos Alberto | Cuantificación de R-01 a R-07 del Acta de Constitución (RSK-01 a RSK-07) e incorporación de RSK-08 y RSK-09 identificados en la fase de planificación. |
 
 [← Volver al README Principal](../../README.md)
