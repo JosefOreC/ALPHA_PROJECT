@@ -2,7 +2,7 @@
 
 **Optimizador de Rutas Sostenibles para DistriRápido S.A.C.**
 
-Sistema web de optimización de rutas de última milla que integra metaheurísticas (VRPTW / Green VRP), visualización cartográfica, indicadores de sostenibilidad y reoptimización dinámica para operaciones logísticas en Lima Metropolitana.
+Sistema web de optimización de rutas de última milla que integra metaheurísticas (VRPTW / Green VRP), visualización cartográfica, indicadores de sostenibilidad y reoptimización dinámica para[...]
 
 ---
 ## Equipo del Proyecto
@@ -75,7 +75,7 @@ El PMV implementará al menos el **70 % de RF-01 a RF-07**.
 | Autenticación | OAuth2 + JWT |
 | Infraestructura | Contenedores con auto-scaling (cloud por definir) |
 
-La alternativa recomendada es **Python / FastAPI + React + PostgreSQL** por su compatibilidad nativa con las bibliotecas de optimización (OR-Tools, SciPy, NumPy) y su alineación explícita con las restricciones tecnológicas del proyecto (RES-15).
+La alternativa recomendada es **Python / FastAPI + React + PostgreSQL** por su compatibilidad nativa con las bibliotecas de optimización (OR-Tools, SciPy, NumPy) y su alineación explícita con l[...]
 
 ---
 
@@ -126,15 +126,15 @@ PostgreSQL 15+ en **Tercera Forma Normal (3FN)**. Entidades principales:
 
 ```
 USUARIO ──── CONDUCTOR ──── RUTA ──── TRAMO
-                  │            │
-              VEHÍCULO     RUTA_PEDIDO
-                                │
-                            PEDIDO ──── INCIDENCIA
+                   │            │
+               VEHÍCULO     RUTA_PEDIDO
+                                 │
+                             PEDIDO ──── INCIDENCIA
 ```
 
 El DDL completo está disponible en [`/docs/db/schema.sql`](./docs/db/schema.sql).
 
-> Pendiente: evaluación de extensión **PostGIS** para almacenamiento nativo de coordenadas y gestión de zonas restringidas. Las tablas `REPORTE`, `ZONA_RESTRINGIDA` y `TRAMO` se formalizarán en la versión V_1_1_0.
+> Pendiente: evaluación de extensión **PostGIS** para almacenamiento nativo de coordenadas y gestión de zonas restringidas. Las tablas `REPORTE`, `ZONA_RESTRINGIDA` y `TRAMO` se formalizarán [...]
 
 ---
 
@@ -267,7 +267,15 @@ La documentación de gestión y técnica completa se encuentra en la carpeta [`/
 
 | Documento | Descripción |
 |-----------|-------------|
-| [01. Transformando a ágil](./docs/02%20Planificación/01.%20Transformando%20a%20ágil%20V_1_0_0.md) | Épicas, User Stories (US-001 a US-007), Enablers (EN-001 a EN-003), criterios BDD/Gherkin y DoD por sprint. |
+| [01. Transformando a ágil](./docs/02%20Planificación/01.%20Transformando%20a%20ágil%20V_1_0_0.md) | Épicas, User Stories (US-001 a US-007), Enablers (EN-001 a EN-003), criterios BDD/Gherkin[...] |
+
+### Fase 03 — Implementación
+
+| Documento | Descripción |
+|-----------|-------------|
+| [.gitignore](./.gitignore) | Configuración de exclusiones para React/Node, Python/FastAPI, entornos virtuales, secretos y más. |
+| [src/frontend/README.md](./src/frontend/README.md) | Propósito y próximos pasos para la implementación del frontend. |
+| [src/backend/README.md](./src/backend/README.md) | Propósito y próximos pasos para la implementación del backend. |
 
 ---
 
