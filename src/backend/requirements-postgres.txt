@@ -1,0 +1,3 @@
+# Opcional: NO se instala para ejecutar el CRUD local en memoria.
+# Verificar versión estable y wheel de Windows antes de activar el adaptador.
+psycopg[binary]>=3.3,<4
