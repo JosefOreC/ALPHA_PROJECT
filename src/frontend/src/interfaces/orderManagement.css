@@ -10,7 +10,7 @@
 .management .management-eyebrow { font-size:11px; font-weight:750; letter-spacing:1.5px; color:#526959 }
 .management .section-header { display:flex; align-items:center; justify-content:space-between; gap:20px; margin:28px 0 20px }
 .management .section-header h2 { margin:0; font-size:23px }
-.management .message { padding:16px 20px; border-radius:10px; line-height:1.6; margin:20px 0 }
+.management .message { padding:16px 20px; border-radius:10px; line-height:1.6; margin:20px 0; overflow-wrap:anywhere }
 .management .demo-message { background:#e7eee5; border:1px solid #bacbb8 }
 .management .error-message { color:#832e27; background:#fff1ee; border:1px solid #c68c86 }
 .management .success-message { color:#245d3f; background:#e1f1e5; border:1px solid #b4ccb9 }
