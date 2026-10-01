@@ -27,7 +27,7 @@ los bypass de protección existen exclusivamente en pruebas aisladas.
 | Documento 08, RBAC; ampliación CRUD del líder | Crear, leer, editar y eliminar según rol | ADMIN/OPERADOR gestionan; AUDITOR/RESPONSABLE_LOGISTICA leen; conductor utiliza exclusivamente sus rutas existentes |
 | RN-002 | Cancelaciones afectan planificación | Transición lógica disponible; no se implementó reoptimización ni despacho |
 | RN-007; EN-02 | Restringir acceso y minimizar exposición | Denegación predeterminada, DTO permitidos, parámetros SQL y errores sin payload. Identidad, cifrado y controles de despliegue pendientes |
-| RN-009 / RNF-005 | Accesibilidad | Labels, estados de texto, mensajes accesibles, teclado y diálogo nativo; revisión parcial de navegador, sin certificación WCAG |
+| RN-009 / RNF-005 | Accesibilidad | Labels, estados de texto, mensajes accesibles, teclado y diálogo nativo; pruebas automatizadas de componentes y cuatro vistas a 390 px, sin certificación WCAG |
 | Documento 11; EN-00 | PostgreSQL compartido | Adaptador preparado e inactivo; esquema, migración y prueba real pendientes por decisión del usuario |
 
 US-003 corresponde a **Registrar pedido de entrega** y US-004 a **Confirmar
@@ -123,11 +123,19 @@ OrdersPort del frontend del conductor.
 | Compartido Carlos, modificado | src/frontend/src/App.tsx | Composición y navegación; conserva query pedido |
 | Compartido, modificado | src/frontend/index.html | Título/descripcion para ambas vistas |
 | Compartido, modificado | src/frontend/vite.config.ts | Proxy local /api → 127.0.0.1:8000 |
-| Compartido, modificado | src/frontend/package.json | Script test, sin dependencias nuevas |
+| Compartido, modificado | src/frontend/package.json | Scripts test y test:ui; Playwright como dependencia de desarrollo |
+| Compartido, modificado | src/frontend/package-lock.json | Versión bloqueada de Playwright; conserva versiones anteriores |
+| CRUD, nuevo | src/frontend/playwright.config.ts | Servidor local de pruebas, Edge, escritorio y viewport 390 × 844 |
+| CRUD, nuevo | src/frontend/tsconfig.ui.json | Comprobación de tipos de configuración y pruebas de interfaz |
+| CRUD, nuevo | src/frontend/tests/ui/components.spec.ts | Comportamiento de formulario y gestión usando campos/botones reales |
+| CRUD, nuevo | src/frontend/tests/ui/mobile.spec.ts | Límites de controles, tabla, mensajes y diálogo a 390 px |
+| CRUD, nuevo | src/frontend/tests/ui/fixtures.ts | Respuestas HTTP ficticias aisladas y captura opcional de evidencia |
+| CRUD, nuevo | src/frontend/tests/ui/demo.html y demo.tsx | Montaje de los componentes reales con demo explícita, solo en servidor de pruebas |
 | CRUD, nuevo | src/frontend/tests/setup.cjs | Transpilación en memoria con TypeScript existente |
 | CRUD, nuevo | src/frontend/tests/management.test.cjs | node:test para casos de uso y adaptadores |
 | CRUD, nuevo | src/frontend/.env.example | Configuración pública segura |
-| CRUD, nuevo | docs/03 Implementación/CRUD de pedidos.md | Esta entrega y decisiones |
+| CRUD, nuevo | docs/03 Implementación/CRUD de pedidos.md | Esta entrega, decisiones y evidencia verificada |
+| CRUD, nuevo | docs/03 Implementación/evidencias-crud-pedidos/*.png | Siete capturas solicitadas con datos ficticios |
 
 Las pruebas heredadas, OrderRepository, DriverOrders, router del conductor,
 OrdersPort, HttpOrders, DemoOrders, DriverOrderView y estilos anteriores no se
@@ -283,7 +291,7 @@ envía /api a 127.0.0.1:8000 y la interfaz muestra la denegación real, sin fall
 a demo. Para volver a demo, retirar VITE_API_URL del archivo local y reiniciar.
 No agregar secretos a VITE_. No activar PostgreSQL mientras falte su contrato.
 
-## Evidencia verificada
+## Evidencia inicial verificada
 
 | Comando / verificación | Resultado del 1 de octubre de 2026 |
 |---|---|
@@ -300,11 +308,11 @@ No agregar secretos a VITE_. No activar PostgreSQL mientras falte su contrato.
 | Navegador, XSS | Texto con apariencia de script se mostró como texto, sin abrir diálogo JavaScript |
 | Navegador, Carlos | /?pedido=PED-0024, diálogo, confirmación, hora Lima y botón deshabilitado después de entregar |
 | Navegador, API local real | Modo HTTP con URL vacía y proxy: muestra sesión requerida, sin fallback demo |
-| Vista estrecha de navegador | Tabla desplaza horizontalmente dentro de su región; página sin desbordamiento horizontal en la anchura efectiva observada (~614 px). No se verificó aún 390 px efectivos |
+| Vista estrecha de navegador, revisión inicial | Tabla desplaza horizontalmente dentro de su región a ~614 px. La comprobación posterior a 390 px está registrada abajo |
 | PostgreSQL real / cookies reales / esquema nube | NO EJECUTADO; no existen contratos ni base autorizada |
 | Auditoría formal, carga, certificación WCAG y análisis de vulnerabilidades | NO EJECUTADOS; no se sustituyen por build/lint |
 
-Antes de publicar se repitieron las 42 pruebas backend, lint, build y las 9
+Antes de la publicación inicial se repitieron las 42 pruebas backend, lint, build y las 9
 pruebas frontend, sin fallos ni omisiones. Las dependencias backend se comprobaron
 con `.venv\Scripts\python.exe -m pip install --no-index -r requirements.txt`:
 todas estaban instaladas. Se ejecutó `npm ci --offline --cache .npm-cache
@@ -315,7 +323,7 @@ La revisión de navegador anterior corresponde a la implementación de hoy;
 no se repitió durante la publicación. PostgreSQL real y autenticación real
 continúan pendientes.
 
-Entorno final: Windows/PowerShell, Python 3.14.7 en .venv, FastAPI 0.142.2,
+Entorno de implementación: Windows/PowerShell, Python 3.14.7 en .venv, FastAPI 0.142.2,
 Uvicorn 0.54.0, HTTPX 0.28.1, Pydantic 2.13.5. Node 24.21.0, npm 11.19.0,
 React/React DOM 19.3.0, TypeScript 6.0.3, Vite 8.3.1 y Oxlint 1.86.0.
 requirements.txt conserva sus rangos originales; la instalación aislada resolvió
@@ -330,6 +338,120 @@ Node V8 también se ejecutó sobre casos de uso/adaptadores transpilados; los
 componentes React no están instrumentados en esa medición. No se declara la DoD
 completa de cobertura global, peer review y staging.
 
+## Componentes, móvil y capturas verificadas
+
+Verificación final de esta ampliación: **1 de octubre de 2026, 13:24:00 UTC-5
+(America/Lima)**. Commit de código evaluado:
+[`5c5c684a2daa5d30b7693f61712b00e4f630c8e2`](https://github.com/JosefOreC/ALPHA_PROJECT/commit/5c5c684a2daa5d30b7693f61712b00e4f630c8e2).
+Las capturas y esta actualización documental se adjuntan en un commit posterior;
+no modifican ese código evaluado.
+
+Se revisaron las herramientas existentes antes de instalar: solo había node:test
+y TypeScript para reglas/adaptadores. Se presentó una configuración mínima y se
+añadió **@playwright/test 1.63.0** como dependencia de desarrollo, con lockfile.
+React, Vite y las dependencias anteriores conservan sus versiones. Se utiliza
+**Microsoft Edge 154.0.4258.48**, instalado localmente, en modo headless; no se
+descargó otro navegador. Node 24.21.0 y npm 11.19.0 permanecen iguales.
+
+Las ocho pruebas de escritorio montan los componentes React reales. Siete usan
+la aplicación en modo HTTP con respuestas interceptadas y ficticias; una usa el
+montaje explícito de demostración. Las dos pruebas móviles usan ese mismo
+componente con DemoManagement. La entrada tests/ui/demo.html está separada del
+index.html del producto y no forma parte del build publicado. No hay bypass de
+autenticación en el backend ni integración nueva de identidad.
+
+Se verificó mediante campos, botones y resultados visibles: registro con mensaje
+de éxito; campos obligatorios y ventana inválida sin solicitud HTTP y conservando
+texto; precarga y edición con versión; Volver sin cancelar y confirmación que
+cambia a CANCELADO; ausencia de acciones de escritura para solo lectura; error
+401 visible sin fallback demo; fallo 503 al guardar que conserva el formulario.
+La demostración también recorre registro, edición y cancelación.
+
+El perfil móvil fija **390 × 844 px** y comprueba que window.innerWidth sea 390.
+Se revisaron visualmente las cuatro capturas móviles. Las pruebas comprueban los
+límites horizontales de controles y que scrollWidth de la página no exceda
+clientWidth; la tabla sí admite desplazamiento dentro de su propia región. El
+diálogo cabe en el viewport y ambos botones funcionan. También se prueban texto
+largo en campos y un mensaje de error sin espacios.
+
+Se encontró un desbordamiento de 3540 px provocado por ese mensaje largo. La
+única corrección productiva fue **overflow-wrap:anywhere** en
+.management .message, dentro de orderManagement.css. App.css e index.css de
+Carlos no cambiaron. Un fallo inicial de cancelación era un selector de prueba
+que confundía éxito y carga; se precisó el selector sin cambiar la cancelación.
+La primera ejecución quedó esperando al cerrar su servidor bajo el entorno
+restringido; se detuvo y las ejecuciones siguientes finalizaron correctamente.
+
+### Comandos y salida resumida del commit evaluado
+
+| Directorio | Comando ejecutado | Salida / resultado |
+|---|---|---|
+| src/backend | .venv\Scripts\python.exe -B -m unittest discover -s tests -v | Ran 42 tests in 0.852s; OK; 0 fallidas y 0 omitidas |
+| src/frontend | npm ci --offline --cache .npm-cache --no-audit --no-fund | added 30 packages in 2s; lockfile respetado |
+| src/frontend | npm run test | tests 9; pass 9; fail 0; skipped 0 |
+| src/frontend | npm run lint | oxlint; salida exitosa, sin avisos |
+| src/frontend | npm run build | tsc -b y Vite; 29 módulos; built in 476ms |
+| src/frontend | npm run test:ui | tsc -p tsconfig.ui.json y Playwright; 10 passed (10.0s); 0 fallidas, 0 omitidas, 0 reintentos |
+
+Las 42 pruebas backend incluyen las 11 heredadas de Carlos. Usan memoria y
+TestClient; las ocho de PostgreSQL usan dobles de conexión. **PostgreSQL real,
+sesión verificada y persistencia durable siguen sin ejecutarse/integrarse**.
+El aviso de deprecación de Starlette sigue presente; Playwright/Node emiten un
+aviso sobre FORCE_COLOR y NO_COLOR, sin afectar las pruebas. No se declara
+certificación WCAG, cobertura global de componentes, carga ni staging.
+
+### Capturas adjuntas
+
+Todas contienen datos ficticios. La demostración no tiene sesión ni persistencia
+durable; el aviso se conserva en las vistas y en esta documentación. Registro,
+edición y cancelación muestran el mismo pedido ficticio de escritorio; el peso
+cambia de 2.5 a 3.75 kg y después el estado cambia a Cancelado. Las imágenes de
+listado, formulario y detalle son capturas de página completa de 390 px de ancho;
+el diálogo es una captura del viewport 390 × 844, con la página detrás desplazada.
+
+| Evidencia | Captura |
+|---|---|
+| Registro exitoso | [registro.png](evidencias-crud-pedidos/registro.png) |
+| Edición guardada | [edicion.png](evidencias-crud-pedidos/edicion.png) |
+| Cancelación confirmada | [cancelacion.png](evidencias-crud-pedidos/cancelacion.png) |
+| Listado a 390 px | [movil-listado.png](evidencias-crud-pedidos/movil-listado.png) |
+| Formulario a 390 px | [movil-formulario.png](evidencias-crud-pedidos/movil-formulario.png) |
+| Detalle a 390 px | [movil-detalle.png](evidencias-crud-pedidos/movil-detalle.png) |
+| Diálogo a 390 px | [movil-dialogo.png](evidencias-crud-pedidos/movil-dialogo.png) |
+
+![Diálogo de cancelación a 390 px con datos ficticios](evidencias-crud-pedidos/movil-dialogo.png)
+
+Para reproducir las pruebas desde src/frontend con Edge instalado:
+
+```powershell
+npm ci
+npm run test
+npm run lint
+npm run build
+npm run test:ui
+```
+
+Playwright inicia y cierra su propio Vite en 127.0.0.1:5178; si el puerto está
+ocupado, falla en lugar de reutilizar un servidor ajeno. Se puede seleccionar
+Chrome instalado mediante $env:PLAYWRIGHT_CHANNEL = 'chrome'. No requiere backend
+para las pruebas UI. La configuración sigue la documentación oficial de
+[servidor de pruebas](https://playwright.dev/docs/test-webserver) y
+[navegadores](https://playwright.dev/docs/browsers).
+
+La generación de las siete capturas es opcional; las pruebas habituales dejan
+solo resultados transitorios en .test-deps, excluido de Git. Para regenerar la
+evidencia intencionalmente desde src/frontend:
+
+```powershell
+$env:CRUD_EVIDENCE_DIR = Join-Path (Resolve-Path '..\..') 'docs\03 Implementación\evidencias-crud-pedidos'
+npm run test:ui
+Remove-Item Env:CRUD_EVIDENCE_DIR
+```
+
+No se adjuntan reportes HTML, trazas, vídeos, dependencias, builds ni cachés. Las
+siete PNG solicitadas suman aproximadamente 383 KiB. Solo se publican archivos
+de prueba, configuración, estilos del CRUD y esta evidencia del módulo.
+
 ## Revisión y publicación autorizada
 
 El usuario autorizó guardar y publicar los cambios mediante el documento
@@ -340,7 +462,7 @@ Secretos, .venv, node_modules, dist, cachés y cobertura quedan fuera de Git.
 Los documentos académicos aprobados y Confirmacion de pedidos.md no se
 sobrescribieron. No se crea PR ni se modifica Jira.
 
-Distribución de commits para esta publicación autorizada:
+Distribución de commits de la publicación inicial autorizada:
 
 1. **feat: implementar reglas y casos de gestión de pedidos**
    - src/backend/domain/entities/order.py
@@ -388,8 +510,9 @@ de Carlos.
 - Esquema PostgreSQL acordado, constraints, relaciones y migración futura.
 - Pruebas reales de persistencia, rollback y concurrencia con sesiones independientes.
 - Política de datos personales visibles para auditor/logística y controles RN-007.
-- Instrumentación y pruebas automatizadas de componentes; revisión móvil a 390 px,
-  contraste formal, carga, revisión por pares y staging.
+- Instrumentación de cobertura global de componentes, contraste formal, carga,
+  revisión por pares y staging. Las pruebas de componentes y la revisión a 390 px
+  ya están ejecutadas y documentadas arriba.
 - Si el flujo requiere reintentos de registro: idempotencia durable aprobada y
   almacenamiento compartido de claves; no basta deshabilitar el botón.
 
