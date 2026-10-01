@@ -4,6 +4,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .npm
+.npm-cache/
+.test-deps/
 .yarn
 dist/
 build/
