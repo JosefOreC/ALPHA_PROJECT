@@ -30,7 +30,7 @@ Responsables confirmados por módulo para el presente incremento:
 | Ore Campos, Josef Pablo | `feature/josef/spr2/m_vehiculos/crud` | Formulario de creación, edición y listado de Vehículos. |
 | Rojas Peña, William Mikeiel | `feature/william/spr2/dashboard` | Interfaz y creación de los puertos de extracción de los datos a mostrar en el Dashboard. |
 
-> **Nota de coordinación:** Carlos (confirmación de pedido) y Valentino (CRUD de pedido) deben coordinar entre sí para que ambos trabajen sobre una única clase de dominio `Pedido`, evitando que cada rama defina su propio modelo.
+
 
 ### Relaciones
 
