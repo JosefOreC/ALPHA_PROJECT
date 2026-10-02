@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0;background:#f4f6f8}
+*,*::before,*::after{box-sizing:border-box}
+a{color:var(--primary)}a:hover{color:var(--ink)}
+[data-theme="light"]{--bg:#f4f6f8;--surface:#ffffff;--surface-sunken:#eceff3;--ink:#141a22;--ink-muted:#4b5563;--border:#d3d9e0;--border-control:#7a8494;--primary:#0b5aa8;--on-primary:#ffffff;--focus-ring:#0b5aa8;--status-delivered:#17773a;--status-transit:#2b6fd1;--status-pending:#a35f00;--status-cancelled:#69717d;--track:#e3e7ec;--skeleton:#e3e7ec;--danger:#b3261e;--danger-bg:#fdeceb;--warning:#8a5100;--warning-bg:#fff3dd;--success-ink:#14662f;--success-bg:#e7f4ec;--info-bg:#e8f0fc;--shadow-card:0 1px 2px rgba(20,26,34,.06)}
+[data-theme="dark"]{--bg:#0e1217;--surface:#161b22;--surface-sunken:#1e252e;--ink:#e7ebf0;--ink-muted:#a3adba;--border:#2d3540;--border-control:#717c8c;--primary:#6ea8ff;--on-primary:#0a1626;--focus-ring:#6ea8ff;--status-delivered:#4cc27a;--status-transit:#6ea8ff;--status-pending:#e3a23b;--status-cancelled:#9aa3ae;--track:#262e38;--skeleton:#262e38;--danger:#ff8b7e;--danger-bg:#3a1715;--warning:#f2b860;--warning-bg:#33240b;--success-ink:#7fdba0;--success-bg:#123222;--info-bg:#13263f;--shadow-card:none}
+@keyframes ap-pulse{50%{opacity:.55}}
+@media (prefers-reduced-motion: reduce){[data-sk]{animation:none !important}}
+</style>
+</helmet>
+<div data-theme="{{ theme }}" lang="es-PE" style="font-family:Inter,'Segoe UI',system-ui,-apple-system,sans-serif;color:var(--ink);background:var(--bg);font-size:14px;line-height:20px;min-height:100vh;padding:24px">
+<div style="max-width:1440px;margin:0 auto;display:flex;flex-direction:column;gap:24px">
+
+<div aria-label="Vista previa de estados" style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:8px;border:1px dashed var(--border);border-radius:12px">
+<span style="font-size:12px;line-height:16px;color:var(--ink-muted);padding:0 8px">Vista previa de estados</span>
+<sc-for list="{{ estados }}" as="e" hint-placeholder-count="5">
+<button type="button" onClick="{{ e.onClick }}" aria-pressed="{{ e.active }}" style="height:32px;padding:0 12px;border-radius:999px;border:1px solid {{ e.border }};background:{{ e.bg }};color:{{ e.color }};font:inherit;font-size:13px;font-weight:500;cursor:pointer" style-focus="outline:2px solid var(--focus-ring);outline-offset:2px">{{ e.label }}</button>
+</sc-for>
+</div>
+
+<header data-screen-label="Cabecera" style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:8px 24px">
+<div>
+<h1 tabIndex="-1" style="margin:0;font-size:24px;line-height:32px;font-weight:600">Dashboard del día</h1>
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;color:var(--ink-muted);margin-top:4px">
+<span>jueves <span style="font-variant-numeric:tabular-nums">01/10/2026</span></span>
+<span aria-hidden="true">·</span>
+<span>Jornada <span style="font-variant-numeric:tabular-nums">05:00–22:00</span></span>
+<span style="display:inline-flex;align-items:center;gap:4px;padding:2px 10px;border-radius:999px;font-size:13px;line-height:18px;font-weight:500;background:var(--success-bg);color:var(--success-ink)"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3.5" fill="currentColor"></circle></svg>En curso</span>
+</div>
+</div>
+<p style="margin:0;color:var(--ink-muted);font-size:12px;line-height:16px;text-align:right">
+<sc-if value="{{ isLoading }}" hint-placeholder-val="{{ false }}"><span>Actualizando…</span></sc-if>
+<sc-if value="{{ notLoading }}" hint-placeholder-val="{{ true }}"><span>Última actualización: <strong style="color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums">{{ updated }}</strong></span></sc-if>
+<br><span>Se actualiza cada 60 s</span>
+</p>
+</header>
+
+<form role="search" aria-label="Filtrar indicadores" onSubmit="{{ noSubmit }}" style="display:flex;flex-wrap:wrap;align-items:center;gap:12px 16px;padding:12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:12px">
+<label for="f-dist" style="font-size:13px;font-weight:600">Distrito</label>
+<select id="f-dist" ref="{{ selRef }}" onChange="{{ onDistrito }}" style="appearance:none;-webkit-appearance:none;min-width:240px;height:40px;padding:0 36px 0 12px;font:inherit;color:var(--ink);background:var(--surface) url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2716%27 height=%2716%27 fill=%27none%27 stroke=%27%237a8494%27 stroke-width=%272%27 stroke-linecap=%27round%27%3E%3Cpath d=%27M4 6l4 4 4-4%27/%3E%3C/svg%3E') no-repeat right 12px center;border:1px solid var(--border-control);border-radius:8px;cursor:pointer" style-focus="outline:2px solid var(--focus-ring);outline-offset:2px">
+<sc-for list="{{ distritos }}" as="d" hint-placeholder-count="5"><option value="{{ d.id }}">{{ d.nombre }}</option></sc-for>
+</select>
+<span style="display:inline-flex;align-items:center;gap:4px;padding:4px 12px;border-radius:999px;background:var(--surface-sunken);color:var(--ink-muted);font-size:13px">Mostrando: <strong style="color:var(--ink);font-weight:600">{{ distritoNombre }}</strong></span>
+</form>
+<span role="status" aria-live="polite" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap">{{ liveMsg }}</span>
+
+<sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
+<div role="status" style="display:flex;align-items:flex-start;gap:12px;padding:12px 16px;border-radius:8px;background:var(--info-bg);border:1px solid var(--border)">
+<svg width="20" height="20" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true" style="flex:none;margin-top:1px;color:var(--primary)"><circle cx="8" cy="8" r="6.5"></circle><path d="M8 7.2v4M8 4.8v.1"></path></svg>
+<div style="flex:1"><p style="margin:0;font-weight:600">No se han generado rutas para la jornada actual</p><p style="margin:2px 0 0;color:var(--ink-muted)">Los indicadores se mostrarán cuando se generen las rutas.</p></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isError }}" hint-placeholder-val="{{ false }}">
+<div role="alert" style="display:flex;flex-wrap:wrap;align-items:flex-start;gap:12px;padding:12px 16px;border-radius:8px;background:var(--danger-bg);border:1px solid var(--danger)">
+<svg width="20" height="20" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none;margin-top:1px;color:var(--danger)"><path d="M8 1.8L15 14H1z"></path><path d="M8 6.2v3.6M8 11.8v.1"></path></svg>
+<div style="flex:1;min-width:200px"><p style="margin:0;font-weight:600;color:var(--danger)">No pudimos cargar los indicadores</p><p style="margin:2px 0 0;color:var(--ink)">Revisa tu conexión e inténtalo de nuevo.</p></div>
+<button type="button" onClick="{{ retry }}" style="display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px;border-radius:8px;border:1px solid transparent;font:inherit;font-weight:600;cursor:pointer;background:var(--primary);color:var(--on-primary);white-space:nowrap" style-hover="filter:brightness(1.08)" style-focus="outline:2px solid var(--focus-ring);outline-offset:2px"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.5 8a5.5 5.5 0 1 1-1.6-3.9"></path><path d="M13.5 2.5v3h-3"></path></svg>Reintentar</button>
+</div>
+</sc-if>
+
+<sc-if value="{{ isStale }}" hint-placeholder-val="{{ false }}">
+<div role="status" style="display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:12px 16px;border-radius:8px;background:var(--warning-bg);border:1px solid var(--warning)">
+<svg width="20" height="20" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none;color:var(--warning)"><path d="M8 1.8L15 14H1z"></path><path d="M8 6.2v3.6M8 11.8v.1"></path></svg>
+<p style="flex:1;min-width:200px;margin:0;font-weight:600;color:var(--warning)">No se pudo actualizar. Mostrando datos de las <span style="font-variant-numeric:tabular-nums">14:32</span>.</p>
+<button type="button" onClick="{{ retry }}" style="display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px;border-radius:8px;border:1px solid transparent;font:inherit;font-weight:600;cursor:pointer;background:var(--primary);color:var(--on-primary);white-space:nowrap" style-hover="filter:brightness(1.08)" style-focus="outline:2px solid var(--focus-ring);outline-offset:2px"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.5 8a5.5 5.5 0 1 1-1.6-3.9"></path><path d="M13.5 2.5v3h-3"></path></svg>Reintentar</button>
+</div>
+</sc-if>
+
+<div aria-busy="{{ isLoading }}" style="display:flex;flex-wrap:wrap;gap:24px">
+<sc-if value="{{ isLoading }}" hint-placeholder-val="{{ false }}"><span role="status" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Cargando indicadores</span></sc-if>
+
+<section aria-labelledby="k-ped" style="flex:5 1 440px;min-width:0;background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow-card);padding:24px;display:flex;flex-direction:column;gap:12px">
+<h2 id="k-ped" style="margin:0;font-size:15px;line-height:20px;font-weight:600">Pedidos</h2>
+<sc-if value="{{ isLoading }}" hint-placeholder-val="{{ false }}">{{ skPedidos }}</sc-if>
+<sc-if value="{{ isError }}" hint-placeholder-val="{{ false }}"><div style="font-size:40px;line-height:44px;font-weight:700"><span aria-hidden="true">—</span><span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">sin dato</span></div></sc-if>
+<sc-if value="{{ hasData }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 8px"><span style="font-size:40px;line-height:44px;font-weight:700;letter-spacing:-0.5px;font-variant-numeric:tabular-nums">{{ ped.entregados }}</span><span style="font-size:16px;line-height:24px;font-weight:500;color:var(--ink-muted)">entregados de <span style="font-variant-numeric:tabular-nums">{{ ped.total }}</span></span></div>
+<div role="img" aria-label="{{ ped.aria }}" style="display:flex;gap:2px;height:16px;border-radius:4px;background:var(--track);overflow:hidden">
+<sc-for list="{{ segs }}" as="s" hint-placeholder-count="4"><span style="height:100%;flex:{{ s.flex }} 0 0;background:{{ s.bg }}"></span></sc-for>
+</div>
+<ul style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px 24px;margin:0;padding:0;list-style:none;font-size:13px;line-height:18px">
+<sc-for list="{{ legend }}" as="l" hint-placeholder-count="4">
+<li style="display:flex;align-items:center;gap:8px"><span style="width:12px;height:12px;border-radius:3px;flex:none;background:{{ l.sw }}"></span><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none;color:{{ l.color }}"><path d="{{ l.icon }}"></path></svg><span>{{ l.label }}</span><span style="margin-left:auto;font-weight:600;font-variant-numeric:tabular-nums">{{ l.n }}</span><span style="color:var(--ink-muted);font-variant-numeric:tabular-nums;min-width:6ch;text-align:right">{{ l.p }}</span></li>
+</sc-for>
+</ul>
+</sc-if>
+</section>
+
+<section aria-labelledby="k-ven" style="flex:3 1 280px;min-width:0;background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow-card);padding:24px;display:flex;flex-direction:column;gap:12px">
+<h2 id="k-ven" style="margin:0;font-size:15px;line-height:20px;font-weight:600">Cumplimiento de ventanas horarias</h2>
+<sc-if value="{{ isLoading }}" hint-placeholder-val="{{ false }}">{{ skVentanas }}</sc-if>
+<sc-if value="{{ isError }}" hint-placeholder-val="{{ false }}"><div style="display:flex;align-items:baseline;gap:8px"><span style="font-size:40px;line-height:44px;font-weight:700"><span aria-hidden="true">—</span><span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">sin dato</span></span><span style="font-size:16px;font-weight:500;color:var(--ink-muted)">%</span></div></sc-if>
+<sc-if value="{{ hasData }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;align-items:baseline;gap:4px 8px"><span style="font-size:40px;line-height:44px;font-weight:700;letter-spacing:-0.5px;font-variant-numeric:tabular-nums">{{ ven.pct }}</span><span style="font-size:16px;line-height:24px;font-weight:500;color:var(--ink-muted)">%</span></div>
+<div role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ ven.pct }}" aria-valuetext="{{ ven.aria }}" style="position:relative;height:12px;border-radius:4px;background:var(--track)">
+<span style="position:absolute;top:0;bottom:0;left:0;width:{{ ven.width }};background:var(--primary);border-radius:4px"></span>
+<sc-if value="{{ ven.showGoal }}" hint-placeholder-val="{{ true }}"><span aria-hidden="true" style="position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--ink);left:{{ ven.goalLeft }}"></span></sc-if>
+</div>
+<div aria-hidden="true" style="display:flex;justify-content:space-between;font-size:12px;line-height:16px;color:var(--ink-muted)"><span>0 %</span><sc-if value="{{ ven.showGoal }}" hint-placeholder-val="{{ true }}"><span>Meta {{ ven.meta }} %</span></sc-if><span>100 %</span></div>
+<p style="margin:auto 0 0;font-size:12px;line-height:16px;color:var(--ink-muted)"><span style="font-variant-numeric:tabular-nums">{{ ven.dentro }}</span> de <span style="font-variant-numeric:tabular-nums">{{ ven.evaluadas }}</span> entregas a tiempo</p>
+</sc-if>
+</section>
+
+<section aria-labelledby="k-dis" style="flex:2 1 190px;min-width:0;background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow-card);padding:24px;display:flex;flex-direction:column;gap:12px">
+<h2 id="k-dis" style="margin:0;font-size:15px;line-height:20px;font-weight:600">Distancia total de la flota</h2>
+<sc-if value="{{ isLoading }}" hint-placeholder-val="{{ false }}">{{ skCifraA }}</sc-if>
+<sc-if value="{{ notLoading }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 8px"><span aria-label="{{ srKm }}" style="font-size:clamp(28px,3vw,40px);line-height:44px;font-weight:700;letter-spacing:-0.5px;font-variant-numeric:tabular-nums">{{ km }}</span><span style="font-size:16px;line-height:24px;font-weight:500;color:var(--ink-muted)">km</span></div>
+</sc-if>
+</section>
+
+<section aria-labelledby="k-co2" style="flex:2 1 190px;min-width:0;background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow-card);padding:24px;display:flex;flex-direction:column;gap:12px">
+<h2 id="k-co2" style="margin:0;font-size:15px;line-height:20px;font-weight:600">CO₂ estimado</h2>
+<sc-if value="{{ isLoading }}" hint-placeholder-val="{{ false }}">{{ skCifraB }}</sc-if>
+<sc-if value="{{ notLoading }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 8px"><span aria-label="{{ srKg }}" style="font-size:clamp(28px,3vw,40px);line-height:44px;font-weight:700;letter-spacing:-0.5px;font-variant-numeric:tabular-nums">{{ kg }}</span><span style="font-size:16px;line-height:24px;font-weight:500;color:var(--ink-muted)">kg</span></div>
+<sc-if value="{{ hasData }}" hint-placeholder-val="{{ true }}"><p style="margin:auto 0 0;font-size:12px;line-height:16px;color:var(--ink-muted)">Estimado a partir de la distancia de la flota</p></sc-if>
+</sc-if>
+</section>
+</div>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;estado&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;datos&quot;,&quot;cargando&quot;,&quot;vacio&quot;,&quot;error&quot;,&quot;desactualizado&quot;],&quot;default&quot;:&quot;datos&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Estado&quot;},&quot;tema&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;light&quot;,&quot;dark&quot;],&quot;default&quot;:&quot;light&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Apariencia&quot;},&quot;mostrarMeta&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Cumplimiento&quot;}}">
+const DIST = [
+  { id: '', nombre: 'Todos los distritos' },
+  { id: '150103', nombre: 'Ate' },
+  { id: '150122', nombre: 'Miraflores' },
+  { id: '150131', nombre: 'San Isidro' },
+  { id: '150140', nombre: 'Santiago de Surco' },
+];
+const mk = (e, c, p, x, ev, d, pct, km, kg) => ({ hayRutas: true, pedidos: { entregados: e, enCamino: c, pendientes: p, cancelados: x, total: e + c + p + x }, ventanas: { evaluadas: ev, dentroDeVentana: d, porcentaje: pct, meta: 90 }, km, kg });
+const DATA = {
+  '': mk(812, 96, 312, 28, 813, 751, 92.4, 3482.6, 912.4),
+  '150103': mk(214, 31, 88, 7, 220, 197, 89.5, 921.3, 241.0),
+  '150122': mk(156, 18, 42, 4, 160, 151, 94.4, 512.8, 134.4),
+  '150131': mk(131, 12, 37, 3, 134, 126, 94.0, 438.2, 114.8),
+  '150140': { hayRutas: false, pedidos: { entregados: 0, enCamino: 0, pendientes: 0, cancelados: 0, total: 0 }, ventanas: { evaluadas: 0, dentroDeVentana: 0, porcentaje: null }, km: 0, kg: 0 },
+};
+const EMPTY = DATA['150140'];
+const fInt = n => new Intl.NumberFormat('en-US').format(n);
+const f1 = n => n === 0 ? '0' : new Intl.NumberFormat('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(n);
+const ESTADOS = [['datos', 'Con datos'], ['cargando', 'Cargando'], ['vacio', 'Vacío'], ['error', 'Error'], ['desactualizado', 'Desactualizado']];
+
+class Component extends DCLogic {
+  state = { estado: this.props.estado ?? 'datos', distrito: '', liveMsg: '' };
+  selRef = React.createRef();
+  syncSel() { const s = this.selRef.current; if (s && s.value !== this.state.distrito) s.value = this.state.distrito; }
+  componentDidMount() { this.syncSel(); setTimeout(() => this.syncSel(), 0); }
+  componentDidUpdate(prev) {
+    this.syncSel();
+    if (prev.estado !== this.props.estado && this.props.estado) this.setState({ estado: this.props.estado });
+  }
+  componentWillUnmount() { clearTimeout(this.t); }
+  load(next) {
+    clearTimeout(this.t);
+    this.setState({ estado: 'cargando', ...next });
+    this.t = setTimeout(() => {
+      const nombre = DIST.find(d => d.id === this.state.distrito).nombre;
+      this.setState({ estado: 'datos', liveMsg: next ? `Indicadores actualizados para ${nombre}.` : '' });
+    }, 700);
+  }
+  sk(h, w) {
+    return React.createElement('div', { 'data-sk': '', 'aria-hidden': true, style: { height: h, width: w || '100%', background: 'var(--skeleton)', borderRadius: 4, animation: 'ap-pulse 1.4s ease-in-out infinite' } });
+  }
+  skGroup(items) {
+    return React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: 12 } }, ...items.map(([h, w], i) => React.cloneElement(this.sk(h, w), { key: i })));
+  }
+  renderVals() {
+    const { estado, distrito, liveMsg } = this.state;
+    const showGoalProp = this.props.mostrarMeta ?? true;
+    let d = estado === 'vacio' ? EMPTY : DATA[distrito];
+    const isLoading = estado === 'cargando', isError = estado === 'error';
+    const isEmpty = !isLoading && !isError && !d.hayRutas;
+    const isStale = estado === 'desactualizado' && d.hayRutas;
+    const p = d.pedidos, v = d.ventanas, t = p.total;
+    const pct = n => t ? f1(n / t * 100) + ' %' : '0 %';
+    const vp = v.porcentaje ?? 0;
+    const showGoal = showGoalProp && v.meta != null;
+    return {
+      theme: this.props.tema ?? 'light',
+      estados: ESTADOS.map(([k, label]) => {
+        const a = k === estado;
+        return { label, active: a, bg: a ? 'var(--ink)' : 'var(--surface)', color: a ? 'var(--surface)' : 'var(--ink)', border: a ? 'var(--ink)' : 'var(--border-control)', onClick: () => { clearTimeout(this.t); this.setState({ estado: k, distrito: k === 'vacio' ? '150140' : (this.state.distrito === '150140' ? '' : this.state.distrito) }); } };
+      }),
+      isLoading, notLoading: !isLoading, isError, isEmpty, isStale, hasData: !isLoading && !isError,
+      updated: isError ? '—' : '14:32',
+      distritos: DIST, distrito, selRef: this.selRef,
+      distritoNombre: DIST.find(x => x.id === distrito).nombre,
+      liveMsg,
+      noSubmit: e => e.preventDefault(),
+      onDistrito: e => this.load({ distrito: e.target.value }),
+      retry: () => this.load(),
+      ped: { entregados: fInt(p.entregados), total: fInt(t), aria: `Pedidos: ${p.entregados} entregados, ${p.enCamino} en camino, ${p.pendientes} pendientes, ${p.cancelados} cancelados, de ${t}` },
+      segs: t ? [
+        { flex: p.entregados, bg: 'var(--status-delivered)' },
+        { flex: p.enCamino, bg: 'var(--status-transit)' },
+        { flex: p.pendientes, bg: 'repeating-linear-gradient(135deg, var(--status-pending) 0 5px, var(--surface) 5px 7px)' },
+        { flex: p.cancelados, bg: 'radial-gradient(circle, var(--surface) 1.2px, var(--status-cancelled) 1.5px) 0 0 / 6px 6px' },
+      ] : [],
+      legend: [
+        { label: 'Entregados', n: fInt(p.entregados), p: pct(p.entregados), sw: 'var(--status-delivered)', color: 'var(--status-delivered)', icon: 'M3 8.5l3 3 7-7' },
+        { label: 'En camino', n: fInt(p.enCamino), p: pct(p.enCamino), sw: 'var(--status-transit)', color: 'var(--status-transit)', icon: 'M2.5 8h10M9 4.5L12.5 8 9 11.5' },
+        { label: 'Pendientes', n: fInt(p.pendientes), p: pct(p.pendientes), sw: 'repeating-linear-gradient(135deg, var(--status-pending) 0 3px, var(--surface) 3px 4px)', color: 'var(--status-pending)', icon: 'M14 8a6 6 0 1 1-12 0a6 6 0 1 1 12 0M8 4.8V8l2.2 1.6' },
+        { label: 'Cancelados', n: fInt(p.cancelados), p: pct(p.cancelados), sw: 'var(--status-cancelled)', color: 'var(--status-cancelled)', icon: 'M4 4l8 8M12 4l-8 8' },
+      ],
+      ven: {
+        pct: vp.toFixed(1), width: vp + '%', showGoal, meta: v.meta, goalLeft: `calc(${v.meta}% - 1px)`,
+        dentro: fInt(v.dentroDeVentana), evaluadas: fInt(v.evaluadas),
+        aria: `${vp.toFixed(1)} % dentro de ventana` + (showGoal ? `, meta ${v.meta} %` : ''),
+      },
+      km: isError ? '—' : f1(d.km), kg: isError ? '—' : f1(d.kg),
+      srKm: isError ? 'sin dato' : `${f1(d.km)} kilómetros`, srKg: isError ? 'sin dato' : `${f1(d.kg)} kilogramos`,
+      skPedidos: this.skGroup([[44, '60%'], [16], [18, '85%'], [18, '70%']]),
+      skVentanas: this.skGroup([[44, '55%'], [12], [16, '70%']]),
+      skCifraA: this.skGroup([[44, '80%'], [16, '50%']]),
+      skCifraB: this.skGroup([[44, '80%'], [16, '50%']]),
+    };
+  }
+}
+</script>
+</body>
+</html>
