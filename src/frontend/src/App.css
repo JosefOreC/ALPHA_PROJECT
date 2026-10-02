@@ -1,3 +1,7 @@
+/* =========================================================
+   ALPHA PROJECT - ESTILOS GENERALES
+   ========================================================= */
+
 .app {
   min-height: 100vh;
   padding: 40px 48px;
@@ -338,6 +342,465 @@ td strong {
   border-top: 1px solid #e5e7eb;
 }
 
+
+/* =========================================================
+   GESTIÓN DE CONDUCTORES
+   ========================================================= */
+
+.driver-management {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 48px;
+  box-sizing: border-box;
+  color: #111827 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  filter: none !important;
+}
+
+.driver-management .page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.driver-management .page-header h1 {
+  margin: 0;
+  font-size: 32px;
+  line-height: 1.2;
+  color: #111827;
+}
+
+.driver-management .subtitle {
+  margin: 10px 0 0;
+  color: #6b7280;
+  font-size: 15px;
+}
+
+.driver-management .primary-button {
+  padding: 11px 18px;
+  border-radius: 8px;
+  background: #2563eb;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.driver-management .primary-button:hover {
+  background: #1d4ed8;
+}
+
+.driver-management .content-card {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.driver-management .card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 24px;
+}
+
+.driver-management .table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.driver-management table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.driver-management th {
+  padding: 14px 24px;
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+  color: #6b7280;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.driver-management td {
+  padding: 17px 24px;
+  border-bottom: 1px solid #f0f0f0;
+  color: #4b5563;
+  font-size: 14px;
+}
+
+.driver-management .status {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.driver-management .status-active {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.driver-management .status-inactive {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.driver-management .actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.driver-management .action-button {
+  padding: 7px 11px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.driver-management .edit-button {
+  border: 1px solid #bfdbfe;
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.driver-management .deactivate-button {
+  border: 1px solid #fecaca;
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.driver-management .activate-button {
+  border: 1px solid #bbf7d0;
+  background: #f0fdf4;
+  color: #15803d;
+}
+
+.driver-management .empty-state {
+  padding: 70px 24px;
+  text-align: center;
+}
+
+.driver-management .empty-state p {
+  margin: 0 0 18px;
+  color: #6b7280;
+}
+
+
+/* =========================================================
+   MODAL DE CONDUCTORES
+   ========================================================= */
+
+.driver-management .modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  background: rgb(15 23 42 / 45%);
+}
+
+.driver-management .modal {
+  width: min(100%, 520px);
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: 12px;
+  background: white;
+  box-shadow: 0 20px 50px rgb(15 23 42 / 20%);
+}
+
+.driver-management .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 24px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.driver-management .modal-header h2 {
+  margin: 0;
+  color: #111827;
+  font-size: 20px;
+}
+
+.driver-management .modal-header p {
+  margin: 6px 0 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.driver-management .modal form {
+  padding: 24px;
+}
+
+.driver-management .form-group {
+  margin-bottom: 18px;
+}
+
+.driver-management .form-group label {
+  display: block;
+  margin-bottom: 7px;
+  color: #374151;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.driver-management .form-group input,
+.driver-management .form-group select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 11px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 7px;
+  outline: none;
+  background: white;
+  color: #111827;
+  font-family: inherit;
+  font-size: 14px;
+}
+
+.driver-management .form-group input:focus,
+.driver-management .form-group select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgb(37 99 235 / 10%);
+}
+
+.driver-management .modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #e5e7eb;
+}
+
+
+/* =========================================================
+   PORTAL DE PEDIDOS / CONDUCTOR
+   ========================================================= */
+
+.topbar {
+  height: 80px;
+  background: #fff;
+  border-bottom: 1px solid #dce5dd;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 max(24px, calc((100vw - 1040px) / 2));
+}
+
+.topbar a {
+  text-decoration: none;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.topbar a span {
+  color: #286446;
+}
+
+.role {
+  border: 1px solid #d1dfd4;
+  border-radius: 30px;
+  padding: 7px 15px;
+  font-size: 14px;
+}
+
+main {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.intro,
+.muted {
+  color: #526659;
+}
+
+.demo {
+  font-size: 13px;
+  background: #e7eee5;
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin: 24px 0;
+}
+
+.order-card {
+  background: white;
+  border: 1px solid #d7e2d7;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 15px 40px #19352c08;
+}
+
+.card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px 32px;
+  border-bottom: 1px solid #e6ece6;
+}
+
+.card-head h2 {
+  margin: 0;
+  font-size: 26px;
+}
+
+.ENTREGADO {
+  color: #245d3f;
+  background: #e1f1e5;
+}
+
+.CANCELADO {
+  color: #8a3030;
+  background: #fbe8e8;
+}
+
+.destination {
+  padding: 30px 32px 12px;
+}
+
+.destination h3 {
+  font-size: 23px;
+  margin-bottom: 12px;
+}
+
+.destination p {
+  margin-bottom: 4px;
+}
+
+dl {
+  padding: 0 32px;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+}
+
+dt {
+  font-size: 12px;
+  color: #526659;
+  margin-bottom: 8px;
+}
+
+dd {
+  margin: 0;
+  line-height: 1.6;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.instructions {
+  margin: 26px 32px;
+  padding: 18px 20px;
+  background: #f4f7f2;
+  border-radius: 12px;
+}
+
+.instructions h3 {
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.instructions p {
+  font-size: 14px;
+  margin: 0;
+}
+
+.card-footer {
+  padding: 24px 32px;
+  border-top: 1px solid #e6ece6;
+}
+
+.card-footer p {
+  font-size: 13px;
+  color: #526659;
+  margin-bottom: 16px;
+}
+
+.primary {
+  background: #245c40;
+  color: white;
+  border-color: #245c40;
+  font-weight: 650;
+}
+
+.card-footer .primary {
+  width: 100%;
+}
+
+.success {
+  background: #e9f5eb;
+  padding: 18px 20px;
+  margin: 24px 32px;
+  border-radius: 12px;
+}
+
+.success p {
+  font-size: 14px;
+  margin: 6px 0 0;
+}
+
+.error {
+  padding: 16px;
+  border: 1px solid #c68c86;
+  border-radius: 12px;
+  background: #fff1ee;
+  margin-bottom: 20px;
+  color: #832e27;
+}
+
+.error button {
+  display: block;
+  margin-top: 12px;
+}
+
+.bottom-note {
+  text-align: center;
+  color: #526659;
+  font-size: 12px;
+  margin-top: 28px;
+}
+
+dialog {
+  border: 1px solid #d7e2d7;
+  border-radius: 18px;
+  max-width: 440px;
+  width: calc(100% - 32px);
+  padding: 28px;
+  color: #19352c;
+}
+
+dialog::backdrop {
+  background: #10271fcc;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.modal form > .alert {
+  margin-bottom: 20px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
 @media (max-width: 800px) {
   .app {
     padding: 24px 18px;
@@ -360,7 +823,526 @@ td strong {
   td {
     padding: 12px 16px;
   }
+
+  .driver-management {
+    padding: 24px 18px;
+  }
+
+  .driver-management .page-header {
+    flex-direction: column;
+  }
 }
-.modal form > .alert {
+
+@media (max-width: 520px) {
+  main {
+    padding: 28px 16px;
+  }
+
+  .card-head,
+  .destination,
+  .card-footer {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  dl {
+    padding: 0 20px;
+    grid-template-columns: 1fr;
+  }
+
+  .instructions,
+  .success {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  .dialog-actions {
+    flex-direction: column;
+  }
+
+  .topbar {
+    height: 68px;
+    padding: 0 20px;
+  }
+
+  .driver-management {
+    padding: 20px 14px;
+  }
+
+  .driver-management .modal-overlay {
+    padding: 12px;
+  }
+}
+/* =========================================================
+   GESTIÓN DE CONDUCTORES
+   ========================================================= */
+
+.driver-management {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 48px;
+  box-sizing: border-box;
+  background: #f5f7fb;
+  color: #111827;
+  opacity: 1;
+  visibility: visible;
+  filter: none;
+}
+
+.driver-page-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  margin-bottom: 32px;
+  opacity: 1;
+  visibility: visible;
+  filter: none;
+}
+
+.driver-page-header > div {
+  flex: 1;
+  min-width: 0;
+  opacity: 1;
+  visibility: visible;
+  filter: none;
+}
+
+.driver-eyebrow {
+  display: block;
+  margin: 0 0 8px;
+  color: #2563eb !important;
+  font-size: 13px;
+  line-height: 1.4;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.driver-page-header h1 {
+  display: block;
+  margin: 0;
+  color: #111827 !important;
+  font-size: 32px;
+  line-height: 1.25;
+  font-weight: 800;
+  opacity: 1 !important;
+  visibility: visible !important;
+  filter: none !important;
+  text-shadow: none !important;
+  background: transparent !important;
+}
+
+/* DESCRIPCIÓN */
+
+.driver-subtitle {
+  display: block;
+  margin: 10px 0 0;
+  color: #374151 !important;
+  font-size: 15px;
+  line-height: 1.6;
+  font-weight: 400;
+  opacity: 1 !important;
+  visibility: visible !important;
+  filter: none !important;
+}
+
+.driver-primary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11px 18px;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: #ffffff !important;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.driver-primary-button:hover {
+  background: #1d4ed8;
+}
+
+.driver-primary-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.driver-secondary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #374151 !important;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.driver-secondary-button:hover {
+  background: #f9fafb;
+}
+
+.driver-secondary-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.driver-alert {
   margin-bottom: 20px;
+  padding: 13px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.driver-success-alert {
+  border: 1px solid #bbf7d0;
+  background: #f0fdf4;
+  color: #166534 !important;
+}
+
+.driver-error-alert {
+  border: 1px solid #fecaca;
+  background: #fef2f2;
+  color: #b91c1c !important;
+}
+
+.driver-content-card {
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgb(15 23 42 / 5%);
+}
+
+.driver-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 24px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.driver-card-header h2 {
+  margin: 0;
+  color: #111827 !important;
+  font-size: 19px;
+  line-height: 1.4;
+  font-weight: 700;
+}
+
+.driver-card-header p {
+  margin: 5px 0 0;
+  color: #6b7280 !important;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.driver-empty-state {
+  padding: 70px 24px;
+  text-align: center;
+  color: #374151;
+}
+
+.driver-empty-state p {
+  margin: 0 0 18px;
+  color: #6b7280 !important;
+  font-size: 14px;
+}
+
+.driver-table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.driver-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+}
+
+.driver-table thead {
+  background: #f9fafb;
+}
+
+.driver-table th {
+  padding: 14px 24px;
+  border-bottom: 1px solid #e5e7eb;
+  color: #6b7280 !important;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.driver-table td {
+  padding: 17px 24px;
+  border-bottom: 1px solid #f0f0f0;
+  color: #4b5563 !important;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.driver-table tbody tr:hover {
+  background: #fafafa;
+}
+
+.driver-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.driver-table td strong {
+  color: #111827 !important;
+  font-weight: 700;
+}
+
+.driver-status {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.driver-status-active {
+  background: #dcfce7;
+  color: #166534 !important;
+}
+
+.driver-status-inactive {
+  background: #fee2e2;
+  color: #991b1b !important;
+}
+
+.driver-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.driver-action-button {
+  padding: 7px 11px;
+
+  border-radius: 6px;
+
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.driver-edit-button {
+  border: 1px solid #bfdbfe;
+  background: #eff6ff;
+  color: #1d4ed8 !important;
+}
+
+.driver-edit-button:hover {
+  background: #dbeafe;
+}
+
+.driver-deactivate-button {
+  border: 1px solid #fecaca;
+  background: #fef2f2;
+  color: #b91c1c !important;
+}
+
+.driver-deactivate-button:hover {
+  background: #fee2e2;
+}
+
+.driver-activate-button {
+  border: 1px solid #bbf7d0;
+  background: #f0fdf4;
+  color: #15803d !important;
+}
+
+.driver-activate-button:hover {
+  background: #dcfce7;
+}
+
+.driver-action-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.driver-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  background: rgb(15 23 42 / 45%);
+}
+
+.driver-modal {
+  width: min(100%, 520px);
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 20px 50px rgb(15 23 42 / 20%);
+}
+
+.driver-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 24px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.driver-modal-header h2 {
+  margin: 0;
+  color: #111827 !important;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.driver-modal-header p {
+  margin: 6px 0 0;
+
+  color: #6b7280 !important;
+
+  font-size: 14px;
+}
+
+.driver-close-button {
+  width: 32px;
+  height: 32px;
+
+  border: none;
+  border-radius: 6px;
+
+  background: #f3f4f6;
+  color: #4b5563 !important;
+
+  font-family: inherit;
+  font-size: 22px;
+  line-height: 1;
+
+  cursor: pointer;
+}
+
+.driver-close-button:hover {
+  background: #e5e7eb;
+}
+
+.driver-form {
+  padding: 24px;
+}
+
+.driver-form-group {
+  margin-bottom: 18px;
+}
+
+.driver-form-group label {
+  display: block;
+  margin-bottom: 7px;
+  color: #374151 !important;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.driver-form-group input,
+.driver-form-group select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 11px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 7px;
+  outline: none;
+  background: #ffffff;
+  color: #111827 !important;
+  font-family: inherit;
+  font-size: 14px;
+}
+
+.driver-form-group input::placeholder {
+  color: #9ca3af !important;
+  opacity: 1;
+}
+
+.driver-form-group input:focus,
+.driver-form-group select:focus {
+  border-color: #2563eb;
+
+  box-shadow: 0 0 0 3px rgb(37 99 235 / 10%);
+}
+
+.driver-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 24px;
+  padding-top: 20px;
+
+  border-top: 1px solid #e5e7eb;
+}
+
+@media (max-width: 800px) {
+  .driver-management {
+    padding: 24px 18px;
+  }
+
+  .driver-page-header {
+    flex-direction: column;
+  }
+
+  .driver-primary-button {
+    width: auto;
+  }
+
+  .driver-card-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .driver-table th,
+  .driver-table td {
+    padding: 12px 16px;
+  }
+}
+
+@media (max-width: 520px) {
+  .driver-management {
+    padding: 20px 14px;
+  }
+
+  .driver-page-header h1 {
+    font-size: 27px;
+  }
+
+  .driver-subtitle {
+    font-size: 14px;
+  }
+
+  .driver-primary-button {
+    width: 100%;
+  }
+
+  .driver-modal-overlay {
+    padding: 12px;
+  }
 }

@@ -55,6 +55,32 @@ def test_duplicate_dni():
         "El DNI ingresado ya corresponde a un conductor registrado en el sistema"
     )
 
+def test_duplicate_license():
+    client.post(
+        "/api/v1/drivers",
+        json={
+            "nombre_completo": "Primer Conductor",
+            "dni": "77777777",
+            "licencia": "LIC-001",
+            "vehiculo_id": "vehiculo-010",
+        },
+    )
+
+    response = client.post(
+        "/api/v1/drivers",
+        json={
+            "nombre_completo": "Segundo Conductor",
+            "dni": "88888888",
+            "licencia": "LIC-001",
+            "vehiculo_id": "vehiculo-011",
+        },
+    )
+
+    assert response.status_code == 409
+
+    assert response.json()["detail"] == (
+        "La licencia ingresada ya corresponde a un conductor registrado en el sistema"
+    )
 
 def test_get_drivers():
     response = client.get("/api/v1/drivers")

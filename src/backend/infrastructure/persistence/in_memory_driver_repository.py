@@ -23,6 +23,15 @@ class InMemoryDriverRepository(DriverRepository):
 
         return None
 
+    def find_by_licencia(self, licencia: str) -> Driver | None:
+        licencia = licencia.strip()
+
+        for driver in self._drivers.values():
+            if driver.licencia == licencia:
+                return driver
+
+        return None
+
     def find_all(self) -> list[Driver]:
         return list(self._drivers.values())
 

@@ -14,6 +14,7 @@ from application.use_cases.register_driver import RegisterDriver
 from application.use_cases.update_driver import UpdateDriver
 from domain.exceptions.driver_exceptions import (
     DriverAlreadyExistsError,
+    DriverLicenseAlreadyExistsError,
     DriverNotFoundError,
 )
 from infrastructure.dependencies import (
@@ -53,6 +54,11 @@ def register_driver(
         return DriverResponse.from_domain(driver)
 
     except DriverAlreadyExistsError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail=str(exc),
+        )
+    except DriverLicenseAlreadyExistsError as exc:
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
             detail=str(exc),

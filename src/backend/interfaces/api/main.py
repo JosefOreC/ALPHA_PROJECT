@@ -1,21 +1,26 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from interfaces.api.vehicles.router import router as vehicles_router
 from interfaces.api.drivers.router import router as drivers_router
+from interfaces.api.dashboard.router import router as dashboard_router
 
 
 app = FastAPI(
-    title="ALPHA_PROJECT API",
-    description="API del sistema de optimización de rutas sostenibles",
+    title="ALPHA_PROJECT - Fleet Management & Routing API",
+    description="API Backend para la gestión de flota vehicular, conductores, pedidos y dashboard del día",
     version="1.0.0",
 )
 
 
+# Configuración de CORS para permitir la comunicación con el frontend
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:5173",
         "http://127.0.0.1:5173",
+        "http://localhost:5174",
+        "http://127.0.0.1:5174",
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -23,14 +28,17 @@ app.add_middleware(
 )
 
 
-app.include_router(
-    drivers_router,
-    prefix="/api/v1",
-)
+# Inclusión de routers
+app.include_router(vehicles_router, prefix="/api/v1")
+app.include_router(drivers_router, prefix="/api/v1")
+app.include_router(dashboard_router)
+
+
+@app.get("/health", tags=["Health"])
+def health_check():
+    return {"status": "ok", "service": "ALPHA_PROJECT Backend"}
 
 
 @app.get("/")
 def root():
-    return {
-        "message": "ALPHA_PROJECT API funcionando correctamente"
-    }
+    return {"message": "ALPHA_PROJECT API funcionando correctamente"}
