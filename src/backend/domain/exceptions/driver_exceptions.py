@@ -14,3 +14,11 @@ class DriverNotFoundError(Exception):
         super().__init__(
             f"No se encontró un conductor con ID: {conductor_id}"
         )
+
+class DriverLicenseAlreadyExistsError(Exception):
+    """Se lanza cuando la licencia ya está registrada."""
+
+    def __init__(self):
+        super().__init__(
+            "La licencia ingresada ya corresponde a un conductor registrado en el sistema"
+        )

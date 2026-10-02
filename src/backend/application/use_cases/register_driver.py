@@ -1,5 +1,8 @@
 from domain.entities.driver import Driver
-from domain.exceptions.driver_exceptions import DriverAlreadyExistsError
+from domain.exceptions.driver_exceptions import (
+    DriverAlreadyExistsError,
+    DriverLicenseAlreadyExistsError,
+)
 from domain.ports.driver_repository import DriverRepository
 
 
@@ -23,6 +26,13 @@ class RegisterDriver:
 
         if existing_driver is not None:
             raise DriverAlreadyExistsError()
+
+        licencia = licencia.strip()
+
+        existing_driver = self.driver_repository.find_by_licencia(licencia)
+
+        if existing_driver is not None:
+            raise DriverLicenseAlreadyExistsError()
 
         driver = Driver(
             nombre_completo=nombre_completo,

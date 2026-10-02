@@ -18,6 +18,10 @@ class DriverRepository(ABC):
         pass
 
     @abstractmethod
+    def find_by_licencia(self, licencia: str) -> Driver | None:
+        pass
+
+    @abstractmethod
     def find_all(self) -> list[Driver]:
         pass
 
