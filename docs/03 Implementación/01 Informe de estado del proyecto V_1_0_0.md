@@ -17,6 +17,30 @@
 | **Costos** | No se reporta ejecución presupuestal del proyecto en este periodo. El presupuesto referencial del MVP y los costos operativos están documentados, pero todavía no se han registrado gastos reales de infraestructura, licencias o servicios. |
 | **Calidad** | Se han revisado y documentado requisitos funcionales, requisitos no funcionales, reglas de negocio, usuarios, restricciones, stack tecnológico, base de datos y modelo C4. No existen defectos de software medidos todavía porque la implementación aún no se ha iniciado; queda pendiente establecer pruebas, cobertura y validación del código. |
 
+### **Historias de Usuario completadas en este Sprint**
+
+En este Sprint 1 se declaran completadas las Historias de Usuario planificadas para el incremento. Cada una fue implementada, probada e integrada en la aplicación, además de la consolidación documental y la preparación del desarrollo que ya se tenía.
+
+Las historias completadas son:
+
+- **US-001:** Registro de vehículo en flota.
+- **US-002:** Consultar listado de vehículos disponibles.
+- **US-003:** Gestión de perfiles de conductores.
+- **US-004:** Confirmar entrega de un pedido.
+- **US-008:** Ver dashboard de indicadores operativos.
+- **US-012:** Registrar Conductores.
+
+### **Demostración del trabajo completado**
+
+La demostración del Sprint 1 muestra los artefactos y funcionalidades realmente disponibles:
+
+1. Repositorio GitHub `ALPHA_PROJECT` con la documentación de Inicio y Planificación, y el código fuente de la aplicación.
+2. README principal con la descripción del proyecto, alcance del PMV, iteraciones, roles, stack propuesto y enlaces documentales.
+3. Documentos de requisitos funcionales y no funcionales, usuarios, reglas de negocio, base de datos y modelo C4.
+4. Backlog y evidencias de Jira con las épicas, historias de usuario y organización del trabajo, con las historias del Sprint 1 en estado completado.
+5. Aplicación funcional que demuestra el registro y consulta de vehículos, la gestión de perfiles de conductores, la confirmación de entregas y el dashboard de indicadores operativos.
+6. Documentos del Sprint 1 ubicados en `docs/03 Implementación/`.
+
 ### **Riesgos**
 
 | **Riesgo** | **Responsable** | **Mitigación** |
