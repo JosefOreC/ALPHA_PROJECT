@@ -77,3 +77,7 @@ logs/
 .DS_Store
 Thumbs.db
 .env.example.backup
+
+# Herramientas de IA / indexado local
+.codegraph/
+.atl/
