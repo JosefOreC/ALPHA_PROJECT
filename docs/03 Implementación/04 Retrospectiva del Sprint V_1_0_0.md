@@ -20,7 +20,17 @@
 
 ### Personas
 
-Asignar responsables concretos para frontend, backend/algoritmo, base de datos, QA/documentación y coordinación del proyecto, evitando tareas sin propietario.
+Responsables confirmados por módulo para el presente incremento:
+
+| Responsable | Rama | Alcance |
+|---|---|---|
+| Cueva Ricse, Alex Roberto | `feature/alex/spr1/m_conductor/crud` | CRUD del módulo Conductor. |
+| Tovar Sánchez, Carlos Alberto | `feature/carlos/spr2/m_pedidos/confirmacion` | Accionar e interfaz, en el rol Conductor, para la vista y confirmación de un pedido. |
+| Rojas Camayo, Valentino Jhan Pierre | `feature/valentino/spr2/m_pedidos/crud` | CRUD y vista del módulo Pedido en los roles correspondientes a esta tarea (aún no existe rol Cliente). |
+| Ore Campos, Josef Pablo | `feature/josef/spr2/m_vehiculos/crud` | Formulario de creación, edición y listado de Vehículos. |
+| Rojas Peña, William Mikeiel | `feature/william/spr2/dashboard` | Interfaz y creación de los puertos de extracción de los datos a mostrar en el Dashboard. |
+
+> **Nota de coordinación:** Carlos (confirmación de pedido) y Valentino (CRUD de pedido) deben coordinar entre sí para que ambos trabajen sobre una única clase de dominio `Pedido`, evitando que cada rama defina su propio modelo.
 
 ### Relaciones
 
@@ -30,16 +40,23 @@ Establecer una reunión breve de sincronización y un canal único para registra
 
 Definir una política de ramas, revisión por pull request, criterios de terminado y una actualización semanal coordinada entre Jira y GitHub.
 
+**Política de ramas adoptada:**
+
+- Nomenclatura obligatoria: `feature/<persona>/spr<N>/<módulo>/<acción>` (ver tabla de la sección "Personas").
+- Ninguna rama `feature/*` se integra directamente a `main`; todo cambio llega a `main` mediante Pull Request revisado por al menos un par técnico.
+- Se exige respetar las reglas de la **arquitectura hexagonal** ya definida en el documento `12. Modelo C4`: el dominio no depende de frameworks ni de infraestructura, y toda integración externa (BD, APIs de mapas/tráfico) se realiza a través de puertos y adaptadores.
+
 ### Herramientas
 
 Completar la configuración de Jira, preparar el entorno local, crear la estructura `src/frontend/` y `src/backend/`, y validar el `.gitignore` antes de incorporar dependencias.
 
 ### Acciones a realizar
 
-1. Confirmar responsables y tareas del siguiente incremento.
-2. Cerrar las decisiones técnicas pendientes.
-3. Crear el esqueleto inicial de frontend y backend.
+1. ~~Confirmar responsables y tareas del siguiente incremento.~~ **Resuelto:** ver tabla de la sección "Personas".
+2. Cerrar las decisiones técnicas pendientes (stack tecnológico, doc. 10).
+3. Crear el esqueleto inicial de frontend y backend sobre la arquitectura hexagonal, respetando las ramas `feature/*` asignadas.
 4. Preparar un dataset sintético para las primeras pruebas de rutas.
-5. Revisar semanalmente la trazabilidad entre Jira, GitHub y los documentos del proyecto.
+5. Coordinar a Carlos y Valentino para unificar la clase de dominio `Pedido` antes de abrir sus respectivos Pull Request.
+6. Revisar semanalmente la trazabilidad entre Jira, GitHub y los documentos del proyecto.
 
 [← Volver al README Principal](../../README.md)
