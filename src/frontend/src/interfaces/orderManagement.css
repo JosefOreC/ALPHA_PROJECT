@@ -1,0 +1,59 @@
+.management { color:#19352c; background:#f3f6f2; min-height:100vh }
+.management .management-header { display:flex; justify-content:space-between; align-items:center; gap:24px; padding:24px max(24px,calc((100vw - 1180px)/2)); background:#fff; border-bottom:1px solid #d7e2d7 }
+.management .management-header>a { font-size:22px; font-weight:800; text-decoration:none }
+.management .management-header>a span { color:#286446 }
+.management nav { display:flex; gap:20px; align-items:center; font-size:14px; flex-wrap:wrap }
+.management nav span { padding:8px 12px; border:1px solid #c4d3c8; border-radius:24px }
+.management .management-main { max-width:1180px; padding:40px 24px; margin:auto }
+.management h1 { font-size:clamp(28px,5vw,40px); letter-spacing:-1px }
+.management h1:focus { outline:none }
+.management .management-eyebrow { font-size:11px; font-weight:750; letter-spacing:1.5px; color:#526959 }
+.management .section-header { display:flex; align-items:center; justify-content:space-between; gap:20px; margin:28px 0 20px }
+.management .section-header h2 { margin:0; font-size:23px }
+.management .message { padding:16px 20px; border-radius:10px; line-height:1.6; margin:20px 0; overflow-wrap:anywhere }
+.management .demo-message { background:#e7eee5; border:1px solid #bacbb8 }
+.management .error-message { color:#832e27; background:#fff1ee; border:1px solid #c68c86 }
+.management .success-message { color:#245d3f; background:#e1f1e5; border:1px solid #b4ccb9 }
+.management .integration-note,.management .form-note { color:#526659; font-size:14px; line-height:1.6 }
+.management .filters,.management .form-columns { display:grid; grid-template-columns:1fr 1fr; gap:20px }
+.management label { display:block; font-size:14px; font-weight:650; margin-bottom:8px }
+.management input,.management select,.management textarea { width:100%; min-height:48px; font:inherit; color:#19352c; background:white; border:1px solid #94aa9b; border-radius:8px; padding:12px }
+.management textarea { resize:vertical }
+.management :is(input,select,textarea,button,a,.table-container):focus-visible { outline:3px solid #986119; outline-offset:3px }
+.management .table-container { margin-top:24px; overflow-x:auto; border:1px solid #d7e2d7; border-radius:14px; background:#fff }
+.management table { border-collapse:collapse; width:100%; min-width:900px; text-align:left; font-size:14px }
+.management caption { text-align:left; padding:16px 20px; color:#526659; font-size:13px }
+.management th { background:#eaf0e8; font-size:12px; padding:14px 18px }
+.management td { padding:20px 18px; border-top:1px solid #dce5dd; vertical-align:top; line-height:1.7 }
+.management td:first-child span { display:block }
+.management .order-reference { display:block; font-size:12px; overflow-wrap:anywhere; max-width:260px; margin:4px 0 }
+.management .row-actions { display:flex; flex-direction:column; gap:8px }
+.management .row-actions button { padding:8px 12px; font-size:13px }
+.management .order-status { display:inline-block; font-weight:700; font-size:12px; border-radius:20px; padding:6px 12px; white-space:nowrap; color:#78510a; background:#fff2d6 }
+.management .state-ENTREGADO { color:#245d3f; background:#e1f1e5 }
+.management .state-CANCELADO { color:#8a3030; background:#fbe8e8 }
+.management .actions,.management .pagination { display:flex; flex-wrap:wrap; align-items:center; gap:12px; margin-top:24px }
+.management .pagination { justify-content:flex-end; font-size:14px }
+.management .action-primary { background:#245c40; color:white; border-color:#245c40 }
+.management .action-danger { background:#832e27; color:white; border-color:#832e27 }
+.management .empty-state { text-align:center; background:white; border:1px dashed #94aa9b; border-radius:14px; padding:40px 20px; margin:24px 0 }
+.management .detail-card,.management .order-form { border:1px solid #d7e2d7; border-radius:18px; background:#fff; padding:28px; margin-top:24px }
+.management .detail-card .section-header { margin-top:0 }
+.management .detail-card dl { padding:0; display:grid; grid-template-columns:1fr 1fr; gap:24px; margin:28px 0 }
+.management .detail-card dd { white-space:pre-wrap; overflow-wrap:anywhere }
+.management .detail-card .wide { grid-column:1/-1 }
+.management .order-form { max-width:850px }
+.management .order-form fieldset { padding:0; margin:24px 0; border:0; min-width:0 }
+.management .order-form fieldset>input,.management .order-form fieldset>select,.management .form-columns { margin-bottom:20px }
+.management .management-footer { text-align:center; font-size:12px; color:#526659; margin:36px 0 0 }
+.management .management-dialog { width:calc(100% - 32px); max-width:500px; padding:28px; border:1px solid #d7e2d7; border-radius:18px; color:#19352c }
+.management .management-dialog::backdrop { background:#10271fcc }
+.management-switch { display:block; padding:12px 24px; background:#e7eee5; text-align:center; font-size:14px }
+@media(max-width:640px) {
+  .management .management-header { align-items:flex-start; flex-direction:column; gap:14px; padding:18px 16px }
+  .management .management-main { padding:28px 16px }
+  .management .section-header { align-items:flex-start; flex-direction:column }
+  .management .filters,.management .form-columns,.management .detail-card dl { grid-template-columns:1fr }
+  .management .detail-card,.management .order-form { padding:20px }
+  .management .actions button { flex:1 1 150px }
+}
