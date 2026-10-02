@@ -40,7 +40,9 @@
   --transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-* {
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -1080,4 +1082,3 @@ body {
   outline: 3px solid #986119;
   outline-offset: 4px;
 }
-

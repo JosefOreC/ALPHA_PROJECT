@@ -16,9 +16,13 @@ import { DemoManagement } from './infrastructure/demoManagement';
 import { HttpManagement } from './infrastructure/httpManagement';
 import { OrderManagementView } from './interfaces/OrderManagementView';
 
+import { DashboardPage, HttpDashboardGateway } from './features/dashboard';
+
 import './App.css';
 
-// Raíz de composición para servicios de pedidos y conductor
+// Raíz de composición: se instancian los gateways / adaptadores
+const dashboardGateway = new HttpDashboardGateway();
+
 const apiUrl = import.meta.env.VITE_API_URL as string | undefined;
 const demo = apiUrl === undefined;
 const driverService = createDriverOrders(demo ? new DemoOrders() : new HttpOrders(apiUrl));
@@ -31,20 +35,26 @@ const managementService = createManagement(
       )
 );
 
-type ActiveView = 'flota' | 'pedidos' | 'conductor';
+type ActiveView = 'dashboard' | 'flota' | 'pedidos' | 'conductor';
 
 function getViewFromUrl(): { view: ActiveView; orderId: string } {
+  if (typeof window === 'undefined') {
+    return { view: 'dashboard', orderId: 'PED-0024' };
+  }
   const params = new URLSearchParams(window.location.search);
   const vista = params.get('vista');
   const pedido = params.get('pedido');
 
+  if (vista === 'flota') {
+    return { view: 'flota', orderId: pedido || 'PED-0024' };
+  }
   if (vista === 'pedidos') {
     return { view: 'pedidos', orderId: pedido || 'PED-0024' };
   }
   if (vista === 'conductor' || pedido) {
     return { view: 'conductor', orderId: pedido || 'PED-0024' };
   }
-  return { view: 'flota', orderId: 'PED-0024' };
+  return { view: 'dashboard', orderId: 'PED-0024' };
 }
 
 export function App() {
@@ -87,8 +97,11 @@ export function App() {
   const navigateTo = (view: ActiveView, orderId?: string) => {
     setActiveView(view);
     const params = new URLSearchParams(window.location.search);
-    if (view === 'flota') {
+    if (view === 'dashboard') {
       params.delete('vista');
+      params.delete('pedido');
+    } else if (view === 'flota') {
+      params.set('vista', 'flota');
       params.delete('pedido');
     } else if (view === 'pedidos') {
       params.set('vista', 'pedidos');
@@ -200,8 +213,7 @@ export function App() {
       setEditingVehicle(null);
       await loadVehicles();
     } catch (err: any) {
-      // Captura y despliega el mensaje exacto exigido en US-001:
-      // "La placa ingresada ya se encuentra registrada en el sistema"
+      // Mensaje de validación de US-001
       setModalError(err.message || 'Error al procesar la solicitud');
     } finally {
       setIsSubmitting(false);
@@ -224,11 +236,11 @@ export function App() {
       {/* Barra de navegación superior unificada para alternar módulos */}
       <nav className="app-nav" aria-label="Navegación principal del sistema">
         <a
-          href="/?vista=flota"
+          href="/"
           className="app-nav-brand"
           onClick={(e) => {
             e.preventDefault();
-            navigateTo('flota');
+            navigateTo('dashboard');
           }}
         >
           <div className="brand-logo-icon">🚛</div>
@@ -236,6 +248,15 @@ export function App() {
         </a>
 
         <div className="app-nav-tabs">
+          <button
+            type="button"
+            className={`nav-tab ${activeView === 'dashboard' ? 'active' : ''}`}
+            onClick={() => navigateTo('dashboard')}
+            id="tab-nav-dashboard"
+          >
+            📊 Dashboard del Día
+          </button>
+
           <button
             type="button"
             className={`nav-tab ${activeView === 'flota' ? 'active' : ''}`}
@@ -265,10 +286,14 @@ export function App() {
         </div>
       </nav>
 
+      {/* Vista 0: Dashboard del Día */}
+      {activeView === 'dashboard' && (
+        <DashboardPage gateway={dashboardGateway} />
+      )}
+
       {/* Vista 1: Flota Vehicular (US-001 & US-002) */}
       {activeView === 'flota' && (
         <div className="app-container" id="fleet-app">
-          {/* Header */}
           <header className="app-header">
             <div className="brand-section">
               <div className="brand-icon">🚛</div>
@@ -311,10 +336,8 @@ export function App() {
             </div>
           </header>
 
-          {/* KPI Stats */}
           <VehicleStats vehicles={vehicles} />
 
-          {/* Main List Section */}
           <main>
             <VehicleList
               vehicles={vehicles}
@@ -327,7 +350,6 @@ export function App() {
             />
           </main>
 
-          {/* Form Modal for US-001 (Creation) & Edition */}
           <VehicleFormModal
             key={editingVehicle ? `edit-${editingVehicle.vehiculo_id}` : 'create-new'}
             isOpen={isModalOpen}
@@ -338,7 +360,6 @@ export function App() {
             isSubmitting={isSubmitting}
           />
 
-          {/* Toast Feedback */}
           {toast && (
             <Toast
               message={toast.message}
