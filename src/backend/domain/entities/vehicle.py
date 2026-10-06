@@ -4,19 +4,18 @@ from typing import Optional
 import uuid
 import re
 
+from src.backend.domain.value_objects import VehicleCombustibles, VehicleStates
 
 @dataclass
 class Vehicle:
     placa: str
     capacidad_kg: float
-    tipo_combustible: str
+    tipo_combustible: VehicleCombustibles
     capacidad_m3: Optional[float] = None
-    estado: str = "DISPONIBLE"
+    estado: VehicleStates = VehicleStates.DISPONIBLE
     vehiculo_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     creado_en: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
 
-    VALID_ESTADOS = {"DISPONIBLE", "EN_RUTA", "MANTENIMIENTO", "INACTIVO"}
-    VALID_COMBUSTIBLES = {"DIESEL", "GASOLINA", "GNV", "GLP", "ELECTRICO", "HIBRIDO"}
 
     def __post_init__(self):
         self.placa = self.normalize_plate(self.placa)
@@ -44,25 +43,21 @@ class Vehicle:
         if self.capacidad_m3 is not None and self.capacidad_m3 <= 0:
             raise ValueError("La capacidad en m3 debe ser un valor positivo mayor a 0")
 
-        normalized_estado = self.estado.upper()
-        if normalized_estado not in self.VALID_ESTADOS:
+        if type(self.estado) != VehicleStates:
             raise ValueError(
-                f"Estado inválido: {self.estado}. Estados permitidos: {', '.join(sorted(self.VALID_ESTADOS))}"
-            )
-        self.estado = normalized_estado
-
-        normalized_combustible = self.tipo_combustible.upper()
-        if normalized_combustible not in self.VALID_COMBUSTIBLES:
+                f"Estado inválido: {str(self.estado)}. Estados permitidos: {', '.join(sorted(VehicleStates.list_states()))}"
+            )  
+        
+        if type(self.tipo_combustible) != VehicleCombustibles:
             raise ValueError(
-                f"Tipo de combustible inválido: {self.tipo_combustible}. Permitidos: {', '.join(sorted(self.VALID_COMBUSTIBLES))}"
+                f"Tipo de combustible inválido: {str(self.tipo_combustible)}. Permitidos: {', '.join(sorted(VehicleCombustibles.list_combustibles()))}"
             )
-        self.tipo_combustible = normalized_combustible
 
     def is_available(self) -> bool:
-        return self.estado == "DISPONIBLE"
+        return self.estado == VehicleStates.DISPONIBLE
 
     def is_active(self) -> bool:
-        return self.estado != "INACTIVO"
+        return self.estado != VehicleStates.INACTIVO
 
     def update_info(
         self,
@@ -78,7 +73,7 @@ class Vehicle:
             self.capacidad_kg = capacidad_kg
         if capacidad_m3 is not None:
             self.capacidad_m3 = capacidad_m3
-        if tipo_combustible is not None:
+        if tipo_combustible is not None and type(tipo_combustible) == VehicleCombustibles:
             self.tipo_combustible = tipo_combustible
         if estado is not None:
             self.estado = estado

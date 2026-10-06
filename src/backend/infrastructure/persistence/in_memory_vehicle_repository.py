@@ -29,8 +29,7 @@ class InMemoryVehicleRepository(VehicleRepositoryPort):
     def find_all(self, status: Optional[str] = None) -> List[Vehicle]:
         vehicles = list(self._vehicles.values())
         if status:
-            normalized_status = status.strip().upper()
-            return [v for v in vehicles if v.estado == normalized_status]
+            return [v for v in vehicles if v.estado == status]
         return vehicles
 
     def update(self, vehicle: Vehicle) -> Vehicle:

@@ -4,7 +4,7 @@ from domain.exceptions.driver_exceptions import (
     DriverNotFoundError,
 )
 from domain.ports.driver_repository import DriverRepository
-
+from domain.value_objects import DriverStates
 
 class UpdateDriver:
 
@@ -18,7 +18,7 @@ class UpdateDriver:
         dni: str | None = None,
         licencia: str | None = None,
         vehiculo_id: str | None = None,
-        estado: str | None = None,
+        estado: DriverStates | None = None,
     ) -> Driver:
 
         driver = self.driver_repository.find_by_id(conductor_id)
@@ -36,6 +36,10 @@ class UpdateDriver:
                 and existing_driver.conductor_id != conductor_id
             ):
                 raise DriverAlreadyExistsError()
+        
+        if estado is not None:
+            if type(estado) != DriverStates:
+                raise ValueError(f"Estado inválido: {str(estado)}. Estados permitidos: {', '.join(sorted(DriverStates.list_states()))}")
 
         driver.update_info(
             nombre_completo=nombre_completo,

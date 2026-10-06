@@ -1,0 +1,2 @@
+class OrderConflict(Exception):
+    pass
