@@ -10,6 +10,11 @@ import { DemoManagement } from './infrastructure/demoManagement';
 import { HttpManagement } from './infrastructure/httpManagement';
 import { OrderManagementView } from './interfaces/OrderManagementView';
 import { FleetView } from './interfaces/FleetView';
+import { RoutePlanningView } from './interfaces/RoutePlanningView';
+import { createGenerateRoutes } from './application/generateRoutes';
+import { DemoPlanningSource, DemoRouteOptimizer, UnavailableRouteOptimizer } from './infrastructure/demoRoutePlanning';
+import { createLivePlanningSource } from './infrastructure/livePlanningSource';
+import { vehicleApi } from './services/vehicleApi';
 
 import { DashboardPage, HttpDashboardGateway } from './features/dashboard';
 import type { ModuleId } from './shared/ui';
@@ -31,7 +36,14 @@ const managementService = createManagement(
       )
 );
 
-type ActiveView = 'dashboard' | 'flota' | 'pedidos' | 'conductor';
+// Sin motor real (EN-01) solo el modo demostración devuelve una propuesta.
+const routeService = createGenerateRoutes(
+  demo
+    ? { optimizer: new DemoRouteOptimizer(), planning: new DemoPlanningSource() }
+    : { optimizer: new UnavailableRouteOptimizer(), planning: createLivePlanningSource(managementService, vehicleApi) }
+);
+
+type ActiveView = 'dashboard' | 'flota' | 'pedidos' | 'rutas' | 'conductor';
 
 function getViewFromUrl(): { view: ActiveView; orderId: string } {
   if (typeof window === 'undefined') {
@@ -46,6 +58,9 @@ function getViewFromUrl(): { view: ActiveView; orderId: string } {
   }
   if (vista === 'pedidos') {
     return { view: 'pedidos', orderId: pedido || 'PED-0024' };
+  }
+  if (vista === 'rutas') {
+    return { view: 'rutas', orderId: pedido || 'PED-0024' };
   }
   if (vista === 'conductor' || pedido) {
     return { view: 'conductor', orderId: pedido || 'PED-0024' };
@@ -82,6 +97,9 @@ export function App() {
     } else if (view === 'pedidos') {
       params.set('vista', 'pedidos');
       params.delete('pedido');
+    } else if (view === 'rutas') {
+      params.set('vista', 'rutas');
+      params.delete('pedido');
     } else if (view === 'conductor') {
       params.set('vista', 'conductor');
       if (orderId) {
@@ -96,7 +114,7 @@ export function App() {
 
   // La barra superior de cada vista migrada al design system navega por módulo; lo que aún no existe recarga por URL.
   const navigateModule = (id: ModuleId, href: string) => {
-    if (id === 'dashboard' || id === 'flota' || id === 'pedidos') navigateTo(id);
+    if (id === 'dashboard' || id === 'flota' || id === 'pedidos' || id === 'rutas') navigateTo(id);
     else window.location.assign(href);
   };
 
@@ -160,7 +178,10 @@ export function App() {
         <OrderManagementView service={managementService} demo={demo} onNavigate={navigateModule} />
       )}
 
-      {/* Vista 3: Portal Conductor */}
+      {/* Vista 3: Generar rutas del día (US-005) */}
+      {activeView === 'rutas' && <RoutePlanningView service={routeService} onNavigate={navigateModule} />}
+
+      {/* Vista 4: Portal Conductor */}
       {activeView === 'conductor' && (
         <div className="driver-order-view-wrapper">
           <a

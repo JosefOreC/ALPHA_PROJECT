@@ -23,11 +23,12 @@ type PanelCellProps = {
   note?: ReactNode
   eco?: boolean
   wide?: boolean
+  tinted?: boolean
 }
 
-export function PanelCell({ label, value, unit, note, eco, wide }: PanelCellProps) {
+export function PanelCell({ label, value, unit, note, eco, wide, tinted }: PanelCellProps) {
   return (
-    <div className={`eco-panel__cell${wide ? ' eco-panel__cell--wide' : ''}`}>
+    <div className={`eco-panel__cell${wide ? ' eco-panel__cell--wide' : ''}${tinted ? ' eco-panel__cell--eco' : ''}`}>
       <p className="eco-panel__label">{label}</p>
       <p className={`eco-panel__value${eco ? ' eco-panel__value--eco' : ''}`}>
         {value}
