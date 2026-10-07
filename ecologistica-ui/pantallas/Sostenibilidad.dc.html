@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Reporte de sostenibilidad</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/ecologistica/tokens.css">
+<link rel="stylesheet" href="ds/ecologistica/components/bundle.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0}
+a{color:var(--primary)}a:hover{color:var(--primary-hover)}
+</style>
+</helmet>
+<div class="eco-root eco-shell" data-theme="{{theme}}" style="min-height: 1060px">
+  <aside class="eco-side" aria-label="Navegación principal">
+    <a class="eco-side__brand" href="Main.dc.html"><svg class="eco-mark" viewBox="0 0 32 32" aria-hidden="true"><path class="leaf" d="M5 27C5 14 13 5 27 5c0 14-9 22-22 22z"></path><path class="vein" d="M8.5 23.5c3.5-3.5 6-8.5 10.5-10.5"></path><circle class="stop" cx="21.5" cy="11.5" r="2.6"></circle></svg>EcoLogística <span>Lima</span></a>
+    <button class="eco-side__search" type="button"><svg class="eco-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="M16 16l4.5 4.5"></path></svg>Buscar…<span class="eco-kbd">⌘K</span></button>
+    <a class="eco-side__item" href="Main.dc.html"><svg class="eco-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="3"></rect><path d="M7.5 16v-3M12 16V8M16.5 16v-5"></path><circle cx="12" cy="8" r="1.8" class="acc"></circle></svg>Dashboard</a>
+    <a class="eco-side__item" href="Sostenibilidad.dc.html" aria-current="page"><svg class="eco-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 19.5C4.5 10.5 10.5 4.5 19.5 4.5c0 9-6 15-15 15z"></path><path d="M4.5 19.5c3.5-3.5 6-6.5 9.5-9.5" stroke-dasharray="2.2 2.6"></path><circle cx="14.6" cy="9.4" r="2" class="acc"></circle></svg>Sostenibilidad</a>
+    <div class="eco-side__foot">
+      <div class="eco-side__co2"><span>CO₂ evitado este mes</span><strong>658 kg <span>de 700</span></strong><div class="eco-hero__meter" role="img" aria-label="94 por ciento de la meta mensual"><div class="eco-hero__meter-fill" style="width: 94%"></div></div></div>
+      <div class="eco-side__user"><span class="eco-role">Resp. de Logística</span><span class="eco-avatar">MV</span><div>Mariela Vargas</div></div>
+    </div>
+  </aside>
+
+  <div class="eco-main">
+    <header class="eco-topbar">
+      <nav class="eco-crumbs" aria-label="Ruta de navegación"><span>Indicadores</span><span aria-hidden="true">/</span><strong>Reporte de sostenibilidad</strong></nav>
+      <div class="eco-topbar__end">
+        <div class="eco-seg-ctrl" role="group" aria-label="Periodo">
+          <sc-for list="{{periods}}" as="p" hint-placeholder-count="3"><button type="button" aria-pressed="{{p.on}}" onClick="{{p.pick}}">{{p.label}}</button></sc-for>
+        </div>
+        <button class="eco-btn eco-btn--secondary" type="button">Descargar PDF</button>
+        <button class="eco-btn" type="button"><svg class="eco-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7.5 10.5L12 15l4.5-4.5M5 19.5h14"></path></svg>Exportar CSV</button>
+      </div>
+    </header>
+
+    <main class="eco-content">
+      <div>
+        <h1 class="eco-h1">Reporte de sostenibilidad</h1>
+        <p class="eco-sub">{{period.sub}} · flota de DistriRápido · línea base 3,5 t de CO₂ al mes</p>
+      </div>
+
+      <section class="eco-panel" aria-label="Resumen del periodo" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))">
+        <div class="eco-panel__cell" style="background: var(--eco-bg)"><p class="eco-panel__label">CO₂ evitado</p><p class="eco-panel__value eco-panel__value--eco">{{period.saved}}</p><p class="eco-panel__note"><span class="eco-delta">{{period.pct}}</span> frente a la línea base</p></div>
+        <div class="eco-panel__cell"><p class="eco-panel__label">CO₂ emitido</p><p class="eco-panel__value">{{period.emitted}}</p><p class="eco-panel__note">serían {{period.base}} sin optimizar</p></div>
+        <div class="eco-panel__cell"><p class="eco-panel__label">Combustible ahorrado</p><p class="eco-panel__value">{{period.fuel}}</p><p class="eco-panel__note">equivalente diésel</p></div>
+        <div class="eco-panel__cell"><p class="eco-panel__label">Km evitados</p><p class="eco-panel__value">{{period.km}}</p><p class="eco-panel__note">rutas más cortas</p></div>
+        <div class="eco-panel__cell"><p class="eco-panel__label">Flota de bajas emisiones</p><p class="eco-panel__value">73 % <small>11 de 15</small></p><p class="eco-panel__note">GNV, eléctricos e híbridos</p></div>
+      </section>
+
+      <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start">
+        <section style="flex: 3 1 560px; min-width: 0; border: 1px solid var(--hairline); border-radius: var(--radius-lg); padding: 18px 20px; display: flex; flex-direction: column; gap: 12px" aria-labelledby="ch-title">
+          <div class="eco-section-head"><h2 id="ch-title">CO₂ emitido por semana</h2><span class="eco-muted" style="margin-left: auto; font-size: 12.5px">octubre 2026 · kg</span></div>
+          <svg class="eco-chart" viewBox="0 0 640 260" role="img" aria-label="CO₂ emitido por semana: 712, 705, 731 y 694 kg; línea base 875 kg; evitado 163, 170, 144 y 181 kg">
+            <line class="axis" x1="40" y1="220" x2="630" y2="220"></line>
+            <text class="tick" x="32" y="224" text-anchor="end">0</text>
+            <text class="tick" x="32" y="124" text-anchor="end">500</text>
+            <line class="axis" x1="40" y1="120" x2="630" y2="120" stroke-dasharray="2 4"></line>
+            <rect class="saved" x="80" y="45" width="90" height="33" rx="4"></rect><rect class="bar" x="80" y="78" width="90" height="142" rx="4"></rect>
+            <rect class="saved" x="220" y="45" width="90" height="34" rx="4"></rect><rect class="bar" x="220" y="79" width="90" height="141" rx="4"></rect>
+            <rect class="saved" x="360" y="45" width="90" height="29" rx="4"></rect><rect class="bar" x="360" y="74" width="90" height="146" rx="4"></rect>
+            <rect class="saved" x="500" y="45" width="90" height="36" rx="4"></rect><rect class="bar bar--now" x="500" y="81" width="90" height="139" rx="4"></rect>
+            <path class="base" d="M60 45H610"></path>
+            <text class="tick" x="610" y="38" text-anchor="end">línea base 875</text>
+            <text class="label label--eco" x="125" y="66" text-anchor="middle">−163</text>
+            <text class="label label--eco" x="265" y="66" text-anchor="middle">−170</text>
+            <text class="label label--eco" x="405" y="64" text-anchor="middle">−144</text>
+            <text class="label label--eco" x="545" y="68" text-anchor="middle">−181</text>
+            <text class="label" x="125" y="100" text-anchor="middle" fill="var(--on-primary)" style="fill: var(--on-primary)">712</text>
+            <text class="label" x="265" y="101" text-anchor="middle" style="fill: var(--on-primary)">705</text>
+            <text class="label" x="405" y="96" text-anchor="middle" style="fill: var(--on-primary)">731</text>
+            <text class="label" x="545" y="103" text-anchor="middle">694</text>
+            <text class="tick" x="125" y="242" text-anchor="middle">SEM 1</text>
+            <text class="tick" x="265" y="242" text-anchor="middle">SEM 2</text>
+            <text class="tick" x="405" y="242" text-anchor="middle">SEM 3</text>
+            <text class="tick" x="545" y="242" text-anchor="middle">SEM 4</text>
+          </svg>
+          <ul class="eco-legend">
+            <li><span class="eco-swatch" style="background: var(--primary)"></span>CO₂ emitido</li>
+            <li><span class="eco-swatch" style="background: var(--eco-bg); outline: 1px solid var(--eco-ink)"></span>CO₂ evitado</li>
+            <li><svg width="16" height="8" aria-hidden="true"><path d="M0 4H16" stroke="var(--ink)" stroke-width="1.5" stroke-dasharray="4 3"></path></svg>Línea base (rutas sin optimizar)</li>
+          </ul>
+        </section>
+
+        <section style="flex: 2 1 340px; min-width: 0; display: flex; flex-direction: column; gap: 12px" aria-labelledby="dist-title">
+          <div class="eco-section-head"><h2 id="dist-title">Por distrito</h2></div>
+          <div class="eco-list" style="--cols: minmax(0, 1fr) 70px 60px">
+            <div class="eco-row eco-row--head"><span>Distrito</span><span>Emitido</span><span>Ahorro</span></div>
+            <div class="eco-row"><span>San Juan de Lurigancho</span><span class="eco-num">1,02 t</span><span class="eco-delta">−21 %</span></div>
+            <div class="eco-row"><span>Ate</span><span class="eco-num">0,69 t</span><span class="eco-delta">−19 %</span></div>
+            <div class="eco-row"><span>El Agustino</span><span class="eco-num">0,61 t</span><span class="eco-delta">−17 %</span></div>
+            <div class="eco-row"><span>Santa Anita</span><span class="eco-num">0,52 t</span><span class="eco-delta">−18 %</span></div>
+          </div>
+        </section>
+      </div>
+
+      <section style="display: flex; flex-direction: column; gap: 12px" aria-labelledby="veh-title">
+        <div class="eco-section-head"><h2 id="veh-title">Por vehículo</h2><span class="eco-muted" style="font-size: 12.5px">ordenado por intensidad de emisiones</span></div>
+        <div class="eco-list eco-list-scroll" style="--cols: 90px 110px 100px 100px minmax(0, 1fr)">
+          <div class="eco-row eco-row--head"><span>Placa</span><span>Combustible</span><span>Km</span><span>CO₂</span><span>kg cada 100 km</span></div>
+          <sc-for list="{{vehicles}}" as="v" hint-placeholder-count="5">
+            <div class="eco-row">
+              <span class="eco-code">{{v.plate}}</span>
+              <span><span class="{{v.tag}}">{{v.fuel}}</span></span>
+              <span class="eco-num">{{v.km}}</span>
+              <span class="eco-num">{{v.co2}}</span>
+              <span style="display: flex; align-items: center; gap: 10px"><span class="eco-meter" style="flex: 0 1 220px; height: 6px"><span class="eco-meter__fill" style="width: {{v.bar}}; background: {{v.color}}"></span></span><span class="eco-code">{{v.rate}}</span></span>
+            </div>
+          </sc-for>
+        </div>
+        <div class="eco-banner eco-banner--success"><svg class="eco-icon eco-icon--md" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 19.5C4.5 10.5 10.5 4.5 19.5 4.5c0 9-6 15-15 15z"></path><path d="M4.5 19.5c3.5-3.5 6-6.5 9.5-9.5" stroke-dasharray="2.2 2.6"></path><circle cx="14.6" cy="9.4" r="2" class="acc"></circle></svg><span class="eco-banner__text"><span class="eco-banner__title">Oportunidad</span> · pasar GJK-112 a GNV evitaría cerca de 95 kg de CO₂ al mes.</span></div>
+      </section>
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["light","dark"],"default":"light"},"$preview":{"width":1440,"height":1060}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { period: 'mes' };
+  }
+  renderVals() {
+    const P = {
+      semana: { label: 'Semana', sub: 'Semana 4 de octubre', saved: '181 kg', pct: '−21 %', emitted: '694 kg', base: '875 kg', fuel: '68 L', km: '1 480 km' },
+      mes: { label: 'Mes', sub: 'Octubre 2026', saved: '658 kg', pct: '−19 %', emitted: '2,84 t', base: '3,50 t', fuel: '245 L', km: '6 360 km' },
+      trimestre: { label: 'Trimestre', sub: 'Agosto – octubre 2026', saved: '1,71 t', pct: '−16 %', emitted: '8,79 t', base: '10,50 t', fuel: '638 L', km: '16 900 km' }
+    };
+    const V = [
+      ['GJK-112', 'Diésel', '1 950', '241 kg', '12,4', 100, 'var(--danger)'],
+      ['BCD-456', 'Diésel', '2 380', '268 kg', '11,3', 91, 'var(--warning)'],
+      ['ABC-123', 'GNV', '2 610', '196 kg', '7,5', 60, 'var(--primary)'],
+      ['EGH-567', 'Híbrido', '2 040', '139 kg', '6,8', 55, 'var(--primary)'],
+      ['HKL-345', 'Eléctrico', '1 480', '0 kg', '0,0', 1, 'var(--primary)']
+    ].map(v => ({ plate: v[0], fuel: v[1], tag: v[1] === 'Diésel' ? 'eco-tag' : 'eco-tag eco-tag--eco', km: v[2], co2: v[3], rate: v[4], bar: v[5] + '%', color: v[6] }));
+    const s = this.state;
+    return {
+      theme: this.props.theme ?? 'light',
+      periods: Object.keys(P).map(k => ({ label: P[k].label, on: s.period === k ? 'true' : 'false', pick: () => this.setState({ period: k }) })),
+      period: P[s.period],
+      vehicles: V
+    };
+  }
+}
+</script>
+</body>
+</html>

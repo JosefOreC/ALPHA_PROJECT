@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Mapa de rutas · Lima Este</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/ecologistica/tokens.css">
+<link rel="stylesheet" href="ds/ecologistica/components/bundle.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div class="eco-map" role="region" aria-label="Mapa de rutas activas de Lima Este" style="font-family: var(--font-sans); color: var(--ink)">
+  <svg viewBox="0 0 900 560" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+    <path class="district district--out" d="M560 0H900V222L640 236L600 200Z"></path>
+    <path class="district" d="M0 0H560L600 200L520 245L300 255L0 262Z"></path>
+    <path class="district" d="M0 286L310 278L340 400L300 560H0Z"></path>
+    <path class="district" d="M310 278L560 268L600 560H300L340 400Z"></path>
+    <path class="district" d="M560 268L640 248L900 236V560H600Z"></path>
+    <path class="water" d="M-10 272C150 262 300 270 420 258S640 232 910 222"></path>
+    <text class="wlabel" x="96" y="262">Río Rímac</text>
+    <path class="road-c" d="M330 0C320 110 330 180 320 255"></path><path class="road" d="M330 0C320 110 330 180 320 255"></path>
+    <path class="road-c" d="M0 160C200 150 400 140 590 150"></path><path class="road" d="M0 160C200 150 400 140 590 150"></path>
+    <path class="road-c" d="M300 330C450 320 600 300 900 285"></path><path class="road" d="M300 330C450 320 600 300 900 285"></path>
+    <path class="road-c" d="M330 560C320 450 330 360 300 282"></path><path class="road" d="M330 560C320 450 330 360 300 282"></path>
+    <path class="road-c" d="M420 560C520 470 640 430 900 420"></path><path class="road" d="M420 560C520 470 640 430 900 420"></path>
+    <text class="rlabel" x="338" y="40">Av. Próceres</text>
+    <text class="rlabel" x="40" y="150">Av. Los Jardines</text>
+    <text class="rlabel" x="760" y="280">Carretera Central</text>
+    <text class="rlabel" x="660" y="452">Av. Separadora Industrial</text>
+    <text class="rlabel" x="200" y="520">Vía de Evitamiento</text>
+    <text class="dlabel" x="40" y="232">SAN JUAN DE LURIGANCHO</text>
+    <text class="dlabel" x="40" y="314">EL AGUSTINO</text>
+    <text class="dlabel" x="500" y="470">SANTA ANITA</text>
+    <text class="dlabel" x="800" y="520">ATE</text>
+
+    <sc-if value="{{showRoutes}}" hint-placeholder-val="{{ true }}">
+      <sc-for list="{{routes}}" as="r" hint-placeholder-count="4">
+        <path class="{{r.cls}}" d="{{r.d}}"></path>
+        <path class="{{r.clsDone}}" d="{{r.done}}"></path>
+      </sc-for>
+    </sc-if>
+
+    <g class="depot" transform="translate(640 360)">
+      <rect x="-11" y="-11" width="22" height="22" rx="5"></rect><circle r="4.5"></circle>
+      <text x="16" y="4">Almacén Ate</text>
+    </g>
+
+    <sc-if value="{{showPins}}" hint-placeholder-val="{{ true }}">
+      <sc-for list="{{pins}}" as="p" hint-placeholder-count="12">
+        <g class="{{p.cls}}" transform="{{p.tf}}" onClick="{{p.pick}}">
+          <circle class="hit" r="14"></circle>
+          <circle class="halo" r="14"></circle>
+          <circle class="pc" r="7.5"></circle>
+          <rect class="pd" x="-6.5" y="-6.5" width="13" height="13" rx="2" transform="rotate(45)"></rect>
+          <path class="pk" d="M-3.4 0.2l2.2 2.2 4.4-4.6"></path>
+          <path class="px" d="M-3 -3l6 6M3 -3l-6 6"></path>
+        </g>
+      </sc-for>
+    </sc-if>
+
+    <sc-if value="{{showVeh}}" hint-placeholder-val="{{ true }}">
+      <sc-for list="{{routes}}" as="r" hint-placeholder-count="4">
+        <g class="{{r.vehCls}}" transform="{{r.vtf}}">
+          <rect class="tag" x="-30" y="-34" width="60" height="18" rx="5"></rect>
+          <text x="0" y="-21" text-anchor="middle">{{r.plate}}</text>
+          <circle class="ring" r="10"></circle>
+          <circle class="core" r="4"></circle>
+        </g>
+      </sc-for>
+    </sc-if>
+  </svg>
+
+  <div class="eco-map__ctrl eco-map__ctrl--tl" role="group" aria-label="Capas del mapa">
+    <button type="button" aria-pressed="{{routesOn}}" onClick="{{toggleRoutes}}">Rutas</button>
+    <button type="button" aria-pressed="{{pinsOn}}" onClick="{{togglePins}}">Pedidos</button>
+    <button type="button" aria-pressed="{{vehOn}}" onClick="{{toggleVeh}}">Vehículos</button>
+  </div>
+  <div class="eco-map__ctrl eco-map__ctrl--tr" role="group" aria-label="Zoom">
+    <button type="button" aria-label="Acercar">+</button>
+    <button type="button" aria-label="Alejar">−</button>
+  </div>
+
+  <sc-if value="{{hasSel}}" hint-placeholder-val="{{ true }}">
+    <div class="eco-map__pop" style="left: {{pop.left}}; top: {{pop.top}}" role="status">
+      <span class="eco-code">{{pop.id}} · {{pop.district}}</span>
+      <strong>{{pop.to}}</strong>
+      <div class="eco-map__pop-row"><span>{{pop.label}}</span><span class="eco-code">{{pop.window}}</span></div>
+      <div class="eco-map__pop-row"><span>{{pop.vehicle}}</span><span style="color: var(--eco-ink); font-weight: 600">{{pop.co2}} CO₂</span></div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{showLegend}}" hint-placeholder-val="{{ true }}">
+    <div class="eco-map__legend">
+      <span><svg viewBox="-8 -8 16 16" aria-hidden="true"><rect x="-5" y="-5" width="10" height="10" rx="1.5" transform="rotate(45)" fill="var(--warning)"></rect></svg>Pendiente</span>
+      <span><svg viewBox="-8 -8 16 16" aria-hidden="true"><circle r="5" fill="var(--surface)" stroke="var(--info-ink)" stroke-width="2.6"></circle></svg>En camino</span>
+      <span><svg viewBox="-8 -8 16 16" aria-hidden="true"><circle r="6" fill="var(--success-ink)"></circle></svg>Entregado</span>
+      <span><svg viewBox="-8 -8 16 16" aria-hidden="true"><circle r="5" fill="var(--surface-sunken)" stroke="var(--ink-muted)" stroke-width="2"></circle></svg>Cancelado</span>
+      <span><svg viewBox="-8 -8 16 16" aria-hidden="true"><path d="M-7 0H7" stroke="var(--ink-muted)" stroke-width="2.5" stroke-dasharray="0.1 4" stroke-linecap="round"></path></svg>Tramo por recorrer</span>
+    </div>
+  </sc-if>
+  <span class="eco-map__note">Mapa esquemático · en producción: OpenStreetMap + Leaflet</span>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"selected":{"editor":"text","default":"PED-0024"},"query":{"editor":null},"onPick":{"editor":null},"compact":{"editor":"boolean","default":false},"$preview":{"width":900,"height":560}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { routes: true, pins: true, veh: true, localSel: null };
+  }
+  renderVals() {
+    const routes = [
+      { id: 'r1', plate: 'ABC-123', d: 'M640 360C620 300 560 260 520 230S430 170 400 150S330 100 300 90S210 140 170 170', done: 'M640 360C620 300 560 260 520 230S430 170 400 150S370 130 350 120', vx: 350, vy: 120 },
+      { id: 'r2', plate: 'BCD-456', d: 'M640 360C580 360 520 350 470 360S390 385 360 380S280 350 240 340', done: 'M640 360C580 360 520 350 470 360S390 385 360 380S320 365 300 360', vx: 300, vy: 360 },
+      { id: 'r3', plate: 'EGH-567', d: 'M640 360C590 380 520 400 450 430', done: 'M640 360C610 372 580 385 550 400', vx: 550, vy: 400 },
+      { id: 'r4', plate: 'FHJ-890', d: 'M640 360C700 320 760 260 780 220S750 270 720 300S790 360 820 410', done: 'M640 360C700 320 760 260 780 220S762 245 750 262', vx: 750, vy: 262 }
+    ];
+    const orders = [
+      ['PED-0021', 'Comercial Hermanos Quispe', 'S. J. de Lurigancho', 'ENTREGADO', 'r1', 400, 150, '08:00–10:00', '0,36 kg'],
+      ['PED-0026', 'Minimarket Don Lucho', 'S. J. de Lurigancho', 'EN_CAMINO', 'r1', 300, 90, '11:00–13:00', '0,41 kg'],
+      ['PED-0029', 'Panadería San Hilarión', 'S. J. de Lurigancho', 'EN_CAMINO', 'r1', 170, 170, '12:00–14:00', '0,29 kg'],
+      ['PED-0027', 'Librería El Estudiante', 'El Agustino', 'ENTREGADO', 'r2', 360, 380, '08:30–10:30', '0,15 kg'],
+      ['PED-0022', 'Bodega La Esquina', 'El Agustino', 'EN_CAMINO', 'r2', 240, 340, '09:00–11:00', '0,24 kg'],
+      ['PED-0052', 'Ferretería Cerro San Pedro', 'El Agustino', 'PENDIENTE', '', 140, 450, '11:00–12:00', '0,22 kg'],
+      ['PED-0031', 'Bodega Santa Rosa', 'Santa Anita', 'EN_CAMINO', 'r3', 450, 430, '10:00–12:00', '0,31 kg'],
+      ['PED-0024', 'Distribuidora Ñaña', 'Santa Anita', 'PENDIENTE', '', 500, 500, '10:30–12:30', '0,18 kg'],
+      ['PED-0023', 'Ferretería El Sol', 'Santa Anita', 'CANCELADO', '', 400, 490, '09:30–11:30', '0 kg'],
+      ['PED-0035', 'Óptica Vitarte', 'Ate', 'ENTREGADO', 'r4', 780, 220, '08:00–10:00', '0,09 kg'],
+      ['PED-0044', 'Farmacia Los Ángeles', 'Ate', 'EN_CAMINO', 'r4', 720, 300, '10:30–11:30', '0,12 kg'],
+      ['PED-0048', 'Mercado Ceres', 'Ate', 'EN_CAMINO', 'r4', 820, 410, '12:00–14:00', '0,44 kg']
+    ];
+    const st = { PENDIENTE: 'pending', EN_CAMINO: 'transit', ENTREGADO: 'delivered', CANCELADO: 'cancelled' };
+    const lb = { PENDIENTE: 'Pendiente', EN_CAMINO: 'En camino', ENTREGADO: 'Entregado', CANCELADO: 'Cancelado' };
+    const sel = this.props.selected ?? this.state.localSel ?? 'PED-0024';
+    const q = String(this.props.query ?? '').trim().toLowerCase();
+    const selO = orders.find(o => o[0] === sel);
+    const focus = selO && selO[4] ? selO[4] : '';
+    const plateOf = id => (routes.find(r => r.id === id) || {}).plate || '';
+    const pick = id => () => { if (this.props.onPick) this.props.onPick(id); else this.setState({ localSel: id }); };
+    const pins = orders.map(o => {
+      const hay = (o[0] + ' ' + o[1] + ' ' + o[2] + ' ' + plateOf(o[4])).toLowerCase();
+      const miss = q && hay.indexOf(q) < 0;
+      return { cls: 'pin pin--' + st[o[3]] + (o[0] === sel ? ' is-sel' : '') + (miss ? ' is-dim' : ''), tf: 'translate(' + o[5] + ' ' + o[6] + ')', pick: pick(o[0]) };
+    });
+    const rs = routes.map(r => {
+      const dim = focus && r.id !== focus ? ' is-dim' : '';
+      return { ...r, cls: 'route ' + r.id + dim, clsDone: 'route route--done ' + r.id + dim, vehCls: 'veh ' + r.id + dim, vtf: 'translate(' + r.vx + ' ' + r.vy + ')' };
+    });
+    const pop = selO ? { id: selO[0], to: selO[1], district: selO[2], label: lb[selO[3]], window: selO[7], co2: selO[8], vehicle: selO[4] ? 'Vehículo ' + plateOf(selO[4]) : 'Sin vehículo asignado', left: (selO[5] / 9) + '%', top: (selO[6] / 5.6) + '%' } : {};
+    const s = this.state;
+    return {
+      routes: rs, pins, pop, hasSel: !!selO,
+      showRoutes: s.routes, showPins: s.pins, showVeh: s.veh,
+      routesOn: s.routes ? 'true' : 'false', pinsOn: s.pins ? 'true' : 'false', vehOn: s.veh ? 'true' : 'false',
+      toggleRoutes: () => this.setState({ routes: !s.routes }),
+      togglePins: () => this.setState({ pins: !s.pins }),
+      toggleVeh: () => this.setState({ veh: !s.veh }),
+      showLegend: !this.props.compact
+    };
+  }
+}
+</script>
+</body>
+</html>
