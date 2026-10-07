@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test'
-import { captureEvidence, fillOrder, mockApi, orderFixture } from './fixtures'
+import { captureEvidence, fillOrder, mockApi, orderFixture, stubTiles } from './fixtures'
 
 test('registro válido muestra éxito y los datos guardados', async ({ page }) => {
   const api = await mockApi(page)
@@ -101,6 +101,7 @@ test('fallo al guardar conserva los campos y no muestra éxito', async ({ page }
 })
 
 test('demostración explícita permite registrar, editar y cancelar con datos ficticios', async ({ page }) => {
+  await stubTiles(page)
   await page.goto('/tests/ui/demo.html')
   await expect(page.getByRole('status').filter({ hasText: 'Modo demostración' })).toContainText('no hay sesión ni almacenamiento durable')
   await page.getByRole('button', { name: 'Registrar pedido', exact: true }).click()

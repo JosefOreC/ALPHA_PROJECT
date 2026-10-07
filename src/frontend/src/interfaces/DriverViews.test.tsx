@@ -42,9 +42,12 @@ describe('ruta demo del conductor', () => {
   })
 })
 
+// Mapa inactivo: no resuelve nunca, así estas pruebas no dibujan Leaflet.
+const idleMap = { load: () => new Promise<never>(() => {}) }
+
 describe('DriverRouteView', () => {
   const setup = (props: Partial<Parameters<typeof DriverRouteView>[0]> = {}) =>
-    render(<DriverRouteView service={createDriverRoute(new DemoOrders())} {...props} />)
+    render(<DriverRouteView service={createDriverRoute(new DemoOrders())} mapSource={idleMap} {...props} />)
 
   it('muestra avance, CO₂, paradas con su estado y el resto de la ruta', async () => {
     setup()
@@ -95,7 +98,7 @@ describe('DriverRouteView', () => {
 
   it('si la ruta no está disponible muestra el error y permite reintentar', async () => {
     const user = userEvent.setup()
-    render(<DriverRouteView service={createDriverRoute(new UnavailableDriverRoute())} />)
+    render(<DriverRouteView service={createDriverRoute(new UnavailableDriverRoute())} mapSource={idleMap} />)
     expect(await screen.findByRole('alert')).toHaveTextContent('aún no está disponible')
     expect(screen.getByRole('button', { name: 'Volver a cargar' })).toBeInTheDocument()
     await user.click(screen.getByRole('button', { name: 'Volver a cargar' }))
