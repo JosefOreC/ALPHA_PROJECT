@@ -14,6 +14,7 @@ import { OrderManagementView } from './interfaces/OrderManagementView';
 import { FleetView } from './interfaces/FleetView';
 import { RoutePlanningView } from './interfaces/RoutePlanningView';
 import { createGenerateRoutes } from './application/generateRoutes';
+import { DemoMapData, UnavailableMapData } from './infrastructure/demoMapData';
 import { DemoPlanningSource, DemoRouteOptimizer, UnavailableRouteOptimizer } from './infrastructure/demoRoutePlanning';
 import { createLivePlanningSource } from './infrastructure/livePlanningSource';
 import { vehicleApi } from './services/vehicleApi';
@@ -41,6 +42,9 @@ const managementService = createManagement(
         () => document.querySelector<HTMLMetaElement>('meta[name="csrf-token"]')?.content ?? null
       )
 );
+
+// Sin API de coordenadas el mapa avisa en lugar de dibujar datos inventados.
+const mapSource = demo ? new DemoMapData() : new UnavailableMapData();
 
 // Sin motor real (EN-01) solo el modo demostración devuelve una propuesta.
 const routeService = createGenerateRoutes(
@@ -183,7 +187,7 @@ export function App() {
 
       {/* Vista 2: Gestión de Pedidos */}
       {activeView === 'pedidos' && (
-        <OrderManagementView service={managementService} demo={demo} onNavigate={navigateModule} />
+        <OrderManagementView service={managementService} demo={demo} mapSource={mapSource} onNavigate={navigateModule} />
       )}
 
       {/* Vista 3: Generar rutas del día (US-005) */}
@@ -193,6 +197,7 @@ export function App() {
       {activeView === 'mi-ruta' && (
         <DriverRouteView
           service={driverRouteService}
+          mapSource={mapSource}
           onNavigate={navigateModule}
           onOpenOrder={(orderId) => navigateTo('conductor', orderId)}
         />

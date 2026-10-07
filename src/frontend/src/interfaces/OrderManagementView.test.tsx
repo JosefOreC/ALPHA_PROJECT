@@ -18,7 +18,9 @@ beforeAll(() => {
   }
 })
 
-const setup = () => render(<OrderManagementView service={createManagement(new DemoManagement())} demo />)
+// Mapa inactivo: no resuelve nunca, así estas pruebas no dibujan Leaflet (se prueba aparte en RouteMap.test).
+const idleMap = { load: () => new Promise<never>(() => {}) }
+const setup = () => render(<OrderManagementView service={createManagement(new DemoManagement())} demo mapSource={idleMap} />)
 
 describe('formateo', () => {
   it('muestra la ventana en hora de Lima y 24 h', () => {
@@ -110,12 +112,12 @@ describe('OrderManagementView', () => {
     const user = userEvent.setup()
     setup()
     await screen.findByText('PED-0026')
-    expect(screen.getByRole('img', { name: /Mapa de rutas/ })).toBeInTheDocument()
+    expect(screen.getByRole('group', { name: /Mapa de rutas/ })).toBeInTheDocument()
     await user.click(screen.getByRole('button', { name: 'Lista', pressed: false }))
-    expect(screen.queryByRole('img', { name: /Mapa de rutas/ })).toBeNull()
+    expect(screen.queryByRole('group', { name: /Mapa de rutas/ })).toBeNull()
     await user.click(screen.getByRole('button', { name: 'Mapa', pressed: false }))
     expect(screen.queryByRole('region', { name: 'Lista de pedidos' })).toBeNull()
-    expect(screen.getByRole('img', { name: /Mapa de rutas/ })).toBeInTheDocument()
+    expect(screen.getByRole('group', { name: /Mapa de rutas/ })).toBeInTheDocument()
   })
 
   it('registrar un pedido valida y agrega el pedido a la lista', async () => {
