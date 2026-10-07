@@ -17,6 +17,7 @@ import { HttpManagement } from './infrastructure/httpManagement';
 import { OrderManagementView } from './interfaces/OrderManagementView';
 
 import { DashboardPage, HttpDashboardGateway } from './features/dashboard';
+import type { ModuleId } from './shared/ui';
 
 import './App.css';
 
@@ -116,6 +117,12 @@ export function App() {
     const queryString = params.toString();
     const targetUrl = `${window.location.pathname}${queryString ? `?${queryString}` : ''}`;
     window.history.pushState({}, '', targetUrl);
+  };
+
+  // La barra superior de cada vista migrada al design system navega por módulo; lo que aún no existe recarga por URL.
+  const navigateModule = (id: ModuleId, href: string) => {
+    if (id === 'dashboard' || id === 'flota' || id === 'pedidos') navigateTo(id);
+    else window.location.assign(href);
   };
 
   const loadVehicles = useCallback(async (filter: string = activeFilter) => {
@@ -233,7 +240,8 @@ export function App() {
 
   return (
     <>
-      {/* Barra de navegación superior unificada para alternar módulos */}
+      {/* Barra de navegación superior heredada; las vistas migradas al design system traen su AppShell */}
+      {activeView !== 'pedidos' && (
       <nav className="app-nav" aria-label="Navegación principal del sistema">
         <a
           href="/"
@@ -268,7 +276,7 @@ export function App() {
 
           <button
             type="button"
-            className={`nav-tab ${activeView === 'pedidos' ? 'active' : ''}`}
+            className="nav-tab"
             onClick={() => navigateTo('pedidos')}
             id="tab-nav-pedidos"
           >
@@ -285,6 +293,7 @@ export function App() {
           </button>
         </div>
       </nav>
+      )}
 
       {/* Vista 0: Dashboard del Día */}
       {activeView === 'dashboard' && (
@@ -372,7 +381,7 @@ export function App() {
 
       {/* Vista 2: Gestión de Pedidos */}
       {activeView === 'pedidos' && (
-        <OrderManagementView service={managementService} demo={demo} />
+        <OrderManagementView service={managementService} demo={demo} onNavigate={navigateModule} />
       )}
 
       {/* Vista 3: Portal Conductor */}

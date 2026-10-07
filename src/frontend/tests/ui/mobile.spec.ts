@@ -24,22 +24,23 @@ async function fitsControls(page: Page, controls: Locator) {
 
 test('390 px: listado, formulario, detalle y diálogo sin recortes ni desbordamiento de página', async ({ page }) => {
   await page.goto('/tests/ui/demo.html')
-  await expect(page.getByRole('table')).toBeVisible()
-  await fitsControls(page, page.locator('.filters select, .section-header button, .pagination button'))
-  const table = page.getByRole('region', { name: /Listado de pedidos/ })
-  const scrolled = await table.evaluate(element => {
-    element.scrollLeft = 250
+  await expect(page.getByRole('grid', { name: 'Pedidos por estado' })).toBeVisible()
+  await fitsControls(page, page.locator('#filter-district, .eco-seg-ctrl button, .eco-topbar__end .eco-btn'))
+  // Las pestañas y la lista se desplazan dentro de su contenedor; la página no.
+  const tabs = page.getByRole('tablist', { name: 'Filtrar por estado' })
+  const scrolled = await tabs.evaluate(element => {
+    element.scrollLeft = 120
     return { width: element.clientWidth, content: element.scrollWidth, scroll: element.scrollLeft }
   })
   expect(scrolled.content).toBeGreaterThan(scrolled.width)
   expect(scrolled.scroll).toBeGreaterThan(0)
   await fitsPage(page)
-  await table.evaluate(element => { element.scrollLeft = 0 })
+  await tabs.evaluate(element => { element.scrollLeft = 0 })
   await captureEvidence(page, 'movil-listado.png')
   await page.getByRole('button', { name: 'Registrar pedido', exact: true }).click()
   await fillOrder(page, 'Destinatario ficticio ' + 'x'.repeat(150))
   await page.getByLabel('Indicaciones adicionales').fill('Mensaje ficticio largo: ' + 'x'.repeat(800))
-  await fitsControls(page, page.locator('.order-form input, .order-form select, .order-form textarea, .order-form button'))
+  await fitsControls(page, page.locator('.eco-form input, .eco-form select, .eco-form textarea, .eco-form button'))
   await page.getByLabel('Destinatario *', { exact: true }).fill('Destinatario ficticio móvil')
   await page.getByLabel('Indicaciones adicionales').fill('Entrega ficticia. Horario de Lima.')
   await captureEvidence(page, 'movil-formulario.png')
@@ -49,8 +50,8 @@ test('390 px: listado, formulario, detalle y diálogo sin recortes ni desbordami
   await fitsPage(page)
   await page.getByLabel('Fin de ventana · Lima *').fill('2026-10-02T12:00')
   await page.getByRole('button', { name: 'Registrar pedido', exact: true }).click()
-  await expect(page.getByRole('heading', { name: 'Detalle del pedido' })).toBeVisible()
-  await fitsControls(page, page.locator('.detail-card button'))
+  await expect(page.getByRole('article', { name: 'Detalle del pedido seleccionado' })).toBeVisible()
+  await fitsControls(page, page.locator('.eco-sheet__actions button'))
   await captureEvidence(page, 'movil-detalle.png')
   await page.getByRole('button', { name: 'Cancelar pedido', exact: true }).click()
   const dialog = page.getByRole('dialog')
@@ -66,10 +67,10 @@ test('390 px: listado, formulario, detalle y diálogo sin recortes ni desbordami
   }
   await dialog.getByRole('button', { name: 'Volver', exact: true }).click()
   await expect(dialog).not.toBeVisible()
-  await expect(page.locator('.detail-card .order-status')).toHaveText('Pendiente')
+  await expect(page.getByRole('article', { name: 'Detalle del pedido seleccionado' })).toContainText('Pendiente')
   await page.getByRole('button', { name: 'Cancelar pedido', exact: true }).click()
   await dialog.getByRole('button', { name: 'Sí, cancelar pedido', exact: true }).click()
-  await expect(page.locator('.detail-card .order-status')).toHaveText('Cancelado')
+  await expect(page.getByRole('article', { name: 'Detalle del pedido seleccionado' })).toContainText('Cancelado')
   await fitsPage(page)
 })
 
