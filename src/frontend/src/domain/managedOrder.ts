@@ -39,10 +39,14 @@ export function formatLima(value: string): string {
 
 const limaTime = new Intl.DateTimeFormat('es-PE', { timeZone: 'America/Lima', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' })
 
+/** Hora en Lima y 24 h: «10:30». */
+export function formatClock(value: string): string {
+  return /^\d{2}:\d{2}/.test(value) ? value.slice(0, 5) : Number.isFinite(Date.parse(value)) ? limaTime.format(new Date(value)) : '—'
+}
+
 /** Ventana en hora de Lima y 24 h: «10:30–12:30». */
 export function formatWindow(start: string, end: string): string {
-  const time = (value: string) => /^\d{2}:\d{2}/.test(value) ? value.slice(0, 5) : Number.isFinite(Date.parse(value)) ? limaTime.format(new Date(value)) : '—'
-  return `${time(start)}–${time(end)}`
+  return `${formatClock(start)}–${formatClock(end)}`
 }
 
 /** Peso con coma decimal: «12,0 kg». */
