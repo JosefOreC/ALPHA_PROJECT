@@ -24,8 +24,8 @@ describe('DashboardPage', () => {
 
     expect(await screen.findByText('Entregados')).toBeInTheDocument()
     expect(container.querySelector('[aria-busy="true"]')).not.toBeInTheDocument()
-    expect(screen.getByLabelText('3,482.6 kilómetros')).toBeInTheDocument()
-    expect(screen.getByLabelText('912.4 kilogramos')).toBeInTheDocument()
+    expect(screen.getByText('3 482,6 km')).toBeInTheDocument()
+    expect(screen.getByText('912,4 kg')).toBeInTheDocument()
     expect(screen.getByRole('meter')).toHaveAttribute('aria-valuenow', '92.4')
     expect(screen.getByText('En curso')).toBeInTheDocument()
   })

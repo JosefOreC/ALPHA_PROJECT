@@ -20,6 +20,7 @@ type LeafletCanvasProps = {
   query: string
   layers: MapLayers
   compact: boolean
+  card: boolean
   onSelect?: (id: string) => void
   onReady: (map: L.Map) => void
   onTileError: () => void
@@ -32,7 +33,7 @@ const toTuple = (point: GeoPoint): [number, number] => [point.lat, point.lng]
 const reducedMotion = () => typeof window !== 'undefined' && typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
 // Mapa de Lima Este sobre OpenStreetMap con las capas, colores y formas de pin del diseño.
-export default function LeafletCanvas({ data, selectedId, query, layers, compact, onSelect, onReady, onTileError, onTileLoad }: LeafletCanvasProps) {
+export default function LeafletCanvas({ data, selectedId, query, layers, compact, card, onSelect, onReady, onTileError, onTileLoad }: LeafletCanvasProps) {
   const selected = data.orders.find(order => order.id === selectedId) ?? null
   const focus = selected?.route_id ?? null
   const bounds = useMemo(() => L.latLngBounds([data.depot.position, ...data.orders.map(order => order.position)].map(toTuple)).pad(0.12), [data])
@@ -88,7 +89,7 @@ export default function LeafletCanvas({ data, selectedId, query, layers, compact
           ))
         : null}
 
-      {selected && !compact ? (
+      {selected && card ? (
         <Popup key={selected.id} position={toTuple(selected.position)} offset={[0, -18]} closeButton={false} autoClose={false} closeOnClick={false} autoPanPaddingTopLeft={[16, 64]} autoPanPaddingBottomRight={[16, 16]} className="eco-map__popup">
           <div className="eco-map__card" role="status">
             <span className="eco-code">

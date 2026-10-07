@@ -19,8 +19,12 @@ type RouteMapProps = {
   /** Atenúa los pedidos que no coinciden con la búsqueda. */
   query?: string
   onSelect?: (id: string) => void
-  /** Sin leyenda ni zoom con rueda; para Dashboard y Mi ruta. */
+  /** Solo lectura: sin leyenda, botones de zoom ni zoom con rueda (no secuestra el scroll de la página). */
   compact?: boolean
+  /** Tarjeta emergente del pedido elegido; se apaga en mapas muy pequeños. */
+  card?: boolean
+  /** Proporción panorámica baja (390 × 220) para el móvil del conductor. */
+  strip?: boolean
 }
 
 const LEGEND = [
@@ -31,7 +35,7 @@ const LEGEND = [
   { label: 'Tramo por recorrer', svg: '<path d="M-7 0H7" stroke="var(--ink-muted)" stroke-width="2.5" stroke-dasharray="0.1 4" stroke-linecap="round"></path>' },
 ]
 
-export function RouteMap({ source, selectedId, query = '', onSelect, compact = false }: RouteMapProps) {
+export function RouteMap({ source, selectedId, query = '', onSelect, compact = false, card = true, strip = false }: RouteMapProps) {
   const [data, setData] = useState<MapData | null>(null)
   const [error, setError] = useState('')
   const [tilesFailed, setTilesFailed] = useState(false)
@@ -69,7 +73,7 @@ export function RouteMap({ source, selectedId, query = '', onSelect, compact = f
   }
 
   return (
-    <div className={`eco-map${compact ? ' eco-map--compact' : ''}`} role="group" aria-label="Mapa de rutas de Lima Este">
+    <div className={`eco-map${compact ? ' eco-map--compact' : ''}${strip ? ' eco-map--strip' : ''}`} role="group" aria-label="Mapa de rutas de Lima Este">
       {data ? (
         <Suspense fallback={<span className="eco-map__note" role="status">Cargando mapa…</span>}>
           <LeafletCanvas
@@ -78,6 +82,7 @@ export function RouteMap({ source, selectedId, query = '', onSelect, compact = f
             query={query}
             layers={layers}
             compact={compact}
+            card={card}
             onSelect={onSelect}
             onReady={setMap}
             onTileLoad={() => {
