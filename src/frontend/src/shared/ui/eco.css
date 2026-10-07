@@ -452,3 +452,23 @@
 .eco-dialog--form { max-width: 520px; }
 .eco-dialog__lead { margin-bottom: 18px; font-size: 13px; }
 dialog.eco-dialog { margin: auto; }
+
+/* ---------- Generar rutas ---------- */
+.eco-panel__cell--eco { background: var(--eco-bg); }
+.eco-columns { display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start; }
+.eco-columns__side { flex: 2 1 360px; min-width: 0; display: flex; flex-direction: column; gap: 16px; }
+.eco-columns__main { flex: 3 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 16px; }
+.eco-config { border: 1px solid var(--hairline); border-radius: var(--radius-lg); padding: 4px 18px; background: var(--surface); }
+.eco-setting .eco-seg-ctrl, .eco-setting .eco-switch { justify-self: end; }
+.eco-empty { border: 1px dashed var(--border-control); border-radius: var(--radius-lg); padding: 40px 24px; text-align: center; color: var(--ink-muted); }
+.eco-empty__title { margin: 0 0 6px; font-size: 15px; font-weight: 600; color: var(--ink); }
+.eco-run { display: flex; flex-direction: column; gap: 14px; padding: 20px; border: 1px solid var(--hairline); border-radius: var(--radius-lg); background: var(--surface); }
+.eco-run__head { display: flex; justify-content: space-between; gap: 12px; font-size: 13.5px; }
+.eco-hint-center { margin: -6px 0 0; font-size: 12.5px; text-align: center; }
+.eco-load { display: flex; align-items: center; gap: 8px; }
+.eco-load .eco-meter { flex: 1; }
+.eco-meter--thin { height: 5px; }
+.eco-tag--sm { height: 18px; }
+.eco-strong { font-weight: 600; }
+.eco-meter { display: block; }
+.eco-root.eco-shell { min-height: 100vh; }
