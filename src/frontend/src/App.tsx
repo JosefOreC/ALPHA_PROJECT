@@ -14,6 +14,9 @@ import { OrderManagementView } from './interfaces/OrderManagementView';
 import { FleetView } from './interfaces/FleetView';
 import { RoutePlanningView } from './interfaces/RoutePlanningView';
 import { SustainabilityView } from './interfaces/SustainabilityView';
+import { AdminView } from './interfaces/AdminView';
+import { createAdministration } from './application/administration';
+import { DemoAlgorithmSettings, DemoIntegrationCatalog, DemoUserDirectory, UnavailableAlgorithmSettings, UnavailableIntegrationCatalog, UnavailableUserDirectory } from './infrastructure/demoAdmin';
 import { createGetSustainabilityReport } from './application/getSustainabilityReport';
 import { BrowserFileSaver } from './infrastructure/browserFileSaver';
 import { DemoSustainabilityReport, UnavailableSustainabilityReport } from './infrastructure/demoSustainability';
@@ -54,11 +57,19 @@ const managementService = createManagement(
 // Sin API de coordenadas el mapa avisa en lugar de dibujar datos inventados.
 const mapSource = demo ? new DemoMapData() : new UnavailableMapData();
 
+// Los parámetros del algoritmo, usuarios e integraciones aún no tienen API: solo hay ejemplo en modo demostración.
+const algorithmSettings = demo ? new DemoAlgorithmSettings() : new UnavailableAlgorithmSettings();
+const administration = createAdministration({
+  settings: algorithmSettings,
+  users: demo ? new DemoUserDirectory() : new UnavailableUserDirectory(),
+  integrations: demo ? new DemoIntegrationCatalog() : new UnavailableIntegrationCatalog(),
+});
+
 // Sin motor real (EN-01) solo el modo demostración devuelve una propuesta.
 const routeService = createGenerateRoutes(
   demo
-    ? { optimizer: new DemoRouteOptimizer(), planning: new DemoPlanningSource() }
-    : { optimizer: new UnavailableRouteOptimizer(), planning: createLivePlanningSource(managementService, vehicleApi) }
+    ? { optimizer: new DemoRouteOptimizer(), planning: new DemoPlanningSource(), settings: algorithmSettings }
+    : { optimizer: new UnavailableRouteOptimizer(), planning: createLivePlanningSource(managementService, vehicleApi), settings: algorithmSettings }
 );
 
 // Sin API de reportes solo el modo demostración tiene cifras que mostrar.
@@ -67,7 +78,7 @@ const sustainabilityService = createGetSustainabilityReport({
   saver: new BrowserFileSaver(),
 });
 
-type ActiveView = 'dashboard' | 'flota' | 'pedidos' | 'rutas' | 'sostenibilidad' | 'mi-ruta' | 'conductor';
+type ActiveView = 'dashboard' | 'flota' | 'pedidos' | 'rutas' | 'sostenibilidad' | 'admin' | 'mi-ruta' | 'conductor';
 
 function getViewFromUrl(): { view: ActiveView; orderId: string } {
   if (typeof window === 'undefined') {
@@ -85,6 +96,9 @@ function getViewFromUrl(): { view: ActiveView; orderId: string } {
   }
   if (vista === 'rutas') {
     return { view: 'rutas', orderId: pedido || DEFAULT_ORDER };
+  }
+  if (vista === 'admin') {
+    return { view: 'admin', orderId: pedido || DEFAULT_ORDER };
   }
   if (vista === 'sostenibilidad') {
     return { view: 'sostenibilidad', orderId: pedido || DEFAULT_ORDER };
@@ -130,6 +144,9 @@ export function App() {
     } else if (view === 'rutas') {
       params.set('vista', 'rutas');
       params.delete('pedido');
+    } else if (view === 'admin') {
+      params.set('vista', 'admin');
+      params.delete('pedido');
     } else if (view === 'sostenibilidad') {
       params.set('vista', 'sostenibilidad');
       params.delete('pedido');
@@ -150,7 +167,7 @@ export function App() {
 
   // La barra superior de cada vista migrada al design system navega por módulo; lo que aún no existe recarga por URL.
   const navigateModule = (id: ModuleId, href: string) => {
-    if (id === 'dashboard' || id === 'flota' || id === 'pedidos' || id === 'rutas' || id === 'sostenibilidad' || id === 'mi-ruta') navigateTo(id);
+    if (id === 'dashboard' || id === 'flota' || id === 'pedidos' || id === 'rutas' || id === 'sostenibilidad' || id === 'admin' || id === 'mi-ruta') navigateTo(id);
     else if (id === 'pedido-actual') navigateTo('conductor', currentOrderId);
     else window.location.assign(href);
   };
@@ -182,7 +199,10 @@ export function App() {
       {/* Vista 4: Reporte de sostenibilidad (US-010 / US-011) */}
       {activeView === 'sostenibilidad' && <SustainabilityView service={sustainabilityService} onNavigate={navigateModule} />}
 
-      {/* Vista 5: Mi ruta del conductor */}
+      {/* Vista 5: Administración */}
+      {activeView === 'admin' && <AdminView service={administration} demo={demo} onNavigate={navigateModule} />}
+
+      {/* Vista 6: Mi ruta del conductor */}
       {activeView === 'mi-ruta' && (
         <DriverRouteView
           service={driverRouteService}
@@ -192,7 +212,7 @@ export function App() {
         />
       )}
 
-      {/* Vista 6: Pedido actual del conductor */}
+      {/* Vista 7: Pedido actual del conductor */}
       {activeView === 'conductor' && (
         <DriverOrderView
           key={currentOrderId}
