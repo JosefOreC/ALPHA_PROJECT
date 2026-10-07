@@ -4,8 +4,8 @@ import { createManagement } from '../../src/application/manageOrders'
 import { DemoManagement } from '../../src/infrastructure/demoManagement'
 import { ManagementError } from '../../src/domain/managedOrder'
 import { OrderManagementView } from '../../src/interfaces/OrderManagementView'
-import '../../src/index.css'
-import '../../src/App.css'
+import '../../src/shared/ui/tokens.css'
+import '../../src/shared/ui/eco.css'
 
 const port = new DemoManagement()
 if (new URLSearchParams(location.search).has('error-largo')) {

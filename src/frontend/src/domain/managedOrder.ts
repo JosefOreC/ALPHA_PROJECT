@@ -1,10 +1,15 @@
+import { formatDecimal } from './format'
 import type { Order, OrderStatus } from './order'
 
 export const districts = ['San Juan de Lurigancho', 'El Agustino', 'Santa Anita', 'Ate'] as const
 export const statusLabels: Record<OrderStatus, string> = {
   PENDIENTE: 'Pendiente', EN_CAMINO: 'En camino', ENTREGADO: 'Entregado', CANCELADO: 'Cancelado',
 }
-export interface ManagedOrder extends Order { assigned: boolean; version: number }
+/** Seguimiento de ruta; la API de gestión aún no lo envía, así que es opcional. */
+export interface OrderTracking {
+  plate: string | null; driver: string | null; note: string | null; co2_kg: number | null; at_risk: boolean
+}
+export interface ManagedOrder extends Order { assigned: boolean; version: number; tracking?: OrderTracking }
 export interface OrderData {
   customer: string; address: string; district: string; window_start: string
   window_end: string; weight_kg: number; instructions: string
@@ -30,6 +35,19 @@ export function formatLima(value: string): string {
   if (/^\d{2}:\d{2}(?::\d{2})?$/.test(value)) return `${value} (fecha no registrada)`
   if (!Number.isFinite(Date.parse(value))) return 'Horario no disponible'
   return new Intl.DateTimeFormat('es-PE', { timeZone: 'America/Lima', dateStyle: 'medium', timeStyle: 'short' }).format(new Date(value))
+}
+
+const limaTime = new Intl.DateTimeFormat('es-PE', { timeZone: 'America/Lima', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' })
+
+/** Ventana en hora de Lima y 24 h: «10:30–12:30». */
+export function formatWindow(start: string, end: string): string {
+  const time = (value: string) => /^\d{2}:\d{2}/.test(value) ? value.slice(0, 5) : Number.isFinite(Date.parse(value)) ? limaTime.format(new Date(value)) : '—'
+  return `${time(start)}–${time(end)}`
+}
+
+/** Peso con coma decimal: «12,0 kg». */
+export function formatKg(value: number): string {
+  return `${formatDecimal(value, 1, 2)} kg`
 }
 
 export function validTimestamp(value: string): boolean {
