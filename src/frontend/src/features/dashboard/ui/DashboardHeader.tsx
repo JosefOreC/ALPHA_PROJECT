@@ -16,45 +16,36 @@ export function DashboardHeader({ day, operatingHours, inProgress, lastUpdated, 
   const { weekday, date } = formatDay(day)
 
   return (
-    <header className="dash-header">
+    <header className="eco-pagehead">
       <div>
-        <h1 tabIndex={-1} className="dash-title">
+        <h1 tabIndex={-1} className="eco-h1">
           Dashboard del día
         </h1>
-        <div className="dash-meta">
+        <p className="eco-sub eco-pagehead__meta">
           <span>
-            {weekday} <span className="dash-num">{date}</span>
+            {weekday} <span className="eco-code">{date}</span>
           </span>
           {operatingHours ? (
             <>
               <span aria-hidden="true">·</span>
               <span>
                 Jornada{' '}
-                <span className="dash-num">
+                <span className="eco-code">
                   {trimSeconds(operatingHours.start)}–{trimSeconds(operatingHours.end)}
                 </span>
               </span>
               {/* Assumption: the badge reflects the backend's `in_progress` flag. */}
-              <span className={`dash-badge ${inProgress ? 'dash-badge--live' : 'dash-badge--off'}`}>
-                <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
-                  {inProgress ? (
-                    <circle cx="8" cy="8" r="3.5" fill="currentColor" />
-                  ) : (
-                    <circle cx="8" cy="8" r="3" fill="none" stroke="currentColor" strokeWidth="1.5" />
-                  )}
-                </svg>
-                {inProgress ? 'En curso' : 'Fuera de jornada'}
-              </span>
+              <span className={`eco-tag${inProgress ? ' eco-tag--eco' : ''}`}>{inProgress ? 'En curso' : 'Fuera de jornada'}</span>
             </>
           ) : null}
-        </div>
+        </p>
       </div>
-      <p className="dash-refresh">
+      <p className="eco-pagehead__refresh eco-muted">
         {isLoading ? (
           <span>Actualizando…</span>
         ) : (
           <span>
-            Última actualización: <strong className="dash-num">{lastUpdated ?? '—'}</strong>
+            Última actualización: <strong className="eco-code">{lastUpdated ?? '—'}</strong>
           </span>
         )}
         <br />

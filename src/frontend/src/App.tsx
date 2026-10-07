@@ -19,16 +19,20 @@ import { DemoPlanningSource, DemoRouteOptimizer, UnavailableRouteOptimizer } fro
 import { createLivePlanningSource } from './infrastructure/livePlanningSource';
 import { vehicleApi } from './services/vehicleApi';
 
-import { DashboardPage, HttpDashboardGateway } from './features/dashboard';
+import { DashboardPage, DemoDashboardInsights, HttpDashboardGateway } from './features/dashboard';
+import { RouteMap } from './interfaces/map/RouteMap';
 import type { ModuleId } from './shared/ui';
 
 import './App.css';
 
 // Raíz de composición: se instancian los gateways / adaptadores
 const dashboardGateway = new HttpDashboardGateway();
+// CO₂ evitado y pedidos en riesgo aún no tienen API: solo hay ejemplo en modo demostración.
 
 const apiUrl = import.meta.env.VITE_API_URL as string | undefined;
 const demo = apiUrl === undefined;
+// CO₂ evitado y pedidos en riesgo aún no tienen API: solo hay ejemplo en modo demostración.
+const insightsGateway = demo ? new DemoDashboardInsights() : undefined;
 // En demostración, pedidos y ruta del conductor comparten estado: confirmar una entrega avanza la ruta.
 const demoDriver = demo ? new DemoOrders() : null;
 const driverService = createDriverOrders(demoDriver ?? new HttpOrders(apiUrl ?? ''));
@@ -135,52 +139,18 @@ export function App() {
     else window.location.assign(href);
   };
 
-  // Las vistas migradas al design system traen su propio AppShell; las demás conservan la barra heredada.
-  const showLegacyNav = activeView === 'dashboard';
-
   return (
     <>
-      {showLegacyNav && (
-        <nav className="app-nav" aria-label="Navegación principal del sistema">
-          <a
-            href="/"
-            className="app-nav-brand"
-            onClick={(e) => {
-              e.preventDefault();
-              navigateTo('dashboard');
-            }}
-          >
-            <div className="brand-logo-icon">🚛</div>
-            <div>ALPHA_PROJECT <span>· EcoLogística</span></div>
-          </a>
-
-          <div className="app-nav-tabs">
-            <button
-              type="button"
-              className={`nav-tab ${activeView === 'dashboard' ? 'active' : ''}`}
-              onClick={() => navigateTo('dashboard')}
-              id="tab-nav-dashboard"
-            >
-              📊 Dashboard del Día
-            </button>
-
-            <button type="button" className="nav-tab" onClick={() => navigateTo('flota')} id="tab-nav-flota">
-              🚛 Flota Vehicular
-            </button>
-
-            <button type="button" className="nav-tab" onClick={() => navigateTo('pedidos')} id="tab-nav-pedidos">
-              📦 Gestión de Pedidos
-            </button>
-
-            <button type="button" className="nav-tab" onClick={() => navigateTo('mi-ruta')} id="tab-nav-conductor">
-              🛵 Vista Conductor
-            </button>
-          </div>
-        </nav>
-      )}
-
       {/* Vista 0: Dashboard del Día */}
-      {activeView === 'dashboard' && <DashboardPage gateway={dashboardGateway} />}
+      {activeView === 'dashboard' && (
+        <DashboardPage
+          gateway={dashboardGateway}
+          insights={insightsGateway}
+          demoNote={demo ? 'Modo demo · CO₂ evitado y pedidos en riesgo de ejemplo' : undefined}
+          renderMap={({ selectedId, onSelect }) => <RouteMap source={mapSource} selectedId={selectedId} onSelect={onSelect} compact />}
+          onNavigate={navigateModule}
+        />
+      )}
 
       {/* Vista 1: Flota (US-001 y US-002) */}
       {activeView === 'flota' && <FleetView onNavigate={navigateModule} />}

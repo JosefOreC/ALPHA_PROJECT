@@ -512,7 +512,7 @@ dialog.eco-dialog { margin: auto; }
 .eco-tabbar a { min-height: 48px; justify-content: center; }
 .eco-tabbar a[aria-disabled="true"] { opacity: 0.5; cursor: not-allowed; }
 .eco-stop__link { display: flex; align-items: center; min-height: 48px; margin: -12px 0; color: var(--ink); text-decoration: none; }
-.eco-map--compact { aspect-ratio: 390 / 220; }
+.eco-map--strip { aspect-ratio: 390 / 220; }
 dialog.eco-dialog--sheet { width: 100%; max-width: 480px; margin: auto auto 0; border-radius: 20px 20px 0 0; padding: 24px 20px 28px; }
 .eco-dialog--sheet .eco-dialog__title { font-size: 18px; }
 .eco-dialog__stack { display: flex; flex-direction: column; gap: 8px; margin-top: 20px; }
@@ -541,3 +541,31 @@ dialog.eco-dialog--sheet { width: 100%; max-width: 480px; margin: auto auto 0; b
 .eco-fallback__row[aria-current="true"] { background: var(--eco-bg); }
 .eco-fallback__pick { display: flex; align-items: center; gap: 12px; min-width: 0; padding: 0; border: 0; background: transparent; font: inherit; color: inherit; text-align: left; cursor: pointer; }
 .eco-phone .eco-map__ctrl button { height: 48px; min-width: 48px; }
+
+/* =====================================================================
+   v10 · Dashboard del día
+   ===================================================================== */
+.eco-skeleton-group { display: flex; flex-direction: column; gap: 12px; }
+.eco-skeleton { border-radius: 6px; background: var(--surface-sunken); }
+.eco-hero .eco-skeleton { background: var(--forest-deep); }
+.eco-hero--orders .eco-skeleton { background: var(--surface-sunken); }
+.eco-nodata { display: inline-flex; align-items: baseline; gap: 8px; }
+.eco-compliance { display: flex; align-items: center; gap: 8px 12px; flex-wrap: wrap; font-size: 13px; color: var(--ink-muted); }
+.eco-compliance__text strong { color: var(--ink); font-size: 15px; }
+.eco-compliance__meter { flex: 1 1 160px; }
+.eco-hero--orders .eco-status-row li { gap: 2px; }
+.eco-hero__row { display: flex; gap: 20px; align-items: flex-end; flex-wrap: wrap; }
+.eco-hero__row .eco-hero__facts { margin: 0; flex: 1 1 260px; }
+.eco-hero__chart-slim { flex: 0 1 220px; display: flex; flex-direction: column; gap: 6px; }
+.eco-bars--slim { height: 52px; }
+.eco-pagehead { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.eco-pagehead__meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.eco-pagehead__refresh { margin: 0; font-size: 12.5px; line-height: 18px; text-align: right; }
+.eco-filterbar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.eco-filterbar .eco-field--inline label { display: inline-flex; align-items: center; gap: 6px; }
+.eco-columns__aside { flex: 2 1 360px; min-width: 0; display: flex; flex-direction: column; gap: 12px; }
+@media (max-width: 640px) {
+  .eco-hero-row { grid-template-columns: minmax(0, 1fr); }
+  .eco-status-row { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 0; }
+  .eco-pagehead__refresh { text-align: left; }
+}

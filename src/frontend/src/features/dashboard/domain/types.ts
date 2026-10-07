@@ -38,3 +38,41 @@ export interface District {
 
 /** Pseudo-district used by the filter to mean "no district restriction". */
 export const ALL_DISTRICTS: District = { id: '', name: 'Todos los distritos' }
+
+/** Un día de la semana en el gráfico de CO₂ evitado. */
+export interface AvoidedDay {
+  /** Inicial del día: L M X J V S D. */
+  label: string
+  avoidedKg: number
+  today: boolean
+}
+
+/** CO₂ evitado frente a rutas sin optimizar. */
+export interface Co2Avoided {
+  avoidedKg: number
+  avoidedPercent: number
+  fuelSavedLiters: number
+  kmSaved: number
+  /** Últimos siete días, el último es hoy. */
+  weekly: AvoidedDay[]
+}
+
+/** Pedido cuya ventana horaria está por vencer. */
+export interface RiskOrder {
+  id: string
+  customer: string
+  district: string
+  /** «09:00–11:00», hora de Lima. */
+  window: string
+  status: 'inTransit' | 'pending'
+  /** «llega 10:55», «sin conductor». */
+  note: string
+}
+
+export interface DashboardInsights {
+  co2Avoided: Co2Avoided | null
+  atRisk: RiskOrder[]
+  /** Minutos que se considera «en riesgo» (ventana por vencer). */
+  riskMinutes: number
+  suggestion: string | null
+}
