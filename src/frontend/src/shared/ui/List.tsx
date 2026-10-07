@@ -38,11 +38,12 @@ type ListRowProps = {
   columns?: string
   selected?: boolean
   head?: boolean
+  twoLines?: boolean
   onSelect?: () => void
   children: ReactNode
 }
 
-export function ListRow({ columns, selected, head, onSelect, children }: ListRowProps) {
+export function ListRow({ columns, selected, head, twoLines, onSelect, children }: ListRowProps) {
   const style = columns ? ({ '--cols': columns } as CSSProperties) : undefined
   const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     if (event.key === 'Enter' || event.key === ' ') {
@@ -52,7 +53,7 @@ export function ListRow({ columns, selected, head, onSelect, children }: ListRow
   }
   return (
     <div
-      className={`eco-row${head ? ' eco-row--head' : ''}`}
+      className={`eco-row${head ? ' eco-row--head' : ''}${twoLines ? ' eco-row--two' : ''}`}
       role="row"
       style={style}
       aria-selected={onSelect ? Boolean(selected) : undefined}

@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import type { ComponentType, ReactNode } from 'react'
 import { AlertIcon, CheckIcon, HojaCo2Icon } from './icons'
 
 export type BannerTone = 'info' | 'success' | 'warning' | 'error'
@@ -10,10 +10,11 @@ type BannerProps = {
   title?: string
   children?: ReactNode
   action?: ReactNode
+  icon?: ComponentType<{ size?: 'md' }>
 }
 
-export function Banner({ tone = 'info', title, children, action }: BannerProps) {
-  const Icon = TONE_ICON[tone]
+export function Banner({ tone = 'info', title, children, action, icon }: BannerProps) {
+  const Icon = icon ?? TONE_ICON[tone]
   return (
     <div className={`eco-banner${tone === 'info' ? '' : ` eco-banner--${tone}`}`} role={tone === 'error' ? 'alert' : 'status'}>
       <Icon size="md" />

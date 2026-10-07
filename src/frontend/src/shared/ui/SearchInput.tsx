@@ -7,10 +7,12 @@ type SearchInputProps = {
   onChange: (value: string) => void
   placeholder?: string
   shortcut?: string
+  id?: string
 }
 
-export function SearchInput({ label, value, onChange, placeholder, shortcut }: SearchInputProps) {
-  const id = useId()
+export function SearchInput({ label, value, onChange, placeholder, shortcut, id: givenId }: SearchInputProps) {
+  const generated = useId()
+  const id = givenId ?? generated
   return (
     <div className="eco-search">
       <label className="eco-sr" htmlFor={id}>

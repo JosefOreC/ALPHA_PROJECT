@@ -21,7 +21,8 @@
   padding:7px 15px;
   font-size:14px
 }
-main {
+/* Solo la vista del conductor; el AppShell trae su propio <main> */
+.driver-order-view-wrapper main {
   max-width:800px;
   padding:48px 24px;
   margin:auto
@@ -187,7 +188,7 @@ dialog::backdrop {
   margin-top:24px
 }
 @media(max-width:520px) {
-  main {
+  .driver-order-view-wrapper main {
   padding:28px 16px
 }
 .card-head,.destination,.card-footer {

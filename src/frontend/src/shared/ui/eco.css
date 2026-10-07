@@ -169,7 +169,7 @@
 .eco-row__title span { font-weight: 400; color: var(--ink-muted); }
 .eco-row__end { justify-self: end; display: flex; gap: 6px; align-items: center; }
 .eco-list-scroll { overflow-x: auto; }
-.eco-list-scroll .eco-row { min-width: 760px; }
+.eco-list-scroll .eco-row { min-width: var(--row-min, 760px); }
 
 /* ---------- Propiedades (panel de detalle) ---------- */
 .eco-props { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 2px 12px; margin: 0; font-size: 13.5px; }
@@ -407,3 +407,44 @@
 .eco-chart .base { stroke: var(--ink); stroke-width: 1.5; stroke-dasharray: 5 4; fill: none; }
 .eco-chart .label { font-family: var(--font-sans); font-size: 12px; font-weight: 600; fill: var(--ink); }
 .eco-chart .label--eco { fill: var(--eco-ink); }
+
+/* =====================================================================
+   v7 · Vistas React: clases que el diseño resolvía en línea
+   ===================================================================== */
+.eco-tag--warning { border-color: transparent; background: var(--warning-bg); color: var(--warning); }
+.eco-panel__value--danger { color: var(--danger); }
+.eco-btn--danger-ghost { background: transparent; color: var(--danger); }
+.eco-btn--danger-ghost:hover { background: var(--danger-bg); }
+.eco-board { display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start; }
+.eco-board__list { --row-min: 440px; flex: 5 1 440px; min-width: 0; display: flex; flex-direction: column; gap: 12px; }
+.eco-board__side { flex: 6 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 16px; }
+.eco-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; }
+.eco-toolbar__end { margin-left: auto; }
+.eco-stack { display: flex; flex-direction: column; gap: 12px; }
+.eco-row--two { min-height: 52px; cursor: pointer; }
+.eco-row__sub { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12.5px; color: var(--ink-muted); }
+.eco-row__cell { min-width: 0; display: flex; flex-direction: column; }
+.eco-sheet { display: flex; flex-direction: column; gap: 14px; padding: 18px 20px; border: 1px solid var(--hairline); border-radius: var(--radius-lg); background: var(--surface); }
+.eco-sheet__head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.eco-sheet__title { margin: 2px 0 0; font-size: 18px; line-height: 24px; font-weight: 600; letter-spacing: -0.02em; }
+.eco-sheet__sub { margin: 2px 0 0; font-size: 13.5px; color: var(--ink-muted); }
+.eco-sheet__actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.eco-props--wide { grid-template-columns: 110px minmax(0, 1fr) 110px minmax(0, 1fr); border-top: 1px solid var(--hairline); padding-top: 4px; }
+.eco-textarea { height: auto; min-height: 84px; padding: 8px 10px; resize: vertical; line-height: 20px; }
+.eco-form { max-width: 720px; }
+.eco-form fieldset { display: contents; border: 0; margin: 0; padding: 0; min-width: 0; }
+.eco-form__title { margin: 0; font-size: 18px; line-height: 24px; font-weight: 600; letter-spacing: -0.02em; }
+@media (max-width: 640px) {
+  .eco-props--wide { grid-template-columns: 110px minmax(0, 1fr); }
+}
+.eco-eco { color: var(--eco-ink); }
+.eco-flush { margin: 0; }
+.eco-field--inline { flex-direction: row; align-items: center; gap: 8px; }
+.eco-field--inline .eco-select { width: auto; min-width: 190px; }
+.eco-root .eco-focus-target:focus { outline: none; }
+.eco-tabs { max-width: 100%; overflow-x: auto; }
+.eco-tab { white-space: nowrap; flex: none; }
+.eco-board__list, .eco-board__side { max-width: 100%; }
+.eco-banner { flex-wrap: wrap; }
+.eco-banner__text { overflow-wrap: anywhere; }
+.eco-field__hint, .eco-note-block, .eco-row__title, .eco-sheet__title, .eco-sheet__sub, .eco-props dd { overflow-wrap: anywhere; }

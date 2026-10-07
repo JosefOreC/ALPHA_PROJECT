@@ -2,6 +2,7 @@ import { useRef, useState } from 'react'
 import type { Management } from '../application/manageOrders'
 import { districts } from '../domain/managedOrder'
 import type { ManagedOrder, OrderData } from '../domain/managedOrder'
+import { Banner } from '../shared/ui'
 
 function localInput(value: string) {
   if (!value || !Number.isFinite(Date.parse(value))) return ''
@@ -36,30 +37,41 @@ export function OrderForm({ service, order, onSaved, onBack }: {
       requestAnimationFrame(() => errorBox.current?.focus())
     } finally { inFlight.current = false; setSaving(false) }
   }
-  return <form className="order-form" onSubmit={event => void submit(event)} aria-busy={saving}>
-    <h2>{order ? 'Editar pedido' : 'Registrar pedido'}</h2>
-    <p>Los campos con * son obligatorios. Las horas corresponden a Lima.</p>
-    {order && <p>Referencia: <strong>{order.id}</strong> · Versión {order.version}</p>}
-    {error && <p ref={errorBox} tabIndex={-1} role="alert" className="message error-message">{error} Los datos ingresados permanecen en el formulario.</p>}
+  return <form className="eco-sheet eco-form" onSubmit={event => void submit(event)} aria-busy={saving}>
+    <h2 className="eco-form__title">{order ? 'Editar pedido' : 'Registrar pedido'}</h2>
+    <p className="eco-sub">Los campos con * son obligatorios. Las horas corresponden a Lima.</p>
+    {order && <p className="eco-muted eco-flush">Referencia: <strong className="eco-code">{order.id}</strong> · Versión {order.version}</p>}
+    {error && <div ref={errorBox} tabIndex={-1}><Banner tone="error" title="No se pudo guardar.">{error} Los datos ingresados permanecen en el formulario.</Banner></div>}
     <fieldset disabled={saving}>
-      <label htmlFor="customer">Destinatario *</label>
-      <input id="customer" name="customer" required maxLength={200} value={fields.customer} onChange={event => change('customer', event.target.value)} autoComplete="off" />
-      <label htmlFor="address">Dirección de entrega *</label>
-      <input id="address" name="address" required maxLength={500} value={fields.address} onChange={event => change('address', event.target.value)} autoComplete="off" />
-      <label htmlFor="district">Distrito *</label>
-      <select id="district" name="district" required value={fields.district} onChange={event => change('district', event.target.value)}>
-        <option value="">Selecciona un distrito</option>{districts.map(district => <option key={district}>{district}</option>)}
-      </select>
-      <div className="form-columns">
-        <div><label htmlFor="window-start">Inicio de ventana · Lima *</label><input id="window-start" name="window_start" type="datetime-local" step="any" required defaultValue={fields.window_start} /></div>
-        <div><label htmlFor="window-end">Fin de ventana · Lima *</label><input id="window-end" name="window_end" type="datetime-local" step="any" required defaultValue={fields.window_end} /></div>
+      <div className="eco-field">
+        <label htmlFor="customer">Destinatario *</label>
+        <input className="eco-input" id="customer" name="customer" required maxLength={200} value={fields.customer} onChange={event => change('customer', event.target.value)} autoComplete="off" />
       </div>
-      <label htmlFor="weight">Peso del paquete (kg) *</label>
-      <input id="weight" name="weight_kg" type="number" min="0.01" max="99999999.99" step="0.01" required value={fields.weight_kg} onChange={event => change('weight_kg', event.target.value)} />
-      <label htmlFor="instructions">Indicaciones adicionales</label>
-      <textarea id="instructions" name="instructions" rows={4} maxLength={1000} value={fields.instructions} onChange={event => change('instructions', event.target.value)} />
+      <div className="eco-field">
+        <label htmlFor="address">Dirección de entrega *</label>
+        <input className="eco-input" id="address" name="address" required maxLength={500} value={fields.address} onChange={event => change('address', event.target.value)} autoComplete="off" />
+      </div>
+      <div className="eco-field">
+        <label htmlFor="district">Distrito *</label>
+        <select className="eco-select" id="district" name="district" required value={fields.district} onChange={event => change('district', event.target.value)}>
+          <option value="">Selecciona un distrito</option>{districts.map(district => <option key={district}>{district}</option>)}
+        </select>
+      </div>
+      <div className="eco-form-grid">
+        <div className="eco-field"><label htmlFor="window-start">Inicio de ventana · Lima *</label><input className="eco-input" id="window-start" name="window_start" type="datetime-local" step="any" required defaultValue={fields.window_start} /></div>
+        <div className="eco-field"><label htmlFor="window-end">Fin de ventana · Lima *</label><input className="eco-input" id="window-end" name="window_end" type="datetime-local" step="any" required defaultValue={fields.window_end} /></div>
+      </div>
+      <div className="eco-field">
+        <label htmlFor="weight">Peso del paquete (kg) *</label>
+        <input className="eco-input" id="weight" name="weight_kg" type="number" min="0.01" max="99999999.99" step="0.01" required value={fields.weight_kg} onChange={event => change('weight_kg', event.target.value)} />
+        <span className="eco-field__hint">Hasta dos decimales.</span>
+      </div>
+      <div className="eco-field">
+        <label htmlFor="instructions">Indicaciones adicionales</label>
+        <textarea className="eco-input eco-textarea" id="instructions" name="instructions" rows={4} maxLength={1000} value={fields.instructions} onChange={event => change('instructions', event.target.value)} />
+      </div>
     </fieldset>
-    <div className="actions"><button type="button" disabled={saving} onClick={onBack}>Volver</button><button type="submit" className="action-primary" disabled={saving}>{saving ? 'Guardando…' : order ? 'Guardar cambios' : 'Registrar pedido'}</button></div>
-    <p className="form-note">El pedido se registra pendiente y sin conductor. La validación geográfica de la dirección está pendiente de integración.</p>
+    <div className="eco-sheet__actions"><button className="eco-btn eco-btn--secondary" type="button" disabled={saving} onClick={onBack}>Volver</button><button type="submit" className="eco-btn" disabled={saving}>{saving ? 'Guardando…' : order ? 'Guardar cambios' : 'Registrar pedido'}</button></div>
+    <p className="eco-field__hint">El pedido se registra pendiente y sin conductor. La validación geográfica de la dirección está pendiente de integración.</p>
   </form>
 }
