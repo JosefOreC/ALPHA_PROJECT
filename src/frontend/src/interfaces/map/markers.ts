@@ -4,7 +4,7 @@ import type { MapRoute } from '../../domain/mapData'
 
 // Marcado SVG de los pines del diseño (Mapa.dc.html). Las clases las resuelve eco.css dentro de `.eco-map`.
 
-/** Pin con la forma de su estado: rombo pendiente, anillo en camino, círculo con check entregado, aro con ✕ cancelado. */
+/** Pin con la forma de su estado: rombo pendiente, anillo en camino, círculo con check entregado, aro con equis cancelado. */
 export function pinHtml(status: OrderStatus, selected: boolean, dimmed: boolean): string {
   const classes = ['pin', `pin--${ORDER_STATUS_CLASS[status]}`, selected ? 'is-sel' : '', dimmed ? 'is-dim' : ''].filter(Boolean).join(' ')
   return (
