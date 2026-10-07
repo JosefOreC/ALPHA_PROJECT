@@ -576,3 +576,18 @@ dialog.eco-dialog--sheet { width: 100%; max-width: 480px; margin: auto auto 0; b
 .eco-swatch--avoided { background: var(--eco-bg); outline: 1px solid var(--eco-ink); }
 .eco-chart .label--on { fill: var(--on-primary); }
 .eco-meter--rate { flex: 0 1 220px; }
+
+/* ---------- Administración ---------- */
+.eco-setting--error .eco-setting__hint { color: var(--danger); font-weight: 500; }
+.eco-setting__wide { grid-column: 1 / -1; }
+.eco-setting__input { display: inline-flex; align-items: center; gap: 6px; }
+.eco-input--short { width: 76px; text-align: right; }
+.eco-row--factor { --cols: minmax(0, 1fr) auto; min-height: 52px; }
+.eco-row--error { background: var(--danger-bg); }
+.eco-row__full { grid-column: 1 / -1; padding-bottom: 8px; color: var(--danger); font-weight: 500; }
+.eco-avatar--quiet { background: var(--surface-sunken); color: var(--ink); }
+.eco-user { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.eco-toolbar__grow { flex: 1 1 320px; min-width: 0; }
+.eco-note { font-size: 12.5px; }
+.eco-tabpanel { display: flex; flex-direction: column; gap: 24px; }
+.eco-row--factor .eco-input--short { width: 112px; }
