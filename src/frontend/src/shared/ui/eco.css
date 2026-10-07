@@ -569,3 +569,10 @@ dialog.eco-dialog--sheet { width: 100%; max-width: 480px; margin: auto auto 0; b
   .eco-status-row { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 0; }
   .eco-pagehead__refresh { text-align: left; }
 }
+
+/* ---------- Reporte de sostenibilidad ---------- */
+.eco-stack--loose { display: flex; flex-direction: column; gap: 24px; }
+.eco-swatch--emitted { background: var(--primary); }
+.eco-swatch--avoided { background: var(--eco-bg); outline: 1px solid var(--eco-ink); }
+.eco-chart .label--on { fill: var(--on-primary); }
+.eco-meter--rate { flex: 0 1 220px; }
