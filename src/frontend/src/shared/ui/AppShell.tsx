@@ -24,6 +24,8 @@ type AppShellProps = {
   counts?: Partial<Record<ModuleId, number>>
   actions?: ReactNode
   onNavigate?: (id: ModuleId, href: string) => void
+  /** Tema explícito; sin él se usa el claro por defecto de tokens.css. */
+  theme?: 'light' | 'dark'
   children: ReactNode
 }
 
@@ -32,11 +34,11 @@ function kg(value: number) {
 }
 
 // Barra superior (eco-side + eco-topbar + eco-content). Muestra solo los módulos del rol.
-export function AppShell({ role, current, user, title, section = 'Operación', co2, counts, actions, onNavigate, children }: AppShellProps) {
+export function AppShell({ role, current, user, title, section = 'Operación', co2, counts, actions, onNavigate, theme, children }: AppShellProps) {
   const modules = modulesForRole(role)
   const percent = co2 && co2.goalKg > 0 ? Math.min(100, Math.round((co2.valueKg / co2.goalKg) * 100)) : 0
   return (
-    <div className="eco-root eco-shell">
+    <div className="eco-root eco-shell" data-theme={theme}>
       <aside className="eco-side" aria-label="Navegación principal">
         <a className="eco-side__brand" href="/">
           <LogoHojaRuta />
