@@ -13,6 +13,10 @@ import { HttpManagement } from './infrastructure/httpManagement';
 import { OrderManagementView } from './interfaces/OrderManagementView';
 import { FleetView } from './interfaces/FleetView';
 import { RoutePlanningView } from './interfaces/RoutePlanningView';
+import { SustainabilityView } from './interfaces/SustainabilityView';
+import { createGetSustainabilityReport } from './application/getSustainabilityReport';
+import { BrowserFileSaver } from './infrastructure/browserFileSaver';
+import { DemoSustainabilityReport, UnavailableSustainabilityReport } from './infrastructure/demoSustainability';
 import { createGenerateRoutes } from './application/generateRoutes';
 import { DemoMapData, UnavailableMapData } from './infrastructure/demoMapData';
 import { DemoPlanningSource, DemoRouteOptimizer, UnavailableRouteOptimizer } from './infrastructure/demoRoutePlanning';
@@ -57,7 +61,13 @@ const routeService = createGenerateRoutes(
     : { optimizer: new UnavailableRouteOptimizer(), planning: createLivePlanningSource(managementService, vehicleApi) }
 );
 
-type ActiveView = 'dashboard' | 'flota' | 'pedidos' | 'rutas' | 'mi-ruta' | 'conductor';
+// Sin API de reportes solo el modo demostración tiene cifras que mostrar.
+const sustainabilityService = createGetSustainabilityReport({
+  source: demo ? new DemoSustainabilityReport() : new UnavailableSustainabilityReport(),
+  saver: new BrowserFileSaver(),
+});
+
+type ActiveView = 'dashboard' | 'flota' | 'pedidos' | 'rutas' | 'sostenibilidad' | 'mi-ruta' | 'conductor';
 
 function getViewFromUrl(): { view: ActiveView; orderId: string } {
   if (typeof window === 'undefined') {
@@ -75,6 +85,9 @@ function getViewFromUrl(): { view: ActiveView; orderId: string } {
   }
   if (vista === 'rutas') {
     return { view: 'rutas', orderId: pedido || DEFAULT_ORDER };
+  }
+  if (vista === 'sostenibilidad') {
+    return { view: 'sostenibilidad', orderId: pedido || DEFAULT_ORDER };
   }
   if (vista === 'mi-ruta') {
     return { view: 'mi-ruta', orderId: pedido || DEFAULT_ORDER };
@@ -117,6 +130,9 @@ export function App() {
     } else if (view === 'rutas') {
       params.set('vista', 'rutas');
       params.delete('pedido');
+    } else if (view === 'sostenibilidad') {
+      params.set('vista', 'sostenibilidad');
+      params.delete('pedido');
     } else if (view === 'mi-ruta') {
       params.set('vista', 'mi-ruta');
       params.delete('pedido');
@@ -134,7 +150,7 @@ export function App() {
 
   // La barra superior de cada vista migrada al design system navega por módulo; lo que aún no existe recarga por URL.
   const navigateModule = (id: ModuleId, href: string) => {
-    if (id === 'dashboard' || id === 'flota' || id === 'pedidos' || id === 'rutas' || id === 'mi-ruta') navigateTo(id);
+    if (id === 'dashboard' || id === 'flota' || id === 'pedidos' || id === 'rutas' || id === 'sostenibilidad' || id === 'mi-ruta') navigateTo(id);
     else if (id === 'pedido-actual') navigateTo('conductor', currentOrderId);
     else window.location.assign(href);
   };
@@ -163,7 +179,10 @@ export function App() {
       {/* Vista 3: Generar rutas del día (US-005) */}
       {activeView === 'rutas' && <RoutePlanningView service={routeService} onNavigate={navigateModule} />}
 
-      {/* Vista 4: Mi ruta del conductor */}
+      {/* Vista 4: Reporte de sostenibilidad (US-010 / US-011) */}
+      {activeView === 'sostenibilidad' && <SustainabilityView service={sustainabilityService} onNavigate={navigateModule} />}
+
+      {/* Vista 5: Mi ruta del conductor */}
       {activeView === 'mi-ruta' && (
         <DriverRouteView
           service={driverRouteService}
@@ -173,7 +192,7 @@ export function App() {
         />
       )}
 
-      {/* Vista 5: Pedido actual del conductor */}
+      {/* Vista 6: Pedido actual del conductor */}
       {activeView === 'conductor' && (
         <DriverOrderView
           key={currentOrderId}
