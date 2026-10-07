@@ -17,7 +17,7 @@ export default defineConfig({
   },
   projects: [
     { name: 'escritorio', testMatch: 'components.spec.ts', use: { viewport: { width: 1280, height: 900 } } },
-    { name: 'movil-390', testMatch: 'mobile.spec.ts', use: { viewport: { width: 390, height: 844 } } },
+    { name: 'movil-390', testMatch: ['mobile.spec.ts', 'driver.spec.ts'], use: { viewport: { width: 390, height: 844 } } },
   ],
   webServer: {
     command: 'npm run dev -- --host 127.0.0.1 --port 5178 --strictPort',

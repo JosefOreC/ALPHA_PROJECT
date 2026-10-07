@@ -1,30 +1,8 @@
 import type { ReactNode } from 'react'
-import {
-  ConductorIcon,
-  FlotaIcon,
-  HojaCo2Icon,
-  IncidenciaIcon,
-  LogoHojaRuta,
-  PaqueteIcon,
-  RutaIcon,
-  SearchIcon,
-  SlidersIcon,
-  TableroIcon,
-} from './icons'
+import { LogoHojaRuta, SearchIcon } from './icons'
+import { MODULE_ICONS } from './moduleIcons'
 import { ROLE_LABELS, modulesForRole } from './roles'
 import type { ModuleId, Role } from './roles'
-
-const MODULE_ICONS: Record<ModuleId, typeof FlotaIcon> = {
-  dashboard: TableroIcon,
-  pedidos: PaqueteIcon,
-  rutas: RutaIcon,
-  flota: FlotaIcon,
-  sostenibilidad: HojaCo2Icon,
-  admin: SlidersIcon,
-  'mi-ruta': RutaIcon,
-  'pedido-actual': ConductorIcon,
-  incidencias: IncidenciaIcon,
-}
 
 export interface ShellUser {
   name: string

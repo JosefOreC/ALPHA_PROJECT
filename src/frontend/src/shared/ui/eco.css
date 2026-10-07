@@ -472,3 +472,47 @@ dialog.eco-dialog { margin: auto; }
 .eco-strong { font-weight: 600; }
 .eco-meter { display: block; }
 .eco-root.eco-shell { min-height: 100vh; }
+
+/* =====================================================================
+   v8 · Conductor (móvil, 390 px): Mi ruta y Pedido actual
+   ===================================================================== */
+.eco-phone-root { min-height: 100vh; background: var(--bg); }
+.eco-phone-root--forest { background: var(--forest); }
+.eco-phone { width: 100%; max-width: 480px; min-height: 100vh; margin: 0 auto; display: flex; flex-direction: column; background: var(--surface); }
+.eco-phone--forest { background: var(--forest); }
+.eco-phone__bar { display: flex; align-items: center; gap: 10px; min-height: 52px; padding: 0 16px; background: var(--forest); color: var(--on-forest); }
+.eco-phone__bar .eco-mark { width: 24px; height: 24px; }
+.eco-phone__title { font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
+.eco-phone__back { display: inline-flex; align-items: center; min-height: 48px; font-size: 15px; font-weight: 600; letter-spacing: -0.01em; color: var(--on-forest); text-decoration: none; }
+.eco-phone__plate { margin-left: auto; }
+.eco-phone__bar .eco-avatar:last-child { margin-left: 0; }
+.eco-phone__progress, .eco-phone__meta { display: flex; align-items: center; gap: 10px; font-size: 12.5px; color: var(--forest-muted); }
+.eco-phone__progress { padding: 12px 16px 14px; background: var(--forest); }
+.eco-phone__meta { margin-top: 18px; }
+.eco-phone__progress .eco-hero__meter, .eco-phone__meta .eco-hero__meter { flex: 1; }
+.eco-phone__count { color: var(--on-forest); }
+.eco-lime { color: var(--lime); }
+.eco-phone__body { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 14px; padding: 14px 16px 16px; background: var(--surface); color: var(--ink); }
+.eco-phone__hero { padding: 8px 20px 28px; color: var(--on-forest); }
+.eco-phone__hero .eco-hero__label { margin-bottom: 6px; }
+.eco-phone__co2 { display: flex; align-items: flex-end; gap: 12px; }
+.eco-phone__co2-value { font-size: 56px; line-height: 0.9; font-weight: 600; letter-spacing: -0.05em; color: var(--lime); font-variant-numeric: tabular-nums; }
+.eco-phone__co2-note { padding-bottom: 4px; font-size: 13px; line-height: 17px; color: var(--forest-muted); }
+.eco-phone__sheet { flex: 1; display: flex; flex-direction: column; gap: 18px; padding: 20px 20px 16px; border-radius: 20px 20px 0 0; background: var(--surface); color: var(--ink); }
+.eco-phone__line { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.eco-phone__h1 { margin: 0; font-size: 24px; line-height: 30px; font-weight: 600; letter-spacing: -0.025em; overflow-wrap: anywhere; }
+.eco-phone__address { margin: 4px 0 0; overflow-wrap: anywhere; }
+.eco-phone__hint { font-size: 12.5px; }
+.eco-props--phone { grid-template-columns: 96px minmax(0, 1fr); border-top: 1px solid var(--hairline); padding-top: 6px; }
+.eco-phone__footer { position: sticky; bottom: 0; display: flex; gap: 8px; padding: 12px 16px 12px; background: var(--surface); border-top: 1px solid var(--hairline); }
+.eco-phone__footer .eco-btn--block { flex: 1; }
+.eco-phone .eco-btn { height: 48px; min-height: 48px; }
+.eco-btn--icon { width: 48px; padding: 0; }
+.eco-phone .eco-tabbar { position: sticky; bottom: 0; }
+.eco-tabbar a { min-height: 48px; justify-content: center; }
+.eco-tabbar a[aria-disabled="true"] { opacity: 0.5; cursor: not-allowed; }
+.eco-stop__link { display: flex; align-items: center; min-height: 48px; margin: -12px 0; color: var(--ink); text-decoration: none; }
+.eco-map--compact { aspect-ratio: 390 / 220; }
+dialog.eco-dialog--sheet { width: 100%; max-width: 480px; margin: auto auto 0; border-radius: 20px 20px 0 0; padding: 24px 20px 28px; }
+.eco-dialog--sheet .eco-dialog__title { font-size: 18px; }
+.eco-dialog__stack { display: flex; flex-direction: column; gap: 8px; margin-top: 20px; }
