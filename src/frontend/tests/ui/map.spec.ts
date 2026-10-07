@@ -12,7 +12,7 @@ test('el mapa dibuja rutas, pedidos y vehículos sobre OpenStreetMap', async ({ 
   await expect(map.locator('path.route')).toHaveCount(8)
   await expect(map.locator('path.route--done')).toHaveCount(4)
   await expect(map.locator('.leaflet-control-attribution')).toContainText('OpenStreetMap')
-  // La forma del pin cuenta el estado: rombo pendiente, check entregado, ✕ cancelado.
+  // La forma del pin cuenta el estado: rombo pendiente, check entregado, equis cancelado.
   await expect(map.locator('svg.pin--pending')).toHaveCount(2)
   await expect(map.locator('svg.pin--delivered')).toHaveCount(3)
   await expect(map.locator('svg.pin--cancelled')).toHaveCount(1)

@@ -30,8 +30,6 @@ import { DashboardPage, DemoDashboardInsights, HttpDashboardGateway } from './fe
 import { RouteMap } from './interfaces/map/RouteMap';
 import type { ModuleId } from './shared/ui';
 
-import './App.css';
-
 // Raíz de composición: se instancian los gateways / adaptadores
 const dashboardGateway = new HttpDashboardGateway();
 // CO₂ evitado y pedidos en riesgo aún no tienen API: solo hay ejemplo en modo demostración.

@@ -46,7 +46,7 @@ export function AppShell({ role, current, user, title, section = 'Operación', c
             EcoLogística <span>Lima</span>
           </span>
         </a>
-        <button className="eco-side__search" type="button">
+        <button className="eco-side__search" type="button" disabled title="Próximamente">
           <SearchIcon />
           Buscar…
           <span className="eco-kbd" aria-hidden="true">
