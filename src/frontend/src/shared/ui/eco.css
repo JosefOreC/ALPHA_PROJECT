@@ -448,3 +448,7 @@
 .eco-banner { flex-wrap: wrap; }
 .eco-banner__text { overflow-wrap: anywhere; }
 .eco-field__hint, .eco-note-block, .eco-row__title, .eco-sheet__title, .eco-sheet__sub, .eco-props dd { overflow-wrap: anywhere; }
+.eco-select--compact { width: auto; min-width: 128px; height: 28px; padding-left: 8px; font-size: 12.5px; }
+.eco-dialog--form { max-width: 520px; }
+.eco-dialog__lead { margin-bottom: 18px; font-size: 13px; }
+dialog.eco-dialog { margin: auto; }
