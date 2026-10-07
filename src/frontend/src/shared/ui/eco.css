@@ -12,6 +12,13 @@
 .eco-root :is(button, a, input, select, textarea, [tabindex]):focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
 .eco-root .eco-side :is(button, a):focus-visible, .eco-root .eco-hero :is(button, a):focus-visible { outline-color: var(--lime); }
 
+/* ---------- Base de la aplicación (sustituye al reset global de los CSS heredados) ---------- */
+html, body { margin: 0; min-height: 100%; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-sans); }
+/* :where() no suma especificidad: cualquier clase eco-* posterior puede volver a poner su margen. */
+.eco-root :where(h1, h2, h3, h4, p, ul, ol, dl, dd, figure, fieldset) { margin: 0; }
+.eco-root :where(ul, ol, fieldset) { padding: 0; }
+
 /* ---------- Íconos Ruta ---------- */
 .eco-icon { width: 16px; height: 16px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
 .eco-icon--md { width: 20px; height: 20px; }
@@ -591,3 +598,9 @@ dialog.eco-dialog--sheet { width: 100%; max-width: 480px; margin: auto auto 0; b
 .eco-note { font-size: 12.5px; }
 .eco-tabpanel { display: flex; flex-direction: column; gap: 24px; }
 .eco-row--factor .eco-input--short { width: 112px; }
+
+/* ---------- Movimiento reducido (GUIA.md › Movimiento) ---------- */
+.eco-side__search:disabled { cursor: not-allowed; opacity: 0.75; }
+@media (prefers-reduced-motion: reduce) {
+  .eco-root *, .eco-root *::before, .eco-root *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }
+}

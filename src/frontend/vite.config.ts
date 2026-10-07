@@ -12,6 +12,8 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./src/test/setup.ts'],
     css: false,
+    // Las pruebas de interfaz escriben con userEvent y, con todos los archivos en paralelo, pueden tardar más de 5 s.
+    testTimeout: 15_000,
     include: ['src/**/*.test.{ts,tsx}'],
   },
 })
