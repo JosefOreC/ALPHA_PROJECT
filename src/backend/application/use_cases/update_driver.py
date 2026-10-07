@@ -18,7 +18,7 @@ class UpdateDriver:
         dni: str | None = None,
         licencia: str | None = None,
         vehiculo_id: str | None = None,
-        estado: DriverStates | None = None,
+        estado: DriverStates | str | None = None,
     ) -> Driver:
 
         driver = self.driver_repository.find_by_id(conductor_id)
@@ -37,16 +37,14 @@ class UpdateDriver:
             ):
                 raise DriverAlreadyExistsError()
         
-        if estado is not None:
-            if type(estado) != DriverStates:
-                raise ValueError(f"Estado inválido: {str(estado)}. Estados permitidos: {', '.join(sorted(DriverStates.list_states()))}")
+        parsed_estado = DriverStates.parse(estado) if estado is not None else None
 
         driver.update_info(
             nombre_completo=nombre_completo,
             dni=dni,
             licencia=licencia,
             vehiculo_id=vehiculo_id,
-            estado=estado,
+            estado=parsed_estado,
         )
 
         return self.driver_repository.update(driver)

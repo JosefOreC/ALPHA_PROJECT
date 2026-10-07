@@ -1,7 +1,9 @@
 from threading import RLock
 from contextlib import contextmanager
 
-from domain.entities.order import Order, OrderConflict, OrderStatus
+from domain.entities.order import Order
+from domain.exceptions.order_conflict import OrderConflict
+from domain.value_objects import OrderStatus
 
 
 class MemoryOrderRepository:

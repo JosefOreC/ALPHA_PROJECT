@@ -1,7 +1,8 @@
 from dataclasses import dataclass
 
 from application.use_cases.confirm_delivery import Forbidden, OrderNotFound
-from domain.entities.order import Order, OrderStatus
+from domain.entities.order import Order
+from domain.value_objects import OrderStatus
 from domain.order_management import DISTRICTS, InvalidOrder, OrderData, cancel_order, update_order
 from domain.ports.order_management import ManagementRepository, OrderIds
 

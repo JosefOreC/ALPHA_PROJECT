@@ -1,5 +1,6 @@
 from typing import Protocol
-from domain.entities.order import Order, OrderStatus
+from domain.entities.order import Order
+from domain.value_objects import OrderStatus
 from domain.ports.orders import OrderRepository
 
 

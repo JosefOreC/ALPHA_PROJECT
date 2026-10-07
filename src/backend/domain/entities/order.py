@@ -1,7 +1,9 @@
 from dataclasses import dataclass, replace
 from datetime import datetime
-from domain.value_objects import OrderStatus
+
 from domain.exceptions.order_conflict import OrderConflict
+from domain.value_objects import OrderStatus
+
 
 @dataclass(frozen=True)
 class Order:

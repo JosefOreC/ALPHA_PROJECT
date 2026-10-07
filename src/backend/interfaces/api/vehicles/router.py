@@ -16,6 +16,7 @@ from domain.exceptions.vehicle_exceptions import (
     VehicleNotFoundError,
     VehiclePlateAlreadyExistsError,
 )
+from domain.value_objects import VehicleStates
 from infrastructure.dependencies import (
     get_register_vehicle_use_case,
     get_update_vehicle_use_case,
@@ -57,7 +58,7 @@ def register_vehicle(
     summary="Consultar listado de vehículos disponibles y activos (US-002)",
 )
 def list_vehicles(
-    status_filter: Optional[str] = Query(None, alias="status", description="Filtrar por estado (ej. DISPONIBLE, EN_RUTA, MANTENIMIENTO, INACTIVO)"),
+    status_filter: Optional[VehicleStates] = Query(None, alias="status", description="Filtrar por estado (ej. DISPONIBLE, EN_RUTA, MANTENIMIENTO, INACTIVO)"),
     only_available: bool = Query(False, description="Filtrar únicamente vehículos disponibles"),
     use_case: GetVehiclesUseCase = Depends(get_vehicles_use_case),
 ):

@@ -1,6 +1,7 @@
 from domain.entities.driver import Driver
 from domain.exceptions.driver_exceptions import DriverAlreadyExistsError
 from domain.ports.driver_repository import DriverRepository
+from domain.value_objects import DriverStates
 
 
 class RegisterDriver:
@@ -14,7 +15,7 @@ class RegisterDriver:
         dni: str,
         licencia: str,
         vehiculo_id: str,
-        estado: str = "ACTIVO",
+        estado: DriverStates | str = DriverStates.ACTIVO,
     ) -> Driver:
 
         dni = dni.strip()
@@ -29,7 +30,7 @@ class RegisterDriver:
             dni=dni,
             licencia=licencia,
             vehiculo_id=vehiculo_id,
-            estado=estado,
+            estado=DriverStates.parse(estado),
         )
 
         return self.driver_repository.save(driver)

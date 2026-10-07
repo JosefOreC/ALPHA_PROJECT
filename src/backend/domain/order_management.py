@@ -4,7 +4,9 @@ from datetime import datetime
 from decimal import Decimal, InvalidOperation
 import re
 
-from domain.entities.order import Order, OrderConflict, OrderStatus
+from domain.entities.order import Order
+from domain.exceptions.order_conflict import OrderConflict
+from domain.value_objects import OrderStatus
 
 DISTRICTS = ("San Juan de Lurigancho", "El Agustino", "Santa Anita", "Ate")
 MAX_WEIGHT = Decimal("99999999.99")  # Capacidad de DECIMAL(10,2), no límite vehicular.

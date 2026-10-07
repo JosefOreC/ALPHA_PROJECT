@@ -7,8 +7,10 @@ from pydantic import BaseModel, ConfigDict, Field
 from application.use_cases.confirm_delivery import Forbidden, OrderNotFound
 from application.use_cases.manage_orders import ManageOrders, ManagementPrincipal
 from application.use_cases.register_order import register_order
-from domain.entities.order import Order, OrderConflict, OrderStatus
+from domain.entities.order import Order
+from domain.exceptions.order_conflict import OrderConflict
 from domain.order_management import InvalidOrder, OrderData
+from domain.value_objects import OrderStatus
 
 
 class CreateOrderBody(BaseModel):
@@ -43,7 +45,7 @@ class OrderRead(BaseModel):
     window_end: str
     weight_kg: float
     instructions: str
-    status: OrderStatus
+    status: str
     confirmed_at: str | None
     assigned: bool
     version: int
@@ -63,6 +65,7 @@ class PermissionsRead(BaseModel):
 def read_order(order: Order) -> OrderRead:
     fields = asdict(order)
     fields.pop("driver_id")
+    fields["status"] = order.status.value
     fields["assigned"] = order.driver_id is not None
     fields["confirmed_at"] = order.confirmed_at.isoformat() if order.confirmed_at else None
     return OrderRead(**fields)

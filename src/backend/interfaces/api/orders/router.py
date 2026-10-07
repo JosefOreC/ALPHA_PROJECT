@@ -4,7 +4,7 @@ from typing import Annotated, Callable
 from fastapi import APIRouter, Depends, HTTPException
 
 from application.use_cases.confirm_delivery import DriverOrders, Forbidden, OrderNotFound, Principal
-from domain.entities.order import OrderConflict
+from domain.exceptions.order_conflict import OrderConflict
 
 
 def create_orders_router(service: DriverOrders, authenticate: Callable) -> APIRouter:
@@ -12,7 +12,9 @@ def create_orders_router(service: DriverOrders, authenticate: Callable) -> APIRo
 
     def execute(action, order_id, principal):
         try:
-            return asdict(action(order_id, principal))
+            payload = asdict(action(order_id, principal))
+            payload["status"] = payload["status"].value if hasattr(payload["status"], "value") else payload["status"]
+            return payload
         except Forbidden as error:
             raise HTTPException(403, str(error)) from error
         except OrderNotFound as error:

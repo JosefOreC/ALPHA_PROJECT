@@ -1,6 +1,7 @@
 from pydantic import BaseModel, Field, field_validator
 
 from domain.entities.driver import Driver
+from domain.value_objects import DriverStates
 
 
 class CreateDriverRequest(BaseModel):
@@ -8,7 +9,7 @@ class CreateDriverRequest(BaseModel):
     dni: str = Field(min_length=8, max_length=8)
     licencia: str = Field(min_length=1, max_length=50)
     vehiculo_id: str = Field(min_length=1)
-    estado: str = "ACTIVO"
+    estado: DriverStates = DriverStates.ACTIVO
 
     @field_validator("dni")
     @classmethod
@@ -19,6 +20,11 @@ class CreateDriverRequest(BaseModel):
             raise ValueError("El DNI debe contener exactamente 8 dígitos")
 
         return value
+
+    @field_validator("estado", mode="before")
+    @classmethod
+    def validate_estado(cls, value: object) -> DriverStates:
+        return DriverStates.parse(value)
 
 
 class UpdateDriverRequest(BaseModel):
@@ -41,7 +47,7 @@ class UpdateDriverRequest(BaseModel):
         default=None,
         min_length=1,
     )
-    estado: str | None = None
+    estado: DriverStates | None = None
 
     @field_validator("dni")
     @classmethod
@@ -55,6 +61,13 @@ class UpdateDriverRequest(BaseModel):
             raise ValueError("El DNI debe contener exactamente 8 dígitos")
 
         return value
+
+    @field_validator("estado", mode="before")
+    @classmethod
+    def validate_estado(cls, value: object) -> DriverStates | None:
+        if value is None:
+            return None
+        return DriverStates.parse(value)
 
 
 class DriverResponse(BaseModel):
@@ -74,7 +87,7 @@ class DriverResponse(BaseModel):
             dni=driver.dni,
             licencia=driver.licencia,
             vehiculo_id=driver.vehiculo_id,
-            estado=driver.estado,
+            estado=driver.estado.value,
             creado_en=driver.creado_en.isoformat(),
         )
 

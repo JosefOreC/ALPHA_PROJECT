@@ -8,7 +8,9 @@ from decimal import Decimal
 from threading import local
 from typing import Callable
 
-from domain.entities.order import Order, OrderConflict, OrderStatus
+from domain.entities.order import Order
+from domain.exceptions.order_conflict import OrderConflict
+from domain.value_objects import OrderStatus
 
 COLUMNS = ("pedido_id", "conductor_id", "cliente_nombre", "direccion_entrega", "distrito",
            "ventana_inicio", "ventana_fin", "peso_kg", "instrucciones", "estado", "confirmed_at", "version")

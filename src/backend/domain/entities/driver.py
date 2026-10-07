@@ -21,7 +21,7 @@ class Driver:
         self.dni = self.dni.strip()
         self.licencia = self.licencia.strip().upper()
         self.vehiculo_id = self.vehiculo_id.strip()
-        self.estado = self.estado.strip().upper()
+        self.estado = DriverStates.parse(self.estado)
 
         self.validate()
 
@@ -41,7 +41,7 @@ class Driver:
         if not self.vehiculo_id:
             raise ValueError("El vehículo asignado es obligatorio")
 
-        if type(self.estado) != DriverStates:
+        if not isinstance(self.estado, DriverStates):
             raise ValueError(
                 f"Estado inválido. Valores permitidos: {', '.join(sorted(DriverStates.list_states()))}"
             )
@@ -61,7 +61,7 @@ class Driver:
         dni: str | None = None,
         licencia: str | None = None,
         vehiculo_id: str | None = None,
-        estado: DriverStates | None = None,
+        estado: DriverStates | str | None = None,
     ):
         if nombre_completo is not None:
             self.nombre_completo = nombre_completo.strip()
@@ -75,7 +75,7 @@ class Driver:
         if vehiculo_id is not None:
             self.vehiculo_id = vehiculo_id.strip()
 
-        if estado is not None and type(estado) == DriverStates:
-            self.estado = estado
+        if estado is not None:
+            self.estado = DriverStates.parse(estado)
 
         self.validate()

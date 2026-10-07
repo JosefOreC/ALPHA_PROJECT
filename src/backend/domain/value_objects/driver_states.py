@@ -1,11 +1,24 @@
 from enum import Enum
 
-class DriverStates(Enum):
+
+class DriverStates(str, Enum):
     ACTIVO = "ACTIVO"
     INACTIVO = "INACTIVO"
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.value
 
-    def list_states(self):
-        return [state.value for state in self]
+    @classmethod
+    def list_states(cls) -> list[str]:
+        return [state.value for state in cls]
+
+    @classmethod
+    def parse(cls, value: object) -> "DriverStates":
+        if isinstance(value, cls):
+            return value
+        raw = value.strip().upper() if isinstance(value, str) else value
+        try:
+            return cls(raw)
+        except (TypeError, ValueError):
+            allowed = ", ".join(sorted(cls.list_states()))
+            raise ValueError(f"Estado inválido. Valores permitidos: {allowed}") from None
