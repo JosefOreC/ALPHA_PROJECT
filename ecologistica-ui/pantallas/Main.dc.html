@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Dashboard del día</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/ecologistica/tokens.css">
+<link rel="stylesheet" href="ds/ecologistica/components/bundle.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0}
+a{color:var(--primary)}a:hover{color:var(--primary-hover)}
+</style>
+</helmet>
+<div class="eco-root eco-shell" data-theme="{{theme}}" style="min-height: 1120px">
+  <aside class="eco-side" aria-label="Navegación principal">
+    <a class="eco-side__brand" href="Main.dc.html"><svg class="eco-mark" viewBox="0 0 32 32" aria-hidden="true"><path class="leaf" d="M5 27C5 14 13 5 27 5c0 14-9 22-22 22z"></path><path class="vein" d="M8.5 23.5c3.5-3.5 6-8.5 10.5-10.5"></path><circle class="stop" cx="21.5" cy="11.5" r="2.6"></circle></svg>EcoLogística <span>Lima</span></a>
+    <button class="eco-side__search" type="button"><svg class="eco-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="M16 16l4.5 4.5"></path></svg>Buscar…<span class="eco-kbd">⌘K</span></button>
+    <p class="eco-side__label">Operación</p>
+    <a class="eco-side__item" href="Main.dc.html" aria-current="page"><svg class="eco-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="3"></rect><path d="M7.5 16v-3M12 16V8M16.5 16v-5"></path><circle cx="12" cy="8" r="1.8" class="acc"></circle></svg>Dashboard</a>
+    <a class="eco-side__item" href="Sostenibilidad.dc.html"><svg class="eco-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 19.5C4.5 10.5 10.5 4.5 19.5 4.5c0 9-6 15-15 15z"></path><path d="M4.5 19.5c3.5-3.5 6-6.5 9.5-9.5" stroke-dasharray="2.2 2.6"></path><circle cx="14.6" cy="9.4" r="2" class="acc"></circle></svg>Sostenibilidad</a>
+    <div class="eco-side__foot">
+      <div class="eco-side__co2">
+        <span>CO₂ evitado este mes</span>
+        <strong>658 kg <span>de 700</span></strong>
+        <div class="eco-hero__meter" role="img" aria-label="94 por ciento de la meta mensual"><div class="eco-hero__meter-fill" style="width: 94%"></div></div>
+      </div>
+      <div class="eco-side__user"><span class="eco-role">Resp. de Logística</span><span class="eco-avatar">MV</span><div>Mariela Vargas</div></div>
+    </div>
+  </aside>
+
+  <div class="eco-main">
+    <header class="eco-topbar">
+      <nav class="eco-crumbs" aria-label="Ruta de navegación"><span>Operación</span><span aria-hidden="true">/</span><strong>Dashboard del día</strong></nav>
+      <div class="eco-topbar__end">
+        <span class="eco-tag"><span class="eco-code">JUE 01 OCT · 10:42</span></span>
+        <button class="eco-filter eco-filter--on" type="button"><svg class="eco-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 6.5l5.5-2 6 2 5.5-2v13l-5.5 2-6-2-5.5 2z"></path><path d="M9 4.5v13M15 6.5v13"></path><circle cx="12" cy="11" r="1.9" class="acc"></circle></svg>Distrito: Todos</button>
+        <a class="eco-btn" href="Sostenibilidad.dc.html"><svg class="eco-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 19.5C4.5 10.5 10.5 4.5 19.5 4.5c0 9-6 15-15 15z"></path><path d="M4.5 19.5c3.5-3.5 6-6.5 9.5-9.5" stroke-dasharray="2.2 2.6"></path><circle cx="14.6" cy="9.4" r="2" class="acc"></circle></svg>Reporte de sostenibilidad</a>
+      </div>
+    </header>
+
+    <main class="eco-content">
+      <div class="eco-hero-row">
+        <section class="eco-hero eco-hero--orders" aria-labelledby="orders-title">
+          <div class="eco-hero__inner">
+            <div>
+              <p class="eco-hero__label" id="orders-title"><svg class="eco-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"></path><path d="M4 7.5l8 4.5 8-4.5M12 12v9"></path><circle cx="8" cy="9.8" r="1.8" class="acc"></circle></svg>Pedidos del día</p>
+              <div class="eco-hero__big"><span class="eco-hero__value">248</span><span class="eco-hero__unit">pedidos programados · 57 % ya entregados</span></div>
+            </div>
+            <div class="eco-segbar" role="img" aria-label="142 entregados, 58 en camino, 39 pendientes, 9 cancelados"><div class="eco-seg--delivered" style="width: 57%"></div><div class="eco-seg--transit" style="width: 23%"></div><div class="eco-seg--pending" style="width: 16%"></div><div class="eco-seg--cancelled" style="width: 4%"></div></div>
+            <ul class="eco-status-row">
+              <li><span class="eco-trip eco-trip--delivered"><svg class="eco-trip__track" viewBox="0 0 46 12" aria-hidden="true"><path class="seg seg1" d="M9 6h10"></path><path class="seg seg2" d="M27 6h10"></path><path class="cut" d="M11.5 3l5 6M16.5 3l-5 6"></path><circle class="stop st1" cx="4.5" cy="6" r="3.5"></circle><circle class="stop st2" cx="23" cy="6" r="3.5"></circle><circle class="stop st3" cx="41" cy="6" r="3.5"></circle><path class="mark" d="M39 6.1l1.4 1.4 2.6-2.8"></path></svg>Entregados</span><strong>142</strong></li>
+              <li><span class="eco-trip eco-trip--transit"><svg class="eco-trip__track" viewBox="0 0 46 12" aria-hidden="true"><path class="seg seg1" d="M9 6h10"></path><path class="seg seg2" d="M27 6h10"></path><path class="cut" d="M11.5 3l5 6M16.5 3l-5 6"></path><circle class="stop st1" cx="4.5" cy="6" r="3.5"></circle><circle class="stop st2" cx="23" cy="6" r="3.5"></circle><circle class="stop st3" cx="41" cy="6" r="3.5"></circle><path class="mark" d="M39 6.1l1.4 1.4 2.6-2.8"></path></svg>En camino</span><strong>58</strong></li>
+              <li><span class="eco-trip eco-trip--pending"><svg class="eco-trip__track" viewBox="0 0 46 12" aria-hidden="true"><path class="seg seg1" d="M9 6h10"></path><path class="seg seg2" d="M27 6h10"></path><path class="cut" d="M11.5 3l5 6M16.5 3l-5 6"></path><circle class="stop st1" cx="4.5" cy="6" r="3.5"></circle><circle class="stop st2" cx="23" cy="6" r="3.5"></circle><circle class="stop st3" cx="41" cy="6" r="3.5"></circle><path class="mark" d="M39 6.1l1.4 1.4 2.6-2.8"></path></svg>Pendientes</span><strong>39</strong></li>
+              <li><span class="eco-trip eco-trip--cancelled"><svg class="eco-trip__track" viewBox="0 0 46 12" aria-hidden="true"><path class="seg seg1" d="M9 6h10"></path><path class="seg seg2" d="M27 6h10"></path><path class="cut" d="M11.5 3l5 6M16.5 3l-5 6"></path><circle class="stop st1" cx="4.5" cy="6" r="3.5"></circle><circle class="stop st2" cx="23" cy="6" r="3.5"></circle><circle class="stop st3" cx="41" cy="6" r="3.5"></circle><path class="mark" d="M39 6.1l1.4 1.4 2.6-2.8"></path></svg>Cancelados</span><strong>9</strong></li>
+            </ul>
+            <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap">
+              <span style="font-size: 13px; color: var(--ink-muted)"><strong style="color: var(--ink); font-size: 15px">82 %</strong> dentro de ventana · meta 90 %</span>
+              <div class="eco-meter" style="flex: 1 1 160px" role="img" aria-label="82 por ciento, meta 90 por ciento"><div class="eco-meter__fill" style="width: 82%"></div><div class="eco-meter__goal" style="left: 90%"></div></div>
+              <button class="eco-btn eco-btn--secondary" type="button"><svg class="eco-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="M16 16l4.5 4.5"></path></svg>Buscar pedido</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="eco-hero" aria-labelledby="co2-title">
+          <svg class="eco-hero__pattern" viewBox="0 0 820 300" preserveAspectRatio="xMaxYMid slice" aria-hidden="true">
+            <path class="contour" d="M0 250C140 210 230 275 360 235S600 170 820 200"></path>
+            <path class="contour" d="M0 200C130 160 250 230 370 185S610 120 820 150"></path>
+            <path class="contour" d="M0 150C150 110 260 180 380 135S620 70 820 100"></path>
+            <path class="contour" d="M0 100C140 60 270 130 390 85S630 20 820 50"></path>
+            <path class="route" d="M60 280C170 230 230 140 330 160S470 250 560 180S690 60 790 80"></path>
+            <circle class="stop" cx="60" cy="280" r="7"></circle>
+            <circle class="stop--open" cx="560" cy="180" r="6"></circle>
+            <circle class="stop" cx="790" cy="80" r="8"></circle>
+          </svg>
+          <div class="eco-hero__inner eco-hero__inner--stack">
+            <div>
+              <p class="eco-hero__label" id="co2-title"><svg class="eco-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 19.5C4.5 10.5 10.5 4.5 19.5 4.5c0 9-6 15-15 15z"></path><path d="M4.5 19.5c3.5-3.5 6-6.5 9.5-9.5" stroke-dasharray="2.2 2.6"></path><circle cx="14.6" cy="9.4" r="2" class="acc"></circle></svg>CO₂ evitado hoy</p>
+              <div class="eco-hero__big"><span class="eco-hero__value">−19 %</span><span class="eco-hero__unit">de emisiones frente a rutas sin optimizar</span></div>
+            </div>
+            <div style="display: flex; gap: 20px; align-items: flex-end; flex-wrap: wrap">
+              <ul class="eco-hero__facts" style="margin: 0; flex: 1 1 260px">
+                <li><strong>22 kg</strong>evitados hoy</li>
+                <li><strong>9 L</strong>de combustible</li>
+                <li><strong>−212 km</strong>recorridos</li>
+              </ul>
+              <div style="flex: 0 1 220px; display: flex; flex-direction: column; gap: 6px">
+                <div class="eco-bars" style="height: 52px" role="img" aria-label="Kg evitados por día: 17, 19, 15, 21, 23, 18 y hoy 22">
+                  <div class="eco-bars__bar" style="height: 70%"></div>
+                  <div class="eco-bars__bar" style="height: 79%"></div>
+                  <div class="eco-bars__bar" style="height: 62%"></div>
+                  <div class="eco-bars__bar" style="height: 87%"></div>
+                  <div class="eco-bars__bar" style="height: 96%"></div>
+                  <div class="eco-bars__bar" style="height: 75%"></div>
+                  <div class="eco-bars__bar eco-bars__bar--today" style="height: 92%"></div>
+                </div>
+                <div class="eco-bars__days"><span>V</span><span>S</span><span>D</span><span>L</span><span>M</span><span>M</span><span style="color: var(--lime)">HOY</span></div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start">
+        <section style="flex: 3 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 12px" aria-labelledby="map-title">
+          <div class="eco-section-head"><h2 id="map-title">Rutas en vivo</h2><span class="eco-tag">4 rutas · 6 pedidos en camino</span><span class="eco-muted" style="margin-left: auto; font-size: 12.5px">Solo lectura · lo opera el Planificador</span></div>
+          <dc-import name="Mapa" selected="{{sel}}" query="" on-pick="{{pick}}" compact="{{ true }}" hint-size="100%,480px"></dc-import>
+        </section>
+
+        <section style="flex: 2 1 360px; min-width: 0; display: flex; flex-direction: column; gap: 12px" aria-labelledby="risk-title">
+          <div class="eco-section-head"><h2 id="risk-title">Pedidos en riesgo</h2><span class="eco-tag eco-tag--danger">vence en &lt; 60 min</span></div>
+          <div class="eco-list" style="--cols: 80px minmax(0, 1fr) auto">
+            <sc-for list="{{risk}}" as="o" hint-placeholder-count="3">
+              <div class="eco-row" role="button" tabindex="0" aria-selected="{{o.selected}}" onClick="{{o.pick}}" style="cursor: pointer; min-height: 56px">
+                <span class="eco-code">{{o.id}}</span>
+                <span style="min-width: 0; display: flex; flex-direction: column"><span class="eco-row__title">{{o.to}}</span><span class="eco-muted" style="font-size: 12.5px">{{o.district}} · <span class="eco-code">{{o.window}}</span></span></span>
+                <span class="{{o.trip}}"><svg class="eco-trip__track" viewBox="0 0 46 12" aria-hidden="true"><path class="seg seg1" d="M9 6h10"></path><path class="seg seg2" d="M27 6h10"></path><path class="cut" d="M11.5 3l5 6M16.5 3l-5 6"></path><circle class="stop st1" cx="4.5" cy="6" r="3.5"></circle><circle class="stop st2" cx="23" cy="6" r="3.5"></circle><circle class="stop st3" cx="41" cy="6" r="3.5"></circle><path class="mark" d="M39 6.1l1.4 1.4 2.6-2.8"></path></svg>{{o.meta}}</span>
+              </div>
+            </sc-for>
+          </div>
+          <div class="eco-banner" role="status"><svg class="eco-icon eco-icon--md" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17c2.5-2.5 1.5-5 5-5s2.5-2.5 5-5" stroke-dasharray="2.4 2.8"></path><circle cx="5" cy="19" r="2.4" class="acc"></circle><circle cx="19" cy="5" r="2.4"></circle></svg><span class="eco-banner__text"><span class="eco-banner__title">Sugerencia</span> · sumar PED-0024 a la ruta de EGH-567 ahorra 0,04 kg de CO₂.</span></div>
+        </section>
+      </div>
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["light","dark"],"default":"light"},"$preview":{"width":1440,"height":1120}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { sel: 'PED-0022' };
+  }
+  renderVals() {
+    const sel = this.state.sel;
+    const risk = [
+      ['PED-0022', 'Bodega La Esquina', 'El Agustino', '09:00–11:00', 'eco-trip eco-trip--transit', 'llega 10:55'],
+      ['PED-0044', 'Farmacia Los Ángeles', 'Ate', '10:30–11:30', 'eco-trip eco-trip--transit', 'llega 11:25'],
+      ['PED-0052', 'Ferretería Cerro San Pedro', 'El Agustino', '11:00–12:00', 'eco-trip eco-trip--pending', 'sin conductor']
+    ].map(r => ({ id: r[0], to: r[1], district: r[2], window: r[3], trip: r[4], meta: r[5], selected: r[0] === sel ? 'true' : 'false', pick: () => this.setState({ sel: r[0] }) }));
+    return {
+      theme: this.props.theme ?? 'light',
+      sel, risk,
+      pick: id => this.setState({ sel: id })
+    };
+  }
+}
+</script>
+</body>
+</html>

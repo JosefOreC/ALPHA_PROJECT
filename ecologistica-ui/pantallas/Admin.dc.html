@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Administración</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/ecologistica/tokens.css">
+<link rel="stylesheet" href="ds/ecologistica/components/bundle.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0}
+a{color:var(--primary)}a:hover{color:var(--primary-hover)}
+</style>
+</helmet>
+<div class="eco-root eco-shell" data-theme="{{theme}}" style="min-height: 1000px">
+  <aside class="eco-side" aria-label="Navegación principal">
+    <a class="eco-side__brand" href="Admin.dc.html"><svg class="eco-mark" viewBox="0 0 32 32" aria-hidden="true"><path class="leaf" d="M5 27C5 14 13 5 27 5c0 14-9 22-22 22z"></path><path class="vein" d="M8.5 23.5c3.5-3.5 6-8.5 10.5-10.5"></path><circle class="stop" cx="21.5" cy="11.5" r="2.6"></circle></svg>EcoLogística <span>Lima</span></a>
+    <a class="eco-side__item" href="Main.dc.html"><svg class="eco-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="3"></rect><path d="M7.5 16v-3M12 16V8M16.5 16v-5"></path><circle cx="12" cy="8" r="1.8" class="acc"></circle></svg>Dashboard</a>
+    <a class="eco-side__item" href="Pedidos.dc.html"><svg class="eco-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"></path><path d="M4 7.5l8 4.5 8-4.5M12 12v9"></path><circle cx="8" cy="9.8" r="1.8" class="acc"></circle></svg>Pedidos</a>
+    <a class="eco-side__item" href="Rutas.dc.html"><svg class="eco-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17c2.5-2.5 1.5-5 5-5s2.5-2.5 5-5" stroke-dasharray="2.4 2.8"></path><circle cx="5" cy="19" r="2.4" class="acc"></circle><circle cx="19" cy="5" r="2.4"></circle></svg>Rutas</a>
+    <a class="eco-side__item" href="Flota.dc.html"><svg class="eco-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 15.5V8.5h8v7"></path><path d="M12 10.5h3.5l2.5 2.6v2.4"></path><circle cx="7" cy="16.5" r="1.6" class="acc"></circle><circle cx="15.5" cy="16.5" r="1.6"></circle><path d="M2.5 20.5h19" stroke-dasharray="2.2 2.8"></path></svg>Flota</a>
+    <a class="eco-side__item" href="Sostenibilidad.dc.html"><svg class="eco-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 19.5C4.5 10.5 10.5 4.5 19.5 4.5c0 9-6 15-15 15z"></path><path d="M4.5 19.5c3.5-3.5 6-6.5 9.5-9.5" stroke-dasharray="2.2 2.6"></path><circle cx="14.6" cy="9.4" r="2" class="acc"></circle></svg>Sostenibilidad</a>
+    <a class="eco-side__item" href="Admin.dc.html" aria-current="page"><svg class="eco-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"></path><circle cx="16" cy="7" r="2" class="acc"></circle><circle cx="10" cy="17" r="2"></circle></svg>Administración</a>
+    <div class="eco-side__foot">
+      <div class="eco-side__user"><span class="eco-role">Administrador</span><span class="eco-avatar">SD</span><div>Sistemas DistriRápido</div></div>
+    </div>
+  </aside>
+
+  <div class="eco-main">
+    <header class="eco-topbar">
+      <nav class="eco-crumbs" aria-label="Ruta de navegación"><span>Sistema</span><span aria-hidden="true">/</span><strong>Administración</strong></nav>
+      <div class="eco-topbar__end">
+        <sc-if value="{{onUsers}}" hint-placeholder-val="{{ true }}"><button class="eco-btn" type="button"><svg class="eco-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>Invitar usuario</button></sc-if>
+        <sc-if value="{{onParams}}" hint-placeholder-val="{{ false }}"><button class="eco-btn" type="button">Guardar cambios</button></sc-if>
+      </div>
+    </header>
+
+    <main class="eco-content">
+      <div>
+        <h1 class="eco-h1">Administración</h1>
+        <p class="eco-sub">Usuarios, roles y configuración de la plataforma</p>
+      </div>
+
+      <div class="eco-tabs" role="tablist" aria-label="Secciones de administración">
+        <sc-for list="{{tabs}}" as="t" hint-placeholder-count="3"><button class="eco-tab" type="button" role="tab" aria-selected="{{t.on}}" onClick="{{t.pick}}">{{t.label}} <span class="eco-code">{{t.count}}</span></button></sc-for>
+      </div>
+
+      <sc-if value="{{onUsers}}" hint-placeholder-val="{{ true }}">
+        <section class="eco-panel" aria-label="Roles" style="grid-template-columns: repeat(4, minmax(0, 1fr))">
+          <div class="eco-panel__cell"><p class="eco-panel__label"><span class="eco-code">ROL-01</span> Administrador</p><p class="eco-panel__value">1 <small>usuario</small></p><p class="eco-panel__note">Configuración, usuarios, flota y parámetros. Acceso a todo.</p></div>
+          <div class="eco-panel__cell"><p class="eco-panel__label"><span class="eco-code">ROL-02</span> Planificador</p><p class="eco-panel__value">3 <small>usuarios</small></p><p class="eco-panel__note">Pedidos, flota, conductores y generación de rutas.</p></div>
+          <div class="eco-panel__cell"><p class="eco-panel__label"><span class="eco-code">ROL-03</span> Conductor</p><p class="eco-panel__value">13 <small>usuarios</small></p><p class="eco-panel__note">Su ruta, confirmar entregas, incidencias y alertas.</p></div>
+          <div class="eco-panel__cell"><p class="eco-panel__label"><span class="eco-code">ROL-04</span> Resp. de Logística</p><p class="eco-panel__value">2 <small>usuarios</small></p><p class="eco-panel__note">Dashboard, sostenibilidad y cumplimiento.</p></div>
+        </section>
+
+        <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center">
+          <div class="eco-search" style="flex: 1 1 320px"><svg class="eco-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="M16 16l4.5 4.5"></path></svg><label for="uq" class="eco-sr">Buscar usuarios</label><input id="uq" class="eco-search__input" type="search" placeholder="Buscar por nombre o correo" style="height: 36px; font-size: 13.5px"></div>
+          <button class="eco-filter" type="button">Rol</button>
+          <button class="eco-filter" type="button">Estado</button>
+        </div>
+
+        <div class="eco-list eco-list-scroll" style="--cols: minmax(0, 1fr) 150px 110px 120px 72px">
+          <div class="eco-row eco-row--head"><span>Usuario</span><span>Rol</span><span>Estado</span><span>Último acceso</span><span></span></div>
+          <sc-for list="{{users}}" as="u" hint-placeholder-count="7">
+            <div class="eco-row">
+              <span style="display: flex; align-items: center; gap: 10px; min-width: 0"><span class="eco-avatar" style="background: var(--surface-sunken); color: var(--ink)">{{u.ini}}</span><span style="min-width: 0; display: flex; flex-direction: column"><span class="eco-row__title">{{u.name}}</span><span class="eco-muted" style="font-size: 12.5px">{{u.mail}}</span></span></span>
+              <span><span class="eco-tag">{{u.role}}</span></span>
+              <span class="{{u.stCls}}"><svg class="eco-unit__ring" viewBox="0 0 16 16" aria-hidden="true"><circle class="ring" cx="8" cy="8" r="6.2"></circle><path class="pie" d="M8 8V3.6A4.4 4.4 0 0 1 8 12.4z"></path><circle class="core" cx="8" cy="8" r="2.6"></circle><path class="slash" d="M3.6 12.4l8.8-8.8"></path></svg>{{u.status}}</span>
+              <span class="eco-code eco-muted">{{u.last}}</span>
+              <span class="eco-row__end"><button class="eco-btn eco-btn--ghost" type="button">Editar</button></span>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{onParams}}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start">
+          <section style="flex: 3 1 520px; min-width: 0; border: 1px solid var(--hairline); border-radius: var(--radius-lg); padding: 4px 20px" aria-label="Parámetros del algoritmo">
+            <div class="eco-setting">
+              <span class="eco-setting__label">Peso del CO₂ frente al tiempo</span>
+              <span class="eco-code">{{weight}} % CO₂</span>
+              <input class="eco-range" type="range" min="0" max="100" value="{{weight}}" onInput="{{onWeight}}" aria-label="Peso del CO₂ frente al tiempo" style="grid-column: 1 / -1">
+              <span class="eco-setting__hint">0 % = solo tiempo · 100 % = solo emisiones (Green VRP)</span>
+            </div>
+            <div class="eco-setting">
+              <span class="eco-setting__label">Tiempo máximo de cálculo</span>
+              <span style="display: flex; align-items: center; gap: 6px"><input class="eco-input eco-code" value="45" style="width: 64px; text-align: right" aria-label="Tiempo máximo de cálculo en segundos"><span class="eco-muted">s</span></span>
+              <span class="eco-setting__hint">RNF-001: 150 pedidos y 15 vehículos en ≤ 45 s (P95)</span>
+            </div>
+            <div class="eco-setting">
+              <span class="eco-setting__label">Carga máxima por vehículo</span>
+              <span style="display: flex; align-items: center; gap: 6px"><input class="eco-input eco-code" value="95" style="width: 64px; text-align: right" aria-label="Carga máxima en porcentaje"><span class="eco-muted">%</span></span>
+              <span class="eco-setting__hint">Margen de seguridad sobre la capacidad registrada</span>
+            </div>
+            <div class="eco-setting">
+              <span class="eco-setting__label">Holgura de ventana</span>
+              <span style="display: flex; align-items: center; gap: 6px"><input class="eco-input eco-code" value="10" style="width: 64px; text-align: right" aria-label="Holgura de ventana en minutos"><span class="eco-muted">min</span></span>
+              <span class="eco-setting__hint">Antes del fin de la ventana, el pedido se marca «en riesgo»</span>
+            </div>
+            <div class="eco-setting">
+              <span class="eco-setting__label">Reoptimización automática</span>
+              <button class="eco-switch" type="button" role="switch" aria-checked="{{autoOn}}" aria-label="Reoptimización automática" onClick="{{toggleAuto}}"></button>
+              <span class="eco-setting__hint">Ante incidencias o tráfico, recalcula la ruta en ≤ 30 s y avisa al conductor</span>
+            </div>
+          </section>
+          <section style="flex: 2 1 320px; min-width: 0; display: flex; flex-direction: column; gap: 12px" aria-labelledby="fx-title">
+            <div class="eco-section-head"><h2 id="fx-title">Factores de emisión</h2></div>
+            <div class="eco-list" style="--cols: minmax(0, 1fr) 120px">
+              <div class="eco-row"><span>Diésel</span><span class="eco-code">2,68 kg/L</span></div>
+              <div class="eco-row"><span>Gasolina</span><span class="eco-code">2,31 kg/L</span></div>
+              <div class="eco-row"><span>GNV</span><span class="eco-code eco-muted">[por definir]</span></div>
+              <div class="eco-row"><span>Eléctrico</span><span class="eco-code eco-muted">[por definir]</span></div>
+            </div>
+            <p class="eco-muted" style="margin: 0; font-size: 12.5px">Valores de referencia: confirma la fuente oficial que usará el proyecto antes de producción.</p>
+          </section>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{onInteg}}" hint-placeholder-val="{{ false }}">
+        <div class="eco-list" style="--cols: minmax(0, 1fr) 160px 140px">
+          <div class="eco-row eco-row--head"><span>Servicio</span><span>Estado</span><span></span></div>
+          <div class="eco-row" style="min-height: 56px"><span style="display: flex; flex-direction: column"><span class="eco-row__title">Mapas · OpenStreetMap + Leaflet</span><span class="eco-muted" style="font-size: 12.5px">Visualización de rutas (US-006)</span></span><span class="eco-unit eco-unit--ready"><svg class="eco-unit__ring" viewBox="0 0 16 16" aria-hidden="true"><circle class="ring" cx="8" cy="8" r="6.2"></circle><path class="pie" d="M8 8V3.6A4.4 4.4 0 0 1 8 12.4z"></path><circle class="core" cx="8" cy="8" r="2.6"></circle><path class="slash" d="M3.6 12.4l8.8-8.8"></path></svg>Conectado</span><span class="eco-row__end"><button class="eco-btn eco-btn--ghost" type="button">Configurar</button></span></div>
+          <div class="eco-row" style="min-height: 56px"><span style="display: flex; flex-direction: column"><span class="eco-row__title">Base de datos · PostgreSQL + PostGIS</span><span class="eco-muted" style="font-size: 12.5px">Pedidos, flota, rutas</span></span><span class="eco-unit eco-unit--ready"><svg class="eco-unit__ring" viewBox="0 0 16 16" aria-hidden="true"><circle class="ring" cx="8" cy="8" r="6.2"></circle><path class="pie" d="M8 8V3.6A4.4 4.4 0 0 1 8 12.4z"></path><circle class="core" cx="8" cy="8" r="2.6"></circle><path class="slash" d="M3.6 12.4l8.8-8.8"></path></svg>Conectado</span><span class="eco-row__end"><button class="eco-btn eco-btn--ghost" type="button">Configurar</button></span></div>
+          <div class="eco-row" style="min-height: 56px"><span style="display: flex; flex-direction: column"><span class="eco-row__title">Tráfico en tiempo real</span><span class="eco-muted" style="font-size: 12.5px">Reoptimización dinámica · Iteración 3</span></span><span class="eco-unit eco-unit--service"><svg class="eco-unit__ring" viewBox="0 0 16 16" aria-hidden="true"><circle class="ring" cx="8" cy="8" r="6.2"></circle><path class="pie" d="M8 8V3.6A4.4 4.4 0 0 1 8 12.4z"></path><circle class="core" cx="8" cy="8" r="2.6"></circle><path class="slash" d="M3.6 12.4l8.8-8.8"></path></svg>Pendiente</span><span class="eco-row__end"><button class="eco-btn eco-btn--secondary" type="button">Conectar</button></span></div>
+        </div>
+      </sc-if>
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["light","dark"],"default":"light"},"$preview":{"width":1440,"height":1000}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { tab: 'users', weight: 70, auto: true };
+  }
+  renderVals() {
+    const s = this.state;
+    const tabs = [['users', 'Usuarios y roles', 19], ['params', 'Parámetros del algoritmo', ''], ['integ', 'Integraciones', 3]];
+    const U = [
+      ['SD', 'Sistemas DistriRápido', 'sistemas@distrirapido.pe', 'Administrador', 'on', 'hoy 08:02'],
+      ['BP', 'Beto P.', 'planificacion@distrirapido.pe', 'Planificador', 'on', 'hoy 10:40'],
+      ['DR', 'Daniel Rojas', 'drojas@distrirapido.pe', 'Planificador', 'on', 'ayer 18:15'],
+      ['MV', 'Mariela Vargas', 'mvargas@distrirapido.pe', 'Resp. de Logística', 'on', 'hoy 09:12'],
+      ['LH', 'Luis Huamán', 'lhuaman@distrirapido.pe', 'Conductor', 'on', 'hoy 10:41'],
+      ['RM', 'Rosa Mendoza', 'rmendoza@distrirapido.pe', 'Conductor', 'on', 'hoy 10:38'],
+      ['RC', 'Raúl Campos', 'rcampos@distrirapido.pe', 'Conductor', 'off', '12 sep']
+    ].map(u => ({ ini: u[0], name: u[1], mail: u[2], role: u[3], status: u[4] === 'on' ? 'Activo' : 'Inactivo', stCls: u[4] === 'on' ? 'eco-unit eco-unit--ready' : 'eco-unit eco-unit--off', last: u[5] }));
+    return {
+      theme: this.props.theme ?? 'light',
+      tabs: tabs.map(t => ({ label: t[1], count: t[2], on: s.tab === t[0] ? 'true' : 'false', pick: () => this.setState({ tab: t[0] }) })),
+      onUsers: s.tab === 'users', onParams: s.tab === 'params', onInteg: s.tab === 'integ',
+      users: U,
+      weight: s.weight, onWeight: e => this.setState({ weight: Number(e.target.value) }),
+      autoOn: s.auto ? 'true' : 'false', toggleAuto: () => this.setState({ auto: !s.auto })
+    };
+  }
+}
+</script>
+</body>
+</html>

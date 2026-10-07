@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Generar rutas del día</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/ecologistica/tokens.css">
+<link rel="stylesheet" href="ds/ecologistica/components/bundle.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0}
+a{color:var(--primary)}a:hover{color:var(--primary-hover)}
+</style>
+</helmet>
+<div class="eco-root eco-shell" data-theme="{{theme}}" style="min-height: 1100px">
+  <aside class="eco-side" aria-label="Navegación principal">
+    <a class="eco-side__brand" href="Pedidos.dc.html"><svg class="eco-mark" viewBox="0 0 32 32" aria-hidden="true"><path class="leaf" d="M5 27C5 14 13 5 27 5c0 14-9 22-22 22z"></path><path class="vein" d="M8.5 23.5c3.5-3.5 6-8.5 10.5-10.5"></path><circle class="stop" cx="21.5" cy="11.5" r="2.6"></circle></svg>EcoLogística <span>Lima</span></a>
+    <button class="eco-side__search" type="button"><svg class="eco-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="M16 16l4.5 4.5"></path></svg>Buscar…<span class="eco-kbd">⌘K</span></button>
+    <a class="eco-side__item" href="Pedidos.dc.html"><svg class="eco-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"></path><path d="M4 7.5l8 4.5 8-4.5M12 12v9"></path><circle cx="8" cy="9.8" r="1.8" class="acc"></circle></svg>Pedidos y rutas<span class="eco-side__count">248</span></a>
+    <a class="eco-side__item" href="Rutas.dc.html" aria-current="page"><svg class="eco-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17c2.5-2.5 1.5-5 5-5s2.5-2.5 5-5" stroke-dasharray="2.4 2.8"></path><circle cx="5" cy="19" r="2.4" class="acc"></circle><circle cx="19" cy="5" r="2.4"></circle></svg>Generar rutas</a>
+    <a class="eco-side__item" href="Flota.dc.html"><svg class="eco-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 15.5V8.5h8v7"></path><path d="M12 10.5h3.5l2.5 2.6v2.4"></path><circle cx="7" cy="16.5" r="1.6" class="acc"></circle><circle cx="15.5" cy="16.5" r="1.6"></circle><path d="M2.5 20.5h19" stroke-dasharray="2.2 2.8"></path></svg>Flota<span class="eco-side__count">15</span></a>
+    <div class="eco-side__foot">
+      <div class="eco-side__co2"><span>CO₂ evitado este mes</span><strong>658 kg <span>de 700</span></strong><div class="eco-hero__meter" role="img" aria-label="94 por ciento de la meta mensual"><div class="eco-hero__meter-fill" style="width: 94%"></div></div></div>
+      <div class="eco-side__user"><span class="eco-role">Planificador</span><span class="eco-avatar">BP</span><div>Beto P.</div></div>
+    </div>
+  </aside>
+
+  <div class="eco-main">
+    <header class="eco-topbar">
+      <nav class="eco-crumbs" aria-label="Ruta de navegación"><span>Operación</span><span aria-hidden="true">/</span><strong>Generar rutas del día</strong></nav>
+      <div class="eco-topbar__end"><span class="eco-tag"><span class="eco-code">MOTOR VRPTW · GREEN VRP</span></span></div>
+    </header>
+
+    <main class="eco-content">
+      <div>
+        <h1 class="eco-h1">Generar rutas del día</h1>
+        <p class="eco-sub">Jueves 1 de octubre · corte de pedidos 10:30 · hasta 150 pedidos y 15 vehículos</p>
+      </div>
+
+      <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start">
+        <section style="flex: 2 1 360px; min-width: 0; display: flex; flex-direction: column; gap: 16px" aria-labelledby="in-title">
+          <div class="eco-section-head"><h2 id="in-title">1 · Qué se va a planificar</h2></div>
+          <div class="eco-panel" style="grid-template-columns: repeat(2, minmax(0, 1fr))">
+            <div class="eco-panel__cell"><p class="eco-panel__label">Pedidos por asignar</p><p class="eco-panel__value">39 <small>pendientes</small></p><p class="eco-panel__note">4 distritos de Lima Este</p></div>
+            <div class="eco-panel__cell"><p class="eco-panel__label">Vehículos disponibles</p><p class="eco-panel__value">13 <small>de 15</small></p><p class="eco-panel__note">2 en mantenimiento</p></div>
+          </div>
+
+          <div class="eco-section-head" style="margin-top: 8px"><h2>2 · Cómo optimizar</h2></div>
+          <div style="border: 1px solid var(--hairline); border-radius: var(--radius-lg); padding: 4px 18px; background: var(--surface)">
+            <div class="eco-setting">
+              <span class="eco-setting__label">Prioridad</span>
+              <div class="eco-seg-ctrl" role="group" aria-label="Prioridad de optimización">
+                <sc-for list="{{goals}}" as="g" hint-placeholder-count="3"><button type="button" aria-pressed="{{g.on}}" onClick="{{g.pick}}">{{g.label}}</button></sc-for>
+              </div>
+              <span class="eco-setting__hint">{{goalHint}}</span>
+            </div>
+            <div class="eco-setting">
+              <span class="eco-setting__label">Respetar ventanas de entrega</span>
+              <button class="eco-switch" type="button" role="switch" aria-checked="{{winOn}}" aria-label="Respetar ventanas de entrega" onClick="{{toggleWin}}"></button>
+              <span class="eco-setting__hint">Ningún pedido llega fuera de su horario</span>
+            </div>
+            <div class="eco-setting">
+              <span class="eco-setting__label">Priorizar vehículos de bajas emisiones</span>
+              <button class="eco-switch" type="button" role="switch" aria-checked="{{lowOn}}" aria-label="Priorizar vehículos de bajas emisiones" onClick="{{toggleLow}}"></button>
+              <span class="eco-setting__hint">GNV, eléctricos e híbridos salen primero</span>
+            </div>
+          </div>
+
+          <button class="eco-btn eco-btn--block" type="button" onClick="{{run}}" disabled="{{running}}"><svg class="eco-icon eco-icon--md" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17c2.5-2.5 1.5-5 5-5s2.5-2.5 5-5" stroke-dasharray="2.4 2.8"></path><circle cx="5" cy="19" r="2.4" class="acc"></circle><circle cx="19" cy="5" r="2.4"></circle></svg>{{runLabel}}</button>
+          <p class="eco-muted" style="margin: -6px 0 0; font-size: 12.5px; text-align: center">El cálculo tarda hasta 45 s. Si no hay vehículos disponibles, no se ejecuta y te avisamos.</p>
+        </section>
+
+        <section style="flex: 3 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 16px" aria-labelledby="out-title" aria-live="polite">
+          <div class="eco-section-head"><h2 id="out-title">3 · Rutas propuestas</h2><span class="eco-tag">{{stateTag}}</span></div>
+
+          <sc-if value="{{isReady}}" hint-placeholder-val="{{ false }}">
+            <div style="border: 1px dashed var(--border-control); border-radius: var(--radius-lg); padding: 40px 24px; text-align: center; color: var(--ink-muted)">
+              <p style="margin: 0; font-size: 15px; font-weight: 600; color: var(--ink)">Todavía no hay rutas para hoy</p>
+              <p style="margin: 6px 0 0">Revisa la configuración y pulsa «Generar rutas». Verás cuánto CO₂ se ahorra antes de aprobarlas.</p>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{isRunning}}" hint-placeholder-val="{{ false }}">
+            <div style="border: 1px solid var(--hairline); border-radius: var(--radius-lg); padding: 20px; display: flex; flex-direction: column; gap: 14px">
+              <div style="display: flex; justify-content: space-between; font-size: 13.5px"><strong>Optimizando 39 pedidos en 13 vehículos…</strong><span class="eco-code eco-muted">12 s</span></div>
+              <div class="eco-meter"><div class="eco-meter__fill" style="width: 62%"></div></div>
+              <ol class="eco-stops">
+                <li class="eco-stop eco-stop--done"><span class="eco-stop__dot">1</span><span class="eco-stop__title">Agrupar pedidos por distrito y ventana</span></li>
+                <li class="eco-stop eco-stop--done"><span class="eco-stop__dot">2</span><span class="eco-stop__title">Asignar vehículos según capacidad</span></li>
+                <li class="eco-stop eco-stop--now"><span class="eco-stop__dot">3</span><span class="eco-stop__title">Ordenar paradas (VRPTW)</span></li>
+                <li class="eco-stop"><span class="eco-stop__dot">4</span><span class="eco-stop__title">Calcular combustible y CO₂</span></li>
+              </ol>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{isDone}}" hint-placeholder-val="{{ true }}">
+            <div class="eco-panel" style="grid-template-columns: repeat(4, minmax(0, 1fr))">
+              <div class="eco-panel__cell"><p class="eco-panel__label">Rutas</p><p class="eco-panel__value">13</p><p class="eco-panel__note">39 pedidos asignados</p></div>
+              <div class="eco-panel__cell"><p class="eco-panel__label">Distancia</p><p class="eco-panel__value">1 284 <small>km</small></p><p class="eco-panel__note"><span class="eco-delta">−212 km</span></p></div>
+              <div class="eco-panel__cell" style="background: var(--eco-bg)"><p class="eco-panel__label">CO₂ estimado</p><p class="eco-panel__value eco-panel__value--eco">95 <small>kg</small></p><p class="eco-panel__note"><span class="eco-delta">−19 %</span> vs. sin optimizar</p></div>
+              <div class="eco-panel__cell"><p class="eco-panel__label">En ventana</p><p class="eco-panel__value">96 %</p><p class="eco-panel__note">meta 90 %</p></div>
+            </div>
+
+            <div class="eco-list eco-list-scroll" style="--cols: 84px minmax(0, 1fr) 70px 70px 120px 74px">
+              <div class="eco-row eco-row--head"><span>Vehículo</span><span>Conductor · zona</span><span>Paradas</span><span>Km</span><span>Carga</span><span>CO₂</span></div>
+              <sc-for list="{{routes}}" as="r" hint-placeholder-count="6">
+                <div class="eco-row">
+                  <span class="eco-code">{{r.plate}}</span>
+                  <span style="min-width: 0; display: flex; flex-direction: column"><span class="eco-row__title">{{r.driver}}</span><span class="eco-muted" style="font-size: 12.5px">{{r.zone}} · <span class="{{r.fuelTag}}" style="height: 18px">{{r.fuel}}</span></span></span>
+                  <span class="eco-num">{{r.stops}}</span>
+                  <span class="eco-num">{{r.km}}</span>
+                  <span style="display: flex; align-items: center; gap: 8px"><span class="eco-meter" style="flex: 1; height: 5px"><span class="eco-meter__fill" style="width: {{r.load}}"></span></span><span class="eco-code eco-muted">{{r.load}}</span></span>
+                  <span class="eco-num" style="color: var(--eco-ink); font-weight: 600">{{r.co2}}</span>
+                </div>
+              </sc-for>
+              <div class="eco-row" style="color: var(--ink-muted); font-size: 13px"><span></span><span>y 7 rutas más</span></div>
+            </div>
+
+            <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center">
+              <a class="eco-btn" href="Pedidos.dc.html">Aprobar y enviar a conductores</a>
+              <button class="eco-btn eco-btn--secondary" type="button">Ajustar manualmente</button>
+              <button class="eco-btn eco-btn--ghost" type="button" onClick="{{reset}}">Descartar</button>
+              <span class="eco-muted" style="margin-left: auto; font-size: 12.5px">Calculado en 31 s</span>
+            </div>
+          </sc-if>
+        </section>
+      </div>
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["light","dark"],"default":"light"},"$preview":{"width":1440,"height":1100}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { step: 'done', goal: 'co2', win: true, low: true };
+  }
+  componentWillUnmount() { clearTimeout(this.timer); }
+  renderVals() {
+    const s = this.state;
+    const goals = [['co2', 'Menos CO₂'], ['bal', 'Equilibrado'], ['time', 'Menos tiempo']];
+    const hints = { co2: 'Green VRP: minimiza combustible y emisiones', bal: 'Mitad CO₂, mitad tiempo de entrega', time: 'Minimiza la duración total de las rutas' };
+    const R = [
+      ['ABC-123', 'Luis Huamán', 'S. J. de Lurigancho', 'GNV', 18, 96, '82%', '7,1 kg'],
+      ['BCD-456', 'Rosa Mendoza', 'El Agustino', 'Diésel', 21, 88, '91%', '8,9 kg'],
+      ['EGH-567', 'Carmen Ríos', 'Santa Anita', 'Híbrido', 16, 74, '70%', '5,8 kg'],
+      ['FHJ-890', 'Jorge Salas', 'Ate', 'GNV', 19, 102, '88%', '7,6 kg'],
+      ['DFG-234', 'Pedro Quispe', 'S. J. de Lurigancho', 'GNV', 20, 110, '85%', '6,4 kg'],
+      ['HKL-345', 'Ana Torres', 'Santa Anita', 'Eléctrico', 15, 61, '64%', '0 kg']
+    ].map(r => ({ plate: r[0], driver: r[1], zone: r[2], fuel: r[3], fuelTag: r[3] === 'Diésel' ? 'eco-tag' : 'eco-tag eco-tag--eco', stops: r[4], km: r[5], load: r[6], co2: r[7] }));
+    const run = () => {
+      this.setState({ step: 'running' });
+      clearTimeout(this.timer);
+      this.timer = setTimeout(() => this.setState({ step: 'done' }), 1800);
+    };
+    return {
+      theme: this.props.theme ?? 'light',
+      goals: goals.map(g => ({ label: g[1], on: s.goal === g[0] ? 'true' : 'false', pick: () => this.setState({ goal: g[0] }) })),
+      goalHint: hints[s.goal],
+      winOn: s.win ? 'true' : 'false', toggleWin: () => this.setState({ win: !s.win }),
+      lowOn: s.low ? 'true' : 'false', toggleLow: () => this.setState({ low: !s.low }),
+      run, running: s.step === 'running',
+      runLabel: s.step === 'running' ? 'Generando rutas…' : (s.step === 'done' ? 'Volver a generar' : 'Generar rutas'),
+      isReady: s.step === 'ready', isRunning: s.step === 'running', isDone: s.step === 'done',
+      stateTag: s.step === 'done' ? 'Propuesta lista · sin aprobar' : (s.step === 'running' ? 'Calculando' : 'Sin generar'),
+      routes: R,
+      reset: () => this.setState({ step: 'ready' })
+    };
+  }
+}
+</script>
+</body>
+</html>

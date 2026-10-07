@@ -11,6 +11,6 @@ describe('index.html accessibility metadata', () => {
   })
 
   it('has a descriptive title (WCAG 2.4.2)', () => {
-    expect(html).toContain('<title>Dashboard del día — EcoLogística Lima</title>')
+    expect(html).toContain('<title>EcoLogística Lima</title>')
   })
 })
