@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test'
 import type { Locator, Page } from '@playwright/test'
+import { stubTiles } from './fixtures'
 
 async function fitsPage(page: Page) {
   const size = await page.evaluate(() => ({ width: innerWidth, viewport: document.documentElement.clientWidth, content: document.documentElement.scrollWidth }))
@@ -18,6 +19,7 @@ async function touchTargets(controls: Locator) {
 }
 
 test('390 px: Mi ruta cabe en pantalla y sus controles miden 48 px', async ({ page }) => {
+  await stubTiles(page)
   await page.goto('/tests/ui/driver.html')
   await expect(page.getByRole('list', { name: 'Paradas de hoy' })).toBeVisible()
   await fitsPage(page)
@@ -28,6 +30,7 @@ test('390 px: Mi ruta cabe en pantalla y sus controles miden 48 px', async ({ pa
 })
 
 test('390 px: confirmar la entrega actualiza el avance y lleva a la siguiente parada', async ({ page }) => {
+  await stubTiles(page)
   await page.goto('/tests/ui/driver.html')
   await page.getByRole('link', { name: 'Minimarket Don Lucho →' }).click()
   await expect(page.getByRole('heading', { name: 'Minimarket Don Lucho' })).toBeVisible()
@@ -55,6 +58,7 @@ test('390 px: confirmar la entrega actualiza el avance y lleva a la siguiente pa
 })
 
 test('390 px: un nombre y una dirección muy largos no desbordan', async ({ page }) => {
+  await stubTiles(page)
   await page.goto('/tests/ui/driver.html?pedido')
   await expect(page.getByRole('heading', { name: 'Minimarket Don Lucho' })).toBeVisible()
   await page.evaluate(() => {

@@ -516,3 +516,28 @@ dialog.eco-dialog { margin: auto; }
 dialog.eco-dialog--sheet { width: 100%; max-width: 480px; margin: auto auto 0; border-radius: 20px 20px 0 0; padding: 24px 20px 28px; }
 .eco-dialog--sheet .eco-dialog__title { font-size: 18px; }
 .eco-dialog__stack { display: flex; flex-direction: column; gap: 8px; margin-top: 20px; }
+
+/* =====================================================================
+   v9 · Mapa Leaflet + OpenStreetMap
+   ===================================================================== */
+.eco-map .eco-map__leaflet { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; background: var(--map-land); font: inherit; }
+.eco-map .leaflet-container { font: inherit; }
+.eco-map__marker { background: transparent; border: 0; }
+.eco-map__marker svg { display: block; overflow: visible; }
+.eco-map .eco-map__ctrl, .eco-map .eco-map__legend, .eco-map .eco-map__note { z-index: 1000; }
+.eco-map .eco-map__note { left: 50%; right: auto; bottom: 50%; transform: translate(-50%, 50%); }
+.eco-map .leaflet-control-attribution { font-size: 10px; }
+.eco-map .eco-map__popup .leaflet-popup-content-wrapper { padding: 0; border: 1px solid var(--hairline); border-radius: 10px; background: var(--surface); color: var(--ink); box-shadow: var(--shadow-dialog, 0 8px 24px rgba(16, 32, 26, 0.18)); }
+.eco-map .eco-map__popup .leaflet-popup-content { margin: 0; }
+.eco-map .eco-map__popup .leaflet-popup-tip { background: var(--surface); }
+.eco-map__card { min-width: 220px; max-width: 260px; padding: 10px 12px; font-size: 12.5px; line-height: 16px; }
+.eco-map__card strong { display: block; font-size: 14px; line-height: 20px; font-weight: 600; letter-spacing: -0.01em; }
+.eco-map__card .eco-code { color: var(--ink-muted); }
+.eco-map__legend svg { overflow: visible; }
+.eco-map--compact .eco-map__ctrl--tl { top: 8px; left: 8px; }
+.eco-fallback { margin: 0; padding: 0; list-style: none; border: 1px solid var(--hairline); border-radius: var(--radius-lg); background: var(--surface); overflow: hidden; }
+.eco-fallback__row { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: center; gap: 4px 16px; min-height: 44px; padding: 6px 16px; border-top: 1px solid var(--hairline); }
+.eco-fallback__row:first-child { border-top: 0; }
+.eco-fallback__row[aria-current="true"] { background: var(--eco-bg); }
+.eco-fallback__pick { display: flex; align-items: center; gap: 12px; min-width: 0; padding: 0; border: 0; background: transparent; font: inherit; color: inherit; text-align: left; cursor: pointer; }
+.eco-phone .eco-map__ctrl button { height: 48px; min-width: 48px; }

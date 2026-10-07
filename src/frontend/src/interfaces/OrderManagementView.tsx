@@ -5,10 +5,12 @@ import type { StatusTab } from '../application/orderBoard'
 import { formatDecimal } from '../domain/format'
 import { districts, formatWindow, statusLabels } from '../domain/managedOrder'
 import type { ManagedOrder, OrderPermissions } from '../domain/managedOrder'
-import { AppShell, Banner, HojaCo2Icon, List, ListGroup, ListRow, MapPlaceholder, PaqueteIcon, Panel, PanelCell, PlusIcon, RutaIcon, SearchInput, TripStatus, VentanaIcon } from '../shared/ui'
+import type { MapDataSource } from '../domain/ports/mapDataSource'
+import { AppShell, Banner, HojaCo2Icon, List, ListGroup, ListRow, PaqueteIcon, Panel, PanelCell, PlusIcon, RutaIcon, SearchInput, TripStatus, VentanaIcon } from '../shared/ui'
 import type { ModuleId } from '../shared/ui'
 import { OrderForm } from './OrderForm'
 import { CancelDialog } from './orders/CancelDialog'
+import { RouteMap } from './map/RouteMap'
 import { OrderDetail } from './orders/OrderDetail'
 import { tripOf } from './orders/tripState'
 
@@ -33,7 +35,7 @@ async function loadAll(service: Management): Promise<ManagedOrder[]> {
 
 const message = (reason: unknown, fallback: string) => (reason instanceof Error ? reason.message : fallback)
 
-export function OrderManagementView({ service, demo, onNavigate }: { service: Management; demo: boolean; onNavigate?: (id: ModuleId, href: string) => void }) {
+export function OrderManagementView({ service, demo, mapSource, onNavigate }: { service: Management; demo: boolean; mapSource: MapDataSource; onNavigate?: (id: ModuleId, href: string) => void }) {
   const [screen, setScreen] = useState<Screen>('board')
   const [orders, setOrders] = useState<ManagedOrder[]>([])
   const [permissions, setPermissions] = useState<OrderPermissions>({ can_write: false })
@@ -317,7 +319,7 @@ export function OrderManagementView({ service, demo, onNavigate }: { service: Ma
               ) : null}
 
               <section className="eco-board__side" aria-label="Mapa y detalle">
-                {showMap ? <MapPlaceholder /> : null}
+                {showMap ? <RouteMap source={mapSource} selectedId={selected?.id} query={query} onSelect={setSelectedId} /> : null}
                 {selected ? (
                   <OrderDetail
                     order={selected}

@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 import type { Page, Locator } from '@playwright/test'
-import { captureEvidence, fillOrder } from './fixtures'
+import { captureEvidence, fillOrder, stubTiles } from './fixtures'
 
 async function fitsPage(page: Page) {
   const size = await page.evaluate(() => ({ width: innerWidth, viewport: document.documentElement.clientWidth, content: document.documentElement.scrollWidth }))
@@ -23,6 +23,7 @@ async function fitsControls(page: Page, controls: Locator) {
 }
 
 test('390 px: listado, formulario, detalle y diálogo sin recortes ni desbordamiento de página', async ({ page }) => {
+  await stubTiles(page)
   await page.goto('/tests/ui/demo.html')
   await expect(page.getByRole('grid', { name: 'Pedidos por estado' })).toBeVisible()
   await fitsControls(page, page.locator('#filter-district, .eco-seg-ctrl button, .eco-topbar__end .eco-btn'))

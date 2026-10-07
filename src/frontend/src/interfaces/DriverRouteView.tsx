@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react'
 import type { DriverRouteService } from '../application/driverRoute'
-import { routeProgress } from '../domain/driverRoute'
+import { currentStop, routeProgress } from '../domain/driverRoute'
 import type { DriverRoute, RouteStop } from '../domain/driverRoute'
-import { Banner, DriverBar, DriverTabBar, MapPlaceholder, RutaIcon } from '../shared/ui'
+import type { MapDataSource } from '../domain/ports/mapDataSource'
+import { Banner, DriverBar, DriverTabBar, RutaIcon } from '../shared/ui'
+import { RouteMap } from './map/RouteMap'
 import type { ModuleId } from '../shared/ui'
 
 type DriverRouteViewProps = {
   service: DriverRouteService
+  mapSource: MapDataSource
   onNavigate?: (id: ModuleId, href: string) => void
   onOpenOrder?: (orderId: string) => void
 }
@@ -19,7 +22,7 @@ function stopMeta(stop: RouteStop) {
 }
 
 // «Mi ruta» del conductor: paradas del día, avance y aviso de reoptimización. Solo móvil.
-export function DriverRouteView({ service, onNavigate, onOpenOrder }: DriverRouteViewProps) {
+export function DriverRouteView({ service, mapSource, onNavigate, onOpenOrder }: DriverRouteViewProps) {
   const [route, setRoute] = useState<DriverRoute | null>(null)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(true)
@@ -102,7 +105,7 @@ export function DriverRouteView({ service, onNavigate, onOpenOrder }: DriverRout
                 </Banner>
               ) : null}
 
-              <MapPlaceholder compact />
+              <RouteMap source={mapSource} selectedId={currentStop(route)?.order_id} compact />
 
               <ol className="eco-stops" aria-label="Paradas de hoy">
                 {route.stops.map((stop, index) => (
