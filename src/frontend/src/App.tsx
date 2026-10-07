@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 
 import { createDriverOrders } from './application/driverOrders';
-import { DemoOrders } from './infrastructure/demoOrders';
+import { createDriverRoute } from './application/driverRoute';
+import { DemoOrders, UnavailableDriverRoute } from './infrastructure/demoOrders';
 import { HttpOrders } from './infrastructure/httpOrders';
 import { DriverOrderView } from './interfaces/DriverOrderView';
+import { DriverRouteView } from './interfaces/DriverRouteView';
 
 import { createManagement } from './application/manageOrders';
 import { DemoManagement } from './infrastructure/demoManagement';
@@ -26,7 +28,11 @@ const dashboardGateway = new HttpDashboardGateway();
 
 const apiUrl = import.meta.env.VITE_API_URL as string | undefined;
 const demo = apiUrl === undefined;
-const driverService = createDriverOrders(demo ? new DemoOrders() : new HttpOrders(apiUrl));
+// En demostración, pedidos y ruta del conductor comparten estado: confirmar una entrega avanza la ruta.
+const demoDriver = demo ? new DemoOrders() : null;
+const driverService = createDriverOrders(demoDriver ?? new HttpOrders(apiUrl ?? ''));
+const driverRouteService = createDriverRoute(demoDriver ?? new UnavailableDriverRoute());
+const DEFAULT_ORDER = 'PED-0026';
 const managementService = createManagement(
   demo
     ? new DemoManagement()
@@ -43,29 +49,32 @@ const routeService = createGenerateRoutes(
     : { optimizer: new UnavailableRouteOptimizer(), planning: createLivePlanningSource(managementService, vehicleApi) }
 );
 
-type ActiveView = 'dashboard' | 'flota' | 'pedidos' | 'rutas' | 'conductor';
+type ActiveView = 'dashboard' | 'flota' | 'pedidos' | 'rutas' | 'mi-ruta' | 'conductor';
 
 function getViewFromUrl(): { view: ActiveView; orderId: string } {
   if (typeof window === 'undefined') {
-    return { view: 'dashboard', orderId: 'PED-0024' };
+    return { view: 'dashboard', orderId: DEFAULT_ORDER };
   }
   const params = new URLSearchParams(window.location.search);
   const vista = params.get('vista');
   const pedido = params.get('pedido');
 
   if (vista === 'flota') {
-    return { view: 'flota', orderId: pedido || 'PED-0024' };
+    return { view: 'flota', orderId: pedido || DEFAULT_ORDER };
   }
   if (vista === 'pedidos') {
-    return { view: 'pedidos', orderId: pedido || 'PED-0024' };
+    return { view: 'pedidos', orderId: pedido || DEFAULT_ORDER };
   }
   if (vista === 'rutas') {
-    return { view: 'rutas', orderId: pedido || 'PED-0024' };
+    return { view: 'rutas', orderId: pedido || DEFAULT_ORDER };
+  }
+  if (vista === 'mi-ruta') {
+    return { view: 'mi-ruta', orderId: pedido || DEFAULT_ORDER };
   }
   if (vista === 'conductor' || pedido) {
-    return { view: 'conductor', orderId: pedido || 'PED-0024' };
+    return { view: 'conductor', orderId: pedido || DEFAULT_ORDER };
   }
-  return { view: 'dashboard', orderId: 'PED-0024' };
+  return { view: 'dashboard', orderId: DEFAULT_ORDER };
 }
 
 export function App() {
@@ -100,6 +109,9 @@ export function App() {
     } else if (view === 'rutas') {
       params.set('vista', 'rutas');
       params.delete('pedido');
+    } else if (view === 'mi-ruta') {
+      params.set('vista', 'mi-ruta');
+      params.delete('pedido');
     } else if (view === 'conductor') {
       params.set('vista', 'conductor');
       if (orderId) {
@@ -114,12 +126,13 @@ export function App() {
 
   // La barra superior de cada vista migrada al design system navega por módulo; lo que aún no existe recarga por URL.
   const navigateModule = (id: ModuleId, href: string) => {
-    if (id === 'dashboard' || id === 'flota' || id === 'pedidos' || id === 'rutas') navigateTo(id);
+    if (id === 'dashboard' || id === 'flota' || id === 'pedidos' || id === 'rutas' || id === 'mi-ruta') navigateTo(id);
+    else if (id === 'pedido-actual') navigateTo('conductor', currentOrderId);
     else window.location.assign(href);
   };
 
   // Las vistas migradas al design system traen su propio AppShell; las demás conservan la barra heredada.
-  const showLegacyNav = activeView === 'dashboard' || activeView === 'conductor';
+  const showLegacyNav = activeView === 'dashboard';
 
   return (
     <>
@@ -155,12 +168,7 @@ export function App() {
               📦 Gestión de Pedidos
             </button>
 
-            <button
-              type="button"
-              className={`nav-tab ${activeView === 'conductor' ? 'active' : ''}`}
-              onClick={() => navigateTo('conductor')}
-              id="tab-nav-conductor"
-            >
+            <button type="button" className="nav-tab" onClick={() => navigateTo('mi-ruta')} id="tab-nav-conductor">
               🛵 Vista Conductor
             </button>
           </div>
@@ -181,26 +189,26 @@ export function App() {
       {/* Vista 3: Generar rutas del día (US-005) */}
       {activeView === 'rutas' && <RoutePlanningView service={routeService} onNavigate={navigateModule} />}
 
-      {/* Vista 4: Portal Conductor */}
+      {/* Vista 4: Mi ruta del conductor */}
+      {activeView === 'mi-ruta' && (
+        <DriverRouteView
+          service={driverRouteService}
+          onNavigate={navigateModule}
+          onOpenOrder={(orderId) => navigateTo('conductor', orderId)}
+        />
+      )}
+
+      {/* Vista 5: Pedido actual del conductor */}
       {activeView === 'conductor' && (
-        <div className="driver-order-view-wrapper">
-          <a
-            className="management-switch"
-            href="/?vista=pedidos"
-            onClick={(e) => {
-              e.preventDefault();
-              navigateTo('pedidos');
-            }}
-          >
-            Ir a gestión de pedidos
-          </a>
-          <DriverOrderView
-            key={currentOrderId}
-            service={driverService}
-            orderId={currentOrderId}
-            demo={demo}
-          />
-        </div>
+        <DriverOrderView
+          key={currentOrderId}
+          service={driverService}
+          routeService={driverRouteService}
+          orderId={currentOrderId}
+          demo={demo}
+          onNavigate={navigateModule}
+          onOpenOrder={(orderId) => navigateTo('conductor', orderId)}
+        />
       )}
     </>
   );
