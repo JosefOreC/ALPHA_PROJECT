@@ -1,5 +1,7 @@
 // Vistas por rol (GUIA.md, tabla «Vistas por rol»): cada rol ve solo sus módulos.
-export type Role = 'admin' | 'planner' | 'driver' | 'logistics'
+import type { Role } from '../../domain/role'
+
+export type { Role }
 
 export type ModuleId =
   | 'dashboard'

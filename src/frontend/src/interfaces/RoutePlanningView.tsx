@@ -23,6 +23,7 @@ const percent = (value: number) => `${Math.round(value * 100)} %`
 export function RoutePlanningView({ service, onNavigate }: { service: GenerateRoutes; onNavigate?: (id: ModuleId, href: string) => void }) {
   const [scope, setScope] = useState<PlanningScope | null>(null)
   const [scopeError, setScopeError] = useState('')
+  const [limit, setLimit] = useState(45)
   const [settings, setSettings] = useState<RouteSettings>(DEFAULT_ROUTE_SETTINGS)
   const [phase, setPhase] = useState<Phase>('ready')
   const [progress, setProgress] = useState<PlanningProgress>({ step: 0, fraction: 0 })
@@ -32,6 +33,9 @@ export function RoutePlanningView({ service, onNavigate }: { service: GenerateRo
 
   useEffect(() => {
     let active = true
+    service.limitSeconds().then((seconds) => {
+      if (active) setLimit(seconds)
+    }, () => undefined)
     service
       .scope()
       .then(value => {
@@ -136,7 +140,7 @@ export function RoutePlanningView({ service, onNavigate }: { service: GenerateRo
             <RutaIcon size="md" />
             {running ? 'Generando rutas…' : phase === 'done' ? 'Volver a generar' : 'Generar rutas'}
           </button>
-          <p className="eco-muted eco-hint-center">El cálculo tarda hasta 45 s. Si no hay vehículos disponibles, no se ejecuta y te avisamos.</p>
+          <p className="eco-muted eco-hint-center">El cálculo tarda hasta {limit} s. Si no hay vehículos disponibles, no se ejecuta y te avisamos.</p>
         </section>
 
         <section className="eco-columns__main" aria-labelledby="plan-output-title" aria-live="polite">
