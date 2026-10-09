@@ -64,9 +64,9 @@ La versión V_1_0_0 no conservó estos datos. Se completan si existe evidencia d
 
 | Campo | Registro |
 |---|---|
-| Fecha y hora de la reunión | — |
-| Asistentes | — |
-| Decisión sobre cada historia (aceptada / parcial / vuelve al backlog) | — |
+| Fecha y hora de la reunión | 30/09/2026 |
+| Asistentes | Todos |
+| Decisión sobre cada historia (aceptada ) | — |
 | Acuerdos y responsables | — |
 | Velocidad del sprint | — |
 
