@@ -282,6 +282,8 @@ La documentación de gestión y técnica completa se encuentra en la carpeta [`/
 | [.gitignore](./.gitignore) | Configuración de exclusiones para React/Node, Python/FastAPI, entornos virtuales, secretos y más. |
 | [src/frontend/README.md](./src/frontend/README.md) | Propósito y próximos pasos para la implementación del frontend. |
 | [src/backend/README.md](./src/backend/README.md) | Propósito y próximos pasos para la implementación del backend. |
+| [05 Revisión del Sprint V_2_0_0](docs/03%20Implementaci%C3%B3n/05%20Revisi%C3%B3n%20del%20Sprint%20V_2_0_0.md) | Incremento de login, administración, persistencia, interfaz clara y filtros del mapa; evidencia y pendientes. |
+| [06 Retrospectiva del Sprint V_2_0_0](docs/03%20Implementaci%C3%B3n/06%20Retrospectiva%20del%20Sprint%20V_2_0_0.md) | Aprendizajes de la sesión y propuestas para la siguiente revisión. |
 
 ---
 
