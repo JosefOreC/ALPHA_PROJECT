@@ -87,15 +87,7 @@ Documentación de soporte (en la rama `feature/josef/spr2/auth`, sin enlaces has
 
 Los responsables y las fechas de resolución se confirman en la revisión. El incremento aporta una base verificable para continuar el desarrollo; PMV-2, PMV-3, EN-00 y EN-02 conservan los pendientes descritos.
 
-## Registro de la reunión de revisión
 
-| Campo | Registro |
-|---|---|
-| Fecha y hora de la reunión | — |
-| Asistentes | — |
-| Decisión sobre cada historia (aceptada / parcial / vuelve al backlog) | — |
-| Acuerdos y responsables | — |
-| Velocidad del sprint | — |
 
 [← Volver al README Principal](../../../README.md)
 
