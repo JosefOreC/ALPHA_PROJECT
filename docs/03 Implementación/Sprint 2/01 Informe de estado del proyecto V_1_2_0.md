@@ -66,13 +66,11 @@ La demostración del Sprint 2 muestra únicamente lo que se puede ejecutar:
 
 ### **Próximos avances**
 
-- Revisar y fusionar los Pull Requests abiertos en el orden de su serie y, después, las ramas `feature/josef/spr2/map` y `feature/josef/spr2/auth`: ambas parten de la serie de interfaz (contienen sus commits) y la extienden con el mapa vectorial, los roles y la base de pruebas.
 - Componer una aplicación de API única (pedidos, vehículos, conductores y dashboard) y conectar el frontend a ella.
 - Conectar los repositorios a PostgreSQL y acordar las migraciones.
 - Integrar el proveedor de autenticación y reemplazar los usuarios genéricos de cada rol.
 - Diseñar el contrato de datos del mapa (rutas, coordenadas, posición y ETA) y la fuente operativa de pedidos en riesgo y CO₂ evitado.
 - Diseñar y construir la pantalla de Incidencias del conductor.
-- Actualizar Jira y GitHub para que reflejen el mismo estado del Sprint 2 y registrar la decisión de revisión.
 
 ### **Notas**
 
