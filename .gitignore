@@ -83,3 +83,10 @@ Thumbs.db
 # Herramientas de IA / indexado local
 .codegraph/
 .atl/
+
+# Documentación de desarrollo compartida (Markdown); otros artefactos siguen locales.
+/development/*
+!/development/*.md
+!/development/templates/
+/development/templates/*
+!/development/templates/*.md

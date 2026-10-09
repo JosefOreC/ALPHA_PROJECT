@@ -1,3 +1,27 @@
 :root, [data-theme="light"] { --bg: #f2f6ef; --surface: #ffffff; --surface-sunken: #e6eee2; --group-hover: #dde7d9; --ink: #10201a; --ink-muted: #475a50; --border: #d0dccf; --hairline: #e2e9df; --border-control: #74877b; --forest: #0f3d2a; --forest-deep: #0a2e1f; --on-forest: #f2f6ef; --forest-muted: #a9c7b5; --lime: #b5e04f; --lime-hover: #c3e86a; --on-lime: #10201a; --primary: #17603f; --primary-hover: #0f4a30; --on-primary: #ffffff; --focus-ring: #17603f; --eco-bg: #eef7d9; --eco-ink: #2f5d0c; --status-delivered: #2e8540; --status-transit: #2b6fd1; --status-pending: #a35f00; --status-cancelled: #69717d; --track: #dde7da; --skeleton: var(--track); --danger: #b3261e; --on-danger: #ffffff; --danger-bg: #fdeceb; --warning: #8a5100; --warning-bg: #fff1d6; --success-ink: #14662f; --success-bg: #e4f3e6; --info-ink: #0b5aa8; --info-bg: #e6effb; --scrim: rgba(15, 61, 42, 0.55); --map-land: #eef3ea; --map-block: #e2eadd; --map-water: #c9dcec; --map-road: #ffffff; --map-road-casing: #d2dccd; --route-1: #17603f; --route-2: #0b5aa8; --route-3: #37505e; --route-4: #6b3fa0; --shadow-dialog: 0 16px 48px rgba(15, 61, 42, 0.18); }
 [data-theme="dark"] { --bg: #0b1410; --surface: #121e18; --surface-sunken: #1a2a22; --group-hover: #21332a; --ink: #e4efe8; --ink-muted: #9fb4a8; --border: #26382e; --hairline: #1f2e26; --border-control: #6d8578; --forest: #133826; --forest-deep: #0d281b; --on-forest: #e4efe8; --forest-muted: #a9c7b5; --lime: #c4ec66; --lime-hover: #d1f27f; --on-lime: #10201a; --primary: #7fd6a0; --primary-hover: #9be3b6; --on-primary: #08200f; --focus-ring: #7fd6a0; --eco-bg: #1f2d0e; --eco-ink: #c4ec66; --status-delivered: #4cc27a; --status-transit: #6ea8ff; --status-pending: #e3a23b; --status-cancelled: #9aa3ae; --track: #22332a; --skeleton: var(--track); --danger: #ff8b7e; --on-danger: #2a0d0b; --danger-bg: #3a1715; --warning: #f2b860; --warning-bg: #33240b; --success-ink: #7fdba0; --success-bg: #123222; --info-ink: #8dbbff; --info-bg: #13263f; --scrim: rgba(0, 0, 0, 0.7); --map-land: #0f1a15; --map-block: #16241d; --map-water: #163049; --map-road: #273a30; --map-road-casing: #31473b; --route-1: #7fd6a0; --route-2: #8dbbff; --route-3: #b6c8d4; --route-4: #c4a3f0; --shadow-dialog: 0 16px 48px rgba(0, 0, 0, 0.55); }
 :root { --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-6: 24px; --space-8: 32px; --radius-sm: 4px; --radius-row: 6px; --radius-md: 8px; --radius-lg: 12px; --radius-xl: 16px; --radius-pill: 999px; --control-h: 34px; --button-h: 32px; --container-max: 1440px; --font-sans: Geist, "Segoe UI", system-ui, sans-serif; --font-mono: "Geist Mono", ui-monospace, monospace; }
+:root, [data-theme="light"] {
+  --map-base-land: #f4f0e6; --map-base-urban: #f5f5f5; --map-base-green: #d3f6e2;
+  --map-base-water: #9bdbe9; --map-base-stream: #b8dce6; --map-base-building: #edeff2;
+  --map-base-road: #ffffff; --map-base-road-edge: #d4dce5;
+  --map-base-arterial: #d1d9e1; --map-base-arterial-edge: #b6c2ce;
+  --map-base-highway: #92abc5; --map-base-highway-edge: #788fa9;
+  --map-base-text: #505b65; --map-base-text-muted: #77838e; --map-base-water-text: #5c99aa;
+  --map-accent: #4b7193; --map-accent-bg: #f1f5f8; --map-ink: #454b50;
+  --map-route-1: #6586a2; --map-route-2: #748e80; --map-route-3: #9186a0; --map-route-4: #a3947e;
+  --map-white: #ffffff; --map-casing: #ffffff; --map-muted: #70757a; --map-border: #e4e7ea;
+  --map-marker-blue: #b9d9ec; --map-marker-blue-ink: #6e91a8;
+  --map-marker-green: #bfe4cd; --map-marker-green-ink: #789c87;
+  --map-marker-lilac: #dbcbea; --map-marker-lilac-ink: #9b85b1;
+  --map-marker-sand: #efd9b0; --map-marker-sand-ink: #a58c61;
+  --map-marker-gray: #d8dde7; --map-marker-gray-ink: #909aaa;
+  --map-shadow: 0 1px 4px rgba(60, 64, 67, 0.10);
+  --map-popup-shadow: 0 4px 16px rgba(60, 64, 67, 0.12);
+}
+[data-theme="dark"] {
+  --map-accent: #8ab4f8; --map-accent-bg: #20334e; --map-ink: #e8eaed;
+  --map-route-1: #8ab4f8; --map-route-2: #81c995; --map-route-3: #c5a5f5; --map-route-4: #f6bf78;
+  --map-casing: #24302b; --map-muted: #aeb4b8; --map-border: #30383d;
+  --map-shadow: 0 2px 8px rgba(0, 0, 0, 0.35); --map-popup-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
+}

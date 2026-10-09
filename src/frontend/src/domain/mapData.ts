@@ -30,10 +30,24 @@ export interface MapRoute {
 }
 
 export interface MapData {
-  depot: { name: string; position: GeoPoint }
+  depot: { name: string; position: GeoPoint } | null
   orders: MapOrder[]
   routes: MapRoute[]
+  /** Independientes de las rutas. Omitir solo para adaptar fixtures heredados. */
+  vehicles?: MapVehicle[]
+  demo?: boolean
 }
+
+export interface MapVehicle {
+  id: string
+  plate: string
+  position: GeoPoint
+  route_id: string | null
+  color: 1 | 2 | 3 | 4
+  status: 'En ruta' | 'Disponible' | 'Detenido'
+}
+
+export type MapSelection = { kind: 'order' | 'route' | 'vehicle'; id: string }
 
 export const ORDER_STATUS_CLASS: Record<OrderStatus, 'pending' | 'transit' | 'delivered' | 'cancelled'> = {
   PENDIENTE: 'pending',

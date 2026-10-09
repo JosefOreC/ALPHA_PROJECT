@@ -1,141 +1,160 @@
 import type { Map as LeafletMap } from 'leaflet'
-import { Suspense, lazy, useEffect, useRef, useState } from 'react'
-import type { MapData } from '../../domain/mapData'
-import { ORDER_STATUS_CLASS } from '../../domain/mapData'
+import { Suspense, lazy, useEffect, useId, useMemo, useState } from 'react'
+import type { MapData, MapSelection } from '../../domain/mapData'
+import { MAP_PROFILES, prepareMap, selectionVisible } from '../../domain/mapPresentation'
+import { orderMatches } from '../../domain/mapData'
+import type { MapLayers, MapProfile } from '../../domain/mapPresentation'
 import type { MapDataSource } from '../../domain/ports/mapDataSource'
 import { statusLabels } from '../../domain/managedOrder'
-import { Banner, TripStatus } from '../../shared/ui'
-import type { MapLayers } from './LeafletCanvas'
+import { Banner, CamionetaIcon, EntregaIcon, MinusIcon, PaqueteIcon, PlusIcon, RecenterIcon, RutaIcon, SlidersIcon } from '../../shared/ui'
 
-// Leaflet pesa bastante: se descarga solo cuando hay un mapa que dibujar.
 const LeafletCanvas = lazy(() => import('./LeafletCanvas'))
-
-/** Tiles fallidos sin ninguno cargado antes de dar el mapa por caído. */
-const TILE_FAILURES = 4
-
-type RouteMapProps = {
+type Props = {
   source: MapDataSource
   selectedId?: string
-  /** Atenúa los pedidos que no coinciden con la búsqueda. */
   query?: string
   onSelect?: (id: string) => void
-  /** Solo lectura: sin leyenda, botones de zoom ni zoom con rueda (no secuestra el scroll de la página). */
+  onSelectElement?: (selection: MapSelection) => void
+  profile?: MapProfile
+  scopePlate?: string
+  initialLayers?: Partial<MapLayers>
+  showLayerControls?: boolean
   compact?: boolean
-  /** Tarjeta emergente del pedido elegido; se apaga en mapas muy pequeños. */
   card?: boolean
-  /** Proporción panorámica baja (390 × 220) para el móvil del conductor. */
   strip?: boolean
 }
+const LABELS: Record<keyof MapLayers, string> = { routes: 'Rutas', pins: 'Pedidos', vehicles: 'Camiones', depot: 'Almacén' }
+const LAYER_ICONS = { routes: RutaIcon, pins: EntregaIcon, vehicles: CamionetaIcon, depot: PaqueteIcon }
+const sourceKeys = new WeakMap<MapDataSource, number>()
+let sourceSequence = 0
 
-const LEGEND = [
-  { label: 'Pendiente', svg: '<rect x="-5" y="-5" width="10" height="10" rx="1.5" transform="rotate(45)" fill="var(--warning)"></rect>' },
-  { label: 'En camino', svg: '<circle r="5" fill="var(--surface)" stroke="var(--info-ink)" stroke-width="2.6"></circle>' },
-  { label: 'Entregado', svg: '<circle r="6" fill="var(--success-ink)"></circle>' },
-  { label: 'Cancelado', svg: '<circle r="5" fill="var(--surface-sunken)" stroke="var(--ink-muted)" stroke-width="2"></circle>' },
-  { label: 'Tramo por recorrer', svg: '<path d="M-7 0H7" stroke="var(--ink-muted)" stroke-width="2.5" stroke-dasharray="0.1 4" stroke-linecap="round"></path>' },
-]
+export function RouteMap(props: Props) {
+  if (!sourceKeys.has(props.source)) sourceKeys.set(props.source, ++sourceSequence)
+  return <MapInstance key={sourceKeys.get(props.source) + ':' + (props.profile ?? 'operations') + ':' + (props.scopePlate ?? '')} {...props} />
+}
 
-export function RouteMap({ source, selectedId, query = '', onSelect, compact = false, card = true, strip = false }: RouteMapProps) {
+function MapInstance({ source, selectedId, query = '', onSelect, onSelectElement, profile = 'operations', scopePlate,
+  initialLayers, showLayerControls = true, compact = false, card = true, strip = false }: Props) {
+  const allowed = MAP_PROFILES[profile]
+  const layersPanelId = useId()
+  const [layersOpen, setLayersOpen] = useState(false)
+  const [layers, setLayers] = useState<MapLayers>(() => Object.fromEntries(Object.entries(allowed).map(([key, value]) =>
+    [key, value && (initialLayers?.[key as keyof MapLayers] ?? true)])) as MapLayers)
   const [data, setData] = useState<MapData | null>(null)
   const [error, setError] = useState('')
-  const [tilesFailed, setTilesFailed] = useState(false)
-  const [layers, setLayers] = useState<MapLayers>({ routes: true, pins: true, vehicles: true })
+  const [attempt, setAttempt] = useState(0)
   const [map, setMap] = useState<LeafletMap | null>(null)
-  const counts = useRef({ failed: 0, loaded: 0 })
+  const [localSelection, setLocalSelection] = useState<{ value: MapSelection; externalId?: string } | null>(null)
+  const [dismissedOrder, setDismissedOrder] = useState<string | undefined>()
+
+  const [previousSelectedId, setPreviousSelectedId] = useState(selectedId)
+  if (previousSelectedId !== selectedId) {
+    setPreviousSelectedId(selectedId)
+    setDismissedOrder(undefined)
+  }
 
   useEffect(() => {
     let active = true
-    source
-      .load()
-      .then(value => {
-        if (active) setData(value)
-      })
-      .catch(reason => {
-        if (active) setError(reason instanceof Error ? reason.message : 'No se pudieron cargar los datos del mapa.')
-      })
-    return () => {
-      active = false
-    }
-  }, [source])
+    Promise.resolve().then(() => source.load()).then(value => { if (active) setData(value) })
+      .catch(reason => { if (active) setError(reason instanceof Error ? reason.message : 'No se pudieron cargar los datos del mapa.') })
+    return () => { active = false }
+  }, [source, attempt])
 
-  const toggle = (layer: keyof MapLayers) => setLayers(current => ({ ...current, [layer]: !current[layer] }))
-
-  // US-006: si el mapa no carga se avisa y se sigue pudiendo trabajar con la lista de pedidos.
-  if (error || tilesFailed) {
-    return (
-      <div className="eco-stack" aria-label="Mapa de rutas">
-        <Banner tone="warning" title="No se pudo cargar el mapa.">
-          {error || 'No se descargaron los tiles de OpenStreetMap. Revisa tu conexión.'} Puedes seguir usando la lista de pedidos.
-        </Banner>
-        {data ? <OrderFallback data={data} selectedId={selectedId} onSelect={onSelect} /> : null}
-      </div>
-    )
+  const prepared = useMemo(() => data ? prepareMap(data, profile === 'driver' ? (scopePlate ?? '') : scopePlate) : null, [data, profile, scopePlate])
+  const context = prepared?.data
+  const candidate = (localSelection?.externalId === selectedId ? localSelection?.value : null) ?? (selectedId && selectedId !== dismissedOrder ? { kind: 'order' as const, id: selectedId } : null)
+  const selection = context && selectionVisible(candidate, context, layers) ? candidate : null
+  const select = (value: MapSelection) => {
+    setLocalSelection({ value, externalId: value.kind === 'order' && onSelect ? value.id : selectedId }); setDismissedOrder(undefined)
+    if (value.kind === 'order') onSelect?.(value.id)
+    onSelectElement?.(value)
   }
+  const dismiss = () => {
+    setLocalSelection(null)
+    setDismissedOrder(selectedId)
+    setLayersOpen(false)
+    map?.getContainer().focus({ preventScroll: true })
+  }
+  const toggle = (key: keyof MapLayers) => {
+    const next = { ...layers, [key]: !layers[key] }
+    if (context && candidate && !selectionVisible(candidate, context, next)) {
+      setLocalSelection(null)
+      if (candidate.kind === 'order') setDismissedOrder(candidate.id)
+    }
+    setLayers(next)
+  }
+  const fail = !!error
+  const retry = () => {
+    setData(null); setError(''); setMap(null)
+    setLocalSelection(null); setDismissedOrder(undefined)
+    setAttempt(value => value + 1)
+  }
+  const count = context ? (layers.routes ? context.routes.length : 0) + (layers.pins ? context.orders.length : 0) + (layers.vehicles ? context.vehicles.length : 0) : 0
+  const matches = context?.orders.some(order => orderMatches(order, context.routes, query))
 
-  return (
-    <div className={`eco-map${compact ? ' eco-map--compact' : ''}${strip ? ' eco-map--strip' : ''}`} role="group" aria-label="Mapa de rutas de Lima Este">
-      {data ? (
-        <Suspense fallback={<span className="eco-map__note" role="status">Cargando mapa…</span>}>
-          <LeafletCanvas
-            data={data}
-            selectedId={selectedId}
-            query={query}
-            layers={layers}
-            compact={compact}
-            card={card}
-            onSelect={onSelect}
-            onReady={setMap}
-            onTileLoad={() => {
-              counts.current.loaded += 1
-            }}
-            onTileError={() => {
-              counts.current.failed += 1
-              if (counts.current.loaded === 0 && counts.current.failed >= TILE_FAILURES) setTilesFailed(true)
-            }}
-          />
-        </Suspense>
-      ) : (
-        <span className="eco-map__note" role="status">Cargando mapa…</span>
-      )}
-
-      <div className="eco-map__ctrl eco-map__ctrl--tl" role="group" aria-label="Capas del mapa">
-        <button type="button" aria-pressed={layers.routes} onClick={() => toggle('routes')}>Rutas</button>
-        <button type="button" aria-pressed={layers.pins} onClick={() => toggle('pins')}>Pedidos</button>
-        <button type="button" aria-pressed={layers.vehicles} onClick={() => toggle('vehicles')}>Vehículos</button>
+  return <div className="eco-stack">
+    {prepared?.omitted ? <p className="eco-muted" role="status">{prepared.omitted} elementos omitidos por coordenadas o geometrías fuera del área de Lima.</p> : null}
+    {fail ? <>
+      <Banner tone="warning" title="No se pudo cargar el mapa." action={<button type="button" className="eco-btn eco-btn--secondary" onClick={retry}>Reintentar mapa</button>}>
+        {error} Puedes seguir usando la lista de {profile === 'vehicles' ? 'camiones' : profile === 'routes' ? 'rutas' : 'pedidos'}.
+      </Banner>
+      {context ? <MapFallback data={context} allowed={allowed} select={select} selection={selection} /> : null}
+    </> : <div className={'eco-map' + (compact ? ' eco-map--compact' : '') + (strip ? ' eco-map--strip' : '')} role="group" aria-label="Mapa de rutas de Lima Este">
+      {context ? <Suspense fallback={<span className="eco-map__note" role="status">Cargando mapa…</span>}>
+        <LeafletCanvas data={context} selection={selection} query={query} layers={layers} compact={compact} card={card}
+          onSelect={select} onDismiss={dismiss} onReady={setMap} onBasemapError={setError} />
+      </Suspense> : <span className="eco-map__note" role="status">Cargando mapa…</span>}
+      {showLayerControls ? <div className="eco-map__layers" onKeyDown={event => {
+        if (event.key === 'Escape') { setLayersOpen(false); event.currentTarget.querySelector('button')?.focus() }
+      }}>
+        <button className="eco-map__layers-toggle" type="button" aria-expanded={layersOpen} aria-controls={layersPanelId}
+          onClick={() => setLayersOpen(value => !value)}><SlidersIcon />Capas</button>
+        {layersOpen ? <div id={layersPanelId} className="eco-map__layer-options" role="group" aria-label="Capas del mapa">
+          {(Object.keys(LABELS) as (keyof MapLayers)[]).filter(key => allowed[key]).map(key => {
+            const Icon = LAYER_ICONS[key]
+            return <button key={key} type="button" aria-pressed={layers[key]} onClick={() => toggle(key)}><Icon />{LABELS[key]}<i aria-hidden="true" /></button>
+          })}
+        </div> : null}
+      </div> : null}
+      {!compact ? <div className="eco-map__ctrl eco-map__ctrl--tr" role="group" aria-label="Zoom">
+        <button type="button" aria-label="Acercar" title="Acercar" onClick={() => map?.zoomIn()}><PlusIcon /></button>
+        <button type="button" aria-label="Alejar" title="Alejar" onClick={() => map?.zoomOut()}><MinusIcon /></button>
+      </div> : null}
+      <div className="eco-map__ctrl eco-map__ctrl--reset">
+        <button type="button" aria-label="Ver Lima" title="Ver Lima" disabled={!map} onClick={() => { if (map && context) void import('./viewport').then(({ fitVisible }) => fitVisible(map, context, layers)) }}><RecenterIcon /></button>
       </div>
-      {!compact ? (
-        <div className="eco-map__ctrl eco-map__ctrl--tr" role="group" aria-label="Zoom">
-          <button type="button" aria-label="Acercar" onClick={() => map?.zoomIn()}>+</button>
-          <button type="button" aria-label="Alejar" onClick={() => map?.zoomOut()}>−</button>
+      {context && (!count || (query.trim() && layers.pins && !matches)) ? <span className="eco-map__empty" role="status">
+        {!layers.routes && !layers.pins && !layers.vehicles ? 'Capas ocultas · activa una capa' : !count ? 'Sin elementos en esta vista' : 'Sin coincidencias'}
+      </span> : null}
+      {!compact ? <details className="eco-map__legend" aria-label="Leyenda">
+        <summary><SlidersIcon />Leyenda</summary>
+        <div className="eco-map__legend-items">
+          {layers.routes ? <span><i className="eco-map__key eco-map__key--route" />Tramo recorrido sólido · tramo por recorrer punteado</span> : null}
+          {layers.vehicles ? <span><CamionetaIcon />Camión · placa y estado</span> : null}
+          {layers.pins ? <>
+            <span><i className="eco-map__key eco-map__key--pending" />Pendiente · rombo</span>
+            <span><i className="eco-map__key eco-map__key--transit" />En camino · anillo</span>
+            <span><i className="eco-map__key eco-map__key--delivered" />Entregado · check</span>
+            <span><i className="eco-map__key eco-map__key--cancelled" />Cancelado · equis</span>
+          </> : null}
         </div>
-      ) : null}
-      {!compact ? (
-        <div className="eco-map__legend" aria-label="Leyenda">
-          {LEGEND.map(item => (
-            <span key={item.label}>
-              <svg viewBox="-8 -8 16 16" aria-hidden="true" dangerouslySetInnerHTML={{ __html: item.svg }} />
-              {item.label}
-            </span>
-          ))}
-        </div>
-      ) : null}
-    </div>
-  )
+      </details> : null}
+    </div>}
+    {!fail && context ? <details className="eco-map-details"><summary>Elementos del mapa</summary><MapFallback data={context} allowed={layers} select={select} selection={selection} all /></details> : null}
+    {context?.demo ? <p className="eco-muted eco-note">Mapa de Lima · rutas y posiciones de demostración</p> : null}
+  </div>
 }
 
-function OrderFallback({ data, selectedId, onSelect }: { data: MapData; selectedId?: string; onSelect?: (id: string) => void }) {
-  return (
-    <ul className="eco-fallback" aria-label="Pedidos">
-      {data.orders.map(order => (
-        <li key={order.id} className="eco-fallback__row" aria-current={order.id === selectedId ? 'true' : undefined}>
-          <button type="button" className="eco-fallback__pick" onClick={() => onSelect?.(order.id)}>
-            <span className="eco-code">{order.id}</span>
-            <span className="eco-row__title">{order.customer}</span>
-          </button>
-          <span className="eco-muted">{order.district}</span>
-          <TripStatus status={ORDER_STATUS_CLASS[order.status]} label={statusLabels[order.status]} />
-        </li>
-      ))}
-    </ul>
-  )
+function MapFallback({ data, allowed, select, selection, all = false }: { data: MapData; allowed: MapLayers; select: (selection: MapSelection) => void; selection: MapSelection | null; all?: boolean }) {
+  const entries = [
+    ...(allowed.pins ? data.orders.map(item => ({ kind: 'order' as const, id: item.id, title: item.customer, detail: item.district + ' · ' + statusLabels[item.status] })) : []),
+    ...(allowed.routes && (all || !allowed.pins) ? data.routes.map(item => ({ kind: 'route' as const, id: item.id, title: 'Ruta ' + item.id, detail: item.plate })) : []),
+    ...(allowed.vehicles && (all || !allowed.pins) ? (data.vehicles ?? []).map(item => ({ kind: 'vehicle' as const, id: item.id, title: 'Camión ' + item.plate, detail: item.status })) : []),
+  ]
+  return <ul className="eco-fallback" aria-label={allowed.pins ? 'Pedidos' : allowed.vehicles ? 'Camiones' : 'Rutas'}>
+    {entries.map(item => <li key={item.kind + ':' + item.id} className="eco-fallback__row" aria-current={selection?.kind === item.kind && selection.id === item.id ? 'true' : undefined}>
+      <button type="button" className="eco-fallback__pick" onClick={() => select({ kind: item.kind, id: item.id })}><span className="eco-code">{item.id}</span><span>{item.title}</span></button>
+      <span className="eco-muted">{item.detail}</span>
+    </li>)}
+  </ul>
 }

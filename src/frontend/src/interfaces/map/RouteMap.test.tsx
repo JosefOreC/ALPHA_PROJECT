@@ -6,6 +6,9 @@ import { DemoMapData, UnavailableMapData } from '../../infrastructure/demoMapDat
 import { depotHtml, pinHtml, vehicleHtml } from './markers'
 import { RouteMap } from './RouteMap'
 
+// jsdom has no WebGL. The actual renderer is exercised in Playwright.
+vi.mock('./VectorBasemap', () => ({ default: () => null }))
+
 // Leaflet llama a window.scrollTo, que jsdom no implementa.
 beforeAll(() => {
   window.scrollTo = vi.fn()
@@ -73,15 +76,17 @@ describe('RouteMap', () => {
     expect(container.querySelectorAll('.eco-map__marker svg.veh')).toHaveLength(data.routes.length)
     expect(container.querySelector('.pin.is-sel')).not.toBeNull()
     expect(within(map).getByRole('button', { name: 'Acercar' })).toBeInTheDocument()
-    expect(within(map).getByLabelText('Leyenda')).toHaveTextContent('Tramo por recorrer')
+    expect(within(map).getByLabelText('Leyenda')).toHaveTextContent('tramo por recorrer')
 
+    expect(within(map).queryByRole('group', { name: 'Capas del mapa' })).toBeNull()
+    await user.click(within(map).getByRole('button', { name: 'Capas' }))
     const layers = within(map).getByRole('group', { name: 'Capas del mapa' })
     await user.click(within(layers).getByRole('button', { name: 'Pedidos' }))
     expect(within(layers).getByRole('button', { name: 'Pedidos' })).toHaveAttribute('aria-pressed', 'false')
     await waitFor(() => expect(container.querySelectorAll('svg.pin')).toHaveLength(0))
     await user.click(within(layers).getByRole('button', { name: 'Rutas' }))
     expect(within(layers).getByRole('button', { name: 'Rutas' })).toHaveAttribute('aria-pressed', 'false')
-    await user.click(within(layers).getByRole('button', { name: 'Vehículos' }))
+    await user.click(within(layers).getByRole('button', { name: 'Camiones' }))
     await waitFor(() => expect(container.querySelectorAll('svg.veh')).toHaveLength(0))
   })
 
@@ -108,12 +113,37 @@ describe('RouteMap', () => {
     expect(onSelect).toHaveBeenCalledWith('PED-0029')
   })
 
+  it('cerrar una tarjeta no reaparece con la selección externa y se puede abrir de nuevo', { timeout: 20_000 }, async () => {
+    const source = new DemoMapData()
+    // jsdom has no pointer type; Leaflet otherwise mistakes quick clicks for a touch double click.
+    const user = userEvent.setup({ delay: 210 })
+    const onSelect = vi.fn()
+    const { container, rerender } = render(<RouteMap source={source} selectedId="PED-0029" onSelect={onSelect} />)
+    await user.click(await screen.findByRole('button', { name: 'Cerrar tarjeta' }, SLOW))
+    expect(container.querySelector('.eco-map__card')).toBeNull()
+    expect(container.querySelector('.pin.is-sel')).toBeNull()
+    expect(onSelect).not.toHaveBeenCalled()
+    rerender(<RouteMap source={source} selectedId="PED-0029" onSelect={onSelect} query="panadería" />)
+    expect(container.querySelector('.eco-map__card')).toBeNull()
+    await user.click(screen.getByTitle('PED-0029 · Panadería San Hilarión · En camino'))
+    expect(await screen.findByRole('button', { name: 'Cerrar tarjeta' })).toBeInTheDocument()
+    expect(onSelect).toHaveBeenCalledWith('PED-0029')
+    await user.click(screen.getByRole('button', { name: 'Cerrar tarjeta' }))
+    rerender(<RouteMap source={source} selectedId="PED-0044" onSelect={onSelect} />)
+    await waitFor(() => expect(container.querySelector('.eco-map__card')).toHaveTextContent('Farmacia Los Ángeles'))
+    rerender(<RouteMap source={source} selectedId="PED-0029" onSelect={onSelect} />)
+    await waitFor(() => expect(container.querySelector('.eco-map__card')).toHaveTextContent('Panadería San Hilarión'))
+  })
+
   it('la versión compacta no muestra leyenda ni zoom', async () => {
+    const user = userEvent.setup()
     render(<RouteMap source={new DemoMapData()} compact />)
     const map = await screen.findByRole('group', { name: /Mapa de rutas/ })
     expect(map).toHaveClass('eco-map--compact')
     expect(within(map).queryByLabelText('Leyenda')).toBeNull()
     expect(within(map).queryByRole('button', { name: 'Acercar' })).toBeNull()
+    expect(within(map).queryByRole('group', { name: 'Capas del mapa' })).toBeNull()
+    await user.click(within(map).getByRole('button', { name: 'Capas' }))
     expect(within(map).getByRole('group', { name: 'Capas del mapa' })).toBeInTheDocument()
   })
 

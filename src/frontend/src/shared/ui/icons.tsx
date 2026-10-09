@@ -12,6 +12,10 @@ function Glyph({ className, size, children, ...rest }: IconProps & { children: R
 }
 
 // Set Ruta: trazo currentColor, punto de parada con className="acc".
+export function CloseIcon(props: IconProps) {
+  return <Glyph {...props}><path d="m6 6 12 12M18 6 6 18" /></Glyph>
+}
+
 export function CamionetaIcon(props: IconProps) {
   return (
     <Glyph {...props}>
@@ -152,6 +156,17 @@ export function PlusIcon(props: IconProps) {
       <path d="M12 5v14M5 12h14" />
     </Glyph>
   )
+}
+
+export function MinusIcon(props: IconProps) {
+  return <Glyph {...props}><path d="M5 12h14" /></Glyph>
+}
+
+export function RecenterIcon(props: IconProps) {
+  return <Glyph {...props}>
+    <circle cx="12" cy="12" r="6.5" /><circle cx="12" cy="12" r="2" />
+    <path d="M12 2v3.5M12 18.5V22M2 12h3.5M18.5 12H22" />
+  </Glyph>
 }
 
 export function AlertIcon(props: IconProps) {

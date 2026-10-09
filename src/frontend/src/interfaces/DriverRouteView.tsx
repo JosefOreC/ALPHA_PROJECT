@@ -105,7 +105,7 @@ export function DriverRouteView({ service, mapSource, onNavigate, onOpenOrder }:
                 </Banner>
               ) : null}
 
-              <RouteMap source={mapSource} selectedId={currentStop(route)?.order_id} compact strip card={false} />
+              <RouteMap source={mapSource} profile="driver" scopePlate={route.plate} selectedId={currentStop(route)?.order_id} compact strip card={false} showLayerControls={false} />
 
               <ol className="eco-stops" aria-label="Paradas de hoy">
                 {route.stops.map((stop, index) => (

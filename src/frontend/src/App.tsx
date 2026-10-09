@@ -178,7 +178,7 @@ export function App() {
           gateway={dashboardGateway}
           insights={insightsGateway}
           demoNote={demo ? 'Modo demo · CO₂ evitado y pedidos en riesgo de ejemplo' : undefined}
-          renderMap={({ selectedId, onSelect }) => <RouteMap source={mapSource} selectedId={selectedId} onSelect={onSelect} compact />}
+          renderMap={({ selectedId, onSelect }) => <RouteMap source={mapSource} profile="dashboard" selectedId={selectedId} onSelect={onSelect} compact />}
           onNavigate={navigateModule}
         />
       )}

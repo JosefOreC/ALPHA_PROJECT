@@ -71,9 +71,9 @@ export async function captureEvidence(page: Page, filename: string) {
   await page.screenshot({ path: resolve(directory, filename), fullPage: true })
 }
 
-// PNG transparente de 1x1: las pruebas no dependen de los servidores de OpenStreetMap.
-const BLANK_TILE = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==', 'base64')
-
+// Base vectorial vacía: prueba el renderizador real sin depender de servidores externos.
 export async function stubTiles(page: Page, mode: 'ok' | 'fail' = 'ok') {
-  await page.route('**/tile.openstreetmap.org/**', route => (mode === 'ok' ? route.fulfill({ status: 200, contentType: 'image/png', body: BLANK_TILE }) : route.abort()))
+  await page.route('**/maps/lima-pastel.json', route => mode === 'ok' ? route.fulfill({
+    status: 200, json: { version: 8, sources: {}, layers: [{ id: 'background', type: 'background', paint: { 'background-color': '#f4f0e6' } }] },
+  }) : route.abort())
 }

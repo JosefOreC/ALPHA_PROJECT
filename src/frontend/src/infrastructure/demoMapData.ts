@@ -1,5 +1,6 @@
 import type { GeoPoint, MapData, MapOrder, MapRoute } from '../domain/mapData'
 import type { MapDataSource } from '../domain/ports/mapDataSource'
+import { ROAD_FIXTURES } from './limaRoadFixtures'
 
 const p = (lat: number, lng: number): GeoPoint => ({ lat, lng })
 
@@ -32,10 +33,23 @@ const ROWS: Row[] = [
 /** Solo demostración: datos ficticios, coherentes con los pedidos y la flota de demostración. */
 export class DemoMapData implements MapDataSource {
   async load(): Promise<MapData> {
+    const routes = ROUTES.map((route, index) => ({
+      ...route, path: ROAD_FIXTURES[index].path.map(([lat, lng]) => p(lat, lng)), done_until: ROAD_FIXTURES[index].done,
+    }))
     return {
-      depot: { name: 'Almacén Ate', position: DEPOT },
-      orders: ROWS.map(([id, customer, district, status, route_id, position, window, co2_kg]) => ({ id, customer, district, status, route_id, position, window, co2_kg })),
-      routes: ROUTES.map(route => ({ ...route, path: [...route.path] })),
+      demo: true,
+      depot: { name: 'Almacén Ate', position: routes[0].path[0] },
+      orders: ROWS.map(([id, customer, district, status, route_id, position, window, co2_kg]) => {
+        const index = ROUTES.findIndex(route => route.id === route_id)
+        const stop = index >= 0 ? ROUTES[index].path.findIndex(point => point.lat === position.lat && point.lng === position.lng) : -1
+        const snapped = stop >= 0 ? ROAD_FIXTURES[index].stops[stop] : null
+        return { id, customer, district, status, route_id, position: snapped ? p(snapped[0], snapped[1]) : position, window, co2_kg }
+      }),
+      routes,
+      vehicles: routes.map(route => ({
+        id: `vehicle-${route.id}`, plate: route.plate, route_id: route.id, color: route.color,
+        position: { ...route.path[route.done_until] }, status: 'En ruta',
+      })),
     }
   }
 }
