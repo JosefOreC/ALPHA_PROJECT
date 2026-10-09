@@ -3,6 +3,13 @@ import { mkdir } from 'node:fs/promises'
 import { resolve } from 'node:path'
 import type { ManagedOrder } from '../../src/domain/managedOrder'
 
+/** Identidad ficticia verificada únicamente dentro de las pruebas de navegador. */
+export async function mockSession(page: Page, role: string | null) {
+  await page.route('**/api/session', route => route.fulfill(role ? {
+    status: 200, json: { subject_id: 'test-' + role, name: 'Usuario ficticio', role, driver_id: role === 'driver' ? 'd1' : null, plate: role === 'driver' ? 'ABC-123' : null },
+  } : { status: 401, json: { detail: 'Sin sesión' } }))
+}
+
 export const orderFixture = (): ManagedOrder => ({
   id: 'PEDIDO-FICTICIO', customer: 'Destinatario ficticio', address: 'Dirección ficticia 123',
   district: 'Santa Anita', window_start: '2026-10-01T10:00:00-05:00',

@@ -17,6 +17,7 @@ Esta carpeta convierte la documentación del proyecto en un plan de ejecución: 
 | [decisiones.md](decisiones.md) | Resolver contradicciones, decisiones técnicas y riesgos. |
 | [task.md](task.md) | Ejecutar el trabajo inmediato de coordinación. |
 | [task-mapa-visual.md](task-mapa-visual.md) | Implementar el mapa visual fiel de Lima con capas configurables de rutas, camiones y pedidos. |
+| [task-roles.md](task-roles.md) | Aplicar la matriz de permisos de los cinco roles y completar la integración de identidad. |
 | [templates/sprint.md](templates/sprint.md) | Registrar planificación, revisión y retrospectiva. |
 | [templates/historia.md](templates/historia.md) | Desglosar una historia o tarea con aceptación y evidencia. |
 | [templates/pull-request.md](templates/pull-request.md) | Preparar una revisión trazable. |

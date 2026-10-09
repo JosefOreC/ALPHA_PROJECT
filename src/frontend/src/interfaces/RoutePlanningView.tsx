@@ -1,4 +1,7 @@
 import { useEffect, useState } from 'react'
+import type { ReactNode } from 'react'
+import { can } from '../domain/accessControl'
+import { useActor } from './session/SessionState'
 import type { GenerateRoutes } from '../application/generateRoutes'
 import { fuelLabel, isLowEmission } from '../application/fleetBoard'
 import { formatDecimal } from '../domain/format'
@@ -20,7 +23,8 @@ const STATE_TAG: Record<Phase, string> = { ready: 'Sin generar', running: 'Calcu
 
 const percent = (value: number) => `${Math.round(value * 100)} %`
 
-export function RoutePlanningView({ service, onNavigate }: { service: GenerateRoutes; onNavigate?: (id: ModuleId, href: string) => void }) {
+export function RoutePlanningView({ service, onNavigate, renderMap }: { service: GenerateRoutes; onNavigate?: (id: ModuleId, href: string) => void; renderMap?: ReactNode }) {
+  const role = useActor('planner')
   const [scope, setScope] = useState<PlanningScope | null>(null)
   const [scopeError, setScopeError] = useState('')
   const [limit, setLimit] = useState(45)
@@ -32,6 +36,7 @@ export function RoutePlanningView({ service, onNavigate }: { service: GenerateRo
   const [error, setError] = useState<{ text: string; noVehicles: boolean } | null>(null)
 
   useEffect(() => {
+    if (!can(role, 'routes.generate')) return
     let active = true
     service.limitSeconds().then((seconds) => {
       if (active) setLimit(seconds)
@@ -47,7 +52,7 @@ export function RoutePlanningView({ service, onNavigate }: { service: GenerateRo
     return () => {
       active = false
     }
-  }, [service])
+  }, [service, role])
 
   useEffect(() => {
     if (phase !== 'running') return
@@ -56,6 +61,7 @@ export function RoutePlanningView({ service, onNavigate }: { service: GenerateRo
   }, [phase])
 
   async function run() {
+    if (!can(role, 'routes.generate')) return
     setError(null)
     setProposal(null)
     setElapsed(0)
@@ -77,6 +83,11 @@ export function RoutePlanningView({ service, onNavigate }: { service: GenerateRo
   const goal = GOALS.find(item => item.value === settings.goal) ?? GOALS[0]
   const running = phase === 'running'
   const noVehicles = scope !== null && scope.availableVehicles === 0
+
+  if (!can(role, 'routes.generate')) return <AppShell role={role} current="rutas" user={SESSION_USER} title="Rutas del día" onNavigate={onNavigate}>
+    <h1 className="eco-h1">Rutas del día</h1><p className="eco-sub">Consulta y supervisión de rutas · solo lectura</p>
+    {renderMap ?? <p className="eco-muted">La consulta de rutas se habilitará al conectar su fuente operativa.</p>}
+  </AppShell>
 
   return (
     <AppShell

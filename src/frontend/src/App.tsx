@@ -1,4 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
+import { authorizeAdministration, authorizeDriver, authorizeManagement, authorizePlanning, authorizeSustainability } from './application/authorizedServices';
+import { can } from './domain/accessControl';
+import { HttpSession } from './infrastructure/httpSession';
+import { SessionProvider } from './interfaces/session/SessionContext';
+import { useSession } from './interfaces/session/SessionState';
+import { SessionGate, SessionToolbar } from './interfaces/session/SessionToolbar';
+import { AppShell } from './shared/ui';
+import { canOpenModule, homeModule } from './shared/ui/roles';
 
 import { createDriverOrders } from './application/driverOrders';
 import { createDriverRoute } from './application/driverRoute';
@@ -31,11 +39,10 @@ import { RouteMap } from './interfaces/map/RouteMap';
 import type { ModuleId } from './shared/ui';
 
 // Raíz de composición: se instancian los gateways / adaptadores
-const dashboardGateway = new HttpDashboardGateway();
-// CO₂ evitado y pedidos en riesgo aún no tienen API: solo hay ejemplo en modo demostración.
-
+const dashboardGateway = new HttpDashboardGateway({ baseUrl: import.meta.env.VITE_API_URL ?? import.meta.env.VITE_API_BASE_URL ?? '' });
 const apiUrl = import.meta.env.VITE_API_URL as string | undefined;
 const demo = apiUrl === undefined;
+const sessionSource = new HttpSession(apiUrl ?? '');
 // CO₂ evitado y pedidos en riesgo aún no tienen API: solo hay ejemplo en modo demostración.
 const insightsGateway = demo ? new DemoDashboardInsights() : undefined;
 // En demostración, pedidos y ruta del conductor comparten estado: confirmar una entrega avanza la ruta.
@@ -76,7 +83,7 @@ const sustainabilityService = createGetSustainabilityReport({
   saver: new BrowserFileSaver(),
 });
 
-type ActiveView = 'dashboard' | 'flota' | 'pedidos' | 'rutas' | 'sostenibilidad' | 'admin' | 'mi-ruta' | 'conductor';
+type ActiveView = Exclude<ModuleId, 'pedido-actual'> | 'conductor';
 
 function getViewFromUrl(): { view: ActiveView; orderId: string } {
   if (typeof window === 'undefined') {
@@ -85,6 +92,7 @@ function getViewFromUrl(): { view: ActiveView; orderId: string } {
   const params = new URLSearchParams(window.location.search);
   const vista = params.get('vista');
   const pedido = params.get('pedido');
+  if (vista === 'conductores' || vista === 'auditoria' || vista === 'incidencias') return { view: vista, orderId: pedido || DEFAULT_ORDER };
 
   if (vista === 'flota') {
     return { view: 'flota', orderId: pedido || DEFAULT_ORDER };
@@ -111,7 +119,26 @@ function getViewFromUrl(): { view: ActiveView; orderId: string } {
 }
 
 export function App() {
+  return <SessionProvider source={sessionSource} demo={demo}><SessionApp /></SessionProvider>;
+}
+
+function SessionApp() {
+  const session = useSession()!;
+  if (!session.user || session.loading) return <SessionGate />;
+  return <AuthorizedApp key={session.user.subjectId} />;
+}
+
+function AuthorizedApp() {
+  const user = useSession()!.user!;
+  const secured = useMemo(() => ({
+    management: authorizeManagement(managementService, user.role),
+    administration: authorizeAdministration(administration, user.role),
+    planning: authorizePlanning(routeService, user.role),
+    sustainability: authorizeSustainability(sustainabilityService, user.role),
+    driver: authorizeDriver(driverService, driverRouteService, user, demo),
+  }), [user]);
   const initial = getViewFromUrl();
+  if (!window.location.search) initial.view = homeModule(user.role).id === 'pedido-actual' ? 'conductor' : homeModule(user.role).id as ActiveView;
   const [activeView, setActiveView] = useState<ActiveView>(initial.view);
   const [currentOrderId, setCurrentOrderId] = useState<string>(initial.orderId);
 
@@ -167,11 +194,23 @@ export function App() {
   const navigateModule = (id: ModuleId, href: string) => {
     if (id === 'dashboard' || id === 'flota' || id === 'pedidos' || id === 'rutas' || id === 'sostenibilidad' || id === 'admin' || id === 'mi-ruta') navigateTo(id);
     else if (id === 'pedido-actual') navigateTo('conductor', currentOrderId);
-    else window.location.assign(href);
+    else if (id === 'auditoria' || id === 'conductores' || id === 'incidencias') {
+      window.history.pushState({}, '', href); setActiveView(id);
+    }
   };
+
+  const moduleId: ModuleId = activeView === 'conductor' ? 'pedido-actual' : activeView;
+  if (!canOpenModule(user.role, moduleId)) return <>
+    <SessionToolbar onNavigate={navigateModule} />
+    <AppShell role={user.role} current={homeModule(user.role).id} user={{ name: user.name, initials: user.name[0] }} title="Acceso restringido" onNavigate={navigateModule}>
+      <h1 className="eco-h1">Acceso restringido</h1><p className="eco-sub">Tu perfil no tiene acceso a esta sección.</p>
+      <button className="eco-btn" type="button" onClick={() => { const home = homeModule(user.role); navigateModule(home.id, home.href) }}>Ir a mi inicio</button>
+    </AppShell>
+  </>;
 
   return (
     <>
+      <SessionToolbar onNavigate={navigateModule} />
       {/* Vista 0: Dashboard del Día */}
       {activeView === 'dashboard' && (
         <DashboardPage
@@ -188,22 +227,22 @@ export function App() {
 
       {/* Vista 2: Gestión de Pedidos */}
       {activeView === 'pedidos' && (
-        <OrderManagementView service={managementService} demo={demo} mapSource={mapSource} onNavigate={navigateModule} />
+        <OrderManagementView service={secured.management} demo={demo} mapSource={mapSource} onNavigate={navigateModule} />
       )}
 
       {/* Vista 3: Generar rutas del día (US-005) */}
-      {activeView === 'rutas' && <RoutePlanningView service={routeService} onNavigate={navigateModule} />}
+      {activeView === 'rutas' && <RoutePlanningView service={secured.planning} renderMap={can(user.role, 'map.read') ? <RouteMap source={mapSource} profile="operations" /> : undefined} onNavigate={navigateModule} />}
 
       {/* Vista 4: Reporte de sostenibilidad (US-010 / US-011) */}
-      {activeView === 'sostenibilidad' && <SustainabilityView service={sustainabilityService} onNavigate={navigateModule} />}
+      {activeView === 'sostenibilidad' && <SustainabilityView service={secured.sustainability} onNavigate={navigateModule} />}
 
       {/* Vista 5: Administración */}
-      {activeView === 'admin' && <AdminView service={administration} demo={demo} onNavigate={navigateModule} />}
+      {activeView === 'admin' && <AdminView service={secured.administration} demo={demo} onNavigate={navigateModule} />}
 
       {/* Vista 6: Mi ruta del conductor */}
       {activeView === 'mi-ruta' && (
         <DriverRouteView
-          service={driverRouteService}
+          service={secured.driver.route}
           mapSource={mapSource}
           onNavigate={navigateModule}
           onOpenOrder={(orderId) => navigateTo('conductor', orderId)}
@@ -214,14 +253,18 @@ export function App() {
       {activeView === 'conductor' && (
         <DriverOrderView
           key={currentOrderId}
-          service={driverService}
-          routeService={driverRouteService}
+          service={secured.driver.orders}
+          routeService={secured.driver.route}
           orderId={currentOrderId}
           demo={demo}
           onNavigate={navigateModule}
           onOpenOrder={(orderId) => navigateTo('conductor', orderId)}
         />
       )}
+      {['auditoria', 'conductores', 'incidencias'].includes(activeView) ? <AppShell role={user.role} current={moduleId} user={{ name: user.name, initials: user.name[0] }} title={activeView === 'auditoria' ? 'Auditoría' : activeView === 'conductores' ? 'Conductores' : 'Incidencias'} onNavigate={navigateModule}>
+        <h1 className="eco-h1">{activeView === 'auditoria' ? 'Auditoría' : activeView === 'conductores' ? 'Conductores' : 'Incidencias'}</h1>
+        <p className="eco-sub">Tu perfil tiene acceso a esta sección. Su interfaz operativa está pendiente de implementación.</p>
+      </AppShell> : null}
     </>
   );
 }

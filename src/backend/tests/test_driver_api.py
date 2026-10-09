@@ -1,6 +1,10 @@
 from fastapi.testclient import TestClient
 
-from interfaces.api.main import app
+from interfaces.api.deps import create_app
+from domain.access_control import Identity
+
+# Identidad y protección falsas únicamente para pruebas funcionales aisladas.
+app = create_app(authenticate=lambda: Identity("test-admin", "Administrador ficticio", "admin"), protect_mutation=lambda: None)
 
 
 client = TestClient(app)

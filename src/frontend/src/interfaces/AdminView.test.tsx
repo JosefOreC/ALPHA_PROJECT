@@ -23,7 +23,7 @@ describe('AdminView · usuarios y roles', () => {
     expect(await screen.findByRole('heading', { name: 'Administración' })).toBeInTheDocument()
     const nav = screen.getByRole('complementary', { name: 'Navegación principal' })
     expect(within(nav).getByText('Administrador')).toBeInTheDocument()
-    for (const name of [/Dashboard del día/, /Pedidos y rutas/, /Generar rutas/, /Flota/, /Sostenibilidad/, /Administración/]) {
+    for (const name of [/Dashboard del día/, /Pedidos y rutas/, /Rutas del día/, /Flota/, /Sostenibilidad/, /Administración/]) {
       expect(within(nav).getByRole('link', { name })).toBeInTheDocument()
     }
     expect(within(nav).getByRole('link', { name: /Administración/ })).toHaveAttribute('aria-current', 'page')
@@ -39,7 +39,8 @@ describe('AdminView · usuarios y roles', () => {
     expect(roles).toHaveTextContent('ROL-02 Planificador3usuarios')
     expect(roles).toHaveTextContent('ROL-03 Conductor13usuarios')
     expect(roles).toHaveTextContent('ROL-04 Resp. de Logística2usuarios')
-    expect(roles).toHaveTextContent('Su ruta, confirmar entregas, incidencias y alertas.')
+    expect(roles).toHaveTextContent('ROL-05 Auditor Externo0usuarios')
+    expect(roles).toHaveTextContent('Su ruta, entregas e incidencias; consultas autorizadas de operación.')
   })
 
   it('lista los usuarios con su rol, estado y último acceso, y avisa que muestra 7 de 19', async () => {

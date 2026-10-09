@@ -30,7 +30,7 @@ describe('SustainabilityView', () => {
     expect(await screen.findByRole('heading', { name: 'Reporte de sostenibilidad' })).toBeInTheDocument()
     expect(screen.getByText('Resp. de Logística')).toBeInTheDocument()
     expect(screen.getByRole('link', { name: /Sostenibilidad/ })).toHaveAttribute('aria-current', 'page')
-    expect(screen.queryByRole('link', { name: /Flota/ })).toBeNull()
+    expect(screen.getByRole('link', { name: /Flota/ })).toBeInTheDocument()
     expect(screen.getByText('Octubre 2026 · flota de DistriRápido · línea base 3,5 t de CO₂ al mes')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Mes', pressed: true })).toBeInTheDocument()
 

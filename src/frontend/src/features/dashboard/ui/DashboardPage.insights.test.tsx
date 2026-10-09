@@ -15,7 +15,7 @@ describe('DashboardPage with the design pieces', () => {
     expect(within(nav).getByText('Resp. de Logística')).toBeInTheDocument()
     expect(within(nav).getByRole('link', { name: /Dashboard del día/ })).toHaveAttribute('aria-current', 'page')
     expect(within(nav).getByRole('link', { name: /Sostenibilidad/ })).toBeInTheDocument()
-    expect(within(nav).queryByRole('link', { name: /Flota/ })).toBeNull()
+    expect(within(nav).getByRole('link', { name: /Flota/ })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Reporte de sostenibilidad' })).toBeInTheDocument()
     expect(screen.getByText('JUE 01 OCT', { exact: false })).toBeInTheDocument()
   })

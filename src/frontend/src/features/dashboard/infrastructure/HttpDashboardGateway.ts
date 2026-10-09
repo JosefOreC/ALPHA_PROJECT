@@ -39,7 +39,7 @@ export class HttpDashboardGateway implements DashboardGateway {
   }
 
   private async getJson<T>(path: string, signal?: AbortSignal): Promise<T> {
-    const response = await this.fetchImpl(`${this.baseUrl}${path}`, { signal })
+    const response = await this.fetchImpl(`${this.baseUrl}${path}`, { signal, credentials: 'include' })
     if (!response.ok) {
       throw new Error(`Dashboard request failed with status ${response.status}`)
     }

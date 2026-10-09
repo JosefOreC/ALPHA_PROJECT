@@ -1,5 +1,7 @@
 # Estado real y brechas de integración
 
+**Actualización 09/10/2026 — roles:** contrato compartido ROL-01–05, autorización de API, pertenencia del conductor, navegación y controles por sesión implementados. `manage:app` e `interfaces.api.main:app` comparten ahora pedidos, vehículos, conductores, dashboard y sesión; CORS usa orígenes explícitos. Esto reemplaza el diagnóstico anterior de composiciones separadas y permisos ausentes. El proveedor de autenticación real, auditoría persistida y pantallas nuevas siguen pendientes; la API rechaza sesiones no verificadas. Ver [tarea de roles](task-roles.md) y [guía técnica](../docs/03%20Implementaci%C3%B3n/Control%20de%20acceso%20por%20roles.md). EN-02 permanece parcial.
+
 **Actualización 09/10/2026 — mapa visual:** límites de navegación urbana de Lima, geometrías viales demo, camiones independientes, perfiles por vista y reintentos implementados. Las evidencias están en [Mapa visual de Lima](../docs/03%20Implementación/Mapa%20visual%20de%20Lima.md). La integración HTTP/GPS/ETA y la aceptación formal siguen pendientes; el inventario siguiente conserva el diagnóstico del 08/10/2026.
 
 Corte: **08/10/2026**; lectura de documentación, archivos y referencias Git locales de `feature/josef/spr2/map`, commit `1bf3ee8`. No se ejecutaron pruebas del producto para este diagnóstico ni se consultaron remoto/Jira en vivo. Las pruebas históricas se mantienen como evidencia del commit que documentan.

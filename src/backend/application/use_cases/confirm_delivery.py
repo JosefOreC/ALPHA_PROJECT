@@ -2,6 +2,7 @@ from dataclasses import dataclass
 
 from domain.entities.order import Order
 from domain.ports.orders import Clock, OrderRepository
+from domain.access_control import can, canonical_role
 
 
 class OrderNotFound(Exception):
@@ -24,7 +25,7 @@ class DriverOrders:
         self.clock = clock
 
     def view(self, order_id: str, principal: Principal) -> Order:
-        if principal.role != "CONDUCTOR":
+        if canonical_role(principal.role) != "driver" or not principal.driver_id or not can(principal.role, "deliveries.read"):
             raise Forbidden("Esta acción requiere el rol conductor.")
         order = self.repository.get(order_id)
         # No divulgar pedidos ajenos.
@@ -33,6 +34,8 @@ class DriverOrders:
         return order
 
     def confirm(self, order_id: str, principal: Principal) -> Order:
+        if not can(principal.role, "deliveries.update"):
+            raise Forbidden("Tu usuario no tiene permiso para confirmar entregas.")
         with self.repository.transaction():
             order = self.view(order_id, principal)
             confirmed = order.confirm_delivery(self.clock.now())

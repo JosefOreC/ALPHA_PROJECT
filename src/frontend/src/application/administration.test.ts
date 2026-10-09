@@ -98,7 +98,7 @@ describe('Administration', () => {
     const service = build(new DemoAlgorithmSettings())
     const page = await service.users()
     expect(page.total).toBe(19)
-    expect(page.roleCounts).toEqual({ admin: 1, planner: 3, driver: 13, logistics: 2 })
+    expect(page.roleCounts).toEqual({ admin: 1, planner: 3, driver: 13, logistics: 2, auditor: 0 })
     expect(Object.values(page.roleCounts).reduce((sum, count) => sum + count, 0)).toBe(page.total)
     expect((await service.integrations()).map((item) => item.status)).toEqual(['connected', 'connected', 'pending'])
   })

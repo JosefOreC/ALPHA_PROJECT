@@ -1,6 +1,12 @@
 import type { CreateVehicleInput, UpdateVehicleInput, Vehicle, VehicleListResponse } from '../types/vehicle';
 
-const API_BASE_URL = 'http://localhost:8000/api/v1';
+const API_BASE_URL = `${(import.meta.env.VITE_API_URL ?? 'http://localhost:8000').replace(/\/$/, '')}/api/v1`;
+const ALLOW_LOCAL_FALLBACK = import.meta.env.VITE_API_URL === undefined;
+class VehicleHttpError extends Error {}
+function mutationHeaders(): Record<string, string> {
+  const token = document.querySelector<HTMLMetaElement>('meta[name="csrf-token"]')?.content;
+  return { 'Content-Type': 'application/json', ...(token ? { 'X-CSRF-Token': token } : {}) };
+}
 
 // Semillas iniciales en caso de fallback local
 const INITIAL_MOCK_VEHICLES: Vehicle[] = [
@@ -60,14 +66,15 @@ class VehicleApiService {
       if (status) params.append('status', status);
       if (onlyAvailable) params.append('only_available', 'true');
 
-      const response = await fetch(`${API_BASE_URL}/vehicles?${params.toString()}`);
+      const response = await fetch(`${API_BASE_URL}/vehicles?${params.toString()}`, { credentials: 'include' });
       if (!response.ok) {
-        throw new Error(`Error en servidor: ${response.statusText}`);
+        throw new VehicleHttpError(response.status === 401 ? 'Se requiere una sesión verificada.' : response.status === 403 ? 'Tu perfil no tiene acceso a la flota.' : `Error en servidor: ${response.statusText}`);
       }
       const data: VehicleListResponse = await response.json();
       this.useLocalFallback = false;
       return { data, isLocal: false };
-    } catch {
+    } catch (error) {
+      if (!ALLOW_LOCAL_FALLBACK || error instanceof VehicleHttpError) throw error;
       // Fallback local elegante si el backend FastAPI aún no está iniciado
       this.useLocalFallback = true;
       let filtered = [...this.localVehicles];
@@ -97,7 +104,8 @@ class VehicleApiService {
     try {
       const response = await fetch(`${API_BASE_URL}/vehicles`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        headers: mutationHeaders(),
         body: JSON.stringify({
           ...input,
           placa: normalizedPlate,
@@ -106,17 +114,18 @@ class VehicleApiService {
 
       if (response.status === 409) {
         const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.detail || 'La placa ingresada ya se encuentra registrada en el sistema');
+        throw new VehicleHttpError(errorData.detail || 'La placa ingresada ya se encuentra registrada en el sistema');
       }
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.detail || 'Error al registrar el vehículo');
+        throw new VehicleHttpError(errorData.detail || 'Error al registrar el vehículo');
       }
 
       const data: Vehicle = await response.json();
       return { data, isLocal: false };
     } catch (err: any) {
+      if (!ALLOW_LOCAL_FALLBACK || err instanceof VehicleHttpError) throw err;
       if (err.message === 'La placa ingresada ya se encuentra registrada en el sistema') {
         throw err;
       }
@@ -150,7 +159,8 @@ class VehicleApiService {
     try {
       const response = await fetch(`${API_BASE_URL}/vehicles/${vehicleId}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        headers: mutationHeaders(),
         body: JSON.stringify({
           ...input,
           ...(normalizedPlate ? { placa: normalizedPlate } : {}),
@@ -159,17 +169,18 @@ class VehicleApiService {
 
       if (response.status === 409) {
         const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.detail || 'La placa ingresada ya se encuentra registrada en el sistema');
+        throw new VehicleHttpError(errorData.detail || 'La placa ingresada ya se encuentra registrada en el sistema');
       }
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.detail || 'Error al actualizar el vehículo');
+        throw new VehicleHttpError(errorData.detail || 'Error al actualizar el vehículo');
       }
 
       const data: Vehicle = await response.json();
       return { data, isLocal: false };
     } catch (err: any) {
+      if (!ALLOW_LOCAL_FALLBACK || err instanceof VehicleHttpError) throw err;
       if (err.message === 'La placa ingresada ya se encuentra registrada en el sistema') {
         throw err;
       }

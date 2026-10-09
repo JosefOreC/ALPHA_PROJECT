@@ -7,6 +7,8 @@ import { IntegrationsPanel } from './admin/IntegrationsPanel'
 import { ParametersPanel } from './admin/ParametersPanel'
 import { UsersPanel } from './admin/UsersPanel'
 import { useParameters } from './admin/useParameters'
+import { can } from '../domain/accessControl'
+import { useActor } from './session/SessionState'
 
 type Tab = 'users' | 'params' | 'integrations'
 
@@ -15,7 +17,10 @@ const SESSION_USER = { name: 'Sistemas', initials: 'SD' }
 const message = (reason: unknown, fallback: string) => (reason instanceof Error ? reason.message : fallback)
 
 export function AdminView({ service, demo, onNavigate }: { service: Administration; demo: boolean; onNavigate?: (id: ModuleId, href: string) => void }) {
-  const [tab, setTab] = useState<Tab>('users')
+  const role = useActor('admin')
+  const usersAllowed = can(role, 'users.read')
+  const canEditParameters = can(role, 'settings.update')
+  const [tab, setTab] = useState<Tab>(usersAllowed ? 'users' : 'params')
   const [users, setUsers] = useState<UserPage | null>(null)
   const [usersError, setUsersError] = useState('')
   const [usersReload, setUsersReload] = useState(0)
@@ -25,6 +30,7 @@ export function AdminView({ service, demo, onNavigate }: { service: Administrati
   const parameters = useParameters(service)
 
   useEffect(() => {
+    if (!usersAllowed) return
     const controller = new AbortController()
     service
       .users(controller.signal)
@@ -37,9 +43,10 @@ export function AdminView({ service, demo, onNavigate }: { service: Administrati
         if (!controller.signal.aborted) setUsersError(message(reason, 'No se pudieron cargar los usuarios.'))
       })
     return () => controller.abort()
-  }, [service, usersReload])
+  }, [service, usersReload, usersAllowed])
 
   useEffect(() => {
+    if (!usersAllowed) return
     const controller = new AbortController()
     service
       .integrations(controller.signal)
@@ -52,12 +59,12 @@ export function AdminView({ service, demo, onNavigate }: { service: Administrati
         if (!controller.signal.aborted) setIntegrationsError(message(reason, 'No se pudo cargar el estado.'))
       })
     return () => controller.abort()
-  }, [service, integrationsReload])
+  }, [service, integrationsReload, usersAllowed])
 
   const tabs: { id: Tab; label: string; count: number | string }[] = [
-    { id: 'users', label: 'Usuarios y roles', count: users ? users.total : '' },
+    ...(usersAllowed ? [{ id: 'users' as const, label: 'Usuarios y roles', count: users ? users.total : '' }] : []),
     { id: 'params', label: 'Parámetros del algoritmo', count: '' },
-    { id: 'integrations', label: 'Integraciones', count: integrations ? integrations.length : '' },
+    ...(usersAllowed ? [{ id: 'integrations' as const, label: 'Integraciones', count: integrations ? integrations.length : '' }] : []),
   ]
 
   const actions = (
@@ -69,7 +76,7 @@ export function AdminView({ service, demo, onNavigate }: { service: Administrati
           Invitar usuario
         </button>
       ) : null}
-      {tab === 'params' ? (
+      {tab === 'params' && canEditParameters ? (
         <>
           {parameters.dirty ? (
             <button className="eco-btn eco-btn--ghost" type="button" disabled={parameters.saving} onClick={parameters.discard}>
@@ -101,7 +108,7 @@ export function AdminView({ service, demo, onNavigate }: { service: Administrati
 
       <div id="admin-panel" role="tabpanel" aria-labelledby={`admin-tab-${tab}`} className="eco-tabpanel">
         {tab === 'users' ? <UsersPanel page={users} error={usersError} onRetry={() => setUsersReload((value) => value + 1)} /> : null}
-        {tab === 'params' ? <ParametersPanel state={parameters} /> : null}
+        {tab === 'params' ? <fieldset className="eco-permission-fields" disabled={!canEditParameters}><ParametersPanel state={parameters} /></fieldset> : null}
         {tab === 'integrations' ? <IntegrationsPanel items={integrations} error={integrationsError} onRetry={() => setIntegrationsReload((value) => value + 1)} /> : null}
       </div>
     </AppShell>

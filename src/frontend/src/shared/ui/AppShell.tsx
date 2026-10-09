@@ -3,6 +3,7 @@ import { LogoHojaRuta, SearchIcon } from './icons'
 import { MODULE_ICONS } from './moduleIcons'
 import { ROLE_LABELS, modulesForRole } from './roles'
 import type { ModuleId, Role } from './roles'
+import { useSession } from '../../interfaces/session/SessionState'
 
 export interface ShellUser {
   name: string
@@ -35,6 +36,11 @@ function kg(value: number) {
 
 // Barra superior (eco-side + eco-topbar + eco-content). Muestra solo los módulos del rol.
 export function AppShell({ role, current, user, title, section = 'Operación', co2, counts, actions, onNavigate, theme, children }: AppShellProps) {
+  const session = useSession()
+  if (session?.user) {
+    role = session.user.role
+    user = { name: session.user.name, initials: session.user.name.split(/\s+/).slice(0, 2).map(part => part[0]).join('') }
+  }
   const modules = modulesForRole(role)
   const percent = co2 && co2.goalKg > 0 ? Math.min(100, Math.round((co2.valueKg / co2.goalKg) * 100)) : 0
   return (

@@ -13,6 +13,8 @@ import { CancelDialog } from './orders/CancelDialog'
 import { RouteMap } from './map/RouteMap'
 import { OrderDetail } from './orders/OrderDetail'
 import { tripOf } from './orders/tripState'
+import { can } from '../domain/accessControl'
+import { useActor, useSession } from './session/SessionState'
 
 type Screen = 'board' | 'create' | 'edit'
 type Layout = 'list' | 'split' | 'map'
@@ -36,6 +38,9 @@ async function loadAll(service: Management): Promise<ManagedOrder[]> {
 const message = (reason: unknown, fallback: string) => (reason instanceof Error ? reason.message : fallback)
 
 export function OrderManagementView({ service, demo, mapSource, onNavigate }: { service: Management; demo: boolean; mapSource: MapDataSource; onNavigate?: (id: ModuleId, href: string) => void }) {
+  const role = useActor('planner')
+  const session = useSession()
+  const mapAllowed = can(role, 'map.read')
   const [screen, setScreen] = useState<Screen>('board')
   const [orders, setOrders] = useState<ManagedOrder[]>([])
   const [permissions, setPermissions] = useState<OrderPermissions>({ can_write: false })
@@ -158,7 +163,7 @@ export function OrderManagementView({ service, demo, mapSource, onNavigate }: { 
     refresh()
   }
   const showList = layout !== 'map'
-  const showMap = layout !== 'list'
+  const showMap = mapAllowed && layout !== 'list'
   const filtered = Boolean(query.trim() || tab !== 'ALL' || district)
 
   const actions = (
@@ -266,8 +271,8 @@ export function OrderManagementView({ service, demo, mapSource, onNavigate }: { 
               </span>
               <div className="eco-seg-ctrl" role="group" aria-label="Vista">
                 <button type="button" aria-pressed={layout === 'list'} onClick={() => setLayout('list')}>Lista</button>
-                <button type="button" aria-pressed={layout === 'split'} onClick={() => setLayout('split')}>Lista + mapa</button>
-                <button type="button" aria-pressed={layout === 'map'} onClick={() => setLayout('map')}>Mapa</button>
+                {mapAllowed ? <><button type="button" aria-pressed={layout === 'split'} onClick={() => setLayout('split')}>Lista + mapa</button>
+                <button type="button" aria-pressed={layout === 'map'} onClick={() => setLayout('map')}>Mapa</button></> : null}
               </div>
             </div>
           </section>
@@ -319,7 +324,7 @@ export function OrderManagementView({ service, demo, mapSource, onNavigate }: { 
               ) : null}
 
               <section className="eco-board__side" aria-label="Mapa y detalle">
-                {showMap ? <RouteMap source={mapSource} selectedId={selected?.id} query={query} onSelect={setSelectedId} /> : null}
+                {showMap ? <RouteMap source={mapSource} profile={role === 'driver' ? 'driver' : 'operations'} scopePlate={role === 'driver' ? session?.user?.plate ?? '' : undefined} selectedId={selected?.id} query={query} onSelect={setSelectedId} /> : null}
                 {selected ? (
                   <OrderDetail
                     order={selected}

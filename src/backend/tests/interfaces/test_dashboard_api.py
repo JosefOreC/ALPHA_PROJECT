@@ -12,6 +12,8 @@ from infrastructure.persistence.in_memory_dashboard import (
 )
 from interfaces.api.dashboard import deps
 from interfaces.api.dashboard.router import router
+from interfaces.api.security.deps import get_current_identity
+from domain.access_control import Identity
 from tests.application.fakes import LIMA, FixedClock
 
 
@@ -19,6 +21,7 @@ from tests.application.fakes import LIMA, FixedClock
 def client() -> TestClient:
     app = FastAPI()
     app.include_router(router)
+    app.dependency_overrides[get_current_identity] = lambda: Identity("test-logistics", "Logística ficticia", "logistics")
     fixed_use_case = GetDashboardSummary(
         metrics=InMemoryDashboardMetrics(),
         districts=InMemoryDistrictCatalog(),
@@ -103,9 +106,9 @@ def test_districts_endpoint_lists_id_and_name(client):
     assert len(response.json()) == 4
 
 
-def test_default_wiring_serves_the_in_memory_dashboard():
+def test_standalone_dashboard_also_requires_a_verified_session():
     from interfaces.api.dashboard.app import app
 
     response = TestClient(app).get("/api/v1/dashboard/districts")
 
-    assert response.status_code == 200
+    assert response.status_code == 401

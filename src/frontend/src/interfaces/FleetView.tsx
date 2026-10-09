@@ -7,6 +7,8 @@ import { AppShell, Banner, CombustibleIcon, FlotaIcon, List, ListGroup, ListRow,
 import type { ModuleId, UnitState } from '../shared/ui'
 import type { CreateVehicleInput, UpdateVehicleInput, Vehicle, VehicleStatus } from '../types/vehicle'
 import { VehicleDialog } from './fleet/VehicleDialog'
+import { can } from '../domain/accessControl'
+import { useActor } from './session/SessionState'
 
 const UNIT_OF: Record<VehicleStatus, UnitState> = { EN_RUTA: 'moving', DISPONIBLE: 'ready', MANTENIMIENTO: 'service', INACTIVO: 'off' }
 const STATUS_LABEL: Record<VehicleStatus, string> = { EN_RUTA: 'En ruta', DISPONIBLE: 'Disponible', MANTENIMIENTO: 'Mantenimiento', INACTIVO: 'Inactivo' }
@@ -18,6 +20,8 @@ const SESSION_USER = { name: 'Planificación', initials: 'PL' }
 type Notice = { tone: 'success' | 'info' | 'error'; text: string }
 
 export function FleetView({ onNavigate }: { onNavigate?: (id: ModuleId, href: string) => void }) {
+  const role = useActor('planner')
+  const canWrite = can(role, 'fleet.update')
   const [vehicles, setVehicles] = useState<Vehicle[]>([])
   const [loading, setLoading] = useState(true)
   const [local, setLocal] = useState(false)
@@ -66,18 +70,21 @@ export function FleetView({ onNavigate }: { onNavigate?: (id: ModuleId, href: st
   const noActive = !loading && (summary.active === 0 || serverMessage === NO_ACTIVE)
 
   function openCreate() {
+    if (!can(role, 'fleet.create')) return
     setEditing(null)
     setDialogError(null)
     setDialogOpen(true)
   }
 
   function openEdit(vehicle: Vehicle) {
+    if (!canWrite) return
     setEditing(vehicle)
     setDialogError(null)
     setDialogOpen(true)
   }
 
   async function save(payload: CreateVehicleInput | UpdateVehicleInput) {
+    if (!canWrite) return
     setSubmitting(true)
     setDialogError(null)
     try {
@@ -100,6 +107,7 @@ export function FleetView({ onNavigate }: { onNavigate?: (id: ModuleId, href: st
   }
 
   async function changeStatus(vehicle: Vehicle, status: VehicleStatus) {
+    if (!canWrite) return
     try {
       const result = await vehicleApi.updateVehicle(vehicle.vehiculo_id, { estado: status })
       setLocal(result.isLocal)
@@ -116,10 +124,10 @@ export function FleetView({ onNavigate }: { onNavigate?: (id: ModuleId, href: st
       <button className="eco-btn eco-btn--ghost" type="button" disabled={loading} onClick={load}>
         Actualizar
       </button>
-      <button className="eco-btn" type="button" onClick={openCreate}>
+      {can(role, 'fleet.create') ? <button className="eco-btn" type="button" onClick={openCreate}>
         <PlusIcon />
         Registrar vehículo
-      </button>
+      </button> : null}
     </>
   )
 
@@ -212,6 +220,7 @@ export function FleetView({ onNavigate }: { onNavigate?: (id: ModuleId, href: st
                         </span>
                         <UnitStatus status={UNIT_OF[vehicle.estado]} label={STATUS_LABEL[vehicle.estado]} meta={vehicle.disponible ? '· asignable a ruta' : '· no asignable'} />
                         <span className="eco-row__end">
+                          {canWrite ? <>
                           <select
                             className="eco-select eco-select--compact"
                             aria-label={`Cambiar estado de ${vehicle.placa}`}
@@ -225,6 +234,7 @@ export function FleetView({ onNavigate }: { onNavigate?: (id: ModuleId, href: st
                           <button className="eco-btn eco-btn--ghost" type="button" aria-label={`Editar vehículo ${vehicle.placa}`} onClick={() => openEdit(vehicle)}>
                             Editar
                           </button>
+                          </> : <span className="eco-muted">Solo lectura</span>}
                         </span>
                       </ListRow>
                     ))}
@@ -236,7 +246,7 @@ export function FleetView({ onNavigate }: { onNavigate?: (id: ModuleId, href: st
         </section>
       ) : null}
 
-      <VehicleDialog open={dialogOpen} vehicle={editing} serverError={dialogError} submitting={submitting} onSubmit={save} onClose={() => setDialogOpen(false)} />
+      {canWrite ? <VehicleDialog open={dialogOpen} vehicle={editing} serverError={dialogError} submitting={submitting} onSubmit={save} onClose={() => setDialogOpen(false)} /> : null}
     </AppShell>
   )
 }

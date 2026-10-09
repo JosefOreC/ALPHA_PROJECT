@@ -18,7 +18,7 @@ class OrdersApiTests(unittest.TestCase):
         self.create_app = create_app
         self.order = Order("p1", "d1", "Cliente", "Dirección", "Santa Anita", "10:00", "12:00", 4.5, "")
         self.repo = MemoryOrderRepository([self.order])
-        self.client = TestClient(create_app(self.repo, lambda: Principal("d1", "CONDUCTOR")))
+        self.client = TestClient(create_app(self.repo, lambda: Principal("d1", "CONDUCTOR"), lambda: None))
 
     def test_view_and_confirmation(self):
         path = "/api/conductor/pedidos/p1"
@@ -36,7 +36,7 @@ class OrdersApiTests(unittest.TestCase):
 
     def test_http_permissions(self):
         for principal, status in [(Principal("d1", "OPERADOR"), 403), (Principal("d2", "CONDUCTOR"), 404)]:
-            client = TestClient(self.create_app(self.repo, lambda: principal))
+            client = TestClient(self.create_app(self.repo, lambda: principal, lambda: None))
             self.assertEqual(client.get("/api/conductor/pedidos/p1").status_code, status)
             self.assertEqual(client.post("/api/conductor/pedidos/p1/confirmacion").status_code, status)
 

@@ -41,15 +41,17 @@ describe('módulos por rol', () => {
   const ids = (role: Role) => modulesForRole(role).map((m) => m.id)
 
   it('cada rol ve solo sus módulos', () => {
-    expect(ids('planner')).toEqual(['pedidos', 'rutas', 'flota'])
-    expect(ids('logistics')).toEqual(['dashboard', 'sostenibilidad'])
-    expect(ids('driver')).toEqual(['mi-ruta', 'pedido-actual', 'incidencias'])
-    expect(ids('admin')).toEqual(['dashboard', 'pedidos', 'rutas', 'flota', 'sostenibilidad', 'admin'])
+    expect(ids('planner')).toEqual(['dashboard', 'pedidos', 'rutas', 'flota', 'conductores', 'sostenibilidad', 'admin', 'incidencias'])
+    expect(ids('logistics')).toEqual(['dashboard', 'pedidos', 'rutas', 'flota', 'conductores', 'sostenibilidad', 'incidencias'])
+    expect(ids('driver')).toEqual(['mi-ruta', 'pedido-actual', 'incidencias', 'pedidos', 'flota', 'conductores'])
+    expect(ids('admin')).toEqual(['dashboard', 'pedidos', 'rutas', 'flota', 'conductores', 'sostenibilidad', 'admin', 'auditoria', 'incidencias'])
+    expect(ids('auditor')).toEqual(['pedidos', 'flota', 'conductores', 'sostenibilidad', 'admin', 'auditoria', 'incidencias'])
   })
 
-  it('el planificador no ve Administración ni Sostenibilidad', () => {
-    expect(ids('planner')).not.toContain('admin')
-    expect(ids('planner')).not.toContain('sostenibilidad')
+  it('el planificador consulta parámetros y sostenibilidad; auditoría queda excluida', () => {
+    expect(modulesForRole('planner').find(module => module.id === 'admin')?.label).toBe('Parámetros')
+    expect(ids('planner')).toContain('sostenibilidad')
+    expect(ids('planner')).not.toContain('auditoria')
   })
 
   it('AppShell pinta solo los módulos del rol y marca el actual', () => {
@@ -61,7 +63,8 @@ describe('módulos por rol', () => {
     const nav = screen.getByRole('complementary', { name: 'Navegación principal' })
     expect(within(nav).getByRole('link', { name: /Dashboard del día/ })).toBeInTheDocument()
     expect(within(nav).getByRole('link', { name: /Sostenibilidad/ })).toHaveAttribute('aria-current', 'page')
-    expect(within(nav).queryByRole('link', { name: /Flota/ })).toBeNull()
+    expect(within(nav).getByRole('link', { name: /Flota/ })).toBeInTheDocument()
+    expect(within(nav).queryByRole('link', { name: /Administración/ })).toBeNull()
     expect(within(nav).getByText('Resp. de Logística')).toBeInTheDocument()
     expect(screen.getByText('contenido')).toBeInTheDocument()
   })

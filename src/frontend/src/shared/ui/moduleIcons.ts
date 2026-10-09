@@ -1,4 +1,4 @@
-import { FlotaIcon, HojaCo2Icon, IncidenciaIcon, PaqueteIcon, RutaIcon, SlidersIcon, TableroIcon } from './icons'
+import { ConductorIcon, FlotaIcon, HojaCo2Icon, IncidenciaIcon, PaqueteIcon, RutaIcon, SlidersIcon, TableroIcon } from './icons'
 import type { ModuleId } from './roles'
 
 export const MODULE_ICONS: Record<ModuleId, typeof FlotaIcon> = {
@@ -11,4 +11,6 @@ export const MODULE_ICONS: Record<ModuleId, typeof FlotaIcon> = {
   'mi-ruta': RutaIcon,
   'pedido-actual': PaqueteIcon,
   incidencias: IncidenciaIcon,
+  conductores: ConductorIcon,
+  auditoria: SlidersIcon,
 }

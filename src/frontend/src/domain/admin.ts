@@ -1,4 +1,5 @@
 import type { Role } from './role'
+import { ROLE_METADATA, ROLES } from './role'
 
 export type UserStatus = 'active' | 'inactive'
 
@@ -28,16 +29,11 @@ export interface Integration {
   status: IntegrationStatus
 }
 
-/** Código del rol en la documentación: ROL-01 … ROL-04. */
-export const ROLE_CODES: Record<Role, string> = { admin: 'ROL-01', planner: 'ROL-02', driver: 'ROL-03', logistics: 'ROL-04' }
+/** Código del rol en la documentación: ROL-01 … ROL-05. */
+export const ROLE_CODES = Object.fromEntries(ROLES.map(role => [role, ROLE_METADATA[role].code])) as Record<Role, string>
 
-export const ROLE_DESCRIPTIONS: Record<Role, string> = {
-  admin: 'Configuración, usuarios, flota y parámetros. Acceso a todo.',
-  planner: 'Pedidos, flota, conductores y generación de rutas.',
-  driver: 'Su ruta, confirmar entregas, incidencias y alertas.',
-  logistics: 'Dashboard, sostenibilidad y cumplimiento.',
-}
+export const ROLE_DESCRIPTIONS = Object.fromEntries(ROLES.map(role => [role, ROLE_METADATA[role].description])) as Record<Role, string>
 
-export const ROLE_ORDER: Role[] = ['admin', 'planner', 'driver', 'logistics']
+export const ROLE_ORDER: Role[] = ROLES
 
 export const INTEGRATION_STATUS_LABELS: Record<IntegrationStatus, string> = { connected: 'Conectado', pending: 'Pendiente', failed: 'Con fallas' }

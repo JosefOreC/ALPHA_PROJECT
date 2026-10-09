@@ -5,6 +5,7 @@ from domain.entities.order import Order
 from domain.value_objects import OrderStatus
 from domain.order_management import DISTRICTS, InvalidOrder, OrderData, cancel_order, update_order
 from domain.ports.order_management import ManagementRepository, OrderIds
+from domain.access_control import can
 
 
 @dataclass(frozen=True)
@@ -13,21 +14,17 @@ class ManagementPrincipal:
     role: str
 
 
-READ_ROLES = frozenset({"ADMIN", "OPERADOR", "AUDITOR", "RESPONSABLE_LOGISTICA"})
-WRITE_ROLES = frozenset({"ADMIN", "OPERADOR"})
-
-
 class ManageOrders:
     def __init__(self, repository: ManagementRepository, ids: OrderIds):
         self.repository, self.ids = repository, ids
 
     @staticmethod
-    def authorize(principal: ManagementPrincipal, write: bool = False) -> None:
-        if principal.role not in (WRITE_ROLES if write else READ_ROLES):
+    def authorize(principal: ManagementPrincipal, permission: str = "orders.read") -> None:
+        if not can(principal.role, permission):
             raise Forbidden("Tu usuario no tiene permiso para esta operación de gestión de pedidos.")
 
     def create(self, data: OrderData, principal: ManagementPrincipal) -> Order:
-        self.authorize(principal, True)
+        self.authorize(principal, "orders.create")
         fields = data.validated()
         order = Order(id=self.ids.new(), driver_id=None, **vars(fields), status=OrderStatus.PENDING)
         with self.repository.transaction():
@@ -54,14 +51,14 @@ class ManageOrders:
 
     def update(self, order_id: str, data: OrderData, expected_version: int,
                principal: ManagementPrincipal) -> Order:
-        self.authorize(principal, True)
+        self.authorize(principal, "orders.update")
         with self.repository.transaction():
             order = update_order(self.view(order_id, principal), data, expected_version)
             self.repository.save(order)
             return order
 
     def cancel(self, order_id: str, expected_version: int, principal: ManagementPrincipal) -> Order:
-        self.authorize(principal, True)
+        self.authorize(principal, "orders.delete")
         with self.repository.transaction():
             order = cancel_order(self.view(order_id, principal), expected_version)
             self.repository.save(order)

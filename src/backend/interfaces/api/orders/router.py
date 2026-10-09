@@ -5,6 +5,7 @@ from fastapi import APIRouter, Depends, HTTPException
 
 from application.use_cases.confirm_delivery import DriverOrders, Forbidden, OrderNotFound, Principal
 from domain.exceptions.order_conflict import OrderConflict
+from interfaces.api.security.deps import protect_mutation
 
 
 def create_orders_router(service: DriverOrders, authenticate: Callable) -> APIRouter:
@@ -26,7 +27,7 @@ def create_orders_router(service: DriverOrders, authenticate: Callable) -> APIRo
     def view(order_id: str, principal: Annotated[Principal, Depends(authenticate)]):
         return execute(service.view, order_id, principal)
 
-    @router.post("/{order_id}/confirmacion")
+    @router.post("/{order_id}/confirmacion", dependencies=[Depends(protect_mutation)])
     def confirm(order_id: str, principal: Annotated[Principal, Depends(authenticate)]):
         return execute(service.confirm, order_id, principal)
 

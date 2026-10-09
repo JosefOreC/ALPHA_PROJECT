@@ -40,7 +40,7 @@ export class UnavailableAlgorithmSettings implements AlgorithmSettings {
 
 const DEMO_USERS: UserPage = {
   total: 19,
-  roleCounts: { admin: 1, planner: 3, driver: 13, logistics: 2 },
+  roleCounts: { admin: 1, planner: 3, driver: 13, logistics: 2, auditor: 0 },
   items: [
     { id: 'u1', name: 'Sistemas DistriRápido', email: 'sistemas@distrirapido.pe', role: 'admin', status: 'active', lastAccess: 'hoy 08:02' },
     { id: 'u2', name: 'Beto P.', email: 'planificacion@distrirapido.pe', role: 'planner', status: 'active', lastAccess: 'hoy 10:40' },

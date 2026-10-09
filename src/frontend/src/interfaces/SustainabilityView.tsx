@@ -7,6 +7,8 @@ import type { ReportPeriod, SustainabilityReport } from '../domain/sustainabilit
 import { AppShell, Banner, HojaCo2Icon, List, ListRow, Panel, PanelCell } from '../shared/ui'
 import type { ModuleId } from '../shared/ui'
 import { EmissionsChart } from './sustainability/EmissionsChart'
+import { can } from '../domain/accessControl'
+import { useActor } from './session/SessionState'
 
 const DISTRICT_COLUMNS = 'minmax(0, 1fr) 80px 70px'
 const VEHICLE_COLUMNS = '90px 110px 100px 100px minmax(0, 1fr)'
@@ -18,6 +20,7 @@ const INTENSITY_COLOR = { danger: 'var(--danger)', warning: 'var(--warning)', no
 const mass = (kg: number) => (kg >= 1000 ? `${formatDecimal(kg / 1000, 2, 2)} t` : `${formatDecimal(kg)} kg`)
 
 export function SustainabilityView({ service, onNavigate }: { service: SustainabilityService; onNavigate?: (id: ModuleId, href: string) => void }) {
+  const role = useActor('logistics')
   const [period, setPeriod] = useState<ReportPeriod>('month')
   const [report, setReport] = useState<SustainabilityReport | null>(null)
   const [error, setError] = useState('')
@@ -58,7 +61,7 @@ export function SustainabilityView({ service, onNavigate }: { service: Sustainab
   }
 
   function exportCsv() {
-    if (!report) return
+    if (!report || !can(role, 'reports.export')) return
     setExportError('')
     try {
       service.exportCsv(report)
@@ -76,12 +79,12 @@ export function SustainabilityView({ service, onNavigate }: { service: Sustainab
           </button>
         ))}
       </div>
-      <button className="eco-btn" type="button" disabled={!report || loading} onClick={exportCsv}>
+      {can(role, 'reports.export') ? <button className="eco-btn" type="button" disabled={!report || loading} onClick={exportCsv}>
         <svg className="eco-icon" viewBox="0 0 24 24" aria-hidden="true">
           <path d="M12 4v11M7.5 10.5L12 15l4.5-4.5M5 19.5h14" />
         </svg>
         Exportar CSV
-      </button>
+      </button> : null}
     </>
   )
 

@@ -2,6 +2,7 @@
 from datetime import date as date_type
 
 from fastapi import APIRouter, Depends, HTTPException
+from interfaces.api.security.deps import require_permission
 
 from application.use_cases.get_dashboard_summary import GetDashboardSummary
 from application.use_cases.list_districts import ListDistricts
@@ -9,7 +10,7 @@ from domain.exceptions.dashboard import DistrictNotFoundError
 from interfaces.api.dashboard import deps
 from interfaces.api.dashboard.schemas import DashboardSummarySchema, DistrictSchema
 
-router = APIRouter(prefix="/api/v1/dashboard", tags=["dashboard"])
+router = APIRouter(prefix="/api/v1/dashboard", tags=["dashboard"], dependencies=[Depends(require_permission("dashboard.read"))])
 
 
 @router.get("", response_model=DashboardSummarySchema)

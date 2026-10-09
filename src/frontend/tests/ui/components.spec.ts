@@ -1,5 +1,7 @@
 import { test, expect } from '@playwright/test'
-import { captureEvidence, fillOrder, mockApi, orderFixture, stubTiles } from './fixtures'
+import { captureEvidence, fillOrder, mockApi, mockSession, orderFixture, stubTiles } from './fixtures'
+
+test.beforeEach(async ({ page }) => { await mockSession(page, 'planner') })
 
 test('registro válido muestra éxito y los datos guardados', async ({ page }) => {
   const api = await mockApi(page)

@@ -1,2 +1,9 @@
-/** ROL-01 Administrador, ROL-02 Planificador, ROL-03 Conductor, ROL-04 Responsable de Logística. */
-export type Role = 'admin' | 'planner' | 'driver' | 'logistics'
+import policy from '../../../shared/rbac.json'
+
+/** ROL-01…ROL-05. ROL-06 revisa entregables, sin acceso a producción. */
+export type Role = keyof typeof policy.roles
+export const ROLES = Object.keys(policy.roles) as Role[]
+export const ROLE_METADATA = policy.roles
+export function isRole(value: unknown): value is Role {
+  return typeof value === 'string' && Object.hasOwn(policy.roles, value)
+}

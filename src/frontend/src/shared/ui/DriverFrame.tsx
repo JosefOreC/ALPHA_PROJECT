@@ -27,7 +27,7 @@ export function DriverBar({ children, plate, initials }: DriverBarProps) {
 export function DriverTabBar({ current, onNavigate }: { current: ModuleId; onNavigate?: (id: ModuleId, href: string) => void }) {
   return (
     <nav className="eco-tabbar" aria-label="Secciones del conductor">
-      {modulesForRole('driver').map(module => {
+      {modulesForRole('driver').filter(module => ['mi-ruta', 'pedido-actual', 'incidencias'].includes(module.id)).map(module => {
         const Icon = MODULE_ICONS[module.id]
         const unavailable = module.id === 'incidencias'
         return (

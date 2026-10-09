@@ -11,6 +11,7 @@ from domain.entities.order import Order
 from domain.exceptions.order_conflict import OrderConflict
 from domain.order_management import InvalidOrder, OrderData
 from domain.value_objects import OrderStatus
+from domain.access_control import can
 
 
 class CreateOrderBody(BaseModel):
@@ -114,8 +115,7 @@ def create_management_router(service: ManageOrders, authenticate: Callable,
     @router.get("/permisos", response_model=PermissionsRead)
     def permissions(principal: principal_dependency):
         execute(service.authorize, principal)
-        from application.use_cases.manage_orders import WRITE_ROLES
-        return PermissionsRead(can_write=principal.role in WRITE_ROLES)
+        return PermissionsRead(can_write=can(principal.role, "orders.update"))
 
     @router.get("/{order_id}", response_model=OrderRead)
     def view(order_id: order_id_parameter, principal: principal_dependency):
