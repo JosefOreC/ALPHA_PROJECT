@@ -132,9 +132,15 @@ USUARIO ──── CONDUCTOR ──── RUTA ──── TRAMO
                              PEDIDO ──── INCIDENCIA
 ```
 
-El DDL completo está disponible en [`/docs/db/schema.sql`](./docs/db/schema.sql).
+El esquema ejecutable de pruebas está en [schema.sql](src/backend/infrastructure/persistence/schema.sql). Para crear PostgreSQL + PostGIS y cargar datos de todos los módulos, configurar `DATABASE_URL` en `.env` y ejecutar desde la raíz:
 
-> Pendiente: evaluación de extensión **PostGIS** para almacenamiento nativo de coordenadas y gestión de zonas restringidas. Las tablas `REPORTE`, `ZONA_RESTRINGIDA` y `TRAMO` se formalizarán [...]
+```powershell
+.venv\Scripts\python.exe scripts/create_test_db.py
+```
+
+Consultar [configuración, instalación de dependencias y datos incluidos](docs/03%20Implementaci%C3%B3n/Base%20de%20datos%20de%20pruebas.md). Este comando prepara la base de pruebas; la conexión de los módulos de la API a persistencia real se integra por separado.
+
+El esquema de pruebas incluye PostGIS, reportes, zonas restringidas y tramos. Su integración con los adaptadores del producto y las migraciones de producción siguen pendientes.
 
 ---
 

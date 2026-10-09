@@ -38,8 +38,8 @@ wheels/
 
 # Entornos virtuales
 .env
-.env.local
-.env.*.local
+.env.*
+!.env.example
 .venv
 env.bak/
 venv.bak/
