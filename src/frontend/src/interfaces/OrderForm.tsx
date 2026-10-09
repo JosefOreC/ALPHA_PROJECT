@@ -72,6 +72,6 @@ export function OrderForm({ service, order, onSaved, onBack }: {
       </div>
     </fieldset>
     <div className="eco-sheet__actions"><button className="eco-btn eco-btn--secondary" type="button" disabled={saving} onClick={onBack}>Volver</button><button type="submit" className="eco-btn" disabled={saving}>{saving ? 'Guardando…' : order ? 'Guardar cambios' : 'Registrar pedido'}</button></div>
-    <p className="eco-field__hint">El pedido se registra pendiente y sin conductor. La validación geográfica de la dirección está pendiente de integración.</p>
+    <p className="eco-field__hint">El pedido se registra pendiente y sin conductor.</p>
   </form>
 }

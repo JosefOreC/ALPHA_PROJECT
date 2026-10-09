@@ -3,7 +3,7 @@ import type { Integration, IntegrationStatus } from '../../domain/admin'
 import { Banner, List, ListRow, UnitStatus } from '../../shared/ui'
 import type { UnitState } from '../../shared/ui'
 
-const COLUMNS = 'minmax(0, 1fr) 160px 140px'
+const COLUMNS = 'minmax(0, 1fr) 160px'
 const UNIT_OF: Record<IntegrationStatus, UnitState> = { connected: 'ready', pending: 'service', failed: 'off' }
 
 type IntegrationsPanelProps = {
@@ -27,7 +27,6 @@ export function IntegrationsPanel({ items, error, onRetry }: IntegrationsPanelPr
       <ListRow head columns={COLUMNS}>
         <span>Servicio</span>
         <span>Estado</span>
-        <span />
       </ListRow>
       {items.map((item) => (
         <ListRow key={item.id} columns={COLUMNS} twoLines>
@@ -36,11 +35,7 @@ export function IntegrationsPanel({ items, error, onRetry }: IntegrationsPanelPr
             <span className="eco-row__sub">{item.description}</span>
           </span>
           <UnitStatus status={UNIT_OF[item.status]} label={INTEGRATION_STATUS_LABELS[item.status]} />
-          <span className="eco-row__end">
-            <button className={`eco-btn ${item.status === 'connected' ? 'eco-btn--ghost' : 'eco-btn--secondary'}`} type="button" disabled title="Próximamente">
-              {item.status === 'connected' ? 'Configurar' : 'Conectar'}
-            </button>
-          </span>
+
         </ListRow>
       ))}
     </List>

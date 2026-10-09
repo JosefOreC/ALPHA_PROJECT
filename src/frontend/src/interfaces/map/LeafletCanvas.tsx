@@ -1,9 +1,9 @@
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
-import { Fragment, useEffect, useRef } from 'react'
+import { Fragment, useEffect } from 'react'
 import type { ComponentProps } from 'react'
 import { MapContainer, Marker, Pane, Polyline, Popup, useMap, useMapEvents } from 'react-leaflet'
-import { doneSegment, orderMatches, pendingSegment } from '../../domain/mapData'
+import { doneSegment, pendingSegment } from '../../domain/mapData'
 import type { MapData, MapSelection } from '../../domain/mapData'
 import { LIMA_REGION } from '../../domain/mapPresentation'
 import type { MapLayers } from '../../domain/mapPresentation'
@@ -15,7 +15,7 @@ import { fitVisible, LIMA_BOUNDS, toTuple } from './viewport'
 import VectorBasemap from './VectorBasemap'
 
 type Props = {
-  data: MapData; selection: MapSelection | null; query: string; layers: MapLayers
+  data: MapData; selection: MapSelection | null; layers: MapLayers
   compact: boolean; card: boolean; onSelect: (selection: MapSelection) => void
   onDismiss: () => void
   onReady: (map: L.Map) => void; onBasemapError: (message: string) => void
@@ -39,7 +39,6 @@ function MapPopup(props: ComponentProps<typeof Popup>) {
 /** Lista/Mapa cambia el contenedor aunque no cambie la ventana. */
 function MapLifecycle({ data, layers, onReady }: Pick<Props, 'data' | 'layers' | 'onReady'>) {
   const map = useMap()
-  const initial = useRef({ data, layers })
   useEffect(() => {
     const resize = () => {
       map.invalidateSize({ pan: false })
@@ -52,7 +51,6 @@ function MapLifecycle({ data, layers, onReady }: Pick<Props, 'data' | 'layers' |
       Object.assign(map.getContainer().dataset, { mapLat: String(center.lat), mapLng: String(center.lng), mapZoom: String(map.getZoom()) })
     }
     resize()
-    fitVisible(map, initial.current.data, initial.current.layers)
     inspect()
     onReady(map)
     map.on('moveend zoomend', inspect)
@@ -60,10 +58,19 @@ function MapLifecycle({ data, layers, onReady }: Pick<Props, 'data' | 'layers' |
     observer?.observe(map.getContainer())
     return () => { observer?.disconnect(); map.off('moveend zoomend', inspect) }
   }, [map, onReady])
+  useEffect(() => {
+    fitVisible(map, data, layers)
+    // La selección se actualiza en el mismo render que los filtros. Ajusta su
+    // tarjeta después de encuadrar, sin limitar el desplazamiento manual.
+    const refresh = setTimeout(() => map.eachLayer(layer => {
+      if (layer instanceof L.Popup && layer.isOpen()) layer.update()
+    }), 0)
+    return () => clearTimeout(refresh)
+  }, [map, data, layers])
   return null
 }
 
-export default function LeafletCanvas({ data, selection, query, layers, compact, card, onSelect, onDismiss, onReady, onBasemapError }: Props) {
+export default function LeafletCanvas({ data, selection, layers, compact, card, onSelect, onDismiss, onReady, onBasemapError }: Props) {
   const order = selection?.kind === 'order' ? data.orders.find(item => item.id === selection.id) : undefined
   const vehicle = selection?.kind === 'vehicle' ? data.vehicles?.find(item => item.id === selection.id) : undefined
   const route = selection?.kind === 'route' ? data.routes.find(item => item.id === selection.id) : undefined
@@ -106,7 +113,7 @@ export default function LeafletCanvas({ data, selection, query, layers, compact,
 
       {layers.pins ? data.orders.map(item => <Marker key={item.id + '-' + (order?.id === item.id)}
         pane={order?.id === item.id ? 'map-selection' : 'map-orders'} position={toTuple(item.position)}
-        icon={L.divIcon({ className: 'eco-map__marker', html: pinHtml(item.status, order?.id === item.id, !orderMatches(item, data.routes, query)), iconSize: [36, 44], iconAnchor: [18, 38] })}
+        icon={L.divIcon({ className: 'eco-map__marker', html: pinHtml(item.status, order?.id === item.id, false), iconSize: [36, 44], iconAnchor: [18, 38] })}
         title={item.id + ' · ' + item.customer + ' · ' + statusLabels[item.status]} alt={item.id + ', ' + item.customer + ', ' + statusLabels[item.status]}
         keyboard eventHandlers={{ click: () => onSelect({ kind: 'order', id: item.id }) }} />) : null}
 
@@ -127,7 +134,6 @@ export default function LeafletCanvas({ data, selection, query, layers, compact,
               {order.co2_kg !== null ? <span className="eco-eco eco-strong">{formatDecimal(order.co2_kg, 0, 2)} kg CO₂</span> : null}</div>
           </> : vehicle ? <><strong>Camión {vehicle.plate}</strong><span>{vehicle.status}</span><p>{data.routes.some(item => item.id === vehicle.route_id) ? 'Ruta ' + vehicle.route_id : 'Sin ruta asignada'}</p></>
             : route ? <><strong>Ruta {route.id} · {route.plate}</strong><span>{data.orders.filter(item => item.route_id === route.id).length} pedidos</span></> : null}
-          {data.demo ? <span className="eco-muted">Posiciones de demostración</span> : null}
         </div>
       </MapPopup> : null}
     </MapContainer>

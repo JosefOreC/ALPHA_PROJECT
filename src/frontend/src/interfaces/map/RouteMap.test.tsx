@@ -98,10 +98,11 @@ describe('RouteMap', () => {
     expect(container.querySelectorAll('svg.veh.is-dim')).toHaveLength(data.routes.length - 1)
   })
 
-  it('la búsqueda atenúa los pedidos que no coinciden', { timeout: 20_000 }, async () => {
+  it('la búsqueda oculta pedidos, rutas y vehículos que no coinciden', { timeout: 20_000 }, async () => {
     const { container } = render(<RouteMap source={new DemoMapData()} query="fhj-890" />)
-    await waitFor(() => expect(container.querySelectorAll('svg.pin')).toHaveLength(data.orders.length), SLOW)
-    expect(container.querySelectorAll('svg.pin:not(.is-dim)')).toHaveLength(data.orders.filter(order => order.route_id === 'r4').length)
+    await waitFor(() => expect(container.querySelectorAll('svg.pin')).toHaveLength(data.orders.filter(order => order.route_id === 'r4').length), SLOW)
+    expect(container.querySelectorAll('svg.pin.is-dim')).toHaveLength(0)
+    expect(container.querySelectorAll('svg.veh')).toHaveLength(1)
   })
 
   it('elegir un pin avisa con el id del pedido', { timeout: 20_000 }, async () => {
@@ -158,5 +159,25 @@ describe('RouteMap', () => {
   it('mientras llegan los datos muestra «Cargando mapa…»', () => {
     render(<RouteMap source={{ load: () => new Promise(() => {}) }} />)
     expect(screen.getByText('Cargando mapa…')).toBeInTheDocument()
+  })
+
+  it('combina estado y pedido, y limpiar restaura el conjunto completo', { timeout: 30_000 }, async () => {
+    const user = userEvent.setup()
+    const { container } = render(<RouteMap source={new DemoMapData()} />)
+    const filters = screen.getByRole('group', { name: 'Filtros del mapa' })
+    const status = within(filters).getByRole('combobox', { name: 'Estado de los pedidos en el mapa' })
+    await waitFor(() => expect(status).toBeEnabled(), SLOW)
+    await user.selectOptions(status, 'PENDIENTE')
+    await waitFor(() => expect(container.querySelectorAll('svg.pin')).toHaveLength(2), SLOW)
+    expect(container.querySelectorAll('svg.veh')).toHaveLength(0)
+    const order = within(filters).getByRole('combobox', { name: 'Filtrar por pedido en el mapa' })
+    await user.selectOptions(order, 'PED-0052')
+    await waitFor(() => expect(container.querySelectorAll('svg.pin')).toHaveLength(1))
+    expect(within(filters).getByRole('status')).toHaveTextContent('1 de 12 pedidos · 0 rutas')
+    await user.click(within(filters).getByRole('button', { name: 'Limpiar filtros del mapa' }))
+    await waitFor(() => expect(container.querySelectorAll('svg.pin')).toHaveLength(data.orders.length))
+    expect(container.querySelectorAll('svg.veh')).toHaveLength(data.routes.length)
+    expect(status).toHaveValue('ALL')
+    expect(order).toHaveValue('')
   })
 })

@@ -29,18 +29,13 @@ export function DriverTabBar({ current, onNavigate }: { current: ModuleId; onNav
     <nav className="eco-tabbar" aria-label="Secciones del conductor">
       {modulesForRole('driver').filter(module => ['mi-ruta', 'pedido-actual', 'incidencias'].includes(module.id)).map(module => {
         const Icon = MODULE_ICONS[module.id]
-        const unavailable = module.id === 'incidencias'
         return (
           <a
             key={module.id}
             href={module.href}
             aria-current={module.id === current ? 'page' : undefined}
-            aria-disabled={unavailable ? true : undefined}
-            title={unavailable ? 'Próximamente' : undefined}
             onClick={event => {
-              if (unavailable) {
-                event.preventDefault()
-              } else if (onNavigate) {
+              if (onNavigate) {
                 event.preventDefault()
                 onNavigate(module.id, module.href)
               }

@@ -2,10 +2,15 @@ import { SettingsValidationError, validateParameters } from '../domain/algorithm
 import type { AlgorithmParameters } from '../domain/algorithmSettings'
 import type { IntegrationCatalog, UserDirectory } from '../domain/ports/adminDirectory'
 import type { AlgorithmSettings } from '../domain/ports/algorithmSettings'
+import type { NewUser } from '../domain/admin'
 
 export function createAdministration(deps: { settings: AlgorithmSettings; users: UserDirectory; integrations: IntegrationCatalog }) {
   return {
     users: (signal?: AbortSignal) => deps.users.list(signal),
+    createUser: async (data: NewUser) => {
+      if (!deps.users.create) throw new Error('No se pudo crear el usuario.')
+      return deps.users.create(data)
+    },
     integrations: (signal?: AbortSignal) => deps.integrations.list(signal),
     parameters: () => deps.settings.load(),
 

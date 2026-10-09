@@ -1,18 +1,24 @@
 import type { Map as LeafletMap } from 'leaflet'
 import { Suspense, lazy, useEffect, useId, useMemo, useState } from 'react'
 import type { MapData, MapSelection } from '../../domain/mapData'
-import { MAP_PROFILES, prepareMap, selectionVisible } from '../../domain/mapPresentation'
-import { orderMatches } from '../../domain/mapData'
-import type { MapLayers, MapProfile } from '../../domain/mapPresentation'
+import { filterMapOrders, MAP_PROFILES, prepareMap, selectionVisible } from '../../domain/mapPresentation'
+import type { MapLayers, MapOrderStatus, MapProfile } from '../../domain/mapPresentation'
 import type { MapDataSource } from '../../domain/ports/mapDataSource'
 import { statusLabels } from '../../domain/managedOrder'
 import { Banner, CamionetaIcon, EntregaIcon, MinusIcon, PaqueteIcon, PlusIcon, RecenterIcon, RutaIcon, SlidersIcon } from '../../shared/ui'
+import { MapFilters } from './MapFilters'
 
 const LeafletCanvas = lazy(() => import('./LeafletCanvas'))
 type Props = {
   source: MapDataSource
   selectedId?: string
   query?: string
+  onQueryChange?: (query: string) => void
+  orderStatus?: MapOrderStatus
+  onOrderStatusChange?: (status: MapOrderStatus) => void
+  district?: string
+  onClearFilters?: () => void
+  showFilters?: boolean
   onSelect?: (id: string) => void
   onSelectElement?: (selection: MapSelection) => void
   profile?: MapProfile
@@ -33,8 +39,9 @@ export function RouteMap(props: Props) {
   return <MapInstance key={sourceKeys.get(props.source) + ':' + (props.profile ?? 'operations') + ':' + (props.scopePlate ?? '')} {...props} />
 }
 
-function MapInstance({ source, selectedId, query = '', onSelect, onSelectElement, profile = 'operations', scopePlate,
-  initialLayers, showLayerControls = true, compact = false, card = true, strip = false }: Props) {
+function MapInstance({ source, selectedId, query = '', onQueryChange, orderStatus, onOrderStatusChange, district = '', onClearFilters,
+  onSelect, onSelectElement, profile = 'operations', scopePlate,
+  initialLayers, showLayerControls = true, showFilters = showLayerControls, compact = false, card = true, strip = false }: Props) {
   const allowed = MAP_PROFILES[profile]
   const layersPanelId = useId()
   const [layersOpen, setLayersOpen] = useState(false)
@@ -46,6 +53,17 @@ function MapInstance({ source, selectedId, query = '', onSelect, onSelectElement
   const [map, setMap] = useState<LeafletMap | null>(null)
   const [localSelection, setLocalSelection] = useState<{ value: MapSelection; externalId?: string } | null>(null)
   const [dismissedOrder, setDismissedOrder] = useState<string | undefined>()
+  const [mapQuery, setMapQuery] = useState('')
+  const [mapStatus, setMapStatus] = useState<MapOrderStatus>('ALL')
+  const [orderFilter, setOrderFilter] = useState('')
+  const search = onQueryChange ? query : mapQuery
+  const status = orderStatus ?? mapStatus
+  const filterScope = JSON.stringify([status, query, search, district])
+  const [previousFilters, setPreviousFilters] = useState(filterScope)
+  if (previousFilters !== filterScope) {
+    setPreviousFilters(filterScope)
+    setOrderFilter('')
+  }
 
   const [previousSelectedId, setPreviousSelectedId] = useState(selectedId)
   if (previousSelectedId !== selectedId) {
@@ -61,7 +79,16 @@ function MapInstance({ source, selectedId, query = '', onSelect, onSelectElement
   }, [source, attempt])
 
   const prepared = useMemo(() => data ? prepareMap(data, profile === 'driver' ? (scopePlate ?? '') : scopePlate) : null, [data, profile, scopePlate])
-  const context = prepared?.data
+  const options = useMemo(() => prepared ? filterMapOrders(prepared.data, { status, queries: [query, search], district }) : null,
+    [prepared, status, query, search, district])
+  // Si otro filtro excluye el pedido elegido, vuelve al conjunto que sí coincide.
+  const activeOrderFilter = options?.orders.some(order => order.id === orderFilter) ? orderFilter : ''
+  const context = useMemo(() => options ? filterMapOrders(options, { orderId: activeOrderFilter }) : null, [options, activeOrderFilter])
+  const filtered = status !== 'ALL' || !!query.trim() || !!search.trim() || !!activeOrderFilter || !!district
+  const clearFilters = () => {
+    setMapQuery(''); setMapStatus('ALL'); setOrderFilter('')
+    onQueryChange?.(''); onOrderStatusChange?.('ALL'); onClearFilters?.()
+  }
   const candidate = (localSelection?.externalId === selectedId ? localSelection?.value : null) ?? (selectedId && selectedId !== dismissedOrder ? { kind: 'order' as const, id: selectedId } : null)
   const selection = context && selectionVisible(candidate, context, layers) ? candidate : null
   const select = (value: MapSelection) => {
@@ -90,9 +117,14 @@ function MapInstance({ source, selectedId, query = '', onSelect, onSelectElement
     setAttempt(value => value + 1)
   }
   const count = context ? (layers.routes ? context.routes.length : 0) + (layers.pins ? context.orders.length : 0) + (layers.vehicles ? context.vehicles.length : 0) : 0
-  const matches = context?.orders.some(order => orderMatches(order, context.routes, query))
 
   return <div className="eco-stack">
+    {showFilters && (allowed.pins || allowed.routes) && (!error || prepared) ? <MapFilters query={search} status={status} orderId={activeOrderFilter}
+      orders={options?.orders ?? []} visibleOrders={context?.orders.length ?? 0} totalOrders={prepared?.data.orders.length ?? 0}
+      visibleRoutes={context?.routes.length ?? 0} loading={!prepared} filtered={filtered}
+      onQuery={value => { setOrderFilter(''); if (onQueryChange) onQueryChange(value); else setMapQuery(value) }}
+      onStatus={value => { setOrderFilter(''); if (onOrderStatusChange) onOrderStatusChange(value); else setMapStatus(value) }}
+      onOrder={value => { setOrderFilter(value); if (value) select({ kind: 'order', id: value }) }} onClear={clearFilters} /> : null}
     {prepared?.omitted ? <p className="eco-muted" role="status">{prepared.omitted} elementos omitidos por coordenadas o geometrías fuera del área de Lima.</p> : null}
     {fail ? <>
       <Banner tone="warning" title="No se pudo cargar el mapa." action={<button type="button" className="eco-btn eco-btn--secondary" onClick={retry}>Reintentar mapa</button>}>
@@ -101,7 +133,7 @@ function MapInstance({ source, selectedId, query = '', onSelect, onSelectElement
       {context ? <MapFallback data={context} allowed={allowed} select={select} selection={selection} /> : null}
     </> : <div className={'eco-map' + (compact ? ' eco-map--compact' : '') + (strip ? ' eco-map--strip' : '')} role="group" aria-label="Mapa de rutas de Lima Este">
       {context ? <Suspense fallback={<span className="eco-map__note" role="status">Cargando mapa…</span>}>
-        <LeafletCanvas data={context} selection={selection} query={query} layers={layers} compact={compact} card={card}
+        <LeafletCanvas data={context} selection={selection} layers={layers} compact={compact} card={card}
           onSelect={select} onDismiss={dismiss} onReady={setMap} onBasemapError={setError} />
       </Suspense> : <span className="eco-map__note" role="status">Cargando mapa…</span>}
       {showLayerControls ? <div className="eco-map__layers" onKeyDown={event => {
@@ -123,8 +155,8 @@ function MapInstance({ source, selectedId, query = '', onSelect, onSelectElement
       <div className="eco-map__ctrl eco-map__ctrl--reset">
         <button type="button" aria-label="Ver Lima" title="Ver Lima" disabled={!map} onClick={() => { if (map && context) void import('./viewport').then(({ fitVisible }) => fitVisible(map, context, layers)) }}><RecenterIcon /></button>
       </div>
-      {context && (!count || (query.trim() && layers.pins && !matches)) ? <span className="eco-map__empty" role="status">
-        {!layers.routes && !layers.pins && !layers.vehicles ? 'Capas ocultas · activa una capa' : !count ? 'Sin elementos en esta vista' : 'Sin coincidencias'}
+      {context && !count ? <span className="eco-map__empty" role="status">
+        {!layers.routes && !layers.pins && !layers.vehicles ? 'Capas ocultas · activa una capa' : filtered ? 'Sin pedidos que coincidan con los filtros' : 'Sin elementos en esta vista'}
       </span> : null}
       {!compact ? <details className="eco-map__legend" aria-label="Leyenda">
         <summary><SlidersIcon />Leyenda</summary>
@@ -141,7 +173,6 @@ function MapInstance({ source, selectedId, query = '', onSelect, onSelectElement
       </details> : null}
     </div>}
     {!fail && context ? <details className="eco-map-details"><summary>Elementos del mapa</summary><MapFallback data={context} allowed={layers} select={select} selection={selection} all /></details> : null}
-    {context?.demo ? <p className="eco-muted eco-note">Mapa de Lima · rutas y posiciones de demostración</p> : null}
   </div>
 }
 

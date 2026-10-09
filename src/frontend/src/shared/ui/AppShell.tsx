@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { LogoHojaRuta, SearchIcon } from './icons'
+import { LogoHojaRuta } from './icons'
 import { MODULE_ICONS } from './moduleIcons'
 import { ROLE_LABELS, modulesForRole } from './roles'
 import type { ModuleId, Role } from './roles'
@@ -52,13 +52,6 @@ export function AppShell({ role, current, user, title, section = 'Operación', c
             EcoLogística <span>Lima</span>
           </span>
         </a>
-        <button className="eco-side__search" type="button" disabled title="Próximamente">
-          <SearchIcon />
-          Buscar…
-          <span className="eco-kbd" aria-hidden="true">
-            ⌘K
-          </span>
-        </button>
         {modules.map((module) => {
           const Icon = MODULE_ICONS[module.id]
           const count = counts?.[module.id]
@@ -100,6 +93,7 @@ export function AppShell({ role, current, user, title, section = 'Operación', c
             </span>
             <div>{user.name}</div>
           </div>
+          {session ? <button className="eco-btn eco-btn--on-dark" type="button" onClick={() => void session.logout()}>Cerrar sesión</button> : null}
         </div>
       </aside>
       <div className="eco-main">
@@ -111,7 +105,7 @@ export function AppShell({ role, current, user, title, section = 'Operación', c
           </nav>
           {actions ? <div className="eco-topbar__end">{actions}</div> : null}
         </header>
-        <main className="eco-content">{children}</main>
+        <main className="eco-content">{session?.error ? <p role="alert">{session.error}</p> : null}{children}</main>
       </div>
     </div>
   )

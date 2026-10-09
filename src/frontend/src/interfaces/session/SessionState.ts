@@ -3,8 +3,8 @@ import type { Role } from '../../domain/role'
 import type { SessionUser } from '../../domain/session'
 
 export type SessionState = {
-  user: SessionUser | null; loading: boolean; error: string; demo: boolean
-  chooseDemo: (id: string) => void; logout: () => Promise<void>; retry: () => void
+  user: SessionUser | null; loading: boolean; error: string
+  login: (email: string, password: string) => Promise<void>; logout: () => Promise<void>; retry: () => void
 }
 export const SessionContext = createContext<SessionState | null>(null)
 export const useSession = () => useContext(SessionContext)

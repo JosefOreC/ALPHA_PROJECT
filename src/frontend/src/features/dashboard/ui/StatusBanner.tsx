@@ -17,7 +17,7 @@ export function StatusBanner(props: Props) {
   if (props.kind === 'empty') {
     return (
       <Banner title="No se han generado rutas para la jornada actual">
-        Los indicadores se mostrarán cuando se generen las rutas.
+        Los pedidos registrados ya están disponibles. La distancia y las emisiones se mostrarán al asignar rutas.
       </Banner>
     )
   }

@@ -85,10 +85,11 @@ describe('DashboardPage with the design pieces', () => {
     expect(onNavigate).toHaveBeenLastCalledWith('pedidos', '/?vista=pedidos')
   })
 
-  it('flags demo data in the top bar', async () => {
+  it('omite avisos de demostración en la interfaz', async () => {
     const { gateway } = makeScriptedGateway([makeSummary()])
     render(<DashboardPage gateway={gateway} demoNote="Modo demo · ejemplo" />)
 
-    expect(await screen.findByText('Modo demo · ejemplo')).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { name: 'Dashboard del día' })).toBeInTheDocument()
+    expect(screen.queryByText('Modo demo · ejemplo')).toBeNull()
   })
 })

@@ -81,9 +81,9 @@ describe('DriverRouteView', () => {
     await screen.findByText('Minimarket Don Lucho →')
     const bar = screen.getByRole('navigation', { name: 'Secciones del conductor' })
     expect(within(bar).getByRole('link', { name: 'Mi ruta' })).toHaveAttribute('aria-current', 'page')
-    expect(within(bar).getByRole('link', { name: 'Incidencias' })).toHaveAttribute('aria-disabled', 'true')
+    expect(within(bar).getByRole('link', { name: 'Incidencias' })).not.toHaveAttribute('aria-disabled')
     await user.click(within(bar).getByRole('link', { name: 'Incidencias' }))
-    expect(onNavigate).not.toHaveBeenCalled()
+    expect(onNavigate).toHaveBeenCalledWith('incidencias', '/?vista=incidencias')
     await user.click(within(bar).getByRole('link', { name: 'Pedido actual' }))
     expect(onNavigate).toHaveBeenCalledWith('pedido-actual', '/?vista=conductor')
   })
@@ -125,7 +125,7 @@ describe('DriverOrderView', () => {
     expect(await screen.findByText('−21 %')).toBeInTheDocument()
     expect(screen.getByText('34 km restantes')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Confirmar entrega' })).toBeEnabled()
-    expect(screen.getByText('Modo demostración · datos ficticios. Los cambios se reinician al recargar.')).toBeInTheDocument()
+    expect(screen.queryByText(/Modo demostración/)).toBeNull()
   })
 
   it('confirmar pide confirmación, registra la hora y ofrece la siguiente parada', async () => {

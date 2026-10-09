@@ -10,13 +10,11 @@ import { canOpenModule, homeModule } from './shared/ui/roles';
 
 import { createDriverOrders } from './application/driverOrders';
 import { createDriverRoute } from './application/driverRoute';
-import { DemoOrders, UnavailableDriverRoute } from './infrastructure/demoOrders';
 import { HttpOrders } from './infrastructure/httpOrders';
 import { DriverOrderView } from './interfaces/DriverOrderView';
 import { DriverRouteView } from './interfaces/DriverRouteView';
 
 import { createManagement } from './application/manageOrders';
-import { DemoManagement } from './infrastructure/demoManagement';
 import { HttpManagement } from './infrastructure/httpManagement';
 import { OrderManagementView } from './interfaces/OrderManagementView';
 import { FleetView } from './interfaces/FleetView';
@@ -24,64 +22,30 @@ import { RoutePlanningView } from './interfaces/RoutePlanningView';
 import { SustainabilityView } from './interfaces/SustainabilityView';
 import { AdminView } from './interfaces/AdminView';
 import { createAdministration } from './application/administration';
-import { DemoAlgorithmSettings, DemoIntegrationCatalog, DemoUserDirectory, UnavailableAlgorithmSettings, UnavailableIntegrationCatalog, UnavailableUserDirectory } from './infrastructure/demoAdmin';
 import { createGetSustainabilityReport } from './application/getSustainabilityReport';
 import { BrowserFileSaver } from './infrastructure/browserFileSaver';
-import { DemoSustainabilityReport, UnavailableSustainabilityReport } from './infrastructure/demoSustainability';
 import { createGenerateRoutes } from './application/generateRoutes';
-import { DemoMapData, UnavailableMapData } from './infrastructure/demoMapData';
-import { DemoPlanningSource, DemoRouteOptimizer, UnavailableRouteOptimizer } from './infrastructure/demoRoutePlanning';
-import { createLivePlanningSource } from './infrastructure/livePlanningSource';
-import { vehicleApi } from './services/vehicleApi';
 
-import { DashboardPage, DemoDashboardInsights, HttpDashboardGateway } from './features/dashboard';
+import { DashboardPage, HttpDashboardGateway } from './features/dashboard';
+import { HttpAlgorithmSettings, HttpDashboardInsights, HttpDriverRoute, HttpIntegrationCatalog, HttpMapData, HttpPlanningSource, HttpRouteOptimizer, HttpSustainabilityReport, HttpUserDirectory } from './infrastructure/httpPortal';
+import { apiBaseUrl, getCsrfToken } from './infrastructure/httpClient';
+import { RecordsView } from './interfaces/RecordsView';
+import { DriversView } from './interfaces/DriversView';
 import { RouteMap } from './interfaces/map/RouteMap';
 import type { ModuleId } from './shared/ui';
 
-// Raíz de composición: se instancian los gateways / adaptadores
-const dashboardGateway = new HttpDashboardGateway({ baseUrl: import.meta.env.VITE_API_URL ?? import.meta.env.VITE_API_BASE_URL ?? '' });
-const apiUrl = import.meta.env.VITE_API_URL as string | undefined;
-const demo = apiUrl === undefined;
-const sessionSource = new HttpSession(apiUrl ?? '');
-// CO₂ evitado y pedidos en riesgo aún no tienen API: solo hay ejemplo en modo demostración.
-const insightsGateway = demo ? new DemoDashboardInsights() : undefined;
-// En demostración, pedidos y ruta del conductor comparten estado: confirmar una entrega avanza la ruta.
-const demoDriver = demo ? new DemoOrders() : null;
-const driverService = createDriverOrders(demoDriver ?? new HttpOrders(apiUrl ?? ''));
-const driverRouteService = createDriverRoute(demoDriver ?? new UnavailableDriverRoute());
-const DEFAULT_ORDER = 'PED-0026';
-const managementService = createManagement(
-  demo
-    ? new DemoManagement()
-    : new HttpManagement(
-        apiUrl,
-        () => document.querySelector<HTMLMetaElement>('meta[name="csrf-token"]')?.content ?? null
-      )
-);
-
-// Sin API de coordenadas el mapa avisa en lugar de dibujar datos inventados.
-const mapSource = demo ? new DemoMapData() : new UnavailableMapData();
-
-// Los parámetros del algoritmo, usuarios e integraciones aún no tienen API: solo hay ejemplo en modo demostración.
-const algorithmSettings = demo ? new DemoAlgorithmSettings() : new UnavailableAlgorithmSettings();
-const administration = createAdministration({
-  settings: algorithmSettings,
-  users: demo ? new DemoUserDirectory() : new UnavailableUserDirectory(),
-  integrations: demo ? new DemoIntegrationCatalog() : new UnavailableIntegrationCatalog(),
-});
-
-// Sin motor real (EN-01) solo el modo demostración devuelve una propuesta.
-const routeService = createGenerateRoutes(
-  demo
-    ? { optimizer: new DemoRouteOptimizer(), planning: new DemoPlanningSource(), settings: algorithmSettings }
-    : { optimizer: new UnavailableRouteOptimizer(), planning: createLivePlanningSource(managementService, vehicleApi), settings: algorithmSettings }
-);
-
-// Sin API de reportes solo el modo demostración tiene cifras que mostrar.
-const sustainabilityService = createGetSustainabilityReport({
-  source: demo ? new DemoSustainabilityReport() : new UnavailableSustainabilityReport(),
-  saver: new BrowserFileSaver(),
-});
+const dashboardGateway = new HttpDashboardGateway({ baseUrl: apiBaseUrl });
+const sessionSource = new HttpSession(apiBaseUrl);
+const insightsGateway = new HttpDashboardInsights();
+const driverService = createDriverOrders(new HttpOrders(apiBaseUrl));
+const driverRouteService = createDriverRoute(new HttpDriverRoute());
+const DEFAULT_ORDER = '';
+const managementService = createManagement(new HttpManagement(apiBaseUrl, getCsrfToken));
+const mapSource = new HttpMapData();
+const algorithmSettings = new HttpAlgorithmSettings();
+const administration = createAdministration({ settings: algorithmSettings, users: new HttpUserDirectory(), integrations: new HttpIntegrationCatalog() });
+const routeService = createGenerateRoutes({ optimizer: new HttpRouteOptimizer(), planning: new HttpPlanningSource(), settings: algorithmSettings });
+const sustainabilityService = createGetSustainabilityReport({ source: new HttpSustainabilityReport(), saver: new BrowserFileSaver() });
 
 type ActiveView = Exclude<ModuleId, 'pedido-actual'> | 'conductor';
 
@@ -119,7 +83,7 @@ function getViewFromUrl(): { view: ActiveView; orderId: string } {
 }
 
 export function App() {
-  return <SessionProvider source={sessionSource} demo={demo}><SessionApp /></SessionProvider>;
+  return <SessionProvider source={sessionSource}><SessionApp /></SessionProvider>;
 }
 
 function SessionApp() {
@@ -135,7 +99,7 @@ function AuthorizedApp() {
     administration: authorizeAdministration(administration, user.role),
     planning: authorizePlanning(routeService, user.role),
     sustainability: authorizeSustainability(sustainabilityService, user.role),
-    driver: authorizeDriver(driverService, driverRouteService, user, demo),
+    driver: authorizeDriver(driverService, driverRouteService, user, false),
   }), [user]);
   const initial = getViewFromUrl();
   if (!window.location.search) initial.view = homeModule(user.role).id === 'pedido-actual' ? 'conductor' : homeModule(user.role).id as ActiveView;
@@ -146,62 +110,36 @@ function AuthorizedApp() {
   useEffect(() => {
     const handlePopState = () => {
       const parsed = getViewFromUrl();
+      if (!window.location.search) parsed.view = homeModule(user.role).id as ActiveView;
       setActiveView(parsed.view);
       setCurrentOrderId(parsed.orderId);
     };
 
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
-  }, []);
+  }, [user.role]);
 
   const navigateTo = (view: ActiveView, orderId?: string) => {
     setActiveView(view);
-    const params = new URLSearchParams(window.location.search);
-    if (view === 'dashboard') {
-      params.delete('vista');
-      params.delete('pedido');
-    } else if (view === 'flota') {
-      params.set('vista', 'flota');
-      params.delete('pedido');
-    } else if (view === 'pedidos') {
-      params.set('vista', 'pedidos');
-      params.delete('pedido');
-    } else if (view === 'rutas') {
-      params.set('vista', 'rutas');
-      params.delete('pedido');
-    } else if (view === 'admin') {
-      params.set('vista', 'admin');
-      params.delete('pedido');
-    } else if (view === 'sostenibilidad') {
-      params.set('vista', 'sostenibilidad');
-      params.delete('pedido');
-    } else if (view === 'mi-ruta') {
-      params.set('vista', 'mi-ruta');
-      params.delete('pedido');
-    } else if (view === 'conductor') {
-      params.set('vista', 'conductor');
-      if (orderId) {
-        params.set('pedido', orderId);
-        setCurrentOrderId(orderId);
-      }
-    }
+    const params = new URLSearchParams();
+    if (view !== 'dashboard') params.set('vista', view);
+    if (view === 'conductor') { if (orderId) params.set('pedido', orderId); setCurrentOrderId(orderId ?? ''); }
     const queryString = params.toString();
     const targetUrl = `${window.location.pathname}${queryString ? `?${queryString}` : ''}`;
     window.history.pushState({}, '', targetUrl);
   };
 
   // La barra superior de cada vista migrada al design system navega por módulo; lo que aún no existe recarga por URL.
-  const navigateModule = (id: ModuleId, href: string) => {
+  const navigateModule = (id: ModuleId, _href: string) => {
     if (id === 'dashboard' || id === 'flota' || id === 'pedidos' || id === 'rutas' || id === 'sostenibilidad' || id === 'admin' || id === 'mi-ruta') navigateTo(id);
-    else if (id === 'pedido-actual') navigateTo('conductor', currentOrderId);
+    else if (id === 'pedido-actual') navigateTo('conductor');
     else if (id === 'auditoria' || id === 'conductores' || id === 'incidencias') {
-      window.history.pushState({}, '', href); setActiveView(id);
+      navigateTo(id);
     }
   };
 
   const moduleId: ModuleId = activeView === 'conductor' ? 'pedido-actual' : activeView;
   if (!canOpenModule(user.role, moduleId)) return <>
-    <SessionToolbar onNavigate={navigateModule} />
     <AppShell role={user.role} current={homeModule(user.role).id} user={{ name: user.name, initials: user.name[0] }} title="Acceso restringido" onNavigate={navigateModule}>
       <h1 className="eco-h1">Acceso restringido</h1><p className="eco-sub">Tu perfil no tiene acceso a esta sección.</p>
       <button className="eco-btn" type="button" onClick={() => { const home = homeModule(user.role); navigateModule(home.id, home.href) }}>Ir a mi inicio</button>
@@ -210,13 +148,12 @@ function AuthorizedApp() {
 
   return (
     <>
-      <SessionToolbar onNavigate={navigateModule} />
+      {activeView === 'mi-ruta' || activeView === 'conductor' ? <SessionToolbar onNavigate={navigateModule} /> : null}
       {/* Vista 0: Dashboard del Día */}
       {activeView === 'dashboard' && (
         <DashboardPage
           gateway={dashboardGateway}
           insights={insightsGateway}
-          demoNote={demo ? 'Modo demo · CO₂ evitado y pedidos en riesgo de ejemplo' : undefined}
           renderMap={({ selectedId, onSelect }) => <RouteMap source={mapSource} profile="dashboard" selectedId={selectedId} onSelect={onSelect} compact />}
           onNavigate={navigateModule}
         />
@@ -227,7 +164,7 @@ function AuthorizedApp() {
 
       {/* Vista 2: Gestión de Pedidos */}
       {activeView === 'pedidos' && (
-        <OrderManagementView service={secured.management} demo={demo} mapSource={mapSource} onNavigate={navigateModule} />
+        <OrderManagementView service={secured.management} mapSource={mapSource} onNavigate={navigateModule} />
       )}
 
       {/* Vista 3: Generar rutas del día (US-005) */}
@@ -237,7 +174,7 @@ function AuthorizedApp() {
       {activeView === 'sostenibilidad' && <SustainabilityView service={secured.sustainability} onNavigate={navigateModule} />}
 
       {/* Vista 5: Administración */}
-      {activeView === 'admin' && <AdminView service={secured.administration} demo={demo} onNavigate={navigateModule} />}
+      {activeView === 'admin' && <AdminView service={secured.administration} onNavigate={navigateModule} />}
 
       {/* Vista 6: Mi ruta del conductor */}
       {activeView === 'mi-ruta' && (
@@ -256,15 +193,13 @@ function AuthorizedApp() {
           service={secured.driver.orders}
           routeService={secured.driver.route}
           orderId={currentOrderId}
-          demo={demo}
+
           onNavigate={navigateModule}
           onOpenOrder={(orderId) => navigateTo('conductor', orderId)}
         />
       )}
-      {['auditoria', 'conductores', 'incidencias'].includes(activeView) ? <AppShell role={user.role} current={moduleId} user={{ name: user.name, initials: user.name[0] }} title={activeView === 'auditoria' ? 'Auditoría' : activeView === 'conductores' ? 'Conductores' : 'Incidencias'} onNavigate={navigateModule}>
-        <h1 className="eco-h1">{activeView === 'auditoria' ? 'Auditoría' : activeView === 'conductores' ? 'Conductores' : 'Incidencias'}</h1>
-        <p className="eco-sub">Tu perfil tiene acceso a esta sección. Su interfaz operativa está pendiente de implementación.</p>
-      </AppShell> : null}
+      {activeView === 'conductores' ? <DriversView onNavigate={navigateModule} /> : null}
+      {activeView === 'auditoria' || activeView === 'incidencias' ? <RecordsView key={activeView} module={activeView} onNavigate={navigateModule} /> : null}
     </>
   );
 }

@@ -10,6 +10,7 @@ export interface SessionUser {
 }
 export interface SessionSource {
   load(signal?: AbortSignal): Promise<SessionUser | null>
+  login(email: string, password: string): Promise<SessionUser>
   logout(): Promise<void>
 }
 export function decodeSession(value: unknown): SessionUser {

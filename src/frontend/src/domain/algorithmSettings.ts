@@ -40,7 +40,7 @@ export interface AlgorithmParameters {
 
 export const PARAMETER_LIMITS = {
   co2Weight: { min: 0, max: 100 },
-  maxSeconds: { min: 5, max: 120 },
+  maxSeconds: { min: 5, max: 45 },
   maxLoadPercent: { min: 50, max: 100 },
   windowSlackMinutes: { min: 0, max: 60 },
   emissionFactor: { max: 100 },
@@ -61,8 +61,8 @@ export function validateParameters(parameters: AlgorithmParameters): ParameterEr
   if (!isWhole(parameters.windowSlackMinutes, windowSlackMinutes.min, windowSlackMinutes.max)) errors.windowSlackMinutes = `Indica un entero de ${windowSlackMinutes.min} a ${windowSlackMinutes.max} minutos.`
   for (const fuel of EMISSION_FUELS) {
     const factor = parameters.emissionFactors[fuel]
-    if (factor !== null && (!Number.isFinite(factor) || factor <= 0 || factor > PARAMETER_LIMITS.emissionFactor.max)) {
-      errors[`factor:${fuel}`] = `El factor debe ser mayor que 0 y no pasar de ${PARAMETER_LIMITS.emissionFactor.max}, o quedar sin definir.`
+    if (factor !== null && (!Number.isFinite(factor) || factor < 0 || factor > PARAMETER_LIMITS.emissionFactor.max)) {
+      errors[`factor:${fuel}`] = `El factor debe ser mayor o igual que 0 y no pasar de ${PARAMETER_LIMITS.emissionFactor.max}, o quedar sin definir.`
     }
   }
   return errors

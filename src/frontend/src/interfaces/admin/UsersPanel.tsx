@@ -4,7 +4,7 @@ import type { AdminUser, UserPage } from '../../domain/admin'
 import { Banner, List, ListRow, Panel, PanelCell, ROLE_LABELS, SearchInput, UnitStatus } from '../../shared/ui'
 import type { Role } from '../../shared/ui'
 
-const COLUMNS = 'minmax(0, 1fr) 150px 110px 120px 72px'
+const COLUMNS = 'minmax(0, 1fr) 150px 110px 160px'
 const initials = (name: string) => name.split(/\s+/).filter(Boolean).slice(0, 2).map((part) => part[0]).join('').toUpperCase()
 const fold = (value: string) => value.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
 
@@ -86,7 +86,6 @@ export function UsersPanel({ page, error, onRetry }: UsersPanelProps) {
               <span>Rol</span>
               <span>Estado</span>
               <span>Último acceso</span>
-              <span />
             </ListRow>
             {visible.map((user) => (
               <ListRow key={user.id} columns={COLUMNS}>
@@ -100,9 +99,7 @@ export function UsersPanel({ page, error, onRetry }: UsersPanelProps) {
                 <span><span className="eco-tag">{ROLE_LABELS[user.role]}</span></span>
                 <UnitStatus status={user.status === 'active' ? 'ready' : 'off'} label={user.status === 'active' ? 'Activo' : 'Inactivo'} />
                 <span className="eco-code eco-muted">{user.lastAccess}</span>
-                <span className="eco-row__end">
-                  <button className="eco-btn eco-btn--ghost" type="button" disabled title="Próximamente" aria-label={`Editar a ${user.name} (próximamente)`}>Editar</button>
-                </span>
+
               </ListRow>
             ))}
           </List>

@@ -2,6 +2,7 @@ import type { Role } from './role'
 import { ROLE_METADATA, ROLES } from './role'
 
 export type UserStatus = 'active' | 'inactive'
+export interface NewUser { name: string; email: string; password: string; role: Role }
 
 export interface AdminUser {
   id: string

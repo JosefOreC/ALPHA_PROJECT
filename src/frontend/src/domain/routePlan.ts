@@ -33,9 +33,9 @@ export interface RouteProposal {
   routeCount: number
   ordersAssigned: number
   totalKm: number
-  kmSaved: number
+  kmSaved: number | null
   co2Kg: number
-  co2SavedPercent: number
+  co2SavedPercent: number | null
   /** Porcentaje de pedidos que llegan dentro de su ventana. */
   windowCompliance: number
   windowTarget: number

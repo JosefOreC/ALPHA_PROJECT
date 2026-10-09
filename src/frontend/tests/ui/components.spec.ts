@@ -105,7 +105,7 @@ test('fallo al guardar conserva los campos y no muestra éxito', async ({ page }
 test('demostración explícita permite registrar, editar y cancelar con datos ficticios', async ({ page }) => {
   await stubTiles(page)
   await page.goto('/tests/ui/demo.html')
-  await expect(page.getByRole('status').filter({ hasText: 'Modo demostración' })).toContainText('no hay sesión ni almacenamiento durable')
+  await expect(page.getByText('Modo demostración', { exact: false })).toHaveCount(0)
   await page.getByRole('button', { name: 'Registrar pedido', exact: true }).click()
   await fillOrder(page, 'Destinatario ficticio de evidencia')
   await page.getByRole('button', { name: 'Registrar pedido', exact: true }).click()

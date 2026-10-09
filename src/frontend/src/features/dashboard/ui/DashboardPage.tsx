@@ -1,4 +1,4 @@
-import { useState, useSyncExternalStore } from 'react'
+import { useState } from 'react'
 import type { ReactNode } from 'react'
 import { AppShell, HojaCo2Icon } from '../../../shared/ui'
 import type { ModuleId } from '../../../shared/ui'
@@ -13,16 +13,6 @@ import { OrdersHero } from './OrdersHero'
 import { RiskList } from './RiskList'
 import { StatusBanner } from './StatusBanner'
 import type { CardState } from './shared'
-
-const DARK_QUERY = '(prefers-color-scheme: dark)'
-
-function subscribeToScheme(onChange: () => void) {
-  const media = window.matchMedia?.(DARK_QUERY)
-  media?.addEventListener('change', onChange)
-  return () => media?.removeEventListener('change', onChange)
-}
-
-const readScheme = () => (window.matchMedia?.(DARK_QUERY).matches ? 'dark' : 'light')
 
 const todayIso = () => {
   const d = new Date()
@@ -51,8 +41,8 @@ interface Props {
   refreshMs?: number
 }
 
-export function DashboardPage({ gateway, insights, renderMap, onNavigate, demoNote, refreshMs }: Props) {
-  const theme = useSyncExternalStore(subscribeToScheme, readScheme)
+export function DashboardPage({ gateway, insights, renderMap, onNavigate, refreshMs }: Props) {
+  const theme = 'light'
   const dashboard = useDashboard(gateway, { refreshMs })
   const extra = useDashboardInsights(insights, dashboard.districtId, { refreshMs })
   const [selectedId, setSelectedId] = useState<string | undefined>()
@@ -66,7 +56,6 @@ export function DashboardPage({ gateway, insights, renderMap, onNavigate, demoNo
 
   const actions = (
     <>
-      {demoNote ? <span className="eco-tag eco-tag--warning">{demoNote}</span> : null}
       <span className="eco-tag">
         <span className="eco-code">
           {formatShortDay(day)}

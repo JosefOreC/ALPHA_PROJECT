@@ -51,8 +51,8 @@ export interface AvoidedDay {
 export interface Co2Avoided {
   avoidedKg: number
   avoidedPercent: number
-  fuelSavedLiters: number
-  kmSaved: number
+  fuelSavedLiters: number | null
+  kmSaved: number | null
   /** Últimos siete días, el último es hoy. */
   weekly: AvoidedDay[]
 }

@@ -24,7 +24,6 @@ export function FleetView({ onNavigate }: { onNavigate?: (id: ModuleId, href: st
   const canWrite = can(role, 'fleet.update')
   const [vehicles, setVehicles] = useState<Vehicle[]>([])
   const [loading, setLoading] = useState(true)
-  const [local, setLocal] = useState(false)
   const [serverMessage, setServerMessage] = useState<string | null>(null)
   const [query, setQuery] = useState('')
   const [tab, setTab] = useState<FleetTab>('ALL')
@@ -45,10 +44,10 @@ export function FleetView({ onNavigate }: { onNavigate?: (id: ModuleId, href: st
         if (!active) return
         setVehicles(result.data.vehiculos)
         setServerMessage(result.data.mensaje || null)
-        setLocal(result.isLocal)
+        setNotice(current => current?.tone === 'error' ? null : current)
       })
-      .catch(() => {
-        if (active) setNotice({ tone: 'error', text: 'Error al conectar con el servidor' })
+      .catch(reason => {
+        if (active) setNotice({ tone: 'error', text: reason instanceof Error ? reason.message : 'No se pudo conectar con el servidor.' })
       })
       .finally(() => {
         if (active) setLoading(false)
@@ -67,7 +66,7 @@ export function FleetView({ onNavigate }: { onNavigate?: (id: ModuleId, href: st
   const counts = useMemo(() => fleetTabCounts(vehicles, query), [vehicles, query])
   const groups = useMemo(() => groupVehicles(visible), [visible])
   const summary = useMemo(() => summarizeFleet(vehicles), [vehicles])
-  const noActive = !loading && (summary.active === 0 || serverMessage === NO_ACTIVE)
+  const noActive = !loading && notice?.tone !== 'error' && (summary.active === 0 || serverMessage === NO_ACTIVE)
 
   function openCreate() {
     if (!can(role, 'fleet.create')) return
@@ -90,11 +89,9 @@ export function FleetView({ onNavigate }: { onNavigate?: (id: ModuleId, href: st
     try {
       if (editing) {
         const result = await vehicleApi.updateVehicle(editing.vehiculo_id, payload)
-        setLocal(result.isLocal)
         setNotice({ tone: 'success', text: `Vehículo ${result.data.placa} actualizado correctamente.` })
       } else {
         const result = await vehicleApi.createVehicle(payload as CreateVehicleInput)
-        setLocal(result.isLocal)
         setNotice({ tone: 'success', text: `Vehículo ${result.data.placa} registrado en la flota activa.` })
       }
       setDialogOpen(false)
@@ -109,8 +106,7 @@ export function FleetView({ onNavigate }: { onNavigate?: (id: ModuleId, href: st
   async function changeStatus(vehicle: Vehicle, status: VehicleStatus) {
     if (!canWrite) return
     try {
-      const result = await vehicleApi.updateVehicle(vehicle.vehiculo_id, { estado: status })
-      setLocal(result.isLocal)
+      await vehicleApi.updateVehicle(vehicle.vehiculo_id, { estado: status })
       setNotice({ tone: 'info', text: `Estado de ${vehicle.placa} actualizado a ${STATUS_LABEL[status]}.` })
       load()
     } catch (reason) {
@@ -120,7 +116,6 @@ export function FleetView({ onNavigate }: { onNavigate?: (id: ModuleId, href: st
 
   const actions = (
     <>
-      {local ? <span className="eco-tag eco-tag--warning">Modo local · sin conexión al servidor</span> : null}
       <button className="eco-btn eco-btn--ghost" type="button" disabled={loading} onClick={load}>
         Actualizar
       </button>

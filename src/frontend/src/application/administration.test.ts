@@ -25,20 +25,21 @@ describe('validateParameters', () => {
   it('acepta los valores de arranque y los extremos permitidos', () => {
     expect(validateParameters(DEFAULT_PARAMETERS)).toEqual({})
     expect(validateParameters(withChange({ co2Weight: 0, maxSeconds: 5, maxLoadPercent: 50, windowSlackMinutes: 0 }))).toEqual({})
-    expect(validateParameters(withChange({ co2Weight: 100, maxSeconds: 120, maxLoadPercent: 100, windowSlackMinutes: 60 }))).toEqual({})
+    expect(validateParameters(withChange({ co2Weight: 100, maxSeconds: 45, maxLoadPercent: 100, windowSlackMinutes: 60 }))).toEqual({})
   })
 
   it('señala cada campo fuera de rango, con decimales o ilegible', () => {
     const errors = validateParameters(withChange({ co2Weight: 101, maxSeconds: 4, maxLoadPercent: 49.5, windowSlackMinutes: Number.NaN }))
     expect(Object.keys(errors).sort()).toEqual(['co2Weight', 'maxLoadPercent', 'maxSeconds', 'windowSlackMinutes'])
-    expect(errors.maxSeconds).toBe('Indica un entero de 5 a 120 segundos.')
+    expect(errors.maxSeconds).toBe('Indica un entero de 5 a 45 segundos.')
     expect(validateParameters(withChange({ co2Weight: -1 })).co2Weight).toBeDefined()
   })
 
-  it('un factor sin definir es válido; cero, negativo o ilegible no', () => {
+  it('un factor sin definir o cero es válido; negativo o ilegible no', () => {
     expect(validateParameters(withChange({ emissionFactors: { ...DEFAULT_PARAMETERS.emissionFactors, GNV: null } }))).toEqual({})
     expect(validateParameters(withChange({ emissionFactors: { ...DEFAULT_PARAMETERS.emissionFactors, GNV: 1.9 } }))).toEqual({})
-    for (const bad of [0, -2, Number.NaN, 101]) {
+    expect(validateParameters(withChange({ emissionFactors: { ...DEFAULT_PARAMETERS.emissionFactors, ELECTRICO: 0 } }))).toEqual({})
+    for (const bad of [-2, Number.NaN, 101]) {
       const errors = validateParameters(withChange({ emissionFactors: { ...DEFAULT_PARAMETERS.emissionFactors, ELECTRICO: bad } }))
       expect(errors['factor:ELECTRICO'], String(bad)).toBeDefined()
     }

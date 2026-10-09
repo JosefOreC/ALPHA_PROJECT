@@ -21,6 +21,7 @@ export function authorizeManagement(service: Management, role: Role): Management
 export function authorizeAdministration(service: Administration, role: Role): Administration {
   return {
     async users(signal) { requirePermission(role, 'users.read'); return service.users(signal) },
+    async createUser(data) { requirePermission(role, 'users.create'); return service.createUser(data) },
     async integrations(signal) { requirePermission(role, 'users.read'); return service.integrations(signal) },
     async parameters() { requirePermission(role, 'settings.read'); return service.parameters() },
     async saveParameters(parameters) { requirePermission(role, 'settings.update'); return service.saveParameters(parameters) },

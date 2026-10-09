@@ -37,7 +37,7 @@ async function loadAll(service: Management): Promise<ManagedOrder[]> {
 
 const message = (reason: unknown, fallback: string) => (reason instanceof Error ? reason.message : fallback)
 
-export function OrderManagementView({ service, demo, mapSource, onNavigate }: { service: Management; demo: boolean; mapSource: MapDataSource; onNavigate?: (id: ModuleId, href: string) => void }) {
+export function OrderManagementView({ service, mapSource, onNavigate }: { service: Management; demo?: boolean; mapSource: MapDataSource; onNavigate?: (id: ModuleId, href: string) => void }) {
   const role = useActor('planner')
   const session = useSession()
   const mapAllowed = can(role, 'map.read')
@@ -168,7 +168,6 @@ export function OrderManagementView({ service, demo, mapSource, onNavigate }: { 
 
   const actions = (
     <>
-      {demo ? <span className="eco-tag eco-tag--warning">Modo demo · datos ficticios</span> : null}
       {permissions.can_write && screen === 'board' ? (
         <button className="eco-btn eco-btn--secondary" type="button" disabled={loading} onClick={() => { setNotice(''); setScreen('create') }}>
           <PlusIcon />
@@ -188,13 +187,6 @@ export function OrderManagementView({ service, demo, mapSource, onNavigate }: { 
         <h1 className="eco-h1">{screen === 'board' ? 'Pedidos y rutas' : screen === 'create' ? 'Registrar pedido' : 'Editar pedido'}</h1>
         <p className="eco-sub">Lima Este · horas de Lima</p>
       </div>
-      {demo ? (
-        <Banner tone="warning" title="Modo demostración.">
-          Vista de operador con datos ficticios. Los cambios se reinician al recargar; no hay sesión ni almacenamiento durable.
-        </Banner>
-      ) : (
-        <Banner>La gestión requiere una sesión verificada y la integración de protección de operaciones.</Banner>
-      )}
       {notice ? <Banner tone="success">{notice}</Banner> : null}
       {error ? (
         <Banner
@@ -324,7 +316,9 @@ export function OrderManagementView({ service, demo, mapSource, onNavigate }: { 
               ) : null}
 
               <section className="eco-board__side" aria-label="Mapa y detalle">
-                {showMap ? <RouteMap source={mapSource} profile={role === 'driver' ? 'driver' : 'operations'} scopePlate={role === 'driver' ? session?.user?.plate ?? '' : undefined} selectedId={selected?.id} query={query} onSelect={setSelectedId} /> : null}
+                {showMap ? <RouteMap source={mapSource} profile={role === 'driver' ? 'driver' : 'operations'} scopePlate={role === 'driver' ? session?.user?.plate ?? '' : undefined}
+                  selectedId={selected?.id} query={query} onQueryChange={setQuery} orderStatus={tab} onOrderStatusChange={setTab} district={district}
+                  onClearFilters={() => { setQuery(''); setTab('ALL'); setDistrict('') }} onSelect={setSelectedId} /> : null}
                 {selected ? (
                   <OrderDetail
                     order={selected}

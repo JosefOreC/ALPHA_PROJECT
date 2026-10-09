@@ -39,8 +39,8 @@ export interface SustainabilityReport {
   baselineKg: number
   emittedKg: number
   avoidedKg: number
-  fuelSavedLiters: number
-  kmAvoided: number
+  fuelSavedLiters: number | null
+  kmAvoided: number | null
   lowEmissionFleet: { count: number; total: number }
   /** Línea base de cada barra, la misma para todas. */
   seriesBaselineKg: number

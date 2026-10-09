@@ -1,10 +1,60 @@
 import { describe, expect, it } from 'vitest'
 import type { MapData } from './mapData'
-import { inLima, LIMA_REGION, MAP_PROFILES, prepareMap, selectionVisible, visiblePoints } from './mapPresentation'
+import { filterMapOrders, inLima, LIMA_REGION, MAP_PROFILES, prepareMap, selectionVisible, visiblePoints } from './mapPresentation'
 
 const local = { lat: -12.04, lng: -76.96 }
 const truck = { id: 'truck', plate: 'ECO-001', color: 1 as const, status: 'Disponible' as const, position: local, route_id: null }
 const empty: MapData = { depot: null, routes: [], orders: [], vehicles: [] }
+
+describe('filtros de pedidos en el mapa', () => {
+  const r1 = { id: 'r1', plate: 'ABC-123', color: 1 as const, path: [local, { lat: -12.05, lng: -76.95 }], done_until: 0 }
+  const r2 = { ...r1, id: 'r2', plate: 'BCD-456', color: 2 as const }
+  const order = { id: 'p1', customer: 'Panadería Uno', district: 'Ate', status: 'EN_CAMINO' as const, position: local, window: '10:00–12:00', co2_kg: null, route_id: 'r1' }
+  const data: MapData = { depot: { name: 'Almacén', position: local }, routes: [r1, r2], orders: [
+    order, { ...order, id: 'p2', status: 'PENDIENTE', route_id: 'r2', district: 'Santa Anita' },
+    { ...order, id: 'p3', status: 'ENTREGADO', route_id: 'r1' },
+    { ...order, id: 'p4', status: 'PENDIENTE', route_id: null },
+  ], vehicles: [{ ...truck, id: 'v1', route_id: 'r1', plate: r1.plate }, { ...truck, id: 'v2', route_id: 'r2', plate: r2.plate }, truck] }
+
+  it('sin filtros conserva las rutas y los camiones sin pedido', () => {
+    expect(filterMapOrders(data, {})).toBe(data)
+  })
+
+  it('filtra por estado y distrito sin mezclar pedidos de otra ruta', () => {
+    const filtered = filterMapOrders(data, { status: 'PENDIENTE', district: 'Santa Anita' })
+    expect(filtered.orders.map(item => item.id)).toEqual(['p2'])
+    expect(filtered.routes.map(item => item.id)).toEqual(['r2'])
+    expect(filtered.vehicles?.map(item => item.id)).toEqual(['v2'])
+    expect(filtered.depot).toBe(data.depot)
+    expect(data.orders).toHaveLength(4)
+  })
+
+  it('el pedido específico conserva solo su ruta y vehículo', () => {
+    const filtered = filterMapOrders(data, { orderId: 'p1', status: 'EN_CAMINO' })
+    expect(filtered.orders.map(item => item.id)).toEqual(['p1'])
+    expect(filtered.routes.map(item => item.id)).toEqual(['r1'])
+    expect(filtered.vehicles?.map(item => item.id)).toEqual(['v1'])
+  })
+
+  it('un pedido sin asignar sigue visible y no muestra rutas ajenas', () => {
+    const filtered = filterMapOrders(data, { orderId: 'p4' })
+    expect(filtered.orders.map(item => item.id)).toEqual(['p4'])
+    expect(filtered.routes).toEqual([])
+    expect(filtered.vehicles).toEqual([])
+  })
+
+  it('combina la búsqueda por placa y cliente con el estado', () => {
+    expect(filterMapOrders(data, { queries: ['abc-123', 'panaderia'], status: 'EN_CAMINO' }).orders.map(item => item.id)).toEqual(['p1'])
+  })
+
+  it('un filtro sin resultados elimina líneas y marcadores pero conserva el almacén', () => {
+    const filtered = filterMapOrders(data, { queries: ['no existe'] })
+    expect(filtered.orders).toEqual([])
+    expect(filtered.routes).toEqual([])
+    expect(filtered.vehicles).toEqual([])
+    expect(filtered.depot).toBe(data.depot)
+  })
+})
 
 describe('contexto cartográfico', () => {
   it('extiende los cuatro lados 10 km respecto a la ventana anterior', () => {

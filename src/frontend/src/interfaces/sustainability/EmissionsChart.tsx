@@ -17,8 +17,9 @@ const joinList = (values: number[]) => (values.length > 1 ? `${values.slice(0, -
 
 // Barras de CO₂ emitido con la franja de lo evitado hasta la línea base punteada; la barra actual va en lima.
 export function EmissionsChart({ title, baselineKg, points }: EmissionsChartProps) {
-  const unit = (ZERO_Y - BASE_Y) / baselineKg
-  const slot = (RIGHT - LEFT) / points.length
+  const scaleMax = Math.max(1, baselineKg, ...points.map(point => point.emittedKg + point.avoidedKg))
+  const unit = (ZERO_Y - BASE_Y) / scaleMax
+  const slot = (RIGHT - LEFT) / Math.max(1, points.length)
   const barWidth = Math.min(90, slot * 0.64)
   const tick = niceTick(baselineKg)
   const tickY = ZERO_Y - tick * unit
@@ -44,11 +45,12 @@ export function EmissionsChart({ title, baselineKg, points }: EmissionsChartProp
         const center = x + barWidth / 2
         const emittedHeight = point.emittedKg * unit
         const emittedTop = ZERO_Y - emittedHeight
+        const baselineTop = ZERO_Y - (point.emittedKg + point.avoidedKg) * unit
         return (
           <g key={point.label}>
-            <rect className="saved" x={x} y={BASE_Y} width={barWidth} height={Math.max(0, emittedTop - BASE_Y)} rx="4" />
+            <rect className="saved" x={x} y={baselineTop} width={barWidth} height={Math.max(0, emittedTop - baselineTop)} rx="4" />
             <rect className={`bar${point.current ? ' bar--now' : ''}`} x={x} y={emittedTop} width={barWidth} height={emittedHeight} rx="4" />
-            <text className="label label--eco" x={center} y={(BASE_Y + emittedTop) / 2 + 4} textAnchor="middle">−{point.avoidedKg}</text>
+            <text className="label label--eco" x={center} y={(baselineTop + emittedTop) / 2 + 4} textAnchor="middle">−{point.avoidedKg}</text>
             <text className={`label${point.current ? '' : ' label--on'}`} x={center} y={emittedTop + 22} textAnchor="middle">{point.emittedKg}</text>
             <text className="tick" x={center} y={242} textAnchor="middle">{point.label}</text>
           </g>

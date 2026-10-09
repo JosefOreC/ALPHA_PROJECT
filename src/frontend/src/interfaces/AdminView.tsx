@@ -6,6 +6,7 @@ import type { ModuleId } from '../shared/ui'
 import { IntegrationsPanel } from './admin/IntegrationsPanel'
 import { ParametersPanel } from './admin/ParametersPanel'
 import { UsersPanel } from './admin/UsersPanel'
+import { UserDialog } from './admin/UserDialog'
 import { useParameters } from './admin/useParameters'
 import { can } from '../domain/accessControl'
 import { useActor } from './session/SessionState'
@@ -16,7 +17,7 @@ const SESSION_USER = { name: 'Sistemas', initials: 'SD' }
 
 const message = (reason: unknown, fallback: string) => (reason instanceof Error ? reason.message : fallback)
 
-export function AdminView({ service, demo, onNavigate }: { service: Administration; demo: boolean; onNavigate?: (id: ModuleId, href: string) => void }) {
+export function AdminView({ service, onNavigate }: { service: Administration; demo?: boolean; onNavigate?: (id: ModuleId, href: string) => void }) {
   const role = useActor('admin')
   const usersAllowed = can(role, 'users.read')
   const canEditParameters = can(role, 'settings.update')
@@ -24,6 +25,8 @@ export function AdminView({ service, demo, onNavigate }: { service: Administrati
   const [users, setUsers] = useState<UserPage | null>(null)
   const [usersError, setUsersError] = useState('')
   const [usersReload, setUsersReload] = useState(0)
+  const [creating, setCreating] = useState(false)
+  const [notice, setNotice] = useState('')
   const [integrations, setIntegrations] = useState<Integration[] | null>(null)
   const [integrationsError, setIntegrationsError] = useState('')
   const [integrationsReload, setIntegrationsReload] = useState(0)
@@ -69,11 +72,10 @@ export function AdminView({ service, demo, onNavigate }: { service: Administrati
 
   const actions = (
     <>
-      {demo ? <span className="eco-tag eco-tag--warning">Modo demo · datos ficticios</span> : null}
       {tab === 'users' ? (
-        <button className="eco-btn" type="button" disabled title="Próximamente">
+        <button className="eco-btn" type="button" onClick={() => setCreating(true)}>
           <PlusIcon />
-          Invitar usuario
+          Crear usuario
         </button>
       ) : null}
       {tab === 'params' && canEditParameters ? (
@@ -107,10 +109,12 @@ export function AdminView({ service, demo, onNavigate }: { service: Administrati
       </div>
 
       <div id="admin-panel" role="tabpanel" aria-labelledby={`admin-tab-${tab}`} className="eco-tabpanel">
+        {notice ? <p role="status" className="eco-notice">{notice}</p> : null}
         {tab === 'users' ? <UsersPanel page={users} error={usersError} onRetry={() => setUsersReload((value) => value + 1)} /> : null}
         {tab === 'params' ? <fieldset className="eco-permission-fields" disabled={!canEditParameters}><ParametersPanel state={parameters} /></fieldset> : null}
         {tab === 'integrations' ? <IntegrationsPanel items={integrations} error={integrationsError} onRetry={() => setIntegrationsReload((value) => value + 1)} /> : null}
       </div>
+      {creating ? <UserDialog onClose={() => setCreating(false)} onCreate={async data => { await service.createUser(data); setUsersReload(value => value + 1); setNotice('Usuario creado. Ya puede iniciar sesión con sus credenciales.') }} /> : null}
     </AppShell>
   )
 }

@@ -720,6 +720,83 @@ dialog.eco-dialog--sheet { width: 100%; max-width: 480px; margin: auto auto 0; b
 
 /* ---------- Movimiento reducido (GUIA.md › Movimiento) ---------- */
 .eco-side__search:disabled { cursor: not-allowed; opacity: 0.75; }
+
+/* Acceso y navegación comunes: una sola jerarquía visual en todos los módulos. */
+.eco-login { min-height: 100vh; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.eco-map-filters { padding: 12px; border: 1px solid var(--hairline); border-radius: var(--radius-lg); background: var(--surface); min-width: 0; }
+.eco-map-filters__fields { display: flex; flex-wrap: wrap; align-items: end; gap: 10px; }
+.eco-map-filters__fields > .eco-field { flex: 1 1 140px; min-width: 0; }
+.eco-map-filters__fields > .eco-map-filters__search { flex: 2 1 200px; }
+.eco-map-filters__fields > .eco-map-filters__order { flex: 2 1 200px; }
+.eco-map-filters .eco-select { width: 100%; min-width: 0; text-overflow: ellipsis; }
+.eco-map-filters__summary { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 12px; margin-top: 8px; font-size: 12px; }
+@media (max-width: 640px) {
+  .eco-map-filters__fields > .eco-field { flex-basis: 100%; }
+  .eco-map-filters .eco-select, .eco-map-filters .eco-input, .eco-map-filters .eco-btn { min-height: 48px; }
+}
+.eco-login__intro { display: flex; flex-direction: column; justify-content: space-between; gap: 48px; padding: clamp(32px, 6vw, 88px); background: var(--forest); color: var(--on-forest); }
+.eco-login__brand { display: flex; align-items: center; gap: 12px; color: var(--on-forest); text-decoration: none; font-size: 20px; font-weight: 650; }
+.eco-login__brand span { color: var(--lime); }
+.eco-login__intro h2 { margin: 20px 0; font-size: clamp(32px, 4vw, 56px); line-height: 1.15; font-weight: 600; letter-spacing: -0.04em; }
+.eco-login__intro p { max-width: 440px; color: var(--forest-muted); font-size: 16px; line-height: 1.7; }
+.eco-login__eyebrow { font-size: 11px; font-weight: 650; letter-spacing: 0.12em; color: var(--ink-muted); }
+.eco-login__intro .eco-login__eyebrow { color: var(--lime); }
+.eco-login__foot { color: var(--forest-muted); font-size: 12px; }
+.eco-login__panel { display: grid; align-items: center; justify-items: center; padding: 40px; background: var(--surface); }
+.eco-login__form { width: 100%; max-width: 390px; }
+.eco-login__form .eco-h1 { font-size: 32px; line-height: 1.3; margin-bottom: 12px; }
+.eco-login__form .eco-input { min-height: 46px; }
+.eco-login__form .eco-btn--block { min-height: 46px; margin-top: 8px; }
+.eco-login__password { display: flex; gap: 8px; align-items: center; }
+.eco-login__password input { flex: 1; min-width: 0; }
+.eco-login__error { margin: 0; padding: 12px; border-radius: var(--radius-md); color: var(--danger); background: var(--danger-bg); }
+.eco-shell { flex-direction: row; align-items: stretch; }
+.eco-side { flex: 0 0 232px; width: 232px; flex-direction: column; align-items: stretch; flex-wrap: nowrap; gap: 6px; padding: 24px 14px; }
+.eco-side__brand { padding: 0 8px 26px; margin: 0; }
+.eco-side__item { min-height: 40px; height: auto; padding: 10px 12px; }
+.eco-side__foot { order: initial; flex-direction: column; align-items: stretch; margin: auto 0 0; padding: 18px 8px 0; border-left: 0; border-top: 1px solid rgba(169, 199, 181, 0.2); gap: 16px; }
+.eco-side__co2 { flex-direction: column; align-items: flex-start; white-space: normal; }
+.eco-side__co2 .eco-hero__meter { width: 100%; }
+.eco-side__user { flex-wrap: wrap; }
+.eco-side__user > div { display: block; overflow-wrap: anywhere; }
+.eco-side__user .eco-role { flex-basis: 100%; }
+.eco-btn--on-dark { background: transparent; color: var(--on-forest); border-color: rgba(169, 199, 181, 0.35); }
+.eco-btn--on-dark:hover { background: rgba(169, 199, 181, 0.12); }
+.eco-main { flex: 1; width: 0; min-width: 0; }
+.eco-topbar { min-height: 68px; padding: 14px 32px; }
+.eco-content { width: 100%; max-width: var(--container-max); margin: 0 auto; padding: 32px; gap: 28px; }
+.eco-data-scroll { max-width: 100%; overflow: auto; border: 1px solid var(--hairline); border-radius: var(--radius-lg); background: var(--surface); }
+.eco-data-table { width: 100%; border-collapse: collapse; text-align: left; }
+.eco-data-table th { font-size: 12px; color: var(--ink-muted); background: var(--surface-sunken); white-space: nowrap; }
+.eco-data-table :is(th, td) { padding: 14px 18px; border-bottom: 1px solid var(--hairline); vertical-align: top; }
+.eco-data-table td { min-width: 100px; max-width: 360px; overflow-wrap: anywhere; }
+.eco-data-table tbody tr:last-child td { border-bottom: 0; }
+.eco-record-form { max-width: 580px; padding: 24px; border: 1px solid var(--hairline); border-radius: var(--radius-lg); background: var(--surface); }
+.eco-record-form textarea { min-height: 110px; resize: vertical; }
+.eco-notice { padding: 12px 16px; border-radius: var(--radius-md); color: var(--success-ink); background: var(--success-bg); }
+@media (min-width: 901px) { .eco-side { position: sticky; top: 0; height: 100vh; overflow-y: auto; } }
+@media (max-width: 900px) {
+  .eco-shell { flex-direction: column; }
+  .eco-side { flex: none; width: 100%; flex-direction: row; flex-wrap: wrap; gap: 6px; padding: 14px 16px; }
+  .eco-side__brand { width: 100%; padding: 0 0 12px; }
+  .eco-side__item { min-height: 40px; padding: 8px 10px; }
+  .eco-side__foot { width: 100%; margin: 8px 0 0; padding: 12px 0 0; flex-direction: row; flex-wrap: wrap; align-items: center; }
+  .eco-side__user { margin-right: auto; }
+  .eco-side__user .eco-role { flex-basis: auto; }
+  .eco-main { width: 100%; }
+  .eco-content { padding: 24px 20px; }
+  .eco-topbar { padding: 14px 20px; }
+}
+@media (max-width: 600px) {
+  .eco-login { grid-template-columns: 1fr; }
+  .eco-login__intro { padding: 24px; gap: 0; }
+  .eco-login__intro > div, .eco-login__foot { display: none; }
+  .eco-login__panel { padding: 40px 24px; align-items: start; }
+  .eco-content { padding: 20px 16px; gap: 24px; }
+  .eco-topbar { padding: 12px 16px; }
+  .eco-side__user > div { font-size: 12px; }
+  .eco-record-form { padding: 18px; }
+}
 @media (prefers-reduced-motion: reduce) {
   .eco-root *, .eco-root *::before, .eco-root *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }
 }

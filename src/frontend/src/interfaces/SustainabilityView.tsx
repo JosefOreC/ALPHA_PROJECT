@@ -118,8 +118,8 @@ export function SustainabilityView({ service, onNavigate }: { service: Sustainab
               tinted
             />
             <PanelCell label="CO₂ emitido" value={mass(report.emittedKg)} note={`serían ${mass(report.baselineKg)} sin optimizar`} />
-            <PanelCell label="Combustible ahorrado" value={`${formatDecimal(report.fuelSavedLiters)} L`} note="equivalente diésel" />
-            <PanelCell label="Km evitados" value={`${formatDecimal(report.kmAvoided)} km`} note="rutas más cortas" />
+            <PanelCell label="Combustible ahorrado" value={report.fuelSavedLiters === null ? '—' : `${formatDecimal(report.fuelSavedLiters)} L`} note="equivalente diésel" />
+            <PanelCell label="Km evitados" value={report.kmAvoided === null ? '—' : `${formatDecimal(report.kmAvoided)} km`} note={report.kmAvoided === null ? 'Sin distancia base registrada' : 'rutas más cortas'} />
             <PanelCell
               label="Flota de bajas emisiones"
               value={`${Math.round((report.lowEmissionFleet.count / Math.max(1, report.lowEmissionFleet.total)) * 100)} %`}

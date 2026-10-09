@@ -79,13 +79,27 @@ describe('AdminView · usuarios y roles', () => {
     expect(screen.queryByRole('grid', { name: 'Usuarios' })).toBeNull()
   })
 
-  it('las acciones sin función todavía están deshabilitadas con la razón visible', async () => {
-    setup()
+  it('crea la cuenta con rol y contraseña y vuelve a consultar el directorio', async () => {
+    HTMLDialogElement.prototype.showModal = function () { this.setAttribute('open', '') }
+    HTMLDialogElement.prototype.close = function () { this.removeAttribute('open'); this.dispatchEvent(new Event('close')) }
+    const directory = new DemoUserDirectory()
+    const create = vi.fn().mockResolvedValue({ id: 'created' })
+    const list = vi.fn(directory.list.bind(directory))
+    const service = createAdministration({ settings: new DemoAlgorithmSettings(), users: { list, create }, integrations: new DemoIntegrationCatalog() })
+    render(<AdminView service={service} />)
     await screen.findByRole('grid', { name: 'Usuarios' })
-    const invite = screen.getByRole('button', { name: 'Invitar usuario' })
-    expect(invite).toBeDisabled()
-    expect(invite).toHaveAttribute('title', 'Próximamente')
-    expect(screen.getAllByRole('button', { name: /Editar a .* \(próximamente\)/ })[0]).toBeDisabled()
+    const user = userEvent.setup()
+    await user.click(screen.getByRole('button', { name: 'Crear usuario' }))
+    const dialog = screen.getByRole('dialog', { name: 'Crear usuario' })
+    await user.type(within(dialog).getByLabelText('Nombre completo'), 'Nuevo Conductor')
+    await user.type(within(dialog).getByLabelText('Correo electrónico'), 'nuevo@empresa.pe')
+    await user.selectOptions(within(dialog).getByLabelText('Rol'), 'driver')
+    await user.type(within(dialog).getByLabelText('Contraseña inicial'), 'una-clave-segura')
+    await user.click(within(dialog).getByRole('button', { name: 'Crear usuario' }))
+    expect(create).toHaveBeenCalledWith({ name: 'Nuevo Conductor', email: 'nuevo@empresa.pe', password: 'una-clave-segura', role: 'driver' })
+    expect(await screen.findByText('Usuario creado. Ya puede iniciar sesión con sus credenciales.')).toBeInTheDocument()
+    expect(list).toHaveBeenCalledTimes(2)
+    expect(dialog).not.toHaveAttribute('open')
   })
 
   it('si no hay fuente de usuarios muestra el error y permite reintentar', async () => {
@@ -110,7 +124,7 @@ describe('AdminView · parámetros del algoritmo', () => {
     expect(screen.getByLabelText('Carga máxima en porcentaje')).toHaveValue('95')
     expect(screen.getByLabelText('Holgura de ventana en minutos')).toHaveValue('10')
     expect(screen.getByRole('switch', { name: 'Reoptimización automática' })).toHaveAttribute('aria-checked', 'true')
-    expect(screen.getByText('RNF-001: 150 pedidos y 15 vehículos en ≤ 45 s (P95)')).toBeInTheDocument()
+    expect(screen.getByText('Límite de 5 a 45 segundos para generar una propuesta')).toBeInTheDocument()
     expect(screen.getByText('0 % = solo tiempo · 100 % = solo emisiones (Green VRP)')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Guardar cambios' })).toBeDisabled()
   })
@@ -183,7 +197,7 @@ describe('AdminView · parámetros del algoritmo', () => {
     await user.clear(seconds)
     await user.type(seconds, '500')
     expect(seconds).toHaveAttribute('aria-invalid', 'true')
-    expect(screen.getByText('Indica un entero de 5 a 120 segundos.')).toBeInTheDocument()
+    expect(screen.getByText('Indica un entero de 5 a 45 segundos.')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Guardar cambios' })).toBeDisabled()
 
     await user.clear(seconds)
@@ -193,7 +207,7 @@ describe('AdminView · parámetros del algoritmo', () => {
     await user.type(seconds, '45')
     await user.type(screen.getByLabelText('GNV'), '-3')
     expect(screen.getByLabelText('GNV')).toHaveAttribute('aria-invalid', 'true')
-    expect(screen.getByText(/El factor debe ser mayor que 0/)).toBeInTheDocument()
+    expect(screen.getByText(/El factor debe ser mayor o igual que 0/)).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Guardar cambios' })).toBeDisabled()
     expect(save).not.toHaveBeenCalled()
   })
@@ -235,8 +249,8 @@ describe('AdminView · integraciones', () => {
     expect(within(rows[1]).getByText('Conectado')).toBeInTheDocument()
     expect(within(rows[3]).getByText('Tráfico en tiempo real')).toBeInTheDocument()
     expect(within(rows[3]).getByText('Pendiente')).toBeInTheDocument()
-    expect(within(rows[3]).getByRole('button', { name: 'Conectar' })).toBeDisabled()
-    expect(within(rows[1]).getByRole('button', { name: 'Configurar' })).toBeDisabled()
+    expect(within(rows[3]).queryByRole('button')).toBeNull()
+    expect(within(rows[1]).queryByRole('button')).toBeNull()
   })
 
   it('sin fuente de datos muestra el error', async () => {

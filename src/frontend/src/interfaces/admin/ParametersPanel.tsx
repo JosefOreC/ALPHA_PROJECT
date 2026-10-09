@@ -89,7 +89,7 @@ export function ParametersPanel({ state }: { state: ParametersState }) {
               onChange={(event) => state.edit((current) => ({ ...current, co2Weight: event.target.value }))}
             />
           </Setting>
-          <Setting id="param-seconds" label="Tiempo máximo de cálculo" hint="RNF-001: 150 pedidos y 15 vehículos en ≤ 45 s (P95)" error={errors.maxSeconds}>
+          <Setting id="param-seconds" label="Tiempo máximo de cálculo" hint="Límite de 5 a 45 segundos para generar una propuesta" error={errors.maxSeconds}>
             <Unit id="param-seconds" field="maxSeconds" state={state} unit="s" label="Tiempo máximo de cálculo en segundos" />
           </Setting>
           <Setting id="param-load" label="Carga máxima por vehículo" hint="Margen de seguridad sobre la capacidad registrada" error={errors.maxLoadPercent}>
@@ -101,7 +101,7 @@ export function ParametersPanel({ state }: { state: ParametersState }) {
           <div className="eco-setting">
             <span className="eco-setting__label" id="param-auto-label">Reoptimización automática</span>
             <Switch label="Reoptimización automática" checked={text.autoReoptimize} onChange={(checked) => state.edit((current) => ({ ...current, autoReoptimize: checked }))} />
-            <span className="eco-setting__hint">Ante incidencias o tráfico, recalcula la ruta en ≤ 30 s y avisa al conductor</span>
+            <span className="eco-setting__hint">Preferencia guardada para la planificación; las propuestas actuales se generan manualmente</span>
           </div>
         </section>
 
@@ -136,7 +136,7 @@ export function ParametersPanel({ state }: { state: ParametersState }) {
             })}
           </div>
           <p className="eco-muted eco-flush eco-note">
-            Valores de referencia: confirma la fuente oficial que usará el proyecto antes de producción. Un factor sin definir no se usa para calcular emisiones.
+            Registra los factores que utiliza tu organización. Un factor sin definir no se usa para calcular emisiones.
           </p>
         </section>
       </div>

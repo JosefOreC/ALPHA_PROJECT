@@ -1,5 +1,6 @@
 import type { GeoPoint, MapData, MapSelection, MapVehicle } from './mapData'
-import { vehiclePosition } from './mapData'
+import { orderMatches, vehiclePosition } from './mapData'
+import type { OrderStatus } from './order'
 
 // Ventana de navegación urbana, no frontera administrativa ni cobertura logística.
 // WGS84: margen para explorar Lima urbana y su entorno, incluido Callao.
@@ -13,6 +14,8 @@ export const LIMA_REGION = {
 
 export type MapLayers = { routes: boolean; pins: boolean; vehicles: boolean; depot: boolean }
 export type MapProfile = 'operations' | 'dashboard' | 'driver' | 'routes' | 'vehicles' | 'orders'
+export type MapOrderStatus = 'ALL' | OrderStatus
+export type MapOrderFilters = { status?: MapOrderStatus; queries?: readonly string[]; orderId?: string; district?: string }
 export const MAP_PROFILES: Record<MapProfile, MapLayers> = {
   operations: { routes: true, pins: true, vehicles: true, depot: true },
   dashboard: { routes: true, pins: true, vehicles: true, depot: true },
@@ -59,6 +62,18 @@ export function visiblePoints(data: MapData, layers: MapLayers): GeoPoint[] {
     ...(layers.pins ? data.orders.map(order => order.position) : []),
     ...(layers.vehicles ? (data.vehicles ?? []).map(vehicle => vehicle.position) : []),
   ]
+}
+
+/** Oculta también las rutas y vehículos ajenos a los pedidos que coinciden. */
+export function filterMapOrders<T extends MapData>(data: T, filters: MapOrderFilters): T {
+  const { status = 'ALL', queries = [], orderId = '', district = '' } = filters
+  if (status === 'ALL' && !queries.some(query => query.trim()) && !orderId && !district) return data
+  const orders = data.orders.filter(order => (status === 'ALL' || order.status === status)
+    && (!orderId || order.id === orderId) && (!district || order.district === district)
+    && queries.every(query => orderMatches(order, data.routes, query)))
+  const routeIds = new Set(orders.flatMap(order => order.route_id ? [order.route_id] : []))
+  return { ...data, orders, routes: data.routes.filter(route => routeIds.has(route.id)),
+    vehicles: data.vehicles?.filter(vehicle => vehicle.route_id !== null && routeIds.has(vehicle.route_id)) }
 }
 
 export function selectionVisible(selection: MapSelection | null, data: MapData, layers: MapLayers): boolean {

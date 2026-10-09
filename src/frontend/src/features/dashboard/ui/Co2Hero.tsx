@@ -59,8 +59,8 @@ export function Co2Hero({ state, avoided, fleetDistanceKm, co2Kg, unavailable }:
               {avoided ? (
                 <>
                   <li><strong>{formatCompact(avoided.avoidedKg)} kg</strong>evitados hoy</li>
-                  <li><strong>{formatCompact(avoided.fuelSavedLiters)} L</strong>de combustible</li>
-                  <li><strong>−{formatInt(avoided.kmSaved)} km</strong>recorridos</li>
+                  {avoided.fuelSavedLiters !== null ? <li><strong>{formatCompact(avoided.fuelSavedLiters)} L</strong>equivalente diésel</li> : null}
+                  {avoided.kmSaved !== null ? <li><strong>−{formatInt(avoided.kmSaved)} km</strong>recorridos</li> : null}
                 </>
               ) : null}
               {co2Kg !== undefined ? (

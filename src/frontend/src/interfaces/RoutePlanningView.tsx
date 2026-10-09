@@ -13,7 +13,7 @@ import type { ModuleId } from '../shared/ui'
 type Phase = 'ready' | 'running' | 'done'
 
 const GOALS: { value: RouteGoal; label: string; hint: string }[] = [
-  { value: 'co2', label: 'Menos CO₂', hint: 'Green VRP: minimiza combustible y emisiones' },
+  { value: 'co2', label: 'Menos CO₂', hint: 'Prioriza los vehículos de menor factor de emisión' },
   { value: 'balanced', label: 'Equilibrado', hint: 'Mitad CO₂, mitad tiempo de entrega' },
   { value: 'time', label: 'Menos tiempo', hint: 'Minimiza la duración total de las rutas' },
 ]
@@ -96,13 +96,14 @@ export function RoutePlanningView({ service, onNavigate, renderMap }: { service:
       user={SESSION_USER}
       title="Generar rutas del día"
       onNavigate={onNavigate}
-      actions={<span className="eco-tag"><span className="eco-code">MOTOR VRPTW · GREEN VRP</span></span>}
+      actions={<span className="eco-tag"><span className="eco-code">PLANIFICACIÓN DE ENTREGAS</span></span>}
     >
       <div>
         <h1 className="eco-h1">Generar rutas del día</h1>
         <p className="eco-sub">Hasta 150 pedidos y 15 vehículos · horas de Lima</p>
       </div>
 
+      <p className="eco-muted eco-note">La propuesta usa cercanía geográfica, capacidad y ventanas de entrega. La distancia y las emisiones son estimaciones; consulta las rutas asignadas en el mapa.</p>
       <div className="eco-columns">
         <section className="eco-columns__side" aria-labelledby="plan-input-title">
           <div className="eco-section-head"><h2 id="plan-input-title">1 · Qué se va a planificar</h2></div>
@@ -206,13 +207,13 @@ export function RoutePlanningView({ service, onNavigate, renderMap }: { service:
                   label="Distancia"
                   value={formatDecimal(proposal.totalKm)}
                   unit="km"
-                  note={<span className="eco-delta">−{formatDecimal(proposal.kmSaved)} km</span>}
+                  note={proposal.kmSaved === null ? 'Distancia geográfica estimada' : <span className="eco-delta">−{formatDecimal(proposal.kmSaved)} km</span>}
                 />
                 <PanelCell
                   label="CO₂ estimado"
                   value={formatDecimal(proposal.co2Kg)}
                   unit="kg"
-                  note={<><span className="eco-delta">−{proposal.co2SavedPercent} %</span> vs. sin optimizar</>}
+                  note={proposal.co2SavedPercent === null ? 'Emisiones estimadas de la propuesta' : <><span className="eco-delta">−{proposal.co2SavedPercent} %</span> vs. sin optimizar</>}
                   eco
                   tinted
                 />
@@ -260,15 +261,12 @@ export function RoutePlanningView({ service, onNavigate, renderMap }: { service:
 
               <div className="eco-sheet__actions">
                 <a className="eco-btn" href="/?vista=pedidos" onClick={event => { if (onNavigate) { event.preventDefault(); onNavigate('pedidos', '/?vista=pedidos') } }}>
-                  Aprobar y enviar a conductores
+                  Consultar pedidos
                 </a>
-                <button className="eco-btn eco-btn--secondary" type="button" disabled aria-describedby="adjust-hint">
-                  Ajustar manualmente
-                </button>
                 <button className="eco-btn eco-btn--ghost" type="button" onClick={() => { setPhase('ready'); setProposal(null) }}>
                   Descartar
                 </button>
-                <span className="eco-muted eco-toolbar__end" id="adjust-hint">Calculado en {proposal.elapsedSeconds} s · el ajuste manual llega pronto</span>
+                <span className="eco-muted eco-toolbar__end" id="adjust-hint">Calculado en {proposal.elapsedSeconds} s</span>
               </div>
             </>
           ) : null}

@@ -15,13 +15,13 @@ type DriverOrderViewProps = {
   service: DriverOrders
   routeService?: DriverRouteService
   orderId: string
-  demo: boolean
+  demo?: boolean
   onNavigate?: (id: ModuleId, href: string) => void
   onOpenOrder?: (orderId: string) => void
 }
 
 // «Pedido actual» del conductor: datos de la entrega y confirmación. Solo móvil, objetivos táctiles de 48 px.
-export function DriverOrderView({ service, routeService, orderId, demo, onNavigate, onOpenOrder }: DriverOrderViewProps) {
+export function DriverOrderView({ service, routeService, orderId, onNavigate, onOpenOrder }: DriverOrderViewProps) {
   const [order, setOrder] = useState<Order | null>(null)
   const [route, setRoute] = useState<DriverRoute | null>(null)
   const [error, setError] = useState('')
@@ -33,8 +33,14 @@ export function DriverOrderView({ service, routeService, orderId, demo, onNaviga
 
   useEffect(() => {
     let active = true
-    service
-      .view(orderId)
+    const loadOrder = async () => {
+      if (orderId) return service.view(orderId)
+      const assignedRoute = await routeService?.route()
+      const stop = assignedRoute ? currentStop(assignedRoute) : null
+      if (!stop) throw new Error('No tienes entregas pendientes en tu ruta de hoy.')
+      return service.view(stop.order_id)
+    }
+    loadOrder()
       .then(value => {
         if (active) setOrder(value)
       })
@@ -64,7 +70,7 @@ export function DriverOrderView({ service, routeService, orderId, demo, onNaviga
     setSaving(true)
     setError('')
     try {
-      setOrder(await service.confirm(orderId))
+      setOrder(await service.confirm(order!.id))
       dialog.current?.close()
       routeService?.route().then(setRoute, () => undefined)
     } catch (reason) {
@@ -124,7 +130,6 @@ export function DriverOrderView({ service, routeService, orderId, demo, onNaviga
         ) : null}
 
         <main className="eco-phone__sheet">
-          {demo ? <Banner tone="warning">Modo demostración · datos ficticios. Los cambios se reinician al recargar.</Banner> : null}
           {error ? (
             <Banner
               tone="error"
@@ -192,7 +197,7 @@ export function DriverOrderView({ service, routeService, orderId, demo, onNaviga
         </main>
 
         <div className="eco-phone__footer">
-          <button className="eco-btn eco-btn--secondary eco-btn--icon" type="button" aria-label="Reportar incidencia" title="Próximamente" disabled>
+          <button className="eco-btn eco-btn--secondary eco-btn--icon" type="button" aria-label="Reportar incidencia" onClick={() => onNavigate?.('incidencias', '/?vista=incidencias')}>
             <IncidenciaIcon size="md" />
           </button>
           {delivered ? (

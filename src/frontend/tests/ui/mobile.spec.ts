@@ -22,6 +22,24 @@ async function fitsControls(page: Page, controls: Locator) {
   await fitsPage(page)
 }
 
+test('390 px: filtrar el mapa por estado y pedido conserva controles dentro de pantalla', async ({ page }) => {
+  await stubTiles(page)
+  await page.goto('/tests/ui/demo.html')
+  const map = page.getByRole('group', { name: /Mapa de rutas de Lima Este/ })
+  const filters = page.getByRole('group', { name: 'Filtros del mapa' })
+  await expect(map.locator('svg.pin')).toHaveCount(12)
+  await fitsControls(page, filters.locator('input, select, button'))
+  await filters.getByRole('combobox', { name: 'Estado de los pedidos en el mapa' }).selectOption('PENDIENTE')
+  await expect(map.locator('svg.pin')).toHaveCount(2)
+  await expect(map.locator('path.route')).toHaveCount(0)
+  await filters.getByRole('combobox', { name: 'Filtrar por pedido en el mapa' }).selectOption('PED-0052')
+  await expect(map.locator('svg.pin')).toHaveCount(1)
+  await fitsControls(page, filters.locator('input, select, button'))
+  await filters.getByRole('button', { name: 'Limpiar filtros del mapa' }).click()
+  await expect(map.locator('svg.pin')).toHaveCount(12)
+  await fitsPage(page)
+})
+
 test('390 px: listado, formulario, detalle y diálogo sin recortes ni desbordamiento de página', async ({ page }) => {
   await stubTiles(page)
   await page.goto('/tests/ui/demo.html')
