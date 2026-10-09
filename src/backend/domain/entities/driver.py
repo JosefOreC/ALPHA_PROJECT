@@ -12,6 +12,7 @@ class Driver:
     vehiculo_id: str
     estado: DriverStates = DriverStates.ACTIVO
     conductor_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    usuario_id: str | None = None
     creado_en: datetime = field(
         default_factory=lambda: datetime.now(timezone.utc)
     )

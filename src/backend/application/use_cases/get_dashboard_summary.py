@@ -9,7 +9,6 @@ from domain.ports.dashboard import (
     DistrictCatalogPort,
     OperationalDayPort,
 )
-from domain.value_objects.dashboard import OrderCounts, WindowCompliance
 
 
 class GetDashboardSummary:
@@ -45,9 +44,9 @@ class GetDashboardSummary:
                 day=day,
                 district_id=district_id,
                 has_routes=False,
-                orders=OrderCounts(0, 0, 0, 0),
+                orders=self._metrics.get_order_counts(day, district_id),
                 window_compliance=WindowComplianceSummary(
-                    WindowCompliance(0, 0), target
+                    self._metrics.get_window_compliance(day, district_id), target
                 ),
                 fleet_distance_km=0.0,
                 co2_kg=0.0,

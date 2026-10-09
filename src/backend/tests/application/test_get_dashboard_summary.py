@@ -81,17 +81,17 @@ def test_empty_district_id_means_all_districts():
     assert {call[2] for call in metrics.calls} == {None}
 
 
-def test_day_without_routes_yields_empty_summary_and_skips_metrics():
+def test_day_without_routes_still_shows_orders_and_delivery_compliance():
     use_case, metrics = build(has_routes=False)
 
     summary = use_case.execute(day=TODAY)
 
     assert summary.has_routes is False
-    assert summary.orders == OrderCounts(0, 0, 0, 0)
-    assert summary.window_compliance.percentage is None
+    assert summary.orders == OrderCounts(10, 2, 5, 1)
+    assert summary.window_compliance.percentage == 90.0
     assert summary.fleet_distance_km == 0.0
     assert summary.co2_kg == 0.0
-    assert metrics.calls == []
+    assert len(metrics.calls) == 2
 
 
 def test_compliance_target_is_carried_in_the_summary():

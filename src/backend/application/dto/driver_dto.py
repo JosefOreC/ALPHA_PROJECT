@@ -10,6 +10,7 @@ class CreateDriverRequest(BaseModel):
     licencia: str = Field(min_length=1, max_length=50)
     vehiculo_id: str = Field(min_length=1)
     estado: DriverStates = DriverStates.ACTIVO
+    usuario_id: str | None = None
 
     @field_validator("dni")
     @classmethod

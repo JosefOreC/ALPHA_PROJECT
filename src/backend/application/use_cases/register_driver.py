@@ -16,6 +16,7 @@ class RegisterDriver:
         licencia: str,
         vehiculo_id: str,
         estado: DriverStates | str = DriverStates.ACTIVO,
+        usuario_id: str | None = None,
     ) -> Driver:
 
         dni = dni.strip()
@@ -31,6 +32,7 @@ class RegisterDriver:
             licencia=licencia,
             vehiculo_id=vehiculo_id,
             estado=DriverStates.parse(estado),
+            usuario_id=usuario_id,
         )
 
         return self.driver_repository.save(driver)

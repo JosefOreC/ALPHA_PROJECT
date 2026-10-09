@@ -16,7 +16,7 @@ ALLOWED_LAYERS = {
 ALLOWED_EXTERNAL = {
     "domain": set(),
     "application": {"pydantic"},
-    "infrastructure": {"psycopg", "psycopg2"},
+    "infrastructure": {"psycopg", "psycopg2", "dotenv"},
     "interfaces": {"fastapi", "pydantic", "starlette"},
 }
 INTERFACES_FRAMEWORKS = ALLOWED_EXTERNAL["interfaces"]

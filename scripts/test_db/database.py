@@ -8,6 +8,8 @@ from .dataset import ROOT, TABLES
 OWNER = 'ecologistica-test-db'
 SCHEMA_VERSION = 1
 METADATA = 'test_database_metadata'
+# Tablas aditivas de la API autenticada; no contienen datos del generador.
+API_TABLES = {'sesiones', 'intentos_sesion'}
 
 
 def seed_signature(settings: Settings):
@@ -62,7 +64,7 @@ def prepare_database(settings: Settings, dataset: dict, *, reset=False) -> dict[
             metadata = connection.execute('SELECT owner, schema_version, seed_config FROM public.test_database_metadata WHERE id = 1').fetchone()
             if not metadata or metadata[0] != OWNER or metadata[1] != SCHEMA_VERSION:
                 raise SetupError('El marcador de la base no pertenece a esta versión del generador.')
-            if tables != expected:
+            if tables - API_TABLES != expected:
                 raise SetupError('Hay tablas ajenas o faltantes. Usa otra base de pruebas; no se modifica este esquema.')
             if metadata[2] != signature and not reset:
                 raise SetupError('Cambió la configuración de datos o RBAC. Usa --reset o configura otra base de pruebas.')
@@ -74,7 +76,7 @@ def prepare_database(settings: Settings, dataset: dict, *, reset=False) -> dict[
 
         if reset:
             # Lista explícita y sin CASCADE; solo después de validar propiedad y esquema.
-            names = sql.SQL(', ').join(sql.Identifier('public', table) for table in (*TABLES, METADATA))
+            names = sql.SQL(', ').join(sql.Identifier('public', table) for table in (*TABLES, METADATA, *sorted(tables & API_TABLES)))
             connection.execute(sql.SQL('TRUNCATE TABLE {}').format(names))
 
         with connection.cursor() as cursor:

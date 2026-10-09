@@ -38,12 +38,12 @@ _LIMA = ZoneInfo("America/Lima")
 
 class InMemoryDashboardMetrics(DashboardMetricsPort):
     def get_order_counts(self, day: date, district_id: str | None) -> OrderCounts:
-        return _SEED[district_id][0]
+        return _SEED.get(district_id, (OrderCounts(0,0,0,0), WindowCompliance(0,0),0,0))[0]
 
     def get_window_compliance(
         self, day: date, district_id: str | None
     ) -> WindowCompliance:
-        return _SEED[district_id][1]
+        return _SEED.get(district_id, (OrderCounts(0,0,0,0), WindowCompliance(0,0),0,0))[1]
 
     def get_fleet_distance_km(self, day: date, district_id: str | None) -> float:
         return _SEED[district_id][2]

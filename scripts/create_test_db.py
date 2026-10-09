@@ -34,7 +34,7 @@ def main(argv=None) -> int:
         for table, count in counts.items():
             print(f'  {table}: {count}')
         print('Cuentas ficticias: admin, operador, operador2, logistica, auditor y conductor01…conductor15 @example.invalid.')
-        print('Contraseña de las cuentas: SEED_PASSWORD de .env (guardada como hash; el login del producto sigue pendiente).')
+        print('Contraseña de las cuentas: SEED_PASSWORD del archivo de configuración (guardada como hash).')
         return 0
     except (SetupError, OSError) as error:
         # Nunca imprimir DSN, contraseñas ni trazas que contengan valores de conexión.

@@ -51,6 +51,7 @@ def register_driver(
             licencia=request.licencia,
             vehiculo_id=request.vehiculo_id,
             estado=request.estado,
+            usuario_id=request.usuario_id,
         )
 
         return DriverResponse.from_domain(driver)
