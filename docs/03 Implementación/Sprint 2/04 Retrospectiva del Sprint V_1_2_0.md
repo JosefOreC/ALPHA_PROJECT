@@ -8,7 +8,7 @@
 
 **Fecha de elaboración:** 09/10/2026
 
-**Versión del documento:** V_1_1_0
+**Versión del documento:** V_1_2_0
 
 **Estado:** insumo para la retrospectiva. Las acciones, responsables y fechas son propuestas para confirmar con el equipo; este documento no registra una reunión ni acuerdos que todavía no tienen evidencia.
 
@@ -22,7 +22,7 @@
 - Las pruebas unitarias no bastan para una interfaz: la ejecución en un navegador real encontró defectos que las pruebas de componentes no veían. Un mensaje de error largo sin espacios ensanchaba la página a 3 025 px en móvil; las líneas de ruta del mapa no recibían su clase porque la biblioteca aplica las opciones después de crearlas; los controles de capas medían 28 px cuando la vista del conductor exige 48 px; y el formato de números de `es-PE` usa punto decimal, contrario a la guía de estilo del proyecto.
 - Una pantalla que funciona con datos de ejemplo no acredita la historia. Separar los datos de ejemplo detrás de puertos y adaptadores permite mostrar avance sin confundirlo con operación, a condición de avisarlo en pantalla.
 - Los Pull Requests apilados dan trazabilidad por pantalla, pero crean una cadena de dependencias: ninguno se puede fusionar antes del anterior y cada fusión obliga a rehacer la base del siguiente.
-- La documentación se contradice con facilidad cuando se actualiza por partes: la [auditoría de coherencia](05%20Auditor%C3%ADa%20de%20coherencia%20del%20proyecto%20V_1_1_0.md) encontró discrepancias en el README, el informe del Sprint 1 y los identificadores de historias y requisitos.
+- La documentación se contradice con facilidad cuando se actualiza por partes: la [auditoría de coherencia](05%20Auditor%C3%ADa%20de%20coherencia%20del%20proyecto%20V_1_2_0.md) encontró discrepancias en el README, el informe del Sprint 1 y los identificadores de historias y requisitos.
 - Un entorno local sin actualizar puede parecer un defecto del código: las pruebas del backend fallaban por falta de `tzdata` hasta reinstalar los requisitos.
 
 **Del mapa, los roles y la base de pruebas**
@@ -100,9 +100,9 @@ Cada entrega necesita un revisor distinto de quien la implementó. Los Pull Requ
 | Implementar el flujo de generación, asignación y despacho restante, con la versión base del motor VRPTW / Green VRP y su medición de rendimiento. | William + Carlos | Planning de continuación de PMV-2. | Demo pedido → ruta → despacho → entrega, con capacidad, ventanas y permisos verificados, y tiempo medido contra RNF-001 con 150 pedidos y 15 vehículos. |
 | Completar la revisión del mapa y de las vistas por perfil. | Valentino + Alex + Josef | Siguiente revisión. | Lista de aceptación, interacción con el mouse y uso móvil evaluados por un revisor distinto del implementador. |
 | Consolidar commits, Pull Requests, enlaces y trazabilidad del incremento. | Josef + Alex + equipo | Antes del cierre formal del sprint. | PR revisado, evidencias accesibles, Jira conciliado y aceptación registrada por historia. |
-| Corregir el README y los documentos señalados en la auditoría de coherencia. | Alex + Carlos | Antes de la siguiente revisión. | Cada hallazgo de la auditoría cerrado o justificado y los enlaces comprobados. |
+| Corregir el README y los documentos de Inicio señalados en la auditoría de coherencia (los del Sprint 1 ya se corrigieron en V_1_1_0). | Alex + Carlos | Antes de la siguiente revisión. | Cada hallazgo de la auditoría cerrado o justificado y los enlaces comprobados. |
 
-La siguiente retrospectiva debe comprobar estas acciones y registrar resultados, obstáculos y fechas reales. La [revisión de este sprint](03%20Revisi%C3%B3n%20del%20Sprint%20V_1_1_0.md) y el [registro de impedimentos](02%20Registro%20de%20Impedimentos%20V_1_1_0.md) sirven de base de seguimiento.
+La siguiente retrospectiva debe comprobar estas acciones y registrar resultados, obstáculos y fechas reales. La [revisión de este sprint](03%20Revisi%C3%B3n%20del%20Sprint%20V_1_1_0.md) y el [registro de impedimentos](02%20Registro%20de%20Impedimentos%20V_1_2_0.md) sirven de base de seguimiento.
 
 [← Volver al README Principal](../../../README.md)
 
@@ -112,3 +112,4 @@ La siguiente retrospectiva debe comprobar estas acciones y registrar resultados,
 |---|---|---|---|
 | V_1_0_0 | 09/10/2026 | Tovar Sánchez, Carlos Alberto | Retrospectiva del Sprint 2 con aprendizajes, aciertos, mejoras por categoría y acciones propuestas pendientes de confirmar. |
 | V_1_1_0 | 09/10/2026 | Tovar Sánchez, Carlos Alberto | Se unifica con la retrospectiva de la rama `feature/josef/spr2/auth` (mapa visual, autorización por roles y base de pruebas): una sola tabla de responsables, aprendizajes integrados y acciones sin duplicados. |
+| V_1_2_0 | 09/10/2026 | Tovar Sánchez, Carlos Alberto | Se actualizan los enlaces y se registra que los documentos del Sprint 1 ya fueron corregidos. |

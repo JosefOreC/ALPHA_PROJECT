@@ -6,9 +6,9 @@
 
 **Fecha de corte:** 09/10/2026
 
-**Versión del documento:** V_1_1_0
+**Versión del documento:** V_1_2_0
 
-Este registro continúa el [registro del Sprint 1](../02%20Registro%20de%20Impedimentos%20V_1_0_0.md): IMP-001 a IMP-003 conservan su numeración y se actualiza su estado con lo comprobado al corte. Las fechas tope de los impedimentos nuevos son propuestas que se confirman en la reunión de revisión.
+Este registro continúa el [registro del Sprint 1](../02%20Registro%20de%20Impedimentos%20V_1_1_0.md): IMP-001 a IMP-003 conservan su numeración y se actualiza su estado con lo comprobado al corte. Las fechas tope de los impedimentos nuevos son propuestas que se confirman en la reunión de revisión.
 
 | Impedimento # | Fecha de Registro | Descripción del Impedimento así como el Impacto en el Proyecto | Prioridad | Reportado por | Fecha tope de Resolución | Estado | Fecha de Resolución | Resolución/Comentarios |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -22,7 +22,7 @@ Este registro continúa el [registro del Sprint 1](../02%20Registro%20de%20Imped
 | IMP-008 | 09/10/2026 | El backend tiene dos aplicaciones separadas (`manage:app` para pedidos e `interfaces.api.main:app` para vehículos, conductores y dashboard); el frontend de flota y dashboard conserva sus propios accesos. Al levantar un solo proceso no se obtiene el flujo completo. | Media | Tovar Sánchez, Carlos Alberto | 16/10/2026 | Abierto | — | Componer una aplicación única con los routers existentes y acordar una URL base común. La rama `feature/josef/spr2/auth` ya avanza en esa dirección. |
 | IMP-009 | 09/10/2026 | El mapa y varias pantallas dependen de datos de ejemplo porque la API no entrega coordenadas, rutas, posición ni ETA, ni CO₂ evitado, pedidos en riesgo, reportes, parámetros, usuarios o integraciones. Fuera del modo demostración esas pantallas avisan que no hay datos. | Media | Tovar Sánchez, Carlos Alberto | 23/10/2026 | Abierto | — | Definir los contratos de datos y los endpoints por módulo; mantener el aviso de modo demostración hasta entonces. |
 | IMP-010 | 09/10/2026 | El entorno virtual local del backend estaba desactualizado y `pytest` fallaba al recolectar cuatro módulos con `ZoneInfoNotFoundError` (en Windows falta `tzdata`). | Baja | Tovar Sánchez, Carlos Alberto | 09/10/2026 | Resuelto | 09/10/2026 | `tzdata` ya figura en `requirements.txt`; bastó reinstalar los requisitos. Se recomienda reinstalar los requisitos del backend al cambiar de rama. |
-| IMP-011 | 09/10/2026 | El README y varios documentos están desactualizados o se contradicen entre sí (stack «pendiente», instrucciones de instalación con archivos inexistentes, numeración de RF y RNF, roles, identificadores de historias del informe del Sprint 1). Pueden llevar a declarar como terminado algo que solo está diseñado. | Media | Tovar Sánchez, Carlos Alberto | 16/10/2026 | Abierto | — | Corregir según la [auditoría de coherencia](05%20Auditor%C3%ADa%20de%20coherencia%20del%20proyecto%20V_1_1_0.md), que lista cada discrepancia con el documento y la acción propuesta. |
+| IMP-011 | 09/10/2026 | El README y varios documentos están desactualizados o se contradicen entre sí (stack «pendiente», instrucciones de instalación con archivos inexistentes, numeración de RF y RNF, roles, identificadores de historias del informe del Sprint 1). Pueden llevar a declarar como terminado algo que solo está diseñado. | Media | Tovar Sánchez, Carlos Alberto | 16/10/2026 | Abierto | — | Avance: los cuatro documentos del Sprint 1 se corrigieron en V_1_1_0 (09/10/2026); quedan el README y los documentos de Inicio. Corregir según la [auditoría de coherencia](05%20Auditor%C3%ADa%20de%20coherencia%20del%20proyecto%20V_1_2_0.md), que lista cada discrepancia con el documento y la acción propuesta. |
 
 [← Volver al README Principal](../../../README.md)
 
@@ -32,3 +32,4 @@ Este registro continúa el [registro del Sprint 1](../02%20Registro%20de%20Imped
 |---|---|---|---|
 | V_1_0_0 | 09/10/2026 | Tovar Sánchez, Carlos Alberto | Registro de impedimentos del Sprint 2: actualiza IMP-001 a IMP-003 y registra IMP-004 a IMP-011 con lo comprobado al 09/10/2026. |
 | V_1_1_0 | 09/10/2026 | Tovar Sánchez, Carlos Alberto | Se actualizan los enlaces tras unificar la revisión y la retrospectiva del Sprint 2 con las de la rama `feature/josef/spr2/auth`. |
+| V_1_2_0 | 09/10/2026 | Tovar Sánchez, Carlos Alberto | Se actualizan los enlaces, se enlaza el registro del Sprint 1 corregido (V_1_1_0) y se registra el avance de IMP-011. |

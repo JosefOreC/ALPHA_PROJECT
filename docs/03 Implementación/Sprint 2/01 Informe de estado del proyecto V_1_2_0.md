@@ -8,7 +8,7 @@
 
 **Periodo del Informe:** 05/10/2026 - 09/10/2026 (corte parcial del Sprint 2)
 
-**Versión del documento:** V_1_1_0
+**Versión del documento:** V_1_2_0
 
 > Las fechas oficiales de inicio y cierre del Sprint 2 se confirman en la reunión de revisión. Este informe resume lo comprobable en el repositorio al corte del 09/10/2026 y no sustituye la aceptación del sprint.
 
@@ -76,7 +76,7 @@ La demostración del Sprint 2 muestra únicamente lo que se puede ejecutar:
 
 ### **Notas**
 
-Este informe no declara como implementadas funcionalidades que solo existen con datos de ejemplo ni como aceptadas historias que aún no pasaron la revisión del sprint. La velocidad del Sprint 2 no se calcula hasta que se decida la aceptación. No se consultó Jira para elaborar este informe; su conciliación con el repositorio queda como acción abierta (ver la [auditoría de coherencia](05%20Auditor%C3%ADa%20de%20coherencia%20del%20proyecto%20V_1_1_0.md)).
+Este informe no declara como implementadas funcionalidades que solo existen con datos de ejemplo ni como aceptadas historias que aún no pasaron la revisión del sprint. La velocidad del Sprint 2 no se calcula hasta que se decida la aceptación. No se consultó Jira para elaborar este informe; su conciliación con el repositorio queda como acción abierta (ver la [auditoría de coherencia](05%20Auditor%C3%ADa%20de%20coherencia%20del%20proyecto%20V_1_2_0.md)).
 
 ### **Control de versiones del documento**
 
@@ -84,5 +84,6 @@ Este informe no declara como implementadas funcionalidades que solo existen con 
 |---|---|---|---|
 | V_1_0_0 | 09/10/2026 | Tovar Sánchez, Carlos Alberto | Informe de estado del Sprint 2 con el estado real de cada historia, la evidencia de pruebas del 09/10 y los riesgos del periodo. |
 | V_1_1_0 | 09/10/2026 | Tovar Sánchez, Carlos Alberto | Se actualizan los enlaces tras unificar la revisión y la retrospectiva del Sprint 2 con las de la rama `feature/josef/spr2/auth`. |
+| V_1_2_0 | 09/10/2026 | Tovar Sánchez, Carlos Alberto | Se actualiza el enlace a la auditoría de coherencia tras corregir los documentos del Sprint 1. |
 
 [← Volver al README Principal](../../../README.md)
