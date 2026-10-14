@@ -1,71 +1,97 @@
-# React/Node
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.npm
-.npm-cache/
-.test-deps/
-.yarn
-dist/
-build/
-*.tsbuildinfo
+# ==========================================================
+# ALPHA_PROJECT - EcoLogística Lima
+# Excluye dependencias, compilados, temporales, secretos y
+# archivos locales de herramientas, editores y sistema operativo.
+# ==========================================================
 
-# Python/FastAPI
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-env/
-venv/
-ENV/
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-
-# Entornos virtuales
+# --- Variables de entorno y secretos ---
 .env
 .env.*
 !.env.example
-.venv
-env.bak/
-venv.bak/
-
-# Secretos
+.env.example.backup
 .env.secret
 *.key
 *.pem
 credentials/
 secrets/
 
-# Cachés
-.cache/
-*.cache
+# --- Node / React / Vite (src/frontend) ---
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+.npm
+.npm-cache/
+.pnpm-store/
+.yarn
+dist/
+dist-ssr/
+build/
+.vite/
+.turbo/
+*.tsbuildinfo
+*.tgz
+
+# --- Python / FastAPI (src/backend y scripts) ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+*.egg-info/
+*.egg
+.eggs/
+.installed.cfg
+pip-wheel-metadata/
+wheels/
+sdist/
+
+# --- Pruebas, cobertura y reportes ---
 .pytest_cache/
 .mypy_cache/
+.ruff_cache/
 .eslintcache
+.cache/
+*.cache
+.test-deps/
+.coverage
+.coverage.*
+htmlcov/
+coverage/
+.nyc_output/
+playwright-report/
+test-results/
+blob-report/
 
-# Logs
+# --- Bases de datos locales y volcados ---
+*.sqlite
+*.sqlite3
+*.db
+*.dump
+
+# --- Logs y temporales ---
 *.log
-logs/
 *.log.gz
+logs/
+*.tmp
+*.temp
+*.bak
+*.pid
+tmp/
+temp/
 
-# IDE
+# --- Editores e IDE ---
 .vscode/
 .idea/
+*.iml
 *.swp
 *.swo
 *~
@@ -75,16 +101,16 @@ logs/
 *.sublime-project
 *.sublime-workspace
 
-# Archivos del sistema
+# --- Sistema operativo ---
 .DS_Store
 Thumbs.db
-.env.example.backup
+Desktop.ini
 
-# Herramientas de IA / indexado local
+# --- Herramientas de IA / indexado local ---
 .codegraph/
 .atl/
 
-# Documentación de desarrollo compartida (Markdown); otros artefactos siguen locales.
+# --- Documentación de desarrollo compartida (Markdown); otros artefactos siguen locales ---
 /development/*
 !/development/*.md
 !/development/templates/
