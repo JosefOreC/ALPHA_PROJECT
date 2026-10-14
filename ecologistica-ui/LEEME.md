@@ -1,3 +1,5 @@
+[← Volver al README Principal](../README.md)
+
 # EcoLogística Lima · paquete de diseño para implementar
 
 Este paquete lleva el diseño aprobado (design system v6 + vistas por rol) al repositorio `JosefOreC/ALPHA_PROJECT` para que Claude Code lo implemente en React.

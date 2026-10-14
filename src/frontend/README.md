@@ -1,3 +1,5 @@
+[← Volver al README Principal](../../README.md)
+
 # Frontend · EcoLogística Lima
 
 Aplicación React, TypeScript y Vite con una interfaz clara, navegación por rol e
@@ -21,7 +23,7 @@ muestran únicamente sus rutas y vehículos asociados. En Gestión de pedidos,
 el estado, el distrito y la búsqueda se comparten con el listado. El botón
 «Limpiar filtros del mapa» restaura la vista completa.
 
-Consultar [configuración del backend y sesiones](../../docs/03%20Implementación/Inicio%20de%20sesión%20y%20persistencia.md).
+Consultar [configuración del backend y sesiones](../../development/Inicio%20de%20sesi%C3%B3n%20y%20persistencia.md).
 
 ```powershell
 npm.cmd run build
