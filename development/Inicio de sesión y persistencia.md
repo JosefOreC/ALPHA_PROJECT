@@ -1,3 +1,5 @@
+[← Volver al README Principal](../README.md)
+
 # Inicio de sesión y persistencia
 
 La aplicación requiere una cuenta activa en PostgreSQL. No hay registro público,
