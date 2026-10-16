@@ -17,13 +17,7 @@ La API local se conecta mediante el proxy de Vite a `127.0.0.1:8000`. Opcionalme
 configurar `VITE_API_URL` para otro servidor. No hay respaldo local de pedidos o
 vehículos: todas las lecturas y escrituras pasan por la API autenticada.
 
-Los mapas incluyen búsqueda por cliente, pedido o placa, filtro de estado y
-selección de un pedido. Los filtros ocultan los marcadores que no coinciden y
-muestran únicamente sus rutas y vehículos asociados. En Gestión de pedidos,
-el estado, el distrito y la búsqueda se comparten con el listado. El botón
-«Limpiar filtros del mapa» restaura la vista completa.
-
-Consultar [configuración del backend y sesiones](../../development/Inicio%20de%20sesi%C3%B3n%20y%20persistencia.md).
+Consultar [configuración del backend y sesiones](../../docs/03%20Implementaci%C3%B3n/Inicio%20de%20sesi%C3%B3n%20y%20persistencia.md).
 
 ```powershell
 npm.cmd run build

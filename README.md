@@ -2,7 +2,7 @@
 
 **Optimizador de Rutas Sostenibles para DistriRápido S.A.C.**
 
-Sistema web de optimización de rutas de última milla que integra metaheurísticas (VRPTW / Green VRP), visualización cartográfica, indicadores de sostenibilidad y reoptimización dinámica para la operación de DistriRápido S.A.C.
+Sistema web de optimización de rutas de última milla que integra metaheurísticas (VRPTW / Green VRP), visualización cartográfica, indicadores de sostenibilidad y reoptimización dinámica para la operación de entregas en Lima Este.
 
 ---
 ## Equipo del Proyecto
@@ -65,7 +65,7 @@ El PMV implementará al menos el **70 % de RF-01 a RF-07**.
 
 ## Stack tecnológico
 
-> El equipo seleccionó formalmente la **Alternativa B: Python / FastAPI + React + PostgreSQL**; la justificación está en [10. Stack tecnológico](./docs/01%20Inicio/10.%20Stack%20tecnol%C3%B3gico%20V_1_0_0.md). Redis, OAuth2/JWT y el despliegue con contenedores pertenecen a la arquitectura objetivo y todavía no están implementados.
+> El equipo seleccionó formalmente la **Alternativa B: Python / FastAPI + React + PostgreSQL**; la justificación está en [10. Stack tecnológico](./docs/01%20Inicio/10.%20Stack%20tecnol%C3%B3gico%20V_1_0_0.md).
 
 | Capa | Tecnología |
 |------|------------|
@@ -125,7 +125,7 @@ Middleware (Auth JWT · Seguridad OWASP · Auditoría)
 
 ## Estructura del repositorio
 
-El repositorio separa el código ejecutable (`src/`), la documentación (`docs/`) y las herramientas de apoyo. El código se divide en **frontend** y **backend**; las dependencias, los compilados y los archivos temporales se excluyen mediante el [.gitignore](./.gitignore).
+El repositorio separa el código ejecutable (`src/`), la documentación (`docs/`) y las herramientas de apoyo. El código se divide en **frontend** y **backend**; las dependencias, los compilados e infraestructuras auxiliares quedan fuera del flujo de producción.
 
 ```
 ALPHA_PROJECT/
@@ -135,9 +135,9 @@ ALPHA_PROJECT/
 ├── docs/                     Documentación académica y de gestión
 │   ├── 01 Inicio/
 │   ├── 02 Planificación/
-│   ├── 03 Implementación/    Documentos de sprint y evidencias
+│   ├── 03 Implementación/    Documentos de sprint, guías técnicas y evidencias
 │   └── 04 Diseño/
-├── development/              Guías técnicas y de desarrollo
+├── development/              Planificación, seguimiento, tareas, plantillas y accesos a las guías trasladadas
 ├── ecologistica-ui/          Paquete de diseño (design system y pantallas de referencia)
 ├── scripts/                  Utilidades de base de datos y arranque del backend
 └── src/
@@ -153,7 +153,7 @@ ALPHA_PROJECT/
 | [src/shared](./src/shared) | Matriz de permisos compartida (`rbac.json`). |
 | [scripts](./scripts) | Scripts de preparación de la base de datos, migraciones y arranque. |
 | [docs](./docs) | Documentación organizada por fases (índice más abajo). |
-| [development](./development) | Guías técnicas, backlog, roadmap y criterios de calidad. |
+| [development](./development) | Planificación, seguimiento, tareas, plantillas y accesos a las guías trasladadas. |
 | [ecologistica-ui](./ecologistica-ui) | Sistema de diseño y pantallas de referencia de la interfaz. |
 
 ---
@@ -170,13 +170,13 @@ USUARIO ──── CONDUCTOR ──── RUTA ──── TRAMO
                              PEDIDO ──── INCIDENCIA
 ```
 
-El modelo completo está en [11. Base de datos](./docs/01%20Inicio/11.%20Base%20de%20datos%20V_1_0_0.md) y el esquema ejecutable de pruebas, en [schema.sql](./src/backend/infrastructure/persistence/schema.sql). Para crear PostgreSQL + PostGIS y cargar datos de todos los módulos, configurar `DATABASE_URL` en `.env` y ejecutar desde la raíz:
+El modelo completo está en [11. Base de datos](./docs/01%20Inicio/11.%20Base%20de%20datos%20V_1_0_0.md) y el esquema ejecutable de pruebas, en [schema.sql](./src/backend/infrastructure/persistence/schema.sql).
 
 ```powershell
 .venv/Scripts/python.exe scripts/create_test_db.py
 ```
 
-Consultar [configuración, instalación de dependencias y datos incluidos](./development/Base%20de%20datos%20de%20pruebas.md). Este comando prepara exclusivamente la base de pruebas. La API operativa utiliza PostgreSQL y requiere aplicar la migración de sesiones; ver [inicio de sesión y persistencia](./development/Inicio%20de%20sesi%C3%B3n%20y%20persistencia.md).
+Consultar [configuración, instalación de dependencias y datos incluidos](./docs/03%20Implementaci%C3%B3n/Base%20de%20datos%20de%20pruebas.md). Este comando prepara exclusivamente la base de pruebas. La API operativa usa la misma estructura compartida y requiere migración/verificación si se activa PostgreSQL real.
 
 El esquema de pruebas incluye PostGIS, reportes, zonas restringidas y tramos. Los adaptadores operativos consultan ese esquema compartido; la migración de sesiones es aditiva.
 
@@ -200,7 +200,7 @@ La especificación vigente de estos requisitos está en [07. Requisitos no funci
 
 ## Instalación y configuración
 
-Los comandos corresponden a Windows con PowerShell; el detalle completo está en [Inicio de sesión y persistencia](./development/Inicio%20de%20sesi%C3%B3n%20y%20persistencia.md).
+Los comandos corresponden a Windows con PowerShell; el detalle completo está en [Inicio de sesión y persistencia](./docs/03%20Implementaci%C3%B3n/Inicio%20de%20sesi%C3%B3n%20y%20persistencia.md).
 
 ### Requisitos previos
 
@@ -246,7 +246,7 @@ npm run dev                                                  # aplicación en ht
 | Responsable de Logística | Dashboard, reportes de sostenibilidad y supervisión operativa. | Medio |
 | Auditor Externo | Acceso de solo lectura a logs y reportes normativos. | Bajo–Medio |
 
-Control de acceso implementado mediante **RBAC** (Role-Based Access Control). Referencias: [08. Usuarios](./docs/01%20Inicio/08.%20Usuarios%20V_1_0_0.md) y [Control de acceso por roles](./development/Control%20de%20acceso%20por%20roles.md).
+Control de acceso implementado mediante **RBAC** (Role-Based Access Control). Referencias: [08. Usuarios](./docs/01%20Inicio/08.%20Usuarios%20V_1_0_0.md) y [Control de acceso por roles](./docs/03%20Implementaci%C3%B3n/Control%20de%20acceso%20por%20roles.md).
 
 ---
 
@@ -291,7 +291,7 @@ Control de acceso implementado mediante **RBAC** (Role-Based Access Control). Re
 
 ## Documentación del proyecto
 
-La documentación completa se encuentra en la carpeta [/docs](./docs). Todos los enlaces de esta sección son relativos al repositorio; los documentos de sprint de la Fase 03 incluyen el enlace «← Volver al README Principal».
+La documentación completa se encuentra en la carpeta [/docs](./docs). Todos los enlaces de esta sección son relativos al repositorio; los documentos de sprint de la Fase 03 incluyen el enlace a la implementación y a las evidencias cargadas en `docs/03 Implementación`.
 
 ### Fase 01 — Inicio
 
@@ -315,7 +315,7 @@ La documentación completa se encuentra en la carpeta [/docs](./docs). Todos los
 
 | Documento | Descripción |
 |-----------|-------------|
-| [01. Transformando a ágil](./docs/02%20Planificaci%C3%B3n/01%20Transformando%20a%20%C3%A1gil%20V_1_0_0.md) | Épicas, historias de usuario (US-001 a US-013), enablers (EN-00 a EN-06) y criterios BDD/Gherkin. |
+| [01. Transformando a ágil](./docs/02%20Planificaci%C3%B3n/01%20Transformando%20a%20%C3%A1gil%20V_1_0_0.md) | Épicas, historias de usuario (US-001 a US-013), enablers (EN-00 a EN-06) y criterios. |
 | [02. Artefactos Jira](./docs/02%20Planificaci%C3%B3n/02%20Artefactos%20Jira%20V_1_0_0.md) | Organización del trabajo en Jira y evidencias de configuración. |
 | [03. Registro de riesgos](./docs/02%20Planificaci%C3%B3n/03%20Registro%20de%20riesgos%20V_1_0_0.md) | Matriz de riesgos del proyecto y su mitigación. |
 | [04. Presupuesto del proyecto](./docs/02%20Planificaci%C3%B3n/04%20Presupuesto%20del%20proyecto%20V_1_0_0.md) | Modelo de costos de recursos humanos, herramientas e infraestructura. |
@@ -332,12 +332,12 @@ Documentos de sprint ubicados en [docs/03 Implementación](./docs/03%20Implement
 | [02. Registro de impedimentos (Sprint 1)](./docs/03%20Implementaci%C3%B3n/02%20Registro%20de%20Impedimentos%20V_1_1_0.md) | Impedimentos del Sprint 1, su prioridad y su estado. |
 | [03. Revisión del Sprint 1](./docs/03%20Implementaci%C3%B3n/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_1_0.md) | Historias implementadas, demostración y pendientes del Sprint 1. |
 | [04. Retrospectiva del Sprint 1](./docs/03%20Implementaci%C3%B3n/04%20Retrospectiva%20del%20Sprint%20V_1_1_0.md) | Aprendizajes, mejoras y seguimiento de acciones del Sprint 1. |
-| [Sprint 2 · 01. Informe de estado](./docs/03%20Implementaci%C3%B3n/Sprint%202/01%20Informe%20de%20estado%20del%20proyecto%20V_1_2_0.md) | Estado del proyecto, historias trabajadas, riesgos y próximos avances. |
+| [Sprint 2 · 01. Informe de estado](./docs/03%20Implementaci%C3%B3n/Sprint%202/01%20Informe%20de%20estado%20del%20proyecto%20V_1_2_0.md) | Estado del proyecto, historias trabajadas, riesgos y pendientes. |
 | [Sprint 2 · 02. Registro de impedimentos](./docs/03%20Implementaci%C3%B3n/Sprint%202/02%20Registro%20de%20Impedimentos%20V_1_2_0.md) | Impedimentos IMP-001 a IMP-011 con su estado. |
 | [Sprint 2 · 03. Revisión del Sprint](./docs/03%20Implementaci%C3%B3n/Sprint%202/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_1_0.md) | Trabajo realizado, demostración, evidencia de pruebas y pendientes. |
 | [Sprint 2 · 04. Retrospectiva del Sprint](./docs/03%20Implementaci%C3%B3n/Sprint%202/04%20Retrospectiva%20del%20Sprint%20V_1_2_0.md) | Aprendizajes, acciones y responsables propuestos. |
-| [Sprint 2 · 05. Auditoría de coherencia](./docs/03%20Implementaci%C3%B3n/Sprint%202/05%20Auditor%C3%ADa%20de%20coherencia%20del%20proyecto%20V_1_2_0.md) | Hallazgos entre documentación, código, ramas y Pull Requests. |
-| [05. Revisión del Sprint V_2_0_0](./docs/03%20Implementaci%C3%B3n/05%20Revisi%C3%B3n%20del%20Sprint%20V_2_0_0.md) | Incremento de login, administración, persistencia, interfaz clara y filtros del mapa. |
+| [Sprint 2 · 05. Auditoría de coherencia](./docs/03%20Implementaci%C3%B3n/Sprint%202/05%20Auditor%C3%ADa%20de%20coherencia%20del%20proyecto%20V_1_2_0.md) | Hallazgos entre documentación, código y producto. |
+| [05. Revisión del Sprint V_2_0_0](./docs/03%20Implementaci%C3%B3n/05%20Revisi%C3%B3n%20del%20Sprint%20V_2_0_0.md) | Incremento de login, administración, persistencia, interfaz clara y filtros. |
 | [06. Retrospectiva del Sprint V_2_0_0](./docs/03%20Implementaci%C3%B3n/06%20Retrospectiva%20del%20Sprint%20V_2_0_0.md) | Aprendizajes de la sesión y acciones propuestas para continuar. |
 
 Evidencias de las entregas:
@@ -350,12 +350,12 @@ Evidencias de las entregas:
 | Documento | Descripción |
 |-----------|-------------|
 | [Guía de desarrollo](./development/README.md) | Orden de lectura, fuentes y mantenimiento de la documentación técnica. |
-| [Inicio de sesión y persistencia](./development/Inicio%20de%20sesi%C3%B3n%20y%20persistencia.md) | Arranque local, sesiones, migraciones y verificación. |
-| [Base de datos de pruebas](./development/Base%20de%20datos%20de%20pruebas.md) | Generador PostgreSQL/PostGIS, datos incluidos y límites. |
-| [Control de acceso por roles](./development/Control%20de%20acceso%20por%20roles.md) | Matriz de permisos de los cinco roles. |
-| [Mapa visual de Lima](./development/Mapa%20visual%20de%20Lima.md) | Capas, navegación restringida y evidencias cartográficas. |
-| [CRUD de pedidos](./development/CRUD%20de%20pedidos.md) | Alcance, decisiones, API, pruebas y evidencia del módulo de pedidos. |
-| [Confirmación de pedidos](./development/Confirmacion%20de%20pedidos.md) | Consulta y confirmación de entrega del conductor. |
+| [Inicio de sesión y persistencia](./docs/03%20Implementaci%C3%B3n/Inicio%20de%20sesi%C3%B3n%20y%20persistencia.md) | Arranque local, sesiones, migraciones y verificación. |
+| [Base de datos de pruebas](./docs/03%20Implementaci%C3%B3n/Base%20de%20datos%20de%20pruebas.md) | Generador PostgreSQL/PostGIS, datos incluidos y límites. |
+| [Control de acceso por roles](./docs/03%20Implementaci%C3%B3n/Control%20de%20acceso%20por%20roles.md) | Matriz de permisos de los cinco roles. |
+| [Mapa visual de Lima](./docs/03%20Implementaci%C3%B3n/Mapa%20visual%20de%20Lima.md) | Capas, navegación restringida y evidencias cartográficas. |
+| [CRUD de pedidos](./docs/03%20Implementaci%C3%B3n/CRUD%20de%20pedidos.md) | Alcance, decisiones, API, pruebas y evidencia del módulo de pedidos. |
+| [Confirmación de pedidos](./docs/03%20Implementaci%C3%B3n/Confirmacion%20de%20pedidos.md) | Consulta y confirmación de entrega del conductor. |
 | [Roadmap](./development/roadmap.md) | Incrementos, dependencias y alcance final. |
 | [Backlog](./development/backlog.md) | Historias, enablers y tareas técnicas trazables. |
 | [Criterios de calidad](./development/calidad.md) | Definition of Ready, Definition of Done y gates de PMV. |
@@ -379,3 +379,4 @@ Evidencias de las entregas:
 ---
 
 > Versión del proyecto: **V_1_0_0** · Fecha: 04/09/2026
+

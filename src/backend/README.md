@@ -25,7 +25,7 @@ Todos los módulos operativos consultan el esquema compartido de PostgreSQL.
 Los repositorios en memoria están reservados para pruebas con dependencias
 inyectadas; no se activan por una caída de la base.
 
-Consultar [inicio de sesión, migración y arranque](../../development/Inicio%20de%20sesi%C3%B3n%20y%20persistencia.md).
+Consultar [inicio de sesión, migración y arranque](../../docs/03%20Implementaci%C3%B3n/Inicio%20de%20sesi%C3%B3n%20y%20persistencia.md).
 
 ```powershell
 .venv\Scripts\python.exe scripts/check_database.py
