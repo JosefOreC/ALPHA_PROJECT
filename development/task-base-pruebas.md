@@ -2,7 +2,7 @@
 
 La lectura estática actual encuentra API común en `src/backend/interfaces/api/deps.py`, sesiones PostgreSQL en `src/backend/infrastructure/security.py`, adaptadores SQL y endpoints de portal. Las afirmaciones anteriores de ausencia de autenticación, PostgreSQL o API HTTP corresponden al diagnóstico fechado, no al estado actual. No se ejecutaron suites, base de datos ni despliegue en esta edición. Permanecen pendientes seguridad completa, migraciones/recuperación, motor VRPTW, despacho, GPS/ETA operativos, factores ambientales y aceptación.
 
-Estado detallado: [impedimentos vigentes](../docs/03%20Implementaci%C3%B3n/Sprint%202/02%20Registro%20de%20Impedimentos%20V_1_4_0.md) y [revisión por criterios](../docs/03%20Implementaci%C3%B3n/Sprint%202/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_3_0.md).
+Estado detallado: [impedimentos vigentes](../docs/03%20Implementaci%C3%B3n/Sprint%202/02%20Registro%20de%20Impedimentos%20V_1_5_0.md) y [revisión por criterios](../docs/03%20Implementaci%C3%B3n/Sprint%202/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_4_0.md).
 
 ---
 

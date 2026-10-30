@@ -1,18 +1,10 @@
-> **HISTÓRICO — no vigente.** Contenido previo conservado; solo se ajustan navegación y enlaces. Las cifras, fechas, responsables y cierres son registros atribuidos al autor indicado; no se reejecutaron ni se ratificaron en esta revisión documental. Vigente: [05 Auditoría de coherencia del proyecto V_1_4_0](../05%20Auditor%C3%ADa%20de%20coherencia%20del%20proyecto%20V_1_4_0.md).
+# Auditoría de coherencia del proyecto — Sprint 2
 
-# Auditoría de coherencia del proyecto — 09/10/2026
+**Proyecto:** EcoLogística Lima — DistriRápido S.A.C.
 
-[← Volver al README Principal](../../../../README.md)
+**Versión del documento:** V_1_5_0
 
-**Nombre del Proyecto:** EcoLogística Lima – Optimizador de Rutas Sostenibles para DistriRápido S.A.C.
-
-**Líder del Proyecto:** Ore Campos, Josef Pablo
-
-**Versión del documento:** V_1_3_0
-
-**Última actualización:** 29/10/2026
-
-> **Actualización V_1_3_0 (29/10/2026).** La auditoría original (09/10) revisó la rama `feature/carlos/spr2/m_pedidos/confirmacion` y trató la autenticación, la persistencia en PostgreSQL, la API única y la integración de las ramas de Josef como pendientes. Ese mismo día esas ramas entraron a `main` sin Pull Request, de modo que varias filas de las tablas «Componente» y «Hallazgos» quedaron desactualizadas. Esta versión las contrasta de nuevo con `main` (commit `30969da`), conserva el texto original entre paréntesis donde cambió y agrega los hallazgos H-15 y H-16.
+**Actualización documental:** 29/10/2026. No es fecha de reunión ni de aceptación.
 
 ## Propósito y alcance
 
@@ -44,7 +36,7 @@ Esta auditoría contrasta la documentación versionada del repositorio con el c�
 | PostGIS | En evaluación | Usado por el esquema y el generador de datos de prueba. |
 | Redis | Sí (sesiones y caché) | No existe; las sesiones se guardan en PostgreSQL. |
 | Autenticación OAuth2 + JWT | Sí | No existe como tal. Hay inicio de sesión propio con contraseña con hash, cookie de sesión, expiración, revocación, CSRF y límite de intentos. *(V_1_2_0: «no existe».)* |
-| Motor VRPTW / Green VRP | Sí (OR-Tools, SciPy, NumPy) | No existe; `generate_routes.py`, `reoptimize_route.py` y `route.py` están vacíos. La propuesta de rutas es una estimación. |
+| Motor VRPTW / Green VRP | Sí (OR-Tools, SciPy, NumPy) | Parcial (30/10/2026): `domain/planning.py` implementa una heurística de inserción de menor costo con mejora 2-opt (capacidad, ventanas y objetivo de CO₂); no usa OR-Tools, no incluye aprobación ni despacho, y `generate_routes.py`, `reoptimize_route.py` y `route.py` siguen vacíos. |
 | Leaflet y OpenStreetMap | Sí | Implementados leyendo `/map`; teselas del servidor público. |
 | Docker Compose, CI (`.github/`) | Sí (README) | No existen. |
 | Middleware OWASP / Ley N.° 29733 (EN-02) | Sí (README, RNF-002) | Parcial: CORS por `CORS_ALLOW_ORIGINS`, CSRF, límite de intentos de login y permisos por rol. Sin cabeceras de seguridad, auditoría anonimizada ni bloqueo de inyección SQL. |
@@ -57,7 +49,7 @@ Esta auditoría contrasta la documentación versionada del repositorio con el c�
 | Iteración | Plan registrado | Resultado comprobado al 09/10/2026 |
 |---|---|---|
 | Sprint 1 | `02 Artefactos Jira`: 21 puntos con EN-00 (5), US-001 (3), US-002 (2), US-003 «Registrar pedido de entrega» (5), US-004 (3) y US-012 (3). | La versión V_1_0_0 del informe y de la revisión del Sprint 1 declaraba completadas US-001, US-002, US-003, US-004, US-008 y US-012 como «implementadas, probadas e integradas», sin mencionar EN-00 (esquema de base de datos) y con US-008 fuera del plan. En el repositorio los datos siguen en memoria y no hay base de datos conectada ni identidad verificada (H-01 y H-02). **Los documentos del Sprint 1 se corrigieron en V_1_1_0 (09/10/2026):** las historias figuran como implementadas de forma parcial, con EN-00 registrado como no completado. |
-| Sprint 2 | `development/sprints.md` (rama de Josef) propone «generación, asignación y entrega» con PMV-2: pedido → ruta → despacho → confirmación → lectura compartida. | Incremento de interfaz por rol, mapa visual, inicio de sesión, autorización por roles, persistencia en PostgreSQL y base de pruebas, integrado en `main` sin revisión. El flujo de PMV-2 no se cumple: faltan el motor de optimización, la aprobación y el despacho. *(V_1_2_0: «faltan el motor de optimización, la persistencia y la autenticación».)* Ver el [informe](../01%20Informe%20de%20estado%20del%20proyecto%20V_1_4_0.md) y la [revisión](../03%20Revisi%C3%B3n%20del%20Sprint%20V_1_3_0.md). |
+| Sprint 2 | `development/sprints.md` (rama de Josef) propone «generación, asignación y entrega» con PMV-2: pedido → ruta → despacho → confirmación → lectura compartida. | Incremento de interfaz por rol, mapa visual, inicio de sesión, autorización por roles, persistencia en PostgreSQL y base de pruebas, integrado en `main` sin revisión. El flujo de PMV-2 no se cumple: faltan el motor de optimización, la aprobación y el despacho. *(V_1_2_0: «faltan el motor de optimización, la persistencia y la autenticación».)* Ver el [informe](01%20Informe%20de%20estado%20del%20proyecto%20V_1_5_0.md) y la [revisión](03%20Revisi%C3%B3n%20del%20Sprint%20V_1_4_0.md). |
 | Sprint 3 | Propuesta: mapa, indicadores, sostenibilidad y tráfico (PMV-3). | Adelantado de forma parcial con datos de ejemplo (mapa, dashboard y reporte con CSV). No acredita la integración de PMV-3. |
 | Sprint 4 y cierre | Propuesta: reoptimización, calidad y entrega final (PMV-4). | Sin trabajo identificado salvo la parte visual del aviso de reoptimización del conductor. |
 
@@ -122,14 +114,33 @@ Estado al 29/10/2026. Las acciones que `main` ya cumple se tachan y se explican.
 - Agregar el historial de cambios a los once documentos de Inicio que no lo tienen (H-11); los cuatro del Sprint 1 ya lo tienen.
 - Mantener Redis, OAuth2/JWT, optimización de rutas, CI y accesibilidad certificada como pendientes hasta implementar y verificar cada incremento. PostgreSQL/PostGIS y la autenticación propia ya están implementadas, pendientes de validación en despliegue.
 
-## Historial de cambios
+## Actualización documental local (29/10/2026)
 
-| Versión | Fecha | Autor | Descripción del cambio |
-|---|---|---|---|
-| V_1_0_0 | 09/10/2026 | Tovar Sánchez, Carlos Alberto | Contraste inicial de documentación, código, ramas, Pull Requests y documentos del Sprint 2; evidencia local de pruebas y respuestas HTTP del 09/10/2026; 14 hallazgos con su acción propuesta. |
-| V_1_1_0 | 09/10/2026 | Tovar Sánchez, Carlos Alberto | Se actualizan los enlaces y se añade la acción de retirar los documentos sueltos de la rama `feature/josef/spr2/auth` tras unificar la revisión y la retrospectiva del Sprint 2. |
-| V_1_2_0 | 09/10/2026 | Tovar Sánchez, Carlos Alberto | Se agrega la columna de estado de los hallazgos: H-01 y H-02 quedan corregidos en los documentos del Sprint 1 (V_1_1_0) y H-11 y H-13 parcialmente; se ajustan el plan, las acciones abiertas y los enlaces. |
-| V_1_3_0 | 29/10/2026 | Tovar Sánchez, Carlos Alberto | Se contrasta de nuevo con `main` (`30969da`): se corrigen la tabla de componentes, el plan, el estado de GitHub y las acciones abiertas, se actualiza el estado de H-03 a H-10 y H-14, y se agregan H-15 (documentos de estado desactualizados), H-16 (código integrado sin Pull Request) y H-17 (enlaces del README rotos tras el commit del 16/10, corregido el mismo día). Se reemplazan las cifras de pruebas por las del 29/10. |
+Este complemento solo acredita inspección documental y de código local. No consulta GitHub/Jira ni repite pruebas.
+
+| Hallazgos | Actualización local | Pendiente |
+|---|---|---|
+| H-01/H-02 | Revisiones distinguen historias, criterios y aceptación; informes enlazan matrices. | Acta y aceptación real. |
+| H-03/H-04/H-05/H-09/H-15 | Sesiones, API común, PostgreSQL y scripts presentes; se deja de describirlos como ausentes. | Seguridad, recuperación y despliegue. |
+| H-06/H-07 | Diferencias de numeración y roles se explicitan en decisiones y revisión. | Conciliación aprobada de D-01/D-10; no cambiar requisitos por inferencia. |
+| H-08/H-10/H-12/H-13/H-14/H-16 | Estado remoto, calendario, presupuesto y Jira conservados como registros históricos. | Confirmación del equipo con fuentes verificables. |
+| H-11 | Nuevas ediciones de sprint registran versión e historia; fuentes de Inicio se conservan. | Revisar necesidad de historial en documentos de Inicio con consigna completa. |
+| H-17 | Seis guías trasladadas a Guías técnicas, enlaces corregidos e índices completos; retrospectivas consolidadas. | Revisión del equipo; resultado automatizado en informe documental. |
+
+La revisión suelta `05 Revisión del Sprint V_2_0_0.md` no existe en el árbol inicial. La revisión anterior documenta que ya se consolidó y retiró. No se reconstruye ni se crea copia duplicada. La retrospectiva `06 ... V_2_0_0` sí existía y se archiva como antecedente de V_2_1_0 del Sprint 2.
+
+Comprobaciones, alcance, mapa de movimientos y pendientes: [informe de verificación documental](../Verificaci%C3%B3n%20documental.md).
+
+## Control de versiones del documento
+
+| Versión | Fecha | Autoría / cambio |
+|---|---|---|
+| V_1_0_0 | 09/10/2026 | Tovar Sánchez, Carlos Alberto. Contraste inicial de documentación, código, ramas, Pull Requests y documentos del Sprint 2; evidencia local de pruebas y respuestas HTTP del 09/10/2026; 14 hallazgos con su acción propuesta. |
+| V_1_1_0 | 09/10/2026 | Tovar Sánchez, Carlos Alberto. Se actualizan los enlaces y se añade la acción de retirar los documentos sueltos de la rama `feature/josef/spr2/auth` tras unificar la revisión y la retrospectiva del Sprint 2. |
+| V_1_2_0 | 09/10/2026 | Tovar Sánchez, Carlos Alberto. Se agrega la columna de estado de los hallazgos: H-01 y H-02 quedan corregidos en los documentos del Sprint 1 (V_1_1_0) y H-11 y H-13 parcialmente; se ajustan el plan, las acciones abiertas y los enlaces. |
+| V_1_3_0 | 29/10/2026 | Tovar Sánchez, Carlos Alberto. Se contrasta de nuevo con `main` (`30969da`): se corrigen la tabla de componentes, el plan, el estado de GitHub y las acciones abiertas, se actualiza el estado de H-03 a H-10 y H-14, y se agregan H-15 (documentos de estado desactualizados), H-16 (código integrado sin Pull Request) y H-17 (enlaces del README rotos tras el commit del 16/10, corregido el mismo día). Se reemplazan las cifras de pruebas por las del 29/10. |
+| V_1_4_0 | 29/10/2026 | Rojas Camayo, Valentino Jhan Pierre (PR #25). Actualización documental; pendiente de revisión del equipo. Actualiza hallazgos documentales locales; conserva auditoría anterior y pendientes externos sin ratificación. |
+| V_1_5_0 | 30/10/2026 | Tovar Sánchez, Carlos Alberto. Documento único vigente: se restaura la auditoría completa (H-01 a H-17) como cuerpo del documento y se retira la carpeta Histórico. |
 
 
 [← Volver al índice correspondiente](README.md)
