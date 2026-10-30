@@ -17,7 +17,7 @@ La API local se conecta mediante el proxy de Vite a `127.0.0.1:8000`. Opcionalme
 configurar `VITE_API_URL` para otro servidor. No hay respaldo local de pedidos o
 vehículos: todas las lecturas y escrituras pasan por la API autenticada.
 
-Consultar [configuración del backend y sesiones](../../docs/03%20Implementaci%C3%B3n/Inicio%20de%20sesi%C3%B3n%20y%20persistencia.md).
+Consultar [configuración del backend y sesiones](../../development/Inicio%20de%20sesi%C3%B3n%20y%20persistencia.md).
 
 ```powershell
 npm.cmd run build

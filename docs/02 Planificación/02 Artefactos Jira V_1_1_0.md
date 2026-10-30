@@ -8,15 +8,15 @@
 |---|---|
 | **Proyecto** | EcoLogística Lima – Optimizador de Rutas Sostenibles para DistriRápido S.A.C. |
 | **Fase** | 02. Planificación |
-| **Versión** | V_1_0_0 |
-| **Fecha** | 11/09/2026 |
+| **Versión** | V_1_1_0 |
+| **Fecha** | 11/09/2026 (actualizado el 29/10/2026) |
 
 
 ## 2. Configuración base del proyecto en Jira
 
 Pasos sugeridos para configurar el proyecto (tipo **Scrum**, plantilla "Software de equipo"):
 
-1. Crear el proyecto Jira con clave corta, por ejemplo `ECOL`.
+1. Crear el proyecto Jira con clave corta, por ejemplo `ECOL`. *(Nota V_1_1_0: el proyecto creado usa la clave `ELODRSPDSC`; `ECOL` era solo el ejemplo sugerido. Los identificadores de las actividades en Jira son del tipo `ELODRSPDSC-28`.)*
 2. Habilitar la jerarquía: Épica → Historia/Enabler (Story) → Subtarea, y activar el tipo **Bug** para incidencias detectadas en Sprint.
 3. Crear las 7 Épicas de la sección 3 de `01 Transformando a ágil V_1_0_0.md` (EP-01 a EP-07).
 4. Cargar cada ítem del backlog (sección 4 del mismo documento) como Story o Enabler, vinculado a su Épica, con su estimación en Story Points.
@@ -91,5 +91,6 @@ Versión creada en Jira: **v1.0.0-MVP**, asociada a las Épicas EP-01, EP-02, EP
 | Versión | Fecha | Autor | Descripción del cambio |
 |---|---|---|---|
 | V_1_0_0 | 11/09/2026 | Tovar Sanchez Carlos Alberto | Configuración de artefactos Jira con Roadmap, backlog priorizado, Sprint Planning, tablero Scrum y Release v1.0.0-MVP, incluyendo evidencias reales. |
+| V_1_1_0 | 29/10/2026 | Tovar Sánchez, Carlos Alberto | Se aclara que la clave real del proyecto Jira es `ELODRSPDSC` y que `ECOL` era un ejemplo; el resto del documento no cambia. |
 
 [← Volver al README Principal](../../README.md)

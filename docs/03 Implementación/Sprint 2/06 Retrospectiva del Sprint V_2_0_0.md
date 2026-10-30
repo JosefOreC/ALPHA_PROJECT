@@ -106,7 +106,7 @@ Estas propuestas retoman el plan de desarrollo y no sustituyen las asignaciones 
 
 Las acciones anteriores de integrar autenticación y conectar módulos a PostgreSQL cuentan ahora con implementación y comprobaciones de la sesión. Las propuestas de esta tabla se concentran en validación, operación y aceptación; sus responsables y fechas aún deben confirmarse.
 
-La siguiente retrospectiva debe comprobar estas acciones y registrar resultados, obstáculos y fechas reales. La [revisión de este incremento](05%20Revisi%C3%B3n%20del%20Sprint%20V_2_0_0.md) y la [guía de inicio de sesión y persistencia](../../development/Inicio%20de%20sesi%C3%B3n%20y%20persistencia.md) registran el alcance actualizado. El [estado de desarrollo](../../development/estado-actual.md) y el backlog requieren conciliar sus pendientes históricos con esta revisión.
+La siguiente retrospectiva debe comprobar estas acciones y registrar resultados, obstáculos y fechas reales. La [revisión de este incremento](03%20Revisi%C3%B3n%20del%20Sprint%20V_1_2_0.md) y la [guía de inicio de sesión y persistencia](../../../development/Inicio%20de%20sesi%C3%B3n%20y%20persistencia.md) registran el alcance actualizado. El [estado de desarrollo](../../../development/estado-actual.md) y el backlog requieren conciliar sus pendientes históricos con esta revisión.
 
 ## Historial de versiones
 
@@ -115,4 +115,4 @@ La siguiente retrospectiva debe comprobar estas acciones y registrar resultados,
 | V_1_0_0 | 09/10/2026 | Aprendizajes iniciales sobre mapa, roles y preparación de datos. |
 | V_2_0_0 | 09/10/2026 | Incorpora diagnóstico del login y entorno, persistencia, administración, distribución visual y filtros; revisa aprendizajes y acciones siguientes. |
 
-[← Volver al README Principal](../../README.md)
+[← Volver al README Principal](../../../README.md)

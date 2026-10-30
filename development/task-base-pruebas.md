@@ -11,4 +11,4 @@ Fecha: 09/10/2026. Vinculada a EN-00, T-02 y EN-02. Estado: generador y datos im
 - [ ] Conectar adaptadores de los módulos de la API a este esquema y al proveedor de identidad real.
 - [ ] Convertir el contrato validado en migraciones productivas y verificar concurrencia y políticas de auditoría operativas.
 
-Comando desde la raíz: `.venv\Scripts\python.exe scripts/create_test_db.py`. La [guía de base de pruebas](../docs/03%20Implementaci%C3%B3n/Base%20de%20datos%20de%20pruebas.md) contiene configuración, cantidades, cuentas, límites y cómo repetir las pruebas. No se declara persistencia completa del producto ni aceptación de EN-00/PMV por disponer del generador.
+Comando desde la raíz: `.venv\Scripts\python.exe scripts/create_test_db.py`. La [guía de base de pruebas](Base%20de%20datos%20de%20pruebas.md) contiene configuración, cantidades, cuentas, límites y cómo repetir las pruebas. No se declara persistencia completa del producto ni aceptación de EN-00/PMV por disponer del generador.

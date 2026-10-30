@@ -15,4 +15,4 @@ Fecha: 09/10/2026. Vinculada a EN-02, T-01 y T-09. Fuente: [matriz de usuarios, 
 - [ ] Auditoría persistida y pantallas/endpoints pendientes, integrados con la misma política.
 - [ ] Validación de seguridad e integración del proveedor real antes de aceptar EN-02.
 
-La [evidencia técnica y guía de integración](../docs/03%20Implementaci%C3%B3n/Control%20de%20acceso%20por%20roles.md) especifica la precedencia de la matriz, archivos, comandos y requisitos del proveedor. Al integrarlo, probar los cinco usuarios con credenciales reales en staging, revocación, expiración y recursos ajenos; conservar pruebas de rechazo sin sesión. No habilitar un rol predeterminado en la API para facilitar demos.
+La [evidencia técnica y guía de integración](Control%20de%20acceso%20por%20roles.md) especifica la precedencia de la matriz, archivos, comandos y requisitos del proveedor. Al integrarlo, probar los cinco usuarios con credenciales reales en staging, revocación, expiración y recursos ajenos; conservar pruebas de rechazo sin sesión. No habilitar un rol predeterminado en la API para facilitar demos.
