@@ -61,3 +61,11 @@ Los riesgos RSK-01 a RSK-07 provienen de los riesgos macro R-01 a R-07 ya identi
 | V_1_0_0 | 11/09/2026 | Tovar Sanchez Carlos Alberto | Cuantificación de R-01 a R-07 del Acta de Constitución (RSK-01 a RSK-07) e incorporación de RSK-08 y RSK-09 identificados en la fase de planificación. |
 
 [← Volver al README Principal](../../README.md)
+
+
+[← Volver al índice correspondiente](README.md)
+
+
+## Referencias de seguimiento documental
+
+La valoración original se conserva. IMP-002 (fuentes, RSK-02/03), IMP-003 (motor/rendimiento, RSK-01), IMP-007/013 (seguridad, RSK-05) e IMP-005 (proceso/revisión, RSK-09) se distinguen de los bloqueos concretos en [registro del Sprint 2](../03%20Implementaci%C3%B3n/Sprint%202/02%20Registro%20de%20Impedimentos%20V_1_4_0.md) y [decisiones](../../development/decisiones.md). Esta referencia documental no cambia probabilidades, impactos, responsables ni fechas; no cierra riesgos.

@@ -1,8 +1,16 @@
+## Corte documental actual — 29/10/2026
+
+La lectura estática actual encuentra API común en `src/backend/interfaces/api/deps.py`, sesiones PostgreSQL en `src/backend/infrastructure/security.py`, adaptadores SQL y endpoints de portal. Las afirmaciones anteriores de ausencia de autenticación, PostgreSQL o API HTTP corresponden al diagnóstico fechado, no al estado actual. No se ejecutaron suites, base de datos ni despliegue en esta edición. Permanecen pendientes seguridad completa, migraciones/recuperación, motor VRPTW, despacho, GPS/ETA operativos, factores ambientales y aceptación.
+
+Estado detallado: [impedimentos vigentes](../docs/03%20Implementaci%C3%B3n/Sprint%202/02%20Registro%20de%20Impedimentos%20V_1_4_0.md) y [revisión por criterios](../docs/03%20Implementaci%C3%B3n/Sprint%202/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_3_0.md).
+
+---
+
 # Task — mapa fiel de Lima y composición visual por vista
 
 Fecha de especificación: **08/10/2026**. Estado actual: **Implementado visualmente; aceptación formal pendiente**.
 
-**Actualización 09/10/2026:** incremento visual implementado en la rama actual. Ver [informe, pruebas y capturas](Mapa%20visual%20de%20Lima.md). El checklist original se conserva como especificación; la revisión formal y los gates del DoD siguen pendientes y RF-004/PMV-3 permanecen abiertos.
+**Actualización 09/10/2026:** incremento visual implementado en la rama actual. Ver [informe, pruebas y capturas](../docs/03%20Implementaci%C3%B3n/Gu%C3%ADas%20t%C3%A9cnicas/Mapa%20visual%20de%20Lima.md). El checklist original se conserva como especificación; la revisión formal y los gates del DoD siguen pendientes y RF-004/PMV-3 permanecen abiertos.
 
 **Presentación visual, 09/10/2026:** se adopta la imagen de referencia mediante una base vectorial OpenFreeMap/MapLibre: fondo crema/blanco, áreas verdes menta, agua celeste y jerarquía de calles; sin relieve ni 3D. Se conservan rutas finas, puntos y camiones con relleno pastel completo, un único botón «Capas», placas al interactuar y leyenda plegada. Reencuadre con icono y controles móviles de 48 px. Se mantiene la ampliación de 10 km por lado y la lista ante fallos de carga o incompatibilidad gráfica. Estilo adaptado, licencias, regeneración, capturas y verificación en el informe.
 
@@ -147,3 +155,6 @@ Secuencia: MAP-V01 y contrato MAP-V03 → geometrías MAP-V02 → composición M
 Registrar commit, entorno, perfil, fixture/fuente geográfica, resultados y capturas. Aceptar el task con evidencia de AC-M01–AC-M12 y revisión visual. Los comandos actuales son `npm run test`, `npm run lint`, `npm run build` y `npm run test:ui` desde `src/frontend`; no se han ejecutado al redactar este task.
 
 Registrar el estado de las obligaciones de [calidad.md](calidad.md). El cierre operacional HTTP/GPS/ETA y RF-004 continúa en [backlog.md](backlog.md); este documento define el avance visual verificable.
+
+
+[← Volver al índice correspondiente](README.md)

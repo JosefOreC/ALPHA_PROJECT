@@ -36,7 +36,7 @@ Alineación de las Épicas en la línea de tiempo, conforme al cronograma de ite
 | Iteración 3 | 8-11 | EP-04, EP-05, EP-06, EN-02, integración de datos de tráfico |
 | Iteración 4 | 12-14 | EN-01 (algoritmo avanzado), EN-04, EN-03, EN-05, EN-06, pruebas y documentación final |
 
-![Roadmap del proyecto en Jira](./evidencias-jira/01-roadmap.png)
+![Roadmap del proyecto en Jira](evidencias-jira/01-roadmap.png)
 
 ---
 
@@ -44,7 +44,7 @@ Alineación de las Épicas en la línea de tiempo, conforme al cronograma de ite
 
 El backlog completo, ya priorizado y estimado en Story Points, está en la sección 4 de `01 Transformando a ágil V_1_0_0.md`. Al cargarlo en Jira, el Backlog debe reflejar ese mismo orden y esas mismas estimaciones, agrupado por componente/Épica.
 
-![Backlog priorizado en Jira](./evidencias-jira/02-backlog.png)
+![Backlog priorizado en Jira](evidencias-jira/02-backlog.png)
 
 ---
 
@@ -68,13 +68,13 @@ El backlog completo, ya priorizado y estimado en Story Points, está en la secci
 | US-012 | Registrar conductor | 3 |
 | **Total** | | **21** |
 
-![Sprint Planning y Sprint Goal en Jira](./evidencias-jira/03-sprint-planning.png)
+![Sprint Planning y Sprint Goal en Jira](evidencias-jira/03-sprint-planning.png)
 
 ---
 
 ## 6.Tablero Scrum activo
 
-![Tablero Scrum activo en Jira](./evidencias-jira/04-tablero-scrum.png)
+![Tablero Scrum activo en Jira](evidencias-jira/04-tablero-scrum.png)
 
 ---
 
@@ -82,7 +82,7 @@ El backlog completo, ya priorizado y estimado en Story Points, está en la secci
 
 Versión creada en Jira: **v1.0.0-MVP**, asociada a las Épicas EP-01, EP-02, EP-03 (parcial) y EP-07, correspondientes al alcance mínimo del PMV definido en el Acta de Constitución.
 
-![Release v1.0.0-MVP en Jira](./evidencias-jira/05-release-mvp.png)
+![Release v1.0.0-MVP en Jira](evidencias-jira/05-release-mvp.png)
 
 ---
 
@@ -94,3 +94,6 @@ Versión creada en Jira: **v1.0.0-MVP**, asociada a las Épicas EP-01, EP-02, EP
 | V_1_1_0 | 29/10/2026 | Tovar Sánchez, Carlos Alberto | Se aclara que la clave real del proyecto Jira es `ELODRSPDSC` y que `ECOL` era un ejemplo; el resto del documento no cambia. |
 
 [← Volver al README Principal](../../README.md)
+
+
+[← Volver al índice correspondiente](README.md)

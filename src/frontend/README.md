@@ -17,7 +17,7 @@ La API local se conecta mediante el proxy de Vite a `127.0.0.1:8000`. Opcionalme
 configurar `VITE_API_URL` para otro servidor. No hay respaldo local de pedidos o
 vehículos: todas las lecturas y escrituras pasan por la API autenticada.
 
-Consultar [configuración del backend y sesiones](../../development/Inicio%20de%20sesi%C3%B3n%20y%20persistencia.md).
+Consultar [configuración del backend y sesiones](../../docs/03%20Implementaci%C3%B3n/Gu%C3%ADas%20t%C3%A9cnicas/Inicio%20de%20sesi%C3%B3n%20y%20persistencia.md).
 
 ```powershell
 npm.cmd run build
@@ -29,3 +29,6 @@ npm.cmd run test:ui
 Las pruebas de navegador incluyen acceso, creación de usuarios y cierre de sesión
 en escritorio y móvil. Usan respuestas HTTP aisladas; la persistencia real requiere
 PostgreSQL configurado y la migración aplicada.
+
+
+[← Volver al índice correspondiente](../../README.md)

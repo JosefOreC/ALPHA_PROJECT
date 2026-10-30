@@ -1,3 +1,11 @@
+## Corte documental actual — 29/10/2026
+
+La lectura estática actual encuentra API común en `src/backend/interfaces/api/deps.py`, sesiones PostgreSQL en `src/backend/infrastructure/security.py`, adaptadores SQL y endpoints de portal. Las afirmaciones anteriores de ausencia de autenticación, PostgreSQL o API HTTP corresponden al diagnóstico fechado, no al estado actual. No se ejecutaron suites, base de datos ni despliegue en esta edición. Permanecen pendientes seguridad completa, migraciones/recuperación, motor VRPTW, despacho, GPS/ETA operativos, factores ambientales y aceptación.
+
+Estado detallado: [impedimentos vigentes](../docs/03%20Implementaci%C3%B3n/Sprint%202/02%20Registro%20de%20Impedimentos%20V_1_4_0.md) y [revisión por criterios](../docs/03%20Implementaci%C3%B3n/Sprint%202/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_3_0.md).
+
+---
+
 # Decisiones, inconsistencias y riesgos de ejecución
 
 Registro inicial **08/10/2026**. Las decisiones propuestas se validan en planning/review y registran responsable, fecha y enlace a evidencia/acta. No se modifican las fuentes históricas como parte de esta documentación.
@@ -50,3 +58,16 @@ Evidencia de acuerdo / PR / documento actualizado:
 ```
 
 Un cambio significativo de alcance, presupuesto o cronograma se acuerda con el equipo según el Acta. Los avances y cambios se revisan semanalmente; los riesgos mantienen su dueño, fecha de revisión y evidencia de resolución en el sprint.
+
+## Conciliaciones pendientes de esta edición
+
+| Referencia | Estado y condición de acuerdo |
+|---|---|
+| D-01 / D-03 | No contar dos veces US-010/011 ni EN-02/05 entre Sprint 2/3. Confirmar Jira, fechas y alcance con el equipo; conservar discrepancia 111/112 SP. |
+| D-04 | Mantener criterio original de rechazo de repetición visible; idempotencia existente no constituye aprobación del cambio de requisito. Requiere decisión atribuida y criterio versionado. |
+| D-05 / D-06 / D-10 | Stack, sesiones y adaptadores ya existen. Sustituir trabajo de integración descrito como ausente por validación pendiente; diferencias de permisos entre Gherkin y RBAC requieren acuerdo. |
+| D-08 / IMP-002/009 | Fuente de tráfico/GPS/ETA y factores ambientales siguen por confirmar. Datos sintéticos no cierran la decisión. |
+| IMP-005 / T-08 | La protección de rama es tarea preventiva; estado remoto no comprobado. |
+
+
+[← Volver al índice correspondiente](README.md)

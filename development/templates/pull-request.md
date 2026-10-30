@@ -29,3 +29,6 @@ Cobertura y alcance: ___. Análisis estático: ___. Demo/staging, commit y evalu
 - [ ] Migración y recuperación descritas, si aplican; sin secretos ni datos personales en evidencia.
 
 Revisor técnico: ___. Plan de recuperación y limitaciones materiales: ___.
+
+
+[← Volver al índice correspondiente](README.md)

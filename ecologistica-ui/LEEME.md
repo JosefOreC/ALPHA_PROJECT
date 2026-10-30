@@ -49,3 +49,6 @@ Ignora `support.js`, `<helmet>` y `data-props`: son del editor de diseño.
 5. Al terminar cada pantalla: `npm run test` y `npm run lint` en `src/frontend`, revisa en el navegador y haz PR.
 
 Lienzo con el diseño navegable: EcoLogística Lima — Vistas por rol (claude.ai).
+
+
+[← Volver al índice correspondiente](README.md)

@@ -65,7 +65,7 @@ El PMV implementará al menos el **70 % de RF-01 a RF-07**.
 
 ## Stack tecnológico
 
-> El equipo seleccionó formalmente la **Alternativa B: Python / FastAPI + React + PostgreSQL**; la justificación está en [10. Stack tecnológico](./docs/01%20Inicio/10.%20Stack%20tecnol%C3%B3gico%20V_1_0_0.md).
+> El equipo seleccionó formalmente la **Alternativa B: Python / FastAPI + React + PostgreSQL**; la justificación está en [10. Stack tecnológico](docs/01%20Inicio/10.%20Stack%20tecnol%C3%B3gico%20V_1_0_0.md).
 
 | Capa | Tecnología |
 |------|------------|
@@ -83,7 +83,7 @@ La alternativa seleccionada ofrece compatibilidad nativa con las bibliotecas de 
 
 ## Arquitectura
 
-El sistema sigue el modelo **C4** estructurado en tres niveles (detalle en [12. Modelo C4](./docs/01%20Inicio/12.%20Modelo%20C4%20V_1_0_0.md)):
+El sistema sigue el modelo **C4** estructurado en tres niveles (detalle en [12. Modelo C4](docs/01%20Inicio/12.%20Modelo%20C4%20V_1_0_0.md)):
 
 ### Nivel 1 — Contexto
 
@@ -114,10 +114,10 @@ Middleware (Auth JWT · Seguridad OWASP · Auditoría)
                     └─► Repositories ──SQL──► PostgreSQL
 ```
 
-**Decisiones arquitectónicas relevantes:**
+**Decisiones arquitectónicas objetivo (su cumplimiento requiere verificación):**
 
 - El módulo de algoritmo es un componente independiente para facilitar pruebas de rendimiento y reemplazos sin afectar el resto del sistema.
-- Redis gestiona sesiones para cumplir la disponibilidad de 99.5 %.
+- Redis es parte de la arquitectura objetivo; las sesiones actuales se almacenan en PostgreSQL. La disponibilidad de 99.5 % requiere medición.
 - El middleware de auditoría anonimiza logs en cumplimiento de la Ley N.º 29733.
 - El código se organiza en capas hexagonales (dominio, aplicación, infraestructura e interfaces), tanto en el backend como en el frontend.
 
@@ -148,13 +148,13 @@ ALPHA_PROJECT/
 
 | Carpeta | Contenido |
 |---------|-----------|
-| [src/backend](./src/backend) | Backend. Guía: [README del backend](./src/backend/README.md). |
-| [src/frontend](./src/frontend) | Frontend. Guía: [README del frontend](./src/frontend/README.md). |
-| [src/shared](./src/shared) | Matriz de permisos compartida (`rbac.json`). |
-| [scripts](./scripts) | Scripts de preparación de la base de datos, migraciones y arranque. |
-| [docs](./docs) | Documentación organizada por fases (índice más abajo). |
-| [development](./development) | Planificación, seguimiento, tareas, plantillas y accesos a las guías trasladadas. |
-| [ecologistica-ui](./ecologistica-ui) | Sistema de diseño y pantallas de referencia de la interfaz. |
+| [src/backend](src/backend) | Backend. Guía: [README del backend](src/backend/README.md). |
+| [src/frontend](src/frontend) | Frontend. Guía: [README del frontend](src/frontend/README.md). |
+| [src/shared](src/shared) | Matriz de permisos compartida (`rbac.json`). |
+| [scripts](scripts) | Scripts de preparación de la base de datos, migraciones y arranque. |
+| [docs](docs) | Documentación organizada por fases (índice más abajo). |
+| [development](development) | Planificación, seguimiento, tareas, plantillas y accesos a las guías trasladadas. |
+| [ecologistica-ui](ecologistica-ui) | Sistema de diseño y pantallas de referencia de la interfaz. |
 
 ---
 
@@ -170,13 +170,13 @@ USUARIO ──── CONDUCTOR ──── RUTA ──── TRAMO
                              PEDIDO ──── INCIDENCIA
 ```
 
-El modelo completo está en [11. Base de datos](./docs/01%20Inicio/11.%20Base%20de%20datos%20V_1_0_0.md) y el esquema ejecutable de pruebas, en [schema.sql](./src/backend/infrastructure/persistence/schema.sql).
+El modelo completo está en [11. Base de datos](docs/01%20Inicio/11.%20Base%20de%20datos%20V_1_0_0.md) y el esquema ejecutable de pruebas, en [schema.sql](src/backend/infrastructure/persistence/schema.sql).
 
 ```powershell
 .venv/Scripts/python.exe scripts/create_test_db.py
 ```
 
-Consultar [configuración, instalación de dependencias y datos incluidos](./development/Base%20de%20datos%20de%20pruebas.md). Este comando prepara exclusivamente la base de pruebas. La API operativa usa la misma estructura compartida y requiere migración/verificación si se activa PostgreSQL real.
+Consultar [configuración, instalación de dependencias y datos incluidos](docs/03%20Implementaci%C3%B3n/Gu%C3%ADas%20t%C3%A9cnicas/Base%20de%20datos%20de%20pruebas.md). Este comando prepara exclusivamente la base de pruebas. La API operativa usa la misma estructura compartida y requiere migración/verificación si se activa PostgreSQL real.
 
 El esquema de pruebas incluye PostGIS, reportes, zonas restringidas y tramos. Los adaptadores operativos consultan ese esquema compartido; la migración de sesiones es aditiva.
 
@@ -194,13 +194,13 @@ El esquema de pruebas incluye PostGIS, reportes, zonas restringidas y tramos. Lo
 | RNF-06 | Escalabilidad | Hasta 1,000 pedidos diarios / 50 vehículos sin rediseño |
 | RNF-07 | Disponibilidad | ≥ 99.5 % en horario operativo (05:00 – 22:00, UTC-5) |
 
-La especificación vigente de estos requisitos está en [07. Requisitos no funcionales](./docs/01%20Inicio/07.%20Requisitos%20no%20funcionales%20V_1_0_0.md).
+La especificación vigente de estos requisitos está en [07. Requisitos no funcionales](docs/01%20Inicio/07.%20Requisitos%20no%20funcionales%20V_1_0_0.md).
 
 ---
 
 ## Instalación y configuración
 
-Los comandos corresponden a Windows con PowerShell; el detalle completo está en [Inicio de sesión y persistencia](./development/Inicio%20de%20sesi%C3%B3n%20y%20persistencia.md).
+Los comandos corresponden a Windows con PowerShell; el detalle completo está en [Inicio de sesión y persistencia](docs/03%20Implementaci%C3%B3n/Gu%C3%ADas%20t%C3%A9cnicas/Inicio%20de%20sesi%C3%B3n%20y%20persistencia.md).
 
 ### Requisitos previos
 
@@ -246,7 +246,7 @@ npm run dev                                                  # aplicación en ht
 | Responsable de Logística | Dashboard, reportes de sostenibilidad y supervisión operativa. | Medio |
 | Auditor Externo | Acceso de solo lectura a logs y reportes normativos. | Bajo–Medio |
 
-Control de acceso implementado mediante **RBAC** (Role-Based Access Control). Referencias: [08. Usuarios](./docs/01%20Inicio/08.%20Usuarios%20V_1_0_0.md) y [Control de acceso por roles](./development/Control%20de%20acceso%20por%20roles.md).
+Control de acceso implementado mediante **RBAC** (Role-Based Access Control). Referencias: [08. Usuarios](docs/01%20Inicio/08.%20Usuarios%20V_1_0_0.md) y [Control de acceso por roles](docs/03%20Implementaci%C3%B3n/Gu%C3%ADas%20t%C3%A9cnicas/Control%20de%20acceso%20por%20roles.md).
 
 ---
 
@@ -291,95 +291,81 @@ Control de acceso implementado mediante **RBAC** (Role-Based Access Control). Re
 
 ## Documentación del proyecto
 
-La documentación completa se encuentra en la carpeta [/docs](./docs). Todos los enlaces de esta sección son relativos al repositorio; los documentos de sprint de la Fase 03 incluyen el enlace a la implementación y a las evidencias cargadas en `docs/03 Implementación`.
+[Índice completo de Markdown del proyecto](docs/README.md) — incluye gestión, desarrollo, diseño, código documentado, licencias e históricos.
+
+La documentación completa se encuentra en el índice de docs. Todos los enlaces de esta sección son relativos al repositorio; los documentos de sprint de la Fase 03 incluyen el enlace a la implementación y a las evidencias cargadas en `docs/03 Implementación`.
 
 ### Fase 01 — Inicio
 
 | Documento | Descripción |
 |-----------|-------------|
-| [01. Selección del enfoque](./docs/01%20Inicio/01.%20Selecci%C3%B3n%20del%20enfoque%20del%20proyecto%20V_1_0_0.md) | Justificación del enfoque híbrido de gestión. |
-| [02. Acta de constitución](./docs/01%20Inicio/02.%20Acta%20de%20constituci%C3%B3n%20V_1_0_0.md) | Objetivos, alcance, hitos y presupuesto. |
-| [03. Declaración de la visión](./docs/01%20Inicio/03.%20Declaraci%C3%B3n%20de%20la%20visi%C3%B3n%20V_1_0_0.md) | Propuesta de valor y diferenciadores del producto. |
-| [04. Supuestos y restricciones](./docs/01%20Inicio/04.%20Registro%20de%20supuestos%20y%20restricciones%20V_1_0_0.md) | Registro de supuestos, restricciones y estrategias de comunicación. |
-| [05. Registro de interesados](./docs/01%20Inicio/05.%20Registro%20de%20interesados%20V_1_0_0.md) | Matriz de poder/interés y estrategias por grupo. |
-| [06. Requisitos funcionales](./docs/01%20Inicio/06.%20Requisitos%20funcionales%20V_1_0_0.md) | Especificación BDD (RF-001 a RF-007). |
-| [07. Requisitos no funcionales](./docs/01%20Inicio/07.%20Requisitos%20no%20funcionales%20V_1_0_0.md) | Escenarios de calidad bajo ISO/IEC 25010. |
-| [08. Usuarios](./docs/01%20Inicio/08.%20Usuarios%20V_1_0_0.md) | Perfiles, historias de uso y matriz RBAC. |
-| [09. Reglas de negocio](./docs/01%20Inicio/09.%20Reglas%20de%20negocio%20V_1_0_0.md) | Políticas del sistema y matriz de trazabilidad. |
-| [10. Stack tecnológico](./docs/01%20Inicio/10.%20Stack%20tecnol%C3%B3gico%20V_1_0_0.md) | Evaluación multidimensional de alternativas y selección formal. |
-| [11. Base de datos](./docs/01%20Inicio/11.%20Base%20de%20datos%20V_1_0_0.md) | Modelo conceptual, lógico (3FN) y DDL físico. |
-| [12. Modelo C4](./docs/01%20Inicio/12.%20Modelo%20C4%20V_1_0_0.md) | Arquitectura de software (contexto, contenedores, componentes). |
-| [13. Restricciones](./docs/01%20Inicio/13.%20Restricciones%20V_1_0_0.md) | Análisis multidimensional y cumplimiento normativo. |
+| [01. Selección del enfoque](docs/01%20Inicio/01.%20Selecci%C3%B3n%20del%20enfoque%20del%20proyecto%20V_1_0_0.md) | Justificación del enfoque híbrido de gestión. |
+| [02. Acta de constitución](docs/01%20Inicio/02.%20Acta%20de%20constituci%C3%B3n%20V_1_0_0.md) | Objetivos, alcance, hitos y presupuesto. |
+| [03. Declaración de la visión](docs/01%20Inicio/03.%20Declaraci%C3%B3n%20de%20la%20visi%C3%B3n%20V_1_0_0.md) | Propuesta de valor y diferenciadores del producto. |
+| [04. Supuestos y restricciones](docs/01%20Inicio/04.%20Registro%20de%20supuestos%20y%20restricciones%20V_1_0_0.md) | Registro de supuestos, restricciones y estrategias de comunicación. |
+| [05. Registro de interesados](docs/01%20Inicio/05.%20Registro%20de%20interesados%20V_1_0_0.md) | Matriz de poder/interés y estrategias por grupo. |
+| [06. Requisitos funcionales](docs/01%20Inicio/06.%20Requisitos%20funcionales%20V_1_0_0.md) | Especificación BDD (RF-001 a RF-007). |
+| [07. Requisitos no funcionales](docs/01%20Inicio/07.%20Requisitos%20no%20funcionales%20V_1_0_0.md) | Escenarios de calidad bajo ISO/IEC 25010. |
+| [08. Usuarios](docs/01%20Inicio/08.%20Usuarios%20V_1_0_0.md) | Perfiles, historias de uso y matriz RBAC. |
+| [09. Reglas de negocio](docs/01%20Inicio/09.%20Reglas%20de%20negocio%20V_1_0_0.md) | Políticas del sistema y matriz de trazabilidad. |
+| [10. Stack tecnológico](docs/01%20Inicio/10.%20Stack%20tecnol%C3%B3gico%20V_1_0_0.md) | Evaluación multidimensional de alternativas y selección formal. |
+| [11. Base de datos](docs/01%20Inicio/11.%20Base%20de%20datos%20V_1_0_0.md) | Modelo conceptual, lógico (3FN) y DDL físico. |
+| [12. Modelo C4](docs/01%20Inicio/12.%20Modelo%20C4%20V_1_0_0.md) | Arquitectura de software (contexto, contenedores, componentes). |
+| [13. Restricciones](docs/01%20Inicio/13.%20Restricciones%20V_1_0_0.md) | Análisis multidimensional y cumplimiento normativo. |
 
 ### Fase 02 — Planificación
 
 | Documento | Descripción |
 |-----------|-------------|
-| [01. Transformando a ágil](./docs/02%20Planificaci%C3%B3n/01%20Transformando%20a%20%C3%A1gil%20V_1_0_0.md) | Épicas, historias de usuario (US-001 a US-013), enablers (EN-00 a EN-06) y criterios. |
-| [02. Artefactos Jira](./docs/02%20Planificaci%C3%B3n/02%20Artefactos%20Jira%20V_1_1_0.md) | Organización del trabajo en Jira y evidencias de configuración. |
-| [03. Registro de riesgos](./docs/02%20Planificaci%C3%B3n/03%20Registro%20de%20riesgos%20V_1_0_0.md) | Matriz de riesgos del proyecto y su mitigación. |
-| [04. Presupuesto del proyecto](./docs/02%20Planificaci%C3%B3n/04%20Presupuesto%20del%20proyecto%20V_1_0_0.md) | Modelo de costos de recursos humanos, herramientas e infraestructura. |
+| [01. Transformando a ágil](docs/02%20Planificaci%C3%B3n/01%20Transformando%20a%20%C3%A1gil%20V_1_0_0.md) | Épicas, historias de usuario (US-001 a US-013), enablers (EN-00 a EN-06) y criterios. |
+| [02. Artefactos Jira](docs/02%20Planificaci%C3%B3n/02%20Artefactos%20Jira%20V_1_1_0.md) | Organización del trabajo en Jira y evidencias de configuración. |
+| [03. Registro de riesgos](docs/02%20Planificaci%C3%B3n/03%20Registro%20de%20riesgos%20V_1_0_0.md) | Matriz de riesgos del proyecto y su mitigación. |
+| [04. Presupuesto del proyecto](docs/02%20Planificaci%C3%B3n/04%20Presupuesto%20del%20proyecto%20V_1_0_0.md) | Modelo de costos de recursos humanos, herramientas e infraestructura. |
 
-Evidencias de Jira: [evidencias-jira/](./docs/02%20Planificaci%C3%B3n/evidencias-jira).
+Evidencias de Jira: [evidencias-jira/](docs/02%20Planificaci%C3%B3n/evidencias-jira).
 
 ### Fase 03 — Implementación
 
-Documentos de sprint ubicados en [docs/03 Implementación](./docs/03%20Implementaci%C3%B3n):
+[Índice de implementación](docs/03%20Implementaci%C3%B3n/README.md) · [Verificación documental](docs/03%20Implementaci%C3%B3n/Verificaci%C3%B3n%20documental.md)
 
-| Documento | Descripción |
-|-----------|-------------|
-| [01. Informe de estado (Sprint 1)](./docs/03%20Implementaci%C3%B3n/Sprint%201/01%20Informe%20de%20estado%20del%20proyecto%20V_1_2_0.md) | Estado del alcance, cronograma, costos y calidad del Sprint 1. |
-| [02. Registro de impedimentos (Sprint 1)](./docs/03%20Implementaci%C3%B3n/Sprint%201/02%20Registro%20de%20Impedimentos%20V_1_2_0.md) | Impedimentos del Sprint 1, su prioridad y su estado. |
-| [03. Revisión del Sprint 1](./docs/03%20Implementaci%C3%B3n/Sprint%201/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_2_0.md) | Historias implementadas, demostración y pendientes del Sprint 1. |
-| [04. Retrospectiva del Sprint 1](./docs/03%20Implementaci%C3%B3n/Sprint%201/04%20Retrospectiva%20del%20Sprint%20V_1_2_0.md) | Aprendizajes, mejoras y seguimiento de acciones del Sprint 1. |
-| [Sprint 2 · 01. Informe de estado](./docs/03%20Implementaci%C3%B3n/Sprint%202/01%20Informe%20de%20estado%20del%20proyecto%20V_1_3_0.md) | Estado del proyecto, historias trabajadas, riesgos y pendientes. |
-| [Sprint 2 · 02. Registro de impedimentos](./docs/03%20Implementaci%C3%B3n/Sprint%202/02%20Registro%20de%20Impedimentos%20V_1_3_0.md) | Impedimentos IMP-001 a IMP-011 con su estado. |
-| [Sprint 2 · 03. Revisión del Sprint](./docs/03%20Implementaci%C3%B3n/Sprint%202/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_2_0.md) | Trabajo realizado, demostración, evidencia de pruebas y pendientes. |
-| [Sprint 2 · 04. Retrospectiva del Sprint](./docs/03%20Implementaci%C3%B3n/Sprint%202/04%20Retrospectiva%20del%20Sprint%20V_1_3_0.md) | Aprendizajes, acciones y responsables propuestos. |
-| [Sprint 2 · 05. Auditoría de coherencia](./docs/03%20Implementaci%C3%B3n/Sprint%202/05%20Auditor%C3%ADa%20de%20coherencia%20del%20proyecto%20V_1_3_0.md) | Hallazgos entre documentación, código y producto. |
-| [Sprint 03 · 01. Revisión del Sprint](./docs/03%20Implementaci%C3%B3n/Sprint%2003/01%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md) | Historias del Sprint 3 con su Definition of Done, demostración y pendientes. |
-| [Sprint 03 · 02. Retrospectiva del Sprint](./docs/03%20Implementaci%C3%B3n/Sprint%2003/02%20Retrospectiva%20del%20Sprint%20V_1_0_0.md) | Aprendizajes, mejoras por dimensión y acciones con responsable y fecha. |
-| [Sprint 03 · 06. Informe de estado](./docs/03%20Implementaci%C3%B3n/Sprint%2003/06%20Informe%20de%20estado%20del%20proyecto%20V_1_0_0.md) | Estado del Sprint 3 contrastado con `main` (complementario). |
-| [Sprint 03 · 07. Registro de impedimentos](./docs/03%20Implementaci%C3%B3n/Sprint%2003/07%20Registro%20de%20Impedimentos%20V_1_0_0.md) | Impedimentos vigentes y nuevos IMP-012 a IMP-016 (complementario). |
-| [06. Retrospectiva del Sprint V_2_0_0](./docs/03%20Implementaci%C3%B3n/Sprint%202/06%20Retrospectiva%20del%20Sprint%20V_2_0_0.md) | Aprendizajes de la sesión y acciones propuestas para continuar. |
-
-Evidencias de las entregas:
-
-- [Evidencias del CRUD de pedidos](./docs/03%20Implementaci%C3%B3n/evidencias-crud-pedidos)
-- [Evidencias del mapa visual de Lima](./docs/03%20Implementaci%C3%B3n/evidencias-mapa-visual)
+| Carpeta | Contenido vigente |
+|---|---|
+| [Sprint 1](docs/03%20Implementaci%C3%B3n/Sprint%201/README.md) | Informe, impedimentos, revisión por criterios, retrospectiva y antecedentes históricos. |
+| [Sprint 2](docs/03%20Implementaci%C3%B3n/Sprint%202/README.md) | Informe, impedimentos, revisión por criterios, retrospectiva y antecedentes históricos. |
+| [Sprint 3](docs/03%20Implementaci%C3%B3n/Sprint%2003/README.md) | Informe, impedimentos, revisión por criterios, retrospectiva y antecedentes históricos. |
+| [Guías técnicas](docs/03%20Implementaci%C3%B3n/Gu%C3%ADas%20t%C3%A9cnicas/README.md) | Las seis guías y sus evidencias, sin copias activas en development. |
 
 ### Guías técnicas de implementación
 
 | Documento | Descripción |
 |-----------|-------------|
-| [Guía de desarrollo](./development/README.md) | Orden de lectura, fuentes y mantenimiento de la documentación técnica. |
-| [Inicio de sesión y persistencia](./development/Inicio%20de%20sesi%C3%B3n%20y%20persistencia.md) | Arranque local, sesiones, migraciones y verificación. |
-| [Base de datos de pruebas](./development/Base%20de%20datos%20de%20pruebas.md) | Generador PostgreSQL/PostGIS, datos incluidos y límites. |
-| [Control de acceso por roles](./development/Control%20de%20acceso%20por%20roles.md) | Matriz de permisos de los cinco roles. |
-| [Mapa visual de Lima](./development/Mapa%20visual%20de%20Lima.md) | Capas, navegación restringida y evidencias cartográficas. |
-| [CRUD de pedidos](./development/CRUD%20de%20pedidos.md) | Alcance, decisiones, API, pruebas y evidencia del módulo de pedidos. |
-| [Confirmación de pedidos](./development/Confirmacion%20de%20pedidos.md) | Consulta y confirmación de entrega del conductor. |
-| [Roadmap](./development/roadmap.md) | Incrementos, dependencias y alcance final. |
-| [Backlog](./development/backlog.md) | Historias, enablers y tareas técnicas trazables. |
-| [Criterios de calidad](./development/calidad.md) | Definition of Ready, Definition of Done y gates de PMV. |
+| [Guía de desarrollo](development/README.md) | Orden de lectura, fuentes y mantenimiento de la documentación técnica. |
+| [Inicio de sesión y persistencia](docs/03%20Implementaci%C3%B3n/Gu%C3%ADas%20t%C3%A9cnicas/Inicio%20de%20sesi%C3%B3n%20y%20persistencia.md) | Arranque local, sesiones, migraciones y verificación. |
+| [Base de datos de pruebas](docs/03%20Implementaci%C3%B3n/Gu%C3%ADas%20t%C3%A9cnicas/Base%20de%20datos%20de%20pruebas.md) | Generador PostgreSQL/PostGIS, datos incluidos y límites. |
+| [Control de acceso por roles](docs/03%20Implementaci%C3%B3n/Gu%C3%ADas%20t%C3%A9cnicas/Control%20de%20acceso%20por%20roles.md) | Matriz de permisos de los cinco roles. |
+| [Mapa visual de Lima](docs/03%20Implementaci%C3%B3n/Gu%C3%ADas%20t%C3%A9cnicas/Mapa%20visual%20de%20Lima.md) | Capas, navegación restringida y evidencias cartográficas. |
+| [CRUD de pedidos](docs/03%20Implementaci%C3%B3n/Gu%C3%ADas%20t%C3%A9cnicas/CRUD%20de%20pedidos.md) | Alcance, decisiones, API, pruebas y evidencia del módulo de pedidos. |
+| [Confirmación de pedidos](docs/03%20Implementaci%C3%B3n/Gu%C3%ADas%20t%C3%A9cnicas/Confirmacion%20de%20pedidos.md) | Consulta y confirmación de entrega del conductor. |
+| [Roadmap](development/roadmap.md) | Incrementos, dependencias y alcance final. |
+| [Backlog](development/backlog.md) | Historias, enablers y tareas técnicas trazables. |
+| [Criterios de calidad](development/calidad.md) | Definition of Ready, Definition of Done y gates de PMV. |
 
 ### Fase 04 — Diseño
 
 | Documento | Descripción |
 |-----------|-------------|
-| [Dashboard del día](./docs/04%20Dise%C3%B1o/Dashboard%20del%20dia.dc.html) | Referencia de diseño del dashboard operativo. |
-| [Paquete de diseño ecologistica-ui](./ecologistica-ui/LEEME.md) | Sistema de diseño, guía visual y pantallas de referencia. |
+| [Dashboard del día](docs/04%20Dise%C3%B1o/Dashboard%20del%20dia.dc.html) | Referencia de diseño del dashboard operativo. |
+| [Paquete de diseño ecologistica-ui](ecologistica-ui/LEEME.md) | Sistema de diseño, guía visual y pantallas de referencia. |
 
 ### Código y configuración
 
 | Elemento | Descripción |
 |----------|-------------|
-| [.gitignore](./.gitignore) | Exclusiones para React/Node, Python/FastAPI, entornos virtuales, secretos, pruebas y temporales. |
-| [.env.example](./.env.example) | Plantilla de variables de entorno sin credenciales reales. |
-| [src/frontend/README.md](./src/frontend/README.md) | Guía del frontend. |
-| [src/backend/README.md](./src/backend/README.md) | Guía del backend. |
+| [.gitignore](.gitignore) | Exclusiones para React/Node, Python/FastAPI, entornos virtuales, secretos, pruebas y temporales. |
+| [.env.example](.env.example) | Plantilla de variables de entorno sin credenciales reales. |
+| [src/frontend/README.md](src/frontend/README.md) | Guía del frontend. |
+| [src/backend/README.md](src/backend/README.md) | Guía del backend. |
 
 ---
 
 > Versión del proyecto: **V_1_0_0** · Fecha: 04/09/2026
-

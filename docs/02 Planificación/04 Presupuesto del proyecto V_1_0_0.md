@@ -84,3 +84,6 @@ Estimado para el período de desarrollo activo (4 meses), usando capas gratuitas
 | V_1_0_0 | 11/09/2026 | Tovar Sanchez Carlos Alberto | Modelo financiero inicial: CAPEX de RRHH, licenciamiento, OPEX cloud y contingencia del 12%. |
 
 [← Volver al README Principal](../../README.md)
+
+
+[← Volver al índice correspondiente](README.md)

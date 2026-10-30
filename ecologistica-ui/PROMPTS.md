@@ -89,3 +89,6 @@ Verifica que ninguna vista use App.css, index.css, orderManagement.css ni dashbo
 Busca colores hex, emoji o fuentes fuera de tokens.css/eco.css en src/frontend/src y corrígelos.
 Corre todas las pruebas, lint y el build, y resume qué falta respecto a ecologistica-ui/pantallas.
 ```
+
+
+[← Volver al índice correspondiente](README.md)

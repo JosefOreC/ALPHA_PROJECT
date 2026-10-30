@@ -1,8 +1,16 @@
+## Corte documental actual — 29/10/2026
+
+La lectura estática actual encuentra API común en `src/backend/interfaces/api/deps.py`, sesiones PostgreSQL en `src/backend/infrastructure/security.py`, adaptadores SQL y endpoints de portal. Las afirmaciones anteriores de ausencia de autenticación, PostgreSQL o API HTTP corresponden al diagnóstico fechado, no al estado actual. No se ejecutaron suites, base de datos ni despliegue en esta edición. Permanecen pendientes seguridad completa, migraciones/recuperación, motor VRPTW, despacho, GPS/ETA operativos, factores ambientales y aceptación.
+
+Estado detallado: [impedimentos vigentes](../docs/03%20Implementaci%C3%B3n/Sprint%202/02%20Registro%20de%20Impedimentos%20V_1_4_0.md) y [revisión por criterios](../docs/03%20Implementaci%C3%B3n/Sprint%202/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_3_0.md).
+
+---
+
 [← Volver al README Principal](../README.md)
 
 # Backlog y trazabilidad de implementación
 
-Fuente de IDs, prioridades y estimaciones: [Transformando a ágil](../docs/02%20Planificación/01%20Transformando%20a%20ágil%20V_1_0_0.md). Los puntos se conservan. La asignación a sprints es propuesta y se revisa con la coordinación del proyecto.
+Fuente de IDs, prioridades y estimaciones: [Transformando a ágil](../docs/02%20Planificaci%C3%B3n/01%20Transformando%20a%20%C3%A1gil%20V_1_0_0.md). Los puntos se conservan. La asignación a sprints es propuesta y se revisa con la coordinación del proyecto.
 
 ## Historias funcionales
 
@@ -65,3 +73,17 @@ La gestión de flota/conductores completa también edición y vínculo, aunque e
 
 RNF-007/008/009 tentativos deben formalizarse después de D-07. El umbral de cobertura del DoD ya está definido en Planificación, aunque RNF-007 todavía figura pendiente. Facturación y notificaciones quedan fuera del PMV actual.
 
+## Seguimiento reclasificado de impedimentos
+
+| IDs de origen | Trabajo a seguir en backlog | Estado |
+|---|---|---|
+| IMP-001/006/008/010 → T-01/T-02/T-08 | Validar arranque, migraciones, recuperación y entorno; no volver a planificar API/sesiones como inexistentes. | Implementación encontrada; ejecución y cierre pendientes. |
+| IMP-002/009 → T-03/T-05/T-06/T-07 | Acordar fuentes operativas y factores con D-08. | Decisión y evidencia pendientes. |
+| IMP-003 → EN-01/T-04/T-08 | Implementar motor/despacho y benchmark. | Pendiente. |
+| IMP-004/005/012 → T-08 | Revisión de pares y protección de rama. | Confirmación remota pendiente. |
+| IMP-007/013 → EN-02/T-09 | Verificar seguridad integral e identidad. | Parcial; aceptación pendiente. |
+| IMP-011/015/016 → T-10 | Revisar documentación corregida y conciliar Jira. | Correcciones locales; confirmación pendiente. |
+| IMP-014 → US-010/011/T-06 | Verificar vacío, formato inválido, P95 y factores. | Pendiente. |
+
+
+[← Volver al índice correspondiente](README.md)

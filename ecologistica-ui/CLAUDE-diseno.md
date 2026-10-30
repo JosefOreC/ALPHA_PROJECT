@@ -11,3 +11,6 @@
 - Accesibilidad: etiqueta visible en todo campo, foco visible, `aria-pressed` / `aria-selected` / `aria-expanded` en controles con estado, objetivos táctiles de 48px en la vista del conductor.
 - Arquitectura: mantener la hexagonal existente (`domain` → `application` → `infrastructure` → `ui`). Los datos de ejemplo de los `.dc.html` van a los adaptadores demo (`infrastructure/demo*.ts`), nunca dentro de los componentes.
 - El mapa es esquemático en el diseño; en código usar Leaflet + OpenStreetMap con las mismas capas, colores (`--route-1…4`) y formas de pin.
+
+
+[← Volver al índice correspondiente](README.md)
