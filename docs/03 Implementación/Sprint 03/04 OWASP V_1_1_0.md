@@ -38,6 +38,6 @@ Los códigos y nombres siguen la lista oficial [OWASP Top 10:2025](https://top10
 | Versión | Fecha | Autoría / cambio |
 |---|---|---|
 | V_1_0_0 | 30/10/2026 | Rojas Camayo, Valentino Jhan Pierre (commit d36441f). Matriz preliminar con las diez categorías oficiales OWASP 2025; evaluación pendiente. |
-| V_1_1_0 | 30/10/2026 | Tovar Sánchez, Carlos Alberto. Se incorpora la inspección estática manual del código, la auditoría de dependencias y los hotspots a la matriz de Valentino, con la lista oficial 2025; resultado de SonarQube Community Build (0 incidencias de seguridad). |
+| V_1_1_0 | 30/10/2026 | Tovar Sánchez, Carlos Alberto. Se incorpora la inspección estática manual del código, la auditoría de dependencias y los hotspots a la matriz de Valentino, con la lista oficial 2025; resultado de SonarQube Community Build (0 incidencias de seguridad). Se integran los datos de las capturas de la ampliación de Valentino (commit 155a99a: advertencias del análisis y cobertura del código nuevo, ver 03 Calidad de código) y se retiran sus secciones de preparación que la plantilla no solicita. |
 
 [← Volver al índice correspondiente](README.md)

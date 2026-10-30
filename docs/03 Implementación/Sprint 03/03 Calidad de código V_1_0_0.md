@@ -10,9 +10,9 @@
 
 ## 1. Resumen Ejecutivo de Quality Gate
 
-- **Estado del Quality Gate:** PASSED. El último análisis tiene advertencias («The last analysis has warnings»); su detalle debe registrarse.
+- **Estado del Quality Gate:** PASSED. El último análisis tiene 2 advertencias: Python se analiza por defecto como compatible con las versiones 3.10 a 3.14 (la herramienta sugiere definir `sonar.python.version`) y falta la información de historial Git (*blame*) de 196 archivos.
 - **Porcentaje de Cobertura de Pruebas (Coverage):** 77,9 % sobre 4,3 mil líneas por cubrir. Queda por debajo del 80 % que exige la Definition of Done. Ese análisis es anterior a las pruebas incorporadas el 30/10: la medición local posterior da backend 97 % y frontend 95,9 % de sentencias (90,2 % de ramas).
-- **Duplicación de Código:** 0,1 % sobre 13 mil líneas.
+- **Duplicación de Código:** 0,1 % sobre 13 mil líneas (0,0 % en el código nuevo). El código nuevo (*New Code*) tiene 90,4 % de cobertura y no hay incidencias en el listado *Issues*.
 
 ![Resumen del proyecto EcoLogistica en SonarQube Community Build](evidencias-sonar/sonarqube-community-ecologistica-resumen.jpg)
 
@@ -32,7 +32,7 @@ El proyecto tiene 11 mil líneas de código (13 mil líneas en total) y 0 incide
 - **Deuda Técnica Estimada:** 0 min según el análisis (sin incidencias de mantenibilidad); el valor exacto de la medida *Technical Debt* se registra de *Measures*.
 - **Principales hallazgos y acciones correctivas:**
   1. **Cobertura de 77,9 % en SonarQube, inferior al 80 % de la DoD.** La medición local posterior (backend 97 %, frontend 95,9 %) ya supera el umbral. Acción: volver a ejecutar SonarQube enviando los informes `coverage.xml` y `lcov.info` para actualizar el valor.
-  2. **Advertencias del análisis.** Acción: abrir *See details*, registrar cada advertencia y su tratamiento.
+  2. **Advertencias del análisis.** Acción: definir `sonar.python.version` con la versión de Python que usa el proyecto y corregir la información de historial Git de los 196 archivos (por ejemplo, analizando desde un clon completo y no uno superficial); luego repetir el análisis.
   3. **Dependencias de desarrollo con vulnerabilidades altas** (`npm audit`, 30/10/2026): `vite` 8.3.0–8.3.2 y `undici` 8.0.0–8.12.1 (transitiva); `pip-audit` sin hallazgos. Acción: `npm audit fix` y repetir las pruebas.
   4. **Tres archivos de backend vacíos** (`generate_routes.py`, `reoptimize_route.py` y `route.py`); la lógica de planificación está en `domain/planning.py`. Acción: eliminarlos o implementarlos con la aprobación y el despacho de rutas.
   5. **Sin integración continua.** Acción: ejecutar el análisis de SonarQube y las pruebas con cobertura en cada Pull Request, con el Quality Gate como requisito de merge.
