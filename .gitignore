@@ -110,9 +110,17 @@ Desktop.ini
 .codegraph/
 .atl/
 
+<<<<<<< HEAD
+# Documentación de desarrollo compartida (Markdown); otros artefactos siguen locales.
+development/
+=======
 # --- Documentación de desarrollo compartida (Markdown); otros artefactos siguen locales ---
+>>>>>>> 8d836f1db1d161567b731a5cf104c4a978bcecda
 /development/*
-!/development/*.md
-!/development/templates/
+/development/*.md
+/development/templates/
 /development/templates/*
-!/development/templates/*.md
+/development/templates/*.md
+development/templates/*.html
+development/templates/*.css
+development/templates/*.js
