@@ -176,7 +176,7 @@ El modelo completo está en [11. Base de datos](./docs/01%20Inicio/11.%20Base%20
 .venv/Scripts/python.exe scripts/create_test_db.py
 ```
 
-Consultar [configuración, instalación de dependencias y datos incluidos](./docs/03%20Implementaci%C3%B3n/Base%20de%20datos%20de%20pruebas.md). Este comando prepara exclusivamente la base de pruebas. La API operativa usa la misma estructura compartida y requiere migración/verificación si se activa PostgreSQL real.
+Consultar [configuración, instalación de dependencias y datos incluidos](./development/Base%20de%20datos%20de%20pruebas.md). Este comando prepara exclusivamente la base de pruebas. La API operativa usa la misma estructura compartida y requiere migración/verificación si se activa PostgreSQL real.
 
 El esquema de pruebas incluye PostGIS, reportes, zonas restringidas y tramos. Los adaptadores operativos consultan ese esquema compartido; la migración de sesiones es aditiva.
 
@@ -200,7 +200,7 @@ La especificación vigente de estos requisitos está en [07. Requisitos no funci
 
 ## Instalación y configuración
 
-Los comandos corresponden a Windows con PowerShell; el detalle completo está en [Inicio de sesión y persistencia](./docs/03%20Implementaci%C3%B3n/Inicio%20de%20sesi%C3%B3n%20y%20persistencia.md).
+Los comandos corresponden a Windows con PowerShell; el detalle completo está en [Inicio de sesión y persistencia](./development/Inicio%20de%20sesi%C3%B3n%20y%20persistencia.md).
 
 ### Requisitos previos
 
@@ -246,7 +246,7 @@ npm run dev                                                  # aplicación en ht
 | Responsable de Logística | Dashboard, reportes de sostenibilidad y supervisión operativa. | Medio |
 | Auditor Externo | Acceso de solo lectura a logs y reportes normativos. | Bajo–Medio |
 
-Control de acceso implementado mediante **RBAC** (Role-Based Access Control). Referencias: [08. Usuarios](./docs/01%20Inicio/08.%20Usuarios%20V_1_0_0.md) y [Control de acceso por roles](./docs/03%20Implementaci%C3%B3n/Control%20de%20acceso%20por%20roles.md).
+Control de acceso implementado mediante **RBAC** (Role-Based Access Control). Referencias: [08. Usuarios](./docs/01%20Inicio/08.%20Usuarios%20V_1_0_0.md) y [Control de acceso por roles](./development/Control%20de%20acceso%20por%20roles.md).
 
 ---
 
@@ -354,12 +354,12 @@ Evidencias de las entregas:
 | Documento | Descripción |
 |-----------|-------------|
 | [Guía de desarrollo](./development/README.md) | Orden de lectura, fuentes y mantenimiento de la documentación técnica. |
-| [Inicio de sesión y persistencia](./docs/03%20Implementaci%C3%B3n/Inicio%20de%20sesi%C3%B3n%20y%20persistencia.md) | Arranque local, sesiones, migraciones y verificación. |
-| [Base de datos de pruebas](./docs/03%20Implementaci%C3%B3n/Base%20de%20datos%20de%20pruebas.md) | Generador PostgreSQL/PostGIS, datos incluidos y límites. |
-| [Control de acceso por roles](./docs/03%20Implementaci%C3%B3n/Control%20de%20acceso%20por%20roles.md) | Matriz de permisos de los cinco roles. |
-| [Mapa visual de Lima](./docs/03%20Implementaci%C3%B3n/Mapa%20visual%20de%20Lima.md) | Capas, navegación restringida y evidencias cartográficas. |
-| [CRUD de pedidos](./docs/03%20Implementaci%C3%B3n/CRUD%20de%20pedidos.md) | Alcance, decisiones, API, pruebas y evidencia del módulo de pedidos. |
-| [Confirmación de pedidos](./docs/03%20Implementaci%C3%B3n/Confirmacion%20de%20pedidos.md) | Consulta y confirmación de entrega del conductor. |
+| [Inicio de sesión y persistencia](./development/Inicio%20de%20sesi%C3%B3n%20y%20persistencia.md) | Arranque local, sesiones, migraciones y verificación. |
+| [Base de datos de pruebas](./development/Base%20de%20datos%20de%20pruebas.md) | Generador PostgreSQL/PostGIS, datos incluidos y límites. |
+| [Control de acceso por roles](./development/Control%20de%20acceso%20por%20roles.md) | Matriz de permisos de los cinco roles. |
+| [Mapa visual de Lima](./development/Mapa%20visual%20de%20Lima.md) | Capas, navegación restringida y evidencias cartográficas. |
+| [CRUD de pedidos](./development/CRUD%20de%20pedidos.md) | Alcance, decisiones, API, pruebas y evidencia del módulo de pedidos. |
+| [Confirmación de pedidos](./development/Confirmacion%20de%20pedidos.md) | Consulta y confirmación de entrega del conductor. |
 | [Roadmap](./development/roadmap.md) | Incrementos, dependencias y alcance final. |
 | [Backlog](./development/backlog.md) | Historias, enablers y tareas técnicas trazables. |
 | [Criterios de calidad](./development/calidad.md) | Definition of Ready, Definition of Done y gates de PMV. |

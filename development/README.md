@@ -31,12 +31,12 @@ Esta carpeta convierte la documentación del proyecto en un plan de ejecución: 
 
 | Guía | Destino |
 |---|---|
-| [Inicio de sesión y persistencia](../docs/03%20Implementaci%C3%B3n/Inicio%20de%20sesi%C3%B3n%20y%20persistencia.md) | Arranque, migraciones y verificación |
-| [Base de datos de pruebas](../docs/03%20Implementaci%C3%B3n/Base%20de%20datos%20de%20pruebas.md) | Creación de BD/PostGIS y dataset |
-| [Control de acceso por roles](../docs/03%20Implementaci%C3%B3n/Control%20de%20acceso%20por%20roles.md) | Matriz RBAC y uso |
-| [Mapa visual de Lima](../docs/03%20Implementaci%C3%B3n/Mapa%20visual%20de%20Lima.md) | Diseño y evidencias cartográficas |
-| [CRUD de pedidos](../docs/03%20Implementaci%C3%B3n/CRUD%20de%20pedidos.md) | Alcance, API y evidencias |
-| [Confirmación de pedidos](../docs/03%20Implementaci%C3%B3n/Confirmacion%20de%20pedidos.md) | Flujo conductor / confirmación |
+| [Inicio de sesión y persistencia](Inicio%20de%20sesi%C3%B3n%20y%20persistencia.md) | Arranque, migraciones y verificación |
+| [Base de datos de pruebas](Base%20de%20datos%20de%20pruebas.md) | Creación de BD/PostGIS y dataset |
+| [Control de acceso por roles](Control%20de%20acceso%20por%20roles.md) | Matriz RBAC y uso |
+| [Mapa visual de Lima](Mapa%20visual%20de%20Lima.md) | Diseño y evidencias cartográficas |
+| [CRUD de pedidos](CRUD%20de%20pedidos.md) | Alcance, API y evidencias |
+| [Confirmación de pedidos](Confirmacion%20de%20pedidos.md) | Flujo conductor / confirmación |
 
 ## Fuentes y precedencia
 
