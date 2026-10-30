@@ -113,7 +113,9 @@ def describe(client, project, selector):
 
 def write_report(data, destination):
     destination.mkdir(parents=True, exist_ok=True)
-    (destination / 'sonar-results.json').write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding='utf-8')
+    # Remote fields are file content only; they never determine a filename.
+    with (destination / 'sonar-results.json').open('w', encoding='utf-8') as output:
+        json.dump(data, output, ensure_ascii=False, indent=2)
     lines = ['# Informe SonarCloud', '', f'- Proyecto: `{data["project_key"]}`',
              f'- Exportado (UTC): {data["exported_at_utc"]}',
              f'- Ámbito: `{json.dumps(data["scope"])}`',
@@ -141,7 +143,8 @@ def write_report(data, destination):
         lines.append(f'| {issue["key"]} | {issue.get("type", "")} | {issue.get("severity", "")} | {issue.get("rule", "")} | {location} |')
     lines.extend(['', 'El Quality Gate depende de sus condiciones y del período de código nuevo; revisar también las vulnerabilidades del código global.',
                   'Si no se devuelve una métrica de cobertura, registrarla como no disponible; no sustituirla con los porcentajes de las pruebas locales.'])
-    (destination / 'sonar-report.md').write_text('\n'.join(lines) + '\n', encoding='utf-8')
+    with (destination / 'sonar-report.md').open('w', encoding='utf-8') as output:
+        output.write('\n'.join(lines) + '\n')
 
 
 def main():

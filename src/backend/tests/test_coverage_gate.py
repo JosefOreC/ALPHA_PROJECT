@@ -23,18 +23,28 @@ def test_invalid_counters_never_pass(covered,total):
         gate.check({'totals':{'covered_lines':covered,'num_statements':total,'covered_branches':100,'num_branches':100}})
 
 
-def test_cli_rejects_missing_and_malformed_reports(tmp_path,capsys):
-    path=tmp_path/'coverage.json'
-    assert gate.main([str(path)])==1
+def test_cli_rejects_missing_and_malformed_reports(tmp_path,capsys,monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    path=tmp_path/'reports/coverage/backend.json'
+    path.parent.mkdir(parents=True)
+    assert gate.main([])==1
     path.write_text('{bad',encoding='utf-8')
-    assert gate.main([str(path)])==1
+    assert gate.main([])==1
     path.write_text('{}',encoding='utf-8')
-    assert gate.main([str(path)])==1
+    assert gate.main([])==1
     assert 'no verificable' in capsys.readouterr().out
 
 
 @pytest.mark.parametrize('covered,exit_code',[(90,0),(89,1)])
-def test_cli_returns_failure_for_coverage_below_threshold(tmp_path,covered,exit_code):
-    path=tmp_path/'coverage.json'
+def test_cli_returns_failure_for_coverage_below_threshold(tmp_path,covered,exit_code,monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    path=tmp_path/'reports/coverage/backend.json'
+    path.parent.mkdir(parents=True)
     path.write_text(json.dumps({'totals':{'covered_lines':covered,'num_statements':100,'covered_branches':90,'num_branches':100}}),encoding='utf-8')
-    assert gate.main([str(path)])==exit_code
+    assert gate.main([])==exit_code
+
+
+def test_cli_cannot_choose_an_arbitrary_file(tmp_path):
+    with pytest.raises(SystemExit) as error:
+        gate.main([str(tmp_path/'outside.json')])
+    assert error.value.code == 2

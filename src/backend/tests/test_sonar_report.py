@@ -219,3 +219,18 @@ def test_cli_exports_public_project_and_rejects_an_analysis_changed_during_expor
     monkeypatch.setattr(sonar, 'write_report', lambda *args: writes.append(args))
     assert sonar.main() == (1 if changed else 0)
     assert len(writes) == (0 if changed else 1)
+
+
+def test_remote_fields_are_content_and_cannot_choose_output_filenames(tmp_path):
+    destination = tmp_path / 'output'
+    report = {
+        'project_key': '../../outside', 'exported_at_utc': '2026-10-30', 'scope': {'branch': '../outside'},
+        'dashboard': 'https://sonarcloud.io/', 'quality_gate': {'projectStatus': {'status': 'ERROR'}},
+        'issues': [{'key': '../malicious', 'component': '../../outside', 'rule': '../rule'}],
+        'hotspots': [], 'hotspots_export_status': 'exportados', 'notice': 'test',
+        'measures': {'component': {'measures': [{'metric': '../../outside', 'value': '../value'}]}},
+    }
+    sonar.write_report(report, destination)
+    assert sorted(path.name for path in destination.iterdir()) == ['sonar-report.md', 'sonar-results.json']
+    assert sorted(path.name for path in tmp_path.iterdir()) == ['output']
+    assert json.loads((destination / 'sonar-results.json').read_text(encoding='utf-8')) == report

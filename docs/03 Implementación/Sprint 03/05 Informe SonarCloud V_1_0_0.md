@@ -15,7 +15,27 @@
 | Versión documental | V_1_0_0 |
 | Estado | Resultados remotos exportados; revisión de hallazgos y cierre OWASP pendientes |
 
-## 1. Resultado real del servicio
+## 0. Actualización: Quality Gate rojo en main
+
+El análisis `228d20c3-3239-437a-947a-39a975bf424c`, del 30/10/2026 a las **13:00:07 America/Lima**, corresponde al commit `155a99a67b325454e18b74a41671e0b7bfd05168`. Informa **16 vulnerabilidades**, 5 bugs y 21 code smells. El Quality Gate está en **ERROR**: `new_security_rating` devuelve 5 y el umbral permitido es 1. El historial registra el cambio de verde a rojo en el análisis anterior de `6ba77a6`. La tabla inicial de este documento conserva el snapshot previo `d36441f` y sus ocho vulnerabilidades; no representa el estado actual de main.
+
+Las ocho nuevas incidencias de seguridad son:
+
+| IDs | Regla | Archivo | Motivo reportado |
+|---|---|---|---|
+| AaGN8WUfHwZRnh-VsbWJ, AaGN8WUfHwZRnh-VsbWM | githubactions:S8541 | `.github/workflows/sonarcloud.yml` | Instalación Python que permite builds desde fuentes |
+| AaGN8WUfHwZRnh-VsbWK, AaGN8WUfHwZRnh-VsbWN | githubactions:S8544 | `.github/workflows/sonarcloud.yml` | Dependencias Python sin resolución bloqueada |
+| AaGN8WUfHwZRnh-VsbWL, AaGN8WUfHwZRnh-VsbWO | githubactions:S6505 | `.github/workflows/sonarcloud.yml` | Scripts lifecycle durante instalación npm |
+| AaGN8WTDHwZRnh-VsbWH | pythonsecurity:S8707 | `scripts/check_python_coverage.py:26` | Lectura de una ruta suministrada por CLI |
+| AaGN8WUXHwZRnh-VsbWI | pythonsecurity:S2083 | `scripts/export_sonar_report.py:92` | Posible path traversal según el flujo reportado |
+
+Las seis incidencias del workflow se relacionan con A03:2025. Las dos alertas de rutas requieren revisar la aplicabilidad de A01:2025; el contenido remoto del exportador no seleccionaba nombres de archivo. Se añadieron pruebas de regresión y escritura mediante archivos abiertos de nombre fijo para hacer explícita esa separación. El comprobador de cobertura ahora lee únicamente su artefacto fijo, sin parámetro para elegir otro archivo.
+
+La corrección preparada instala Python desde un lock universal con versiones exactas y hashes, usa `--only-binary=:all:` y `--require-hashes`, y ejecuta `npm ci --ignore-scripts`. Se verificó una instalación nueva completa, sin errores de dependencias, y `pip-audit` no encontró vulnerabilidades conocidas en **ese entorno CI aislado**. Las pruebas aprobaron 378 casos Python y 441 frontend; se mantuvo el mínimo del 90 %: líneas/ramas Python 94,42 % / 92,79 %, frontend 97,58 % / 90,24 %. Cinco pruebas de integración real siguen omitidas. Estas correcciones **no están confirmadas por un nuevo análisis remoto** y no cierran automáticamente los ocho hallazgos anteriores ni las alertas de Bandit/npm.
+
+En GitHub existe además un problema independiente: las anotaciones del job del PR [41102893381](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/41102893381) incluyen **«Falta el secret SONAR_TOKEN»**. Generar y guardar el token habilita el escáner; no elimina las vulnerabilidades ni sustituye el nuevo análisis. El token no debe incorporarse a archivos ni al informe.
+
+## 1. Resultado inicial del servicio (snapshot d36441f)
 
 La exportación se realizó mediante la API pública, sin token, conservando los identificadores originales. Se comprobó que el identificador del análisis no cambiara entre el inicio y el final de la consulta. Las listas y medidas no constituyen un snapshot transaccional del servicio.
 

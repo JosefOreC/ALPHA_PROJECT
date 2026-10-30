@@ -4,7 +4,7 @@
 
 ## Estado y alcance
 
-El proyecto SonarCloud ya existe y es público. Se exportaron los resultados del análisis de `main` / `d36441f` del 30/10/2026: ocho vulnerabilidades abiertas, cinco bugs, veintiún code smells y cobertura remota no disponible. Consultar el [informe remoto del Sprint 3](../Sprint%2003/05%20Informe%20SonarCloud%20V_1_0_0.md) y el [antecedente de verificación local](Informe%20preliminar%20OWASP%202025.md). La configuración CI actualizada está publicada en el [PR #27 en borrador](https://github.com/JosefOreC/ALPHA_PROJECT/pull/27), pendiente de verificación e integración; el propietario completará token y permisos desde las páginas de los servicios.
+El proyecto SonarCloud ya existe y es público. La consulta más reciente de `main` / `155a99a`, del 30/10/2026 a las 13:00:07 de Lima, registra dieciséis vulnerabilidades y Quality Gate ERROR por seguridad en código nuevo. El [informe remoto del Sprint 3](../Sprint%2003/05%20Informe%20SonarCloud%20V_1_0_0.md) conserva el análisis inicial y documenta la actualización, las ocho incidencias añadidas por la integración y sus correcciones pendientes de reanálisis. La configuración está en el [PR #27 en borrador](https://github.com/JosefOreC/ALPHA_PROJECT/pull/27); el propietario completará token y permisos desde las páginas de los servicios.
 
 | Dato de entrega al equipo | Estado |
 |---|---|
@@ -21,6 +21,8 @@ El proyecto SonarCloud ya existe y es público. Se exportaron los resultados del
 2. Compartir con Valentino la URL del dashboard, organización `joseforec` y project key `JosefOreC_ALPHA_PROJECT`.
 3. Seleccionar análisis mediante GitHub Actions. Desactivar **Automatic Analysis** en el proyecto cuando se habilite CI, para evitar análisis duplicados. Si Sonar exige una primera referencia de `main`, completar primero ese análisis inicial desde el asistente y comprobar el SHA analizado.
 4. Generar o seleccionar un token con permiso **Execute Analysis** para este proyecto desde [My Account → Security](https://sonarcloud.io/account/security). Guardarlo directamente en [GitHub → Settings → Secrets and variables → Actions → Secrets](https://github.com/JosefOreC/ALPHA_PROJECT/settings/secrets/actions), como `SONAR_TOKEN`. Definir una caducidad y rotarlo al vencer. No compartir el token con el revisor.
+
+   El token es el valor secreto que muestra **Generate Token**, no la project key, el nombre `alpha-github-actions` que se le asigne ni la clave de la organización. Copiar el valor generado en el campo **Secret** de GitHub y usar `SONAR_TOKEN` en **Name**. Sonar solo muestra el valor al generarlo; si ya no está disponible, generar otro. Una credencial ausente impide ejecutar CI; una credencial válida no hace aprobar un Quality Gate con vulnerabilidades.
 5. Los identificadores reales ya están en `sonar-project.properties`; el workflow actualizado no necesita variables adicionales para ellos. Si todavía se ejecuta la versión anterior del workflow del commit `6ba77a6`, esa versión sí requiere `SONAR_ORGANIZATION=joseforec` y `SONAR_PROJECT_KEY=JosefOreC_ALPHA_PROJECT` en Variables. La configuración apunta a `https://sonarcloud.io`.
 6. Subir esta rama y abrir un PR hacia `main`. El flujo se ejecuta en los PR internos, los pushes a `main` y mediante **Actions → SonarCloud y seguridad → Run workflow** cuando esté disponible en la rama predeterminada. La disponibilidad de análisis de ramas/PR depende del plan contratado; verificarla antes de elegir esa modalidad. No contratar ni cambiar el plan como parte de esta configuración.
 
@@ -48,12 +50,12 @@ Referencia: [permisos del proyecto](https://docs.sonarsource.com/sonarqube-cloud
 Para reproducir las verificaciones locales en PowerShell:
 
 ```powershell
-.venv/Scripts/python.exe -m pip install -r src/backend/requirements.txt -r scripts/requirements-security.txt
+.venv/Scripts/python.exe -m pip install --only-binary=:all: --require-hashes -r scripts/requirements-ci.lock
 New-Item -ItemType Directory -Force reports/security | Out-Null
 .venv/Scripts/python.exe -m pytest src/backend/tests -q -p no:cacheprovider --cov --cov-config=.coveragerc --cov-report=xml:reports/coverage/backend.xml --junitxml=reports/tests/backend.xml
 .venv/Scripts/python.exe -m coverage json -o reports/coverage/backend.json
 .venv/Scripts/python.exe scripts/check_python_coverage.py
-npm ci --prefix src/frontend
+npm ci --ignore-scripts --prefix src/frontend
 npm run test:coverage --prefix src/frontend
 npm run build --prefix src/frontend
 .venv/Scripts/python.exe -m bandit -r src/backend scripts -x src/backend/tests -f json -o reports/security/bandit.json
@@ -62,7 +64,9 @@ npm run build --prefix src/frontend
 npm audit --prefix src/frontend --audit-level=high --json > reports/security/npm-audit.json
 ```
 
-Bandit y los auditores de dependencias devuelven un código de fallo al encontrar alertas. Cada auditoría del workflow se ejecuta aunque falle la anterior, y se conservan los JSON. CI aplica el umbral de severidad media para Bandit y alta para npm; `pip-audit` falla por cualquier vulnerabilidad conocida. La auditoría Python incluye las herramientas instaladas; el archivo de versiones permite distinguirlas de las dependencias de ejecución. Las dependencias Python de la aplicación tienen rangos abiertos y pueden resolver versiones distintas entre ejecuciones.
+Bandit y los auditores de dependencias devuelven un código de fallo al encontrar alertas. Cada auditoría del workflow se ejecuta aunque falle la anterior, y se conservan los JSON. CI aplica el umbral de severidad media para Bandit y alta para npm; `pip-audit` falla por cualquier vulnerabilidad conocida. La auditoría Python incluye las herramientas instaladas; el archivo de versiones permite distinguirlas de las dependencias de ejecución. Los requirements de desarrollo mantienen sus rangos; CI instala exclusivamente las versiones y hashes de `scripts/requirements-ci.lock`, con ruedas binarias y sin ejecutar builds de paquetes. npm usa su lockfile sin scripts lifecycle. La compilación y las pruebas se ejecutan explícitamente después.
+
+Para actualizar el lock Python, revisar `scripts/requirements-ci.in` y `scripts/requirements-ci.constraints.txt` y regenerarlo con `uv pip compile scripts/requirements-ci.in --universal --python-version 3.14 --generate-hashes --only-binary=:all: --output-file scripts/requirements-ci.lock`. La generación inicial se verificó con uv 0.13.6, instalación real en Windows y resolución binaria para Linux. Las nuevas versiones deben volver a pasar pruebas y auditorías. El comprobador de cobertura solo lee `reports/coverage/backend.json`; no admite una ruta arbitraria por argumento.
 
 El análisis incluye backend, frontend, scripts, política RBAC y configuración de CI. Los tests se clasifican aparte; se excluyen de fuentes las dependencias, cachés, compilados y los mapas estáticos. La cobertura Python incluye **backend y scripts**, igual que el alcance Python enviado a Sonar; la de TypeScript, los archivos de `src` incluidos por Vitest. Las 9 pruebas adicionales de Node no contribuyen al LCOV de Vitest. PostgreSQL/PostGIS real requiere habilitar por separado las pruebas optativas; sus omisiones no son verificaciones aprobadas.
 
