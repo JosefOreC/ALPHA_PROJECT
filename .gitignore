@@ -85,8 +85,12 @@ Thumbs.db
 .atl/
 
 # Documentación de desarrollo compartida (Markdown); otros artefactos siguen locales.
+development/
 /development/*
-!/development/*.md
-!/development/templates/
+/development/*.md
+/development/templates/
 /development/templates/*
-!/development/templates/*.md
+/development/templates/*.md
+development/templates/*.html
+development/templates/*.css
+development/templates/*.js
