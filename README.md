@@ -316,7 +316,7 @@ La documentación completa se encuentra en la carpeta [/docs](./docs). Todos los
 | Documento | Descripción |
 |-----------|-------------|
 | [01. Transformando a ágil](./docs/02%20Planificaci%C3%B3n/01%20Transformando%20a%20%C3%A1gil%20V_1_0_0.md) | Épicas, historias de usuario (US-001 a US-013), enablers (EN-00 a EN-06) y criterios. |
-| [02. Artefactos Jira](./docs/02%20Planificaci%C3%B3n/02%20Artefactos%20Jira%20V_1_0_0.md) | Organización del trabajo en Jira y evidencias de configuración. |
+| [02. Artefactos Jira](./docs/02%20Planificaci%C3%B3n/02%20Artefactos%20Jira%20V_1_1_0.md) | Organización del trabajo en Jira y evidencias de configuración. |
 | [03. Registro de riesgos](./docs/02%20Planificaci%C3%B3n/03%20Registro%20de%20riesgos%20V_1_0_0.md) | Matriz de riesgos del proyecto y su mitigación. |
 | [04. Presupuesto del proyecto](./docs/02%20Planificaci%C3%B3n/04%20Presupuesto%20del%20proyecto%20V_1_0_0.md) | Modelo de costos de recursos humanos, herramientas e infraestructura. |
 
@@ -328,15 +328,19 @@ Documentos de sprint ubicados en [docs/03 Implementación](./docs/03%20Implement
 
 | Documento | Descripción |
 |-----------|-------------|
-| [01. Informe de estado (Sprint 1)](./docs/03%20Implementaci%C3%B3n/01%20Informe%20de%20estado%20del%20proyecto%20V_1_1_0.md) | Estado del alcance, cronograma, costos y calidad del Sprint 1. |
-| [02. Registro de impedimentos (Sprint 1)](./docs/03%20Implementaci%C3%B3n/02%20Registro%20de%20Impedimentos%20V_1_1_0.md) | Impedimentos del Sprint 1, su prioridad y su estado. |
-| [03. Revisión del Sprint 1](./docs/03%20Implementaci%C3%B3n/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_1_0.md) | Historias implementadas, demostración y pendientes del Sprint 1. |
-| [04. Retrospectiva del Sprint 1](./docs/03%20Implementaci%C3%B3n/04%20Retrospectiva%20del%20Sprint%20V_1_1_0.md) | Aprendizajes, mejoras y seguimiento de acciones del Sprint 1. |
-| [Sprint 2 · 01. Informe de estado](./docs/03%20Implementaci%C3%B3n/Sprint%202/01%20Informe%20de%20estado%20del%20proyecto%20V_1_2_0.md) | Estado del proyecto, historias trabajadas, riesgos y pendientes. |
-| [Sprint 2 · 02. Registro de impedimentos](./docs/03%20Implementaci%C3%B3n/Sprint%202/02%20Registro%20de%20Impedimentos%20V_1_2_0.md) | Impedimentos IMP-001 a IMP-011 con su estado. |
-| [Sprint 2 · 03. Revisión del Sprint](./docs/03%20Implementaci%C3%B3n/Sprint%202/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_1_0.md) | Trabajo realizado, demostración, evidencia de pruebas y pendientes. |
-| [Sprint 2 · 04. Retrospectiva del Sprint](./docs/03%20Implementaci%C3%B3n/Sprint%202/04%20Retrospectiva%20del%20Sprint%20V_1_2_0.md) | Aprendizajes, acciones y responsables propuestos. |
-| [Sprint 2 · 05. Auditoría de coherencia](./docs/03%20Implementaci%C3%B3n/Sprint%202/05%20Auditor%C3%ADa%20de%20coherencia%20del%20proyecto%20V_1_2_0.md) | Hallazgos entre documentación, código y producto. |
+| [01. Informe de estado (Sprint 1)](./docs/03%20Implementaci%C3%B3n/01%20Informe%20de%20estado%20del%20proyecto%20V_1_2_0.md) | Estado del alcance, cronograma, costos y calidad del Sprint 1. |
+| [02. Registro de impedimentos (Sprint 1)](./docs/03%20Implementaci%C3%B3n/02%20Registro%20de%20Impedimentos%20V_1_2_0.md) | Impedimentos del Sprint 1, su prioridad y su estado. |
+| [03. Revisión del Sprint 1](./docs/03%20Implementaci%C3%B3n/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_2_0.md) | Historias implementadas, demostración y pendientes del Sprint 1. |
+| [04. Retrospectiva del Sprint 1](./docs/03%20Implementaci%C3%B3n/04%20Retrospectiva%20del%20Sprint%20V_1_2_0.md) | Aprendizajes, mejoras y seguimiento de acciones del Sprint 1. |
+| [Sprint 2 · 01. Informe de estado](./docs/03%20Implementaci%C3%B3n/Sprint%202/01%20Informe%20de%20estado%20del%20proyecto%20V_1_3_0.md) | Estado del proyecto, historias trabajadas, riesgos y pendientes. |
+| [Sprint 2 · 02. Registro de impedimentos](./docs/03%20Implementaci%C3%B3n/Sprint%202/02%20Registro%20de%20Impedimentos%20V_1_3_0.md) | Impedimentos IMP-001 a IMP-011 con su estado. |
+| [Sprint 2 · 03. Revisión del Sprint](./docs/03%20Implementaci%C3%B3n/Sprint%202/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_2_0.md) | Trabajo realizado, demostración, evidencia de pruebas y pendientes. |
+| [Sprint 2 · 04. Retrospectiva del Sprint](./docs/03%20Implementaci%C3%B3n/Sprint%202/04%20Retrospectiva%20del%20Sprint%20V_1_3_0.md) | Aprendizajes, acciones y responsables propuestos. |
+| [Sprint 2 · 05. Auditoría de coherencia](./docs/03%20Implementaci%C3%B3n/Sprint%202/05%20Auditor%C3%ADa%20de%20coherencia%20del%20proyecto%20V_1_3_0.md) | Hallazgos entre documentación, código y producto. |
+| [Sprint 3 · 01. Informe de estado](./docs/03%20Implementaci%C3%B3n/Sprint%203/01%20Informe%20de%20estado%20del%20proyecto%20V_1_0_0.md) | Estado del Sprint 3 (US-010, US-011, EN-05 y EN-02) contrastado con `main`. |
+| [Sprint 3 · 02. Registro de impedimentos](./docs/03%20Implementaci%C3%B3n/Sprint%203/02%20Registro%20de%20Impedimentos%20V_1_0_0.md) | Impedimentos vigentes y nuevos IMP-012 a IMP-016. |
+| [Sprint 3 · 03. Revisión del Sprint](./docs/03%20Implementaci%C3%B3n/Sprint%203/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md) | Resultado por actividad, demostración, pendientes y registro de la reunión. |
+| [Sprint 3 · 04. Retrospectiva del Sprint](./docs/03%20Implementaci%C3%B3n/Sprint%203/04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md) | Aprendizajes, mejoras y acciones propuestas. |
 | [05. Revisión del Sprint V_2_0_0](./docs/03%20Implementaci%C3%B3n/05%20Revisi%C3%B3n%20del%20Sprint%20V_2_0_0.md) | Incremento de login, administración, persistencia, interfaz clara y filtros. |
 | [06. Retrospectiva del Sprint V_2_0_0](./docs/03%20Implementaci%C3%B3n/06%20Retrospectiva%20del%20Sprint%20V_2_0_0.md) | Aprendizajes de la sesión y acciones propuestas para continuar. |
 
