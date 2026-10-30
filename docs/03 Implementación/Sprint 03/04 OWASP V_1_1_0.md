@@ -35,8 +35,9 @@ Los códigos y nombres siguen la lista oficial [OWASP Top 10:2025](https://top10
 
 ## 3. Pendientes para completar el informe
 
-- **Antecedente de SonarQube Cloud:** el análisis del PR #26 (commit `54135e26`, 30/10/2026) reportó Quality Gate «Passed» y 0 Security Hotspots, pero con **0 líneas nuevas de código** (el PR solo contiene documentación). No evalúa el código existente, por lo que no cambia el estado de ninguna categoría; ver [03 Calidad de código](03%20Calidad%20de%20c%C3%B3digo%20V_1_0_0.md).
-- Incorporar las capturas de SonarQube (fecha y hora, rama y commit analizados, Security Hotspots y detalle de incidencias de seguridad) y copiar sus hallazgos por categoría a la tercera columna.
+- **SonarQube Cloud, rama `main` (commit `d36441f`, 30/10/2026):** Quality Gate «Passed», con **8 incidencias de seguridad abiertas (calificación D)**, 26 de fiabilidad (E) y 10 de mantenibilidad (A). El resumen no las asigna a categorías OWASP; falta la pantalla *Reporting → Security Reports → OWASP Top 10 2025* para clasificarlas y reclasificar el estado de cada fila. La calificación D indica que hay incidencias de seguridad que atender, por lo que ninguna categoría puede declararse «Limpio» hasta esa clasificación.
+- **Antecedente del PR #26:** el análisis del PR #26 (commit `54135e26`, 30/10/2026) reportó Quality Gate «Passed» y 0 Security Hotspots, pero con **0 líneas nuevas de código** (el PR solo contiene documentación). No evalúa el código existente, por lo que no cambia el estado de ninguna categoría; ver [03 Calidad de código](03%20Calidad%20de%20c%C3%B3digo%20V_1_0_0.md).
+- Incorporar las capturas de SonarQube Cloud: *Security Reports → OWASP Top 10 2025*, *Security Hotspots* y el detalle de las 8 incidencias de seguridad; copiar sus hallazgos por categoría a la tercera columna.
 - Registrar la configuración del escaneo sin tokens ni contraseñas (fuentes, exclusiones y reglas activas) a partir de `sonar-project.properties`, que hoy está en la rama de Alex y aún no en `main`.
 - Registrar el tratamiento de las advertencias de versión de Python y de información de historial Git observadas en las capturas.
 - Vincular cada hallazgo confirmado con su corrección y el nuevo análisis que la comprueba; cuando se corrija un punto, reclasificar su estado.
