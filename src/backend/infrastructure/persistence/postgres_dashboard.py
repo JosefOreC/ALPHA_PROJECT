@@ -13,9 +13,13 @@ class PostgresDistrictCatalog:
         return district_id in DISTRICTS
 
 
+# Consulta fija; solo se le agrega un filtro opcional también fijo y los valores viajan como parámetros.
+ORDERS_OF_DAY = "SELECT * FROM pedidos WHERE (ventana_inicio AT TIME ZONE 'America/Lima')::date=%s"
+
+
 class PostgresDashboard:
     def _orders(self, day, district_id):
-        return rows("SELECT * FROM pedidos WHERE (ventana_inicio AT TIME ZONE 'America/Lima')::date=%s" + (' AND distrito=%s' if district_id else ''), (day,DISTRICTS[district_id]) if district_id else (day,))
+        return rows(ORDERS_OF_DAY + (' AND distrito=%s' if district_id else ''), (day,DISTRICTS[district_id]) if district_id else (day,))
 
     def get_order_counts(self, day, district_id):
         orders = self._orders(day, district_id)

@@ -24,9 +24,13 @@ def vehicle(row):
                    vehiculo_id=str(row['vehiculo_id']), creado_en=row['creado_en'])
 
 
+# Consulta fija; solo se le agrega un filtro opcional también fijo y los valores viajan como parámetros.
+ALL_VEHICLES = 'SELECT * FROM vehiculos'
+
+
 class PostgresVehicles(VehicleRepositoryPort):
     def find_all(self, status=None):
-        return [vehicle(row) for row in rows('SELECT * FROM vehiculos' + (' WHERE estado=%s' if status else '') + ' ORDER BY placa', (status.value,) if status else ())]
+        return [vehicle(row) for row in rows(ALL_VEHICLES + (' WHERE estado=%s' if status else '') + ' ORDER BY placa', (status.value,) if status else ())]
 
     def find_by_id(self, value):
         result = rows('SELECT * FROM vehiculos WHERE vehiculo_id=%s', (value,)) if valid_id(value) else []

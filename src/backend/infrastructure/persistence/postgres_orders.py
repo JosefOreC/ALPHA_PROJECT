@@ -15,6 +15,12 @@ from domain.value_objects import OrderStatus
 COLUMNS = ("pedido_id", "conductor_id", "cliente_nombre", "direccion_entrega", "distrito",
            "ventana_inicio", "ventana_fin", "peso_kg", "instrucciones", "estado", "confirmed_at", "version")
 SELECT_COLUMNS = ", ".join(COLUMNS)
+# Las consultas se arman solo con los nombres de columna de COLUMNS (constantes del módulo); los valores viajan como parámetros.
+SELECT_ORDERS = " ".join(("SELECT", SELECT_COLUMNS, "FROM pedidos"))
+INSERT_ORDER = "".join(("INSERT INTO pedidos (", SELECT_COLUMNS, ") VALUES (", ", ".join(["%s"] * len(COLUMNS)),
+                        ") ON CONFLICT (pedido_id) DO NOTHING"))
+UPDATE_ORDER = "".join(("UPDATE pedidos SET ", ", ".join(column + " = %s" for column in COLUMNS[1:]),
+                        " WHERE pedido_id = %s AND version = %s"))
 
 
 def values(order: Order) -> tuple:
@@ -81,18 +87,14 @@ class PostgresOrderRepository:
             return None
         lock = " FOR UPDATE" if self._current_connection() is not None else ""
         with self._session() as connection:
-            row = connection.execute(f"SELECT {SELECT_COLUMNS} FROM pedidos WHERE pedido_id = %s{lock}", (order_id,)).fetchone()
+            row = connection.execute(SELECT_ORDERS + " WHERE pedido_id = %s" + lock, (order_id,)).fetchone()
             return from_row(row) if row is not None else None
 
     def add(self, order: Order) -> None:
         connection = self._current_connection()
         if connection is None:
             raise RuntimeError("El registro requiere una transacción explícita.")
-        placeholders = ", ".join(["%s"] * len(COLUMNS))
-        cursor = connection.execute(
-            f"INSERT INTO pedidos ({SELECT_COLUMNS}) VALUES ({placeholders}) ON CONFLICT (pedido_id) DO NOTHING",
-            values(order),
-        )
+        cursor = connection.execute(INSERT_ORDER, values(order))
         if cursor.rowcount != 1:
             raise OrderConflict("Ya existe un pedido con ese identificador.")
 
@@ -100,11 +102,7 @@ class PostgresOrderRepository:
         connection = self._current_connection()
         if connection is None:
             raise RuntimeError("La actualización requiere una transacción explícita.")
-        assignments = ", ".join(f"{column} = %s" for column in COLUMNS[1:])
-        cursor = connection.execute(
-            f"UPDATE pedidos SET {assignments} WHERE pedido_id = %s AND version = %s",
-            values(order)[1:] + (order.id, order.version - 1),
-        )
+        cursor = connection.execute(UPDATE_ORDER, values(order)[1:] + (order.id, order.version - 1))
         if cursor.rowcount != 1:
             raise OrderConflict("El pedido cambió. Vuelve a cargarlo antes de modificarlo.")
 
@@ -121,7 +119,7 @@ class PostgresOrderRepository:
         parameters.extend((limit, offset))
         with self._session() as connection:
             rows = connection.execute(
-                f"SELECT {SELECT_COLUMNS} FROM pedidos{where} ORDER BY pedido_id LIMIT %s OFFSET %s",
+                SELECT_ORDERS + where + " ORDER BY pedido_id LIMIT %s OFFSET %s",
                 tuple(parameters),
             ).fetchall()
             return [from_row(row) for row in rows]
