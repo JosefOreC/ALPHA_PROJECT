@@ -26,7 +26,7 @@ Esta auditoría contrasta la documentación versionada del repositorio con el c�
 - La documentación del producto y de la planificación, el README, la interfaz y los mensajes de error están redactados en español. La excepción detectada es el título del esquema OpenAPI de la API, escrito en inglés y con el nombre del repositorio: «ALPHA_PROJECT - Fleet Management & Routing API» (hallazgo H-09).
 - El nombre del director aparece como «Ore Campos Josef Pablo» en la tabla del README y como «Ore Campos, Josef Pablo» en el resto de los documentos (H-10).
 - La línea base vigente documentada en `10. Stack tecnológico` es la **Alternativa B: Python / FastAPI + React + PostgreSQL**. El código ejecutable usa React 19 con Vite y TypeScript en el frontend y FastAPI con Python en el backend; el mapa usa Leaflet y OpenStreetMap.
-- Redis, OAuth2/JWT, Docker Compose, OR-Tools y la integración continua pertenecen a la arquitectura objetivo y **no forman parte del stack ejecutable**. PostgreSQL y PostGIS sí lo son desde el 09/10/2026, cuando entraron a `main`. *(V_1_2_0 incluía PostgreSQL y PostGIS entre los componentes no ejecutables de la rama de Carlos.)* Estado al 29/10/2026 sobre `main`:
+- Redis, OAuth2/JWT, Docker Compose y OR-Tools pertenecen a la arquitectura objetivo y **no forman parte del stack ejecutable**. PostgreSQL y PostGIS sí lo son desde el 09/10/2026, cuando entraron a `main`. *(V_1_2_0 incluía PostgreSQL y PostGIS entre los componentes no ejecutables de la rama de Carlos.)* Estado al 29/10/2026 sobre `main`:
 
 | Componente | Documentado | Observado en `main` (29/10/2026) |
 |---|---|---|
@@ -38,7 +38,8 @@ Esta auditoría contrasta la documentación versionada del repositorio con el c�
 | Autenticación OAuth2 + JWT | Sí | No existe como tal. Hay inicio de sesión propio con contraseña con hash, cookie de sesión, expiración, revocación, CSRF y límite de intentos. *(V_1_2_0: «no existe».)* |
 | Motor VRPTW / Green VRP | Sí (OR-Tools, SciPy, NumPy) | Parcial (30/10/2026): `domain/planning.py` implementa una heurística de inserción de menor costo con mejora 2-opt (capacidad, ventanas y objetivo de CO₂); no usa OR-Tools, no incluye aprobación ni despacho, y `generate_routes.py`, `reoptimize_route.py` y `route.py` siguen vacíos. |
 | Leaflet y OpenStreetMap | Sí | Implementados leyendo `/map`; teselas del servidor público. |
-| Docker Compose, CI (`.github/`) | Sí (README) | No existen. |
+| Docker Compose | Sí (README) | No existe. |
+| Integración continua (`.github/`) | Sí (README) | Existe desde el 30/10/2026: se ejecuta en cada push y Pull Request hacia `main`: pruebas con cobertura (mínimo del 90 % en Python), compilación del frontend, Quality Gate y una auditoría de dependencias. |
 | Middleware OWASP / Ley N.° 29733 (EN-02) | Sí (README, RNF-002) | Parcial: CORS por `CORS_ALLOW_ORIGINS`, CSRF, límite de intentos de login y permisos por rol. Sin cabeceras de seguridad, auditoría anonimizada ni bloqueo de inyección SQL. |
 | Accesibilidad WCAG 2.1 AA | Sí (RNF-005) | Medidas parciales (objetivos de 48 px, etiquetas visibles, foco); sin certificación. |
 
