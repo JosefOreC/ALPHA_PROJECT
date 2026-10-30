@@ -16,7 +16,7 @@
 
 > **Actualización V_1_3_0 (29/10/2026).** La versión anterior daba por pendientes la autenticación, la persistencia en PostgreSQL y la API única, y trataba las ramas de Josef como «sin fusionar». Ese trabajo entró a `main` el 09/10 sin Pull Request (commits `c314f64`, `a07136a`, `c981e8a` y `97b401b`), así que se corrigen los aprendizajes, los aciertos, los procesos y las acciones afectados. Un aprendizaje nuevo: **redactar un documento de estado sin volver a contrastarlo con `main` lo deja desactualizado en horas**; este propio documento fue un ejemplo.
 
-> **Documento unificado.** Reúne en un solo texto la retrospectiva de la serie de interfaz por rol (Tovar Sánchez, Carlos Alberto) y la retrospectiva del mapa visual, la autorización por roles y la base de pruebas (Ore Campos, Josef Pablo). La versión suelta de Josef quedó en `main` como `docs/03 Implementación/06 Retrospectiva del Sprint V_2_0_0.md`; al cerrar el sprint se debe retirar o enlazar en favor de este documento.
+> **Documento unificado.** Reúne en un solo texto la retrospectiva de la serie de interfaz por rol (Tovar Sánchez, Carlos Alberto) y la retrospectiva del mapa visual, la autorización por roles y la base de pruebas (Ore Campos, Josef Pablo). La retrospectiva de Josef está en esta misma carpeta como `06 Retrospectiva del Sprint V_2_0_0.md`; este documento es la referencia unificada.
 
 ## ¿Qué aprendimos?
 

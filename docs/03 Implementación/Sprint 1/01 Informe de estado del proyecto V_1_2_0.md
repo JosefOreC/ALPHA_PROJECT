@@ -51,7 +51,7 @@ La demostración del Sprint 1 muestra los artefactos y funcionalidades realmente
 3. Documentos de requisitos funcionales y no funcionales, usuarios, reglas de negocio, base de datos y modelo C4.
 4. Backlog y evidencias de Jira con las épicas, historias de usuario y organización del trabajo.
 5. Aplicación con datos en memoria que permite registrar y consultar vehículos, registrar y administrar pedidos (con la evidencia de [`evidencias-crud-pedidos/`](../evidencias-crud-pedidos/)), confirmar entregas, registrar conductores y ver el dashboard de indicadores. La documentación de cada módulo está en [CRUD de pedidos](../../../development/CRUD%20de%20pedidos.md) y [Confirmación de pedidos](../../../development/Confirmacion%20de%20pedidos.md).
-6. Documentos del Sprint 1 ubicados en `docs/03 Implementación/`.
+6. Documentos del Sprint 1 ubicados en `docs/03 Implementación/Sprint 1/`.
 
 ### **Riesgos**
 

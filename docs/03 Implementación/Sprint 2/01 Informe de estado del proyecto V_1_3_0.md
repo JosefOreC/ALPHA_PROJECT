@@ -44,7 +44,7 @@ Se registra el trabajo realizado y su estado real al 29/10/2026. La columna de e
 
 ### **Demostración del trabajo completado**
 
-La demostración del Sprint 2 muestra únicamente lo que se puede ejecutar. Los pasos se actualizaron el 29/10/2026 según la guía de inicio de sesión y persistencia de `docs/03 Implementación/`.
+La demostración del Sprint 2 muestra únicamente lo que se puede ejecutar. Los pasos se actualizaron el 29/10/2026 según la guía de inicio de sesión y persistencia de `development/`.
 
 1. Backend: configurar `DATABASE_URL` en `.env` y ejecutar `scripts/migrate.py` y `scripts/run_backend.py` (una sola aplicación, también disponible como `manage:app`). El esquema OpenAPI incluye pedidos, vehículos, conductores, dashboard, sesión y portal.
 2. Datos: `scripts/create_test_db.py --env-file .env.test` carga un conjunto sintético de siete días; el primer administrador se crea con `scripts/create_admin.py`.
@@ -74,7 +74,7 @@ La demostración del Sprint 2 muestra únicamente lo que se puede ejecutar. Los 
 
 ### **Notas**
 
-Este informe no declara como aceptadas historias que aún no pasaron la revisión del sprint ni presenta datos sintéticos como operación real. La velocidad del Sprint 2 no se calcula hasta que se decida la aceptación. No se consultó Jira para elaborar este informe; su conciliación con el repositorio queda como acción abierta (ver la [auditoría de coherencia](05%20Auditor%C3%ADa%20de%20coherencia%20del%20proyecto%20V_1_3_0.md)). Josef Ore documentó su parte del sprint en `05 Revisión del Sprint V_2_0_0.md` y `06 Retrospectiva del Sprint V_2_0_0.md` (carpeta `docs/03 Implementación/`).
+Este informe no declara como aceptadas historias que aún no pasaron la revisión del sprint ni presenta datos sintéticos como operación real. La velocidad del Sprint 2 no se calcula hasta que se decida la aceptación. No se consultó Jira para elaborar este informe; su conciliación con el repositorio queda como acción abierta (ver la [auditoría de coherencia](05%20Auditor%C3%ADa%20de%20coherencia%20del%20proyecto%20V_1_3_0.md)). Josef Ore documentó su parte del sprint en `05 Revisión del Sprint V_2_0_0.md` y `06 Retrospectiva del Sprint V_2_0_0.md` (en esta carpeta).
 
 ### **Control de versiones del documento**
 

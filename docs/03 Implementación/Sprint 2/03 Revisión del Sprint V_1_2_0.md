@@ -14,7 +14,7 @@
 
 > **Actualización V_1_2_0 (29/10/2026).** La versión V_1_1_0 describía la autenticación, la persistencia en PostgreSQL y la API única como pendientes, y las ramas de Josef como «sin integrar». El 09/10, después de redactarla, esas ramas entraron a `main` (commits `c314f64`, `a07136a`, `68d2b60`, `c981e8a` y `97b401b`, sin Pull Request). Esta versión corrige esas afirmaciones contrastándolas con `main` (commit `30969da`). Lo que sigue pendiente se mantiene.
 
-> **Documento unificado.** Reúne en un solo texto la revisión de la serie de interfaz por rol (Tovar Sánchez, Carlos Alberto) y la del mapa visual, la autorización por roles y la base de pruebas (Ore Campos, Josef Pablo). La revisión suelta de Josef quedó en `main` como `docs/03 Implementación/05 Revisión del Sprint V_2_0_0.md`; este documento es la referencia de cierre y debe retirar o enlazar aquella versión al registrar la aceptación.
+> **Documento unificado.** Reúne en un solo texto la revisión de la serie de interfaz por rol (Tovar Sánchez, Carlos Alberto) y la del mapa visual, la autorización por roles y la base de pruebas (Ore Campos, Josef Pablo). La revisión suelta de Josef quedó en `main` como `Sprint 2/05 Revisión del Sprint V_2_0_0.md`; este documento es la referencia de cierre y debe retirar o enlazar aquella versión al registrar la aceptación.
 
 **Referencias del repositorio evaluado:**
 
