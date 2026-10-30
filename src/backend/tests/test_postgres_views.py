@@ -84,6 +84,13 @@ def test_database_login_user_creation_fleet_orders_and_operational_views(databas
     assert settings.status_code == 200
     assert settings.json()['emissionFactors']['ELECTRICO']==0
     assert settings.json()['fuelConsumption']['DIESEL']==0.095
+    # La pantalla de parámetros no envía consumo: un factor nuevo toma el consumo de referencia.
+    factors.update(GNV=1.95)
+    readded = client.put('/api/admin/parameters',headers=headers,json={
+        'co2Weight':70,'maxSeconds':45,'maxLoadPercent':95,'windowSlackMinutes':10,'autoReoptimize':False,'emissionFactors':factors})
+    assert readded.json()['emissionFactors']['GNV']==1.95
+    assert readded.json()['fuelConsumption']['GNV']==0.08
+    assert readded.json()['fuelConsumption']['DIESEL']==0.095
     start = datetime.now(ZoneInfo('America/Lima')).replace(hour=8,minute=0,second=0,microsecond=0)
     order = client.post('/api/pedidos',headers=headers,json={
         'customer':'Integration customer','address':'Integration address','district':'Ate',

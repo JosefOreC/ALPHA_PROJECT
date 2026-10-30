@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 from uuid import uuid4
 from zoneinfo import ZoneInfo
 from domain.access_control import canonical_role
-from domain.emissions import FUEL_UNITS
+from domain.emissions import FUEL_UNITS, REFERENCE_CONSUMPTION
 from domain.planning import propose
 from infrastructure.persistence.database import connection, rows
 from infrastructure.security import hash_password
@@ -86,11 +86,14 @@ class PostgresPortal:
                 if factor is None:
                     conn.execute('DELETE FROM factores_emision WHERE combustible=%s',(fuel,))
                 else:
-                    # Sin consumo en la petición se conserva el guardado; clientes anteriores no lo envían.
-                    conn.execute('''INSERT INTO factores_emision(combustible,factor_kg_co2,unidad,fuente,consumo_por_km) VALUES (%s,%s,%s,'Configurado por administración',%s)
+                    # Sin consumo en la petición (clientes anteriores no lo envían) se conserva el guardado
+                    # o, en una fila nueva, se usa el de referencia para no excluir esos vehículos.
+                    given = consumption.get(fuel)
+                    conn.execute('''INSERT INTO factores_emision(combustible,factor_kg_co2,unidad,fuente,consumo_por_km)
+                        VALUES (%s,%s,%s,'Configurado por administración',COALESCE(%s::numeric,%s::numeric))
                         ON CONFLICT(combustible) DO UPDATE SET factor_kg_co2=EXCLUDED.factor_kg_co2,fuente=EXCLUDED.fuente,
-                        consumo_por_km=COALESCE(EXCLUDED.consumo_por_km,factores_emision.consumo_por_km)''',
-                        (fuel,factor,FUEL_UNITS[fuel],consumption.get(fuel)))
+                        consumo_por_km=COALESCE(%s::numeric,factores_emision.consumo_por_km)''',
+                        (fuel,factor,FUEL_UNITS[fuel],given,REFERENCE_CONSUMPTION[fuel],given))
             audit(conn,actor,'ACTUALIZAR_PARAMETROS','parametros_algoritmo',identifier,{})
         return self.parameters()
 
