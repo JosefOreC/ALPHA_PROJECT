@@ -337,10 +337,10 @@ Documentos de sprint ubicados en [docs/03 Implementación](./docs/03%20Implement
 | [Sprint 2 · 03. Revisión del Sprint](./docs/03%20Implementaci%C3%B3n/Sprint%202/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_2_0.md) | Trabajo realizado, demostración, evidencia de pruebas y pendientes. |
 | [Sprint 2 · 04. Retrospectiva del Sprint](./docs/03%20Implementaci%C3%B3n/Sprint%202/04%20Retrospectiva%20del%20Sprint%20V_1_3_0.md) | Aprendizajes, acciones y responsables propuestos. |
 | [Sprint 2 · 05. Auditoría de coherencia](./docs/03%20Implementaci%C3%B3n/Sprint%202/05%20Auditor%C3%ADa%20de%20coherencia%20del%20proyecto%20V_1_3_0.md) | Hallazgos entre documentación, código y producto. |
-| [Sprint 3 · 01. Informe de estado](./docs/03%20Implementaci%C3%B3n/Sprint%203/01%20Informe%20de%20estado%20del%20proyecto%20V_1_0_0.md) | Estado del Sprint 3 (US-010, US-011, EN-05 y EN-02) contrastado con `main`. |
-| [Sprint 3 · 02. Registro de impedimentos](./docs/03%20Implementaci%C3%B3n/Sprint%203/02%20Registro%20de%20Impedimentos%20V_1_0_0.md) | Impedimentos vigentes y nuevos IMP-012 a IMP-016. |
-| [Sprint 3 · 03. Revisión del Sprint](./docs/03%20Implementaci%C3%B3n/Sprint%203/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md) | Resultado por actividad, demostración, pendientes y registro de la reunión. |
-| [Sprint 3 · 04. Retrospectiva del Sprint](./docs/03%20Implementaci%C3%B3n/Sprint%203/04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md) | Aprendizajes, mejoras y acciones propuestas. |
+| [Sprint 03 · 01. Revisión del Sprint](./docs/03%20Implementaci%C3%B3n/Sprint%2003/01%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md) | Historias del Sprint 3 con su Definition of Done, demostración y pendientes. |
+| [Sprint 03 · 02. Retrospectiva del Sprint](./docs/03%20Implementaci%C3%B3n/Sprint%2003/02%20Retrospectiva%20del%20Sprint%20V_1_0_0.md) | Aprendizajes, mejoras por dimensión y acciones con responsable y fecha. |
+| [Sprint 03 · 06. Informe de estado](./docs/03%20Implementaci%C3%B3n/Sprint%2003/06%20Informe%20de%20estado%20del%20proyecto%20V_1_0_0.md) | Estado del Sprint 3 contrastado con `main` (complementario). |
+| [Sprint 03 · 07. Registro de impedimentos](./docs/03%20Implementaci%C3%B3n/Sprint%2003/07%20Registro%20de%20Impedimentos%20V_1_0_0.md) | Impedimentos vigentes y nuevos IMP-012 a IMP-016 (complementario). |
 | [05. Revisión del Sprint V_2_0_0](./docs/03%20Implementaci%C3%B3n/05%20Revisi%C3%B3n%20del%20Sprint%20V_2_0_0.md) | Incremento de login, administración, persistencia, interfaz clara y filtros. |
 | [06. Retrospectiva del Sprint V_2_0_0](./docs/03%20Implementaci%C3%B3n/06%20Retrospectiva%20del%20Sprint%20V_2_0_0.md) | Aprendizajes de la sesión y acciones propuestas para continuar. |
 

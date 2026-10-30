@@ -58,7 +58,7 @@ Los puntos **no se contabilizan como completados**: ninguna actividad está acep
 
 ### **Notas**
 
-Este informe no declara aceptadas las actividades ni presenta datos sintéticos como operación real. Ver el [registro de impedimentos](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) y la [auditoría de coherencia del Sprint 2](../Sprint%202/05%20Auditor%C3%ADa%20de%20coherencia%20del%20proyecto%20V_1_3_0.md).
+Este informe no declara aceptadas las actividades ni presenta datos sintéticos como operación real. Ver el [registro de impedimentos](07%20Registro%20de%20Impedimentos%20V_1_0_0.md) y la [auditoría de coherencia del Sprint 2](../Sprint%202/05%20Auditor%C3%ADa%20de%20coherencia%20del%20proyecto%20V_1_3_0.md).
 
 ### **Control de versiones del documento**
 

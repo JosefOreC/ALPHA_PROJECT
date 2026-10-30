@@ -8,7 +8,7 @@
 
 **Versión del documento:** V_1_3_0
 
-Este registro continúa el [registro del Sprint 1](../02%20Registro%20de%20Impedimentos%20V_1_2_0.md): IMP-001 a IMP-003 conservan su numeración. **Actualización V_1_3_0 (29/10/2026):** IMP-006 a IMP-009 se redactaron el 09/10 antes de que Josef integrara en `main` la autenticación, los adaptadores PostgreSQL, la API única y los datos desde la API; se actualiza su estado contrastándolo con `main` (commit `30969da`). La descripción original se conserva y la resolución explica qué cambió. Los impedimentos del Sprint 3 continúan desde IMP-012 en el [registro del Sprint 3](../Sprint%203/02%20Registro%20de%20Impedimentos%20V_1_0_0.md).
+Este registro continúa el [registro del Sprint 1](../02%20Registro%20de%20Impedimentos%20V_1_2_0.md): IMP-001 a IMP-003 conservan su numeración. **Actualización V_1_3_0 (29/10/2026):** IMP-006 a IMP-009 se redactaron el 09/10 antes de que Josef integrara en `main` la autenticación, los adaptadores PostgreSQL, la API única y los datos desde la API; se actualiza su estado contrastándolo con `main` (commit `30969da`). La descripción original se conserva y la resolución explica qué cambió. Los impedimentos del Sprint 3 continúan desde IMP-012 en el [registro del Sprint 3](../Sprint%2003/07%20Registro%20de%20Impedimentos%20V_1_0_0.md).
 
 | Impedimento # | Fecha de Registro | Descripción del Impedimento así como el Impacto en el Proyecto | Prioridad | Reportado por | Fecha tope de Resolución | Estado | Fecha de Resolución | Resolución/Comentarios |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |

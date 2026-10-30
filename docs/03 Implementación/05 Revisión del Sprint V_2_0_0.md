@@ -81,10 +81,10 @@ Estos resultados proceden de las ejecuciones de la sesión del 09/10/2026. No se
 
 Documentación de soporte:
 
-- [Mapa visual de Lima](../../development/Mapa%20visual%20de%20Lima.md) y [evidencias cartográficas](evidencias-mapa-visual/).
-- [Control de acceso por roles](../../development/Control%20de%20acceso%20por%20roles.md).
-- [Base de datos de pruebas](../../development/Base%20de%20datos%20de%20pruebas.md).
-- [Inicio de sesión y persistencia](../../development/Inicio%20de%20sesi%C3%B3n%20y%20persistencia.md) y [guía del frontend y filtros](../../src/frontend/README.md).
+- [Mapa visual de Lima](Mapa%20visual%20de%20Lima.md) y [evidencias cartográficas](evidencias-mapa-visual/).
+- [Control de acceso por roles](Control%20de%20acceso%20por%20roles.md).
+- [Base de datos de pruebas](Base%20de%20datos%20de%20pruebas.md).
+- [Inicio de sesión y persistencia](Inicio%20de%20sesi%C3%B3n%20y%20persistencia.md) y [guía del frontend y filtros](../../src/frontend/README.md).
 - [Plan de sprints](../../development/sprints.md), [backlog](../../development/backlog.md) y [criterios de calidad](../../development/calidad.md).
 
 Los documentos de planificación y la guía histórica del generador pueden conservar pendientes anteriores a esta integración. Para el arranque actual se utiliza la guía de inicio de sesión y persistencia; esta revisión registra el corte actualizado del incremento.
