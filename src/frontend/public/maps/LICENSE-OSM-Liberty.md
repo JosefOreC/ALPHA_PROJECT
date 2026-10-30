@@ -36,3 +36,6 @@ The right arrow was derived from [Wikipedia][wiki_arrow] which is in the public 
 
 OSM Liberty is using the Roboto font family (Copyright 2011 Google).
 Roboto is licensed under the [Apache License, Version 2.0](https://github.com/google/roboto/blob/master/LICENSE).
+
+
+[← Volver al índice correspondiente](README.md)

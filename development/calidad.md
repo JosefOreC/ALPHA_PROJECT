@@ -1,6 +1,6 @@
 # Criterios de preparación, aceptación y entrega
 
-Las metas provienen de los documentos RF/RNF, reglas de negocio y [DoD de Planificación](../docs/02%20Planificación/01%20Transformando%20a%20ágil%20V_1_0_0.md). Esta guía organiza su verificación en el ciclo de sprint y consolida los gates del producto mínimo viable.
+Las metas provienen de los documentos RF/RNF, reglas de negocio y [DoD de Planificación](../docs/02%20Planificaci%C3%B3n/01%20Transformando%20a%20%C3%A1gil%20V_1_0_0.md). Esta guía organiza su verificación en el ciclo de sprint y consolida los gates del producto mínimo viable.
 
 ## Definition of Ready (DoR) propuesta
 
@@ -90,3 +90,6 @@ Antes del release final:
 - [ ] Tag/release desde commit aceptado; plan de recuperación y continuidad del siguiente sprint.
 
 Evidencia mínima: comando, fecha, commit, entorno/hardware, dataset, resultado esperado/observado y enlace al informe. Los benchmarks registran muestras, warmup, P95, factibilidad y si la medición requiere una revisión de alcance.
+
+
+[← Volver al índice correspondiente](README.md)

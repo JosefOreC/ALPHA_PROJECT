@@ -84,3 +84,6 @@ Tags propuestos: `v0.1.0-pmv1`, `v0.2.0-pmv2`, `v0.3.0-pmv3` y `v1.0.0-MVP` para
 Una historia incompleta permanece abierta. Si continúa en otro sprint, crear rama de continuación desde la nueva integración y trasladar únicamente commits revisados; enlazar origen y destino. Evitar fusionar todo un sprint anterior para rescatar una tarea.
 
 Una corrección de release también se incorpora al sprint activo mediante PR para evitar perderla. Ante un merge defectuoso, preparar un revert revisado que conserve historial y verificar compatibilidad con BD; el rollback de datos sigue su procedimiento de migraciones/backup. No usar reset forzado ni reescribir ramas compartidas. Eliminar ramas de trabajo solo tras aceptación y verificación de que el trabajo útil está integrado.
+
+
+[← Volver al índice correspondiente](README.md)

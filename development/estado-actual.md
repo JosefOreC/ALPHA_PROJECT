@@ -1,10 +1,18 @@
+## Corte documental actual — 29/10/2026
+
+La lectura estática actual encuentra API común en `src/backend/interfaces/api/deps.py`, sesiones PostgreSQL en `src/backend/infrastructure/security.py`, adaptadores SQL y endpoints de portal. Las afirmaciones anteriores de ausencia de autenticación, PostgreSQL o API HTTP corresponden al diagnóstico fechado, no al estado actual. No se ejecutaron suites, base de datos ni despliegue en esta edición. Permanecen pendientes seguridad completa, migraciones/recuperación, motor VRPTW, despacho, GPS/ETA operativos, factores ambientales y aceptación.
+
+Estado detallado: [impedimentos vigentes](../docs/03%20Implementaci%C3%B3n/Sprint%202/02%20Registro%20de%20Impedimentos%20V_1_4_0.md) y [revisión por criterios](../docs/03%20Implementaci%C3%B3n/Sprint%202/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_3_0.md).
+
+---
+
 # Estado real y brechas de integración
 
-**Actualización 09/10/2026 — base de pruebas:** generador de consola con destino en `.env`, esquema PostgreSQL/PostGIS y datos relacionados de todos los módulos implementados. Se verificaron carga, repetición, reinicio y rollback con un PostgreSQL 18 aislado. Esto sustituye la brecha de ausencia de comandos/esquema de pruebas; la API aún no activa automáticamente sus adaptadores SQL y las migraciones productivas siguen pendientes. Ver [tarea](task-base-pruebas.md) y [guía técnica](Base%20de%20datos%20de%20pruebas.md).
+**Actualización 09/10/2026 — base de pruebas:** generador de consola con destino en `.env`, esquema PostgreSQL/PostGIS y datos relacionados de todos los módulos implementados. Se verificaron carga, repetición, reinicio y rollback con un PostgreSQL 18 aislado. Esto sustituye la brecha de ausencia de comandos/esquema de pruebas; la API aún no activa automáticamente sus adaptadores SQL y las migraciones productivas siguen pendientes. Ver [tarea](task-base-pruebas.md) y [guía técnica](../docs/03%20Implementaci%C3%B3n/Gu%C3%ADas%20t%C3%A9cnicas/Base%20de%20datos%20de%20pruebas.md).
 
-**Actualización 09/10/2026 — roles:** contrato compartido ROL-01–05, autorización de API, pertenencia del conductor, navegación y controles por sesión implementados. `manage:app` e `interfaces.api.main:app` comparten ahora pedidos, vehículos, conductores, dashboard y sesión; CORS usa orígenes explícitos. Esto reemplaza el diagnóstico anterior de composiciones separadas y permisos ausentes. El proveedor de autenticación real, auditoría persistida y pantallas nuevas siguen pendientes; la API rechaza sesiones no verificadas. Ver [tarea de roles](task-roles.md) y [guía técnica](Control%20de%20acceso%20por%20roles.md). EN-02 permanece parcial.
+**Actualización 09/10/2026 — roles:** contrato compartido ROL-01–05, autorización de API, pertenencia del conductor, navegación y controles por sesión implementados. `manage:app` e `interfaces.api.main:app` comparten ahora pedidos, vehículos, conductores, dashboard y sesión; CORS usa orígenes explícitos. Esto reemplaza el diagnóstico anterior de composiciones separadas y permisos ausentes. El proveedor de autenticación real, auditoría persistida y pantallas nuevas siguen pendientes; la API rechaza sesiones no verificadas. Ver [tarea de roles](task-roles.md) y [guía técnica](../docs/03%20Implementaci%C3%B3n/Gu%C3%ADas%20t%C3%A9cnicas/Control%20de%20acceso%20por%20roles.md). EN-02 permanece parcial.
 
-**Actualización 09/10/2026 — mapa visual:** límites de navegación urbana de Lima, geometrías viales demo, camiones independientes, perfiles por vista y reintentos implementados. Las evidencias están en [Mapa visual de Lima](Mapa%20visual%20de%20Lima.md). La integración HTTP/GPS/ETA y la aceptación formal siguen pendientes; el inventario siguiente conserva el diagnóstico del 08/10/2026.
+**Actualización 09/10/2026 — mapa visual:** límites de navegación urbana de Lima, geometrías viales demo, camiones independientes, perfiles por vista y reintentos implementados. Las evidencias están en [Mapa visual de Lima](../docs/03%20Implementaci%C3%B3n/Gu%C3%ADas%20t%C3%A9cnicas/Mapa%20visual%20de%20Lima.md). La integración HTTP/GPS/ETA y la aceptación formal siguen pendientes; el inventario siguiente conserva el diagnóstico del 08/10/2026.
 
 Corte: **08/10/2026**; lectura de documentación, archivos y referencias Git locales de `feature/josef/spr2/map`, commit `1bf3ee8`. No se ejecutaron pruebas del producto para este diagnóstico ni se consultaron remoto/Jira en vivo. Las pruebas históricas se mantienen como evidencia del commit que documentan.
 
@@ -57,3 +65,6 @@ En frontend, `VITE_API_URL` controla demo/HTTP de varios módulos, pero flota y 
 ## Recuperación propuesta
 
 Primero conciliar fuentes y registrar la base de integración. Después cerrar T-01–T-04 y las brechas de PMV-1/PMV-2. Reutilizar mapas, dashboard y reportes existentes al conectar PMV-3. Los ítems se mantienen en revisión de aceptación hasta reunir evidencia; no se asigna un porcentaje de avance por cantidad de archivos.
+
+
+[← Volver al índice correspondiente](README.md)

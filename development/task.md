@@ -1,3 +1,11 @@
+## Corte documental actual — 29/10/2026
+
+La lectura estática actual encuentra API común en `src/backend/interfaces/api/deps.py`, sesiones PostgreSQL en `src/backend/infrastructure/security.py`, adaptadores SQL y endpoints de portal. Las afirmaciones anteriores de ausencia de autenticación, PostgreSQL o API HTTP corresponden al diagnóstico fechado, no al estado actual. No se ejecutaron suites, base de datos ni despliegue en esta edición. Permanecen pendientes seguridad completa, migraciones/recuperación, motor VRPTW, despacho, GPS/ETA operativos, factores ambientales y aceptación.
+
+Estado detallado: [impedimentos vigentes](../docs/03%20Implementaci%C3%B3n/Sprint%202/02%20Registro%20de%20Impedimentos%20V_1_4_0.md) y [revisión por criterios](../docs/03%20Implementaci%C3%B3n/Sprint%202/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_3_0.md).
+
+---
+
 # Trabajo inmediato de coordinación y recuperación
 
 Rama actual: `feature/josef/spr2/map`. Fecha: **08/10/2026**. Este tablero local sirve para ejecutar el [roadmap](roadmap.md); no sustituye Jira. Las casillas pendientes no se cierran por la existencia de código demo.
@@ -8,7 +16,7 @@ Por indicación del usuario, el siguiente trabajo es [T-MAP-VIS: mapa visual](ta
 
 - [x] Preparar task específico con alcance visual, perfiles por vista, checklist y criterios de aceptación.
 - [x] Implementar mapa visual: límites Lima, geometrías viales demo, camiones independientes, perfiles y selección por vista.
-- [x] Verificar comportamiento con pruebas de dominio/UI y capturas de cartografía real; [informe y límites de validación](Mapa%20visual%20de%20Lima.md).
+- [x] Verificar comportamiento con pruebas de dominio/UI y capturas de cartografía real; [informe y límites de validación](../docs/03%20Implementaci%C3%B3n/Gu%C3%ADas%20t%C3%A9cnicas/Mapa%20visual%20de%20Lima.md).
 - [ ] Completar aceptación formal del incremento (peer review, cobertura/análisis y staging según DoD).
 
 ## Entregado en esta rama: documentación del plan
@@ -58,3 +66,6 @@ PMV-3: T-05/06/07, US-006–011 y cierre transversal de seguridad. PMV-4: EN-01/
 ## Actualización por tarea
 
 Antes de empezar: ID, dueño, sprint/PMV, dependencia, rama y criterio. Al terminar: PR, commit, pruebas, evidencia y revisor. Si cambia una decisión: añadir D-XX y actualizar roadmap/backlog/sprint afectados. No cerrar casillas con resultados de otro commit o pruebas de un modo demo para un criterio real.
+
+
+[← Volver al índice correspondiente](README.md)

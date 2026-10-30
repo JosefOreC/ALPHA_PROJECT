@@ -52,3 +52,6 @@ Escenario: Error o permiso insuficiente
 - [ ] PR aprobado e integrado en el destino correcto.
 
 Limitaciones y trabajo restante: ___. Evaluador y fecha de aceptación: ___. Un resultado en memoria no acredita un criterio de persistencia real.
+
+
+[← Volver al índice correspondiente](README.md)
