@@ -21,7 +21,7 @@ Esta carpeta convierte la documentación del proyecto en un plan de ejecución: 
 | [task-mapa-visual.md](task-mapa-visual.md) | Implementar el mapa visual fiel de Lima con capas configurables de rutas, camiones y pedidos. |
 | [task-roles.md](task-roles.md) | Aplicar la matriz de permisos de los cinco roles y completar la integración de identidad. |
 | [task-base-pruebas.md](task-base-pruebas.md) | Crear PostgreSQL + PostGIS desde `.env` y generar datos de todos los módulos. |
-| [Revisión del Sprint 2 V_2_0_0](../docs/03%20Implementaci%C3%B3n/Sprint%202/05%20Revisi%C3%B3n%20del%20Sprint%20V_2_0_0.md) | Consultar el incremento actualizado de login, persistencia, interfaz y filtros. |
+| [Revisión del Sprint 2](../docs/03%20Implementaci%C3%B3n/Sprint%202/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_2_0.md) | Consultar el incremento actualizado de login, persistencia, interfaz y filtros. |
 | [Retrospectiva del Sprint 2 V_2_0_0](../docs/03%20Implementaci%C3%B3n/Sprint%202/06%20Retrospectiva%20del%20Sprint%20V_2_0_0.md) | Consultar aprendizajes de la sesión y acciones propuestas para continuar. |
 | [templates/sprint.md](templates/sprint.md) | Registrar planificación, revisión y retrospectiva. |
 | [templates/historia.md](templates/historia.md) | Desglosar una historia o tarea con aceptación y evidencia. |

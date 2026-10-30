@@ -8,7 +8,7 @@ Por indicación del usuario, el siguiente trabajo es [T-MAP-VIS: mapa visual](ta
 
 - [x] Preparar task específico con alcance visual, perfiles por vista, checklist y criterios de aceptación.
 - [x] Implementar mapa visual: límites Lima, geometrías viales demo, camiones independientes, perfiles y selección por vista.
-- [x] Verificar comportamiento con pruebas de dominio/UI y capturas de cartografía real; [informe y límites de validación](../docs/03%20Implementación/Mapa%20visual%20de%20Lima.md).
+- [x] Verificar comportamiento con pruebas de dominio/UI y capturas de cartografía real; [informe y límites de validación](Mapa%20visual%20de%20Lima.md).
 - [ ] Completar aceptación formal del incremento (peer review, cobertura/análisis y staging según DoD).
 
 ## Entregado en esta rama: documentación del plan

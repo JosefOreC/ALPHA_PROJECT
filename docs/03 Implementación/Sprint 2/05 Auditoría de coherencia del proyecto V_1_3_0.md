@@ -114,7 +114,7 @@ Estado al 29/10/2026. Las acciones que `main` ya cumple se tachan y se explican.
 - Revisar los Pull Requests abiertos (#7, #11 y #12 a #21) con un revisor distinto del autor, cerrarlos con motivo o fusionarlos, y activar la protección de `main` (H-08 y H-16).
 - Revisar retroactivamente el código de autenticación, sesiones y permisos que entró a `main` sin Pull Request (H-16).
 - ~~Componer una API única, conectar PostgreSQL con migraciones e integrar la autenticación (H-09).~~ Hecho en `main`; quedan por validar el despliegue y la recuperación, y por definir el contrato de datos de GPS y ETA.
-- Retirar o enlazar los documentos sueltos `05 Revisión del Sprint V_2_0_0.md` y `06 Retrospectiva del Sprint V_2_0_0.md` de Josef (ahora en esta carpeta) con los unificados de `Sprint 2/`. *(V_1_2_0: «al fusionar la rama `feature/josef/spr2/auth`».)*
+- ~~Retirar o enlazar los documentos sueltos de Josef.~~ La revisión (`05 Revisión del Sprint V_2_0_0.md`) se retiró y su contenido está en `03 Revisión del Sprint`; falta decidir lo mismo con `06 Retrospectiva del Sprint V_2_0_0.md` respecto de los unificados de `Sprint 2/`. *(V_1_2_0: «al fusionar la rama `feature/josef/spr2/auth`».)*
 - Verificar Jira y conciliarlo con el backlog (H-14); corregir la clave `ECOL` por `ELODRSPDSC` en `02 Artefactos Jira`.
 - Documentar la conciliación del presupuesto y fijar el calendario con fechas (H-12 y H-13).
 - Agregar el historial de cambios a los once documentos de Inicio que no lo tienen (H-11); los cuatro del Sprint 1 ya lo tienen.

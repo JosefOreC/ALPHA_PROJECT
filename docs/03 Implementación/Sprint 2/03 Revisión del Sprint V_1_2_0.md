@@ -14,7 +14,7 @@
 
 > **Actualización V_1_2_0 (29/10/2026).** La versión V_1_1_0 describía la autenticación, la persistencia en PostgreSQL y la API única como pendientes, y las ramas de Josef como «sin integrar». El 09/10, después de redactarla, esas ramas entraron a `main` (commits `c314f64`, `a07136a`, `68d2b60`, `c981e8a` y `97b401b`, sin Pull Request). Esta versión corrige esas afirmaciones contrastándolas con `main` (commit `30969da`). Lo que sigue pendiente se mantiene.
 
-> **Documento unificado.** Reúne en un solo texto la revisión de la serie de interfaz por rol (Tovar Sánchez, Carlos Alberto) y la del mapa visual, la autorización por roles y la base de pruebas (Ore Campos, Josef Pablo). La revisión suelta de Josef quedó en `main` como `Sprint 2/05 Revisión del Sprint V_2_0_0.md`; este documento es la referencia de cierre y debe retirar o enlazar aquella versión al registrar la aceptación.
+> **Documento único de revisión del Sprint 2.** Reúne la revisión de la serie de interfaz por rol (Tovar Sánchez, Carlos Alberto) y la del mapa visual, la autorización por roles, el inicio de sesión y la base de pruebas (Ore Campos, Josef Pablo). La revisión suelta de Josef (`05 Revisión del Sprint V_2_0_0.md`, 09/10/2026) se retiró de la carpeta el 29/10/2026 porque este documento incorpora su contenido; sigue disponible en el historial de Git.
 
 **Referencias del repositorio evaluado:**
 
@@ -66,9 +66,15 @@ La demostración del Sprint 2 muestra los artefactos y comportamientos realmente
 | **`main`, commit `30969da` (29/10/2026) — backend** | 225 pruebas aprobadas, 5 omitidas y 36 subpruebas. | Dominio, casos de uso, API, sesiones, permisos y vistas. Las 5 omitidas son las de integración con un PostgreSQL real, que no se ejecutó. Requiere instalar `requirements-postgres.txt`. |
 | Frontend sobre `1bf3ee8` (09/10/2026, serie de interfaz) | 247 pruebas de Vitest, 9 de Node y 22 de navegador aprobadas. | Medición anterior sobre la rama de Carlos, sin el trabajo de Josef; se conserva como antecedente. |
 | Backend sobre `1bf3ee8` (09/10/2026) | 169 pruebas y 36 subpruebas aprobadas, con almacenamiento en memoria. | Medición anterior; se conserva como antecedente. |
-| Frontend y backend de Josef (reportado por él el 09/10/2026) | 273 pruebas de Vitest y 9 de Node, 37 casos de navegador tras el login, y 226 pruebas con 36 subpruebas (4 omitidas) en el backend; dos comprobaciones reales de la base de pruebas. | Documentadas en `05 Revisión del Sprint V_2_0_0.md`; incluyen PostgreSQL real, que no se repitió el 29/10. |
+| Frontend y backend de Josef (reportado por él el 09/10/2026) | 273 pruebas de Vitest y 9 de Node, 37 casos de navegador tras el login, y 226 pruebas con 36 subpruebas (4 omitidas) en el backend; dos comprobaciones reales de la base de pruebas. | Documentadas por Josef en su revisión del 09/10/2026 (retirada; ver la nota inicial); incluyen PostgreSQL real, que no se repitió el 29/10. |
 
 Estos resultados no equivalen a la aprobación de los interesados.
+
+## Entorno y datos verificados (reportado por Josef el 09/10/2026)
+
+Se preparó PostgreSQL local con PostGIS. El generador se ejecutó para la base de pruebas `ecologistica_seed_test` mediante `.env.test`; después se configuró la API en `.env` para consultar esa misma base y se aplicó la migración `001_sessions.sql`. El conjunto de siete días contiene **1.050 pedidos, 70 rutas, 15 vehículos y 15 conductores**, con 20 cuentas del generador (21 usuarios con el administrador local).
+
+Las comprobaciones del mapa del día leyeron **150 pedidos** desde la API: el filtro **En camino** mostró 24 pedidos y 4 rutas, un pedido asignado dejó visibles un pedido, una ruta y un camión, y limpiar los filtros restauró los 150 pedidos. Estos resultados demuestran persistencia y consulta con datos de pruebas, no entregas de una operación real: geometrías, posiciones, factores ambientales y restricciones son sintéticos. Los comandos de arranque (`scripts/migrate.py`, `check_database.py`, `create_admin.py`, `run_backend.py`) están en la guía de inicio de sesión y persistencia de `development/`.
 
 ## Pendientes
 
@@ -92,4 +98,4 @@ Los responsables y las fechas de resolución se confirman en la revisión. El in
 |---|---|---|---|
 | V_1_0_0 | 09/10/2026 | Tovar Sánchez, Carlos Alberto | Revisión del Sprint 2 con el estado real de cada historia, la pauta de demostración y el registro de la reunión pendiente de completar. |
 | V_1_1_0 | 09/10/2026 | Tovar Sánchez, Carlos Alberto | Se unifica con la revisión de la rama `feature/josef/spr2/auth` (mapa visual, autorización por roles y base de pruebas): se integran su demostración, su evidencia de pruebas y sus pendientes sin duplicarlos. |
-| V_1_2_0 | 29/10/2026 | Tovar Sánchez, Carlos Alberto | Corrige afirmaciones que `main` ya contradecía (autenticación, persistencia en PostgreSQL, API única y datos desde la API están integradas; las ramas de Josef están en `main` sin Pull Request), reemplaza la evidencia de pruebas por la del 29/10 sobre `30969da` y actualiza el estado de cada historia, la demostración y los pendientes. |
+| V_1_2_0 | 29/10/2026 | Tovar Sánchez, Carlos Alberto | Corrige afirmaciones que `main` ya contradecía (autenticación, persistencia en PostgreSQL, API única y datos desde la API están integradas; las ramas de Josef están en `main` sin Pull Request), reemplaza la evidencia de pruebas por la del 29/10 sobre `30969da` y actualiza el estado de cada historia, la demostración y los pendientes. Absorbe la revisión de Josef (`05 Revisión del Sprint V_2_0_0.md`), que se retira de la carpeta. |
