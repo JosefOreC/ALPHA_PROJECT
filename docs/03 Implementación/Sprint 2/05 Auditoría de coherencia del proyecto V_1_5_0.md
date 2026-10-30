@@ -36,7 +36,7 @@ Esta auditoría contrasta la documentación versionada del repositorio con el c�
 | PostGIS | En evaluación | Usado por el esquema y el generador de datos de prueba. |
 | Redis | Sí (sesiones y caché) | No existe; las sesiones se guardan en PostgreSQL. |
 | Autenticación OAuth2 + JWT | Sí | No existe como tal. Hay inicio de sesión propio con contraseña con hash, cookie de sesión, expiración, revocación, CSRF y límite de intentos. *(V_1_2_0: «no existe».)* |
-| Motor VRPTW / Green VRP | Sí (OR-Tools, SciPy, NumPy) | No existe; `generate_routes.py`, `reoptimize_route.py` y `route.py` están vacíos. La propuesta de rutas es una estimación. |
+| Motor VRPTW / Green VRP | Sí (OR-Tools, SciPy, NumPy) | Parcial (30/10/2026): `domain/planning.py` implementa una heurística de inserción de menor costo con mejora 2-opt (capacidad, ventanas y objetivo de CO₂); no usa OR-Tools, no incluye aprobación ni despacho, y `generate_routes.py`, `reoptimize_route.py` y `route.py` siguen vacíos. |
 | Leaflet y OpenStreetMap | Sí | Implementados leyendo `/map`; teselas del servidor público. |
 | Docker Compose, CI (`.github/`) | Sí (README) | No existen. |
 | Middleware OWASP / Ley N.° 29733 (EN-02) | Sí (README, RNF-002) | Parcial: CORS por `CORS_ALLOW_ORIGINS`, CSRF, límite de intentos de login y permisos por rol. Sin cabeceras de seguridad, auditoría anonimizada ni bloqueo de inyección SQL. |

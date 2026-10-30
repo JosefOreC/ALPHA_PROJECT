@@ -22,7 +22,7 @@ La fuente declara US-010, US-011, EN-02 y EN-05 (20 puntos); Jira no se ha consu
 
 | Criterio | US-010 | US-011 | EN-05 | EN-02 |
 |---|---|---|---|---|
-| Cobertura ≥80 % del código nuevo | No cumple: SonarQube 77,9 % global; medición local backend 82 % y frontend 80 % | Ídem | Ídem | Ídem |
+| Cobertura ≥80 % del código nuevo | Cumple en la medición local (backend 97 %, frontend 95,9 %); SonarQube 77,9 % en su análisis previo, por actualizar | Ídem | Ídem | Ídem |
 | Análisis estático sin vulnerabilidades críticas | Cumple: SonarQube con 0 vulnerabilidades y 0 hotspots; lint y tipos sin errores | Ídem | Ídem | Ídem |
 | Revisión por un par mediante PR | No cumple: PR #19 abierto | No cumple: PR #19 abierto | No cumple: PR #16 abierto | No cumple: integrado a `main` sin Pull Request |
 | Staging verificado por quien no implementó | No cumple: sin verificación independiente | Ídem | Ídem | Ídem |
@@ -62,9 +62,9 @@ La tabla es el guion reproducible de la demostración. Un enlace a código o tes
 
 ### Evidencia técnica (29 y 30/10/2026)
 
-Sobre `main` (commit `30969da`, 29/10): frontend con 273 pruebas Vitest, 9 de Node y 40 de navegador aprobadas; backend con 225 pruebas aprobadas, 5 omitidas (PostgreSQL real, no ejecutado) y 36 subpruebas; lint, tipos y compilación sin errores. Cobertura medida el 30/10: backend 82 % (sentencias de `application`, `domain`, `infrastructure` e `interfaces`) y frontend 80,0 % de sentencias, 72,5 % de ramas y 85,8 % de líneas. Estas cifras son agregadas: no sustituyen la ejecución por escenario de la matriz ni la aceptación formal.
+Sobre `main` (commit `6ba77a6`, 30/10): frontend con 432 pruebas Vitest, 9 de Node y 40 de navegador aprobadas; backend con 368 pruebas aprobadas, 5 omitidas (PostgreSQL real, no ejecutado) y 36 subpruebas; lint, tipos y compilación sin errores. Cobertura local: backend 97 % y frontend 95,9 % de sentencias (90,2 % de ramas y 97,6 % de líneas); SonarQube Community Build reportó 77,9 % en su análisis, anterior a las pruebas incorporadas el 30/10. Estas cifras son agregadas: no sustituyen la ejecución por escenario de la matriz ni la aceptación formal.
 
-Rama de Mikeiel `feature/mikeiel/spr3/rutas/optimizacion-co2` (5 commits del 30/10, sin Pull Request): propuesta de rutas por inserción de menor costo y mejora 2-opt, huella de CO₂ por consumo de combustible por tipo, detalle de cada ruta en la interfaz y migración `002_consumo_por_km.sql`. Avanza US-005/EN-01 y el cálculo ambiental que alimenta US-010, pero no es un motor VRPTW, no incluye aprobación ni despacho, y no está en `main`; no se cuenta como completado.
+La rama de Mikeiel (`feature/mikeiel/spr3/rutas/optimizacion-co2`) ya está en `main` desde el 30/10: propuesta de rutas por inserción de menor costo con mejora 2-opt, huella de CO₂ por consumo de combustible, detalle de cada ruta en la interfaz y migración `002_consumo_por_km.sql`. Avanza US-005/EN-01 y el cálculo ambiental de US-010; no es un solucionador VRPTW exacto y no incluye aprobación ni despacho. Medición del 30/10 con datos sintéticos (10 corridas de 150 pedidos y 15 vehículos): mediana 3,5 s y máximo 6,6 s.
 
 ### Registro de la reunión y aceptación formal
 
@@ -80,7 +80,7 @@ Rama de Mikeiel `feature/mikeiel/spr3/rutas/optimizacion-co2` (5 commits del 30/
 - Ejecutar manualmente cada escenario sobre un commit identificado y registrar entorno, precondiciones, comandos, resultado y artefacto; hoy solo hay pruebas automatizadas asociadas.
 - Resolver D-04 (rechazo de repetición frente a idempotencia) y D-10 (roles del Gherkin frente a matriz RBAC) en [decisiones](../../../development/decisiones.md); no adaptar criterios silenciosamente al código.
 - La DoD global exige cobertura ≥80 %, análisis estático, revisión por un par, staging independiente, documentación API y criterios comprobados. Todo queda pendiente de evidencia por historia, sin inferir cumplimiento de la existencia de tests.
-- Validar migraciones/recuperación y seguridad; motor VRPTW, despacho, fuentes GPS/ETA y factores ambientales siguen pendientes según [impedimentos](../Sprint%202/02%20Registro%20de%20Impedimentos%20V_1_5_0.md).
+- Validar migraciones/recuperación y seguridad; solucionador VRPTW exacto (hoy hay una heurística), aprobación y despacho de rutas, fuentes GPS/ETA y factores ambientales siguen pendientes según [impedimentos](../Sprint%202/02%20Registro%20de%20Impedimentos%20V_1_5_0.md).
 
 Los documentos 03 Calidad de código, 04 OWASP y 05 WCAG de esta carpeta recogen las evaluaciones exigidas por la consigna del Sprint 3. El equipo ejecutó SonarQube (configuración en la rama de Alex); sus resultados se incorporan a los documentos 03 y 04 cuando se registren las capturas. La accesibilidad se evaluó con axe-core sobre páginas de prueba; faltan Lighthouse y la revisión manual.
 

@@ -15,13 +15,13 @@
 | Alcance | Implementación parcial; aceptación de todas las historias pendiente de evidencia por criterio y decisión formal. |
 | Cronograma | Fechas y asignación a sprints por conciliar con Jira; no deducir sprint por nombre de rama ni por versión documental. |
 | Costos | No se verificaron gastos; se conserva el presupuesto y el registro histórico, sin nuevas cifras. |
-| Calidad | Ejecución del 29/10/2026 sobre `main` (commit `30969da`): backend con 225 pruebas aprobadas, 5 omitidas (PostgreSQL real) y 36 subpruebas; frontend con 273 pruebas Vitest, 9 de Node y 40 de navegador; lint, tipos y compilación sin errores. Cobertura medida el 30/10: backend 82 % y frontend 80 % de sentencias. Rendimiento, seguridad y accesibilidad requieren evidencia específica (ver Sprint 03, documentos 03 a 05). |
+| Calidad | Ejecución del 30/10/2026 sobre `main` (commit `6ba77a6`): backend con 368 pruebas aprobadas, 5 omitidas (PostgreSQL real) y 36 subpruebas; frontend con 432 pruebas Vitest, 9 de Node y 40 de navegador; lint, tipos y compilación sin errores. Cobertura local: backend 97 % y frontend 95,9 % de sentencias. Rendimiento, seguridad y accesibilidad se evalúan en los documentos 03 a 05 del Sprint 03. |
 
 ### Historias de Usuario y alcance
 
 US-001, US-002, US-003, US-004, US-005, US-006, US-007, US-008, US-009, US-010, US-011, EN-00, EN-01, EN-02, EN-05. La [revisión vigente](03%20Revisi%C3%B3n%20del%20Sprint%20V_1_4_0.md) delimita qué fue planificado, adicional o continuidad y contiene criterios y cuatro rutas por historia/enabler. No se cuentan puntos completados.
 
-La composición común, sesiones PostgreSQL, permisos y endpoints de portal existen en el árbol local. El motor VRPTW no está implementado en los archivos reservados y la propuesta estimada no demuestra el criterio de US-005. La rama `feature/mikeiel/spr3/rutas/optimizacion-co2` (sin Pull Request al 30/10/2026) agrega una heurística de inserción de menor costo con mejora 2-opt y el cálculo de CO₂ por consumo de combustible; no es un motor VRPTW y no está en `main`. Datos sintéticos no acreditan GPS/ETA, factores reales ni línea base.
+La composición común, sesiones PostgreSQL, permisos y endpoints de portal existen en el árbol local. La planificación de rutas está implementada como heurística en `domain/planning.py` (inserción de menor costo con mejora 2-opt, capacidad, ventanas y objetivo de CO₂, tiempo o mixto), incorporada a `main` el 30/10/2026 desde la rama de Mikeiel. No es un solucionador VRPTW exacto (OR-Tools) ni incluye aprobación, publicación o despacho de rutas; los archivos `generate_routes.py`, `reoptimize_route.py` y `route.py` siguen vacíos. Medición del 30/10 con datos sintéticos (10 corridas de 150 pedidos y 15 vehículos): mediana 3,5 s y máximo 6,6 s, por debajo de 45 s. Datos sintéticos no acreditan GPS/ETA, factores reales ni línea base.
 
 ### Demostración del trabajo realizado
 

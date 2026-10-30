@@ -67,7 +67,7 @@ Los resultados agregados de 09/10 y 29/10 atribuidos en las fuentes no incluyen 
 - Ejecutar cada escenario sobre un commit/árbol identificado y registrar entorno, precondiciones, comandos, resultado y artefacto. Confirmar los escenarios propuestos.
 - Resolver D-04 (rechazo de repetición frente a idempotencia) y D-10 (roles del Gherkin frente a matriz RBAC) en [decisiones](../../../development/decisiones.md); no adaptar criterios silenciosamente al código.
 - La DoD global exige cobertura ≥80 %, análisis estático, revisión por un par, staging independiente, documentación API y criterios comprobados. Todo queda pendiente de evidencia por historia, sin inferir cumplimiento de la existencia de tests.
-- Validar migraciones/recuperación y seguridad; motor VRPTW, despacho, fuentes GPS/ETA y factores ambientales siguen pendientes según [impedimentos](02%20Registro%20de%20Impedimentos%20V_1_4_0.md).
+- Validar migraciones/recuperación y seguridad; solucionador VRPTW exacto (hoy hay una heurística), aprobación y despacho de rutas, fuentes GPS/ETA y factores ambientales siguen pendientes según [impedimentos](02%20Registro%20de%20Impedimentos%20V_1_4_0.md).
 
 ## Registro de la reunión y aceptación formal
 
