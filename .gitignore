@@ -70,6 +70,9 @@ coverage/
 playwright-report/
 test-results/
 blob-report/
+reports/
+.scannerwork/
+.sonar/
 
 # --- Bases de datos locales y volcados ---
 *.sqlite
@@ -110,12 +113,8 @@ Desktop.ini
 .codegraph/
 .atl/
 
-<<<<<<< HEAD
-# Documentación de desarrollo compartida (Markdown); otros artefactos siguen locales.
-development/
-=======
 # --- Documentación de desarrollo compartida (Markdown); otros artefactos siguen locales ---
->>>>>>> 8d836f1db1d161567b731a5cf104c4a978bcecda
+development/
 /development/*
 /development/*.md
 /development/templates/
