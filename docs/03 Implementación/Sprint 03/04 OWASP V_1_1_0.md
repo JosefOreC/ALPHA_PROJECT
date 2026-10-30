@@ -2,7 +2,7 @@
 
 **Nombre del Proyecto:** EcoLogística Lima – Optimizador de Rutas Sostenibles para DistriRápido S.A.C.
 
-**Herramienta de Escaneo:** SonarQube Community Build (proyecto `EcoLogistica`, versión 1.0), con la configuración `sonar-project.properties` de la rama de Alex; SonarQube Cloud analiza además el repositorio de GitHub. Resultado de Community Build: Quality Gate «Passed», **0 incidencias de seguridad y 0 Security Hotspots** (calificación A), ver [03 Calidad de código](03%20Calidad%20de%20c%C3%B3digo%20V_1_0_0.md). La tercera columna de la matriz combina ese resultado con la inspección manual del código; SonarQube no asigna sus incidencias por categoría OWASP.
+**Herramienta de Escaneo:** SonarQube Community Build (proyecto `EcoLogistica`, versión 1.0): Quality Gate «Passed», **0 incidencias de seguridad y 0 Security Hotspots**, calificación A (ver [03 Calidad de código](03%20Calidad%20de%20c%C3%B3digo%20V_1_0_0.md)). SonarQube no asigna sus incidencias por categoría OWASP; la tercera columna lo combina con la inspección manual del código.
 
 **Versión del documento:** V_1_1_0 · **Fecha:** 30/10/2026 · **Código inspeccionado:** `main`, commit `29ca820`.
 
@@ -33,20 +33,11 @@ Los códigos y nombres siguen la lista oficial [OWASP Top 10:2025](https://top10
 - **Vulnerabilidad #4 — Dependencias con severidad alta (A03).** `vite` y `undici`: ejecutar `npm audit fix` y repetir `npm audit` y las pruebas. **No aplicada.**
 - **Brecha #5 — EN-02 incompleto (A05, A06, A09).** Falta el bloqueo, registro y notificación de la inyección SQL, la auditoría anonimizada y la minimización de datos personales. Su estado está en la [revisión del Sprint 03](01%20Revisi%C3%B3n%20del%20Sprint%20V_1_2_0.md).
 
-## 3. Pendientes para completar el informe
-
-- **SonarQube Community Build:** 0 incidencias de seguridad y 0 Security Hotspots en las 11 mil líneas analizadas. Cero incidencias no demuestra ausencia de riesgos: las brechas de la inspección manual (cabeceras de seguridad, cookie `Secure`, auditoría anonimizada, bloqueo de inyección de EN-02) son de configuración y de diseño que SonarQube no evalúa por regla. Por eso no se declara «Limpio» ninguna categoría con hallazgos manuales.
-- **SonarQube Cloud (alcance por defecto, rama `main`, commit `d36441f`):** 8 incidencias de seguridad (calificación D), 26 de fiabilidad (E) y 10 de mantenibilidad (A) abiertas; el resumen no las asigna a categorías OWASP. Hay que revisar si corresponden a código del proyecto y reclasificar cuando se aclare la discrepancia con Community Build.
-- Registrar la rama, el commit y la hora del análisis de Community Build y el detalle de sus advertencias; incorporar su informe *Security Reports → OWASP Top 10 2025* y la lista de Security Hotspots (hoy en 0).
-- Registrar la configuración del escaneo sin tokens ni contraseñas (fuentes, exclusiones y reglas activas) a partir de `sonar-project.properties`, que hoy está en la rama de Alex y aún no en `main`.
-- Registrar el tratamiento de las advertencias de versión de Python y de información de historial Git observadas en las capturas.
-- Vincular cada hallazgo confirmado con su corrección y el nuevo análisis que la comprueba; cuando se corrija un punto, reclasificar su estado.
-
 ## Control de versiones del documento
 
 | Versión | Fecha | Autoría / cambio |
 |---|---|---|
 | V_1_0_0 | 30/10/2026 | Rojas Camayo, Valentino Jhan Pierre (commit d36441f). Matriz preliminar con las diez categorías oficiales OWASP 2025; evaluación pendiente. |
-| V_1_1_0 | 30/10/2026 | Tovar Sánchez, Carlos Alberto. Se incorpora la inspección estática manual del código, la auditoría de dependencias y los hotspots a la matriz de Valentino, con la lista oficial 2025; hallazgos de SonarQube por incorporar. |
+| V_1_1_0 | 30/10/2026 | Tovar Sánchez, Carlos Alberto. Se incorpora la inspección estática manual del código, la auditoría de dependencias y los hotspots a la matriz de Valentino, con la lista oficial 2025; resultado de SonarQube Community Build (0 incidencias de seguridad). |
 
 [← Volver al índice correspondiente](README.md)

@@ -1,6 +1,6 @@
 # Índice — Sprint 2
 
-Una sola edición vigente por tipo de documento; las ediciones anteriores se integran en cada documento como anexo y su historial está en su tabla de versiones. La versión del documento no determina el número del sprint.
+Una sola edición vigente por tipo de documento; su historial está en la tabla de versiones de cada documento. La versión del documento no determina el número del sprint.
 
 - [01 Informe de estado del proyecto V_1_5_0](01%20Informe%20de%20estado%20del%20proyecto%20V_1_5_0.md)
 - [02 Registro de Impedimentos V_1_5_0](02%20Registro%20de%20Impedimentos%20V_1_5_0.md)

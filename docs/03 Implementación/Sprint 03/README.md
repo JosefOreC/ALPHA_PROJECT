@@ -1,6 +1,6 @@
 # Índice — Sprint 03
 
-Una sola edición vigente por tipo de documento; las ediciones anteriores se integran en cada documento como anexo y su historial está en su tabla de versiones. La carpeta contiene los documentos que exige la consigna del Sprint 3. Los impedimentos del sprint (IMP-012 a IMP-016) están en el [registro de impedimentos](../Sprint%202/02%20Registro%20de%20Impedimentos%20V_1_5_0.md).
+Una sola edición vigente por tipo de documento; su historial está en la tabla de versiones de cada documento. La carpeta contiene los documentos que exige la consigna del Sprint 3. Los impedimentos del sprint (IMP-012 a IMP-016) están en el [registro de impedimentos](../Sprint%202/02%20Registro%20de%20Impedimentos%20V_1_5_0.md).
 
 - [01 Revisión del Sprint V_1_2_0](01%20Revisi%C3%B3n%20del%20Sprint%20V_1_2_0.md)
 - [02 Retrospectiva del Sprint V_1_2_0](02%20Retrospectiva%20del%20Sprint%20V_1_2_0.md)
