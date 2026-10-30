@@ -31,7 +31,7 @@ Fechas originales, prioridades, reportantes y plazos (incluidos vencidos) perman
 
 ## Continuidad entre sprints
 
-Las filas IMP-012 a IMP-016 corresponden al Sprint 3 y continúan los impedimentos indicados. IMP-002/003 continúan desde Sprint 1. IMP-006–009 describen implementación posterior al corte inicial; las validaciones siguen abiertas. IMP-012 retoma IMP-004; IMP-013 retoma IMP-007; IMP-016 retoma IMP-011/H-17. Consultar [Sprint 1](../Sprint%201/02%20Registro%20de%20Impedimentos%20V_1_3_0.md) y la [revisión del Sprint 03](../Sprint%2003/01%20Revisi%C3%B3n%20del%20Sprint%20V_1_2_0.md).
+Las filas IMP-012 a IMP-016 corresponden al Sprint 3 y continúan los impedimentos indicados. IMP-002/003 continúan desde Sprint 1. IMP-006–009 describen implementación posterior al corte inicial; las validaciones siguen abiertas. IMP-012 retoma IMP-004; IMP-013 retoma IMP-007; IMP-016 retoma IMP-011/H-17. Consultar [Sprint 1](../Sprint%201/02%20Registro%20de%20Impedimentos%20V_1_4_0.md) y la [revisión del Sprint 03](../Sprint%2003/01%20Revisi%C3%B3n%20del%20Sprint%20V_1_2_0.md).
 
 ## Anexo — Edición anterior V_1_3_0 (conservada como antecedente)
 
@@ -49,7 +49,7 @@ Texto de la edición anterior; se conserva su contenido y sus cifras con la fech
 
 **Versión del documento:** V_1_3_0
 
-Este registro continúa el [registro del Sprint 1](../Sprint%201/02%20Registro%20de%20Impedimentos%20V_1_3_0.md): IMP-001 a IMP-003 conservan su numeración. **Actualización V_1_3_0 (29/10/2026):** IMP-006 a IMP-009 se redactaron el 09/10 antes de que Josef integrara en `main` la autenticación, los adaptadores PostgreSQL, la API única y los datos desde la API; se actualiza su estado contrastándolo con `main` (commit `30969da`). La descripción original se conserva y la resolución explica qué cambió. Los impedimentos del Sprint 3 continúan desde IMP-012 en el [registro del Sprint 3](../Sprint%2003/01%20Revisi%C3%B3n%20del%20Sprint%20V_1_2_0.md).
+Este registro continúa el [registro del Sprint 1](../Sprint%201/02%20Registro%20de%20Impedimentos%20V_1_4_0.md): IMP-001 a IMP-003 conservan su numeración. **Actualización V_1_3_0 (29/10/2026):** IMP-006 a IMP-009 se redactaron el 09/10 antes de que Josef integrara en `main` la autenticación, los adaptadores PostgreSQL, la API única y los datos desde la API; se actualiza su estado contrastándolo con `main` (commit `30969da`). La descripción original se conserva y la resolución explica qué cambió. Los impedimentos del Sprint 3 continúan desde IMP-012 en el [registro del Sprint 3](../Sprint%2003/01%20Revisi%C3%B3n%20del%20Sprint%20V_1_2_0.md).
 
 | Impedimento # | Fecha de Registro | Descripción del Impedimento así como el Impacto en el Proyecto | Prioridad | Reportado por | Fecha tope de Resolución | Estado | Fecha de Resolución | Resolución/Comentarios |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |

@@ -6,7 +6,7 @@
 
 ## Cambios y versiones vigentes
 
-- Sprint 1: informe, impedimentos, revisión y retrospectiva V_1_3_0.
+- Sprint 1: informe, impedimentos, revisión y retrospectiva V_1_4_0 (V_1_3_0 al momento de la verificación original).
 - Sprint 2: informe/impedimentos/auditoría V_1_4_0, revisión V_1_3_0 y retrospectiva única V_2_1_0.
 - Sprint 3: se conserva el nombre `Sprint 03/`; contiene seis archivos, como Sprint 2: el índice y los documentos 01 a 05 (revisión V_1_2_0, retrospectiva V_1_2_0, calidad de código, OWASP y WCAG V_1_0_0).
 - Seis guías trasladadas desde `development/` a `Guías técnicas/`, sin copias activas. Capturas permanecen en las carpetas de evidencias y se enlazan desde la ubicación real.
@@ -21,10 +21,10 @@ Las carpetas Sprint 1 y Sprint 2 ya existían: se completaron y versionaron sin 
 
 | Ubicación anterior | Ubicación vigente | Historial |
 |---|---|---|
-| `docs/03 Implementación/Sprint 1/01 Informe de estado del proyecto V_1_2_0.md` | [01 Informe de estado del proyecto V_1_3_0.md](Sprint%201/01%20Informe%20de%20estado%20del%20proyecto%20V_1_3_0.md) | [01 Informe de estado del proyecto V_1_2_0.md](Sprint%201/Hist%C3%B3rico/01%20Informe%20de%20estado%20del%20proyecto%20V_1_2_0.md) |
-| `docs/03 Implementación/Sprint 1/02 Registro de Impedimentos V_1_2_0.md` | [02 Registro de Impedimentos V_1_3_0.md](Sprint%201/02%20Registro%20de%20Impedimentos%20V_1_3_0.md) | [02 Registro de Impedimentos V_1_2_0.md](Sprint%201/Hist%C3%B3rico/02%20Registro%20de%20Impedimentos%20V_1_2_0.md) |
-| `docs/03 Implementación/Sprint 1/03 Revisión del Sprint V_1_2_0.md` | [03 Revisión del Sprint V_1_3_0.md](Sprint%201/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_3_0.md) | [03 Revisión del Sprint V_1_2_0.md](Sprint%201/Hist%C3%B3rico/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_2_0.md) |
-| `docs/03 Implementación/Sprint 1/04 Retrospectiva del Sprint V_1_2_0.md` | [04 Retrospectiva del Sprint V_1_3_0.md](Sprint%201/04%20Retrospectiva%20del%20Sprint%20V_1_3_0.md) | [04 Retrospectiva del Sprint V_1_2_0.md](Sprint%201/Hist%C3%B3rico/04%20Retrospectiva%20del%20Sprint%20V_1_2_0.md) |
+| `docs/03 Implementación/Sprint 1/01 Informe de estado del proyecto V_1_2_0.md` | [01 Informe de estado del proyecto V_1_4_0.md](Sprint%201/01%20Informe%20de%20estado%20del%20proyecto%20V_1_4_0.md) | Integrado como anexo del documento vigente; su historial está en la tabla de versiones |
+| `docs/03 Implementación/Sprint 1/02 Registro de Impedimentos V_1_2_0.md` | [02 Registro de Impedimentos V_1_4_0.md](Sprint%201/02%20Registro%20de%20Impedimentos%20V_1_4_0.md) | Integrado como anexo del documento vigente; su historial está en la tabla de versiones |
+| `docs/03 Implementación/Sprint 1/03 Revisión del Sprint V_1_2_0.md` | [03 Revisión del Sprint V_1_4_0.md](Sprint%201/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_4_0.md) | Integrado como anexo del documento vigente; su historial está en la tabla de versiones |
+| `docs/03 Implementación/Sprint 1/04 Retrospectiva del Sprint V_1_2_0.md` | [04 Retrospectiva del Sprint V_1_4_0.md](Sprint%201/04%20Retrospectiva%20del%20Sprint%20V_1_4_0.md) | Integrado como anexo del documento vigente; su historial está en la tabla de versiones |
 | `docs/03 Implementación/Sprint 2/01 Informe de estado del proyecto V_1_3_0.md` | [01 Informe de estado del proyecto V_1_5_0.md](Sprint%202/01%20Informe%20de%20estado%20del%20proyecto%20V_1_5_0.md) | Integrado como anexo del documento vigente; su historial está en la tabla de versiones |
 | `docs/03 Implementación/Sprint 2/02 Registro de Impedimentos V_1_3_0.md` | [02 Registro de Impedimentos V_1_5_0.md](Sprint%202/02%20Registro%20de%20Impedimentos%20V_1_5_0.md) | Integrado como anexo del documento vigente; su historial está en la tabla de versiones |
 | `docs/03 Implementación/Sprint 2/03 Revisión del Sprint V_1_2_0.md` | [03 Revisión del Sprint V_1_4_0.md](Sprint%202/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_4_0.md) | Integrado como anexo del documento vigente; su historial está en la tabla de versiones |
@@ -95,4 +95,4 @@ Sprint 3 anuncia documentos 03 Calidad de código, 04 OWASP y 05 WCAG que no est
 [← Volver al índice de implementación](README.md)
 
 
-> **Actualización 30/10/2026.** Sprint 2 y Sprint 03 ya no tienen carpeta `Histórico`: cada documento vigente integra su edición anterior como anexo y conserva su historial en la tabla de versiones. Sprint 1 conserva su carpeta `Histórico`.
+> **Actualización 30/10/2026.** Sprint 1, Sprint 2 y Sprint 03 ya no tienen carpeta `Histórico`: cada documento vigente integra su edición anterior como anexo y conserva su historial en la tabla de versiones. tampoco Sprint 1: sus cuatro documentos pasan a V_1_4_0.
