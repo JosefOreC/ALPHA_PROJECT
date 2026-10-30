@@ -14,9 +14,9 @@
 
 ## 1. Resumen Ejecutivo de Quality Gate
 
-- **Estado del Quality Gate:** Por incorporar de SonarQube (ejecutado por el equipo; resultado no disponible en el repositorio).
+- **Estado del Quality Gate:** PASSED en SonarQube Cloud para el análisis del Pull Request #26 (commit `54135e26`, 30/10/2026). Ese análisis cubre **0 líneas nuevas de código** (el PR solo contiene documentación), de modo que el resultado no evalúa el código existente del proyecto; el Quality Gate del análisis completo de `main` está por incorporar.
 - **Porcentaje de Cobertura de Pruebas (Coverage):** backend **82 %** de sentencias (`pytest-cov` sobre `application`, `domain`, `infrastructure` e `interfaces`; 225 pruebas aprobadas) y frontend **80,0 %** de sentencias, 72,5 % de ramas, 80,6 % de funciones y 85,8 % de líneas (`vitest --coverage`, proveedor V8; 273 pruebas aprobadas). Es cobertura global del código, no del código nuevo del sprint, y proviene de herramientas locales, no de SonarQube.
-- **Duplicación de Código:** Por incorporar de SonarQube.
+- **Duplicación de Código:** **0,3 %** estimada tras el merge (SonarQube Cloud, PR #26; sin condiciones definidas en el Quality Gate). Es la estimación del análisis del PR; la duplicación medida sobre `main` está por incorporar.
 
 Otros indicadores locales (30/10/2026): `oxlint` sin advertencias, `tsc -b` sin errores, compilación de producción completada; backend con 225 pruebas aprobadas, 5 omitidas (integración con PostgreSQL real) y 36 subpruebas.
 
@@ -25,9 +25,9 @@ Otros indicadores locales (30/10/2026): `oxlint` sin advertencias, `tsc -b` sin 
 | Categoría | Cantidad Detectada | Severidad (Bloqueante / Alta / Media / Baja) |
 |---|---|---|
 | Bugs | Por incorporar de SonarQube | Pendiente |
-| Vulnerabilidades | Por incorporar de SonarQube. Auditoría de dependencias: `npm audit` 2 altas, `pip-audit` 0 (ver sección 3) | Alta (dependencias de desarrollo) |
-| Code Smells | Por incorporar de SonarQube. Observación manual: 3 archivos de backend vacíos (`generate_routes.py`, `reoptimize_route.py`, `route.py`) | Pendiente |
-| Security Hotspots | Por incorporar de SonarQube. Candidatos por inspección manual en el documento [04 OWASP](04%20OWASP%20V_1_1_0.md) | Pendiente |
+| Vulnerabilidades | **0** nuevas en el PR #26 (0 líneas nuevas); total sobre `main` por incorporar. Auditoría de dependencias: `npm audit` 2 altas, `pip-audit` 0 (ver sección 3) | Alta (dependencias de desarrollo) |
+| Code Smells | **0** nuevos en el PR #26 (0 líneas nuevas); total sobre `main` por incorporar. Observación manual: 3 archivos de backend vacíos (`generate_routes.py`, `reoptimize_route.py`, `route.py`) | Pendiente |
+| Security Hotspots | **0** en el análisis del PR #26 (0 líneas nuevas; no evalúa el código existente). Candidatos por inspección manual en el documento [04 OWASP](04%20OWASP%20V_1_1_0.md) | Sin severidad reportada por SonarQube |
 
 ## 3. Plan de Remediación y Deuda Técnica
 
@@ -39,7 +39,7 @@ Otros indicadores locales (30/10/2026): `oxlint` sin advertencias, `tsc -b` sin 
   4. **Tres archivos de backend vacíos** (`generate_routes.py`, `reoptimize_route.py` y `route.py`) y duplicidad entre el módulo de planificación estimada y el caso de uso previsto. Acción: eliminarlos o implementarlos al construir el motor de rutas (EN-01).
   5. **Análisis estático sin integración continua.** La configuración de SonarQube existe en la rama de Alex. Acción: integrarla a `main` mediante Pull Request, generar la cobertura de backend con `pytest --cov --cov-report=xml` (archivo `src/backend/coverage.xml`) y la de frontend con `vitest --coverage` (`lcov`), y agregar un flujo de CI que ejecute el escaneo con el Quality Gate como requisito de merge.
 
-**Para completar este documento:** copiar de las capturas de SonarQube el Quality Gate, la duplicación y los conteos por severidad a las secciones 1 y 2 (con fecha, rama y commit analizados), y registrar la deuda técnica y las correcciones aplicadas.
+**Para completar este documento:** agregar las capturas del análisis de la rama `main` en SonarQube Cloud: (1) *Overview* con el Quality Gate, Security, Reliability, Maintainability, Hotspots revisados, cobertura, duplicación y líneas de código; (2) *Issues* con el conteo por tipo (bugs, vulnerabilidades y code smells) y severidad; (3) *Security Hotspots* con su lista y estado; (4) *Measures* con la deuda técnica; y registrar la fecha y el commit analizados.
 
 **Comandos usados en esta evaluación (desde `src/backend` y `src/frontend`):**
 
@@ -52,10 +52,27 @@ npx vitest run --coverage --coverage.reporter=text-summary
 npx oxlint ; npx tsc -b ; npm audit
 ```
 
+## Evidencia de SonarQube Cloud
+
+Captura del resumen del Pull Request #26 en SonarQube Cloud (proyecto `JosefOreC / ALPHA_PROJECT`, rama `feature/carlos/spr3/docs-sprints` hacia `main`, análisis del commit `54135e26`, 30/10/2026):
+
+![Resumen del PR #26 en SonarQube Cloud](evidencias-sonar/sonarqube-cloud-pr26-resumen.png)
+
+| Indicador | Valor en la captura |
+|---|---|
+| Quality Gate | Passed |
+| Líneas nuevas de código | 0 |
+| New Issues / Accepted Issues | 0 / 0 |
+| Security Hotspots | 0 |
+| Duplicaciones en código nuevo | Sin dato; **0,3 %** estimado tras el merge |
+| Cobertura | No configurada en SonarQube Cloud («A few extra steps are needed to analyze your code coverage») |
+
+**Límites de esta evidencia.** Es un análisis de Pull Request con cero líneas nuevas, así que no sustituye al análisis del código completo. La cobertura no llega a SonarQube todavía: los informes `coverage.xml` y `lcov.info` que configura `sonar-project.properties` no se envían, por lo que las cifras de cobertura de este documento son las medidas localmente. Para completar el documento se necesitan las pantallas del análisis de la rama `main` (ver «Para completar este documento»).
+
 ## Control de versiones del documento
 
 | Versión | Fecha | Autoría / cambio |
 |---|---|---|
-| V_1_0_0 | 30/10/2026 | Tovar Sánchez, Carlos Alberto. Emisión inicial con la plantilla oficial: cobertura, lint y auditoría de dependencias medidos localmente; resultados de SonarQube por incorporar. |
+| V_1_0_0 | 30/10/2026 | Tovar Sánchez, Carlos Alberto. Emisión inicial con la plantilla oficial: cobertura, lint y auditoría de dependencias medidos localmente y resumen de SonarQube Cloud del PR #26; análisis de `main` por incorporar. |
 
 [← Volver al índice correspondiente](README.md)

@@ -35,6 +35,7 @@ Los códigos y nombres siguen la lista oficial [OWASP Top 10:2025](https://top10
 
 ## 3. Pendientes para completar el informe
 
+- **Antecedente de SonarQube Cloud:** el análisis del PR #26 (commit `54135e26`, 30/10/2026) reportó Quality Gate «Passed» y 0 Security Hotspots, pero con **0 líneas nuevas de código** (el PR solo contiene documentación). No evalúa el código existente, por lo que no cambia el estado de ninguna categoría; ver [03 Calidad de código](03%20Calidad%20de%20c%C3%B3digo%20V_1_0_0.md).
 - Incorporar las capturas de SonarQube (fecha y hora, rama y commit analizados, Security Hotspots y detalle de incidencias de seguridad) y copiar sus hallazgos por categoría a la tercera columna.
 - Registrar la configuración del escaneo sin tokens ni contraseñas (fuentes, exclusiones y reglas activas) a partir de `sonar-project.properties`, que hoy está en la rama de Alex y aún no en `main`.
 - Registrar el tratamiento de las advertencias de versión de Python y de información de historial Git observadas en las capturas.
