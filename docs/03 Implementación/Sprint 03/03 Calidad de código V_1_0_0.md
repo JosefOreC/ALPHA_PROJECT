@@ -35,7 +35,7 @@ El proyecto tiene 11 mil líneas de código (13 mil líneas en total) y 0 incide
   2. **Advertencias del análisis.** Acción: definir `sonar.python.version` con la versión de Python que usa el proyecto y corregir la información de historial Git de los 196 archivos (por ejemplo, analizando desde un clon completo y no uno superficial); luego repetir el análisis.
   3. **Dependencias de desarrollo con vulnerabilidades altas** (`npm audit`, 30/10/2026): `vite` 8.3.0–8.3.2 y `undici` 8.0.0–8.12.1 (transitiva); `pip-audit` sin hallazgos. Acción: `npm audit fix` y repetir las pruebas.
   4. **Tres archivos de backend vacíos** (`generate_routes.py`, `reoptimize_route.py` y `route.py`); la lógica de planificación está en `domain/planning.py`. Acción: eliminarlos o implementarlos con la aprobación y el despacho de rutas.
-  5. **Sin integración continua.** Acción: ejecutar el análisis de SonarQube y las pruebas con cobertura en cada Pull Request, con el Quality Gate como requisito de merge.
+  5. **La auditoría de dependencias del flujo de integración continua falla.** El flujo `.github/workflows/sonarcloud.yml` (existe desde el 30/10/2026) se ejecuta en cada push y Pull Request hacia `main`: pruebas con cobertura (mínimo del 90 % en Python), compilación del frontend, Quality Gate y una auditoría de dependencias. Esa auditoría falla por las 2 vulnerabilidades altas de `npm audit` (`vite` y `undici`). Acción: actualizar ambas dependencias; el `npm audit fix` local falla por un error interno de npm 10.9.8 con este `package-lock.json`.
 
 ## Control de versiones del documento
 
