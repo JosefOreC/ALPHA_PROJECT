@@ -15,5 +15,12 @@ export default defineConfig({
     // Las pruebas de interfaz escriben con userEvent y, con todos los archivos en paralelo, pueden tardar más de 5 s.
     testTimeout: 15_000,
     include: ['src/**/*.test.{ts,tsx}'],
+    coverage: {
+      provider: 'v8',
+      reporter: ['text-summary', 'lcov', 'json-summary'],
+      include: ['src/**/*.{ts,tsx}'],
+      exclude: ['src/**/*.test.{ts,tsx}', 'src/test/**', 'src/vite-env.d.ts'],
+      thresholds: { lines: 90, statements: 90, functions: 90, branches: 90 },
+    },
   },
 })

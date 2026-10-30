@@ -197,7 +197,8 @@ CREATE TABLE factores_emision (
     combustible VARCHAR(30) PRIMARY KEY,
     factor_kg_co2 NUMERIC(8,3) NOT NULL CHECK (factor_kg_co2 >= 0),
     unidad VARCHAR(10) NOT NULL,
-    fuente TEXT NOT NULL
+    fuente TEXT NOT NULL,
+    consumo_por_km NUMERIC(8,4) CHECK (consumo_por_km > 0)
 );
 CREATE TABLE integraciones (
     integracion_id VARCHAR(30) PRIMARY KEY,

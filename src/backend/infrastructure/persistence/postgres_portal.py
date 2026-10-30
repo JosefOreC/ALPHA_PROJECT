@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 from uuid import uuid4
 from zoneinfo import ZoneInfo
 from domain.access_control import canonical_role
+from domain.emissions import FUEL_UNITS, REFERENCE_CONSUMPTION
 from domain.planning import propose
 from infrastructure.persistence.database import connection, rows
 from infrastructure.security import hash_password
@@ -60,10 +61,14 @@ class PostgresPortal:
         if not result:
             raise ValueError('No hay parámetros configurados en la base de datos.')
         row = result[0]
+        stored = rows('SELECT * FROM factores_emision')
         factors = {fuel:None for fuel in FUELS}
-        factors.update({item['combustible']:float(item['factor_kg_co2']) for item in rows('SELECT * FROM factores_emision')})
+        factors.update({item['combustible']:float(item['factor_kg_co2']) for item in stored})
+        consumption = {fuel:None for fuel in FUELS}
+        consumption.update({item['combustible']:float(item['consumo_por_km']) for item in stored if item.get('consumo_por_km') is not None})
         return {'co2Weight':row['peso_co2'],'maxSeconds':row['tiempo_maximo_seg'],'maxLoadPercent':row['carga_maxima_pct'],
-                'windowSlackMinutes':row['holgura_ventana_min'],'autoReoptimize':row['reoptimizar_automaticamente'],'emissionFactors':factors}
+                'windowSlackMinutes':row['holgura_ventana_min'],'autoReoptimize':row['reoptimizar_automaticamente'],'emissionFactors':factors,
+                'fuelConsumption':consumption}
 
     def save_parameters(self, data, actor):
         with connection() as conn:
@@ -76,13 +81,19 @@ class PostgresPortal:
                 holgura_ventana_min=EXCLUDED.holgura_ventana_min,reoptimizar_automaticamente=EXCLUDED.reoptimizar_automaticamente,
                 actualizado_por=EXCLUDED.actualizado_por,actualizado_en=EXCLUDED.actualizado_en''',
                 (identifier,data['co2Weight'],data['maxSeconds'],data['maxLoadPercent'],data['windowSlackMinutes'],data['autoReoptimize'],actor))
+            consumption = data.get('fuelConsumption') or {}
             for fuel, factor in data['emissionFactors'].items():
                 if factor is None:
                     conn.execute('DELETE FROM factores_emision WHERE combustible=%s',(fuel,))
                 else:
-                    conn.execute('''INSERT INTO factores_emision(combustible,factor_kg_co2,unidad,fuente) VALUES (%s,%s,%s,'Configurado por administración')
-                        ON CONFLICT(combustible) DO UPDATE SET factor_kg_co2=EXCLUDED.factor_kg_co2,fuente=EXCLUDED.fuente''',
-                        (fuel,factor,'kWh' if fuel=='ELECTRICO' else 'm3' if fuel=='GNV' else 'L'))
+                    # Sin consumo en la petición (clientes anteriores no lo envían) se conserva el guardado
+                    # o, en una fila nueva, se usa el de referencia para no excluir esos vehículos.
+                    given = consumption.get(fuel)
+                    conn.execute('''INSERT INTO factores_emision(combustible,factor_kg_co2,unidad,fuente,consumo_por_km)
+                        VALUES (%s,%s,%s,'Configurado por administración',COALESCE(%s::numeric,%s::numeric))
+                        ON CONFLICT(combustible) DO UPDATE SET factor_kg_co2=EXCLUDED.factor_kg_co2,fuente=EXCLUDED.fuente,
+                        consumo_por_km=COALESCE(%s::numeric,factores_emision.consumo_por_km)''',
+                        (fuel,factor,FUEL_UNITS[fuel],given,REFERENCE_CONSUMPTION[fuel],given))
             audit(conn,actor,'ACTUALIZAR_PARAMETROS','parametros_algoritmo',identifier,{})
         return self.parameters()
 
@@ -246,7 +257,8 @@ class PostgresPortal:
         depots = rows('SELECT latitud,longitud FROM almacenes ORDER BY nombre LIMIT 1')
         if not depots or not fleet:
             raise ValueError('Se requiere un almacén y vehículos disponibles con conductor para planificar.')
-        factors = {row['combustible']:float(row['factor_kg_co2']) for row in rows('SELECT * FROM factores_emision')}
-        result = propose(orders,fleet,(float(depots[0]['latitud']),float(depots[0]['longitud'])),factors,self.parameters(),settings,now())
+        profiles = {row['combustible']:{'factor':float(row['factor_kg_co2']),
+                    'consumption':float(row['consumo_por_km']) if row.get('consumo_por_km') is not None else None} for row in rows('SELECT * FROM factores_emision')}
+        result = propose(orders,fleet,(float(depots[0]['latitud']),float(depots[0]['longitud'])),profiles,self.parameters(),settings,now())
         result['elapsedSeconds'] = round(time.monotonic()-started,2)
         return result

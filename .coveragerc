@@ -1,0 +1,18 @@
+[run]
+branch = True
+relative_files = True
+source =
+    src/backend
+    scripts
+omit =
+    src/backend/tests/*
+
+[report]
+fail_under = 90
+precision = 2
+
+[xml]
+output = reports/coverage/backend.xml
+
+[json]
+output = reports/coverage/backend.json
