@@ -74,7 +74,7 @@ La demostración del Sprint 2 muestra únicamente lo que se puede ejecutar. Los 
 
 ### **Notas**
 
-Este informe no declara como aceptadas historias que aún no pasaron la revisión del sprint ni presenta datos sintéticos como operación real. La velocidad del Sprint 2 no se calcula hasta que se decida la aceptación. No se consultó Jira para elaborar este informe; su conciliación con el repositorio queda como acción abierta (ver la [auditoría de coherencia](05%20Auditor%C3%ADa%20de%20coherencia%20del%20proyecto%20V_1_3_0.md)). Josef Ore documentó su parte del sprint en `05 Revisión del Sprint V_2_0_0.md` y `06 Retrospectiva del Sprint V_2_0_0.md` (en esta carpeta).
+Este informe no declara como aceptadas historias que aún no pasaron la revisión del sprint ni presenta datos sintéticos como operación real. La velocidad del Sprint 2 no se calcula hasta que se decida la aceptación. No se consultó Jira para elaborar este informe; su conciliación con el repositorio queda como acción abierta (ver la [auditoría de coherencia](05%20Auditor%C3%ADa%20de%20coherencia%20del%20proyecto%20V_1_3_0.md)). La parte de Josef Ore está incorporada en la [revisión](03%20Revisi%C3%B3n%20del%20Sprint%20V_1_2_0.md) y su retrospectiva se conserva en `06 Retrospectiva del Sprint V_2_0_0.md` (esta carpeta).
 
 ### **Control de versiones del documento**
 
