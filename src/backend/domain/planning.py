@@ -138,7 +138,8 @@ def propose(orders, fleet, depot, factors, config, settings, start):
     total_km = sum(row['km'] for row in planned)
     co2 = sum(row['co2Kg'] for row in planned)
     baseline_co2 = round(baseline_km*baseline_rate,2) if baseline_rate else None
+    # «+ 0.0» descarta el -0.0 que deja redondear una diferencia flotante mínima.
     return {'routeCount':len(planned),'ordersAssigned':sum(row['stops'] for row in planned),'totalKm':round(total_km,2),
-            'kmSaved':round(baseline_km-total_km,2),'co2Kg':round(co2,2),'baselineKm':round(baseline_km,2),'baselineCo2Kg':baseline_co2,
-            'co2SavedPercent':round((baseline_co2-co2)/baseline_co2*100,1) if baseline_co2 else None,
+            'kmSaved':round(baseline_km-total_km,2)+0.0,'co2Kg':round(co2,2),'baselineKm':round(baseline_km,2),'baselineCo2Kg':baseline_co2,
+            'co2SavedPercent':round((baseline_co2-co2)/baseline_co2*100,1)+0.0 if baseline_co2 else None,
             'windowCompliance':round(compliant/len(orders)*100,1),'windowTarget':90,'elapsedSeconds':0,'routes':planned}
