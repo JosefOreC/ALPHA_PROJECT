@@ -80,7 +80,7 @@ Completar la configuración de Jira, preparar el entorno local, crear la estruct
 | 5 | Unificar la clase de dominio `Pedido` antes de abrir los Pull Request. | En el código existe una sola entidad `Order` (`domain/entities/order.py`) y la gestión añade sus datos en `order_management.py`; no hay un acuerdo documentado. | Código del backend en `main`. |
 | 6 | Revisar semanalmente la trazabilidad entre Jira, GitHub y los documentos. | Pendiente: Jira no se ha conciliado con el repositorio. | Auditoría de coherencia del Sprint 2, H-14. |
 
-[← Volver al README Principal](../../README.md)
+[← Volver al README Principal](../../../README.md)
 
 ### **Control de versiones del documento**
 

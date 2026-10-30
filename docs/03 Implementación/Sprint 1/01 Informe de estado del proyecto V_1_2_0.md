@@ -14,7 +14,7 @@
 
 > **Nota de actualización.** Este informe tuvo su emisión original el 25/09/2026 y se actualizó el 02/10/2026 al incorporar las historias implementadas entre el 30/09 y el 02/10. La versión V_1_1_0 (09/10/2026) corrige los identificadores de las historias, reconcilia las filas del estado con esa lista y registra lo que el sprint planificó y no completó. El periodo y la fecha originales se conservan; el trabajo de implementación ocurrió después de ese corte y se describe como tal.
 
-> **Actualización V_1_2_0 (29/10/2026).** Esta versión solo precisa que el estado de los riesgos refleja el 09/10/2026. Después de esa fecha `main` incorporó el inicio de sesión, la persistencia en PostgreSQL y un generador de datos de prueba (commits `c314f64` a `97b401b`, sin Pull Request); el riesgo «Datos solo en memoria y sin identidad verificada» y el dataset sintético están en parte superados. Ver el [informe del Sprint 2](Sprint%202/01%20Informe%20de%20estado%20del%20proyecto%20V_1_3_0.md). El resto del texto del Sprint 1 no cambia.
+> **Actualización V_1_2_0 (29/10/2026).** Esta versión solo precisa que el estado de los riesgos refleja el 09/10/2026. Después de esa fecha `main` incorporó el inicio de sesión, la persistencia en PostgreSQL y un generador de datos de prueba (commits `c314f64` a `97b401b`, sin Pull Request); el riesgo «Datos solo en memoria y sin identidad verificada» y el dataset sintético están en parte superados. Ver el [informe del Sprint 2](../Sprint%202/01%20Informe%20de%20estado%20del%20proyecto%20V_1_3_0.md). El resto del texto del Sprint 1 no cambia.
 
 ### **Estado del proyecto**
 
@@ -50,7 +50,7 @@ La demostración del Sprint 1 muestra los artefactos y funcionalidades realmente
 2. README principal con la descripción del proyecto, alcance del PMV, iteraciones, roles, stack propuesto y enlaces documentales.
 3. Documentos de requisitos funcionales y no funcionales, usuarios, reglas de negocio, base de datos y modelo C4.
 4. Backlog y evidencias de Jira con las épicas, historias de usuario y organización del trabajo.
-5. Aplicación con datos en memoria que permite registrar y consultar vehículos, registrar y administrar pedidos (con la evidencia de [`evidencias-crud-pedidos/`](evidencias-crud-pedidos/)), confirmar entregas, registrar conductores y ver el dashboard de indicadores. La documentación de cada módulo está en [CRUD de pedidos](../../development/CRUD%20de%20pedidos.md) y [Confirmación de pedidos](../../development/Confirmacion%20de%20pedidos.md).
+5. Aplicación con datos en memoria que permite registrar y consultar vehículos, registrar y administrar pedidos (con la evidencia de [`evidencias-crud-pedidos/`](../evidencias-crud-pedidos/)), confirmar entregas, registrar conductores y ver el dashboard de indicadores. La documentación de cada módulo está en [CRUD de pedidos](../../../development/CRUD%20de%20pedidos.md) y [Confirmación de pedidos](../../../development/Confirmacion%20de%20pedidos.md).
 6. Documentos del Sprint 1 ubicados en `docs/03 Implementación/`.
 
 ### **Riesgos**
@@ -73,7 +73,7 @@ La demostración del Sprint 1 muestra los artefactos y funcionalidades realmente
 
 ### **Notas**
 
-Este informe no declara como completas funcionalidades que solo existen con almacenamiento en memoria o que no han pasado una revisión de aceptación. Las historias figuran como «implementadas de forma parcial» hasta contar con persistencia, identidad verificada y la aceptación del sprint. El trabajo restante continúa en el Sprint 2; su estado se registra en los [documentos del Sprint 2](Sprint%202/).
+Este informe no declara como completas funcionalidades que solo existen con almacenamiento en memoria o que no han pasado una revisión de aceptación. Las historias figuran como «implementadas de forma parcial» hasta contar con persistencia, identidad verificada y la aceptación del sprint. El trabajo restante continúa en el Sprint 2; su estado se registra en los [documentos del Sprint 2](../Sprint%202/).
 
 ### **Control de versiones del documento**
 
@@ -83,4 +83,4 @@ Este informe no declara como completas funcionalidades que solo existen con alma
 | V_1_1_0 | 09/10/2026 | Tovar Sánchez, Carlos Alberto | Se corrigen los identificadores US-003 y US-012, se reconcilian las filas de estado con las historias implementadas, se registran EN-00 como no completado, la evidencia de pruebas y el estado actual de los riesgos y los próximos avances. |
 | V_1_2_0 | 29/10/2026 | Tovar Sánchez, Carlos Alberto | Nota de actualización y corrección del estado de dos riesgos que `main` superó el 09/10/2026 (generador de datos de prueba; autenticación y PostgreSQL). El resto del texto no cambia. |
 
-[← Volver al README Principal](../../README.md)
+[← Volver al README Principal](../../../README.md)

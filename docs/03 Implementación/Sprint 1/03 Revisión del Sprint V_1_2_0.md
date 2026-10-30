@@ -35,7 +35,7 @@ La demostración del Sprint 1 muestra los artefactos y funcionalidades realmente
 2. README principal con la descripción del proyecto, alcance del PMV, iteraciones, roles, stack propuesto y enlaces documentales.
 3. Documentos de requisitos funcionales y no funcionales, usuarios, reglas de negocio, base de datos y modelo C4.
 4. Backlog y evidencias de Jira con las épicas, historias de usuario y organización del trabajo.
-5. Aplicación con datos en memoria que demuestra el registro y consulta de vehículos, el registro y la administración de pedidos, la confirmación de entregas, el registro de conductores y el dashboard de indicadores operativos. Documentación de los módulos: [CRUD de pedidos](../../development/CRUD%20de%20pedidos.md) y [Confirmación de pedidos](../../development/Confirmacion%20de%20pedidos.md), con su evidencia en [`evidencias-crud-pedidos/`](evidencias-crud-pedidos/).
+5. Aplicación con datos en memoria que demuestra el registro y consulta de vehículos, el registro y la administración de pedidos, la confirmación de entregas, el registro de conductores y el dashboard de indicadores operativos. Documentación de los módulos: [CRUD de pedidos](../../../development/CRUD%20de%20pedidos.md) y [Confirmación de pedidos](../../../development/Confirmacion%20de%20pedidos.md), con su evidencia en [`evidencias-crud-pedidos/`](../evidencias-crud-pedidos/).
 6. Documentos del Sprint 1 ubicados en `docs/03 Implementación/`.
 
 Verificación posterior (09/10/2026): el backend de `main` aprueba 169 pruebas y 36 subpruebas. No se midió cobertura y no hay pruebas con una base de datos real.
@@ -78,4 +78,4 @@ La versión V_1_0_0 no conservó estos datos. Se completan si existe evidencia d
 | V_1_1_0 | 09/10/2026 | Tovar Sánchez, Carlos Alberto | Se corrigen los identificadores US-003 y US-012, se registra EN-00 como no completado, se retira la afirmación «no quedan pendientes», se aclara que el acceso por roles no se completó en el sprint y se agrega el registro de la reunión pendiente. |
 | V_1_2_0 | 29/10/2026 | Tovar Sánchez, Carlos Alberto | Se enlaza el informe en V_1_2_0 y se anotan, sin borrar el texto original, los pendientes que `main` resolvió después del 09/10/2026 (control de acceso, PostgreSQL y API única). |
 
-[← Volver al README Principal](../../README.md)
+[← Volver al README Principal](../../../README.md)

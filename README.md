@@ -328,10 +328,10 @@ Documentos de sprint ubicados en [docs/03 Implementación](./docs/03%20Implement
 
 | Documento | Descripción |
 |-----------|-------------|
-| [01. Informe de estado (Sprint 1)](./docs/03%20Implementaci%C3%B3n/01%20Informe%20de%20estado%20del%20proyecto%20V_1_2_0.md) | Estado del alcance, cronograma, costos y calidad del Sprint 1. |
-| [02. Registro de impedimentos (Sprint 1)](./docs/03%20Implementaci%C3%B3n/02%20Registro%20de%20Impedimentos%20V_1_2_0.md) | Impedimentos del Sprint 1, su prioridad y su estado. |
-| [03. Revisión del Sprint 1](./docs/03%20Implementaci%C3%B3n/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_2_0.md) | Historias implementadas, demostración y pendientes del Sprint 1. |
-| [04. Retrospectiva del Sprint 1](./docs/03%20Implementaci%C3%B3n/04%20Retrospectiva%20del%20Sprint%20V_1_2_0.md) | Aprendizajes, mejoras y seguimiento de acciones del Sprint 1. |
+| [01. Informe de estado (Sprint 1)](./docs/03%20Implementaci%C3%B3n/Sprint%201/01%20Informe%20de%20estado%20del%20proyecto%20V_1_2_0.md) | Estado del alcance, cronograma, costos y calidad del Sprint 1. |
+| [02. Registro de impedimentos (Sprint 1)](./docs/03%20Implementaci%C3%B3n/Sprint%201/02%20Registro%20de%20Impedimentos%20V_1_2_0.md) | Impedimentos del Sprint 1, su prioridad y su estado. |
+| [03. Revisión del Sprint 1](./docs/03%20Implementaci%C3%B3n/Sprint%201/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_2_0.md) | Historias implementadas, demostración y pendientes del Sprint 1. |
+| [04. Retrospectiva del Sprint 1](./docs/03%20Implementaci%C3%B3n/Sprint%201/04%20Retrospectiva%20del%20Sprint%20V_1_2_0.md) | Aprendizajes, mejoras y seguimiento de acciones del Sprint 1. |
 | [Sprint 2 · 01. Informe de estado](./docs/03%20Implementaci%C3%B3n/Sprint%202/01%20Informe%20de%20estado%20del%20proyecto%20V_1_3_0.md) | Estado del proyecto, historias trabajadas, riesgos y pendientes. |
 | [Sprint 2 · 02. Registro de impedimentos](./docs/03%20Implementaci%C3%B3n/Sprint%202/02%20Registro%20de%20Impedimentos%20V_1_3_0.md) | Impedimentos IMP-001 a IMP-011 con su estado. |
 | [Sprint 2 · 03. Revisión del Sprint](./docs/03%20Implementaci%C3%B3n/Sprint%202/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_2_0.md) | Trabajo realizado, demostración, evidencia de pruebas y pendientes. |
