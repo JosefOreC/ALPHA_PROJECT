@@ -4,7 +4,7 @@
 
 ## Estado y alcance
 
-El proyecto SonarCloud ya existe y es público. La consulta más reciente de `main` / `155a99a`, del 30/10/2026 a las 13:00:07 de Lima, registra dieciséis vulnerabilidades y Quality Gate ERROR por seguridad en código nuevo. El [informe remoto del Sprint 3](../Sprint%2003/05%20Informe%20SonarCloud%20V_1_0_0.md) conserva el análisis inicial y documenta la actualización, las ocho incidencias añadidas por la integración y sus correcciones pendientes de reanálisis. La configuración está en el [PR #27 en borrador](https://github.com/JosefOreC/ALPHA_PROJECT/pull/27); el propietario completará token y permisos desde las páginas de los servicios.
+El proyecto SonarCloud ya existe y es público. La consulta de `main` / `155a99a`, del 30/10/2026 a las 13:00:07 de Lima, registra dieciséis vulnerabilidades y Quality Gate ERROR por seguridad en código nuevo. El análisis CI posterior del PR #27 tiene Quality Gate OK y cobertura superior al 90 %, con el alcance delimitado por su configuración. El [informe remoto del Sprint 3](../Sprint%2003/05%20Informe%20SonarCloud%20V_1_0_0.md) conserva ambos resultados y sus diferencias de alcance. La configuración está en el [PR #27 en borrador](https://github.com/JosefOreC/ALPHA_PROJECT/pull/27); el token está guardado y los permisos de revisión siguen pendientes de verificar.
 
 | Dato de entrega al equipo | Estado |
 |---|---|
@@ -13,7 +13,10 @@ El proyecto SonarCloud ya existe y es público. La consulta más reciente de `ma
 | Proyecto (`project key`) | `JosefOreC_ALPHA_PROJECT`, verificada mediante la API |
 | Enlace del proyecto | [Resumen de main](https://sonarcloud.io/summary/overall?id=JosefOreC_ALPHA_PROJECT&branch=main) |
 | Usuario del revisor | Valentino Jhan Pierre Rojas Camayo, GitHub `ValeRojas1`; confirmar su cuenta en el selector de SonarCloud |
-| Token | El propietario lo guardará en GitHub Actions como `SONAR_TOKEN`; no se verificó su existencia ni se accedió a su valor |
+| Token | El propietario guardó `SONAR_TOKEN`; se verificó su existencia en GitHub, sin leer el valor |
+| Análisis CI | Intento 3 de 41107004270: Pruebas y SonarCloud success; Quality Gate del PR #27 OK |
+
+El [intento 3 de CI](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/41107004270/attempts/3), sobre `21248b1`, aprobó 378 pruebas Python y 441 frontend, con cinco omisiones de integración. Cobertura de líneas/ramas: Python 94,42 % / 92,79 %; frontend 97,58 % / 90,24 %. Después de desactivar Automatic Analysis, Sonar aceptó el análisis `aa683391-5607-478e-9138-905441b99644`: Quality Gate OK para el PR #27, cobertura 94,1 %, líneas 95,9 %, ramas 90,8 % y cobertura nueva 100 %. La condición remota de cobertura nueva sigue en 80 %, aunque CI exige el 90 %; ajustarla en el servicio si se requiere el mismo umbral remoto. La ejecución completa sigue fallando por diez alertas Bandit B608 y dos vulnerabilidades altas npm; pip-audit no encontró vulnerabilidades conocidas en su entorno. El análisis de main y sus hallazgos se conservan por separado.
 
 ## Pasos pendientes del propietario del repositorio
 

@@ -15,7 +15,28 @@
 | Versión documental | V_1_0_0 |
 | Estado | Resultados remotos exportados; revisión de hallazgos y cierre OWASP pendientes |
 
-## 0. Actualización: Quality Gate rojo en main
+## 0. Actualización: análisis CI del PR aprobado
+
+El propietario guardó `SONAR_TOKEN` y desactivó Automatic Analysis. El [intento 3 de GitHub Actions](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/41107004270/attempts/3) completó **Pruebas y SonarCloud con success**. La tarea `AaGOKR0tuF0_WiLutffU` finalizó en SUCCESS el 30/10/2026 a las 18:53:48 UTC y generó el análisis `aa683391-5607-478e-9138-905441b99644`, para el [PR #27](https://sonarcloud.io/dashboard?id=JosefOreC_ALPHA_PROJECT&pullRequest=27).
+
+La API del PR confirma el head `21248b14a39e3053390bc4ab4038bd1b51981f4f`. El artefacto registra `GITHUB_SHA=d5eb106129b0a3c4842442e2788288d23f0b20ac`, la referencia de merge utilizada por GitHub para probar el PR. Se conservan ambas referencias para distinguir el head del contexto de ejecución.
+
+| Resultado remoto del PR #27 | Valor |
+|---|---:|
+| Quality Gate | OK |
+| Cobertura informada en el ámbito del PR | 94,1 % |
+| Cobertura de líneas / ramas | 95,9 % / 90,8 % |
+| Cobertura nueva, de líneas y de ramas | 100 % |
+| Vulnerabilidades / bugs / code smells del PR | 0 / 0 / 0 |
+| Condición remota de cobertura nueva | Mínimo 80 %; el resultado supera el 90 % solicitado |
+
+CI exige por separado el 90 % de líneas y ramas Python, y de las cuatro métricas frontend. El Quality Gate remoto todavía debe ajustarse al 90 % desde la administración del servicio si se desea que también imponga ese umbral. Las cifras del PR no sustituyen un nuevo análisis de main ni demuestran el cierre de sus dieciséis vulnerabilidades: hay diferencias de alcance documentadas en la sección 4.
+
+Una consulta posterior confirmó que `main` ya apunta a `4218a972f94ab4c99ce49dc704c54e858569d3cf`: su análisis del 30/10/2026 a las 13:30:59 de Lima mantiene dieciséis vulnerabilidades y Quality Gate ERROR por `new_security_rating=5` (E), frente al máximo permitido de 1 (A). El PR #27 sigue abierto y sin integrar. Por eso el enlace de main continúa mostrando Failed aunque el análisis del PR esté aprobado.
+
+La ejecución completa sigue en **failure** por el job independiente de auditoría: diez alertas Bandit B608, cero vulnerabilidades conocidas en el entorno Python auditado y dos vulnerabilidades altas npm (`undici` y `vite`). Esos hallazgos requieren revisión/corrección y no se ocultaron para aprobar CI. Los artifacts `sonar-evidence-41107004270-3` y `security-audits-41107004270-3` contienen la evidencia. La exportación de hotspots por PR sigue sin estar soportada por la API anunciada; revisar el dashboard.
+
+### 0.1. Estado de main anterior al análisis CI del PR
 
 El análisis `228d20c3-3239-437a-947a-39a975bf424c`, del 30/10/2026 a las **13:00:07 America/Lima**, corresponde al commit `155a99a67b325454e18b74a41671e0b7bfd05168`. Informa **16 vulnerabilidades**, 5 bugs y 21 code smells. El Quality Gate está en **ERROR**: `new_security_rating` devuelve 5 y el umbral permitido es 1. El historial registra el cambio de verde a rojo en el análisis anterior de `6ba77a6`. La tabla inicial de este documento conserva el snapshot previo `d36441f` y sus ocho vulnerabilidades; no representa el estado actual de main.
 
@@ -31,9 +52,13 @@ Las ocho nuevas incidencias de seguridad son:
 
 Las seis incidencias del workflow se relacionan con A03:2025. Las dos alertas de rutas requieren revisar la aplicabilidad de A01:2025; el contenido remoto del exportador no seleccionaba nombres de archivo. Se añadieron pruebas de regresión y escritura mediante archivos abiertos de nombre fijo para hacer explícita esa separación. El comprobador de cobertura ahora lee únicamente su artefacto fijo, sin parámetro para elegir otro archivo.
 
-La corrección preparada instala Python desde un lock universal con versiones exactas y hashes, usa `--only-binary=:all:` y `--require-hashes`, y ejecuta `npm ci --ignore-scripts`. Se verificó una instalación nueva completa, sin errores de dependencias, y `pip-audit` no encontró vulnerabilidades conocidas en **ese entorno CI aislado**. Las pruebas aprobaron 378 casos Python y 441 frontend; se mantuvo el mínimo del 90 %: líneas/ramas Python 94,42 % / 92,79 %, frontend 97,58 % / 90,24 %. Cinco pruebas de integración real siguen omitidas. Estas correcciones **no están confirmadas por un nuevo análisis remoto** y no cierran automáticamente los ocho hallazgos anteriores ni las alertas de Bandit/npm.
+La corrección preparada instala Python desde un lock universal con versiones exactas y hashes, usa `--only-binary=:all:` y `--require-hashes`, y ejecuta `npm ci --ignore-scripts`. Se verificó una instalación nueva completa, sin errores de dependencias, y `pip-audit` no encontró vulnerabilidades conocidas en **ese entorno CI aislado**. Las pruebas aprobaron 378 casos Python y 441 frontend; se mantuvo el mínimo del 90 %: líneas/ramas Python 94,42 % / 92,79 %, frontend 97,58 % / 90,24 %. Cinco pruebas de integración real siguen omitidas. El análisis posterior del PR no devuelve incidencias, pero no acredita por sí solo el cierre de los hallazgos de main ni las alertas de Bandit/npm.
 
-En GitHub existe además un problema independiente: las anotaciones del job del PR [41102893381](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/41102893381) incluyen **«Falta el secret SONAR_TOKEN»**. Generar y guardar el token habilita el escáner; no elimina las vulnerabilidades ni sustituye el nuevo análisis. El token no debe incorporarse a archivos ni al informe.
+La ejecución anterior [41102893381](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/41102893381) falló por **«Falta el secret SONAR_TOKEN»**. El propietario ya lo guardó: se verificó únicamente su existencia mediante la API de GitHub, con actualización el 30/10/2026 a las 18:44:47 UTC; no se leyó su valor.
+
+Se repitió la ejecución [41107004270, intento 2](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/41107004270/attempts/2), sobre `21248b14a39e3053390bc4ab4038bd1b51981f4f`. Las 378 pruebas Python y 441 frontend aprobaron en GitHub, con cinco omisiones de integración y las mismas coberturas de líneas/ramas anteriores. El escáner llegó al servicio y este rechazó el análisis: **«You are running CI analysis while Automatic Analysis is enabled»**. Ese intento no publicó un análisis CI ni importó cobertura a SonarCloud. El propietario desactivó Automatic Analysis en Administration → Analysis Method del proyecto; el intento 3 posterior resolvió ese bloqueo sin reemplazar el token.
+
+Los artifacts del intento 2 registran diez alertas Bandit B608, cero vulnerabilidades conocidas en el entorno Python auditado y dos vulnerabilidades altas de npm. El job de auditoría falla por los hallazgos de Bandit/npm; desactivar Automatic Analysis no los resuelve. El resultado verde del análisis automático del PR #27, fechado a las 18:26:51 UTC y anterior al token, tampoco demuestra que este intento CI haya aprobado.
 
 ## 1. Resultado inicial del servicio (snapshot d36441f)
 
@@ -111,10 +136,10 @@ Hay una diferencia de alcance que debe resolverse explícitamente al migrar a CI
 
 ## 5. Integración y permisos pendientes del propietario
 
-El propietario indicó que realizará en SonarCloud/GitHub el guardado del token y la asignación de permisos. No se verificó ni modificó ningún secreto ni permiso mediante esta sesión.
+El propietario guardó el token en GitHub; se verificó su existencia y se repitió CI sin leer el valor. La asignación de permisos de revisión sigue a cargo del propietario y no se ha verificado ni modificado mediante esta sesión.
 
-1. Crear o seleccionar un token de SonarCloud con Execute Analysis y guardarlo directamente como `SONAR_TOKEN` en [GitHub Actions Secrets](https://github.com/JosefOreC/ALPHA_PROJECT/settings/secrets/actions). No publicarlo en archivos, commits, capturas ni mensajes.
-2. Seleccionar análisis por GitHub Actions y desactivar el análisis automático cuando se active CI, para evitar dos mecanismos simultáneos. Confirmar que la aplicación SonarCloud tenga acceso al repositorio.
+1. Completado por el propietario: guardar el token de SonarCloud como `SONAR_TOKEN` en [GitHub Actions Secrets](https://github.com/JosefOreC/ALPHA_PROJECT/settings/secrets/actions). No publicarlo en archivos, commits, capturas ni mensajes.
+2. Completado por el propietario: desactivar Automatic Analysis y usar GitHub Actions. El intento 3 publicó un análisis y recibió Quality Gate OK.
 3. Añadir o localizar a **Valentino Jhan Pierre Rojas Camayo**, GitHub `ValeRojas1`, en la organización `joseforec`. La API asocia su commit al login `ValeRojas1-6n1Tp@github`; confirmar la cuenta exacta en el selector de SonarCloud.
 4. En Administration → Permissions del proyecto, habilitar los permisos disponibles para revisar código, Administer Issues y Administer Security Hotspots. Browse Project y See Source Code son controles de lectura de proyectos privados; este proyecto es público. Revisar el acceso efectivo sin convertirlo en administrador del proyecto ni compartirle el token de CI.
 5. Configurar y asignar un Quality Gate con el mínimo acordado del 90 % para cobertura global y nueva, según las capacidades del plan. Los archivos locales solo pueden exigir los umbrales de las pruebas y esperar el Quality Gate remoto; no crean sus condiciones.
