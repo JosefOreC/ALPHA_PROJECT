@@ -1,8 +1,34 @@
-> **HISTÓRICO — no vigente.** Contenido previo conservado; solo se ajustan navegación y enlaces. Las cifras, fechas, responsables y cierres son registros atribuidos al autor indicado; no se reejecutaron ni se ratificaron en esta revisión documental. Vigente: [05 Auditoría de coherencia del proyecto V_1_4_0](../05%20Auditor%C3%ADa%20de%20coherencia%20del%20proyecto%20V_1_4_0.md).
+# Auditoría de coherencia del proyecto — Sprint 2
 
-# Auditoría de coherencia del proyecto — 09/10/2026
+**Proyecto:** EcoLogística Lima — DistriRápido S.A.C.
 
-[← Volver al README Principal](../../../../README.md)
+**Versión del documento:** V_1_5_0
+
+**Actualización documental:** 29/10/2026. No es fecha de reunión ni de aceptación.
+
+La auditoría anterior se conserva íntegra en V_1_3_0 (histórica) (ver el anexo de este documento), con H-01–H-17, atribuciones y cifras. Este complemento solo acredita inspección documental y de código local. No consulta GitHub/Jira ni repite pruebas.
+
+| Hallazgos | Actualización local | Pendiente |
+|---|---|---|
+| H-01/H-02 | Revisiones distinguen historias, criterios y aceptación; informes enlazan matrices. | Acta y aceptación real. |
+| H-03/H-04/H-05/H-09/H-15 | Sesiones, API común, PostgreSQL y scripts presentes; se deja de describirlos como ausentes. | Seguridad, recuperación y despliegue. |
+| H-06/H-07 | Diferencias de numeración y roles se explicitan en decisiones y revisión. | Conciliación aprobada de D-01/D-10; no cambiar requisitos por inferencia. |
+| H-08/H-10/H-12/H-13/H-14/H-16 | Estado remoto, calendario, presupuesto y Jira conservados como registros históricos. | Confirmación del equipo con fuentes verificables. |
+| H-11 | Nuevas ediciones de sprint registran versión e historia; fuentes de Inicio se conservan. | Revisar necesidad de historial en documentos de Inicio con consigna completa. |
+| H-17 | Seis guías trasladadas a Guías técnicas, enlaces corregidos e índices completos; retrospectivas consolidadas. | Revisión del equipo; resultado automatizado en informe documental. |
+
+La revisión suelta `05 Revisión del Sprint V_2_0_0.md` no existe en el árbol inicial. La revisión anterior documenta que ya se consolidó y retiró. No se reconstruye ni se crea copia duplicada. La retrospectiva `06 ... V_2_0_0` sí existía y se archiva como antecedente de V_2_1_0 del Sprint 2.
+
+Comprobaciones, alcance, mapa de movimientos y pendientes: [informe de verificación documental](../Verificaci%C3%B3n%20documental.md).
+
+## Anexo — Edición anterior V_1_3_0 (conservada como antecedente)
+
+Texto de la edición anterior; se conserva su contenido y sus cifras con la fecha de esa edición. Solo se ajustaron enlaces y niveles de encabezado. El estado vigente es el de las secciones anteriores de este documento.
+
+> **HISTÓRICO — no vigente.** Contenido previo conservado; solo se ajustan navegación y enlaces. Las cifras, fechas, responsables y cierres son registros atribuidos al autor indicado; no se reejecutaron ni se ratificaron en esta revisión documental. Vigente: [05 Auditoría de coherencia del proyecto V_1_4_0](05%20Auditor%C3%ADa%20de%20coherencia%20del%20proyecto%20V_1_5_0.md).
+
+### Auditoría de coherencia del proyecto — 09/10/2026
+
 
 **Nombre del Proyecto:** EcoLogística Lima – Optimizador de Rutas Sostenibles para DistriRápido S.A.C.
 
@@ -14,7 +40,7 @@
 
 > **Actualización V_1_3_0 (29/10/2026).** La auditoría original (09/10) revisó la rama `feature/carlos/spr2/m_pedidos/confirmacion` y trató la autenticación, la persistencia en PostgreSQL, la API única y la integración de las ramas de Josef como pendientes. Ese mismo día esas ramas entraron a `main` sin Pull Request, de modo que varias filas de las tablas «Componente» y «Hallazgos» quedaron desactualizadas. Esta versión las contrasta de nuevo con `main` (commit `30969da`), conserva el texto original entre paréntesis donde cambió y agrega los hallazgos H-15 y H-16.
 
-## Propósito y alcance
+#### Propósito y alcance
 
 Esta auditoría contrasta la documentación versionada del repositorio con el código, las dependencias, las ramas y los Pull Requests de GitHub y los documentos del Sprint 2. Distingue el diseño objetivo de lo implementado y registra los desajustes que deben resolverse antes de dar por cerrada la documentación del Sprint 2.
 
@@ -29,7 +55,7 @@ Esta auditoría contrasta la documentación versionada del repositorio con el c�
 
 > **Verificación del 29/10/2026 sobre `main` (commit `30969da`):** backend con 225 pruebas aprobadas, 5 omitidas (integración con PostgreSQL real, no ejecutada) y 36 subpruebas; frontend con 273 pruebas de Vitest, 9 de Node y 40 de navegador aprobadas, con lint, tipos y compilación sin errores. Las cifras del recuadro anterior (09/10) corresponden a la rama de Carlos y se conservan como antecedente.
 
-## Idioma, identidad y stack comunes
+#### Idioma, identidad y stack comunes
 
 - La documentación del producto y de la planificación, el README, la interfaz y los mensajes de error están redactados en español. La excepción detectada es el título del esquema OpenAPI de la API, escrito en inglés y con el nombre del repositorio: «ALPHA_PROJECT - Fleet Management & Routing API» (hallazgo H-09).
 - El nombre del director aparece como «Ore Campos Josef Pablo» en la tabla del README y como «Ore Campos, Josef Pablo» en el resto de los documentos (H-10).
@@ -52,24 +78,24 @@ Esta auditoría contrasta la documentación versionada del repositorio con el c�
 
 - El flujo de ramas documentado es `feature/<persona>/spr<N>/<módulo>/<acción>` con Pull Request revisado hacia `main` (retrospectiva del Sprint 1). La protección de `main` no se pudo comprobar: la consulta a GitHub devolvió 404 con la cuenta usada.
 
-## Plan y resultado hasta el Sprint 2
+#### Plan y resultado hasta el Sprint 2
 
 | Iteración | Plan registrado | Resultado comprobado al 09/10/2026 |
 |---|---|---|
 | Sprint 1 | `02 Artefactos Jira`: 21 puntos con EN-00 (5), US-001 (3), US-002 (2), US-003 «Registrar pedido de entrega» (5), US-004 (3) y US-012 (3). | La versión V_1_0_0 del informe y de la revisión del Sprint 1 declaraba completadas US-001, US-002, US-003, US-004, US-008 y US-012 como «implementadas, probadas e integradas», sin mencionar EN-00 (esquema de base de datos) y con US-008 fuera del plan. En el repositorio los datos siguen en memoria y no hay base de datos conectada ni identidad verificada (H-01 y H-02). **Los documentos del Sprint 1 se corrigieron en V_1_1_0 (09/10/2026):** las historias figuran como implementadas de forma parcial, con EN-00 registrado como no completado. |
-| Sprint 2 | `development/sprints.md` (rama de Josef) propone «generación, asignación y entrega» con PMV-2: pedido → ruta → despacho → confirmación → lectura compartida. | Incremento de interfaz por rol, mapa visual, inicio de sesión, autorización por roles, persistencia en PostgreSQL y base de pruebas, integrado en `main` sin revisión. El flujo de PMV-2 no se cumple: faltan el motor de optimización, la aprobación y el despacho. *(V_1_2_0: «faltan el motor de optimización, la persistencia y la autenticación».)* Ver el [informe](../01%20Informe%20de%20estado%20del%20proyecto%20V_1_4_0.md) y la [revisión](../03%20Revisi%C3%B3n%20del%20Sprint%20V_1_3_0.md). |
+| Sprint 2 | `development/sprints.md` (rama de Josef) propone «generación, asignación y entrega» con PMV-2: pedido → ruta → despacho → confirmación → lectura compartida. | Incremento de interfaz por rol, mapa visual, inicio de sesión, autorización por roles, persistencia en PostgreSQL y base de pruebas, integrado en `main` sin revisión. El flujo de PMV-2 no se cumple: faltan el motor de optimización, la aprobación y el despacho. *(V_1_2_0: «faltan el motor de optimización, la persistencia y la autenticación».)* Ver el [informe](01%20Informe%20de%20estado%20del%20proyecto%20V_1_5_0.md) y la [revisión](03%20Revisi%C3%B3n%20del%20Sprint%20V_1_4_0.md). |
 | Sprint 3 | Propuesta: mapa, indicadores, sostenibilidad y tráfico (PMV-3). | Adelantado de forma parcial con datos de ejemplo (mapa, dashboard y reporte con CSV). No acredita la integración de PMV-3. |
 | Sprint 4 y cierre | Propuesta: reoptimización, calidad y entrega final (PMV-4). | Sin trabajo identificado salvo la parte visual del aviso de reoptimización del conductor. |
 
 Los plazos de cada sprint se proponen en semanas relativas (Sprint 1: semanas 4–5; Sprint 2: 6–7; Sprint 3: 8–11; Sprint 4: 12–14). No hay fechas absolutas aprobadas para Sprint 2, 3 y 4, y las fechas efectivas del Sprint 2 se confirman en su revisión.
 
-## Consistencia de calendario y presupuesto
+#### Consistencia de calendario y presupuesto
 
 - El Acta fija 14 semanas de desarrollo en cuatro hitos (H-01 a H-04); el README habla de cuatro «iteraciones» y los documentos de seguimiento de cuatro «sprints». Falta definir si una iteración equivale a un sprint: el plan de sprints las mapea a rangos de semanas distintos (Sprint 3 abarca cuatro semanas y Sprint 4 tres), y el informe del Sprint 1 declara el periodo 15/09–25/09 con hechos del 30/09 al 02/10 (H-13).
 - El Acta establece un presupuesto de **S/ 500,000** (distribución preliminar por categorías, tomada de la consigna del proyecto). El documento `04 Presupuesto del proyecto` calcula un total de **USD 9,063.04** (subtotal de proyecto de USD 8,092.00 más una reserva de contingencia del 12 %, USD 971.04) y aclara que modela el costo de ejecución del equipo. Son dos magnitudes en monedas distintas y no hay conciliación documentada entre ellas (H-12). No se aplicó ningún tipo de cambio.
 - No se reporta gasto real en infraestructura, licencias o servicios en el Sprint 2: todo lo implementado usa software de código abierto.
 
-## Estado de GitHub y Jira
+#### Estado de GitHub y Jira
 
 - **Pull Requests (29/10/2026):** 11 integrados (#1 a #6, #8, #9, #10, #22 y #23) y 12 abiertos (#7, #11 y #12 a #21). Los integrados durante el Sprint 2 son solo de documentación (#22 y #23, 09/10).
 - **Código en `main` sin Pull Request:** el 09/10 entraron cinco commits de Josef (`c314f64`, `a07136a`, `68d2b60`, `c981e8a` y `97b401b`) con el mapa, la autenticación, la persistencia y los documentos; con ellos llegó a `main` el código de la serie de interfaz (#12 a #21), cuyos PR siguen abiertos. *(V_1_2_0: «Durante el Sprint 2 no se integró ninguno».)*
@@ -77,7 +103,7 @@ Los plazos de cada sprint se proponen en semanas relativas (Sprint 1: semanas 4�
 - **Ramas remotas:** 23 además de `main`: 18 `feature/*` (10 de la serie `feature/carlos/spr3/ui/*`), 4 `merge/*` y 1 `refactor/*`.
 - **Jira:** no consultado. `02 Artefactos Jira` documenta un proyecto Scrum con clave `ECOL`, 7 épicas (EP-01 a EP-07), columnas To Do, In Progress, In Review / QA y Done, y la versión `v1.0.0-MVP`, con capturas del 11/09 en `evidencias-jira/`. Esas capturas no se compararon con el tablero actual.
 
-## Hallazgos
+#### Hallazgos
 
 | ID | Severidad | Lo que dicen los documentos | Lo que muestra el repositorio | Acción propuesta | Estado al 09/10/2026 |
 |---|---|---|---|---|---|
@@ -99,7 +125,7 @@ Los plazos de cada sprint se proponen en semanas relativas (Sprint 1: semanas 4�
 | H-16 | Alta | La política de ramas exige Pull Request revisado por un par técnico hacia `main`. | Cinco commits de Josef con mapa, autenticación y PostgreSQL entraron a `main` el 09/10 sin Pull Request, y con ellos el código de la serie de interfaz (#12 a #21, que siguen abiertos). Hay además commits directos de documentación de Carlos y Valentino. | Revisar retroactivamente el código de seguridad, cerrar o fusionar los PR abiertos con motivo y activar la protección de `main`. | Abierto (29/10). |
 | H-17 | Media | El README (commit `30969da`, 16/10) enlaza las guías «Base de datos de pruebas», «Inicio de sesión y persistencia», «Control de acceso por roles», «Mapa visual de Lima», «CRUD de pedidos» y «Confirmación de pedidos» en `docs/03 Implementación/`. | Los seis archivos siguen en `development/`; el commit solo cambió los enlaces, no movió los archivos, por lo que 9 enlaces del README quedan rotos. | Restaurar los enlaces a `development/` o mover los archivos junto con sus evidencias. | **Corregido** (29/10): los enlaces del README y de los documentos que los referencian apuntan a `development/`, donde están las guías. Siguen rotos los enlaces internos de las propias guías (capturas en `evidencias-*` y referencias relativas), que no se modificaron. |
 
-## Documentos contrastados
+#### Documentos contrastados
 
 - `README.md` y los 13 documentos de Inicio, los 4 de Planificación y los 4 del Sprint 1, más los 5 del Sprint 2.
 - Código del backend (`manage.py`, `interfaces/api/`, `infrastructure/persistence/`, `application/`, `domain/`, pruebas y requisitos) y del frontend (`package.json`, `vite.config.ts`, `src/` y pruebas).
@@ -107,7 +133,7 @@ Los plazos de cada sprint se proponen en semanas relativas (Sprint 1: semanas 4�
 
 En la revisión estática se recorrieron los 35 archivos Markdown presentes en el repositorio (sin dependencias) antes de crear este documento: se encontraron dos enlaces locales rotos, ambos en el README (`docs/db/schema.sql` y «01. Transformando a ágil»), y se comprobaron los enlaces entre los cinco documentos del Sprint 2.
 
-## Acciones abiertas
+#### Acciones abiertas
 
 Estado al 29/10/2026. Las acciones que `main` ya cumple se tachan y se explican.
 
@@ -122,14 +148,16 @@ Estado al 29/10/2026. Las acciones que `main` ya cumple se tachan y se explican.
 - Agregar el historial de cambios a los once documentos de Inicio que no lo tienen (H-11); los cuatro del Sprint 1 ya lo tienen.
 - Mantener Redis, OAuth2/JWT, optimización de rutas, CI y accesibilidad certificada como pendientes hasta implementar y verificar cada incremento. PostgreSQL/PostGIS y la autenticación propia ya están implementadas, pendientes de validación en despliegue.
 
-## Historial de cambios
+## Control de versiones del documento
 
-| Versión | Fecha | Autor | Descripción del cambio |
-|---|---|---|---|
-| V_1_0_0 | 09/10/2026 | Tovar Sánchez, Carlos Alberto | Contraste inicial de documentación, código, ramas, Pull Requests y documentos del Sprint 2; evidencia local de pruebas y respuestas HTTP del 09/10/2026; 14 hallazgos con su acción propuesta. |
-| V_1_1_0 | 09/10/2026 | Tovar Sánchez, Carlos Alberto | Se actualizan los enlaces y se añade la acción de retirar los documentos sueltos de la rama `feature/josef/spr2/auth` tras unificar la revisión y la retrospectiva del Sprint 2. |
-| V_1_2_0 | 09/10/2026 | Tovar Sánchez, Carlos Alberto | Se agrega la columna de estado de los hallazgos: H-01 y H-02 quedan corregidos en los documentos del Sprint 1 (V_1_1_0) y H-11 y H-13 parcialmente; se ajustan el plan, las acciones abiertas y los enlaces. |
-| V_1_3_0 | 29/10/2026 | Tovar Sánchez, Carlos Alberto | Se contrasta de nuevo con `main` (`30969da`): se corrigen la tabla de componentes, el plan, el estado de GitHub y las acciones abiertas, se actualiza el estado de H-03 a H-10 y H-14, y se agregan H-15 (documentos de estado desactualizados), H-16 (código integrado sin Pull Request) y H-17 (enlaces del README rotos tras el commit del 16/10, corregido el mismo día). Se reemplazan las cifras de pruebas por las del 29/10. |
+| Versión | Fecha | Autoría / cambio |
+|---|---|---|
+| V_1_0_0 | 09/10/2026 | Tovar Sánchez, Carlos Alberto. Contraste inicial de documentación, código, ramas, Pull Requests y documentos del Sprint 2; evidencia local de pruebas y respuestas HTTP del 09/10/2026; 14 hallazgos con su acción propuesta. |
+| V_1_1_0 | 09/10/2026 | Tovar Sánchez, Carlos Alberto. Se actualizan los enlaces y se añade la acción de retirar los documentos sueltos de la rama `feature/josef/spr2/auth` tras unificar la revisión y la retrospectiva del Sprint 2. |
+| V_1_2_0 | 09/10/2026 | Tovar Sánchez, Carlos Alberto. Se agrega la columna de estado de los hallazgos: H-01 y H-02 quedan corregidos en los documentos del Sprint 1 (V_1_1_0) y H-11 y H-13 parcialmente; se ajustan el plan, las acciones abiertas y los enlaces. |
+| V_1_3_0 | 29/10/2026 | Tovar Sánchez, Carlos Alberto. Se contrasta de nuevo con `main` (`30969da`): se corrigen la tabla de componentes, el plan, el estado de GitHub y las acciones abiertas, se actualiza el estado de H-03 a H-10 y H-14, y se agregan H-15 (documentos de estado desactualizados), H-16 (código integrado sin Pull Request) y H-17 (enlaces del README rotos tras el commit del 16/10, corregido el mismo día). Se reemplazan las cifras de pruebas por las del 29/10. |
+| V_1_4_0 | 29/10/2026 | Rojas Camayo, Valentino Jhan Pierre (PR #25). Actualización documental; pendiente de revisión del equipo. Actualiza hallazgos documentales locales; conserva auditoría anterior y pendientes externos sin ratificación. |
+| V_1_5_0 | 30/10/2026 | Tovar Sánchez, Carlos Alberto. Documento único vigente: se integra la auditoría completa (H-01 a H-17) como anexo y se retira la carpeta Histórico. |
 
 
 [← Volver al índice correspondiente](README.md)

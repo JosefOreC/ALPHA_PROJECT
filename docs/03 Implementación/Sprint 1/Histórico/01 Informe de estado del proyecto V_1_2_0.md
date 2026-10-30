@@ -16,7 +16,7 @@
 
 > **Nota de actualización.** Este informe tuvo su emisión original el 25/09/2026 y se actualizó el 02/10/2026 al incorporar las historias implementadas entre el 30/09 y el 02/10. La versión V_1_1_0 (09/10/2026) corrige los identificadores de las historias, reconcilia las filas del estado con esa lista y registra lo que el sprint planificó y no completó. El periodo y la fecha originales se conservan; el trabajo de implementación ocurrió después de ese corte y se describe como tal.
 
-> **Actualización V_1_2_0 (29/10/2026).** Esta versión solo precisa que el estado de los riesgos refleja el 09/10/2026. Después de esa fecha `main` incorporó el inicio de sesión, la persistencia en PostgreSQL y un generador de datos de prueba (commits `c314f64` a `97b401b`, sin Pull Request); el riesgo «Datos solo en memoria y sin identidad verificada» y el dataset sintético están en parte superados. Ver el [informe del Sprint 2](../../Sprint%202/01%20Informe%20de%20estado%20del%20proyecto%20V_1_4_0.md). El resto del texto del Sprint 1 no cambia.
+> **Actualización V_1_2_0 (29/10/2026).** Esta versión solo precisa que el estado de los riesgos refleja el 09/10/2026. Después de esa fecha `main` incorporó el inicio de sesión, la persistencia en PostgreSQL y un generador de datos de prueba (commits `c314f64` a `97b401b`, sin Pull Request); el riesgo «Datos solo en memoria y sin identidad verificada» y el dataset sintético están en parte superados. Ver el [informe del Sprint 2](../../Sprint%202/01%20Informe%20de%20estado%20del%20proyecto%20V_1_5_0.md). El resto del texto del Sprint 1 no cambia.
 
 ### **Estado del proyecto**
 

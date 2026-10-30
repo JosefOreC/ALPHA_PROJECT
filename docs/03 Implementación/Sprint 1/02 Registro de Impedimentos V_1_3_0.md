@@ -18,7 +18,7 @@ Fechas originales, prioridades, reportantes y plazos (incluidos vencidos) perman
 
 ## Continuidad entre sprints
 
-IMP-002/003 continúan desde Sprint 1. IMP-006–009 describen implementación posterior al corte inicial; las validaciones siguen abiertas. IMP-012 retoma IMP-004; IMP-013 retoma IMP-007; IMP-016 retoma IMP-011/H-17. Consultar [Sprint 2](../Sprint%202/02%20Registro%20de%20Impedimentos%20V_1_4_0.md), [Sprint 03](../Sprint%2003/07%20Registro%20de%20Impedimentos%20V_1_1_0.md).
+IMP-002/003 continúan desde Sprint 1. IMP-006–009 describen implementación posterior al corte inicial; las validaciones siguen abiertas. IMP-012 retoma IMP-004; IMP-013 retoma IMP-007; IMP-016 retoma IMP-011/H-17. Consultar [Sprint 2](../Sprint%202/02%20Registro%20de%20Impedimentos%20V_1_5_0.md), [Sprint 03](../Sprint%202/02%20Registro%20de%20Impedimentos%20V_1_5_0.md).
 
 
 ## Control de versiones del documento

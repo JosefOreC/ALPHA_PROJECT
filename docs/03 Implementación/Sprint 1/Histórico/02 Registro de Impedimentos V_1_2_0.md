@@ -10,7 +10,7 @@
 
 **Última actualización:** 29/10/2026
 
-Este registro corresponde al Sprint 1. Los impedimentos que siguen abiertos continúan en el [registro del Sprint 2](../../Sprint%202/02%20Registro%20de%20Impedimentos%20V_1_4_0.md), que conserva su numeración (IMP-001 a IMP-003) y agrega los nuevos.
+Este registro corresponde al Sprint 1. Los impedimentos que siguen abiertos continúan en el [registro del Sprint 2](../../Sprint%202/02%20Registro%20de%20Impedimentos%20V_1_5_0.md), que conserva su numeración (IMP-001 a IMP-003) y agrega los nuevos.
 
 | Impedimento # | Fecha de Registro | Descripción del Impedimento así como el Impacto en el Proyecto | Prioridad | Reportado por | Fecha tope de Resolución | Estado | Fecha de Resolución | Resolución/Comentarios |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
