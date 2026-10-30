@@ -1,4 +1,5 @@
 from uuid import UUID
+from psycopg import sql
 from domain.entities.vehicle import Vehicle
 from domain.entities.driver import Driver
 from domain.ports.vehicle_repository import VehicleRepositoryPort
@@ -26,7 +27,8 @@ def vehicle(row):
 
 class PostgresVehicles(VehicleRepositoryPort):
     def find_all(self, status=None):
-        return [vehicle(row) for row in rows('SELECT * FROM vehiculos' + (' WHERE estado=%s' if status else '') + ' ORDER BY placa', (status.value,) if status else ())]
+        query = sql.SQL('SELECT * FROM vehiculos') + sql.SQL(' WHERE estado=%s' if status else '') + sql.SQL(' ORDER BY placa')
+        return [vehicle(row) for row in rows(query, (status.value,) if status else ())]
 
     def find_by_id(self, value):
         result = rows('SELECT * FROM vehiculos WHERE vehiculo_id=%s', (value,)) if valid_id(value) else []

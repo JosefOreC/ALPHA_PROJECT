@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import { afterEach, expect, it, vi } from 'vitest'
 import App from './App'
 
@@ -32,5 +32,5 @@ it('renders the dashboard fed by the HTTP backend', async () => {
 
   expect(await screen.findByText('Entregados')).toBeInTheDocument()
   expect(screen.getByRole('heading', { level: 1, name: 'Dashboard del día' })).toBeInTheDocument()
-  expect(fetchStub.mock.calls.map(([url]) => url)).toContain('/api/v1/dashboard')
+  await waitFor(() => expect(fetchStub.mock.calls.map(([url]) => url)).toContain('/api/v1/dashboard'))
 })

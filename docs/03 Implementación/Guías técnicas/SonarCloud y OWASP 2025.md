@@ -4,33 +4,42 @@
 
 ## Estado y alcance
 
-La configuración está preparada para Python/FastAPI y React/TypeScript. **Preparar estos archivos no crea la organización, no conecta GitHub y no ejecuta SonarCloud.** Al 30/10/2026 no se ha creado el proyecto remoto ni emitido un resultado Sonar. Consultar el [informe preliminar local](Informe%20preliminar%20OWASP%202025.md).
+Actualización de correcciones: esta rama usa `vite` 8.3.5 y `undici` 8.12.3 (auditoría npm sin hallazgos), composición SQL con `psycopg.sql` y cero alertas medias/altas Bandit. El prototipo de diseño carga su lógica desde `dashboard-logic.js`: ya no evalúa código recibido como texto ni importa JavaScript remoto dinámicamente. Conserva la vista inicial y las propiedades; los cambios de lógica deben editarse en ese archivo local. Los mensajes entre ventanas solo se aceptan del padre con el mismo origen, y los envíos usan un origen explícito. Las nuevas pruebas verifican el rechazo de mensajes ajenos y de código enviado por el puente del editor.
+
+El análisis de seguridad incluye ahora también `docs/04 Diseño`, `ecologistica-ui` y `src/frontend/scripts`, para comprobar los hallazgos históricos sin retirarlos del alcance. Los exportados de diseño están excluidos únicamente de cobertura, porque no forman parte de la aplicación desplegada; siguen sujetos a las reglas de seguridad. La cobertura Python se amplía a los dos generadores frontend: 94,60 % de líneas y 92,77 % de ramas, con 383 pruebas aprobadas y cinco omisiones de integración. Frontend: 432 pruebas Vitest y once Node, líneas 97,58 % y ramas 90,38 %. La confirmación remota de estas correcciones debe registrarse con su análisis y commit.
+
+El proyecto SonarCloud ya existe y es público. La consulta de `main` / `155a99a`, del 30/10/2026 a las 13:00:07 de Lima, registra dieciséis vulnerabilidades y Quality Gate ERROR por seguridad en código nuevo. El análisis CI posterior del PR #27 tiene Quality Gate OK y cobertura superior al 90 %, con el alcance delimitado por su configuración. El [informe remoto del Sprint 3](../Sprint%2003/06%20Informe%20SonarCloud%20V_1_0_0.md) conserva ambos resultados y sus diferencias de alcance. La configuración está en el [PR #27 en borrador](https://github.com/JosefOreC/ALPHA_PROJECT/pull/27); el token está guardado y los permisos de revisión siguen pendientes de verificar.
 
 | Dato de entrega al equipo | Estado |
 |---|---|
 | Repositorio | `JosefOreC/ALPHA_PROJECT` |
-| Organización SonarCloud (`organization key`) | Pendiente de creación; copiar el valor real |
-| Proyecto (`project key`) | Pendiente de importación; copiar el valor real |
-| Enlace del proyecto | Pendiente; copiar desde el dashboard creado |
-| Usuario del revisor | Pendiente de indicar su cuenta SonarCloud |
-| Token | Secret `SONAR_TOKEN` de GitHub Actions; nunca incluir su valor en esta tabla |
+| Organización SonarCloud (`organization key`) | `joseforec`, verificada mediante la API |
+| Proyecto (`project key`) | `JosefOreC_ALPHA_PROJECT`, verificada mediante la API |
+| Enlace del proyecto | [Resumen de main](https://sonarcloud.io/summary/overall?id=JosefOreC_ALPHA_PROJECT&branch=main) |
+| Usuario del revisor | Valentino Jhan Pierre Rojas Camayo, GitHub `ValeRojas1`; confirmar su cuenta en el selector de SonarCloud |
+| Token | El propietario guardó `SONAR_TOKEN`; se verificó su existencia en GitHub, sin leer el valor |
+| Análisis CI | Intento 3 de 41107004270: Pruebas y SonarCloud success; Quality Gate del PR #27 OK |
 
-## Alta por el propietario del repositorio
+El [intento 3 de CI](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/41107004270/attempts/3), sobre `21248b1`, aprobó 378 pruebas Python y 441 frontend, con cinco omisiones de integración. Cobertura de líneas/ramas: Python 94,42 % / 92,79 %; frontend 97,58 % / 90,24 %. Después de desactivar Automatic Analysis, Sonar aceptó el análisis `aa683391-5607-478e-9138-905441b99644`: Quality Gate OK para el PR #27, cobertura 94,1 %, líneas 95,9 %, ramas 90,8 % y cobertura nueva 100 %. La condición remota de cobertura nueva sigue en 80 %, aunque CI exige el 90 %; ajustarla en el servicio si se requiere el mismo umbral remoto. La ejecución completa sigue fallando por diez alertas Bandit B608 y dos vulnerabilidades altas npm; pip-audit no encontró vulnerabilidades conocidas en su entorno. El análisis de main y sus hallazgos se conservan por separado.
 
-1. Entrar en [SonarQube Cloud](https://sonarcloud.io/) con GitHub. Importar el repositorio `JosefOreC/ALPHA_PROJECT` y crear/seleccionar la organización que proponga el asistente. Autorizar la aplicación de Sonar solamente para los repositorios necesarios. Mantener la visibilidad acorde con la autorización del equipo; no hacer público un repositorio privado.
-2. Copiar la **organization key**, la **project key** y la URL del dashboard. No deducir estos identificadores a partir del nombre visible.
+## Pasos pendientes del propietario del repositorio
+
+1. Entrar en [SonarQube Cloud](https://sonarcloud.io/) con la cuenta administradora y abrir el proyecto existente de la tabla. Comprobar su vinculación con `JosefOreC/ALPHA_PROJECT` y el acceso de la aplicación Sonar al repositorio. No crear un segundo proyecto.
+2. Compartir con Valentino la URL del dashboard, organización `joseforec` y project key `JosefOreC_ALPHA_PROJECT`.
 3. Seleccionar análisis mediante GitHub Actions. Desactivar **Automatic Analysis** en el proyecto cuando se habilite CI, para evitar análisis duplicados. Si Sonar exige una primera referencia de `main`, completar primero ese análisis inicial desde el asistente y comprobar el SHA analizado.
-4. Generar un token con permiso **Execute Analysis** para este proyecto. Para exportar resultados de un proyecto privado, su titular también necesita permisos de lectura. Guardarlo directamente en GitHub → repositorio → **Settings → Secrets and variables → Actions → Secrets**, como `SONAR_TOKEN`. Definir una caducidad y rotarlo al vencer.
-5. En **Variables**, crear `SONAR_ORGANIZATION` y `SONAR_PROJECT_KEY` con los valores reales. El workflow está dirigido a la región europea `https://sonarcloud.io`; si el alta se hace en otra región, adaptar también el host del escáner y del exportador antes de ejecutarlo.
+4. Generar o seleccionar un token con permiso **Execute Analysis** para este proyecto desde [My Account → Security](https://sonarcloud.io/account/security). Guardarlo directamente en [GitHub → Settings → Secrets and variables → Actions → Secrets](https://github.com/JosefOreC/ALPHA_PROJECT/settings/secrets/actions), como `SONAR_TOKEN`. Definir una caducidad y rotarlo al vencer. No compartir el token con el revisor.
+
+   El token es el valor secreto que muestra **Generate Token**, no la project key, el nombre `alpha-github-actions` que se le asigne ni la clave de la organización. Copiar el valor generado en el campo **Secret** de GitHub y usar `SONAR_TOKEN` en **Name**. Sonar solo muestra el valor al generarlo; si ya no está disponible, generar otro. Una credencial ausente impide ejecutar CI; una credencial válida no hace aprobar un Quality Gate con vulnerabilidades.
+5. Los identificadores reales ya están en `sonar-project.properties`; el workflow actualizado no necesita variables adicionales para ellos. Si todavía se ejecuta la versión anterior del workflow del commit `6ba77a6`, esa versión sí requiere `SONAR_ORGANIZATION=joseforec` y `SONAR_PROJECT_KEY=JosefOreC_ALPHA_PROJECT` en Variables. La configuración apunta a `https://sonarcloud.io`.
 6. Subir esta rama y abrir un PR hacia `main`. El flujo se ejecuta en los PR internos, los pushes a `main` y mediante **Actions → SonarCloud y seguridad → Run workflow** cuando esté disponible en la rama predeterminada. La disponibilidad de análisis de ramas/PR depende del plan contratado; verificarla antes de elegir esa modalidad. No contratar ni cambiar el plan como parte de esta configuración.
 
-Los archivos preparados son `sonar-project.properties`, `.coveragerc`, `.github/workflows/sonarcloud.yml` y `scripts/export_sonar_report.py`. Las claves se pasan desde las variables de Actions; el token se pasa por entorno. Para un análisis local con SonarScanner CLI instalado, proporcionar las mismas claves mediante `-Dsonar.organization=...` y `-Dsonar.projectKey=...`, y el token mediante `SONAR_TOKEN`. Ejecutar desde la raíz y confirmar la rama y el SHA antes de enviar el análisis.
+Los archivos preparados son `sonar-project.properties`, `.coveragerc`, `.github/workflows/sonarcloud.yml` y `scripts/export_sonar_report.py`. Las claves públicas están en el archivo de propiedades; el token se pasa por entorno. Para un análisis local con SonarScanner CLI instalado, usar ese archivo y `SONAR_TOKEN`. Ejecutar desde la raíz y confirmar la rama y el SHA antes de enviar el análisis.
 
-Si faltan las variables, el flujo ejecuta las pruebas y avisa que **Sonar no se ejecutó**. Si las variables existen pero falta el token, falla expresamente. Los PR de forks ejecutan pruebas sin recibir el token ni enviar análisis; el flujo usa `pull_request`, con permisos de repositorio de solo lectura.
+El workflow actualizado falla expresamente si falta el token; no omite el análisis por variables de identificación ausentes. Los PR de forks ejecutan pruebas sin recibir el token ni enviar análisis; el flujo usa `pull_request`, con permisos de repositorio de solo lectura.
 
 ## Acceso para el compañero
 
-Una vez indicada su cuenta, añadirla a la organización y asignarle permisos del proyecto en **Administration → Permissions**:
+Añadir o localizar a `ValeRojas1` en la organización y asignarle permisos del proyecto en **Administration → Permissions**. Confirmar la cuenta SonarCloud exacta: el historial del análisis asocia su commit al login `ValeRojas1-6n1Tp@github`. Ser Collaborator de GitHub no verifica ni concede por sí solo estos permisos en SonarCloud:
 
 | Permiso | Finalidad |
 |---|---|
@@ -48,12 +57,12 @@ Referencia: [permisos del proyecto](https://docs.sonarsource.com/sonarqube-cloud
 Para reproducir las verificaciones locales en PowerShell:
 
 ```powershell
-.venv/Scripts/python.exe -m pip install -r src/backend/requirements.txt -r scripts/requirements-security.txt
+.venv/Scripts/python.exe -m pip install --only-binary=:all: --require-hashes -r scripts/requirements-ci.lock
 New-Item -ItemType Directory -Force reports/security | Out-Null
 .venv/Scripts/python.exe -m pytest src/backend/tests -q -p no:cacheprovider --cov --cov-config=.coveragerc --cov-report=xml:reports/coverage/backend.xml --junitxml=reports/tests/backend.xml
 .venv/Scripts/python.exe -m coverage json -o reports/coverage/backend.json
 .venv/Scripts/python.exe scripts/check_python_coverage.py
-npm ci --prefix src/frontend
+npm ci --ignore-scripts --prefix src/frontend
 npm run test:coverage --prefix src/frontend
 npm run build --prefix src/frontend
 .venv/Scripts/python.exe -m bandit -r src/backend scripts -x src/backend/tests -f json -o reports/security/bandit.json
@@ -62,7 +71,9 @@ npm run build --prefix src/frontend
 npm audit --prefix src/frontend --audit-level=high --json > reports/security/npm-audit.json
 ```
 
-Bandit y los auditores de dependencias devuelven un código de fallo al encontrar alertas. Cada auditoría del workflow se ejecuta aunque falle la anterior, y se conservan los JSON. CI aplica el umbral de severidad media para Bandit y alta para npm; `pip-audit` falla por cualquier vulnerabilidad conocida. La auditoría Python incluye las herramientas instaladas; el archivo de versiones permite distinguirlas de las dependencias de ejecución. Las dependencias Python de la aplicación tienen rangos abiertos y pueden resolver versiones distintas entre ejecuciones.
+Bandit y los auditores de dependencias devuelven un código de fallo al encontrar alertas. Cada auditoría del workflow se ejecuta aunque falle la anterior, y se conservan los JSON. CI aplica el umbral de severidad media para Bandit y alta para npm; `pip-audit` falla por cualquier vulnerabilidad conocida. La auditoría Python incluye las herramientas instaladas; el archivo de versiones permite distinguirlas de las dependencias de ejecución. Los requirements de desarrollo mantienen sus rangos; CI instala exclusivamente las versiones y hashes de `scripts/requirements-ci.lock`, con ruedas binarias y sin ejecutar builds de paquetes. npm usa su lockfile sin scripts lifecycle. La compilación y las pruebas se ejecutan explícitamente después.
+
+Para actualizar el lock Python, revisar `scripts/requirements-ci.in` y `scripts/requirements-ci.constraints.txt` y regenerarlo con `uv pip compile scripts/requirements-ci.in --universal --python-version 3.14 --generate-hashes --only-binary=:all: --output-file scripts/requirements-ci.lock`. La generación inicial se verificó con uv 0.13.6, instalación real en Windows y resolución binaria para Linux. Las nuevas versiones deben volver a pasar pruebas y auditorías. El comprobador de cobertura solo lee `reports/coverage/backend.json`; no admite una ruta arbitraria por argumento.
 
 El análisis incluye backend, frontend, scripts, política RBAC y configuración de CI. Los tests se clasifican aparte; se excluyen de fuentes las dependencias, cachés, compilados y los mapas estáticos. La cobertura Python incluye **backend y scripts**, igual que el alcance Python enviado a Sonar; la de TypeScript, los archivos de `src` incluidos por Vitest. Las 9 pruebas adicionales de Node no contribuyen al LCOV de Vitest. PostgreSQL/PostGIS real requiere habilitar por separado las pruebas optativas; sus omisiones no son verificaciones aprobadas.
 
@@ -78,7 +89,7 @@ También se puede exportar desde la raíz con las variables `SONAR_TOKEN`, `SONA
 .venv/Scripts/python.exe scripts/export_sonar_report.py
 ```
 
-`SONAR_PULL_REQUEST` tiene prioridad sobre la rama. Sin ninguna de ambas, se consulta la rama principal. Sin `report-task.txt`, la exportación manual consulta el estado actual del proyecto. Los resultados quedan en `reports/`, ignorado por Git porque puede contener detalles de código e incidencias; conservar la evidencia aprobada en el entregable del sprint.
+`SONAR_PULL_REQUEST` tiene prioridad sobre la rama. Sin ninguna de ambas, se consulta la rama principal. Para este proyecto público basta con `SONAR_PROJECT_KEY=JosefOreC_ALPHA_PROJECT`; no se necesita token para consultar sus resultados públicos. Sin `report-task.txt`, la exportación manual consulta el análisis actual del proyecto, conserva su SHA y comprueba que no cambie durante la exportación. Para hotspots sin filtro de rama en la API, solo usa la consulta predeterminada cuando ha verificado que la rama solicitada es la principal. Los resultados quedan en `reports/`, ignorado por Git porque puede contener detalles de código e incidencias; conservar la evidencia aprobada en el entregable del sprint.
 
 ## Matriz de revisión OWASP 2025
 

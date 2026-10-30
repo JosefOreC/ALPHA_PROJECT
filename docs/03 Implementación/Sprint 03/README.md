@@ -7,6 +7,7 @@ Una sola edición vigente por tipo de documento; su historial está en la tabla 
 - [03 Calidad de código V_1_0_0](03%20Calidad%20de%20c%C3%B3digo%20V_1_0_0.md)
 - [04 OWASP V_1_1_0](04%20OWASP%20V_1_1_0.md)
 - [05 WCAG V_1_0_0](05%20WCAG%20V_1_0_0.md)
+- [06 Informe SonarCloud V_1_0_0: evidencia complementaria de CI y OWASP](06%20Informe%20SonarCloud%20V_1_0_0.md)
 
 Las capturas de Jira y de la demostración van en [`evidencias-jira/`](evidencias-jira/).
 

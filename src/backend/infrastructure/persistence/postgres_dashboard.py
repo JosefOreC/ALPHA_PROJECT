@@ -1,4 +1,5 @@
 from datetime import time
+from psycopg import sql
 from domain.value_objects.dashboard import District, OperatingHours, OrderCounts, WindowCompliance
 from infrastructure.persistence.database import rows
 
@@ -15,7 +16,9 @@ class PostgresDistrictCatalog:
 
 class PostgresDashboard:
     def _orders(self, day, district_id):
-        return rows("SELECT * FROM pedidos WHERE (ventana_inicio AT TIME ZONE 'America/Lima')::date=%s" + (' AND distrito=%s' if district_id else ''), (day,DISTRICTS[district_id]) if district_id else (day,))
+        query = sql.SQL("SELECT * FROM pedidos WHERE (ventana_inicio AT TIME ZONE 'America/Lima')::date=%s")
+        query += sql.SQL(' AND distrito=%s' if district_id else '')
+        return rows(query, (day,DISTRICTS[district_id]) if district_id else (day,))
 
     def get_order_counts(self, day, district_id):
         orders = self._orders(day, district_id)

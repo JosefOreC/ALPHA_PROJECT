@@ -4,6 +4,7 @@ relative_files = True
 source =
     src/backend
     scripts
+    src/frontend/scripts
 omit =
     src/backend/tests/*
 

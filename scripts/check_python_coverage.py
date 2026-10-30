@@ -20,10 +20,10 @@ def check(report, minimum=90):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('report', nargs='?', type=Path, default=Path('reports/coverage/backend.json'))
-    args = parser.parse_args(argv)
+    parser.parse_args(argv)
     try:
-        metrics, passed = check(json.loads(args.report.read_text(encoding='utf-8')))
+        # CI reads its own fixed artifact; command-line input cannot choose another file.
+        metrics, passed = check(json.loads(Path('reports/coverage/backend.json').read_text(encoding='utf-8')))
     except (OSError, ValueError, KeyError, TypeError):
         print('Cobertura no verificable: genera un JSON de coverage.py con branch=True.')
         return 1

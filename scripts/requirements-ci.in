@@ -1,0 +1,8 @@
+# Runtime and security tools installed by GitHub Actions.
+-c requirements-ci.constraints.txt
+-r ../src/backend/requirements.txt
+-r requirements-security.txt
+
+# Audit the installer too; keep its known-vulnerable versions out of CI.
+pip>=26.2.2
+certifi>=2026.10.18

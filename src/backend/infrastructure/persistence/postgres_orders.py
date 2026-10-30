@@ -73,36 +73,43 @@ class PostgresOrderRepository:
                 self._local.connection = None
 
     def get(self, order_id: str) -> Order | None:
+        from psycopg import sql
         # UUID inválido no llega al motor como error de conversión ni fuga SQL.
         from uuid import UUID
         try:
             UUID(order_id)
         except (ValueError, TypeError, AttributeError):
             return None
-        lock = " FOR UPDATE" if self._current_connection() is not None else ""
+        lock = sql.SQL(" FOR UPDATE" if self._current_connection() is not None else "")
+        query = sql.SQL("SELECT {} FROM pedidos WHERE pedido_id = %s{}").format(
+            sql.SQL(", ").join(map(sql.Identifier, COLUMNS)), lock)
         with self._session() as connection:
-            row = connection.execute(f"SELECT {SELECT_COLUMNS} FROM pedidos WHERE pedido_id = %s{lock}", (order_id,)).fetchone()
+            row = connection.execute(query, (order_id,)).fetchone()
             return from_row(row) if row is not None else None
 
     def add(self, order: Order) -> None:
+        from psycopg import sql
         connection = self._current_connection()
         if connection is None:
             raise RuntimeError("El registro requiere una transacción explícita.")
-        placeholders = ", ".join(["%s"] * len(COLUMNS))
+        query = sql.SQL("INSERT INTO pedidos ({}) VALUES ({}) ON CONFLICT (pedido_id) DO NOTHING").format(
+            sql.SQL(", ").join(map(sql.Identifier, COLUMNS)),
+            sql.SQL(", ").join(sql.Placeholder() for _ in COLUMNS))
         cursor = connection.execute(
-            f"INSERT INTO pedidos ({SELECT_COLUMNS}) VALUES ({placeholders}) ON CONFLICT (pedido_id) DO NOTHING",
+            query,
             values(order),
         )
         if cursor.rowcount != 1:
             raise OrderConflict("Ya existe un pedido con ese identificador.")
 
     def save(self, order: Order) -> None:
+        from psycopg import sql
         connection = self._current_connection()
         if connection is None:
             raise RuntimeError("La actualización requiere una transacción explícita.")
-        assignments = ", ".join(f"{column} = %s" for column in COLUMNS[1:])
+        assignments = sql.SQL(", ").join(sql.SQL("{} = %s").format(sql.Identifier(column)) for column in COLUMNS[1:])
         cursor = connection.execute(
-            f"UPDATE pedidos SET {assignments} WHERE pedido_id = %s AND version = %s",
+            sql.SQL("UPDATE pedidos SET {} WHERE pedido_id = %s AND version = %s").format(assignments),
             values(order)[1:] + (order.id, order.version - 1),
         )
         if cursor.rowcount != 1:
@@ -110,18 +117,20 @@ class PostgresOrderRepository:
 
     def list(self, *, limit: int, offset: int, status: OrderStatus | None = None,
              district: str | None = None) -> list[Order]:
+        from psycopg import sql
         clauses, parameters = [], []
         if status is not None:
-            clauses.append("estado = %s")
+            clauses.append(sql.SQL("estado = %s"))
             parameters.append(status.value)
         if district is not None:
-            clauses.append("distrito = %s")
+            clauses.append(sql.SQL("distrito = %s"))
             parameters.append(district)
-        where = " WHERE " + " AND ".join(clauses) if clauses else ""
+        where = sql.SQL(" WHERE ") + sql.SQL(" AND ").join(clauses) if clauses else sql.SQL("")
         parameters.extend((limit, offset))
         with self._session() as connection:
             rows = connection.execute(
-                f"SELECT {SELECT_COLUMNS} FROM pedidos{where} ORDER BY pedido_id LIMIT %s OFFSET %s",
+                sql.SQL("SELECT {} FROM pedidos{} ORDER BY pedido_id LIMIT %s OFFSET %s").format(
+                    sql.SQL(", ").join(map(sql.Identifier, COLUMNS)), where),
                 tuple(parameters),
             ).fetchall()
             return [from_row(row) for row in rows]

@@ -26,6 +26,8 @@ class Connection:
         self.result = []
 
     def execute(self, sql, params=()):
+        if isinstance(sql, psycopg.sql.Composable):
+            sql = sql.as_string()
         self.calls.append((sql, params))
         self.result = next((value for fragment, value in self.responses.items() if fragment in sql), [])
         if isinstance(self.result, Exception):
