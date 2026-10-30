@@ -1,4 +1,4 @@
-> **Alcance de esta guía:** los comandos, cifras y capturas que siguen son registros técnicos de sus sesiones originales; no se ejecutaron nuevamente en la reorganización documental del 29/10/2026. La inspección actual encuentra API común, sesiones y adaptadores PostgreSQL. Las notas antiguas que los presentan como pendientes se refieren a ese momento. Validación y aceptación vigentes: [revisión del Sprint 2](../Sprint%202/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_3_0.md).
+> **Alcance de esta guía:** los comandos, cifras y capturas que siguen son registros técnicos de sus sesiones originales; no se ejecutaron nuevamente en la reorganización documental del 29/10/2026. La inspección actual encuentra API común, sesiones y adaptadores PostgreSQL. Las notas antiguas que los presentan como pendientes se refieren a ese momento. Validación y aceptación vigentes: [revisión del Sprint 2](../Sprint%202/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_4_0.md).
 
 # Control de acceso por roles
 

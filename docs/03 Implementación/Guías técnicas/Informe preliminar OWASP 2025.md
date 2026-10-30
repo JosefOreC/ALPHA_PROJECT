@@ -4,7 +4,7 @@
 
 **Fecha:** 30/10/2026, America/Lima. **Proyecto:** EcoLogística Lima / ALPHA_PROJECT.
 
-**Estado de este antecedente:** verificación local previa a la consulta del proyecto remoto. Las métricas siguientes pertenecen a esa ejecución local y no son una certificación ni el informe final del Sprint 3. Ya está disponible el [informe posterior de SonarCloud](../Sprint%2003/05%20Informe%20SonarCloud%20V_1_0_0.md), con el análisis de `d36441f`; no confundir ambos commits, alcances ni coberturas.
+**Estado de este antecedente:** verificación local previa a la consulta del proyecto remoto. Las métricas siguientes pertenecen a esa ejecución local y no son una certificación ni el informe final del Sprint 3. Ya está disponible el [informe posterior de SonarCloud](../Sprint%2003/06%20Informe%20SonarCloud%20V_1_0_0.md), con el análisis de `d36441f`; no confundir ambos commits, alcances ni coberturas.
 
 ## Referencia y alcance
 

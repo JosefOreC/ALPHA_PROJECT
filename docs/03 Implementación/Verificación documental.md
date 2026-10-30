@@ -6,9 +6,9 @@
 
 ## Cambios y versiones vigentes
 
-- Sprint 1: informe, impedimentos, revisión y retrospectiva V_1_3_0.
+- Sprint 1: informe, impedimentos, revisión y retrospectiva V_1_4_0 (V_1_3_0 al momento de la verificación original).
 - Sprint 2: informe/impedimentos/auditoría V_1_4_0, revisión V_1_3_0 y retrospectiva única V_2_1_0.
-- Sprint 3: se conserva el nombre existente `Sprint 03/`; sus cuatro documentos pasan a V_1_1_0 para distinguir los antecedentes de la comprobación/aceptación pendientes.
+- Sprint 3: se conserva el nombre `Sprint 03/`; contiene seis archivos, como Sprint 2: el índice y los documentos 01 a 05 (revisión V_1_2_0, retrospectiva V_1_2_0, calidad de código, OWASP y WCAG V_1_0_0).
 - Seis guías trasladadas desde `development/` a `Guías técnicas/`, sin copias activas. Capturas permanecen en las carpetas de evidencias y se enlazan desde la ubicación real.
 - Índices por fase/sprint, histórico, guías, diseño y plantillas; navegación del README a todos los Markdown incluidos por Git, más retornos al índice correspondiente.
 - Matrices de revisión: 32 escenarios en Sprint 1, 60 en Sprint 2 y 16 en Sprint 3. Cada historia/enabler tiene Gold, Feliz, Infeliz y Borde; las variantes nuevas se marcan como propuestas. Ninguna se presenta ejecutada ni aceptada.
@@ -19,22 +19,23 @@
 
 Las carpetas Sprint 1 y Sprint 2 ya existían: se completaron y versionaron sin deducir el sprint del número de versión. Se conservan 14 fuentes históricas, con contenido único y registros de cambios; solo se ajustan sus enlaces, retornos y aviso de no vigencia.
 
-| Ubicación anterior | Ubicación vigente | Histórico conservado |
+| Ubicación anterior | Ubicación vigente | Historial |
 |---|---|---|
-| `docs/03 Implementación/Sprint 1/01 Informe de estado del proyecto V_1_2_0.md` | [01 Informe de estado del proyecto V_1_3_0.md](Sprint%201/01%20Informe%20de%20estado%20del%20proyecto%20V_1_3_0.md) | [01 Informe de estado del proyecto V_1_2_0.md](Sprint%201/Hist%C3%B3rico/01%20Informe%20de%20estado%20del%20proyecto%20V_1_2_0.md) |
-| `docs/03 Implementación/Sprint 1/02 Registro de Impedimentos V_1_2_0.md` | [02 Registro de Impedimentos V_1_3_0.md](Sprint%201/02%20Registro%20de%20Impedimentos%20V_1_3_0.md) | [02 Registro de Impedimentos V_1_2_0.md](Sprint%201/Hist%C3%B3rico/02%20Registro%20de%20Impedimentos%20V_1_2_0.md) |
-| `docs/03 Implementación/Sprint 1/03 Revisión del Sprint V_1_2_0.md` | [03 Revisión del Sprint V_1_3_0.md](Sprint%201/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_3_0.md) | [03 Revisión del Sprint V_1_2_0.md](Sprint%201/Hist%C3%B3rico/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_2_0.md) |
-| `docs/03 Implementación/Sprint 1/04 Retrospectiva del Sprint V_1_2_0.md` | [04 Retrospectiva del Sprint V_1_3_0.md](Sprint%201/04%20Retrospectiva%20del%20Sprint%20V_1_3_0.md) | [04 Retrospectiva del Sprint V_1_2_0.md](Sprint%201/Hist%C3%B3rico/04%20Retrospectiva%20del%20Sprint%20V_1_2_0.md) |
-| `docs/03 Implementación/Sprint 2/01 Informe de estado del proyecto V_1_3_0.md` | [01 Informe de estado del proyecto V_1_4_0.md](Sprint%202/01%20Informe%20de%20estado%20del%20proyecto%20V_1_4_0.md) | [01 Informe de estado del proyecto V_1_3_0.md](Sprint%202/Hist%C3%B3rico/01%20Informe%20de%20estado%20del%20proyecto%20V_1_3_0.md) |
-| `docs/03 Implementación/Sprint 2/02 Registro de Impedimentos V_1_3_0.md` | [02 Registro de Impedimentos V_1_4_0.md](Sprint%202/02%20Registro%20de%20Impedimentos%20V_1_4_0.md) | [02 Registro de Impedimentos V_1_3_0.md](Sprint%202/Hist%C3%B3rico/02%20Registro%20de%20Impedimentos%20V_1_3_0.md) |
-| `docs/03 Implementación/Sprint 2/03 Revisión del Sprint V_1_2_0.md` | [03 Revisión del Sprint V_1_3_0.md](Sprint%202/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_3_0.md) | [03 Revisión del Sprint V_1_2_0.md](Sprint%202/Hist%C3%B3rico/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_2_0.md) |
-| `docs/03 Implementación/Sprint 2/04 Retrospectiva del Sprint V_1_3_0.md` | [04 Retrospectiva del Sprint V_2_1_0.md](Sprint%202/04%20Retrospectiva%20del%20Sprint%20V_2_1_0.md) | [04 Retrospectiva del Sprint V_1_3_0.md](Sprint%202/Hist%C3%B3rico/04%20Retrospectiva%20del%20Sprint%20V_1_3_0.md) |
-| `docs/03 Implementación/Sprint 2/05 Auditoría de coherencia del proyecto V_1_3_0.md` | [05 Auditoría de coherencia del proyecto V_1_4_0.md](Sprint%202/05%20Auditor%C3%ADa%20de%20coherencia%20del%20proyecto%20V_1_4_0.md) | [05 Auditoría de coherencia del proyecto V_1_3_0.md](Sprint%202/Hist%C3%B3rico/05%20Auditor%C3%ADa%20de%20coherencia%20del%20proyecto%20V_1_3_0.md) |
-| `docs/03 Implementación/Sprint 2/06 Retrospectiva del Sprint V_2_0_0.md` | [04 Retrospectiva del Sprint V_2_1_0.md](Sprint%202/04%20Retrospectiva%20del%20Sprint%20V_2_1_0.md) | [06 Retrospectiva del Sprint V_2_0_0.md](Sprint%202/Hist%C3%B3rico/06%20Retrospectiva%20del%20Sprint%20V_2_0_0.md) |
-| `docs/03 Implementación/Sprint 03/01 Revisión del Sprint V_1_0_0.md` | [01 Revisión del Sprint V_1_1_0.md](Sprint%2003/01%20Revisi%C3%B3n%20del%20Sprint%20V_1_1_0.md) | [01 Revisión del Sprint V_1_0_0.md](Sprint%2003/Hist%C3%B3rico/01%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md) |
-| `docs/03 Implementación/Sprint 03/02 Retrospectiva del Sprint V_1_0_0.md` | [02 Retrospectiva del Sprint V_1_1_0.md](Sprint%2003/02%20Retrospectiva%20del%20Sprint%20V_1_1_0.md) | [02 Retrospectiva del Sprint V_1_0_0.md](Sprint%2003/Hist%C3%B3rico/02%20Retrospectiva%20del%20Sprint%20V_1_0_0.md) |
-| `docs/03 Implementación/Sprint 03/06 Informe de estado del proyecto V_1_0_0.md` | [06 Informe de estado del proyecto V_1_1_0.md](Sprint%2003/06%20Informe%20de%20estado%20del%20proyecto%20V_1_1_0.md) | [06 Informe de estado del proyecto V_1_0_0.md](Sprint%2003/Hist%C3%B3rico/06%20Informe%20de%20estado%20del%20proyecto%20V_1_0_0.md) |
-| `docs/03 Implementación/Sprint 03/07 Registro de Impedimentos V_1_0_0.md` | [07 Registro de Impedimentos V_1_1_0.md](Sprint%2003/07%20Registro%20de%20Impedimentos%20V_1_1_0.md) | [07 Registro de Impedimentos V_1_0_0.md](Sprint%2003/Hist%C3%B3rico/07%20Registro%20de%20Impedimentos%20V_1_0_0.md) |
+| `docs/03 Implementación/Sprint 1/01 Informe de estado del proyecto V_1_2_0.md` | [01 Informe de estado del proyecto V_1_4_0.md](Sprint%201/01%20Informe%20de%20estado%20del%20proyecto%20V_1_4_0.md) | Historial en la tabla de versiones del documento vigente |
+| `docs/03 Implementación/Sprint 1/02 Registro de Impedimentos V_1_2_0.md` | [02 Registro de Impedimentos V_1_4_0.md](Sprint%201/02%20Registro%20de%20Impedimentos%20V_1_4_0.md) | Historial en la tabla de versiones del documento vigente |
+| `docs/03 Implementación/Sprint 1/03 Revisión del Sprint V_1_2_0.md` | [03 Revisión del Sprint V_1_4_0.md](Sprint%201/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_4_0.md) | Historial en la tabla de versiones del documento vigente |
+| `docs/03 Implementación/Sprint 1/04 Retrospectiva del Sprint V_1_2_0.md` | [04 Retrospectiva del Sprint V_1_4_0.md](Sprint%201/04%20Retrospectiva%20del%20Sprint%20V_1_4_0.md) | Historial en la tabla de versiones del documento vigente |
+| `docs/03 Implementación/Sprint 2/01 Informe de estado del proyecto V_1_3_0.md` | [01 Informe de estado del proyecto V_1_5_0.md](Sprint%202/01%20Informe%20de%20estado%20del%20proyecto%20V_1_5_0.md) | Historial en la tabla de versiones del documento vigente |
+| `docs/03 Implementación/Sprint 2/02 Registro de Impedimentos V_1_3_0.md` | [02 Registro de Impedimentos V_1_5_0.md](Sprint%202/02%20Registro%20de%20Impedimentos%20V_1_5_0.md) | Historial en la tabla de versiones del documento vigente |
+| `docs/03 Implementación/Sprint 2/03 Revisión del Sprint V_1_2_0.md` | [03 Revisión del Sprint V_1_4_0.md](Sprint%202/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_4_0.md) | Historial en la tabla de versiones del documento vigente |
+| `docs/03 Implementación/Sprint 2/04 Retrospectiva del Sprint V_1_3_0.md` | [04 Retrospectiva del Sprint V_2_2_0.md](Sprint%202/04%20Retrospectiva%20del%20Sprint%20V_2_2_0.md) | Historial en la tabla de versiones del documento vigente |
+| `docs/03 Implementación/Sprint 2/05 Auditoría de coherencia del proyecto V_1_3_0.md` | [05 Auditoría de coherencia del proyecto V_1_5_0.md](Sprint%202/05%20Auditor%C3%ADa%20de%20coherencia%20del%20proyecto%20V_1_5_0.md) | Historial en la tabla de versiones del documento vigente |
+| `docs/03 Implementación/Sprint 2/06 Retrospectiva del Sprint V_2_0_0.md` | [04 Retrospectiva del Sprint V_2_2_0.md](Sprint%202/04%20Retrospectiva%20del%20Sprint%20V_2_2_0.md) | Historial en la tabla de versiones del documento vigente |
+| `docs/03 Implementación/Sprint 03/01 Revisión del Sprint V_1_0_0.md` | [01 Revisión del Sprint V_1_2_0.md](Sprint%2003/01%20Revisi%C3%B3n%20del%20Sprint%20V_1_2_0.md) | Historial en la tabla de versiones del documento vigente |
+| `docs/03 Implementación/Sprint 03/02 Retrospectiva del Sprint V_1_0_0.md` | [02 Retrospectiva del Sprint V_1_2_0.md](Sprint%2003/02%20Retrospectiva%20del%20Sprint%20V_1_2_0.md) | Historial en la tabla de versiones del documento vigente |
+| `docs/03 Implementación/Sprint 03/06 Informe de estado del proyecto V_1_0_0.md` | [01 Revisión del Sprint V_1_2_0.md](Sprint%2003/01%20Revisi%C3%B3n%20del%20Sprint%20V_1_2_0.md) | Retirado; su contenido pasa a la revisión vigente |
+| `docs/03 Implementación/Sprint 03/07 Registro de Impedimentos V_1_0_0.md` | [02 Registro de Impedimentos V_1_5_0.md](Sprint%202/02%20Registro%20de%20Impedimentos%20V_1_5_0.md) | Retirado; IMP-012 a IMP-016 pasan al registro único de impedimentos |
+| *(nuevos)* `Sprint 03/03 Calidad de código`, `04 OWASP` y `05 WCAG` | [03 Calidad de código V_1_0_0.md](Sprint%2003/03%20Calidad%20de%20c%C3%B3digo%20V_1_0_0.md), [04 OWASP V_1_1_0.md](Sprint%2003/04%20OWASP%20V_1_1_0.md) y [05 WCAG V_1_0_0.md](Sprint%2003/05%20WCAG%20V_1_0_0.md) | Documentos nuevos exigidos por la consigna; sin edición anterior |
 | `development/Base de datos de pruebas.md` | [Base de datos de pruebas.md](Gu%C3%ADas%20t%C3%A9cnicas/Base%20de%20datos%20de%20pruebas.md) | No se duplica: traslado de la guía |
 | `development/CRUD de pedidos.md` | [CRUD de pedidos.md](Gu%C3%ADas%20t%C3%A9cnicas/CRUD%20de%20pedidos.md) | No se duplica: traslado de la guía |
 | `development/Confirmacion de pedidos.md` | [Confirmacion de pedidos.md](Gu%C3%ADas%20t%C3%A9cnicas/Confirmacion%20de%20pedidos.md) | No se duplica: traslado de la guía |
@@ -92,3 +93,6 @@ Sprint 3 anuncia documentos 03 Calidad de código, 04 OWASP y 05 WCAG que no est
 | 1.0.0 | 29/10/2026 | Informe local de reorganización, trazabilidad, comprobaciones y pendientes; revisión del equipo pendiente. |
 
 [← Volver al índice de implementación](README.md)
+
+
+> **Actualización 30/10/2026.** Sprint 1, Sprint 2 y Sprint 03 ya no tienen carpeta `Histórico`: cada documento vigente conserva su historial en la tabla de versiones.

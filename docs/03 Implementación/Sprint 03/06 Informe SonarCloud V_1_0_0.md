@@ -122,7 +122,7 @@ Estos hallazgos no fueron corregidos, aceptados ni marcados como falsos positivo
 | A09 Security Logging and Alerting Failures | No se aportó evidencia operativa de alertas y monitoreo | Pendiente evaluación manual |
 | A10 Mishandling of Exceptional Conditions | Pruebas locales de entradas inválidas, fallos y protección transaccional con dobles | Evidencia parcial; integración real y condiciones de recursos pendientes |
 
-La ausencia de una incidencia asociada a una categoría no equivale a cumplimiento de esa categoría. La revisión debe completarse con la [matriz OWASP del Sprint 3](04%20OWASP%20V_1_0_0.md).
+La ausencia de una incidencia asociada a una categoría no equivale a cumplimiento de esa categoría. La revisión debe completarse con la [matriz OWASP del Sprint 3](04%20OWASP%20V_1_1_0.md).
 
 ## 4. Cobertura, alcance y continuidad del análisis
 

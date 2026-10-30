@@ -4,7 +4,7 @@
 
 ## Estado y alcance
 
-El proyecto SonarCloud ya existe y es público. La consulta de `main` / `155a99a`, del 30/10/2026 a las 13:00:07 de Lima, registra dieciséis vulnerabilidades y Quality Gate ERROR por seguridad en código nuevo. El análisis CI posterior del PR #27 tiene Quality Gate OK y cobertura superior al 90 %, con el alcance delimitado por su configuración. El [informe remoto del Sprint 3](../Sprint%2003/05%20Informe%20SonarCloud%20V_1_0_0.md) conserva ambos resultados y sus diferencias de alcance. La configuración está en el [PR #27 en borrador](https://github.com/JosefOreC/ALPHA_PROJECT/pull/27); el token está guardado y los permisos de revisión siguen pendientes de verificar.
+El proyecto SonarCloud ya existe y es público. La consulta de `main` / `155a99a`, del 30/10/2026 a las 13:00:07 de Lima, registra dieciséis vulnerabilidades y Quality Gate ERROR por seguridad en código nuevo. El análisis CI posterior del PR #27 tiene Quality Gate OK y cobertura superior al 90 %, con el alcance delimitado por su configuración. El [informe remoto del Sprint 3](../Sprint%2003/06%20Informe%20SonarCloud%20V_1_0_0.md) conserva ambos resultados y sus diferencias de alcance. La configuración está en el [PR #27 en borrador](https://github.com/JosefOreC/ALPHA_PROJECT/pull/27); el token está guardado y los permisos de revisión siguen pendientes de verificar.
 
 | Dato de entrega al equipo | Estado |
 |---|---|
