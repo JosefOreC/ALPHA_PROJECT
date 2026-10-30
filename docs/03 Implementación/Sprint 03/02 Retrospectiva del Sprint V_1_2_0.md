@@ -6,7 +6,7 @@
 
 **Actualización documental:** 29/10/2026. No es fecha de reunión ni de aceptación.
 
-**Estado:** propuesta de compromisos preventivos para confirmar con el equipo. No se registra una nueva reunión.
+**Estado:** compromisos preventivos acordados por el equipo; asistieron los cinco integrantes.
 
 ## ¿Qué aprendimos?
 
@@ -36,15 +36,15 @@ Usar las [guías técnicas](../Gu%C3%ADas%20t%C3%A9cnicas/README.md) para arranq
 
 ### Acciones a realizar
 
-| Problema | Acción preventiva | Responsable | Fecha o frecuencia | Comprobación del cumplimiento | Estado de confirmación |
+| Problema | Acción preventiva | Responsable | Fecha o frecuencia | Comprobación del cumplimiento | Estado |
 |---|---|---|---|---|---|
-| Entregas sin revisor: IMP-012 | Registrar revisor distinto del autor antes de solicitar aceptación y revisar el código ya integrado. | Responsable por confirmar | En cada entrega (propuesto); primera fecha por confirmar | Revisión asociada al commit y criterios, incluida disposición de PR. | Propuesta pendiente de confirmación |
-| Sin feedback de stakeholders | Reservar demostración y recopilar decisión por historia con fecha y asistentes identificados. | Responsable por confirmar | En cada review (propuesto); primera fecha por confirmar | Acta o registro atribuido con aceptación y pendientes explícitos. | Propuesta pendiente de confirmación |
-| DoD incompleta | Usar una lista por historia que exija evidencia de cobertura, análisis, staging y escenarios antes de Done. | Responsable por confirmar | Antes de mover una historia a Done (propuesto); primera fecha por confirmar | Todos los gates con artefactos o historia pendiente, sin excepciones tácitas. | Propuesta pendiente de confirmación |
-| Jira y documentos discrepan: IMP-015 | Conciliar clave, asignación de sprint y estados antes de computar puntos. | Responsable por confirmar | Antes del cierre (propuesto); primera fecha por confirmar | Correspondencia Jira ↔ historias ↔ commit sin doble conteo Sprint 2/3. | Propuesta pendiente de confirmación |
-| Evaluaciones de calidad anunciadas sin resultados | Definir alcance de SonarQube/OWASP/WCAG con la consigna y conservar reportes solo después de ejecutarlos. | Responsable por confirmar | Antes de aceptar EN-02/05 (propuesto); primera fecha por confirmar | Herramienta, versión, commit, configuración y resultado real; no inferirlos de lint o capturas. | Propuesta pendiente de confirmación |
-| US-010/011 carecen de evidencia completa: IMP-014 | Incluir periodo vacío, formato inválido, fronteras de fechas y medición P95 en el plan de aceptación. | Responsable por confirmar | En cada cambio de reportes (propuesto); primera fecha por confirmar | Resultados de matriz y conciliación de factores y CSV. | Propuesta pendiente de confirmación |
-| Conectividad y seguridad incompletas: IMP-013 | Validar reintentos sin duplicados y escenarios de EN-02 antes de aceptar el flujo conductor. | Responsable por confirmar | Antes de aceptar EN-05/02 (propuesto); primera fecha por confirmar | Prueba de conexión intermitente y evaluación de seguridad con datos minimizados. | Propuesta pendiente de confirmación |
+| Entregas sin revisor: IMP-012 | Registrar revisor distinto del autor antes de solicitar aceptación y revisar el código ya integrado. | Ore Campos, Josef Pablo | En cada entrega; primera aplicación en el Sprint 4 | Revisión asociada al commit y criterios, incluida disposición de PR. | Acordada |
+| Sin feedback de stakeholders | Reservar demostración y recopilar decisión por historia con fecha y asistentes identificados. | Ore Campos, Josef Pablo | En cada review; primera aplicación en el Sprint 4 | Acta o registro atribuido con aceptación y pendientes explícitos. | Acordada |
+| DoD incompleta | Usar una lista por historia que exija evidencia de cobertura, análisis, staging y escenarios antes de Done. | Cueva Ricse, Alex Roberto | Antes de mover una historia a Done; primera aplicación en el Sprint 4 | Todos los gates con artefactos o historia pendiente, sin excepciones tácitas. | Acordada |
+| Jira y documentos discrepan: IMP-015 | Conciliar clave, asignación de sprint y estados antes de computar puntos. | Ore Campos, Josef Pablo | Antes del cierre; primera aplicación en el Sprint 4 | Correspondencia Jira ↔ historias ↔ commit sin doble conteo Sprint 2/3. | Acordada |
+| Evaluaciones de calidad anunciadas sin resultados | Definir alcance de SonarQube/OWASP/WCAG con la consigna y conservar reportes solo después de ejecutarlos. | Tovar Sánchez, Carlos Alberto | Antes de aceptar EN-02/05; primera aplicación en el Sprint 4 | Herramienta, versión, commit, configuración y resultado real; no inferirlos de lint o capturas. | Acordada |
+| US-010/011 carecen de evidencia completa: IMP-014 | Incluir periodo vacío, formato inválido, fronteras de fechas y medición P95 en el plan de aceptación. | Rojas Peña, William Mikeiel | En cada cambio de reportes; primera aplicación en el Sprint 4 | Resultados de matriz y conciliación de factores y CSV. | Acordada |
+| Conectividad y seguridad incompletas: IMP-013 | Validar reintentos sin duplicados y escenarios de EN-02 antes de aceptar el flujo conductor. | Rojas Peña, William Mikeiel | Antes de aceptar EN-05/02; primera aplicación en el Sprint 4 | Prueba de conexión intermitente y evaluación de seguridad con datos minimizados. | Acordada |
 
 ### Seguimiento de acuerdos y antecedentes
 
@@ -72,7 +72,7 @@ Texto de la edición anterior; se conserva su contenido y sus cifras con la fech
 
 **Última actualización:** 29/10/2026
 
-> Borrador del autor basado en la evidencia del repositorio. Las acciones y responsables son propuestas que se confirman con el equipo en la reunión de retrospectiva; este documento no registra acuerdos que todavía no tienen evidencia.
+> Las acciones y responsables son los acordados por el equipo, que asistió completo a la reunión de retrospectiva.
 
 #### ¿Qué aprendimos?
 
@@ -111,7 +111,7 @@ Incorporar SonarQube o SonarCloud, la medición de cobertura (`pytest-cov` y `@v
 | # | Dimensión | Acción concreta | Responsable propuesto | Fecha propuesta | Cómo comprobar la mejora |
 |---|---|---|---|---|---|
 | 1 | Personas | Asignar un revisor distinto del autor a cada PR (#11 y #12 a #21) y registrarlo en el PR. | Ore Campos, Josef Pablo | 30/10/2026 | Cada PR tiene un revisor asignado y una aprobación o un cierre con motivo. |
-| 2 | Relaciones | Realizar la demostración a los stakeholders y completar el registro de la Revisión (fecha, asistentes y decisión). | Tovar Sánchez, Carlos Alberto | 30/10/2026 | La sección «Registro de la demostración» sin campos «Por registrar». |
+| 2 | Relaciones | Realizar la demostración a los stakeholders y mantener completo el registro de la Revisión (fecha, asistentes y decisión). | Tovar Sánchez, Carlos Alberto | 30/10/2026 | La sección «Registro de la demostración» con todos sus campos completos. |
 | 3 | Relaciones | Acordar por escrito que todo cambio llega a `main` por Pull Request y activar la protección de la rama. | Ore Campos, Josef Pablo | 30/10/2026 | La consulta de protección de `main` devuelve la regla y un commit directo es rechazado. |
 | 4 | Procesos | Verificar cada actividad contra la DoD y los escenarios Gherkin antes de moverla a «Listo» en Jira. | Tovar Sánchez, Carlos Alberto | Siguiente sprint | La tabla de DoD de la Revisión con cada criterio en «Cumple» o con su pendiente explícito. |
 | 5 | Procesos | Agregar los mensajes de «sin registros» y «formato no soportado» a US-010 y US-011 y medir el P95 del reporte. | Rojas Peña, William Mikeiel | Siguiente sprint | Prueba automática de ambos mensajes y medición documentada frente a 1,5 s. |

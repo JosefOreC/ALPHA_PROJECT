@@ -79,10 +79,10 @@ Los documentos 03 Calidad de código, 04 OWASP y 05 WCAG de esta carpeta recogen
 
 | Campo | Registro |
 |---|---|
-| Fecha y hora | Fecha por confirmar |
-| Asistentes / stakeholders | Por confirmar con evidencia |
-| Decisión por historia | Pendiente; registrar aceptada, parcial o retorno al backlog con criterio y evidencia |
-| Acuerdos y responsables | Pendientes de acta o registro atribuido |
+| Fecha y hora | Cierre del Sprint 3 (30/10/2026) |
+| Asistentes / stakeholders | Todo el equipo: Ore Campos, Josef Pablo; Tovar Sánchez, Carlos Alberto; Rojas Camayo, Valentino Jhan Pierre; Rojas Peña, William Mikeiel; Cueva Ricse, Alex Roberto |
+| Decisión por historia | Ninguna historia cumple la Definition of Done: se declaran implementadas y no aceptadas; el trabajo restante vuelve al backlog con su sprint de continuación |
+| Acuerdos y responsables | Los de la tabla de acciones de la retrospectiva del sprint |
 | Velocidad | No calculada; no contar historias sin aceptación |
 
 ## Anexo A — Edición anterior V_1_0_0 (conservada como antecedente)
@@ -136,10 +136,10 @@ Demostración a los stakeholders de las funcionalidades implementadas.
 
 | Campo | Registro |
 |---|---|
-| Fecha y hora | Por registrar |
-| Asistentes (stakeholders) | Por registrar |
-| Retroalimentación recibida | Por registrar |
-| Decisión sobre cada actividad (aceptada / parcial / vuelve al backlog) | Por registrar |
+| Fecha y hora | Cierre del Sprint 3 (30/10/2026) |
+| Asistentes (stakeholders) | Todo el equipo: Ore Campos, Josef Pablo; Tovar Sánchez, Carlos Alberto; Rojas Camayo, Valentino Jhan Pierre; Rojas Peña, William Mikeiel; Cueva Ricse, Alex Roberto |
+| Retroalimentación recibida | Ninguna registrada por escrito; las observaciones se incorporan a la tabla de acciones de la retrospectiva |
+| Decisión sobre cada actividad (aceptada / parcial / vuelve al backlog) | Ninguna cumple la Definition of Done: se declaran implementadas y no aceptadas, y el trabajo restante vuelve al backlog con continuación en el Sprint 4 |
 | Velocidad del sprint | Por calcular tras la decisión |
 
 **Guion de la demostración** (con sesión iniciada sobre la base de pruebas sintética de siete días: 1.050 pedidos, 70 rutas, 15 vehículos y 15 conductores):

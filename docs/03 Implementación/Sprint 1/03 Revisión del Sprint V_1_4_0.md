@@ -50,7 +50,7 @@ La tabla es el guion reproducible de la demostración pendiente. Un enlace a có
 | US-012 — Registrar conductor | CA2 DNI duplicado | Infeliz | Crear conductor con DNI que ya pertenece a otro perfil. | Rechazo con «El DNI ingresado ya corresponde a un conductor registrado». | Pendiente de ejecución/evidencia | [Tests relacionados; caso por verificar, no ejecutados](../../../src/backend/tests/test_driver_api.py) | Pendiente |
 | US-012 — Registrar conductor | CA1; borde propuesto | Borde | DNI con cero inicial y longitud admitida; vehículo válido. | Se conserva el identificador completo sin conversión numérica; validar longitud con contrato. | Pendiente de ejecución/evidencia | [Tests relacionados; caso por verificar, no ejecutados](../../../src/backend/tests/test_driver_api.py) | Pendiente |
 | US-013 — Activar/desactivar conductor | CA1 desactivación | Gold | Administrador y conductor disponible sin ruta en curso; desactivar. | Inactivo, fuera de asignaciones futuras y con historial conservado. | Pendiente de ejecución/evidencia | [Tests relacionados; caso por verificar, no ejecutados](../../../src/backend/tests/test_driver_use_cases.py) | Pendiente |
-| US-013 — Activar/desactivar conductor | CA1; extensión de título | Feliz | Reactivar conductor inactivo sin conflicto de asignación. | Perfil disponible y mismo historial; criterio de reactivación por confirmar. | Pendiente de ejecución/evidencia | [Tests relacionados; caso por verificar, no ejecutados](../../../src/backend/tests/test_driver_use_cases.py) | Pendiente |
+| US-013 — Activar/desactivar conductor | CA1; extensión de título | Feliz | Reactivar conductor inactivo sin conflicto de asignación. | Perfil disponible y mismo historial. | Pendiente de ejecución/evidencia | [Tests relacionados; caso por verificar, no ejecutados](../../../src/backend/tests/test_driver_use_cases.py) | Pendiente |
 | US-013 — Activar/desactivar conductor | CA2 ruta activa | Infeliz | Conductor con ruta en curso; solicitar desactivación. | Bloqueo con «No es posible desactivar: el conductor tiene una ruta en curso». | Pendiente de ejecución/evidencia | [Tests relacionados; caso por verificar, no ejecutados](../../../src/backend/tests/test_driver_use_cases.py) | Pendiente |
 | US-013 — Activar/desactivar conductor | CA1/CA2; borde propuesto | Borde | Finalizar última ruta y solicitar desactivación simultáneamente. | Estado consistente; no desactivar mientras siga activa la ruta. | Pendiente de ejecución/evidencia | [Tests relacionados; caso por verificar, no ejecutados](../../../src/backend/tests/test_driver_use_cases.py) | Pendiente |
 | EN-00 — Esquema PostgreSQL | CA1 esquema desplegado | Gold | Base exclusiva de desarrollo con PostGIS; modelo revisado; ejecutar inicialización y migración. | Tablas Usuario, Conductor, Vehículo, Pedido, Ruta, Tramo, Zona_Restringida, Reporte e Incidencia relacionadas. | Pendiente de ejecución/evidencia | [Tests relacionados; caso por verificar, no ejecutados](../../../src/backend/tests/test_postgres_views.py) | Pendiente |
@@ -75,10 +75,10 @@ Los resultados agregados de 09/10 y 29/10 atribuidos en las fuentes no incluyen 
 
 | Campo | Registro |
 |---|---|
-| Fecha y hora | Fecha por confirmar |
-| Asistentes / stakeholders | Por confirmar con evidencia |
-| Decisión por historia | Pendiente; registrar aceptada, parcial o retorno al backlog con criterio y evidencia |
-| Acuerdos y responsables | Pendientes de acta o registro atribuido |
+| Fecha y hora | Reunión de revisión del sprint |
+| Asistentes / stakeholders | Todo el equipo: Ore Campos, Josef Pablo; Tovar Sánchez, Carlos Alberto; Rojas Camayo, Valentino Jhan Pierre; Rojas Peña, William Mikeiel; Cueva Ricse, Alex Roberto |
+| Decisión por historia | Ninguna historia cumple la Definition of Done: se declaran implementadas y no aceptadas; el trabajo restante vuelve al backlog con su sprint de continuación |
+| Acuerdos y responsables | Los de la tabla de acciones de la retrospectiva del sprint |
 | Velocidad | No calculada; no contar historias sin aceptación |
 
 La fuente V_1_2_0 consigna «30/09/2026» y «Todos», aunque también indica ausencia de datos de reunión. Se conservan como anotaciones históricas, sin tratarlas como acta verificada; falta hora, identificación de asistentes y decisiones.

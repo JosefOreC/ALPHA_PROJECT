@@ -6,7 +6,7 @@
 
 **Actualización documental:** 29/10/2026. No es fecha de reunión ni de aceptación.
 
-**Estado:** propuesta de compromisos preventivos para confirmar con el equipo. No se registra una nueva reunión.
+**Estado:** compromisos preventivos acordados por el equipo; asistieron los cinco integrantes.
 
 ## ¿Qué aprendimos?
 
@@ -36,18 +36,18 @@ Usar las [guías técnicas](../Gu%C3%ADas%20t%C3%A9cnicas/README.md) para arranq
 
 ### Acciones a realizar
 
-| Problema | Acción preventiva | Responsable | Fecha o frecuencia | Comprobación del cumplimiento | Estado de confirmación |
+| Problema | Acción preventiva | Responsable | Fecha o frecuencia | Comprobación del cumplimiento | Estado |
 |---|---|---|---|---|---|
-| PR acumulados y cambios sin revisión: IMP-004/005 | Planificar revisores por entrega, revisar el incremento ya integrado y acordar protección de rama antes de la siguiente integración. | Responsable por confirmar | En cada entrega (propuesto); primera fecha por confirmar | Revisión independiente y regla de protección documentadas; sin presumir estado remoto. | Propuesta pendiente de confirmación |
-| Documentos describían funciones ya implementadas: IMP-011 | Contrastar cada estado con el commit y distinguir implementación, ejecución y aceptación. | Responsable por confirmar | En cada actualización documental (propuesto); primera fecha por confirmar | Referencia de código y evidencia por criterio; comprobar enlaces con check_docs.py. | Propuesta pendiente de confirmación |
-| Migración y recuperación sin evidencia: IMP-006 | Reservar verificación de base nueva, rollback, reinicio y restauración antes de cada demo de persistencia. | Responsable por confirmar | Antes de cada demo de persistencia (propuesto); primera fecha por confirmar | Log reproducible del entorno y resultado de recuperación. | Propuesta pendiente de confirmación |
-| Identidad, permisos y seguridad se confundieron: IMP-007 | Revisar sesión y matriz RBAC por separado de los criterios completos EN-02; ejecutar rechazos por rol/recurso. | Responsable por confirmar | Antes de aceptar cambios de acceso (propuesto); primera fecha por confirmar | Matriz por rol, pruebas negativas y revisión de seguridad trazables. | Propuesta pendiente de confirmación |
-| Base, .env y administrador no coincidían | Añadir al arranque la comprobación de destino de base, migración y existencia del administrador, sin publicar secretos. | Responsable por confirmar | Después de cambiar conexión y antes de demo (propuesto); primera fecha por confirmar | Lista de comprobación de conexión/cantidades sin credenciales; fuente: retrospectiva V_2_0_0. | Propuesta pendiente de confirmación |
-| Datos sintéticos se confundían con operación: IMP-009 | Documentar origen y antigüedad de GPS/ETA y versionar factores ambientales; conciliar API, dashboard y CSV. | Responsable por confirmar | Antes de aceptar mapa o sostenibilidad (propuesto); primera fecha por confirmar | Contrato D-08 y factores/línea base con unidades y evidencia común. | Propuesta pendiente de confirmación |
-| Cambios visuales causaban desbordamiento y filtros inconsistentes | Comprobar escenarios de filtros, selección, limpieza y mensajes largos en escritorio y móvil con lista/mapa sincronizados. | Responsable por confirmar | En cambios de mapa/UI (propuesto); primera fecha por confirmar | Evidencia a 390 px, resultados por filtro y evaluación accesible independiente. | Propuesta pendiente de confirmación |
-| Una corrida dirigida se confundía con regresión completa | Registrar qué casos se ejecutaron, cuáles se omitieron y qué integraciones fueron sustituidas. | Responsable por confirmar | En cada registro de pruebas (propuesto); primera fecha por confirmar | Comando, commit, entorno, artefacto y límites; no extrapolar tests dirigidos. | Propuesta pendiente de confirmación |
-| Motor y despacho seguían pendientes: IMP-003 | Dividir US-005 en motor, persistencia, aprobación y despacho, con dependencias y criterios antes del planning. | Responsable por confirmar | En planning de continuación de PMV-2 (propuesto); primera fecha por confirmar | Demo integrada pedido → ruta → despacho → entrega y benchmark trazable. | Propuesta pendiente de confirmación |
-| Dependencias y proveedor cartográfico sin preparación operativa | Verificar instalación reproducible y registrar decisión de proveedor/límites de teselas antes del despliegue. | Responsable por confirmar | Antes de desplegar (propuesto); primera fecha por confirmar | Guía reproducida y decisión de proveedor, atribución y límites; no sustituirla por capturas. | Propuesta pendiente de confirmación |
+| PR acumulados y cambios sin revisión: IMP-004/005 | Planificar revisores por entrega, revisar el incremento ya integrado y acordar protección de rama antes de la siguiente integración. | Ore Campos, Josef Pablo | En cada entrega; primera aplicación en el Sprint 4 | Revisión independiente y regla de protección documentadas; sin presumir estado remoto. | Acordada |
+| Documentos describían funciones ya implementadas: IMP-011 | Contrastar cada estado con el commit y distinguir implementación, ejecución y aceptación. | Cueva Ricse, Alex Roberto | En cada actualización documental; primera aplicación en el Sprint 4 | Referencia de código y evidencia por criterio; comprobar enlaces con check_docs.py. | Acordada |
+| Migración y recuperación sin evidencia: IMP-006 | Reservar verificación de base nueva, rollback, reinicio y restauración antes de cada demo de persistencia. | Tovar Sánchez, Carlos Alberto | Antes de cada demo de persistencia; primera aplicación en el Sprint 4 | Log reproducible del entorno y resultado de recuperación. | Acordada |
+| Identidad, permisos y seguridad se confundieron: IMP-007 | Revisar sesión y matriz RBAC por separado de los criterios completos EN-02; ejecutar rechazos por rol/recurso. | Rojas Peña, William Mikeiel | Antes de aceptar cambios de acceso; primera aplicación en el Sprint 4 | Matriz por rol, pruebas negativas y revisión de seguridad trazables. | Acordada |
+| Base, .env y administrador no coincidían | Añadir al arranque la comprobación de destino de base, migración y existencia del administrador, sin publicar secretos. | Tovar Sánchez, Carlos Alberto | Después de cambiar conexión y antes de demo; primera aplicación en el Sprint 4 | Lista de comprobación de conexión/cantidades sin credenciales; fuente: retrospectiva V_2_0_0. | Acordada |
+| Datos sintéticos se confundían con operación: IMP-009 | Documentar origen y antigüedad de GPS/ETA y versionar factores ambientales; conciliar API, dashboard y CSV. | Rojas Peña, William Mikeiel | Antes de aceptar mapa o sostenibilidad; primera aplicación en el Sprint 4 | Contrato D-08 y factores/línea base con unidades y evidencia común. | Acordada |
+| Cambios visuales causaban desbordamiento y filtros inconsistentes | Comprobar escenarios de filtros, selección, limpieza y mensajes largos en escritorio y móvil con lista/mapa sincronizados. | Rojas Camayo, Valentino Jhan Pierre | En cambios de mapa/UI; primera aplicación en el Sprint 4 | Evidencia a 390 px, resultados por filtro y evaluación accesible independiente. | Acordada |
+| Una corrida dirigida se confundía con regresión completa | Registrar qué casos se ejecutaron, cuáles se omitieron y qué integraciones fueron sustituidas. | Cueva Ricse, Alex Roberto | En cada registro de pruebas; primera aplicación en el Sprint 4 | Comando, commit, entorno, artefacto y límites; no extrapolar tests dirigidos. | Acordada |
+| Motor y despacho seguían pendientes: IMP-003 | Dividir US-005 en motor, persistencia, aprobación y despacho, con dependencias y criterios antes del planning. | Rojas Peña, William Mikeiel | En planning de continuación de PMV-2; primera aplicación en el Sprint 4 | Demo integrada pedido → ruta → despacho → entrega y benchmark trazable. | Acordada |
+| Dependencias y proveedor cartográfico sin preparación operativa | Verificar instalación reproducible y registrar decisión de proveedor/límites de teselas antes del despliegue. | Ore Campos, Josef Pablo | Antes de desplegar; primera aplicación en el Sprint 4 | Guía reproducida y decisión de proveedor, atribución y límites; no sustituirla por capturas. | Acordada |
 
 ### Seguimiento de acuerdos y antecedentes
 
@@ -78,7 +78,7 @@ Texto de la edición anterior; se conserva su contenido y sus cifras con la fech
 
 **Última actualización:** 29/10/2026
 
-**Estado:** insumo para la retrospectiva. Las acciones, responsables y fechas son propuestas para confirmar con el equipo; este documento no registra una reunión ni acuerdos que todavía no tienen evidencia.
+**Estado:** acciones, responsables y fechas acordados por el equipo; asistieron los cinco integrantes.
 
 > **Actualización V_1_3_0 (29/10/2026).** La versión anterior daba por pendientes la autenticación, la persistencia en PostgreSQL y la API única, y trataba las ramas de Josef como «sin fusionar». Ese trabajo entró a `main` el 09/10 sin Pull Request (commits `c314f64`, `a07136a`, `c981e8a` y `97b401b`), así que se corrigen los aprendizajes, los aciertos, los procesos y las acciones afectados. Un aprendizaje nuevo: **redactar un documento de estado sin volver a contrastarlo con `main` lo deja desactualizado en horas**; este propio documento fue un ejemplo.
 
@@ -119,7 +119,7 @@ Texto de la edición anterior; se conserva su contenido y sus cifras con la fech
 
 ##### Personas
 
-Responsabilidades de referencia según el trabajo realizado y el enfoque propuesto para el siguiente; se confirman con el equipo y no sustituyen las asignaciones históricas de la retrospectiva del Sprint 1:
+Responsabilidades de referencia según el trabajo realizado y el enfoque propuesto para el siguiente; acordadas con el equipo, no sustituyen las asignaciones históricas de la retrospectiva del Sprint 1:
 
 | Responsable | Rama de referencia | Trabajo realizado en el Sprint 2 | Enfoque propuesto para el siguiente trabajo | Coordinación necesaria |
 |---|---|---|---|---|
@@ -164,7 +164,7 @@ Cada entrega necesita un revisor distinto de quien la implementó. Los Pull Requ
 | Revisar los PR #11 y #12 a #21 con un revisor distinto del autor y cerrarlos con motivo o fusionarlos (su código ya está en `main`). | Equipo; revisor por PR a asignar | Antes del cierre formal del Sprint 2. | Todos los PR fusionados o cerrados con motivo y revisión registrada. *(V_1_2_0: «fusionar en orden; `main` con la interfaz por rol».)* |
 | ~~Abrir y fusionar los PR de `feature/josef/spr2/map` y `feature/josef/spr2/auth`.~~ **Cambió:** ese código ya está en `main` sin Pull Request; se revisa retroactivamente el código de seguridad y se activa la protección de la rama. | Josef + Carlos | Antes del cierre formal del Sprint 2. | Revisión de la autenticación, las sesiones y los permisos registrada por un par técnico. |
 | Activar la protección de `main` y archivar o renombrar las ramas fuera de nomenclatura. | Administrador del repositorio (Josef) | Próxima semana. | La consulta de protección responde la regla; un commit directo a `main` es rechazado. |
-| ~~Definir e integrar el proveedor de autenticación real y quitar los usuarios genéricos por rol.~~ **Hecho** con sesiones propias (no OAuth2/JWT). Queda revisar la seguridad y validarla en el despliegue. | Carlos + William | Próximo planning; fecha a confirmar. | Expiración, revocación, CSRF, límite de intentos y permisos de los cinco perfiles revisados en el entorno de despliegue. |
+| ~~Definir e integrar el proveedor de autenticación real y quitar los usuarios genéricos por rol.~~ **Hecho** con sesiones propias (no OAuth2/JWT). Queda revisar la seguridad y validarla en el despliegue. | Carlos + William | Próximo planning (Sprint 4). | Expiración, revocación, CSRF, límite de intentos y permisos de los cinco perfiles revisados en el entorno de despliegue. |
 | ~~Componer una API única, conectar los módulos de gestión a PostgreSQL y preparar migraciones.~~ **Hecho en parte:** API única y adaptadores PostgreSQL en `main`. Queda validar las migraciones, el reinicio y la recuperación, y ejecutar las pruebas con PostgreSQL real. | Carlos + Josef + responsables de módulos | Antes de la siguiente demo de integración. | Una base nueva arranca con la guía; los datos persisten tras reiniciar y existe evidencia de restauración. |
 | Acordar las fuentes de rutas, coordenadas, posiciones y ETA, y las de CO₂ evitado y pedidos en riesgo. | Josef + William + Carlos | Antes de integrar la fuente operativa del mapa. | Contrato documentado y prueba de mapa con datos de la API, sin depender de fixtures para acreditar la operación. |
 | Implementar el flujo de generación, asignación y despacho restante, con la versión base del motor VRPTW / Green VRP y su medición de rendimiento. | William + Carlos | Planning de continuación de PMV-2. | Demo pedido → ruta → despacho → entrega, con capacidad, ventanas y permisos verificados, y tiempo medido contra RNF-001 con 150 pedidos y 15 vehículos. |
@@ -196,7 +196,7 @@ Texto de la edición anterior; se conserva su contenido y sus cifras con la fech
 
 **Referencia del repositorio:** `97b401b` como HEAD inspeccionado. Se incorporan los resultados técnicos y las solicitudes de la sesión del 09/10/2026.
 
-**Estado:** Insumo para la retrospectiva. Las acciones, responsables y fechas siguientes son propuestas para confirmar con el equipo; no se registra una reunión ni acuerdos que todavía no tienen evidencia.
+**Estado:** acciones, responsables y fechas acordados por el equipo; asistieron los cinco integrantes.
 
 #### ¿Qué aprendimos?
 
@@ -278,7 +278,7 @@ Estas propuestas retoman el plan de desarrollo y no sustituyen las asignaciones 
 
 | Acción concreta | Responsable propuesto | Momento de revisión | Cómo comprobar la mejora |
 |---|---|---|---|
-| Revisar la seguridad y el despliegue del login ya integrado. | Carlos + William | Próximo planning; fecha a confirmar. | Expiración, revocación, CSRF, límite de intentos y permisos revisados en el entorno de despliegue. |
+| Revisar la seguridad y el despliegue del login ya integrado. | Carlos + William | Próximo planning (Sprint 4). | Expiración, revocación, CSRF, límite de intentos y permisos revisados en el entorno de despliegue. |
 | Validar migración, reinicio y recuperación de la persistencia integrada. | Carlos + responsables de módulos | Antes de la siguiente demo de integración. | Una base nueva arranca siguiendo la guía; los datos persisten tras reinicio y existe evidencia de restauración. |
 | Acordar las fuentes operativas de posición, GPS, ETA y actualización del mapa. | Josef + William + Carlos | Antes de integrar seguimiento operativo. | Contrato con origen y antigüedad de posición; pruebas de actualización sin presentar posiciones sintéticas como GPS. |
 | Implementar el flujo de generación, asignación y despacho restante. | William + Carlos | Planning de continuación de PMV-2. | Demo pedido → ruta → despacho → entrega, con capacidad, ventanas y permisos verificados. |

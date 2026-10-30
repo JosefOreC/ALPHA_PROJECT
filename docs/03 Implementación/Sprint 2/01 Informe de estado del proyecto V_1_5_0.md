@@ -60,7 +60,7 @@ Texto de la edición anterior; se conserva su contenido y sus cifras con la fech
 
 **Versión del documento:** V_1_3_0
 
-> Las fechas oficiales de inicio y cierre del Sprint 2 se confirman en la reunión de revisión. **Actualización V_1_3_0 (29/10/2026):** la versión anterior se redactó el 09/10 con la rama `feature/carlos/spr2/m_pedidos/confirmacion` y decía que la autenticación, PostgreSQL y la API única estaban pendientes. Ese mismo día Josef Ore integró en `main` el mapa, la autorización, el inicio de sesión y los adaptadores PostgreSQL (commits `c314f64`, `a07136a`, `c981e8a` y `97b401b`), de modo que esas afirmaciones dejaron de ser ciertas. Este informe las corrige contrastándolas con `main` (commit `30969da`).
+> Las fechas oficiales de inicio y cierre del Sprint 2 se registran en la reunión de revisión. **Actualización V_1_3_0 (29/10/2026):** la versión anterior se redactó el 09/10 con la rama `feature/carlos/spr2/m_pedidos/confirmacion` y decía que la autenticación, PostgreSQL y la API única estaban pendientes. Ese mismo día Josef Ore integró en `main` el mapa, la autorización, el inicio de sesión y los adaptadores PostgreSQL (commits `c314f64`, `a07136a`, `c981e8a` y `97b401b`), de modo que esas afirmaciones dejaron de ser ciertas. Este informe las corrige contrastándolas con `main` (commit `30969da`).
 
 ##### **Estado del proyecto**
 

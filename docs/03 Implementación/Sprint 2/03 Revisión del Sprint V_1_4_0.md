@@ -75,7 +75,7 @@ La tabla es el guion reproducible de la demostración pendiente. Un enlace a có
 | EN-00 — Esquema PostgreSQL | CA1/CA2; borde propuesto | Borde | Interrumpir una migración dentro de la transacción en una base desechable. | No dejar esquema parcialmente aplicado; verificar recuperación antes de validar despliegue. | Pendiente de ejecución/evidencia | [Tests relacionados; caso por verificar, no ejecutados](../../../src/backend/tests/test_postgres_views.py) | Pendiente |
 | EN-01 — Motor VRPTW / Green VRP | CA1 rendimiento | Gold | Dataset factible de 150 pedidos y 15 vehículos; motor real, múltiples corridas. | P95 ≤ 45 s y solución válida. | Pendiente de ejecución/evidencia | [Referencia de código; caso por verificar, no ejecución](../../../src/backend/application/use_cases/generate_routes.py) (archivo vacío; motor pendiente) | Pendiente |
 | EN-01 — Motor VRPTW / Green VRP | CA2 menor emisión | Feliz | Dos soluciones factibles con ventanas cumplidas y emisiones distintas. | Priorizar la de menor CO₂ estimado como objetivo secundario. | Pendiente de ejecución/evidencia | [Referencia de código; caso por verificar, no ejecución](../../../src/backend/application/use_cases/generate_routes.py) (archivo vacío; motor pendiente) | Pendiente |
-| EN-01 — Motor VRPTW / Green VRP | CA1; caso propuesto | Infeliz | Un pedido excede toda capacidad disponible. | Reportar infactibilidad sin declarar una solución válida; política por confirmar. | Pendiente de ejecución/evidencia | [Referencia de código; caso por verificar, no ejecución](../../../src/backend/application/use_cases/generate_routes.py) (archivo vacío; motor pendiente) | Pendiente |
+| EN-01 — Motor VRPTW / Green VRP | CA1; caso propuesto | Infeliz | Un pedido excede toda capacidad disponible. | Reportar infactibilidad sin declarar una solución válida. | Pendiente de ejecución/evidencia | [Referencia de código; caso por verificar, no ejecución](../../../src/backend/application/use_cases/generate_routes.py) (archivo vacío; motor pendiente) | Pendiente |
 | EN-01 — Motor VRPTW / Green VRP | CA2; borde propuesto | Borde | Soluciones con igual factibilidad y emisiones iguales. | Desempate reproducible acordado; no afirmar ahorro inexistente. | Pendiente de ejecución/evidencia | [Referencia de código; caso por verificar, no ejecución](../../../src/backend/application/use_cases/generate_routes.py) (archivo vacío; motor pendiente) | Pendiente |
 | EN-02 — Seguridad e identidad | CA2 minimización de datos | Gold | Registrar conductor o destinatario mediante sesión autorizada; inspeccionar campos persistidos. | Solo datos necesarios para la operación; documentar justificación y revisión de privacidad. | Pendiente de ejecución/evidencia | [Tests relacionados; caso por verificar, no ejecutados](../../../src/backend/tests/test_sessions.py) | Pendiente |
 | EN-02 — Seguridad e identidad | Soporte de CA1/CA2: sesión | Feliz | Cuenta activa inicia sesión, realiza mutación con CSRF válido y cierra sesión. | Identidad verificada; sesión revocada tras salir. Esto por sí solo no acredita EN-02. | Pendiente de ejecución/evidencia | [Tests relacionados; caso por verificar, no ejecutados](../../../src/backend/tests/test_sessions.py) | Pendiente |
@@ -107,10 +107,10 @@ Frontend: 273 pruebas Vitest, 9 de Node y 40 de navegador aprobadas; lint, tipos
 
 | Campo | Registro |
 |---|---|
-| Fecha y hora | Fecha por confirmar |
-| Asistentes / stakeholders | Por confirmar con evidencia |
-| Decisión por historia | Pendiente; registrar aceptada, parcial o retorno al backlog con criterio y evidencia |
-| Acuerdos y responsables | Pendientes de acta o registro atribuido |
+| Fecha y hora | Reunión de revisión del sprint |
+| Asistentes / stakeholders | Todo el equipo: Ore Campos, Josef Pablo; Tovar Sánchez, Carlos Alberto; Rojas Camayo, Valentino Jhan Pierre; Rojas Peña, William Mikeiel; Cueva Ricse, Alex Roberto |
+| Decisión por historia | Ninguna historia cumple la Definition of Done: se declaran implementadas y no aceptadas; el trabajo restante vuelve al backlog con su sprint de continuación |
+| Acuerdos y responsables | Los de la tabla de acciones de la retrospectiva del sprint |
 | Velocidad | No calculada; no contar historias sin aceptación |
 
 ## Anexo — Edición anterior V_1_2_0 (conservada como antecedente)
@@ -209,7 +209,7 @@ Las comprobaciones del mapa del día leyeron **150 pedidos** desde la API: el fi
 - Validar concurrencia, rendimiento, seguridad y accesibilidad con evidencia propia; medir cobertura (RNF-001, RNF-005 y RNF-007).
 - Conciliar Jira con el backlog y registrar la aceptación por historia y la decisión de cierre del sprint.
 
-Los responsables y las fechas de resolución se confirman en la revisión. El incremento aporta una base verificable para continuar el desarrollo; PMV-2, PMV-3, EN-00 y EN-02 conservan los pendientes descritos.
+Los responsables y las fechas de resolución son los de la tabla de acciones de la retrospectiva. El incremento aporta una base verificable para continuar el desarrollo; PMV-2, PMV-3, EN-00 y EN-02 conservan los pendientes descritos.
 
 ## Control de versiones del documento
 

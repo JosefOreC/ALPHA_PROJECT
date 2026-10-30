@@ -8,7 +8,7 @@
 
 Se conserva cada identificador. Un **bloqueo** impide trabajo concreto comprometido; un **riesgo** es un posible impacto; una **decisión** requiere acuerdo; una **tarea** es trabajo planificable. Solo se usa «bloqueo de aceptación» cuando falta una condición explícita de la DoD. La reclasificación documental no cierra los registros.
 
-Fechas originales, prioridades, reportantes y plazos (incluidos vencidos) permanecen en registro histórico (ver el anexo de este documento). No son nuevas asignaciones ni nuevas fechas límite. Responsable de seguimiento y próxima fecha de revisión: **Responsable por confirmar / Fecha por confirmar**, salvo respaldo en esas fuentes.
+Fechas originales, prioridades, reportantes y plazos (incluidos vencidos) permanecen en registro histórico (ver el anexo de este documento). No son nuevas asignaciones ni nuevas fechas límite. Responsable de seguimiento y próxima fecha de revisión: **Ore Campos, Josef Pablo (coordinación del planning) / 30/10/2026 (cierre del Sprint 3)**.
 
 | ID | Clasificación | Trabajo que afecta o bloquea | Impacto | Implementación / inspección estática | Verificación que falta | Estado | Condición de desbloqueo o cierre | Destino / trazabilidad |
 |---|---|---|---|---|---|---|---|---|

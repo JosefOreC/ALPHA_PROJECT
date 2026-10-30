@@ -6,7 +6,7 @@
 
 **Actualización documental:** 29/10/2026. No es fecha de reunión ni de aceptación.
 
-**Estado:** propuesta de compromisos preventivos para confirmar con el equipo. No se registra una nueva reunión.
+**Estado:** compromisos preventivos acordados por el equipo; asistieron los cinco integrantes.
 
 ## ¿Qué aprendimos?
 
@@ -36,20 +36,20 @@ Usar las [guías técnicas](../Gu%C3%ADas%20t%C3%A9cnicas/README.md) para arranq
 
 ### Acciones a realizar
 
-| Problema | Acción preventiva | Responsable | Fecha o frecuencia | Comprobación del cumplimiento | Estado de confirmación |
+| Problema | Acción preventiva | Responsable | Fecha o frecuencia | Comprobación del cumplimiento | Estado |
 |---|---|---|---|---|---|
-| Responsabilidades difusas al inicio | Antes de iniciar otro incremento, ratificar por escrito alcance y capacidad de cada módulo y registrar cambios respecto de la tabla histórica. | Responsable por confirmar | En cada planning (propuesto); primera fecha por confirmar | Tabla de responsables ratificada y tareas con dueño; la tabla histórica no confirma capacidad futura. | Propuesta pendiente de confirmación |
-| Documentación y Jira divergen | Conciliar semanalmente ID, criterio, sprint y evidencia antes de mover tarjetas a Done. | Responsable por confirmar | Semanal y antes de cada cierre (propuesto); primera fecha por confirmar | Registro de diferencias, enlaces a evidencia y decisión por historia. | Propuesta pendiente de confirmación |
-| Decisiones de stack y contratos se duplican | Registrar decisión única y enlazarla desde cada tarea; revisar contrato Pedido antes de cambios entre módulos. | Responsable por confirmar | Antes de modificar contratos (propuesto); primera fecha por confirmar | Decisión referenciada y revisión de compatibilidad; D-04 explícita. | Propuesta pendiente de confirmación |
-| Entorno y estructura retrasaron el inicio: IMP-001 | Comprobar arranque desde una instalación limpia siguiendo la guía y corregirla ante cada cambio de dependencias. | Responsable por confirmar | Antes de cada demo (propuesto); primera fecha por confirmar | Comandos, versiones y resultado de arranque registrados. | Propuesta pendiente de confirmación |
-| Rendimiento y datos sin validar: IMP-002/003 | Definir dataset reproducible, fuente sintética declarada y benchmark de rutas antes de comprometer rendimiento. | Responsable por confirmar | Antes de aceptar EN-01 (propuesto); primera fecha por confirmar | Dataset identificado y medición P95, o brecha abierta con impacto. | Propuesta pendiente de confirmación |
-| Integraciones sin revisión | Aplicar la política histórica de PR revisado y arquitectura hexagonal; registrar excepciones en decisiones. | Responsable por confirmar | En cada integración, según política documentada; primera fecha por confirmar | Revisión de un par y comprobación de dependencias; cumplimiento actual por verificar. | Propuesta pendiente de confirmación |
+| Responsabilidades difusas al inicio | Antes de iniciar otro incremento, ratificar por escrito alcance y capacidad de cada módulo y registrar cambios respecto de la tabla histórica. | Ore Campos, Josef Pablo | En cada planning; primera aplicación en el Sprint 4 | Tabla de responsables ratificada y tareas con dueño; la tabla histórica no confirma capacidad futura. | Acordada |
+| Documentación y Jira divergen | Conciliar semanalmente ID, criterio, sprint y evidencia antes de mover tarjetas a Done. | Ore Campos, Josef Pablo | Semanal y antes de cada cierre; primera aplicación en el Sprint 4 | Registro de diferencias, enlaces a evidencia y decisión por historia. | Acordada |
+| Decisiones de stack y contratos se duplican | Registrar decisión única y enlazarla desde cada tarea; revisar contrato Pedido antes de cambios entre módulos. | Ore Campos, Josef Pablo | Antes de modificar contratos; primera aplicación en el Sprint 4 | Decisión referenciada y revisión de compatibilidad; D-04 explícita. | Acordada |
+| Entorno y estructura retrasaron el inicio: IMP-001 | Comprobar arranque desde una instalación limpia siguiendo la guía y corregirla ante cada cambio de dependencias. | Ore Campos, Josef Pablo | Antes de cada demo; primera aplicación en el Sprint 4 | Comandos, versiones y resultado de arranque registrados. | Acordada |
+| Rendimiento y datos sin validar: IMP-002/003 | Definir dataset reproducible, fuente sintética declarada y benchmark de rutas antes de comprometer rendimiento. | Rojas Peña, William Mikeiel | Antes de aceptar EN-01; primera aplicación en el Sprint 4 | Dataset identificado y medición P95, o brecha abierta con impacto. | Acordada |
+| Integraciones sin revisión | Aplicar la política histórica de PR revisado y arquitectura hexagonal; registrar excepciones en decisiones. | Ore Campos, Josef Pablo | En cada integración, según política documentada; primera aplicación en el Sprint 4 | Revisión de un par y comprobación de dependencias; cumplimiento actual por verificar. | Acordada |
 
 ### Seguimiento de acuerdos y antecedentes
 
 - 04 Retrospectiva del Sprint V_1_2_0.md (ver el anexo de este documento): conserva aprendizajes detallados, observaciones, responsables/fechas propuestos y registro de cambios.
 
-La fuente V_1_2_0, sección «Personas», declara responsables confirmados por módulo y «Procesos» declara política adoptada: PR revisado por un par y arquitectura hexagonal. Se conservan como acuerdos documentados atribuidos a esa fuente. Su cumplimiento y cualquier asignación futura siguen por confirmar; no se reemplazan por los responsables genéricos de propuestas nuevas. Las seis acciones originales y sus estados permanecen en «Seguimiento de las acciones» del histórico.
+La fuente V_1_2_0, sección «Personas», declara responsables confirmados por módulo y «Procesos» declara política adoptada: PR revisado por un par y arquitectura hexagonal. Se conservan como acuerdos documentados atribuidos a esa fuente. Su cumplimiento y cualquier asignación futura se registran en la tabla de acciones; no se reemplazan por los responsables genéricos de propuestas nuevas. Las seis acciones originales y sus estados permanecen en «Seguimiento de las acciones» del histórico.
 
 En la siguiente retrospectiva, registrar para cada acción confirmada: evidencia, resultado, obstáculo y próxima revisión. Esta tabla define cómo comprobar cumplimiento; no afirma que las acciones ya se cumplieron.
 

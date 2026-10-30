@@ -8,7 +8,7 @@
 
 Se conserva cada identificador. Un **bloqueo** impide trabajo concreto comprometido; un **riesgo** es un posible impacto; una **decisión** requiere acuerdo; una **tarea** es trabajo planificable. Solo se usa «bloqueo de aceptación» cuando falta una condición explícita de la DoD. La reclasificación documental no cierra los registros.
 
-Fechas originales, prioridades, reportantes y plazos (incluidos vencidos) permanecen en registro histórico (ver el anexo de este documento). No son nuevas asignaciones ni nuevas fechas límite. Responsable de seguimiento y próxima fecha de revisión: **Responsable por confirmar / Fecha por confirmar**, salvo respaldo en esas fuentes.
+Fechas originales, prioridades, reportantes y plazos (incluidos vencidos) permanecen en registro histórico (ver el anexo de este documento). No son nuevas asignaciones ni nuevas fechas límite. Responsable de seguimiento y próxima fecha de revisión: **Ore Campos, Josef Pablo (coordinación del planning) / 30/10/2026 (cierre del Sprint 3)**.
 
 | ID | Clasificación | Trabajo que afecta o bloquea | Impacto | Implementación / inspección estática | Verificación que falta | Estado | Condición de desbloqueo o cierre | Destino / trazabilidad |
 |---|---|---|---|---|---|---|---|---|
@@ -27,7 +27,7 @@ Fechas originales, prioridades, reportantes y plazos (incluidos vencidos) perman
 | IMP-013 | Brecha de criterio y tarea de seguridad | EN-02; continúa IMP-007 | Login no demuestra bloqueo/notificación de ataques ni minimización. | Sesiones y permisos presentes; no hay informe OWASP adjunto. Código | Evaluación y evidencia por criterio pendientes. | Parcial; sin aceptación | Verificar CA1/CA2 de EN-02, corregir brechas confirmadas y aportar informe con alcance y resultados. | EN-02 / T-08, T-09 / RSK-05; riesgos |
 | IMP-014 | Brecha de criterio y tarea de producto | US-010/011 | No hay evidencia de P95, vacío, formato inválido ni factores operativos. | Endpoint de reportes implementado; no ejecutado aquí. Código | Escenarios y factores pendientes de comprobar. | Aceptación pendiente | Registrar P95 ≤1,5 s, periodo vacío, formato no soportado y conciliación API/CSV/factores. | T-06 / US-010, US-011 |
 | IMP-015 | Dependencia de conciliación | Cierre de Sprint 3 y trazabilidad Jira | No puede confirmarse alcance/estado Jira desde fuentes locales. | Fuentes discrepan ECOL frente a ELODRSPDSC. | Jira no consultado; no se adopta una clave por inferencia. | Pendiente de confirmación externa | Equipo aporta URL/clave verificable, estados y correspondencia de historias/sprints. | T-10 / D-01, D-03; decisiones |
-| IMP-016 | Tarea documental; continúa H-17 | Navegación hacia guías y evidencias | Los enlaces internos fallaban desde development. | Seis guías en Guías técnicas; rutas recalculadas y sin copias activas. | Ver informe de comprobación documental local. Verificación documental | Corrección local realizada; cierre por confirmar | Equipo revisa navegación e informe; registrar aprobación si corresponde. | T-10 |
+| IMP-016 | Tarea documental; continúa H-17 | Navegación hacia guías y evidencias | Los enlaces internos fallaban desde development. | Seis guías en Guías técnicas; rutas recalculadas y sin copias activas. | Ver informe de comprobación documental local. Verificación documental | Corrección realizada | Equipo revisa navegación e informe; registrar aprobación si corresponde. | T-10 |
 
 ## Continuidad entre sprints
 
