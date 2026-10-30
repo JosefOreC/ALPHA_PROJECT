@@ -4,6 +4,7 @@ import { describe, expect, it, vi } from 'vitest'
 import { createGenerateRoutes } from '../application/generateRoutes'
 import type { RouteOptimizer } from '../domain/ports/routeOptimizer'
 import { DemoPlanningSource, DemoRouteOptimizer, UnavailableRouteOptimizer } from '../infrastructure/demoRoutePlanning'
+import { DEFAULT_ROUTE_SETTINGS } from '../domain/routePlan'
 import { RoutePlanningView } from './RoutePlanningView'
 
 const demo = (planning = new DemoPlanningSource()) => createGenerateRoutes({ optimizer: new DemoRouteOptimizer({ stepMs: 0 }), planning })
@@ -24,7 +25,7 @@ describe('RoutePlanningView', () => {
     const user = userEvent.setup()
     render(<RoutePlanningView service={demo()} />)
     await screen.findByText('pendientes')
-    expect(screen.getByText('Prioriza los vehículos de menor factor de emisión')).toBeInTheDocument()
+    expect(screen.getByText('Minimiza los kg de CO₂ según el consumo y el factor de cada vehículo')).toBeInTheDocument()
     await user.click(screen.getByRole('button', { name: 'Menos tiempo' }))
     expect(screen.getByRole('button', { name: 'Menos tiempo' })).toHaveAttribute('aria-pressed', 'true')
     expect(screen.getByRole('button', { name: 'Menos CO₂' })).toHaveAttribute('aria-pressed', 'false')
@@ -77,10 +78,75 @@ describe('RoutePlanningView', () => {
     expect(await screen.findByText('Optimizando 39 pedidos en 13 vehículos…')).toBeInTheDocument()
     expect(screen.getByText('Calculando')).toBeInTheDocument()
     expect(screen.getByRole('progressbar', { name: 'Avance del cálculo' })).toHaveAttribute('aria-valuenow', '50')
-    expect(screen.getByText('Ordenar paradas (VRPTW)').closest('li')).toHaveAttribute('aria-current', 'step')
+    expect(screen.getByText('Mejorar el orden de paradas (2-opt)').closest('li')).toHaveAttribute('aria-current', 'step')
     expect(screen.getByRole('button', { name: 'Generando rutas…' })).toBeDisabled()
     release()
     expect(await screen.findByText('Propuesta lista · sin aprobar')).toBeInTheDocument()
+  })
+
+  it('sin avance por pasos del servidor muestra el tiempo usado del máximo, no un porcentaje inventado', async () => {
+    const user = userEvent.setup()
+    let release: () => void = () => {}
+    const gate = new Promise<void>(resolve => { release = resolve })
+    const optimizer: RouteOptimizer = {
+      async optimize(scope, settings, onProgress) {
+        onProgress?.({ step: 0, fraction: null })
+        await gate
+        return new DemoRouteOptimizer({ stepMs: 0 }).optimize(scope, settings)
+      },
+    }
+    render(<RoutePlanningView service={createGenerateRoutes({ optimizer, planning: new DemoPlanningSource(), timeoutMs: 45_000 })} />)
+    await screen.findByText('pendientes')
+    await user.click(screen.getByRole('button', { name: 'Generar rutas' }))
+    const meter = await screen.findByRole('progressbar', { name: 'Tiempo usado del máximo' })
+    expect(meter).toHaveAttribute('aria-valuemax', '45')
+    expect(meter).toHaveAttribute('aria-valuenow', '0')
+    expect(screen.getByText(/El servidor calcula la propuesta en una sola petición/)).toBeInTheDocument()
+    expect(screen.queryByRole('listitem', { current: 'step' })).toBeNull()
+    release()
+    expect(await screen.findByText('Propuesta lista · sin aprobar')).toBeInTheDocument()
+  })
+
+  it('muestra el detalle de cada ruta: paradas en orden, combustible y CO₂', async () => {
+    const user = userEvent.setup()
+    const proposal = await new DemoRouteOptimizer({ stepMs: 0 }).optimize(await new DemoPlanningSource().scope(), DEFAULT_ROUTE_SETTINGS)
+    const optimizer: RouteOptimizer = {
+      async optimize() {
+        return { ...proposal, routes: [{ ...proposal.routes[0], minutes: 95, co2PerKm: 0.152, fuelUsed: { amount: 7.7, unit: 'm3' },
+          sequence: [{ id: '1', customer: 'Bodega Rosa', district: 'Ate', eta: '08:12', onTime: true },
+            { id: '2', customer: 'Minimarket Sol', district: 'Ate', eta: '08:40', onTime: false }] }] }
+      },
+    }
+    render(<RoutePlanningView service={createGenerateRoutes({ optimizer, planning: new DemoPlanningSource() })} />)
+    await screen.findByText('pendientes')
+    await user.click(screen.getByRole('button', { name: 'Generar rutas' }))
+    const toggle = await screen.findByRole('button', { name: 'Ver paradas de ABC-123' })
+    expect(toggle).toHaveAttribute('aria-expanded', 'false')
+    await user.click(toggle)
+    expect(toggle).toHaveAttribute('aria-expanded', 'true')
+    const detail = screen.getByRole('region', { name: 'Detalle de ABC-123' })
+    expect(detail).toHaveTextContent('7,7 m³ de GNV')
+    expect(detail).toHaveTextContent('0,152 kg CO₂/km')
+    expect(detail).toHaveTextContent('1 h 35 min')
+    const stops = within(detail).getAllByRole('listitem')
+    expect(stops.map(stop => stop.textContent)).toEqual([expect.stringContaining('Bodega Rosa'), expect.stringContaining('Minimarket Sol')])
+    expect(stops[0]).toHaveTextContent('08:12')
+    expect(stops[1]).toHaveTextContent('Fuera de ventana')
+    await user.click(toggle)
+    expect(screen.queryByRole('region', { name: 'Detalle de ABC-123' })).toBeNull()
+  })
+
+  it('sin ahorro frente a la línea base lo dice en lugar de mostrar un descuento negativo', async () => {
+    const user = userEvent.setup()
+    const proposal = await new DemoRouteOptimizer({ stepMs: 0 }).optimize(await new DemoPlanningSource().scope(), DEFAULT_ROUTE_SETTINGS)
+    const optimizer: RouteOptimizer = { optimize: async () => ({ ...proposal, kmSaved: -3, co2SavedPercent: -2 }) }
+    render(<RoutePlanningView service={createGenerateRoutes({ optimizer, planning: new DemoPlanningSource() })} />)
+    await screen.findByText('pendientes')
+    await user.click(screen.getByRole('button', { name: 'Generar rutas' }))
+    const summary = await screen.findByRole('region', { name: 'Resumen de la propuesta' })
+    expect(summary).toHaveTextContent('Sin ahorro de distancia frente a la línea base')
+    expect(summary).toHaveTextContent('Sin ahorro de CO₂ frente a la línea base')
+    expect(summary).not.toHaveTextContent('−-')
   })
 
   it('sin vehículos disponibles no genera rutas y avisa (US-005)', async () => {

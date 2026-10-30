@@ -470,6 +470,8 @@ dialog.eco-dialog { margin: auto; }
 .eco-empty { border: 1px dashed var(--border-control); border-radius: var(--radius-lg); padding: 40px 24px; text-align: center; color: var(--ink-muted); }
 .eco-empty__title { margin: 0 0 6px; font-size: 15px; font-weight: 600; color: var(--ink); }
 .eco-run { display: flex; flex-direction: column; gap: 14px; padding: 20px; border: 1px solid var(--hairline); border-radius: var(--radius-lg); background: var(--surface); }
+.eco-route-detail { display: flex; flex-direction: column; gap: 12px; padding: 16px 20px; border: 1px solid var(--hairline); border-radius: var(--radius-lg); background: var(--surface); }
+.eco-route-detail h3 { margin: 0; font-size: 15px; }
 .eco-run__head { display: flex; justify-content: space-between; gap: 12px; font-size: 13.5px; }
 .eco-hint-center { margin: -6px 0 0; font-size: 12.5px; text-align: center; }
 .eco-load { display: flex; align-items: center; gap: 8px; }

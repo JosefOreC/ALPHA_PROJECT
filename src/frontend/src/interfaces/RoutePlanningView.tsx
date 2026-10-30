@@ -5,23 +5,53 @@ import { useActor } from './session/SessionState'
 import type { GenerateRoutes } from '../application/generateRoutes'
 import { fuelLabel, isLowEmission } from '../application/fleetBoard'
 import { formatDecimal } from '../domain/format'
-import { DEFAULT_ROUTE_SETTINGS, NoVehiclesAvailableError, PLANNING_STEPS } from '../domain/routePlan'
-import type { PlanningProgress, PlanningScope, RouteGoal, RouteProposal, RouteSettings } from '../domain/routePlan'
+import { DEFAULT_ROUTE_SETTINGS, formatDuration, NoVehiclesAvailableError, PLANNING_STEPS } from '../domain/routePlan'
+import type { PlannedRoute, PlanningProgress, PlanningScope, RouteGoal, RouteProposal, RouteSettings } from '../domain/routePlan'
 import { AppShell, Banner, CheckIcon, List, ListRow, Panel, PanelCell, RutaIcon, Switch } from '../shared/ui'
 import type { ModuleId } from '../shared/ui'
 
 type Phase = 'ready' | 'running' | 'done'
 
 const GOALS: { value: RouteGoal; label: string; hint: string }[] = [
-  { value: 'co2', label: 'Menos CO₂', hint: 'Prioriza los vehículos de menor factor de emisión' },
-  { value: 'balanced', label: 'Equilibrado', hint: 'Mitad CO₂, mitad tiempo de entrega' },
+  { value: 'co2', label: 'Menos CO₂', hint: 'Minimiza los kg de CO₂ según el consumo y el factor de cada vehículo' },
+  { value: 'balanced', label: 'Equilibrado', hint: 'Combina CO₂ y tiempo según el peso de CO₂ de los parámetros' },
   { value: 'time', label: 'Menos tiempo', hint: 'Minimiza la duración total de las rutas' },
 ]
-const ROW_COLUMNS = '84px minmax(0, 1fr) 70px 70px 120px 74px'
+const ROW_COLUMNS = '84px minmax(0, 1fr) 70px 70px 120px 74px 112px'
+const UNIT_LABEL: Record<string, string> = { m3: 'm³' }
 const SESSION_USER = { name: 'Planificación', initials: 'PL' }
 const STATE_TAG: Record<Phase, string> = { ready: 'Sin generar', running: 'Calculando', done: 'Propuesta lista · sin aprobar' }
 
 const percent = (value: number) => `${Math.round(value * 100)} %`
+
+function RouteDetail({ route }: { route: PlannedRoute }) {
+  const facts = [
+    route.fuelUsed ? `${formatDecimal(route.fuelUsed.amount, 0, 2)} ${UNIT_LABEL[route.fuelUsed.unit] ?? route.fuelUsed.unit} de ${fuelLabel(route.fuel)}` : null,
+    route.co2PerKm !== undefined ? `${formatDecimal(route.co2PerKm, 0, 3)} kg CO₂/km` : null,
+    route.minutes !== undefined ? formatDuration(route.minutes) : null,
+  ].filter(Boolean)
+  return (
+    <section className="eco-route-detail" id="route-detail" aria-label={`Detalle de ${route.plate}`}>
+      <div className="eco-section-head">
+        <h3>{route.plate} · {route.driver}</h3>
+        {facts.length ? <span className="eco-muted">{facts.join(' · ')}</span> : null}
+      </div>
+      <ol className="eco-stops">
+        {(route.sequence ?? []).map((stop, index) => (
+          <li key={stop.id || index} className="eco-stop">
+            <span className="eco-stop__dot">{index + 1}</span>
+            <span className="eco-stop__title">{stop.customer ?? 'Pedido sin nombre'}</span>
+            <span className="eco-stop__time">{stop.eta}</span>
+            <span className="eco-stop__meta">
+              {stop.district}
+              {stop.onTime ? null : <> · <span className="eco-tag eco-tag--sm eco-tag--warning">Fuera de ventana</span></>}
+            </span>
+          </li>
+        ))}
+      </ol>
+    </section>
+  )
+}
 
 export function RoutePlanningView({ service, onNavigate, renderMap }: { service: GenerateRoutes; onNavigate?: (id: ModuleId, href: string) => void; renderMap?: ReactNode }) {
   const role = useActor('planner')
@@ -34,6 +64,7 @@ export function RoutePlanningView({ service, onNavigate, renderMap }: { service:
   const [elapsed, setElapsed] = useState(0)
   const [proposal, setProposal] = useState<RouteProposal | null>(null)
   const [error, setError] = useState<{ text: string; noVehicles: boolean } | null>(null)
+  const [openPlate, setOpenPlate] = useState<string | null>(null)
 
   useEffect(() => {
     if (!can(role, 'routes.generate')) return
@@ -64,6 +95,7 @@ export function RoutePlanningView({ service, onNavigate, renderMap }: { service:
     if (!can(role, 'routes.generate')) return
     setError(null)
     setProposal(null)
+    setOpenPlate(null)
     setElapsed(0)
     setProgress({ step: 0, fraction: 0 })
     setPhase('running')
@@ -83,6 +115,8 @@ export function RoutePlanningView({ service, onNavigate, renderMap }: { service:
   const goal = GOALS.find(item => item.value === settings.goal) ?? GOALS[0]
   const running = phase === 'running'
   const noVehicles = scope !== null && scope.availableVehicles === 0
+  const known = progress.fraction !== null
+  const openRoute = proposal?.routes.find(route => route.plate === openPlate) ?? null
 
   if (!can(role, 'routes.generate')) return <AppShell role={role} current="rutas" user={SESSION_USER} title="Rutas del día" onNavigate={onNavigate}>
     <h1 className="eco-h1">Rutas del día</h1><p className="eco-sub">Consulta y supervisión de rutas · solo lectura</p>
@@ -103,7 +137,7 @@ export function RoutePlanningView({ service, onNavigate, renderMap }: { service:
         <p className="eco-sub">Hasta 150 pedidos y 15 vehículos · horas de Lima</p>
       </div>
 
-      <p className="eco-muted eco-note">La propuesta usa cercanía geográfica, capacidad y ventanas de entrega. La distancia y las emisiones son estimaciones; consulta las rutas asignadas en el mapa.</p>
+      <p className="eco-muted eco-note">La propuesta inserta cada pedido en el vehículo y la posición de menor costo según la prioridad, respetando capacidad y ventanas. El CO₂ es km × consumo × factor de emisión de cada combustible; la distancia es geográfica estimada.</p>
       <div className="eco-columns">
         <section className="eco-columns__side" aria-labelledby="plan-input-title">
           <div className="eco-section-head"><h2 id="plan-input-title">1 · Qué se va a planificar</h2></div>
@@ -144,7 +178,7 @@ export function RoutePlanningView({ service, onNavigate, renderMap }: { service:
             <div className="eco-setting">
               <span className="eco-setting__label">Priorizar vehículos de bajas emisiones</span>
               <Switch label="Priorizar vehículos de bajas emisiones" checked={settings.prioritizeLowEmission} disabled={running} onChange={value => setSettings(current => ({ ...current, prioritizeLowEmission: value }))} />
-              <span className="eco-setting__hint">GNV, eléctricos e híbridos salen primero</span>
+              <span className="eco-setting__hint">A igual costo, primero los vehículos con menos kg CO₂/km</span>
             </div>
           </div>
 
@@ -182,12 +216,21 @@ export function RoutePlanningView({ service, onNavigate, renderMap }: { service:
                 </strong>
                 <span className="eco-code eco-muted">{elapsed} s</span>
               </div>
-              <div className="eco-meter" role="progressbar" aria-label="Avance del cálculo" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(progress.fraction * 100)}>
-                <div className="eco-meter__fill" style={{ width: `${Math.max(4, Math.round(progress.fraction * 100))}%` }} />
-              </div>
+              {known ? (
+                <div className="eco-meter" role="progressbar" aria-label="Avance del cálculo" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round((progress.fraction ?? 0) * 100)}>
+                  <div className="eco-meter__fill" style={{ width: `${Math.max(4, Math.round((progress.fraction ?? 0) * 100))}%` }} />
+                </div>
+              ) : (
+                <>
+                  <div className="eco-meter" role="progressbar" aria-label="Tiempo usado del máximo" aria-valuemin={0} aria-valuemax={limit} aria-valuenow={Math.min(elapsed, limit)} aria-valuetext={`${elapsed} de ${limit} s`}>
+                    <div className="eco-meter__fill" style={{ width: `${Math.max(4, Math.round(Math.min(elapsed / limit, 1) * 100))}%` }} />
+                  </div>
+                  <p className="eco-muted eco-flush">El servidor calcula la propuesta en una sola petición: la barra muestra el tiempo usado de los {limit} s permitidos. Estos son los pasos que ejecuta:</p>
+                </>
+              )}
               <ol className="eco-stops">
                 {PLANNING_STEPS.map((label, index) => {
-                  const state = index < progress.step ? 'done' : index === progress.step ? 'now' : ''
+                  const state = !known ? '' : index < progress.step ? 'done' : index === progress.step ? 'now' : ''
                   return (
                     <li key={label} className={`eco-stop${state ? ` eco-stop--${state}` : ''}`} aria-current={state === 'now' ? 'step' : undefined}>
                       <span className="eco-stop__dot">{state === 'done' ? <CheckIcon /> : index + 1}</span>
@@ -207,13 +250,17 @@ export function RoutePlanningView({ service, onNavigate, renderMap }: { service:
                   label="Distancia"
                   value={formatDecimal(proposal.totalKm)}
                   unit="km"
-                  note={proposal.kmSaved === null ? 'Distancia geográfica estimada' : <span className="eco-delta">−{formatDecimal(proposal.kmSaved)} km</span>}
+                  note={proposal.kmSaved === null ? 'Distancia geográfica estimada'
+                    : proposal.kmSaved > 0 ? <span className="eco-delta">−{formatDecimal(proposal.kmSaved)} km</span>
+                    : 'Sin ahorro de distancia frente a la línea base'}
                 />
                 <PanelCell
                   label="CO₂ estimado"
                   value={formatDecimal(proposal.co2Kg)}
                   unit="kg"
-                  note={proposal.co2SavedPercent === null ? 'Emisiones estimadas de la propuesta' : <><span className="eco-delta">−{proposal.co2SavedPercent} %</span> vs. sin optimizar</>}
+                  note={proposal.co2SavedPercent === null ? 'Emisiones estimadas de la propuesta'
+                    : proposal.co2SavedPercent > 0 ? <><span className="eco-delta">−{proposal.co2SavedPercent} %</span> vs. sin optimizar</>
+                    : 'Sin ahorro de CO₂ frente a la línea base'}
                   eco
                   tinted
                 />
@@ -229,6 +276,7 @@ export function RoutePlanningView({ service, onNavigate, renderMap }: { service:
                     <span>Km</span>
                     <span>Carga</span>
                     <span>CO₂</span>
+                    <span />
                   </ListRow>
                   {proposal.routes.map(route => (
                     <ListRow key={route.plate} columns={ROW_COLUMNS}>
@@ -248,6 +296,13 @@ export function RoutePlanningView({ service, onNavigate, renderMap }: { service:
                         <span className="eco-code eco-muted">{percent(route.load)}</span>
                       </span>
                       <span className="eco-num eco-eco eco-strong">{formatDecimal(route.co2Kg, 0, 1)} kg</span>
+                      {route.sequence?.length ? (
+                        <button className="eco-btn eco-btn--ghost" type="button" aria-expanded={openPlate === route.plate} aria-controls="route-detail"
+                          aria-label={`${openPlate === route.plate ? 'Ocultar' : 'Ver'} paradas de ${route.plate}`}
+                          onClick={() => setOpenPlate(current => current === route.plate ? null : route.plate)}>
+                          {openPlate === route.plate ? 'Ocultar' : 'Paradas'}
+                        </button>
+                      ) : <span />}
                     </ListRow>
                   ))}
                   {proposal.routeCount > proposal.routes.length ? (
@@ -258,6 +313,7 @@ export function RoutePlanningView({ service, onNavigate, renderMap }: { service:
                   ) : null}
                 </List>
               </div>
+              {openRoute ? <RouteDetail route={openRoute} /> : null}
 
               <div className="eco-sheet__actions">
                 <a className="eco-btn" href="/?vista=pedidos" onClick={event => { if (onNavigate) { event.preventDefault(); onNavigate('pedidos', '/?vista=pedidos') } }}>

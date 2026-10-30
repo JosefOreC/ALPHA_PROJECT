@@ -6,6 +6,7 @@ import type { PlanningProgress, PlanningScope, RouteProposal, RouteSettings } fr
 import type { ReportPeriod, SustainabilityReport } from '../domain/sustainability'
 import type { DashboardInsights } from '../features/dashboard/domain/types'
 import type { SummaryParams } from '../features/dashboard/domain/gateway'
+import { PLANNING_STEPS } from '../domain/routePlan'
 import { requestJson } from './httpClient'
 
 export class HttpUserDirectory {
@@ -33,9 +34,10 @@ export class HttpPlanningSource {
 }
 export class HttpRouteOptimizer {
   async optimize(_scope: PlanningScope, settings: RouteSettings, onProgress?: (progress: PlanningProgress) => void) {
-    onProgress?.({ step: 0, fraction: 0 })
+    // El servidor responde en una sola petición: no hay avance por pasos que informar.
+    onProgress?.({ step: 0, fraction: null })
     const result = await requestJson<RouteProposal>('/api/routes/proposal', { method: 'POST', body: settings })
-    onProgress?.({ step: 3, fraction: 1 })
+    onProgress?.({ step: PLANNING_STEPS.length - 1, fraction: 1 })
     return result
   }
 }
