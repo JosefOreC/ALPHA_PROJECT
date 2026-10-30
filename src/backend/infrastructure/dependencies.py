@@ -5,6 +5,7 @@ from application.use_cases.update_vehicle import UpdateVehicleUseCase
 from application.use_cases.get_vehicle_by_id import GetVehicleByIdUseCase
 from domain.entities.vehicle import Vehicle
 from domain.ports.vehicle_repository import VehicleRepositoryPort
+from domain.value_objects import VehicleCombustibles, VehicleStates
 from infrastructure.persistence.in_memory_vehicle_repository import InMemoryVehicleRepository
 
 
@@ -15,29 +16,29 @@ _in_memory_repo = InMemoryVehicleRepository(
             placa="ABC-101",
             capacidad_kg=1500.0,
             capacidad_m3=8.5,
-            tipo_combustible="DIESEL",
-            estado="DISPONIBLE",
+            tipo_combustible=VehicleCombustibles.DIESEL,
+            estado=VehicleStates.DISPONIBLE,
         ),
         Vehicle(
             placa="XYZ-202",
             capacidad_kg=2200.0,
             capacidad_m3=12.0,
-            tipo_combustible="GNV",
-            estado="DISPONIBLE",
+            tipo_combustible=VehicleCombustibles.GNV,
+            estado=VehicleStates.DISPONIBLE,
         ),
         Vehicle(
             placa="ECO-303",
             capacidad_kg=800.0,
             capacidad_m3=4.2,
-            tipo_combustible="ELECTRICO",
-            estado="EN_RUTA",
+            tipo_combustible=VehicleCombustibles.ELECTRICO,
+            estado=VehicleStates.EN_RUTA,
         ),
         Vehicle(
             placa="MNT-404",
             capacidad_kg=3000.0,
             capacidad_m3=16.0,
-            tipo_combustible="DIESEL",
-            estado="MANTENIMIENTO",
+            tipo_combustible=VehicleCombustibles.DIESEL,
+            estado=VehicleStates.MANTENIMIENTO,
         ),
     ]
 )

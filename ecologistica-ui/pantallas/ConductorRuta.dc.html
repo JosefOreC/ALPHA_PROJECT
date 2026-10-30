@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Conductor · mi ruta</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/ecologistica/tokens.css">
+<link rel="stylesheet" href="ds/ecologistica/components/bundle.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0}
+a{color:var(--primary)}a:hover{color:var(--primary-hover)}
+</style>
+</helmet>
+<div class="eco-root" data-theme="{{theme}}" style="position: relative; width: 390px; height: 844px; overflow: hidden; display: flex; flex-direction: column; background: var(--surface)">
+  <header style="display: flex; align-items: center; gap: 10px; height: 52px; padding: 0 16px; background: var(--forest); color: var(--on-forest)">
+    <svg class="eco-mark" viewBox="0 0 32 32" aria-hidden="true" style="width: 24px; height: 24px"><path class="leaf" d="M5 27C5 14 13 5 27 5c0 14-9 22-22 22z"></path><path class="vein" d="M8.5 23.5c3.5-3.5 6-8.5 10.5-10.5"></path><circle class="stop" cx="21.5" cy="11.5" r="2.6"></circle></svg>
+    <span style="font-size: 15px; font-weight: 600">Mi ruta</span>
+    <span class="eco-tag eco-tag--on-dark eco-code" style="margin-left: auto">ABC-123</span>
+    <span class="eco-avatar">LH</span>
+  </header>
+
+  <div style="padding: 12px 16px 14px; background: var(--forest); color: var(--forest-muted); display: flex; align-items: center; gap: 10px; font-size: 12.5px">
+    <span class="eco-code" style="color: var(--on-forest)">2/9</span>
+    <div class="eco-hero__meter" style="flex: 1" role="img" aria-label="2 de 9 entregas"><div class="eco-hero__meter-fill" style="width: 22%"></div></div>
+    <span><strong style="color: var(--lime)">−21 %</strong> CO₂</span>
+  </div>
+
+  <main style="flex: 1; min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 14px; padding: 14px 16px 16px">
+    <sc-if value="{{alertOn}}" hint-placeholder-val="{{ true }}">
+      <div class="eco-banner eco-banner--warning" role="alert" style="align-items: flex-start">
+        <svg class="eco-icon eco-icon--md" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17c2.5-2.5 1.5-5 5-5s2.5-2.5 5-5" stroke-dasharray="2.4 2.8"></path><circle cx="5" cy="19" r="2.4" class="acc"></circle><circle cx="19" cy="5" r="2.4"></circle></svg>
+        <span class="eco-banner__text" style="min-width: 0"><span class="eco-banner__title">Tu ruta cambió · 10:38</span><br>Se agregó PED-0055 como parada 4 por tráfico en Av. Próceres. Terminas 12:40.</span>
+        <button class="eco-btn eco-btn--secondary" type="button" style="height: 32px" onClick="{{dismiss}}">Entendido</button>
+      </div>
+    </sc-if>
+
+    <dc-import name="Mapa" selected="PED-0026" query="" compact="{{ true }}" hint-size="100%,220px"></dc-import>
+
+    <ol class="eco-stops" aria-label="Paradas de hoy">
+      <li class="eco-stop eco-stop--done"><span class="eco-stop__dot">1</span><span class="eco-stop__title">Bodega Mi Barrio</span><span class="eco-stop__time">08:20</span><span class="eco-stop__meta">PED-0018 · entregado</span></li>
+      <li class="eco-stop eco-stop--done"><span class="eco-stop__dot">2</span><span class="eco-stop__title">Comercial Hermanos Quispe</span><span class="eco-stop__time">09:12</span><span class="eco-stop__meta">PED-0021 · entregado</span></li>
+      <li class="eco-stop eco-stop--now"><span class="eco-stop__dot">3</span><a class="eco-stop__title" href="Conductor.dc.html" style="color: var(--ink)">Minimarket Don Lucho →</a><span class="eco-stop__time">11:05</span><span class="eco-stop__meta">PED-0026 · Av. Próceres 1450 · ahora</span></li>
+      <li class="eco-stop eco-stop--new"><span class="eco-stop__dot">4</span><span class="eco-stop__title">Botica San Martín</span><span class="eco-stop__time">11:30</span><span class="eco-stop__meta">PED-0055 · nueva parada</span></li>
+      <li class="eco-stop"><span class="eco-stop__dot">5</span><span class="eco-stop__title">Panadería San Hilarión</span><span class="eco-stop__time">12:10</span><span class="eco-stop__meta">PED-0029 · Av. Los Jardines 980</span></li>
+      <li class="eco-stop"><span class="eco-stop__dot">…</span><span class="eco-stop__title eco-muted">4 paradas más</span><span class="eco-stop__time">12:40</span><span class="eco-stop__meta">regreso al almacén de Ate</span></li>
+    </ol>
+  </main>
+
+  <nav class="eco-tabbar" aria-label="Secciones del conductor">
+    <a href="ConductorRuta.dc.html" aria-current="page"><svg class="eco-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17c2.5-2.5 1.5-5 5-5s2.5-2.5 5-5" stroke-dasharray="2.4 2.8"></path><circle cx="5" cy="19" r="2.4" class="acc"></circle><circle cx="19" cy="5" r="2.4"></circle></svg>Mi ruta</a>
+    <a href="Conductor.dc.html"><svg class="eco-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"></path><path d="M4 7.5l8 4.5 8-4.5M12 12v9"></path><circle cx="8" cy="9.8" r="1.8" class="acc"></circle></svg>Pedido actual</a>
+    <a href="#incidencias"><svg class="eco-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.6 3.5h4.8l4.6 16H5z"></path><path d="M7.5 12.2h9l.7 2.6H6.8z" class="acc"></path><path d="M3.5 19.5h17"></path></svg>Incidencias</a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["light","dark"],"default":"light"},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { alert: true };
+  }
+  renderVals() {
+    return {
+      theme: this.props.theme ?? 'light',
+      alertOn: this.state.alert,
+      dismiss: () => this.setState({ alert: false })
+    };
+  }
+}
+</script>
+</body>
+</html>

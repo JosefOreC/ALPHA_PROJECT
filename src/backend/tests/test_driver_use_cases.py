@@ -8,6 +8,7 @@ from application.use_cases.register_driver import RegisterDriver
 from application.use_cases.update_driver import UpdateDriver
 from domain.exceptions.driver_exceptions import (
     DriverAlreadyExistsError,
+    DriverLicenseAlreadyExistsError,
     DriverNotFoundError,
 )
 from infrastructure.persistence.in_memory_driver_repository import (
@@ -44,6 +45,24 @@ def test_register_duplicate_dni(repository):
         licencia="A12345678",
         vehiculo_id="vehiculo-001",
     )
+
+def test_register_duplicate_license(repository):
+    use_case = RegisterDriver(repository)
+
+    use_case.execute(
+        nombre_completo="Primer Conductor",
+        dni="12345678",
+        licencia="A12345678",
+        vehiculo_id="vehiculo-001",
+    )
+
+    with pytest.raises(DriverLicenseAlreadyExistsError):
+        use_case.execute(
+            nombre_completo="Segundo Conductor",
+            dni="87654321",
+            licencia="A12345678",
+            vehiculo_id="vehiculo-002",
+        )
 
     with pytest.raises(DriverAlreadyExistsError) as exc_info:
         use_case.execute(
@@ -131,6 +150,45 @@ def test_update_driver(repository):
     assert result.vehiculo_id == "vehiculo-002"
     assert result.dni == "12345678"
 
+def test_update_driver_only_dni(repository):
+    register = RegisterDriver(repository)
+
+    driver = register.execute(
+        nombre_completo="Alex Cueva",
+        dni="12345678",
+        licencia="A12345678",
+        vehiculo_id="vehiculo-001",
+    )
+
+    use_case = UpdateDriver(repository)
+
+    result = use_case.execute(
+        conductor_id=driver.conductor_id,
+        dni="87654321",
+    )
+
+    assert result.dni == "87654321"
+    assert result.licencia == "A12345678"
+
+def test_update_driver_only_license(repository):
+    register = RegisterDriver(repository)
+
+    driver = register.execute(
+        nombre_completo="Alex Cueva",
+        dni="12345678",
+        licencia="A12345678",
+        vehiculo_id="vehiculo-001",
+    )
+
+    use_case = UpdateDriver(repository)
+
+    result = use_case.execute(
+        conductor_id=driver.conductor_id,
+        licencia="B98765432",
+    )
+
+    assert result.licencia == "B98765432"
+    assert result.dni == "12345678"
 
 def test_update_driver_duplicate_dni(repository):
     register = RegisterDriver(repository)

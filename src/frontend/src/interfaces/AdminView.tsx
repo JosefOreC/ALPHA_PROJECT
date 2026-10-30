@@ -1,0 +1,120 @@
+import { useEffect, useState } from 'react'
+import type { Administration } from '../application/administration'
+import type { Integration, UserPage } from '../domain/admin'
+import { AppShell, PlusIcon } from '../shared/ui'
+import type { ModuleId } from '../shared/ui'
+import { IntegrationsPanel } from './admin/IntegrationsPanel'
+import { ParametersPanel } from './admin/ParametersPanel'
+import { UsersPanel } from './admin/UsersPanel'
+import { UserDialog } from './admin/UserDialog'
+import { useParameters } from './admin/useParameters'
+import { can } from '../domain/accessControl'
+import { useActor } from './session/SessionState'
+
+type Tab = 'users' | 'params' | 'integrations'
+
+const SESSION_USER = { name: 'Sistemas', initials: 'SD' }
+
+const message = (reason: unknown, fallback: string) => (reason instanceof Error ? reason.message : fallback)
+
+export function AdminView({ service, onNavigate }: { service: Administration; demo?: boolean; onNavigate?: (id: ModuleId, href: string) => void }) {
+  const role = useActor('admin')
+  const usersAllowed = can(role, 'users.read')
+  const canEditParameters = can(role, 'settings.update')
+  const [tab, setTab] = useState<Tab>(usersAllowed ? 'users' : 'params')
+  const [users, setUsers] = useState<UserPage | null>(null)
+  const [usersError, setUsersError] = useState('')
+  const [usersReload, setUsersReload] = useState(0)
+  const [creating, setCreating] = useState(false)
+  const [notice, setNotice] = useState('')
+  const [integrations, setIntegrations] = useState<Integration[] | null>(null)
+  const [integrationsError, setIntegrationsError] = useState('')
+  const [integrationsReload, setIntegrationsReload] = useState(0)
+  const parameters = useParameters(service)
+
+  useEffect(() => {
+    if (!usersAllowed) return
+    const controller = new AbortController()
+    service
+      .users(controller.signal)
+      .then((page) => {
+        if (controller.signal.aborted) return
+        setUsers(page)
+        setUsersError('')
+      })
+      .catch((reason) => {
+        if (!controller.signal.aborted) setUsersError(message(reason, 'No se pudieron cargar los usuarios.'))
+      })
+    return () => controller.abort()
+  }, [service, usersReload, usersAllowed])
+
+  useEffect(() => {
+    if (!usersAllowed) return
+    const controller = new AbortController()
+    service
+      .integrations(controller.signal)
+      .then((items) => {
+        if (controller.signal.aborted) return
+        setIntegrations(items)
+        setIntegrationsError('')
+      })
+      .catch((reason) => {
+        if (!controller.signal.aborted) setIntegrationsError(message(reason, 'No se pudo cargar el estado.'))
+      })
+    return () => controller.abort()
+  }, [service, integrationsReload, usersAllowed])
+
+  const tabs: { id: Tab; label: string; count: number | string }[] = [
+    ...(usersAllowed ? [{ id: 'users' as const, label: 'Usuarios y roles', count: users ? users.total : '' }] : []),
+    { id: 'params', label: 'Parámetros del algoritmo', count: '' },
+    ...(usersAllowed ? [{ id: 'integrations' as const, label: 'Integraciones', count: integrations ? integrations.length : '' }] : []),
+  ]
+
+  const actions = (
+    <>
+      {tab === 'users' ? (
+        <button className="eco-btn" type="button" onClick={() => setCreating(true)}>
+          <PlusIcon />
+          Crear usuario
+        </button>
+      ) : null}
+      {tab === 'params' && canEditParameters ? (
+        <>
+          {parameters.dirty ? (
+            <button className="eco-btn eco-btn--ghost" type="button" disabled={parameters.saving} onClick={parameters.discard}>
+              Descartar cambios
+            </button>
+          ) : null}
+          <button className="eco-btn" type="button" disabled={!parameters.dirty || parameters.saving || Object.keys(parameters.errors).length > 0} onClick={() => void parameters.save()}>
+            {parameters.saving ? 'Guardando…' : 'Guardar cambios'}
+          </button>
+        </>
+      ) : null}
+    </>
+  )
+
+  return (
+    <AppShell role="admin" current="admin" user={SESSION_USER} section="Sistema" title="Administración" actions={actions} onNavigate={onNavigate}>
+      <div>
+        <h1 className="eco-h1">Administración</h1>
+        <p className="eco-sub">Usuarios, roles y configuración de la plataforma</p>
+      </div>
+
+      <div className="eco-tabs" role="tablist" aria-label="Secciones de administración">
+        {tabs.map((item) => (
+          <button key={item.id} className="eco-tab" type="button" role="tab" id={`admin-tab-${item.id}`} aria-selected={tab === item.id} aria-controls="admin-panel" onClick={() => setTab(item.id)}>
+            {item.label} {item.count !== '' ? <span className="eco-code">{item.count}</span> : null}
+          </button>
+        ))}
+      </div>
+
+      <div id="admin-panel" role="tabpanel" aria-labelledby={`admin-tab-${tab}`} className="eco-tabpanel">
+        {notice ? <p role="status" className="eco-notice">{notice}</p> : null}
+        {tab === 'users' ? <UsersPanel page={users} error={usersError} onRetry={() => setUsersReload((value) => value + 1)} /> : null}
+        {tab === 'params' ? <fieldset className="eco-permission-fields" disabled={!canEditParameters}><ParametersPanel state={parameters} /></fieldset> : null}
+        {tab === 'integrations' ? <IntegrationsPanel items={integrations} error={integrationsError} onRetry={() => setIntegrationsReload((value) => value + 1)} /> : null}
+      </div>
+      {creating ? <UserDialog onClose={() => setCreating(false)} onCreate={async data => { await service.createUser(data); setUsersReload(value => value + 1); setNotice('Usuario creado. Ya puede iniciar sesión con sus credenciales.') }} /> : null}
+    </AppShell>
+  )
+}

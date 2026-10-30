@@ -1,7 +1,7 @@
 """App de desarrollo independiente del dashboard.
 
 Ejecutar desde src/backend: uvicorn interfaces.api.dashboard.app:app --reload
-(el main real, interfaces/api/main.py, pertenece a otra rama).
+La composición integrada es interfaces.api.main:app; esta entrada también exige identidad.
 """
 from fastapi import FastAPI
 

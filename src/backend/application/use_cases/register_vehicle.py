@@ -2,6 +2,7 @@ from application.dto.vehicle_dto import CreateVehicleDTO, VehicleResponseDTO
 from domain.entities.vehicle import Vehicle
 from domain.exceptions.vehicle_exceptions import VehiclePlateAlreadyExistsError
 from domain.ports.vehicle_repository import VehicleRepositoryPort
+from domain.value_objects import VehicleStates
 
 
 class RegisterVehicleUseCase:
@@ -22,7 +23,7 @@ class RegisterVehicleUseCase:
             capacidad_kg=dto.capacidad_kg,
             tipo_combustible=dto.tipo_combustible,
             capacidad_m3=dto.capacidad_m3,
-            estado=dto.estado or "DISPONIBLE",
+            estado=dto.estado or VehicleStates.DISPONIBLE,
         )
 
         saved_vehicle = self.vehicle_repository.save(vehicle)

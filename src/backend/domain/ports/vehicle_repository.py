@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import List, Optional
 from domain.entities.vehicle import Vehicle
+from domain.value_objects import VehicleStates
 
 
 class VehicleRepositoryPort(ABC):
@@ -22,7 +23,7 @@ class VehicleRepositoryPort(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def find_all(self, status: Optional[str] = None) -> List[Vehicle]:
+    def find_all(self, status: Optional[VehicleStates] = None) -> List[Vehicle]:
         """Lista vehículos, opcionalmente filtrados por su estado."""
         raise NotImplementedError
 

@@ -4,6 +4,7 @@ from domain.exceptions.driver_exceptions import (
     DriverNotFoundError,
 )
 from domain.ports.driver_repository import DriverRepository
+from domain.value_objects import DriverStates
 
 
 class UpdateDriver:
@@ -18,7 +19,7 @@ class UpdateDriver:
         dni: str | None = None,
         licencia: str | None = None,
         vehiculo_id: str | None = None,
-        estado: str | None = None,
+        estado: DriverStates | str | None = None,
     ) -> Driver:
 
         driver = self.driver_repository.find_by_id(conductor_id)
@@ -37,12 +38,16 @@ class UpdateDriver:
             ):
                 raise DriverAlreadyExistsError()
 
+        parsed_estado = (
+            DriverStates.parse(estado) if estado is not None else None
+        )
+
         driver.update_info(
             nombre_completo=nombre_completo,
             dni=dni,
             licencia=licencia,
             vehiculo_id=vehiculo_id,
-            estado=estado,
+            estado=parsed_estado,
         )
 
         return self.driver_repository.update(driver)

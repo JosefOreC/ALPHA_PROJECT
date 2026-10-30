@@ -38,7 +38,7 @@ test('demo crea, lista, consulta, edita y cancela con versión y sin persistenci
   assert.equal(updated.version, 2)
   await assert.rejects(service.update(created, data()))
   assert.equal((await service.cancel(updated)).status, 'CANCELADO')
-  assert.equal((await service.list({ limit: 20, offset: 0, status: 'CANCELADO' })).items.length, 1)
+  assert.equal((await service.list({ limit: 20, offset: 0, status: 'CANCELADO' })).items.length, 2) // PED-0023 de la demo + el recién cancelado
   await assert.rejects(new DemoManagement().view(created.id))
 })
 test('demo filtra, pagina y no permite mutar DTO para alterar almacenamiento', async () => {
@@ -47,7 +47,8 @@ test('demo filtra, pagina y no permite mutar DTO para alterar almacenamiento', a
   assert.equal(page.has_more, true)
   page.items[0].customer = 'Mutación externa'
   assert.notEqual((await port.view(page.items[0].id)).customer, 'Mutación externa')
-  assert.equal((await port.list({ limit: 20, offset: 0, district: 'Ate' })).items.length, 0)
+  assert.equal((await port.list({ limit: 20, offset: 0, district: 'Ate' })).items.length, 3)
+  assert.equal((await port.list({ limit: 20, offset: 0 })).items.length, 12)
 })
 test('adaptador HTTP rechaza respuestas inválidas en tiempo de ejecución', () => {
   for (const value of [null, [], {}, { ...read(), status: 'INVENTADO' }, { ...read(), version: '1' }, { ...read(), weight_kg: NaN }, { ...read(), assigned: 'false' }, { ...read(), confirmed_at: 'foo' }, { ...read(), window_start: 'fecha inválida' }]) assert.throws(() => decodeOrder(value))

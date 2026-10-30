@@ -1,0 +1,333 @@
+import { useEffect, useState } from 'react'
+import type { ReactNode } from 'react'
+import { can } from '../domain/accessControl'
+import { useActor } from './session/SessionState'
+import type { GenerateRoutes } from '../application/generateRoutes'
+import { fuelLabel, isLowEmission } from '../application/fleetBoard'
+import { formatDecimal } from '../domain/format'
+import { DEFAULT_ROUTE_SETTINGS, formatDuration, NoVehiclesAvailableError, PLANNING_STEPS } from '../domain/routePlan'
+import type { PlannedRoute, PlanningProgress, PlanningScope, RouteGoal, RouteProposal, RouteSettings } from '../domain/routePlan'
+import { AppShell, Banner, CheckIcon, List, ListRow, Panel, PanelCell, RutaIcon, Switch } from '../shared/ui'
+import type { ModuleId } from '../shared/ui'
+
+type Phase = 'ready' | 'running' | 'done'
+
+const GOALS: { value: RouteGoal; label: string; hint: string }[] = [
+  { value: 'co2', label: 'Menos CO₂', hint: 'Minimiza los kg de CO₂ según el consumo y el factor de cada vehículo' },
+  { value: 'balanced', label: 'Equilibrado', hint: 'Combina CO₂ y tiempo según el peso de CO₂ de los parámetros' },
+  { value: 'time', label: 'Menos tiempo', hint: 'Minimiza la duración total de las rutas' },
+]
+const ROW_COLUMNS = '84px minmax(0, 1fr) 70px 70px 120px 74px 112px'
+const UNIT_LABEL: Record<string, string> = { m3: 'm³' }
+const SESSION_USER = { name: 'Planificación', initials: 'PL' }
+const STATE_TAG: Record<Phase, string> = { ready: 'Sin generar', running: 'Calculando', done: 'Propuesta lista · sin aprobar' }
+
+const percent = (value: number) => `${Math.round(value * 100)} %`
+
+function RouteDetail({ route }: { route: PlannedRoute }) {
+  const facts = [
+    route.fuelUsed ? `${formatDecimal(route.fuelUsed.amount, 0, 2)} ${UNIT_LABEL[route.fuelUsed.unit] ?? route.fuelUsed.unit} de ${fuelLabel(route.fuel)}` : null,
+    route.co2PerKm !== undefined ? `${formatDecimal(route.co2PerKm, 0, 3)} kg CO₂/km` : null,
+    route.minutes !== undefined ? formatDuration(route.minutes) : null,
+  ].filter(Boolean)
+  return (
+    <section className="eco-route-detail" id="route-detail" aria-label={`Detalle de ${route.plate}`}>
+      <div className="eco-section-head">
+        <h3>{route.plate} · {route.driver}</h3>
+        {facts.length ? <span className="eco-muted">{facts.join(' · ')}</span> : null}
+      </div>
+      <ol className="eco-stops">
+        {(route.sequence ?? []).map((stop, index) => (
+          <li key={stop.id || index} className="eco-stop">
+            <span className="eco-stop__dot">{index + 1}</span>
+            <span className="eco-stop__title">{stop.customer ?? 'Pedido sin nombre'}</span>
+            <span className="eco-stop__time">{stop.eta}</span>
+            <span className="eco-stop__meta">
+              {stop.district}
+              {stop.onTime ? null : <> · <span className="eco-tag eco-tag--sm eco-tag--warning">Fuera de ventana</span></>}
+            </span>
+          </li>
+        ))}
+      </ol>
+    </section>
+  )
+}
+
+export function RoutePlanningView({ service, onNavigate, renderMap }: { service: GenerateRoutes; onNavigate?: (id: ModuleId, href: string) => void; renderMap?: ReactNode }) {
+  const role = useActor('planner')
+  const [scope, setScope] = useState<PlanningScope | null>(null)
+  const [scopeError, setScopeError] = useState('')
+  const [limit, setLimit] = useState(45)
+  const [settings, setSettings] = useState<RouteSettings>(DEFAULT_ROUTE_SETTINGS)
+  const [phase, setPhase] = useState<Phase>('ready')
+  const [progress, setProgress] = useState<PlanningProgress>({ step: 0, fraction: 0 })
+  const [elapsed, setElapsed] = useState(0)
+  const [proposal, setProposal] = useState<RouteProposal | null>(null)
+  const [error, setError] = useState<{ text: string; noVehicles: boolean } | null>(null)
+  const [openPlate, setOpenPlate] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (!can(role, 'routes.generate')) return
+    let active = true
+    service.limitSeconds().then((seconds) => {
+      if (active) setLimit(seconds)
+    }, () => undefined)
+    service
+      .scope()
+      .then(value => {
+        if (active) setScope(value)
+      })
+      .catch(reason => {
+        if (active) setScopeError(reason instanceof Error ? reason.message : 'No se pudo consultar lo que se va a planificar.')
+      })
+    return () => {
+      active = false
+    }
+  }, [service, role])
+
+  useEffect(() => {
+    if (phase !== 'running') return
+    const timer = setInterval(() => setElapsed(value => value + 1), 1000)
+    return () => clearInterval(timer)
+  }, [phase])
+
+  async function run() {
+    if (!can(role, 'routes.generate')) return
+    setError(null)
+    setProposal(null)
+    setOpenPlate(null)
+    setElapsed(0)
+    setProgress({ step: 0, fraction: 0 })
+    setPhase('running')
+    try {
+      const result = await service.generate(settings, setProgress)
+      setProposal(result)
+      setPhase('done')
+    } catch (reason) {
+      setPhase('ready')
+      setError({
+        text: reason instanceof Error ? reason.message : 'No se pudieron generar las rutas.',
+        noVehicles: reason instanceof NoVehiclesAvailableError,
+      })
+    }
+  }
+
+  const goal = GOALS.find(item => item.value === settings.goal) ?? GOALS[0]
+  const running = phase === 'running'
+  const noVehicles = scope !== null && scope.availableVehicles === 0
+  const known = progress.fraction !== null
+  const openRoute = proposal?.routes.find(route => route.plate === openPlate) ?? null
+
+  if (!can(role, 'routes.generate')) return <AppShell role={role} current="rutas" user={SESSION_USER} title="Rutas del día" onNavigate={onNavigate}>
+    <h1 className="eco-h1">Rutas del día</h1><p className="eco-sub">Consulta y supervisión de rutas · solo lectura</p>
+    {renderMap ?? <p className="eco-muted">La consulta de rutas se habilitará al conectar su fuente operativa.</p>}
+  </AppShell>
+
+  return (
+    <AppShell
+      role="planner"
+      current="rutas"
+      user={SESSION_USER}
+      title="Generar rutas del día"
+      onNavigate={onNavigate}
+      actions={<span className="eco-tag"><span className="eco-code">PLANIFICACIÓN DE ENTREGAS</span></span>}
+    >
+      <div>
+        <h1 className="eco-h1">Generar rutas del día</h1>
+        <p className="eco-sub">Hasta 150 pedidos y 15 vehículos · horas de Lima</p>
+      </div>
+
+      <p className="eco-muted eco-note">La propuesta inserta cada pedido en el vehículo y la posición de menor costo según la prioridad, respetando capacidad y ventanas. El CO₂ es km × consumo × factor de emisión de cada combustible; la distancia es geográfica estimada.</p>
+      <div className="eco-columns">
+        <section className="eco-columns__side" aria-labelledby="plan-input-title">
+          <div className="eco-section-head"><h2 id="plan-input-title">1 · Qué se va a planificar</h2></div>
+          {scopeError ? <Banner tone="error" title="No se pudo cargar.">{scopeError}</Banner> : null}
+          <Panel label="Alcance de la planificación" minCell={150}>
+            <PanelCell
+              label="Pedidos por asignar"
+              value={scope ? scope.pendingOrders : '—'}
+              unit="pendientes"
+              note={scope ? `${scope.districts} ${scope.districts === 1 ? 'distrito' : 'distritos'} de Lima Este` : 'Consultando…'}
+            />
+            <PanelCell
+              label="Vehículos disponibles"
+              value={scope ? <span className={noVehicles ? 'eco-panel__value--danger' : undefined}>{scope.availableVehicles}</span> : '—'}
+              unit={scope ? `de ${scope.totalVehicles}` : undefined}
+              note={scope ? `${scope.vehiclesInService} en mantenimiento` : 'Consultando…'}
+            />
+          </Panel>
+
+          <div className="eco-section-head"><h2>2 · Cómo optimizar</h2></div>
+          <div className="eco-config">
+            <div className="eco-setting">
+              <span className="eco-setting__label" id="goal-label">Prioridad</span>
+              <div className="eco-seg-ctrl" role="group" aria-labelledby="goal-label">
+                {GOALS.map(item => (
+                  <button key={item.value} type="button" aria-pressed={settings.goal === item.value} disabled={running} onClick={() => setSettings(current => ({ ...current, goal: item.value }))}>
+                    {item.label}
+                  </button>
+                ))}
+              </div>
+              <span className="eco-setting__hint">{goal.hint}</span>
+            </div>
+            <div className="eco-setting">
+              <span className="eco-setting__label">Respetar ventanas de entrega</span>
+              <Switch label="Respetar ventanas de entrega" checked={settings.respectWindows} disabled={running} onChange={value => setSettings(current => ({ ...current, respectWindows: value }))} />
+              <span className="eco-setting__hint">Ningún pedido llega fuera de su horario</span>
+            </div>
+            <div className="eco-setting">
+              <span className="eco-setting__label">Priorizar vehículos de bajas emisiones</span>
+              <Switch label="Priorizar vehículos de bajas emisiones" checked={settings.prioritizeLowEmission} disabled={running} onChange={value => setSettings(current => ({ ...current, prioritizeLowEmission: value }))} />
+              <span className="eco-setting__hint">A igual costo, primero los vehículos con menos kg CO₂/km</span>
+            </div>
+          </div>
+
+          <button className="eco-btn eco-btn--block" type="button" disabled={running} onClick={() => void run()}>
+            <RutaIcon size="md" />
+            {running ? 'Generando rutas…' : phase === 'done' ? 'Volver a generar' : 'Generar rutas'}
+          </button>
+          <p className="eco-muted eco-hint-center">El cálculo tarda hasta {limit} s. Si no hay vehículos disponibles, no se ejecuta y te avisamos.</p>
+        </section>
+
+        <section className="eco-columns__main" aria-labelledby="plan-output-title" aria-live="polite">
+          <div className="eco-section-head">
+            <h2 id="plan-output-title">3 · Rutas propuestas</h2>
+            <span className="eco-tag">{STATE_TAG[phase]}</span>
+          </div>
+
+          {error ? (
+            <Banner tone={error.noVehicles ? 'warning' : 'error'} title={error.noVehicles ? 'No se generaron rutas.' : 'No se pudieron generar las rutas.'}>
+              {error.text}
+            </Banner>
+          ) : null}
+
+          {phase === 'ready' && !error ? (
+            <div className="eco-empty">
+              <p className="eco-empty__title">Todavía no hay rutas para hoy</p>
+              <p className="eco-flush">Revisa la configuración y pulsa «Generar rutas». Verás cuánto CO₂ se ahorra antes de aprobarlas.</p>
+            </div>
+          ) : null}
+
+          {running ? (
+            <div className="eco-run">
+              <div className="eco-run__head">
+                <strong>
+                  Optimizando {scope?.pendingOrders ?? ''} pedidos en {scope?.availableVehicles ?? ''} vehículos…
+                </strong>
+                <span className="eco-code eco-muted">{elapsed} s</span>
+              </div>
+              {known ? (
+                <div className="eco-meter" role="progressbar" aria-label="Avance del cálculo" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round((progress.fraction ?? 0) * 100)}>
+                  <div className="eco-meter__fill" style={{ width: `${Math.max(4, Math.round((progress.fraction ?? 0) * 100))}%` }} />
+                </div>
+              ) : (
+                <>
+                  <div className="eco-meter" role="progressbar" aria-label="Tiempo usado del máximo" aria-valuemin={0} aria-valuemax={limit} aria-valuenow={Math.min(elapsed, limit)} aria-valuetext={`${elapsed} de ${limit} s`}>
+                    <div className="eco-meter__fill" style={{ width: `${Math.max(4, Math.round(Math.min(elapsed / limit, 1) * 100))}%` }} />
+                  </div>
+                  <p className="eco-muted eco-flush">El servidor calcula la propuesta en una sola petición: la barra muestra el tiempo usado de los {limit} s permitidos. Estos son los pasos que ejecuta:</p>
+                </>
+              )}
+              <ol className="eco-stops">
+                {PLANNING_STEPS.map((label, index) => {
+                  const state = !known ? '' : index < progress.step ? 'done' : index === progress.step ? 'now' : ''
+                  return (
+                    <li key={label} className={`eco-stop${state ? ` eco-stop--${state}` : ''}`} aria-current={state === 'now' ? 'step' : undefined}>
+                      <span className="eco-stop__dot">{state === 'done' ? <CheckIcon /> : index + 1}</span>
+                      <span className="eco-stop__title">{label}</span>
+                    </li>
+                  )
+                })}
+              </ol>
+            </div>
+          ) : null}
+
+          {phase === 'done' && proposal ? (
+            <>
+              <Panel label="Resumen de la propuesta" minCell={130}>
+                <PanelCell label="Rutas" value={proposal.routeCount} note={`${proposal.ordersAssigned} pedidos asignados`} />
+                <PanelCell
+                  label="Distancia"
+                  value={formatDecimal(proposal.totalKm)}
+                  unit="km"
+                  note={proposal.kmSaved === null ? 'Distancia geográfica estimada'
+                    : proposal.kmSaved > 0 ? <span className="eco-delta">−{formatDecimal(proposal.kmSaved)} km</span>
+                    : 'Sin ahorro de distancia frente a la línea base'}
+                />
+                <PanelCell
+                  label="CO₂ estimado"
+                  value={formatDecimal(proposal.co2Kg)}
+                  unit="kg"
+                  note={proposal.co2SavedPercent === null ? 'Emisiones estimadas de la propuesta'
+                    : proposal.co2SavedPercent > 0 ? <><span className="eco-delta">−{proposal.co2SavedPercent} %</span> vs. sin optimizar</>
+                    : 'Sin ahorro de CO₂ frente a la línea base'}
+                  eco
+                  tinted
+                />
+                <PanelCell label="En ventana" value={`${proposal.windowCompliance} %`} note={`meta ${proposal.windowTarget} %`} />
+              </Panel>
+
+              <div className="eco-list-scroll">
+                <List label="Rutas propuestas por vehículo">
+                  <ListRow head columns={ROW_COLUMNS}>
+                    <span>Vehículo</span>
+                    <span>Conductor · zona</span>
+                    <span>Paradas</span>
+                    <span>Km</span>
+                    <span>Carga</span>
+                    <span>CO₂</span>
+                    <span />
+                  </ListRow>
+                  {proposal.routes.map(route => (
+                    <ListRow key={route.plate} columns={ROW_COLUMNS}>
+                      <span className="eco-code">{route.plate}</span>
+                      <span className="eco-row__cell">
+                        <span className="eco-row__title">{route.driver}</span>
+                        <span className="eco-row__sub">
+                          {route.zone} · <span className={`eco-tag eco-tag--sm${isLowEmission(route.fuel) ? ' eco-tag--eco' : ''}`}>{fuelLabel(route.fuel)}</span>
+                        </span>
+                      </span>
+                      <span className="eco-num">{route.stops}</span>
+                      <span className="eco-num">{route.km}</span>
+                      <span className="eco-load">
+                        <span className="eco-meter eco-meter--thin" role="img" aria-label={`Carga al ${percent(route.load)}`}>
+                          <span className="eco-meter__fill" style={{ width: percent(route.load) }} />
+                        </span>
+                        <span className="eco-code eco-muted">{percent(route.load)}</span>
+                      </span>
+                      <span className="eco-num eco-eco eco-strong">{formatDecimal(route.co2Kg, 0, 1)} kg</span>
+                      {route.sequence?.length ? (
+                        <button className="eco-btn eco-btn--ghost" type="button" aria-expanded={openPlate === route.plate} aria-controls="route-detail"
+                          aria-label={`${openPlate === route.plate ? 'Ocultar' : 'Ver'} paradas de ${route.plate}`}
+                          onClick={() => setOpenPlate(current => current === route.plate ? null : route.plate)}>
+                          {openPlate === route.plate ? 'Ocultar' : 'Paradas'}
+                        </button>
+                      ) : <span />}
+                    </ListRow>
+                  ))}
+                  {proposal.routeCount > proposal.routes.length ? (
+                    <ListRow columns={ROW_COLUMNS}>
+                      <span />
+                      <span className="eco-muted">y {proposal.routeCount - proposal.routes.length} rutas más</span>
+                    </ListRow>
+                  ) : null}
+                </List>
+              </div>
+              {openRoute ? <RouteDetail route={openRoute} /> : null}
+
+              <div className="eco-sheet__actions">
+                <a className="eco-btn" href="/?vista=pedidos" onClick={event => { if (onNavigate) { event.preventDefault(); onNavigate('pedidos', '/?vista=pedidos') } }}>
+                  Consultar pedidos
+                </a>
+                <button className="eco-btn eco-btn--ghost" type="button" onClick={() => { setPhase('ready'); setProposal(null) }}>
+                  Descartar
+                </button>
+                <span className="eco-muted eco-toolbar__end" id="adjust-hint">Calculado en {proposal.elapsedSeconds} s</span>
+              </div>
+            </>
+          ) : null}
+        </section>
+      </div>
+    </AppShell>
+  )
+}

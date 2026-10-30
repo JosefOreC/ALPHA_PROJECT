@@ -1,6 +1,7 @@
 from typing import Dict, List, Optional
 from domain.entities.vehicle import Vehicle
 from domain.ports.vehicle_repository import VehicleRepositoryPort
+from domain.value_objects import VehicleStates
 
 
 class InMemoryVehicleRepository(VehicleRepositoryPort):
@@ -26,11 +27,11 @@ class InMemoryVehicleRepository(VehicleRepositoryPort):
                 return v
         return None
 
-    def find_all(self, status: Optional[str] = None) -> List[Vehicle]:
+    def find_all(self, status: Optional[VehicleStates] = None) -> List[Vehicle]:
         vehicles = list(self._vehicles.values())
-        if status:
-            normalized_status = status.strip().upper()
-            return [v for v in vehicles if v.estado == normalized_status]
+        if status is not None:
+            target = VehicleStates.parse(status)
+            return [v for v in vehicles if v.estado == target]
         return vehicles
 
     def update(self, vehicle: Vehicle) -> Vehicle:

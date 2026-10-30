@@ -9,7 +9,7 @@ describe('StatusBanner', () => {
 
     const banner = screen.getByRole('status')
     expect(banner).toHaveTextContent('No se han generado rutas para la jornada actual')
-    expect(banner).toHaveTextContent('Los indicadores se mostrarán cuando se generen las rutas.')
+    expect(banner).toHaveTextContent('Los pedidos registrados ya están disponibles.')
   })
 
   it('announces a load failure as an alert and retries on click', async () => {

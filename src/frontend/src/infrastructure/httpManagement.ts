@@ -46,7 +46,7 @@ export class HttpManagement implements ManagementPort {
       : 'No se pudo conectar con la API. Revisa tu conexión y vuelve a intentar.') }
     if (!response.ok) {
       const messages: Record<number, string> = { 401: 'Se requiere una sesión verificada para gestionar pedidos.',
-        403: 'Acceso denegado o protección de la operación pendiente de integración.', 404: 'Pedido no encontrado.',
+        403: 'Tu perfil no tiene permiso para esta operación.', 404: 'Pedido no encontrado.',
         409: 'El pedido cambió. Consulta su versión actual antes de continuar.', 422: 'Revisa los campos, la ventana, el peso y el distrito.' }
       throw new ManagementError(messages[response.status] ?? 'No se pudo completar la operación. Inténtalo nuevamente.', response.status)
     }

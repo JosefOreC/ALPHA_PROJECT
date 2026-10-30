@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Gestión de flota</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/ecologistica/tokens.css">
+<link rel="stylesheet" href="ds/ecologistica/components/bundle.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0}
+a{color:var(--primary)}a:hover{color:var(--primary-hover)}
+</style>
+</helmet>
+<div class="eco-root eco-shell" data-theme="{{theme}}" style="position: relative; min-height: 900px">
+  <aside class="eco-side" aria-label="Navegación principal">
+    <a class="eco-side__brand" href="Main.dc.html"><svg class="eco-mark" viewBox="0 0 32 32" aria-hidden="true"><path class="leaf" d="M5 27C5 14 13 5 27 5c0 14-9 22-22 22z"></path><path class="vein" d="M8.5 23.5c3.5-3.5 6-8.5 10.5-10.5"></path><circle class="stop" cx="21.5" cy="11.5" r="2.6"></circle></svg>EcoLogística <span>Lima</span></a>
+    <button class="eco-side__search" type="button"><svg class="eco-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="M16 16l4.5 4.5"></path></svg>Buscar…<span class="eco-kbd">⌘K</span></button>
+    <p class="eco-side__label">Operación</p>
+    <a class="eco-side__item" href="Pedidos.dc.html"><svg class="eco-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"></path><path d="M4 7.5l8 4.5 8-4.5M12 12v9"></path><circle cx="8" cy="9.8" r="1.8" class="acc"></circle></svg>Pedidos y rutas<span class="eco-side__count">248</span></a>
+    <a class="eco-side__item" href="Rutas.dc.html"><svg class="eco-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17c2.5-2.5 1.5-5 5-5s2.5-2.5 5-5" stroke-dasharray="2.4 2.8"></path><circle cx="5" cy="19" r="2.4" class="acc"></circle><circle cx="19" cy="5" r="2.4"></circle></svg>Generar rutas</a>
+    <a class="eco-side__item" href="Flota.dc.html" aria-current="page"><svg class="eco-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 15.5V8.5h8v7"></path><path d="M12 10.5h3.5l2.5 2.6v2.4"></path><circle cx="7" cy="16.5" r="1.6" class="acc"></circle><circle cx="15.5" cy="16.5" r="1.6"></circle><path d="M2.5 20.5h19" stroke-dasharray="2.2 2.8"></path></svg>Flota<span class="eco-side__count">15</span></a>
+    <div class="eco-side__foot">
+      <div class="eco-side__co2">
+        <span>CO₂ evitado este mes</span>
+        <strong>658 kg <span style="font-size: 12px; font-weight: 500; letter-spacing: 0; color: var(--forest-muted)">de 700</span></strong>
+        <div class="eco-hero__meter" role="img" aria-label="94 por ciento de la meta mensual"><div class="eco-hero__meter-fill" style="width: 94%"></div></div>
+      </div>
+      <div class="eco-side__user"><span class="eco-role">Planificador</span><span class="eco-avatar">BP</span><div>Beto P.</div></div>
+    </div>
+  </aside>
+
+  <div class="eco-main">
+    <header class="eco-topbar">
+      <nav class="eco-crumbs" aria-label="Ruta de navegación"><span>Operación</span><span aria-hidden="true">/</span><strong>Flota</strong></nav>
+      <div class="eco-topbar__end">
+        <button class="eco-filter" type="button"><svg class="eco-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5s6 6.5 6 10.5a6 6 0 0 1-12 0c0-4 6-10.5 6-10.5z"></path><path d="M9.5 15.5c1.5 0 2.5-1 2.5-2.5"></path><circle cx="14" cy="16" r="1.8" class="acc"></circle></svg>Combustible</button>
+        <button class="eco-btn" type="button" onClick="{{openForm}}"><svg class="eco-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>Registrar vehículo</button>
+      </div>
+    </header>
+
+    <main class="eco-content">
+      <div>
+        <h1 class="eco-h1">Flota</h1>
+        <p class="eco-sub">15 camionetas de DistriRápido · Lima Este</p>
+      </div>
+
+      <section class="eco-panel" aria-label="Resumen de la flota">
+        <div class="eco-panel__cell">
+          <p class="eco-panel__label">Vehículos activos</p>
+          <p class="eco-panel__value">15 <small>de 15</small></p>
+          <p class="eco-panel__note">11 en ruta · 2 disponibles · 2 en taller</p>
+        </div>
+        <div class="eco-panel__cell">
+          <p class="eco-panel__label"><svg class="eco-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5s6 6.5 6 10.5a6 6 0 0 1-12 0c0-4 6-10.5 6-10.5z"></path><path d="M9.5 15.5c1.5 0 2.5-1 2.5-2.5"></path><circle cx="14" cy="16" r="1.8" class="acc"></circle></svg>Bajas emisiones</p>
+          <p class="eco-panel__value eco-panel__value--eco">73 % <small>11 de 15</small></p>
+          <p class="eco-panel__note">8 GNV · 3 eléctricos · 1 híbrido</p>
+        </div>
+        <div class="eco-panel__cell">
+          <p class="eco-panel__label"><svg class="eco-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 19.5C4.5 10.5 10.5 4.5 19.5 4.5c0 9-6 15-15 15z"></path><path d="M4.5 19.5c3.5-3.5 6-6.5 9.5-9.5" stroke-dasharray="2.2 2.6"></path><circle cx="14.6" cy="9.4" r="2" class="acc"></circle></svg>CO₂ evitado hoy</p>
+          <p class="eco-panel__value eco-panel__value--eco">22 kg <small>1,5 kg por vehículo</small></p>
+          <p class="eco-panel__note"><span class="eco-delta">−19 %</span> frente a rutas sin optimizar</p>
+        </div>
+      </section>
+
+      <div style="display: flex; flex-direction: column; gap: 12px">
+        <div class="eco-tabs" role="tablist" aria-label="Filtrar por estado">
+          <sc-for list="{{tabs}}" as="t" hint-placeholder-count="4">
+            <button class="eco-tab" type="button" role="tab" aria-selected="{{t.selected}}" onClick="{{t.pick}}">{{t.label}} <span class="eco-code">{{t.count}}</span></button>
+          </sc-for>
+        </div>
+
+        <div class="eco-list eco-list-scroll" style="--cols: 96px 120px 110px minmax(0, 1fr) 120px 72px">
+          <div class="eco-row eco-row--head"><span>Placa</span><span>Combustible</span><span>Capacidad</span><span>Estado</span><span>CO₂ evitado hoy</span><span></span></div>
+          <sc-for list="{{groups}}" as="g" hint-placeholder-count="3">
+            <button class="eco-group" type="button" aria-expanded="{{g.exp}}" onClick="{{g.toggle}}"><svg class="eco-group__chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6l4 4 4-4"></path></svg>{{g.label}} <span class="eco-group__count">{{g.count}}</span><span class="eco-group__hint">{{g.hint}}</span></button>
+            <sc-if value="{{g.open}}" hint-placeholder-val="{{ true }}">
+              <sc-for list="{{g.rows}}" as="v" hint-placeholder-count="3">
+                <div class="eco-row">
+                  <span class="eco-code">{{v.plate}}</span>
+                  <span><span class="{{v.fuelTag}}">{{v.fuel}}</span></span>
+                  <span class="eco-num">{{v.kg}}</span>
+                  <span class="{{v.unit}}"><svg class="eco-unit__ring" viewBox="0 0 16 16" aria-hidden="true"><circle class="ring" cx="8" cy="8" r="6.2"></circle><path class="pie" d="M8 8V3.6A4.4 4.4 0 0 1 8 12.4z"></path><circle class="core" cx="8" cy="8" r="2.6"></circle><path class="slash" d="M3.6 12.4l8.8-8.8"></path></svg>{{v.state}} <span class="eco-muted">{{v.meta}}</span></span>
+                  <span class="{{v.co2Class}}">{{v.co2}}</span>
+                  <span class="eco-row__end"><button class="eco-btn eco-btn--ghost" type="button">Editar</button></span>
+                </div>
+              </sc-for>
+            </sc-if>
+          </sc-for>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <sc-if value="{{formOpen}}" hint-placeholder-val="{{ false }}">
+    <div class="eco-scrim" style="position: absolute; inset: 0; align-items: flex-start; padding-top: 120px">
+      <div class="eco-dialog" role="dialog" aria-modal="true" aria-labelledby="dlg-title" style="max-width: 520px">
+        <h2 class="eco-dialog__title" id="dlg-title">Registrar vehículo</h2>
+        <p class="eco-muted" style="margin: 0 0 18px; font-size: 13px">Los campos con * son obligatorios.</p>
+        <div class="eco-form-grid">
+          <div class="eco-field"><label for="placa">Placa *</label><input id="placa" class="eco-input eco-code" value="DEF-321"><span class="eco-field__hint">Formato ABC-123</span></div>
+          <div class="eco-field"><label for="comb">Combustible *</label><select id="comb" class="eco-select"><option>GNV</option><option>Diésel</option><option>Gasolina</option><option>GLP</option><option>Eléctrico</option><option>Híbrido</option></select></div>
+          <div class="eco-field eco-field--error"><label for="kg">Capacidad (kg) *</label><input id="kg" class="eco-input" value="0" aria-invalid="true" aria-describedby="kg-err"><span class="eco-field__hint" id="kg-err">Debe ser mayor que 0</span></div>
+          <div class="eco-field"><label for="m3">Volumen (m³)</label><input id="m3" class="eco-input" placeholder="Opcional"></div>
+        </div>
+        <div class="eco-dialog__actions"><button class="eco-btn eco-btn--secondary" type="button" onClick="{{closeForm}}">Cancelar</button><button class="eco-btn" type="button" onClick="{{closeForm}}">Guardar vehículo</button></div>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["light","dark"],"default":"light"},"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { filter: 'ALL', formOpen: false, closed: {} };
+  }
+  renderVals() {
+    const unit = { EN_RUTA: 'eco-unit eco-unit--moving', DISPONIBLE: 'eco-unit eco-unit--ready', MANTENIMIENTO: 'eco-unit eco-unit--service', INACTIVO: 'eco-unit eco-unit--off' };
+    const label = { EN_RUTA: 'En ruta', DISPONIBLE: 'Disponible', MANTENIMIENTO: 'Mantenimiento', INACTIVO: 'Inactivo' };
+    const green = { 'GNV': 1, 'Eléctrico': 1, 'Híbrido': 1 };
+    const all = [
+      ['ABC-123', 'GNV', '1 200 kg', 'EN_RUTA', '· 4 paradas', '−2,1 kg'],
+      ['BCD-456', 'Diésel', '1 500 kg', 'EN_RUTA', '· 6 paradas', '−1,2 kg'],
+      ['EGH-567', 'Híbrido', '1 000 kg', 'EN_RUTA', '· 3 paradas', '−1,7 kg'],
+      ['FHJ-890', 'GNV', '1 200 kg', 'EN_RUTA', '· 5 paradas', '−1,9 kg'],
+      ['DFG-234', 'GNV', '1 200 kg', 'DISPONIBLE', '· base Ate', '—'],
+      ['HKL-345', 'Eléctrico', '900 kg', 'DISPONIBLE', '· base Santa Anita', '—'],
+      ['CDE-789', 'Eléctrico', '900 kg', 'MANTENIMIENTO', '· hasta lun 5', '—'],
+      ['GJK-112', 'Diésel', '1 800 kg', 'MANTENIMIENTO', '· hasta mar 6', '—']
+    ];
+    const order = [['EN_RUTA', 11, 'mostrando 4'], ['DISPONIBLE', 2, ''], ['MANTENIMIENTO', 2, ''], ['INACTIVO', 0, '']];
+    const f = this.state.filter;
+    const closed = this.state.closed;
+    const groups = order.filter(o => (f === 'ALL' || o[0] === f) && o[1] > 0).map(o => ({
+      label: label[o[0]], count: o[1], hint: o[2],
+      open: !closed[o[0]], exp: closed[o[0]] ? 'false' : 'true',
+      toggle: () => this.setState({ closed: { ...closed, [o[0]]: !closed[o[0]] } }),
+      rows: all.filter(r => r[3] === o[0]).map(r => ({ plate: r[0], fuel: r[1], fuelTag: green[r[1]] ? 'eco-tag eco-tag--eco' : 'eco-tag', kg: r[2], unit: unit[r[3]], state: label[r[3]], meta: r[4], co2: r[5], co2Class: r[5] === '—' ? 'eco-muted' : 'eco-delta' }))
+    }));
+    const tabs = [['ALL', 'Todos', 15], ['EN_RUTA', 'En ruta', 11], ['DISPONIBLE', 'Disponibles', 2], ['MANTENIMIENTO', 'Mantenimiento', 2]];
+    return {
+      theme: this.props.theme ?? 'light',
+      tabs: tabs.map(t => ({ label: t[1], count: t[2], selected: t[0] === f ? 'true' : 'false', pick: () => this.setState({ filter: t[0] }) })),
+      groups,
+      formOpen: this.state.formOpen,
+      openForm: () => this.setState({ formOpen: true }),
+      closeForm: () => this.setState({ formOpen: false })
+    };
+  }
+}
+</script>
+</body>
+</html>

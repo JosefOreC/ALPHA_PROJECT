@@ -7,7 +7,10 @@ afterEach(() => vi.unstubAllGlobals())
 it('renders the dashboard fed by the HTTP backend', async () => {
   const fetchStub = vi.fn(async (url: string) =>
     Response.json(
-      url.endsWith('/districts')
+      url.endsWith('/api/session') ? { subject_id: 'user-1', name: 'Administrador', role: 'admin', driver_id: null, plate: null, csrf_token: 'verified-token' }
+      : url.includes('/api/dashboard/insights') ? { co2Avoided: null, atRisk: [], riskMinutes: 30, suggestion: null }
+      : url.endsWith('/api/map') ? { depot: null, orders: [], routes: [], vehicles: [] }
+      : url.endsWith('/districts')
         ? [{ id: '150103', name: 'Ate' }]
         : {
             day: '2026-10-01',

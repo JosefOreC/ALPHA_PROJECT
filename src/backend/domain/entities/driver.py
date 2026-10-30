@@ -1,6 +1,7 @@
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 import uuid
+from domain.value_objects import DriverStates
 
 
 @dataclass
@@ -9,20 +10,19 @@ class Driver:
     dni: str
     licencia: str
     vehiculo_id: str
-    estado: str = "ACTIVO"
+    estado: DriverStates = DriverStates.ACTIVO
     conductor_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    usuario_id: str | None = None
     creado_en: datetime = field(
         default_factory=lambda: datetime.now(timezone.utc)
     )
-
-    VALID_ESTADOS = {"ACTIVO", "INACTIVO"}
 
     def __post_init__(self):
         self.nombre_completo = self.nombre_completo.strip()
         self.dni = self.dni.strip()
         self.licencia = self.licencia.strip().upper()
         self.vehiculo_id = self.vehiculo_id.strip()
-        self.estado = self.estado.strip().upper()
+        self.estado = DriverStates.parse(self.estado)
 
         self.validate()
 
@@ -42,19 +42,19 @@ class Driver:
         if not self.vehiculo_id:
             raise ValueError("El vehículo asignado es obligatorio")
 
-        if self.estado not in self.VALID_ESTADOS:
+        if not isinstance(self.estado, DriverStates):
             raise ValueError(
-                f"Estado inválido. Valores permitidos: {', '.join(sorted(self.VALID_ESTADOS))}"
+                f"Estado inválido. Valores permitidos: {', '.join(sorted(DriverStates.list_states()))}"
             )
 
     def is_active(self) -> bool:
-        return self.estado == "ACTIVO"
+        return self.estado == DriverStates.ACTIVO
 
     def activate(self):
-        self.estado = "ACTIVO"
+        self.estado = DriverStates.ACTIVO
 
     def deactivate(self):
-        self.estado = "INACTIVO"
+        self.estado = DriverStates.INACTIVO
 
     def update_info(
         self,
@@ -62,7 +62,7 @@ class Driver:
         dni: str | None = None,
         licencia: str | None = None,
         vehiculo_id: str | None = None,
-        estado: str | None = None,
+        estado: DriverStates | str | None = None,
     ):
         if nombre_completo is not None:
             self.nombre_completo = nombre_completo.strip()
@@ -77,6 +77,6 @@ class Driver:
             self.vehiculo_id = vehiculo_id.strip()
 
         if estado is not None:
-            self.estado = estado.strip().upper()
+            self.estado = DriverStates.parse(estado)
 
         self.validate()

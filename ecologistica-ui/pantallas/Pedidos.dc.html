@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Pedidos y rutas</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/ecologistica/tokens.css">
+<link rel="stylesheet" href="ds/ecologistica/components/bundle.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0}
+a{color:var(--primary)}a:hover{color:var(--primary-hover)}
+</style>
+</helmet>
+<div class="eco-root eco-shell" data-theme="{{theme}}" style="position: relative; min-height: 1180px">
+  <aside class="eco-side" aria-label="Navegación principal">
+    <a class="eco-side__brand" href="Main.dc.html"><svg class="eco-mark" viewBox="0 0 32 32" aria-hidden="true"><path class="leaf" d="M5 27C5 14 13 5 27 5c0 14-9 22-22 22z"></path><path class="vein" d="M8.5 23.5c3.5-3.5 6-8.5 10.5-10.5"></path><circle class="stop" cx="21.5" cy="11.5" r="2.6"></circle></svg>EcoLogística <span>Lima</span></a>
+    <button class="eco-side__search" type="button"><svg class="eco-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="M16 16l4.5 4.5"></path></svg>Buscar…<span class="eco-kbd">⌘K</span></button>
+    <p class="eco-side__label">Operación</p>
+    <a class="eco-side__item" href="Pedidos.dc.html" aria-current="page"><svg class="eco-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"></path><path d="M4 7.5l8 4.5 8-4.5M12 12v9"></path><circle cx="8" cy="9.8" r="1.8" class="acc"></circle></svg>Pedidos y rutas<span class="eco-side__count">248</span></a>
+    <a class="eco-side__item" href="Rutas.dc.html"><svg class="eco-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17c2.5-2.5 1.5-5 5-5s2.5-2.5 5-5" stroke-dasharray="2.4 2.8"></path><circle cx="5" cy="19" r="2.4" class="acc"></circle><circle cx="19" cy="5" r="2.4"></circle></svg>Generar rutas</a>
+    <a class="eco-side__item" href="Flota.dc.html"><svg class="eco-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 15.5V8.5h8v7"></path><path d="M12 10.5h3.5l2.5 2.6v2.4"></path><circle cx="7" cy="16.5" r="1.6" class="acc"></circle><circle cx="15.5" cy="16.5" r="1.6"></circle><path d="M2.5 20.5h19" stroke-dasharray="2.2 2.8"></path></svg>Flota<span class="eco-side__count">15</span></a>
+    <div class="eco-side__foot">
+      <div class="eco-side__co2">
+        <span>CO₂ evitado este mes</span>
+        <strong>658 kg <span>de 700</span></strong>
+        <div class="eco-hero__meter" role="img" aria-label="94 por ciento de la meta mensual"><div class="eco-hero__meter-fill" style="width: 94%"></div></div>
+      </div>
+      <div class="eco-side__user"><span class="eco-role">Planificador</span><span class="eco-avatar">BP</span><div>Beto P.</div></div>
+    </div>
+  </aside>
+
+  <div class="eco-main">
+    <header class="eco-topbar">
+      <nav class="eco-crumbs" aria-label="Ruta de navegación"><span>Operación</span><span aria-hidden="true">/</span><strong>Pedidos y rutas</strong></nav>
+      <div class="eco-topbar__end">
+        <span class="eco-tag" style="border-color: transparent; background: var(--warning-bg); color: var(--warning)">Modo demo · datos ficticios</span>
+        <button class="eco-btn eco-btn--secondary" type="button"><svg class="eco-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>Registrar pedido</button>
+        <a class="eco-btn" href="Rutas.dc.html"><svg class="eco-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17c2.5-2.5 1.5-5 5-5s2.5-2.5 5-5" stroke-dasharray="2.4 2.8"></path><circle cx="5" cy="19" r="2.4" class="acc"></circle><circle cx="19" cy="5" r="2.4"></circle></svg>Generar rutas del día</a>
+      </div>
+    </header>
+
+    <main class="eco-content">
+      <div>
+        <h1 class="eco-h1">Pedidos y rutas</h1>
+        <p class="eco-sub">Jueves 1 de octubre · Lima Este · horas de Lima</p>
+      </div>
+
+      <section class="eco-panel" aria-label="Resumen de pedidos" style="grid-template-columns: repeat(auto-fit, minmax(190px, 1fr))">
+        <div class="eco-panel__cell">
+          <p class="eco-panel__label"><span class="eco-trip eco-trip--pending"><svg class="eco-trip__track" viewBox="0 0 46 12" aria-hidden="true"><path class="seg seg1" d="M9 6h10"></path><path class="seg seg2" d="M27 6h10"></path><path class="cut" d="M11.5 3l5 6M16.5 3l-5 6"></path><circle class="stop st1" cx="4.5" cy="6" r="3.5"></circle><circle class="stop st2" cx="23" cy="6" r="3.5"></circle><circle class="stop st3" cx="41" cy="6" r="3.5"></circle><path class="mark" d="M39 6.1l1.4 1.4 2.6-2.8"></path></svg></span>Sin conductor</p>
+          <p class="eco-panel__value">2 <small>pendientes</small></p>
+          <p class="eco-panel__note">Entran en la próxima generación de rutas</p>
+        </div>
+        <div class="eco-panel__cell">
+          <p class="eco-panel__label"><span class="eco-trip eco-trip--transit"><svg class="eco-trip__track" viewBox="0 0 46 12" aria-hidden="true"><path class="seg seg1" d="M9 6h10"></path><path class="seg seg2" d="M27 6h10"></path><path class="cut" d="M11.5 3l5 6M16.5 3l-5 6"></path><circle class="stop st1" cx="4.5" cy="6" r="3.5"></circle><circle class="stop st2" cx="23" cy="6" r="3.5"></circle><circle class="stop st3" cx="41" cy="6" r="3.5"></circle><path class="mark" d="M39 6.1l1.4 1.4 2.6-2.8"></path></svg></span>En camino</p>
+          <p class="eco-panel__value">6 <small>en 4 rutas</small></p>
+          <p class="eco-panel__note">Próxima llegada 10:55 · PED-0022</p>
+        </div>
+        <div class="eco-panel__cell">
+          <p class="eco-panel__label"><span class="eco-trip eco-trip--delivered"><svg class="eco-trip__track" viewBox="0 0 46 12" aria-hidden="true"><path class="seg seg1" d="M9 6h10"></path><path class="seg seg2" d="M27 6h10"></path><path class="cut" d="M11.5 3l5 6M16.5 3l-5 6"></path><circle class="stop st1" cx="4.5" cy="6" r="3.5"></circle><circle class="stop st2" cx="23" cy="6" r="3.5"></circle><circle class="stop st3" cx="41" cy="6" r="3.5"></circle><path class="mark" d="M39 6.1l1.4 1.4 2.6-2.8"></path></svg></span>Entregados</p>
+          <p class="eco-panel__value">3 <small>a tiempo</small></p>
+          <p class="eco-panel__note">1 cancelado por el cliente</p>
+        </div>
+        <div class="eco-panel__cell">
+          <p class="eco-panel__label"><svg class="eco-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"></circle><path d="M12 3.5a8.5 8.5 0 0 1 8.5 8.5" class="acc-stroke"></path><path d="M12 7.5V12l3 2"></path></svg>Ventana en riesgo</p>
+          <p class="eco-panel__value" style="color: var(--danger)">2 <small>vencen antes de 11:30</small></p>
+          <p class="eco-panel__note">PED-0022 · PED-0044</p>
+        </div>
+        <div class="eco-panel__cell">
+          <p class="eco-panel__label"><svg class="eco-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 19.5C4.5 10.5 10.5 4.5 19.5 4.5c0 9-6 15-15 15z"></path><path d="M4.5 19.5c3.5-3.5 6-6.5 9.5-9.5" stroke-dasharray="2.2 2.6"></path><circle cx="14.6" cy="9.4" r="2" class="acc"></circle></svg>Huella por pedido</p>
+          <p class="eco-panel__value eco-panel__value--eco">0,23 <small>kg CO₂</small></p>
+          <p class="eco-panel__note"><span class="eco-delta">−19 %</span> al agruparlos por ruta</p>
+        </div>
+      </section>
+
+      <section style="display: flex; flex-direction: column; gap: 12px" aria-label="Buscar pedidos">
+        <div class="eco-search">
+          <svg class="eco-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="M16 16l4.5 4.5"></path></svg>
+          <label for="q" class="eco-sr">Buscar pedidos</label>
+          <input id="q" class="eco-search__input" type="search" placeholder="Buscar por pedido, cliente, distrito o placa · ej. «Santa Anita» o «ABC-123»" value="{{q}}" onInput="{{onSearch}}">
+          <span class="eco-kbd">/</span>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px">
+          <div class="eco-tabs" role="tablist" aria-label="Filtrar por estado" style="border-bottom: 0">
+            <sc-for list="{{tabs}}" as="t" hint-placeholder-count="5">
+              <button class="eco-tab" type="button" role="tab" aria-selected="{{t.selected}}" onClick="{{t.pick}}">{{t.label}} <span class="eco-code">{{t.count}}</span></button>
+            </sc-for>
+          </div>
+          <button class="eco-filter" type="button"><svg class="eco-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 6.5l5.5-2 6 2 5.5-2v13l-5.5 2-6-2-5.5 2z"></path><path d="M9 4.5v13M15 6.5v13"></path><circle cx="12" cy="11" r="1.9" class="acc"></circle></svg>Distrito</button>
+          <button class="eco-filter" type="button"><svg class="eco-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 15.5V8.5h8v7"></path><path d="M12 10.5h3.5l2.5 2.6v2.4"></path><circle cx="7" cy="16.5" r="1.6" class="acc"></circle><circle cx="15.5" cy="16.5" r="1.6"></circle></svg>Vehículo</button>
+          <span class="eco-search__meta" style="margin-left: auto"><strong>{{resultCount}}</strong> de 12 pedidos</span>
+          <div class="eco-seg-ctrl" role="group" aria-label="Vista">
+            <button type="button" aria-pressed="{{vList}}" onClick="{{setList}}">Lista</button>
+            <button type="button" aria-pressed="{{vSplit}}" onClick="{{setSplit}}">Lista + mapa</button>
+            <button type="button" aria-pressed="{{vMap}}" onClick="{{setMap}}">Mapa</button>
+          </div>
+        </div>
+      </section>
+
+      <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start">
+        <sc-if value="{{showList}}" hint-placeholder-val="{{ true }}">
+          <section style="flex: 5 1 440px; min-width: 0" aria-label="Lista de pedidos">
+            <sc-if value="{{empty}}" hint-placeholder-val="{{ false }}">
+              <div class="eco-banner" role="status"><svg class="eco-icon eco-icon--md" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"></path><path d="M4 7.5l8 4.5 8-4.5M12 12v9"></path><circle cx="8" cy="9.8" r="1.8" class="acc"></circle></svg><span class="eco-banner__text"><span class="eco-banner__title">Sin resultados</span> · prueba con un distrito, una placa o un número de pedido.</span></div>
+            </sc-if>
+            <div class="eco-list eco-list-scroll" style="--cols: 80px minmax(0, 1fr) 92px 74px">
+              <sc-for list="{{groups}}" as="g" hint-placeholder-count="4">
+                <button class="eco-group" type="button" aria-expanded="{{g.exp}}" onClick="{{g.toggle}}"><svg class="eco-group__chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6l4 4 4-4"></path></svg><span class="{{g.trip}}"><svg class="eco-trip__track" viewBox="0 0 46 12" aria-hidden="true"><path class="seg seg1" d="M9 6h10"></path><path class="seg seg2" d="M27 6h10"></path><path class="cut" d="M11.5 3l5 6M16.5 3l-5 6"></path><circle class="stop st1" cx="4.5" cy="6" r="3.5"></circle><circle class="stop st2" cx="23" cy="6" r="3.5"></circle><circle class="stop st3" cx="41" cy="6" r="3.5"></circle><path class="mark" d="M39 6.1l1.4 1.4 2.6-2.8"></path></svg></span>{{g.label}} <span class="eco-group__count">{{g.count}}</span></button>
+                <sc-if value="{{g.open}}" hint-placeholder-val="{{ true }}">
+                  <sc-for list="{{g.rows}}" as="o" hint-placeholder-count="3">
+                    <div class="eco-row" role="button" tabindex="0" aria-selected="{{o.selected}}" onClick="{{o.pick}}" style="cursor: pointer; min-height: 52px">
+                      <span class="eco-code">{{o.id}}</span>
+                      <span style="min-width: 0; display: flex; flex-direction: column"><span class="eco-row__title">{{o.to}}</span><span class="eco-muted" style="font-size: 12.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{o.district}} · {{o.meta}}</span></span>
+                      <span class="eco-code">{{o.window}}</span>
+                      <span class="eco-code eco-muted">{{o.plate}}</span>
+                    </div>
+                  </sc-for>
+                </sc-if>
+              </sc-for>
+            </div>
+          </section>
+        </sc-if>
+
+        <section style="flex: 6 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 16px" aria-label="Mapa y detalle">
+          <sc-if value="{{showMap}}" hint-placeholder-val="{{ true }}">
+            <dc-import name="Mapa" selected="{{sel.id}}" query="{{q}}" on-pick="{{pickId}}" compact="{{ false }}" hint-size="100%,420px"></dc-import>
+          </sc-if>
+
+          <article style="border: 1px solid var(--hairline); border-radius: var(--radius-lg); padding: 18px 20px; display: flex; flex-direction: column; gap: 14px; background: var(--surface)" aria-label="Detalle del pedido seleccionado">
+            <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; flex-wrap: wrap">
+              <div>
+                <span class="eco-code eco-muted">{{sel.id}} · {{sel.district}}</span>
+                <h2 style="margin: 2px 0 0; font-size: 18px; line-height: 24px; font-weight: 600; letter-spacing: -0.02em">{{sel.to}}</h2>
+                <p class="eco-muted" style="margin: 2px 0 0; font-size: 13.5px">{{sel.address}}</p>
+              </div>
+              <span class="{{sel.trip}}"><svg class="eco-trip__track" viewBox="0 0 46 12" aria-hidden="true"><path class="seg seg1" d="M9 6h10"></path><path class="seg seg2" d="M27 6h10"></path><path class="cut" d="M11.5 3l5 6M16.5 3l-5 6"></path><circle class="stop st1" cx="4.5" cy="6" r="3.5"></circle><circle class="stop st2" cx="23" cy="6" r="3.5"></circle><circle class="stop st3" cx="41" cy="6" r="3.5"></circle><path class="mark" d="M39 6.1l1.4 1.4 2.6-2.8"></path></svg>{{sel.label}} <span class="eco-trip__meta">· {{sel.meta}}</span></span>
+            </div>
+            <dl class="eco-props" style="grid-template-columns: 110px minmax(0, 1fr) 110px minmax(0, 1fr); border-top: 1px solid var(--hairline); padding-top: 4px">
+              <dt>Ventana</dt><dd class="eco-code">{{sel.window}}</dd>
+              <dt>Peso</dt><dd class="eco-num">{{sel.kg}}</dd>
+              <dt>Vehículo</dt><dd>{{sel.vehicle}}</dd>
+              <dt>Huella CO₂</dt><dd style="color: var(--eco-ink)">{{sel.co2}}</dd>
+            </dl>
+            <div class="eco-note-block"><strong>Indicaciones</strong>{{sel.notes}}</div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap">
+              <sc-if value="{{sel.pending}}" hint-placeholder-val="{{ true }}">
+                <button class="eco-btn" type="button"><svg class="eco-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17c2.5-2.5 1.5-5 5-5s2.5-2.5 5-5" stroke-dasharray="2.4 2.8"></path><circle cx="5" cy="19" r="2.4" class="acc"></circle><circle cx="19" cy="5" r="2.4"></circle></svg>Asignar a una ruta</button>
+                <button class="eco-btn eco-btn--secondary" type="button">Editar</button>
+              </sc-if>
+              <sc-if value="{{sel.transit}}" hint-placeholder-val="{{ false }}">
+                <button class="eco-btn eco-btn--secondary" type="button">Seguir en el mapa</button>
+              </sc-if>
+              <sc-if value="{{sel.cancellable}}" hint-placeholder-val="{{ true }}">
+                <button class="eco-btn eco-btn--ghost" type="button" style="color: var(--danger)" onClick="{{askCancel}}">Cancelar pedido</button>
+              </sc-if>
+              <sc-if value="{{sel.readonly}}" hint-placeholder-val="{{ false }}">
+                <span class="eco-muted" style="font-size: 13px">Este pedido ya no se puede modificar.</span>
+              </sc-if>
+            </div>
+          </article>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <sc-if value="{{confirmOpen}}" hint-placeholder-val="{{ false }}">
+    <div class="eco-scrim" style="position: absolute; inset: 0; align-items: flex-start; padding-top: 260px">
+      <div class="eco-dialog" role="dialog" aria-modal="true" aria-labelledby="cx">
+        <h2 class="eco-dialog__title" id="cx">¿Cancelar el pedido {{sel.id}}?</h2>
+        <p class="eco-muted" style="margin: 0; font-size: 13.5px">Saldrá de la planificación y la ruta se reoptimizará. Esta acción no se puede deshacer.</p>
+        <div class="eco-dialog__actions"><button class="eco-btn eco-btn--secondary" type="button" onClick="{{closeCancel}}">Volver</button><button class="eco-btn eco-btn--danger" type="button" onClick="{{closeCancel}}">Sí, cancelar pedido</button></div>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["light","dark"],"default":"light"},"$preview":{"width":1440,"height":1180}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { selected: 'PED-0024', q: '', status: 'ALL', view: 'split', closed: {}, confirmOpen: false };
+  }
+  renderVals() {
+    const trip = { PENDIENTE: 'eco-trip eco-trip--pending', EN_CAMINO: 'eco-trip eco-trip--transit', ENTREGADO: 'eco-trip eco-trip--delivered', CANCELADO: 'eco-trip eco-trip--cancelled' };
+    const label = { PENDIENTE: 'Pendiente', EN_CAMINO: 'En camino', ENTREGADO: 'Entregado', CANCELADO: 'Cancelado' };
+    const D = [
+      ['PED-0021', 'Comercial Hermanos Quispe', 'Jr. Las Gardenias 210', 'S. J. de Lurigancho', '08:00–10:00', '12,0 kg', 'ENTREGADO', 'ABC-123', 'Luis Huamán', 'entregado 09:12', '0,36 kg', 'Entregar por la puerta lateral.'],
+      ['PED-0026', 'Minimarket Don Lucho', 'Av. Próceres 1450', 'S. J. de Lurigancho', '11:00–13:00', '15,8 kg', 'EN_CAMINO', 'ABC-123', 'Luis Huamán', 'siguiente parada · 11:05', '0,41 kg', 'Dejar en recepción.'],
+      ['PED-0029', 'Panadería San Hilarión', 'Av. Los Jardines 980', 'S. J. de Lurigancho', '12:00–14:00', '9,4 kg', 'EN_CAMINO', 'ABC-123', 'Luis Huamán', 'parada 3 de 3', '0,29 kg', 'Mercadería refrigerada.'],
+      ['PED-0027', 'Librería El Estudiante', 'Av. Riva Agüero 410', 'El Agustino', '08:30–10:30', '4,1 kg', 'ENTREGADO', 'BCD-456', 'Rosa Mendoza', 'entregado 09:40', '0,15 kg', 'Sin indicaciones.'],
+      ['PED-0022', 'Bodega La Esquina', 'Av. Riva Agüero 845', 'El Agustino', '09:00–11:00', '6,5 kg', 'EN_CAMINO', 'BCD-456', 'Rosa Mendoza', 'llega 10:55 · ventana en riesgo', '0,24 kg', 'Llamar al llegar.'],
+      ['PED-0052', 'Ferretería Cerro San Pedro', 'Jr. Áncash 1203', 'El Agustino', '11:00–12:00', '7,7 kg', 'PENDIENTE', '', '', 'sin conductor', '0,22 kg estimada', 'Carga pesada: usar carretilla.'],
+      ['PED-0031', 'Bodega Santa Rosa', 'Av. Los Ruiseñores 455', 'Santa Anita', '10:00–12:00', '8,2 kg', 'EN_CAMINO', 'EGH-567', 'Carmen Ríos', 'llega 11:35', '0,31 kg', 'Tocar el timbre del portón verde; recibe el encargado.'],
+      ['PED-0024', 'Distribuidora Ñaña', 'Av. Huarochirí 300', 'Santa Anita', '10:30–12:30', '5,0 kg', 'PENDIENTE', '', '', 'sin conductor', '0,18 kg estimada · −22 % si va con EGH-567', 'Entregar en almacén posterior.'],
+      ['PED-0023', 'Ferretería El Sol', 'Calle Los Ruiseñores 77', 'Santa Anita', '09:30–11:30', '22,4 kg', 'CANCELADO', '', '', 'canceló el cliente', '0 kg · no salió a ruta', 'Cliente canceló por teléfono.'],
+      ['PED-0035', 'Óptica Vitarte', 'Av. Nicolás Ayllón 5800', 'Ate', '08:00–10:00', '2,2 kg', 'ENTREGADO', 'FHJ-890', 'Jorge Salas', 'entregado 09:05', '0,09 kg', 'Paquete frágil.'],
+      ['PED-0044', 'Farmacia Los Ángeles', 'Carretera Central km 3,5', 'Ate', '10:30–11:30', '3,0 kg', 'EN_CAMINO', 'FHJ-890', 'Jorge Salas', 'llega 11:25 · ventana en riesgo', '0,12 kg', 'Pedir firma del químico farmacéutico.'],
+      ['PED-0048', 'Mercado Ceres', 'Av. Separadora Industrial 2100', 'Ate', '12:00–14:00', '18,6 kg', 'EN_CAMINO', 'FHJ-890', 'Jorge Salas', 'parada 3 de 3', '0,44 kg', 'Ingreso por la puerta 4.']
+    ].map(r => ({ id: r[0], to: r[1], address: r[2], district: r[3], window: r[4], kg: r[5], status: r[6], plate: r[7] || '—', driver: r[8], meta: r[9], co2: r[10], notes: r[11] }));
+    const s = this.state;
+    const q = s.q.trim().toLowerCase();
+    const match = d => !q || (d.id + ' ' + d.to + ' ' + d.address + ' ' + d.district + ' ' + d.plate).toLowerCase().indexOf(q) >= 0;
+    const found = D.filter(d => match(d) && (s.status === 'ALL' || d.status === s.status));
+    const sel = D.find(d => d.id === s.selected) || D[7];
+    const groups = ['EN_CAMINO', 'PENDIENTE', 'ENTREGADO', 'CANCELADO'].map(st => ({
+      label: label[st], trip: trip[st], count: found.filter(d => d.status === st).length,
+      open: !s.closed[st], exp: s.closed[st] ? 'false' : 'true',
+      toggle: () => this.setState({ closed: { ...s.closed, [st]: !s.closed[st] } }),
+      rows: found.filter(d => d.status === st).map(d => ({ ...d, selected: d.id === sel.id ? 'true' : 'false', pick: () => this.setState({ selected: d.id }) }))
+    })).filter(g => g.count > 0);
+    const tabsDef = [['ALL', 'Todos'], ['PENDIENTE', 'Pendientes'], ['EN_CAMINO', 'En camino'], ['ENTREGADO', 'Entregados'], ['CANCELADO', 'Cancelados']];
+    const tabs = tabsDef.map(t => ({ label: t[1], count: D.filter(d => match(d) && (t[0] === 'ALL' || d.status === t[0])).length, selected: s.status === t[0] ? 'true' : 'false', pick: () => this.setState({ status: t[0] }) }));
+    const pending = sel.status === 'PENDIENTE';
+    return {
+      theme: this.props.theme ?? 'light',
+      q: s.q,
+      onSearch: e => this.setState({ q: e.target.value }),
+      tabs, groups, resultCount: found.length, empty: found.length === 0,
+      vList: s.view === 'list' ? 'true' : 'false', vSplit: s.view === 'split' ? 'true' : 'false', vMap: s.view === 'map' ? 'true' : 'false',
+      setList: () => this.setState({ view: 'list' }), setSplit: () => this.setState({ view: 'split' }), setMap: () => this.setState({ view: 'map' }),
+      showList: s.view !== 'map', showMap: s.view !== 'list',
+      pickId: id => this.setState({ selected: id }),
+      sel: { ...sel, trip: trip[sel.status], label: label[sel.status], vehicle: sel.plate === '—' ? 'Sin asignar' : sel.plate + ' · ' + sel.driver, pending, transit: sel.status === 'EN_CAMINO', cancellable: pending || sel.status === 'EN_CAMINO', readonly: !pending && sel.status !== 'EN_CAMINO' },
+      confirmOpen: s.confirmOpen,
+      askCancel: () => this.setState({ confirmOpen: true }),
+      closeCancel: () => this.setState({ confirmOpen: false })
+    };
+  }
+}
+</script>
+</body>
+</html>

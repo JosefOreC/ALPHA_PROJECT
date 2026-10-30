@@ -100,7 +100,7 @@ class ManagementApiTests(unittest.TestCase):
         order = self.create()
         for role in ("CONDUCTOR", "CLIENTE", "desconocido", "AUDITOR", "RESPONSABLE_LOGISTICA", "ADMIN"):
             client = TestClient(create_app(self.repo, lambda: ManagementPrincipal("ficticio", role), lambda: None))
-            read_status = 403 if role in {"CONDUCTOR", "CLIENTE", "desconocido"} else 200
+            read_status = 403 if role in {"CLIENTE", "desconocido"} else 200
             self.assertEqual(client.get("/api/pedidos").status_code, read_status)
             self.assertEqual(client.get("/api/pedidos/" + order["id"]).status_code, read_status)
             if role != "ADMIN":
@@ -127,7 +127,7 @@ class ManagementApiTests(unittest.TestCase):
         created = self.create()
         order = self.repo.get(created["id"])
         self.repo.save(replace(order, driver_id="d1", status=OrderStatus.IN_TRANSIT))
-        driver = TestClient(create_app(self.repo, lambda: Principal("d1", "CONDUCTOR")))
+        driver = TestClient(create_app(self.repo, lambda: Principal("d1", "CONDUCTOR"), lambda: None))
         path = "/api/conductor/pedidos/" + order.id
         self.assertEqual(driver.get(path).status_code, 200)
         confirmed = driver.post(path + "/confirmacion").json()

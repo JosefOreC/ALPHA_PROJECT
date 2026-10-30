@@ -1,7 +1,7 @@
 from typing import Optional
 from application.dto.vehicle_dto import VehicleListResponseDTO, VehicleResponseDTO
 from domain.ports.vehicle_repository import VehicleRepositoryPort
-
+from domain.value_objects import VehicleStates
 
 class GetVehiclesUseCase:
     """Caso de uso US-002: Consultar listado de vehículos con su estado y disponibilidad."""
@@ -11,10 +11,10 @@ class GetVehiclesUseCase:
 
     def execute(
         self,
-        status: Optional[str] = None,
+        status: Optional[VehicleStates] = None,
         only_available: bool = False,
     ) -> VehicleListResponseDTO:
-        target_status = "DISPONIBLE" if only_available else status
+        target_status = VehicleStates.DISPONIBLE if only_available else status
         vehicles = self.vehicle_repository.find_all(status=target_status)
 
         active_vehicles = [v for v in vehicles if v.is_active()]

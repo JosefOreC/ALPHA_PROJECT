@@ -24,8 +24,8 @@ describe('DashboardPage', () => {
 
     expect(await screen.findByText('Entregados')).toBeInTheDocument()
     expect(container.querySelector('[aria-busy="true"]')).not.toBeInTheDocument()
-    expect(screen.getByLabelText('3,482.6 kilómetros')).toBeInTheDocument()
-    expect(screen.getByLabelText('912.4 kilogramos')).toBeInTheDocument()
+    expect(screen.getByText('3 482,6 km')).toBeInTheDocument()
+    expect(screen.getByText('912,4 kg')).toBeInTheDocument()
     expect(screen.getByRole('meter')).toHaveAttribute('aria-valuenow', '92.4')
     expect(screen.getByText('En curso')).toBeInTheDocument()
   })
@@ -82,7 +82,7 @@ describe('DashboardPage', () => {
     expect(within(screen.getByRole('search')).getByText('Ate', { selector: 'strong' })).toBeInTheDocument()
   })
 
-  it('uses the dark theme when the system prefers it', () => {
+  it('conserva el tema claro aunque el sistema prefiera oscuro', () => {
     vi.stubGlobal('matchMedia', (query: string) => ({
       matches: query.includes('dark'),
       media: query,
@@ -92,6 +92,6 @@ describe('DashboardPage', () => {
     const { gateway } = makeScriptedGateway([makeSummary()])
     const { container } = render(<DashboardPage gateway={gateway} />)
 
-    expect(container.firstElementChild).toHaveAttribute('data-theme', 'dark')
+    expect(container.firstElementChild).toHaveAttribute('data-theme', 'light')
   })
 })

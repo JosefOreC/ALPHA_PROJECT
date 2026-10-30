@@ -1,17 +1,8 @@
 from dataclasses import dataclass, replace
 from datetime import datetime
-from enum import Enum
 
-
-class OrderStatus(str, Enum):
-    PENDING = "PENDIENTE"
-    IN_TRANSIT = "EN_CAMINO"
-    DELIVERED = "ENTREGADO"
-    CANCELLED = "CANCELADO"
-
-
-class OrderConflict(Exception):
-    pass
+from domain.exceptions.order_conflict import OrderConflict
+from domain.value_objects import OrderStatus
 
 
 @dataclass(frozen=True)

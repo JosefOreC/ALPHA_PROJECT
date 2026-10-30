@@ -1,0 +1,195 @@
+{
+  "source": "docs/01 Inicio/08. Usuarios V_1_0_0.md, sección 4",
+  "excludedActor": {
+    "code": "ROL-06",
+    "label": "Docente Evaluador",
+    "reason": "Revisa entregables; no es usuario de producción."
+  },
+  "roles": {
+    "admin": {
+      "code": "ROL-01",
+      "backend": "ADMIN",
+      "label": "Administrador",
+      "description": "Configuración, usuarios y acceso a los módulos según la matriz RBAC."
+    },
+    "planner": {
+      "code": "ROL-02",
+      "backend": "OPERADOR",
+      "label": "Planificador",
+      "description": "Pedidos, flota, conductores y ejecución de rutas."
+    },
+    "driver": {
+      "code": "ROL-03",
+      "backend": "CONDUCTOR",
+      "label": "Conductor",
+      "description": "Su ruta, entregas e incidencias; consultas autorizadas de operación."
+    },
+    "logistics": {
+      "code": "ROL-04",
+      "backend": "RESPONSABLE_LOGISTICA",
+      "label": "Resp. de Logística",
+      "description": "Consulta de operación, indicadores y exportación de sostenibilidad."
+    },
+    "auditor": {
+      "code": "ROL-05",
+      "backend": "AUDITOR",
+      "label": "Auditor Externo",
+      "description": "Consultas y reportes; auditoría en modo de solo lectura."
+    }
+  },
+  "permissions": {
+    "settings.create": {
+      "admin": "all"
+    },
+    "users.create": {
+      "admin": "all"
+    },
+    "fleet.create": {
+      "admin": "all",
+      "planner": "all"
+    },
+    "orders.create": {
+      "admin": "all",
+      "planner": "all"
+    },
+    "drivers.create": {
+      "admin": "all",
+      "planner": "all"
+    },
+    "settings.read": {
+      "admin": "all",
+      "planner": "all",
+      "auditor": "all"
+    },
+    "users.read": {
+      "admin": "all"
+    },
+    "fleet.read": {
+      "admin": "all",
+      "planner": "all",
+      "driver": "all",
+      "logistics": "all",
+      "auditor": "all"
+    },
+    "orders.read": {
+      "admin": "all",
+      "planner": "all",
+      "driver": "all",
+      "logistics": "all",
+      "auditor": "all"
+    },
+    "drivers.read": {
+      "admin": "all",
+      "planner": "all",
+      "logistics": "all",
+      "auditor": "all",
+      "driver": "own"
+    },
+    "settings.update": {
+      "admin": "all"
+    },
+    "users.update": {
+      "admin": "all"
+    },
+    "fleet.update": {
+      "admin": "all",
+      "planner": "all"
+    },
+    "orders.update": {
+      "admin": "all",
+      "planner": "all"
+    },
+    "drivers.update": {
+      "admin": "all",
+      "planner": "all"
+    },
+    "settings.delete": {
+      "admin": "all"
+    },
+    "users.delete": {
+      "admin": "all"
+    },
+    "fleet.delete": {
+      "admin": "all",
+      "planner": "all"
+    },
+    "orders.delete": {
+      "admin": "all",
+      "planner": "all"
+    },
+    "drivers.delete": {
+      "admin": "all",
+      "planner": "all"
+    },
+    "routes.read": {
+      "admin": "all",
+      "planner": "all",
+      "logistics": "all",
+      "driver": "own"
+    },
+    "routes.generate": {
+      "planner": "all"
+    },
+    "reoptimization.read": {
+      "admin": "all",
+      "planner": "all",
+      "logistics": "all"
+    },
+    "reoptimization.execute": {
+      "planner": "all"
+    },
+    "map.read": {
+      "admin": "all",
+      "planner": "all",
+      "logistics": "all",
+      "driver": "own"
+    },
+    "deliveries.read": {
+      "planner": "all",
+      "logistics": "all",
+      "auditor": "all",
+      "driver": "own"
+    },
+    "deliveries.create": {
+      "driver": "own"
+    },
+    "deliveries.update": {
+      "driver": "own"
+    },
+    "incidents.read": {
+      "admin": "all",
+      "planner": "all",
+      "logistics": "all",
+      "auditor": "all"
+    },
+    "incidents.create": {
+      "driver": "own"
+    },
+    "dashboard.read": {
+      "admin": "all",
+      "planner": "all",
+      "logistics": "all"
+    },
+    "reports.read": {
+      "admin": "all",
+      "planner": "all",
+      "logistics": "all",
+      "auditor": "all"
+    },
+    "reports.export": {
+      "planner": "all",
+      "logistics": "all",
+      "auditor": "all"
+    },
+    "audit.read": {
+      "admin": "all",
+      "auditor": "all"
+    },
+    "audit.export": {
+      "admin": "all"
+    },
+    "data.delete": {
+      "admin": "all"
+    }
+  }
+}

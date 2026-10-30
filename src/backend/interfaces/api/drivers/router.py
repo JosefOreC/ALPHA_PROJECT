@@ -1,4 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
+from domain.access_control import Identity, scope_for
+from interfaces.api.security.deps import protect_mutation, require_permission
 
 from application.dto.driver_dto import (
     CreateDriverRequest,
@@ -37,6 +39,7 @@ router = APIRouter(
     "",
     response_model=DriverResponse,
     status_code=status.HTTP_201_CREATED,
+    dependencies=[Depends(require_permission("drivers.create")), Depends(protect_mutation)],
 )
 def register_driver(
     request: CreateDriverRequest,
@@ -49,6 +52,7 @@ def register_driver(
             licencia=request.licencia,
             vehiculo_id=request.vehiculo_id,
             estado=request.estado,
+            usuario_id=request.usuario_id,
         )
 
         return DriverResponse.from_domain(driver)
@@ -71,8 +75,11 @@ def register_driver(
 )
 def get_drivers(
     use_case: GetDrivers = Depends(get_get_drivers),
+    principal: Identity = Depends(require_permission("drivers.read")),
 ):
     drivers = use_case.execute()
+    if scope_for(principal.role, "drivers.read") == "own":
+        drivers = [driver for driver in drivers if driver.conductor_id == principal.driver_id]
 
     return DriverListResponse(
         items=[
@@ -90,7 +97,10 @@ def get_drivers(
 def get_driver_by_id(
     conductor_id: str,
     use_case: GetDriverById = Depends(get_get_driver_by_id),
+    principal: Identity = Depends(require_permission("drivers.read")),
 ):
+    if scope_for(principal.role, "drivers.read") == "own" and conductor_id != principal.driver_id:
+        raise HTTPException(404, "Conductor no encontrado.")
     try:
         driver = use_case.execute(conductor_id)
 
@@ -106,6 +116,7 @@ def get_driver_by_id(
 @router.put(
     "/{conductor_id}",
     response_model=DriverResponse,
+    dependencies=[Depends(require_permission("drivers.update")), Depends(protect_mutation)],
 )
 def update_driver(
     conductor_id: str,
@@ -140,6 +151,7 @@ def update_driver(
 @router.patch(
     "/{conductor_id}/activate",
     response_model=DriverResponse,
+    dependencies=[Depends(require_permission("drivers.update")), Depends(protect_mutation)],
 )
 def activate_driver(
     conductor_id: str,
@@ -160,6 +172,7 @@ def activate_driver(
 @router.patch(
     "/{conductor_id}/deactivate",
     response_model=DriverResponse,
+    dependencies=[Depends(require_permission("drivers.update")), Depends(protect_mutation)],
 )
 def deactivate_driver(
     conductor_id: str,

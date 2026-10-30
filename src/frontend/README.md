@@ -1,24 +1,34 @@
-# Frontend - ALPHA_PROJECT
+[← Volver al README Principal](../../README.md)
 
-## Propósito
+# Frontend · EcoLogística Lima
 
-Esta carpeta contiene la aplicación frontend del proyecto ALPHA_PROJECT, desarrollada con **React**, **TypeScript** y **Vite**. Aquí se implementarán todos los componentes, páginas e interfaces de usuario que conforman la aplicación SPA, incluyendo visualización de mapas interactivos con Leaflet / OpenStreetMap y dashboards de monitoreo de rutas.
+Aplicación React, TypeScript y Vite con una interfaz clara, navegación por rol e
+inicio de sesión mediante correo y contraseña. Las cuentas se crean desde el
+administrador; no existe registro público ni selección de perfiles de ejemplo.
 
-## Estado y Próximos Pasos
+Desde `src/frontend`:
 
-- [x] Configurar estructura base de React con Vite y TypeScript
-- [ ] Establecer sistema de rutas (React Router)
-- [ ] Implementar autenticación y gestión de estado
-- [ ] Integrar Leaflet / OpenStreetMap para visualización de rutas
-- [ ] Diseñar componentes principales de la UI (vehículos, pedidos, rutas, dashboard)
-- [ ] Integrar con la API backend (FastAPI)
+```powershell
+npm.cmd install
+npm.cmd run dev
+```
 
-## Scripts Disponibles
+La API local se conecta mediante el proxy de Vite a `127.0.0.1:8000`. Opcionalmente
+configurar `VITE_API_URL` para otro servidor. No hay respaldo local de pedidos o
+vehículos: todas las lecturas y escrituras pasan por la API autenticada.
 
-Desde el directorio `src/frontend`:
+Consultar [configuración del backend y sesiones](../../docs/03%20Implementaci%C3%B3n/Gu%C3%ADas%20t%C3%A9cnicas/Inicio%20de%20sesi%C3%B3n%20y%20persistencia.md).
 
-- `npm run dev`: Inicia el servidor de desarrollo local de Vite con HMR.
-- `npm run build`: Compila el proyecto TypeScript y genera el bundle de producción en `dist/`.
-- `npm run preview`: Previsualiza la versión de producción generada.
-- `npm run lint`: Ejecuta el linter con Oxlint.
+```powershell
+npm.cmd run build
+npm.cmd run lint
+npm.cmd run test
+npm.cmd run test:ui
+```
 
+Las pruebas de navegador incluyen acceso, creación de usuarios y cierre de sesión
+en escritorio y móvil. Usan respuestas HTTP aisladas; la persistencia real requiere
+PostgreSQL configurado y la migración aplicada.
+
+
+[← Volver al índice correspondiente](../../README.md)

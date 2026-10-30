@@ -16,6 +16,8 @@ from domain.exceptions.vehicle_exceptions import (
     VehicleNotFoundError,
     VehiclePlateAlreadyExistsError,
 )
+from domain.value_objects import VehicleStates
+from interfaces.api.security.deps import protect_mutation, require_permission
 from infrastructure.dependencies import (
     get_register_vehicle_use_case,
     get_update_vehicle_use_case,
@@ -31,6 +33,7 @@ router = APIRouter(prefix="/vehicles", tags=["Vehicles"])
     response_model=VehicleResponseDTO,
     status_code=status.HTTP_201_CREATED,
     summary="Registrar un nuevo vehículo en la flota (US-001)",
+    dependencies=[Depends(require_permission("fleet.create")), Depends(protect_mutation)],
 )
 def register_vehicle(
     dto: CreateVehicleDTO,
@@ -55,9 +58,10 @@ def register_vehicle(
     response_model=VehicleListResponseDTO,
     status_code=status.HTTP_200_OK,
     summary="Consultar listado de vehículos disponibles y activos (US-002)",
+    dependencies=[Depends(require_permission("fleet.read"))],
 )
 def list_vehicles(
-    status_filter: Optional[str] = Query(None, alias="status", description="Filtrar por estado (ej. DISPONIBLE, EN_RUTA, MANTENIMIENTO, INACTIVO)"),
+    status_filter: Optional[VehicleStates] = Query(None, alias="status", description="Filtrar por estado (ej. DISPONIBLE, EN_RUTA, MANTENIMIENTO, INACTIVO)"),
     only_available: bool = Query(False, description="Filtrar únicamente vehículos disponibles"),
     use_case: GetVehiclesUseCase = Depends(get_vehicles_use_case),
 ):
@@ -69,6 +73,7 @@ def list_vehicles(
     response_model=VehicleResponseDTO,
     status_code=status.HTTP_200_OK,
     summary="Consultar detalle de un vehículo",
+    dependencies=[Depends(require_permission("fleet.read"))],
 )
 def get_vehicle_by_id(
     vehicle_id: str,
@@ -88,6 +93,7 @@ def get_vehicle_by_id(
     response_model=VehicleResponseDTO,
     status_code=status.HTTP_200_OK,
     summary="Editar información y estado de un vehículo",
+    dependencies=[Depends(require_permission("fleet.update")), Depends(protect_mutation)],
 )
 def update_vehicle(
     vehicle_id: str,

@@ -3,6 +3,14 @@ import { mkdir } from 'node:fs/promises'
 import { resolve } from 'node:path'
 import type { ManagedOrder } from '../../src/domain/managedOrder'
 
+/** Identidad ficticia verificada únicamente dentro de las pruebas de navegador. */
+export async function mockSession(page: Page, role: string | null) {
+  await page.route('**/api/map', route => route.fulfill({ json: { depot: null, orders: [], routes: [], vehicles: [] } }))
+  await page.route('**/api/session', route => route.fulfill(role ? {
+    status: 200, json: { subject_id: 'test-' + role, name: 'Usuario ficticio', role, driver_id: role === 'driver' ? 'd1' : null, plate: role === 'driver' ? 'ABC-123' : null, csrf_token: 'test-csrf' },
+  } : { status: 401, json: { detail: 'Sin sesión' } }))
+}
+
 export const orderFixture = (): ManagedOrder => ({
   id: 'PEDIDO-FICTICIO', customer: 'Destinatario ficticio', address: 'Dirección ficticia 123',
   district: 'Santa Anita', window_start: '2026-10-01T10:00:00-05:00',
@@ -69,4 +77,11 @@ export async function captureEvidence(page: Page, filename: string) {
   if (!directory) return
   await mkdir(directory, { recursive: true })
   await page.screenshot({ path: resolve(directory, filename), fullPage: true })
+}
+
+// Base vectorial vacía: prueba el renderizador real sin depender de servidores externos.
+export async function stubTiles(page: Page, mode: 'ok' | 'fail' = 'ok') {
+  await page.route('**/maps/lima-pastel.json', route => mode === 'ok' ? route.fulfill({
+    status: 200, json: { version: 8, sources: {}, layers: [{ id: 'background', type: 'background', paint: { 'background-color': '#f4f0e6' } }] },
+  }) : route.abort())
 }

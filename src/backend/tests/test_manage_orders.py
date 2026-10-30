@@ -87,7 +87,7 @@ class ManagementTests(unittest.TestCase):
         for role in ("ADMIN", "OPERADOR", "AUDITOR", "RESPONSABLE_LOGISTICA", "CONDUCTOR", "CLIENTE", "desconocido"):
             actor = ManagementPrincipal("ficticio", role)
             for operation in (lambda: self.service.list(actor), lambda: self.service.view(order.id, actor)):
-                if role in {"ADMIN", "OPERADOR", "AUDITOR", "RESPONSABLE_LOGISTICA"}:
+                if role in {"ADMIN", "OPERADOR", "AUDITOR", "RESPONSABLE_LOGISTICA", "CONDUCTOR"}:
                     operation()
                 else:
                     with self.assertRaises(Forbidden):

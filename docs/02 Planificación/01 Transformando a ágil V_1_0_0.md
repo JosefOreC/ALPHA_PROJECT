@@ -40,7 +40,7 @@ Los seis Requisitos No Funcionales (RNF-001 a RNF-006) del documento `07. Requis
 
 ## 4. Backlog priorizado (Épicas → Historias de Usuario → Enablers)
 
-Estimación en **Story Points** (secuencia de Fibonacci: 1, 2, 3, 5, 8, 13). Este backlog es la fuente única de verdad que debe cargarse en Jira (ver `02 Artefactos Jira V_1_0_0.md`).
+Estimación en **Story Points** (secuencia de Fibonacci: 1, 2, 3, 5, 8, 13). Este backlog es la fuente única de verdad que debe cargarse en Jira (ver `02 Artefactos Jira V_1_1_0.md`).
 
 | ID | Tipo | Título | Épica | Story Points | Prioridad |
 |---|---|---|---|---:|---|
@@ -552,3 +552,6 @@ Toda Historia de Usuario o Enabler se considera **"Done"** únicamente cuando cu
 | V_1_0_0 | 11/09/2026 | Tovar Sanchez Carlos Alberto | Creación inicial: transformación de RF-001–007 y RNF-001–006 a Épicas, US y Enablers; DoD global. |
 
 [← Volver al README Principal](../../README.md)
+
+
+[← Volver al índice correspondiente](README.md)
