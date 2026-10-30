@@ -2,7 +2,7 @@
 
 **Nombre del Proyecto:** EcoLogística Lima – Optimizador de Rutas Sostenibles para DistriRápido S.A.C.
 
-**Herramienta de Escaneo:** SonarQube Community Build (proyecto `EcoLogistica`, versión 1.0): Quality Gate «Passed», **0 incidencias de seguridad y 0 Security Hotspots**, calificación A (ver [03 Calidad de código](03%20Calidad%20de%20c%C3%B3digo%20V_1_0_0.md)). SonarQube no asigna sus incidencias por categoría OWASP; la tercera columna lo combina con la inspección manual del código.
+**Herramienta de Escaneo:** SonarQube Community Build (proyecto `EcoLogistica`, versión 1.0): Quality Gate «Passed», **0 incidencias de seguridad y 0 Security Hotspots**, calificación A, también sobre el código nuevo (ver [03 Calidad de código](03%20Calidad%20de%20c%C3%B3digo%20V_1_0_0.md)). El resumen muestra el aviso «Limited security analysis»: el análisis de seguridad de esta edición es limitado, por lo que 0 incidencias no se interpreta como ausencia de vulnerabilidades. SonarQube no asigna sus incidencias por categoría OWASP; la tercera columna lo combina con la inspección manual del código.
 
 **Versión del documento:** V_1_1_0 · **Fecha:** 30/10/2026 · **Código inspeccionado:** `main`, commit `29ca820`.
 
@@ -38,6 +38,6 @@ Los códigos y nombres siguen la lista oficial [OWASP Top 10:2025](https://top10
 | Versión | Fecha | Autoría / cambio |
 |---|---|---|
 | V_1_0_0 | 30/10/2026 | Rojas Camayo, Valentino Jhan Pierre (commit d36441f). Matriz preliminar con las diez categorías oficiales OWASP 2025; evaluación pendiente. |
-| V_1_1_0 | 30/10/2026 | Tovar Sánchez, Carlos Alberto. Se incorpora la inspección estática manual del código, la auditoría de dependencias y los hotspots a la matriz de Valentino, con la lista oficial 2025; resultado de SonarQube Community Build (0 incidencias de seguridad). Se integran los datos de las capturas de la ampliación de Valentino (commit 155a99a: advertencias del análisis y cobertura del código nuevo, ver 03 Calidad de código) y se retiran sus secciones de preparación que la plantilla no solicita. |
+| V_1_1_0 | 30/10/2026 | Tovar Sánchez, Carlos Alberto. Se anota el aviso «Limited security analysis» del último análisis de SonarQube Community Build. Se incorpora la inspección estática manual del código, la auditoría de dependencias y los hotspots a la matriz de Valentino, con la lista oficial 2025; resultado de SonarQube Community Build (0 incidencias de seguridad). Se integran los datos de las capturas de la ampliación de Valentino (commit 155a99a: advertencias del análisis y cobertura del código nuevo, ver 03 Calidad de código) y se retiran sus secciones de preparación que la plantilla no solicita. |
 
 [← Volver al índice correspondiente](README.md)
