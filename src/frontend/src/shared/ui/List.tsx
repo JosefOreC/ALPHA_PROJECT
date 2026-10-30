@@ -1,4 +1,5 @@
-import type { CSSProperties, KeyboardEvent, ReactNode } from 'react'
+import { Children, cloneElement, isValidElement } from 'react'
+import type { CSSProperties, KeyboardEvent, ReactElement, ReactNode } from 'react'
 
 export function List({ label, children }: { label: string; children: ReactNode }) {
   return (
@@ -21,6 +22,8 @@ type ListGroupProps = {
 export function ListGroup({ heading, count, hint, expanded, onToggle, children }: ListGroupProps) {
   return (
     <div role="rowgroup">
+      {/* WCAG 1.3.1: un rowgroup solo admite filas; el encabezado del grupo es una fila con una celda. */}
+      <div role="row" className="eco-group-row"><div role="gridcell" className="eco-group-cell">
       <button className="eco-group" type="button" aria-expanded={expanded} onClick={onToggle}>
         <svg className="eco-group__chev" viewBox="0 0 16 16" aria-hidden="true" style={expanded ? undefined : { transform: 'rotate(-90deg)' }}>
           <path d="M4 6l4 4 4-4" />
@@ -29,6 +32,7 @@ export function ListGroup({ heading, count, hint, expanded, onToggle, children }
         <span className="eco-group__count">{count}</span>
         {hint ? <span className="eco-group__hint">{hint}</span> : null}
       </button>
+      </div></div>
       {expanded ? children : null}
     </div>
   )
@@ -51,6 +55,15 @@ export function ListRow({ columns, selected, head, twoLines, onSelect, children 
       onSelect?.()
     }
   }
+  // WCAG 1.3.1: una fila de cuadrícula debe contener celdas (o encabezados de columna). Los controles
+  // interactivos conservan su rol y van dentro de una celda sin caja propia para no alterar la cuadrícula.
+  const role = head ? 'columnheader' : 'gridcell'
+  const interactive = new Set(['button', 'a', 'input', 'select', 'textarea'])
+  const cells = Children.map(children, child => {
+    if (!isValidElement(child) || 'role' in (child.props as object)) return child
+    if (typeof child.type === 'string' && interactive.has(child.type)) return <span role={role} style={{ display: 'contents' }}>{child}</span>
+    return cloneElement(child as ReactElement<{ role?: string }>, { role })
+  })
   return (
     <div
       className={`eco-row${head ? ' eco-row--head' : ''}${twoLines ? ' eco-row--two' : ''}`}
@@ -61,7 +74,7 @@ export function ListRow({ columns, selected, head, twoLines, onSelect, children 
       onClick={onSelect}
       onKeyDown={onSelect ? onKeyDown : undefined}
     >
-      {children}
+      {cells}
     </div>
   )
 }
