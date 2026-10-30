@@ -4,6 +4,10 @@
 
 ## Estado y alcance
 
+Actualización de correcciones: esta rama usa `vite` 8.3.5 y `undici` 8.12.3 (auditoría npm sin hallazgos), composición SQL con `psycopg.sql` y cero alertas medias/altas Bandit. El prototipo de diseño carga su lógica desde `dashboard-logic.js`: ya no evalúa código recibido como texto ni importa JavaScript remoto dinámicamente. Conserva la vista inicial y las propiedades; los cambios de lógica deben editarse en ese archivo local. Los mensajes entre ventanas solo se aceptan del padre con el mismo origen, y los envíos usan un origen explícito. Las nuevas pruebas verifican el rechazo de mensajes ajenos y de código enviado por el puente del editor.
+
+El análisis de seguridad incluye ahora también `docs/04 Diseño`, `ecologistica-ui` y `src/frontend/scripts`, para comprobar los hallazgos históricos sin retirarlos del alcance. Los exportados de diseño están excluidos únicamente de cobertura, porque no forman parte de la aplicación desplegada; siguen sujetos a las reglas de seguridad. La cobertura Python se amplía a los dos generadores frontend: 94,60 % de líneas y 92,77 % de ramas, con 383 pruebas aprobadas y cinco omisiones de integración. Frontend: 432 pruebas Vitest y once Node, líneas 97,58 % y ramas 90,38 %. La confirmación remota de estas correcciones debe registrarse con su análisis y commit.
+
 El proyecto SonarCloud ya existe y es público. La consulta de `main` / `155a99a`, del 30/10/2026 a las 13:00:07 de Lima, registra dieciséis vulnerabilidades y Quality Gate ERROR por seguridad en código nuevo. El análisis CI posterior del PR #27 tiene Quality Gate OK y cobertura superior al 90 %, con el alcance delimitado por su configuración. El [informe remoto del Sprint 3](../Sprint%2003/06%20Informe%20SonarCloud%20V_1_0_0.md) conserva ambos resultados y sus diferencias de alcance. La configuración está en el [PR #27 en borrador](https://github.com/JosefOreC/ALPHA_PROJECT/pull/27); el token está guardado y los permisos de revisión siguen pendientes de verificar.
 
 | Dato de entrega al equipo | Estado |

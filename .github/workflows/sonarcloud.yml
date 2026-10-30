@@ -113,7 +113,7 @@ jobs:
           npm ci --ignore-scripts --prefix src/frontend
       - name: Bandit (alertas medias y altas)
         if: success() || failure()
-        run: python -m bandit -r src/backend scripts -x src/backend/tests -ll -f json -o reports/security/bandit.json
+        run: python -m bandit -r src/backend scripts src/frontend/scripts -x src/backend/tests -ll -f json -o reports/security/bandit.json
       - name: Dependencias Python instaladas
         if: success() || failure()
         run: python -m pip_audit --local --format json --output reports/security/pip-audit.json

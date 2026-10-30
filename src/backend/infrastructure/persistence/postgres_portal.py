@@ -3,6 +3,7 @@ import json
 from datetime import datetime, timedelta
 from uuid import uuid4
 from zoneinfo import ZoneInfo
+from psycopg import sql
 from domain.access_control import canonical_role
 from domain.emissions import FUEL_UNITS, REFERENCE_CONSUMPTION
 from domain.planning import propose
@@ -103,22 +104,22 @@ class PostgresPortal:
                  'status':'connected' if row['integracion_id']=='db' else 'pending'} for row in result]
 
     def route_rows(self, day=None, driver_id=None):
-        return rows('''SELECT r.*,v.placa,v.tipo_combustible,c.nombre_completo,a.nombre AS depot,ST_AsGeoJSON(r.geometria)::json AS geo
+        return rows(sql.SQL('''SELECT r.*,v.placa,v.tipo_combustible,c.nombre_completo,a.nombre AS depot,ST_AsGeoJSON(r.geometria)::json AS geo
             FROM rutas r JOIN vehiculos v USING(vehiculo_id) JOIN conductores c USING(conductor_id) JOIN almacenes a USING(almacen_id)
-            WHERE fecha_operacion=%s''' + (' AND r.conductor_id=%s' if driver_id else '') + ' ORDER BY v.placa',
+            WHERE fecha_operacion=%s''') + sql.SQL(' AND r.conductor_id=%s' if driver_id else '') + sql.SQL(' ORDER BY v.placa'),
             (day or now().date(),driver_id) if driver_id else (day or now().date(),))
 
     def map(self, driver_id=None):
         route_rows = self.route_rows(driver_id=driver_id)
         route_ids = [row['ruta_id'] for row in route_rows]
         depots = rows('SELECT nombre,latitud,longitud FROM almacenes ORDER BY nombre LIMIT 1')
-        orders = rows('''SELECT p.*,rp.ruta_id FROM pedidos p LEFT JOIN ruta_pedido rp USING(pedido_id)
-            WHERE (ventana_inicio AT TIME ZONE 'America/Lima')::date=%s AND latitud IS NOT NULL AND longitud IS NOT NULL'''
-            + (' AND p.conductor_id=%s' if driver_id else ''),(now().date(),driver_id) if driver_id else (now().date(),))
+        orders = rows(sql.SQL('''SELECT p.*,rp.ruta_id FROM pedidos p LEFT JOIN ruta_pedido rp USING(pedido_id)
+            WHERE (ventana_inicio AT TIME ZONE 'America/Lima')::date=%s AND latitud IS NOT NULL AND longitud IS NOT NULL''')
+            + sql.SQL(' AND p.conductor_id=%s' if driver_id else ''),(now().date(),driver_id) if driver_id else (now().date(),))
         routes = [{'id':str(row['ruta_id']),'plate':row['placa'],'color':i%4+1,
                    'path':[{'lat':point[1],'lng':point[0]} for point in row['geo']['coordinates']], 'done_until':0} for i,row in enumerate(route_rows)]
-        vehicles = rows('''SELECT DISTINCT ON (p.vehiculo_id) p.*,v.placa,v.estado FROM posiciones_vehiculos p JOIN vehiculos v USING(vehiculo_id)
-            WHERE (p.registrada_en AT TIME ZONE 'America/Lima')::date=%s'''+(' AND p.ruta_id=ANY(%s)' if driver_id else '')+' ORDER BY p.vehiculo_id,p.registrada_en DESC',
+        vehicles = rows(sql.SQL('''SELECT DISTINCT ON (p.vehiculo_id) p.*,v.placa,v.estado FROM posiciones_vehiculos p JOIN vehiculos v USING(vehiculo_id)
+            WHERE (p.registrada_en AT TIME ZONE 'America/Lima')::date=%s''')+sql.SQL(' AND p.ruta_id=ANY(%s)' if driver_id else '')+sql.SQL(' ORDER BY p.vehiculo_id,p.registrada_en DESC'),
             (now().date(),route_ids) if driver_id else (now().date(),))
         return {'depot':{'name':depots[0]['nombre'],'position':{'lat':float(depots[0]['latitud']),'lng':float(depots[0]['longitud'])}} if depots else None,
                 'orders':[{'id':str(row['pedido_id']),'customer':row['cliente_nombre'],'district':row['distrito'],'status':row['estado'],
@@ -223,9 +224,9 @@ class PostgresPortal:
             return rows('''SELECT a.registrada_en AS fecha,u.nombre AS usuario,a.accion,a.entidad,a.detalle
                 FROM auditoria a JOIN usuarios u USING(usuario_id) ORDER BY registrada_en DESC LIMIT 200''')
         if module=='incidencias':
-            return rows('''SELECT i.incidencia_id AS id,i.reportada_en AS fecha,p.cliente_nombre AS cliente,c.nombre_completo AS conductor,i.tipo,i.descripcion,i.estado
-                FROM incidencias i JOIN pedidos p USING(pedido_id) JOIN conductores c ON c.conductor_id=i.conductor_id'''
-                + (' WHERE i.conductor_id=%s' if driver_id else '') + ' ORDER BY reportada_en DESC LIMIT 200', (driver_id,) if driver_id else ())
+            return rows(sql.SQL('''SELECT i.incidencia_id AS id,i.reportada_en AS fecha,p.cliente_nombre AS cliente,c.nombre_completo AS conductor,i.tipo,i.descripcion,i.estado
+                FROM incidencias i JOIN pedidos p USING(pedido_id) JOIN conductores c ON c.conductor_id=i.conductor_id''')
+                + sql.SQL(' WHERE i.conductor_id=%s' if driver_id else '') + sql.SQL(' ORDER BY reportada_en DESC LIMIT 200'), (driver_id,) if driver_id else ())
         raise ValueError('Sección no válida.')
 
     def create_incident(self, payload, identity):

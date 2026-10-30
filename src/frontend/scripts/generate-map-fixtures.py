@@ -1,7 +1,9 @@
 """Regenera geometrías viales demo; el producto no llama a OSRM en ejecución."""
 import json
 from pathlib import Path
-from urllib.request import urlopen
+from http.client import HTTPSConnection
+
+ROOT = Path(__file__).resolve().parents[1]
 
 DEPOT = (-76.948, -12.038)
 POINTS = [
@@ -16,10 +18,15 @@ def main():
     fixtures = []
     for points in POINTS:
         coordinates = ';'.join(f'{lng},{lat}' for lng, lat in points)
-        url = ('https://router.project-osrm.org/route/v1/driving/' + coordinates
-               + '?overview=full&geometries=geojson&steps=false')
-        with urlopen(url, timeout=25) as response:
+        client = HTTPSConnection('router.project-osrm.org', timeout=25)
+        try:
+            client.request('GET', '/route/v1/driving/' + coordinates + '?overview=full&geometries=geojson&steps=false')
+            response = client.getresponse()
+            if response.status != 200:
+                raise RuntimeError('OSRM returned HTTP ' + str(response.status))
             result = json.load(response)
+        finally:
+            client.close()
         if result['code'] != 'Ok':
             raise RuntimeError(result['code'])
         path = [[lat, lng] for lng, lat in result['routes'][0]['geometry']['coordinates']]
@@ -27,13 +34,14 @@ def main():
         done = min(range(len(path)), key=lambda i: sum((path[i][j] - stops[1][j]) ** 2 for j in (0, 1))) if len(stops) > 2 else 0
         fixtures.append({'path': path, 'stops': stops, 'done': done})
         print(f'Ruta {len(fixtures)}: {len(path)} puntos viales', flush=True)
-    target = Path(__file__).resolve().parents[1] / 'src/infrastructure/limaRoadFixtures.ts'
-    target.write_text(
-        '// Geometrías demo OSRM / OpenStreetMap (ODbL). Regenerar con scripts/generate-map-fixtures.py.\n'
-        '// Coordenadas [latitud, longitud]; no son rutas optimizadas ni restricciones operativas validadas.\n'
-        'export const ROAD_FIXTURES = ' + json.dumps(fixtures, separators=(',', ':')) + '\n',
-        encoding='utf-8',
-    )
+    target = ROOT / 'src/infrastructure/limaRoadFixtures.ts'
+    with target.open('w', encoding='utf-8') as output:
+        output.write('// Demo OSRM / OpenStreetMap (ODbL). Regenerate with scripts/generate-map-fixtures.py.\n'
+                     '// Coordinates [latitude, longitude]; not validated operational routes.\n'
+                     'export const ROAD_FIXTURES = ')
+        json.dump(fixtures, output, separators=(',', ':'))
+        output.write('\n')
+
 
 
 if __name__ == '__main__':

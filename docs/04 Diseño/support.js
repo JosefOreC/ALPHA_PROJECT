@@ -155,13 +155,6 @@
     runtime.markFetched(rootName);
     runtime.setRootName(rootName);
     runtime.adoptParsed(rootName, parsed);
-    if (!window.__resources) {
-      fetch(location.href).then((res) => res.ok ? res.text() : "").then((t) => {
-        const raw = t ? parseDcText(t) : null;
-        if (raw?.template) runtime.updateHtml(rootName, raw.template);
-      }).catch(() => {
-      });
-    }
     const dc = doc.querySelector("x-dc");
     const hostEl = doc.createElement("div");
     hostEl.id = "dc-root";
@@ -839,15 +832,10 @@
       return {};
     }
   };
-  function evalDcLogic(src) {
-    //! nosemgrep: eval-and-function-constructor
-    const fn = new Function(
-      "DCLogic",
-      "StreamableLogic",
-      "React",
-      src + '\n;return (typeof Component!=="undefined"&&Component)||undefined;'
-    );
-    return fn(StreamableLogic, StreamableLogic, getReact());
+  function createDcLogic() {
+    const factory = window.__dcCreateLogic;
+    if (typeof factory !== "function") throw new Error("Missing reviewed local logic factory");
+    return factory(StreamableLogic, getReact());
   }
 
   // src/component.ts
@@ -1144,8 +1132,6 @@
   var REACT_SRI = "sha384-DGyLxAyjq0f9SPpVevD6IgztCFlnMF6oW/XQGmfe+IsZ8TqEiDrcHkMLKI6fiB/Z";
   var REACT_DOM_URL = "https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js";
   var REACT_DOM_SRI = "sha384-gTGxhz21lVGYNMcdJOyq01Edg0jhn/c22nsx0kyqP0TxaV5WVdsSH1fSDUf5YJj1";
-  var BABEL_URL = "https://unpkg.com/@babel/standalone@7.29.0/babel.min.js";
-  var BABEL_SRI = "sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y";
   function cdnScriptFor(url, sri) {
     const res = window.__resources;
     const v = res ? res[url] : void 0;
@@ -1170,89 +1156,17 @@
   var GLOBAL_POLL_TIMEOUT_MS = 3e4;
   function createExternalModules(onResolved) {
     const cache = /* @__PURE__ */ new Map();
-    let babelLoading = null;
     const reportedMissing = /* @__PURE__ */ new Map();
     const polling = /* @__PURE__ */ new Set();
-    function ensureBabel() {
-      if (window.Babel) return Promise.resolve();
-      if (babelLoading) return babelLoading;
-      const babel = cdnScriptFor(BABEL_URL, BABEL_SRI);
-      babelLoading = new Promise((res, rej) => {
-        const s = document.createElement("script");
-        s.src = babel.src;
-        if (babel.integrity) {
-          s.integrity = babel.integrity;
-          s.crossOrigin = "anonymous";
-        }
-        s.onload = () => res();
-        s.onerror = rej;
-        document.head.appendChild(s);
-      });
-      return babelLoading;
-    }
-    const pending = /* @__PURE__ */ new Map();
-    function load(kind, url, after) {
-      const existing = pending.get(url);
-      if (existing) return existing;
-      cache.set(url, null);
-      console.info("[dc-runtime] x-import: loading", url, "(" + kind + ")");
-      const ready = Promise.all([
-        kind === "jsx" ? ensureBabel() : Promise.resolve(),
-        after ?? Promise.resolve()
-      ]);
-      const p = ready.then(() => {
-        const pre = bundledBlob(url);
-        if (pre) return pre.text();
-        return fetch(url).then((r) => {
-          if (!r.ok) throw new Error("HTTP " + r.status);
-          return r.text();
-        });
-      }).then((src) => {
-        const code = kind === "jsx" ? window.Babel.transform(src, {
-          filename: url,
-          presets: ["react", "typescript"]
-        }).code : src;
-        const module = { exports: {} };
-        const before = new Set(Object.keys(window));
-        //! nosemgrep: eval-and-function-constructor
-        new Function("React", "module", "exports", "require", code)(
-          getReact(),
-          module,
-          module.exports,
-          () => ({})
-        );
-        const globals = {};
-        for (const k of Object.keys(window)) {
-          if (!before.has(k) && typeof window[k] === "function") {
-            globals[k] = window[k];
-          }
-        }
-        cache.set(url, { mod: module.exports, globals });
-        console.info(
-          "[dc-runtime] x-import: loaded",
-          url,
-          "\u2014 exports:",
-          Object.keys(module.exports),
-          "window globals:",
-          Object.keys(globals)
-        );
-        onResolved();
-      }).catch((e) => {
-        cache.set(url, {
-          mod: {},
-          globals: {},
-          error: "failed to load: " + (e instanceof Error && e.message ? e.message : String(e))
-        });
-        console.error(
-          "[dc-runtime] x-import: FAILED to load",
-          url,
-          "(" + kind + ")",
-          e
-        );
+    const pending = new Map();
+    function load(_kind, url, after) {
+      if (pending.has(url)) return pending.get(url);
+      const promise = Promise.resolve(after).then(() => {
+        cache.set(url, { mod: {}, globals: {}, error: "Dynamic imports are disabled in this static export" });
         onResolved();
       });
-      pending.set(url, p);
-      return p;
+      pending.set(url, promise);
+      return promise;
     }
     function resolve2(url, name) {
       const entry = cache.get(url);
@@ -1382,9 +1296,9 @@
       canvasStyleEl.textContent = `html,body{background:${bg}}#dc-root>.sc-host{position:relative}`;
     }
     function postDesignMode(mode) {
-      if (window.parent === window) return;
+      if (window.parent === window || window.location.origin === "null") return;
       try {
-        window.parent.postMessage({ type: "__dc_design_mode", mode }, "*");
+        window.parent.postMessage({ type: "__dc_design_mode", mode }, window.location.origin);
       } catch {
       }
     }
@@ -1405,6 +1319,7 @@
       }
     }
     window.addEventListener("message", (e) => {
+      if (e.origin !== window.location.origin || e.source !== window.parent) return;
       const type = e.data && e.data.type;
       if (type === "__dc_theme") {
         const t = e.data.theme;
@@ -1674,7 +1589,7 @@
         if (parsed.props) r.propsMeta = parsed.props;
         if (parsed.preview) r.preview = parsed.preview;
         if (parsed.template && !r.html) updateHtml(name, parsed.template);
-        if (parsed.js && !r.Logic) updateJs(name, parsed.js);
+        if (parsed.js && !r.Logic) updateJs(name);
       }).catch(
         (e) => console.error(
           '[dc-runtime] sibling fetch for "' + name + '" threw:',
@@ -1698,11 +1613,11 @@
       }
       registry.bump(name);
     }
-    function updateJs(name, src) {
+    function updateJs(name) {
       const r = registry.get(name);
       const seq = r.jsSeq = (r.jsSeq || 0) + 1;
       try {
-        const Cls = evalDcLogic(src);
+        const Cls = createDcLogic();
         if (r.jsSeq !== seq) return;
         if (typeof Cls !== "function") {
           r.logicError = name + ".dc.html: <script data-dc-script> must define `class Component extends DCLogic`";
@@ -1744,7 +1659,7 @@
         updateHtml(name, content);
       } else if (kind === "js") {
         setStreaming(name, "js", !!streaming);
-        if (!streaming) updateJs(name, content);
+        if (!streaming) updateJs(name);
       } else if (kind === "props") {
         const { props, preview } = parseDataProps(content);
         const r = registry.get(name);
@@ -1763,7 +1678,7 @@
       if (parsed.props) r.propsMeta = parsed.props;
       if (parsed.preview) r.preview = parsed.preview;
       if (parsed.template) updateHtml(name, parsed.template);
-      if (parsed.js) updateJs(name, parsed.js);
+      if (parsed.js) updateJs(name);
     }
     return {
       registry,
@@ -1852,7 +1767,7 @@
     baseCss.textContent = BASE_CSS;
     document.head.prepend(baseCss);
     const notifyHost = () => {
-      if (window.parent === window) return;
+      if (window.parent === window || window.location.origin === "null") return;
       const r = runtime.registry.entries[rootName];
       try {
         window.parent.postMessage(
@@ -1862,7 +1777,7 @@
             propsMeta: r && r.propsMeta || null,
             preview: r && r.preview || null
           },
-          "*"
+          window.location.origin
         );
       } catch {
       }

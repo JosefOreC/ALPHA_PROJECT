@@ -32,6 +32,9 @@ class Connection:
     def __exit__(self, *args):
         self.closed = True
     def execute(self, sql, parameters):
+        from psycopg.sql import Composable
+        if isinstance(sql, Composable):
+            sql = sql.as_string()
         self.calls.append((sql, parameters))
         return self.cursor
     @contextmanager
