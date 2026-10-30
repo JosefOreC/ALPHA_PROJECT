@@ -61,7 +61,7 @@ Rama de Mikeiel `feature/mikeiel/spr3/rutas/optimizacion-co2` (5 commits del 30/
 - La DoD global exige cobertura ≥80 %, análisis estático, revisión por un par, staging independiente, documentación API y criterios comprobados. Todo queda pendiente de evidencia por historia, sin inferir cumplimiento de la existencia de tests.
 - Validar migraciones/recuperación y seguridad; motor VRPTW, despacho, fuentes GPS/ETA y factores ambientales siguen pendientes según [impedimentos](../Sprint%202/02%20Registro%20de%20Impedimentos%20V_1_5_0.md).
 
-Los documentos 03 Calidad de código, 04 OWASP y 05 WCAG de esta carpeta recogen las evaluaciones exigidas por la consigna del Sprint 3. Sus campos que dependen de SonarQube y de la herramienta de accesibilidad automatizada permanecen «Pendiente de ejecución» hasta correr esas herramientas.
+Los documentos 03 Calidad de código, 04 OWASP y 05 WCAG de esta carpeta recogen las evaluaciones exigidas por la consigna del Sprint 3. El equipo ejecutó SonarQube (configuración en la rama de Alex); sus resultados se incorporan a los documentos 03 y 04 cuando se registren las capturas. La accesibilidad se evaluó con axe-core sobre páginas de prueba; faltan Lighthouse y la revisión manual.
 
 ## Definition of Done por actividad
 
