@@ -4,33 +4,33 @@
 
 ## Estado y alcance
 
-La configuración está preparada para Python/FastAPI y React/TypeScript. **Preparar estos archivos no crea la organización, no conecta GitHub y no ejecuta SonarCloud.** Al 30/10/2026 no se ha creado el proyecto remoto ni emitido un resultado Sonar. Consultar el [informe preliminar local](Informe%20preliminar%20OWASP%202025.md).
+El proyecto SonarCloud ya existe y es público. Se exportaron los resultados del análisis de `main` / `d36441f` del 30/10/2026: ocho vulnerabilidades abiertas, cinco bugs, veintiún code smells y cobertura remota no disponible. Consultar el [informe remoto del Sprint 3](../Sprint%2003/05%20Informe%20SonarCloud%20V_1_0_0.md) y el [antecedente de verificación local](Informe%20preliminar%20OWASP%202025.md). La configuración CI actualizada aún debe publicarse y ejecutarse; el propietario completará token y permisos desde las páginas de los servicios.
 
 | Dato de entrega al equipo | Estado |
 |---|---|
 | Repositorio | `JosefOreC/ALPHA_PROJECT` |
-| Organización SonarCloud (`organization key`) | Pendiente de creación; copiar el valor real |
-| Proyecto (`project key`) | Pendiente de importación; copiar el valor real |
-| Enlace del proyecto | Pendiente; copiar desde el dashboard creado |
-| Usuario del revisor | Pendiente de indicar su cuenta SonarCloud |
-| Token | Secret `SONAR_TOKEN` de GitHub Actions; nunca incluir su valor en esta tabla |
+| Organización SonarCloud (`organization key`) | `joseforec`, verificada mediante la API |
+| Proyecto (`project key`) | `JosefOreC_ALPHA_PROJECT`, verificada mediante la API |
+| Enlace del proyecto | [Resumen de main](https://sonarcloud.io/summary/overall?id=JosefOreC_ALPHA_PROJECT&branch=main) |
+| Usuario del revisor | Valentino Jhan Pierre Rojas Camayo, GitHub `ValeRojas1`; confirmar su cuenta en el selector de SonarCloud |
+| Token | El propietario lo guardará en GitHub Actions como `SONAR_TOKEN`; no se verificó su existencia ni se accedió a su valor |
 
-## Alta por el propietario del repositorio
+## Pasos pendientes del propietario del repositorio
 
-1. Entrar en [SonarQube Cloud](https://sonarcloud.io/) con GitHub. Importar el repositorio `JosefOreC/ALPHA_PROJECT` y crear/seleccionar la organización que proponga el asistente. Autorizar la aplicación de Sonar solamente para los repositorios necesarios. Mantener la visibilidad acorde con la autorización del equipo; no hacer público un repositorio privado.
-2. Copiar la **organization key**, la **project key** y la URL del dashboard. No deducir estos identificadores a partir del nombre visible.
+1. Entrar en [SonarQube Cloud](https://sonarcloud.io/) con la cuenta administradora y abrir el proyecto existente de la tabla. Comprobar su vinculación con `JosefOreC/ALPHA_PROJECT` y el acceso de la aplicación Sonar al repositorio. No crear un segundo proyecto.
+2. Compartir con Valentino la URL del dashboard, organización `joseforec` y project key `JosefOreC_ALPHA_PROJECT`.
 3. Seleccionar análisis mediante GitHub Actions. Desactivar **Automatic Analysis** en el proyecto cuando se habilite CI, para evitar análisis duplicados. Si Sonar exige una primera referencia de `main`, completar primero ese análisis inicial desde el asistente y comprobar el SHA analizado.
-4. Generar un token con permiso **Execute Analysis** para este proyecto. Para exportar resultados de un proyecto privado, su titular también necesita permisos de lectura. Guardarlo directamente en GitHub → repositorio → **Settings → Secrets and variables → Actions → Secrets**, como `SONAR_TOKEN`. Definir una caducidad y rotarlo al vencer.
-5. En **Variables**, crear `SONAR_ORGANIZATION` y `SONAR_PROJECT_KEY` con los valores reales. El workflow está dirigido a la región europea `https://sonarcloud.io`; si el alta se hace en otra región, adaptar también el host del escáner y del exportador antes de ejecutarlo.
+4. Generar o seleccionar un token con permiso **Execute Analysis** para este proyecto desde [My Account → Security](https://sonarcloud.io/account/security). Guardarlo directamente en [GitHub → Settings → Secrets and variables → Actions → Secrets](https://github.com/JosefOreC/ALPHA_PROJECT/settings/secrets/actions), como `SONAR_TOKEN`. Definir una caducidad y rotarlo al vencer. No compartir el token con el revisor.
+5. Los identificadores reales ya están en `sonar-project.properties`; el workflow actualizado no necesita variables adicionales para ellos. Si todavía se ejecuta la versión anterior del workflow del commit `6ba77a6`, esa versión sí requiere `SONAR_ORGANIZATION=joseforec` y `SONAR_PROJECT_KEY=JosefOreC_ALPHA_PROJECT` en Variables. La configuración apunta a `https://sonarcloud.io`.
 6. Subir esta rama y abrir un PR hacia `main`. El flujo se ejecuta en los PR internos, los pushes a `main` y mediante **Actions → SonarCloud y seguridad → Run workflow** cuando esté disponible en la rama predeterminada. La disponibilidad de análisis de ramas/PR depende del plan contratado; verificarla antes de elegir esa modalidad. No contratar ni cambiar el plan como parte de esta configuración.
 
-Los archivos preparados son `sonar-project.properties`, `.coveragerc`, `.github/workflows/sonarcloud.yml` y `scripts/export_sonar_report.py`. Las claves se pasan desde las variables de Actions; el token se pasa por entorno. Para un análisis local con SonarScanner CLI instalado, proporcionar las mismas claves mediante `-Dsonar.organization=...` y `-Dsonar.projectKey=...`, y el token mediante `SONAR_TOKEN`. Ejecutar desde la raíz y confirmar la rama y el SHA antes de enviar el análisis.
+Los archivos preparados son `sonar-project.properties`, `.coveragerc`, `.github/workflows/sonarcloud.yml` y `scripts/export_sonar_report.py`. Las claves públicas están en el archivo de propiedades; el token se pasa por entorno. Para un análisis local con SonarScanner CLI instalado, usar ese archivo y `SONAR_TOKEN`. Ejecutar desde la raíz y confirmar la rama y el SHA antes de enviar el análisis.
 
-Si faltan las variables, el flujo ejecuta las pruebas y avisa que **Sonar no se ejecutó**. Si las variables existen pero falta el token, falla expresamente. Los PR de forks ejecutan pruebas sin recibir el token ni enviar análisis; el flujo usa `pull_request`, con permisos de repositorio de solo lectura.
+El workflow actualizado falla expresamente si falta el token; no omite el análisis por variables de identificación ausentes. Los PR de forks ejecutan pruebas sin recibir el token ni enviar análisis; el flujo usa `pull_request`, con permisos de repositorio de solo lectura.
 
 ## Acceso para el compañero
 
-Una vez indicada su cuenta, añadirla a la organización y asignarle permisos del proyecto en **Administration → Permissions**:
+Añadir o localizar a `ValeRojas1` en la organización y asignarle permisos del proyecto en **Administration → Permissions**. Confirmar la cuenta SonarCloud exacta: el historial del análisis asocia su commit al login `ValeRojas1-6n1Tp@github`. Ser Collaborator de GitHub no verifica ni concede por sí solo estos permisos en SonarCloud:
 
 | Permiso | Finalidad |
 |---|---|
@@ -78,7 +78,7 @@ También se puede exportar desde la raíz con las variables `SONAR_TOKEN`, `SONA
 .venv/Scripts/python.exe scripts/export_sonar_report.py
 ```
 
-`SONAR_PULL_REQUEST` tiene prioridad sobre la rama. Sin ninguna de ambas, se consulta la rama principal. Sin `report-task.txt`, la exportación manual consulta el estado actual del proyecto. Los resultados quedan en `reports/`, ignorado por Git porque puede contener detalles de código e incidencias; conservar la evidencia aprobada en el entregable del sprint.
+`SONAR_PULL_REQUEST` tiene prioridad sobre la rama. Sin ninguna de ambas, se consulta la rama principal. Para este proyecto público basta con `SONAR_PROJECT_KEY=JosefOreC_ALPHA_PROJECT`; no se necesita token para consultar sus resultados públicos. Sin `report-task.txt`, la exportación manual consulta el análisis actual del proyecto, conserva su SHA y comprueba que no cambie durante la exportación. Para hotspots sin filtro de rama en la API, solo usa la consulta predeterminada cuando ha verificado que la rama solicitada es la principal. Los resultados quedan en `reports/`, ignorado por Git porque puede contener detalles de código e incidencias; conservar la evidencia aprobada en el entregable del sprint.
 
 ## Matriz de revisión OWASP 2025
 

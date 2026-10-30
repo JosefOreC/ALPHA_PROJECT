@@ -4,7 +4,7 @@
 
 **Fecha:** 30/10/2026, America/Lima. **Proyecto:** EcoLogística Lima / ALPHA_PROJECT.
 
-**Estado:** verificación local y preparación de integración. No se ha ejecutado SonarCloud ni existe un Quality Gate remoto. No es una certificación de cumplimiento ni el informe final del Sprint 3.
+**Estado de este antecedente:** verificación local previa a la consulta del proyecto remoto. Las métricas siguientes pertenecen a esa ejecución local y no son una certificación ni el informe final del Sprint 3. Ya está disponible el [informe posterior de SonarCloud](../Sprint%2003/05%20Informe%20SonarCloud%20V_1_0_0.md), con el análisis de `d36441f`; no confundir ambos commits, alcances ni coberturas.
 
 ## Referencia y alcance
 
@@ -25,7 +25,7 @@ Se revisó el árbol de trabajo de `feature/josef/owasp`, basado en el commit `2
 | Bandit 1.9.4 | 14 alertas: 10 medias y 4 bajas; sin errores al analizar archivos |
 | npm audit | 2 paquetes con severidad máxima alta: `vite` y `undici` |
 | pip-audit 2.10.1 | 12 registros en 2 paquetes, correspondientes a 6 identificadores únicos; hay registros duplicados en la respuesta |
-| SonarCloud / Quality Gate | Pendiente de alta, token y primera ejecución |
+| SonarCloud / Quality Gate | No consultado en esta verificación local; ver el informe posterior enlazado arriba |
 
 La cobertura de líneas y ramas se presenta por separado; no equivale al porcentaje combinado que algunas herramientas muestran en su resumen. Se añadieron pruebas de persistencia, sesiones, entradas límite, scripts administrativos, permisos, clientes HTTP, formularios, navegación, errores y estados del mapa. Se mantuvo el alcance existente del frontend y se amplió Python a los scripts que también analiza Sonar. Las omisiones del backend corresponden a integración real optativa. El entorno usa Python 3.14.2 y Node 24.11.1; npm advierte que algunas dependencias requieren una revisión más reciente de Node 24. CI selecciona Node 24 actualizado.
 

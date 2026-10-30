@@ -53,7 +53,7 @@ jobs:
         working-directory: src/frontend
         run: npm run build
       - name: Validar configuración SonarCloud
-        if: vars.SONAR_ORGANIZATION != '' && vars.SONAR_PROJECT_KEY != '' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
+        if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
@@ -63,28 +63,23 @@ jobs:
           fi
       - name: SonarCloud y Quality Gate
         id: sonar
-        if: vars.SONAR_ORGANIZATION != '' && vars.SONAR_PROJECT_KEY != '' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
+        if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
         uses: SonarSource/sonarqube-scan-action@d209202bc7d53ff1cc128f7f907dac145c9d6ae9 # v8.3.0
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: https://sonarcloud.io
         with:
           args: >-
-            -Dsonar.organization=${{ vars.SONAR_ORGANIZATION }}
-            -Dsonar.projectKey=${{ vars.SONAR_PROJECT_KEY }}
             -Dsonar.qualitygate.wait=true
             -Dsonar.qualitygate.timeout=300
       - name: Exportar resultados SonarCloud incluso si falla el Quality Gate
         if: always() && !cancelled() && steps.sonar.outcome != 'skipped' && hashFiles('.scannerwork/report-task.txt') != ''
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_PROJECT_KEY: ${{ vars.SONAR_PROJECT_KEY }}
+          SONAR_PROJECT_KEY: JosefOreC_ALPHA_PROJECT
           SONAR_BRANCH: ${{ github.head_ref || github.ref_name }}
           SONAR_PULL_REQUEST: ${{ github.event.pull_request.number }}
         run: python scripts/export_sonar_report.py
-      - name: Avisar si SonarCloud todavía no está configurado
-        if: vars.SONAR_ORGANIZATION == '' || vars.SONAR_PROJECT_KEY == ''
-        run: echo '::warning::SonarCloud no ejecutado. Configurar SONAR_ORGANIZATION, SONAR_PROJECT_KEY y SONAR_TOKEN; las pruebas no equivalen a un análisis Sonar.'
       - name: Guardar evidencia
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2

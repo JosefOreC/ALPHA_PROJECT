@@ -6,15 +6,17 @@
 | Sprint | 3 |
 | Versión documental | V_1_0_0 |
 | Fecha de actualización documental | 30/10/2026 |
-| Estado | Documento preliminar: lista actualizada; evaluación pendiente |
-| Herramienta de análisis | SonarQube Community Build, según las capturas compartidas por el equipo; configuración por confirmar |
-| Fecha y hora del análisis | Pendientes de confirmar |
-| Rama y SHA del commit analizado | Pendientes de confirmar |
+| Estado | Evaluación abierta; informe de SonarCloud disponible, hallazgos pendientes de revisión |
+| Herramienta de análisis | SonarQube Cloud; capturas previas de Community Build pendientes de correlación |
+| Fecha y hora del análisis | SonarCloud: 30/10/2026, 12:34:50 America/Lima |
+| Rama y SHA del commit analizado | `main`, `d36441fc4254ac9865dab6daa5bfc8dfa29ff71e` |
 | Alcance, exclusiones y reglas activas | Pendientes de confirmar |
 
 ## 1. Alcance de esta versión
 
 Esta versión prepara la matriz con los códigos y nombres oficiales de OWASP Top 10:2025. No acredita la evaluación de las diez categorías ni el cierre del trabajo de seguridad del Sprint 3. No modifica el código de la aplicación ni afirma correcciones realizadas.
+
+El [informe SonarCloud](05%20Informe%20SonarCloud%20V_1_0_0.md) incorpora los resultados verificables de `joseforec` / `JosefOreC_ALPHA_PROJECT`: ocho vulnerabilidades, cinco bugs, veintiún code smells y cobertura remota no disponible. Su matriz distingue evidencia parcial y revisión pendiente; el Quality Gate OK no representa el cierre de OWASP.
 
 Las capturas compartidas son un antecedente. Antes de atribuir sus resultados a una versión del repositorio deben confirmarse el commit, la fecha, las carpetas incluidas y excluidas, los perfiles y reglas de seguridad activos y las limitaciones del análisis.
 
