@@ -4,7 +4,7 @@
 
 Source data remains OpenStreetMap, served by OpenFreeMap using the OpenMapTiles schema. This style is a visual reference for the application; it contains no Google tiles or Google Maps assets. Keep OpenFreeMap, OpenMapTiles and OpenStreetMap credit visible.
 
-The upstream MIT and BSD notices and design attribution are retained in `LICENSE-OpenFreeMap.md` and `LICENSE-OSM-Liberty.md`. See those files for the complete upstream terms and credits. Modified on 09/10/2026.
+The upstream MIT and BSD notices and design attribution are retained in [LICENSE-OpenFreeMap.md](LICENSE-OpenFreeMap.md) and [LICENSE-OSM-Liberty.md](LICENSE-OSM-Liberty.md). See those files for the complete upstream terms and credits. Modified on 09/10/2026.
 
 To regenerate from `src/frontend` after changing the map palette:
 
@@ -14,3 +14,6 @@ python scripts/generate-basemap-style.py .test-deps/liberty-style.json
 ```
 
 Review the generated cartography after regeneration: upstream schema/style changes can affect the result.
+
+
+[← Volver al índice correspondiente](../../README.md)

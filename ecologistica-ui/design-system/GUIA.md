@@ -94,3 +94,6 @@ Curvas de nivel suaves (`forest-muted`) y una ruta punteada `lime` con paradas l
 ## Movimiento
 
 Solo transiciones de color de 150ms y el giro del chevron al plegar un grupo. Nada de rebotes ni pulsos. Respetar `prefers-reduced-motion`.
+
+
+[← Volver al índice correspondiente](../README.md)

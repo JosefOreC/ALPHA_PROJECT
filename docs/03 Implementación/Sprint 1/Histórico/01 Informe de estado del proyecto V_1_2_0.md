@@ -1,3 +1,5 @@
+> **HISTÓRICO — no vigente.** Contenido previo conservado; solo se ajustan navegación y enlaces. Las cifras, fechas, responsables y cierres son registros atribuidos al autor indicado; no se reejecutaron ni se ratificaron en esta revisión documental. Vigente: [01 Informe de estado del proyecto V_1_3_0](../01%20Informe%20de%20estado%20del%20proyecto%20V_1_3_0.md).
+
 # Informe de estado del proyecto
 
 **Nombre del Proyecto:** EcoLogística Lima – Optimizador de Rutas Sostenibles para DistriRápido S.A.C.
@@ -8,11 +10,13 @@
 
 **Periodo del Informe:** 15/09/2026 - 25/09/2026
 
-**Versión del documento:** V_1_1_0
+**Versión del documento:** V_1_2_0
 
-**Última actualización:** 09/10/2026
+**Última actualización:** 29/10/2026
 
 > **Nota de actualización.** Este informe tuvo su emisión original el 25/09/2026 y se actualizó el 02/10/2026 al incorporar las historias implementadas entre el 30/09 y el 02/10. La versión V_1_1_0 (09/10/2026) corrige los identificadores de las historias, reconcilia las filas del estado con esa lista y registra lo que el sprint planificó y no completó. El periodo y la fecha originales se conservan; el trabajo de implementación ocurrió después de ese corte y se describe como tal.
+
+> **Actualización V_1_2_0 (29/10/2026).** Esta versión solo precisa que el estado de los riesgos refleja el 09/10/2026. Después de esa fecha `main` incorporó el inicio de sesión, la persistencia en PostgreSQL y un generador de datos de prueba (commits `c314f64` a `97b401b`, sin Pull Request); el riesgo «Datos solo en memoria y sin identidad verificada» y el dataset sintético están en parte superados. Ver el [informe del Sprint 2](../../Sprint%202/01%20Informe%20de%20estado%20del%20proyecto%20V_1_4_0.md). El resto del texto del Sprint 1 no cambia.
 
 ### **Estado del proyecto**
 
@@ -48,17 +52,17 @@ La demostración del Sprint 1 muestra los artefactos y funcionalidades realmente
 2. README principal con la descripción del proyecto, alcance del PMV, iteraciones, roles, stack propuesto y enlaces documentales.
 3. Documentos de requisitos funcionales y no funcionales, usuarios, reglas de negocio, base de datos y modelo C4.
 4. Backlog y evidencias de Jira con las épicas, historias de usuario y organización del trabajo.
-5. Aplicación con datos en memoria que permite registrar y consultar vehículos, registrar y administrar pedidos (con la evidencia de [`evidencias-crud-pedidos/`](evidencias-crud-pedidos/)), confirmar entregas, registrar conductores y ver el dashboard de indicadores. La documentación de cada módulo está en [CRUD de pedidos](CRUD%20de%20pedidos.md) y [Confirmación de pedidos](Confirmacion%20de%20pedidos.md).
-6. Documentos del Sprint 1 ubicados en `docs/03 Implementación/`.
+5. Aplicación con datos en memoria que permite registrar y consultar vehículos, registrar y administrar pedidos (con la evidencia de [`evidencias-crud-pedidos/`](../../evidencias-crud-pedidos)), confirmar entregas, registrar conductores y ver el dashboard de indicadores. La documentación de cada módulo está en [CRUD de pedidos](../../Gu%C3%ADas%20t%C3%A9cnicas/CRUD%20de%20pedidos.md) y [Confirmación de pedidos](../../Gu%C3%ADas%20t%C3%A9cnicas/Confirmacion%20de%20pedidos.md).
+6. Documentos del Sprint 1 ubicados en `docs/03 Implementación/Sprint 1/`.
 
 ### **Riesgos**
 
 | **Riesgo** | **Responsable** | **Mitigación** | **Estado al 09/10/2026** |
 | -- | -- | -- | -- |
 | Definiciones técnicas pendientes antes de iniciar la implementación | Equipo técnico | Cerrar el stack, el proveedor de mapas, la estrategia de datos y el uso de PostGIS antes de comenzar el desarrollo. | Parcial: el stack está definido (documento 10) y el desarrollo comenzó. Siguen abiertas la estrategia de datos y PostGIS. |
-| Falta de datos operativos reales para validar rutas y tráfico | Equipo de análisis y producto | Preparar datasets sintéticos de Lima Este y definir una estrategia alternativa si las APIs externas no están disponibles. | Abierto: no hay dataset de rutas en `main`; un generador de base de pruebas está en la rama `feature/josef/spr2/auth`, sin integrar. |
+| Falta de datos operativos reales para validar rutas y tráfico | Equipo de análisis y producto | Preparar datasets sintéticos de Lima Este y definir una estrategia alternativa si las APIs externas no están disponibles. | Parcial (29/10/2026): `main` incluye un generador de base de pruebas (`create_test_db.py`, siete días con 1.050 pedidos y 70 rutas); sigue sin dataset de benchmark de rutas ni datos operativos reales. *(09/10: «en la rama `feature/josef/spr2/auth`, sin integrar».)* |
 | Complejidad del algoritmo VRPTW/Green VRP | Responsable de backend y algoritmo | Implementar primero una versión base, medir el rendimiento y mejorarla iterativamente durante los sprints. | Abierto: los archivos de generación de rutas del backend están vacíos. |
-| Datos solo en memoria y sin identidad verificada (nuevo) | Equipo técnico | Conectar PostgreSQL con migraciones e integrar un proveedor de autenticación antes de aceptar las historias. | Abierto (ver el registro de impedimentos del Sprint 2). |
+| Datos solo en memoria y sin identidad verificada (nuevo) | Equipo técnico | Conectar PostgreSQL con migraciones e integrar un proveedor de autenticación antes de aceptar las historias. | Parcial (29/10/2026): autenticación propia y adaptadores PostgreSQL integrados en `main`; faltan validar el despliegue y la revisión de seguridad (ver el registro de impedimentos del Sprint 2). |
 
 ### **Próximos avances**
 
@@ -71,7 +75,7 @@ La demostración del Sprint 1 muestra los artefactos y funcionalidades realmente
 
 ### **Notas**
 
-Este informe no declara como completas funcionalidades que solo existen con almacenamiento en memoria o que no han pasado una revisión de aceptación. Las historias figuran como «implementadas de forma parcial» hasta contar con persistencia, identidad verificada y la aceptación del sprint. El trabajo restante continúa en el Sprint 2; su estado se registra en los [documentos del Sprint 2](Sprint%202/).
+Este informe no declara como completas funcionalidades que solo existen con almacenamiento en memoria o que no han pasado una revisión de aceptación. Las historias figuran como «implementadas de forma parcial» hasta contar con persistencia, identidad verificada y la aceptación del sprint. El trabajo restante continúa en el Sprint 2; su estado se registra en los [documentos del Sprint 2](../../Sprint%202).
 
 ### **Control de versiones del documento**
 
@@ -79,5 +83,9 @@ Este informe no declara como completas funcionalidades que solo existen con alma
 |---|---|---|---|
 | V_1_0_0 | 25/09/2026 | Equipo del proyecto | Emisión inicial del informe. El 02/10/2026 se incorporaron las historias implementadas sin cambio de versión (historial reconstruido desde Git). |
 | V_1_1_0 | 09/10/2026 | Tovar Sánchez, Carlos Alberto | Se corrigen los identificadores US-003 y US-012, se reconcilian las filas de estado con las historias implementadas, se registran EN-00 como no completado, la evidencia de pruebas y el estado actual de los riesgos y los próximos avances. |
+| V_1_2_0 | 29/10/2026 | Tovar Sánchez, Carlos Alberto | Nota de actualización y corrección del estado de dos riesgos que `main` superó el 09/10/2026 (generador de datos de prueba; autenticación y PostgreSQL). El resto del texto no cambia. |
 
-[← Volver al README Principal](../../README.md)
+[← Volver al README Principal](../../../../README.md)
+
+
+[← Volver al índice correspondiente](README.md)

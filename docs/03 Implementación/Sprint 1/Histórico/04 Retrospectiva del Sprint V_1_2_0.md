@@ -1,3 +1,5 @@
+> **HISTÓRICO — no vigente.** Contenido previo conservado; solo se ajustan navegación y enlaces. Las cifras, fechas, responsables y cierres son registros atribuidos al autor indicado; no se reejecutaron ni se ratificaron en esta revisión documental. Vigente: [04 Retrospectiva del Sprint V_1_3_0](../04%20Retrospectiva%20del%20Sprint%20V_1_3_0.md).
+
 # Retrospectiva del Sprint
 
 **Nombre del Proyecto:** EcoLogística Lima – Optimizador de Rutas Sostenibles para DistriRápido S.A.C.
@@ -6,9 +8,9 @@
 
 **Sprint:** Sprint 1
 
-**Versión del documento:** V_1_1_0
+**Versión del documento:** V_1_2_0
 
-**Última actualización:** 09/10/2026
+**Última actualización:** 29/10/2026
 
 > El contenido de las secciones originales se conserva tal como se redactó (con la actualización del 02/10/2026). La versión V_1_1_0 agrega el seguimiento del estado de cada acción al 09/10/2026 y algunas notas aclaratorias, marcadas como tales.
 
@@ -76,11 +78,11 @@ Completar la configuración de Jira, preparar el entorno local, crear la estruct
 | 1 | Confirmar responsables y tareas del siguiente incremento. | Resuelto | Tabla de la sección «Personas». |
 | 2 | Cerrar las decisiones técnicas pendientes (stack, doc. 10). | Resuelto en el documento 10 y en el código; el README conserva el texto anterior de «decisión pendiente». | Documento 10 (Alternativa B: FastAPI + React + PostgreSQL); código de `src/`. |
 | 3 | Crear el esqueleto de frontend y backend con arquitectura hexagonal. | Resuelto el 30/09/2026. | Commits `9bf7a5a` y `e8ff9bc`. |
-| 4 | Preparar un dataset sintético para las pruebas de rutas. | Parcial: no hay dataset de rutas en `main`; un generador de base de pruebas está en la rama `feature/josef/spr2/auth`, sin integrar. | Rama `feature/josef/spr2/auth`. |
+| 4 | Preparar un dataset sintético para las pruebas de rutas. | Parcial: no hay dataset de rutas en `main`; un generador de base de pruebas está en la rama `feature/josef/spr2/auth`, sin integrar. *(Actualización 29/10/2026: el generador `create_test_db.py` está en `main`, sin Pull Request.)* | Rama `feature/josef/spr2/auth`. |
 | 5 | Unificar la clase de dominio `Pedido` antes de abrir los Pull Request. | En el código existe una sola entidad `Order` (`domain/entities/order.py`) y la gestión añade sus datos en `order_management.py`; no hay un acuerdo documentado. | Código del backend en `main`. |
 | 6 | Revisar semanalmente la trazabilidad entre Jira, GitHub y los documentos. | Pendiente: Jira no se ha conciliado con el repositorio. | Auditoría de coherencia del Sprint 2, H-14. |
 
-[← Volver al README Principal](../../README.md)
+[← Volver al README Principal](../../../../README.md)
 
 ### **Control de versiones del documento**
 
@@ -88,3 +90,7 @@ Completar la configuración de Jira, preparar el entorno local, crear la estruct
 |---|---|---|---|
 | V_1_0_0 | 25/09/2026 | Equipo del proyecto | Emisión inicial. El 02/10/2026 se asignaron responsables y ramas `feature/*` sin cambio de versión (historial reconstruido desde Git). |
 | V_1_1_0 | 09/10/2026 | Tovar Sánchez, Carlos Alberto | Se agregan la versión y la fecha de actualización, el seguimiento del estado de las seis acciones y dos notas aclaratorias (nomenclatura de ramas y cumplimiento de la política). El texto original se conserva. |
+| V_1_2_0 | 29/10/2026 | Tovar Sánchez, Carlos Alberto | Se anota la actualización de la acción 4: el generador de base de pruebas ya está en `main`. |
+
+
+[← Volver al índice correspondiente](README.md)

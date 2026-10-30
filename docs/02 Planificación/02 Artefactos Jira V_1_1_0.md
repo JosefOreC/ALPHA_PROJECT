@@ -8,15 +8,15 @@
 |---|---|
 | **Proyecto** | EcoLogística Lima – Optimizador de Rutas Sostenibles para DistriRápido S.A.C. |
 | **Fase** | 02. Planificación |
-| **Versión** | V_1_0_0 |
-| **Fecha** | 11/09/2026 |
+| **Versión** | V_1_1_0 |
+| **Fecha** | 11/09/2026 (actualizado el 29/10/2026) |
 
 
 ## 2. Configuración base del proyecto en Jira
 
 Pasos sugeridos para configurar el proyecto (tipo **Scrum**, plantilla "Software de equipo"):
 
-1. Crear el proyecto Jira con clave corta, por ejemplo `ECOL`.
+1. Crear el proyecto Jira con clave corta, por ejemplo `ECOL`. *(Nota V_1_1_0: el proyecto creado usa la clave `ELODRSPDSC`; `ECOL` era solo el ejemplo sugerido. Los identificadores de las actividades en Jira son del tipo `ELODRSPDSC-28`.)*
 2. Habilitar la jerarquía: Épica → Historia/Enabler (Story) → Subtarea, y activar el tipo **Bug** para incidencias detectadas en Sprint.
 3. Crear las 7 Épicas de la sección 3 de `01 Transformando a ágil V_1_0_0.md` (EP-01 a EP-07).
 4. Cargar cada ítem del backlog (sección 4 del mismo documento) como Story o Enabler, vinculado a su Épica, con su estimación en Story Points.
@@ -36,7 +36,7 @@ Alineación de las Épicas en la línea de tiempo, conforme al cronograma de ite
 | Iteración 3 | 8-11 | EP-04, EP-05, EP-06, EN-02, integración de datos de tráfico |
 | Iteración 4 | 12-14 | EN-01 (algoritmo avanzado), EN-04, EN-03, EN-05, EN-06, pruebas y documentación final |
 
-![Roadmap del proyecto en Jira](./evidencias-jira/01-roadmap.png)
+![Roadmap del proyecto en Jira](evidencias-jira/01-roadmap.png)
 
 ---
 
@@ -44,7 +44,7 @@ Alineación de las Épicas en la línea de tiempo, conforme al cronograma de ite
 
 El backlog completo, ya priorizado y estimado en Story Points, está en la sección 4 de `01 Transformando a ágil V_1_0_0.md`. Al cargarlo en Jira, el Backlog debe reflejar ese mismo orden y esas mismas estimaciones, agrupado por componente/Épica.
 
-![Backlog priorizado en Jira](./evidencias-jira/02-backlog.png)
+![Backlog priorizado en Jira](evidencias-jira/02-backlog.png)
 
 ---
 
@@ -68,13 +68,13 @@ El backlog completo, ya priorizado y estimado en Story Points, está en la secci
 | US-012 | Registrar conductor | 3 |
 | **Total** | | **21** |
 
-![Sprint Planning y Sprint Goal en Jira](./evidencias-jira/03-sprint-planning.png)
+![Sprint Planning y Sprint Goal en Jira](evidencias-jira/03-sprint-planning.png)
 
 ---
 
 ## 6.Tablero Scrum activo
 
-![Tablero Scrum activo en Jira](./evidencias-jira/04-tablero-scrum.png)
+![Tablero Scrum activo en Jira](evidencias-jira/04-tablero-scrum.png)
 
 ---
 
@@ -82,7 +82,7 @@ El backlog completo, ya priorizado y estimado en Story Points, está en la secci
 
 Versión creada en Jira: **v1.0.0-MVP**, asociada a las Épicas EP-01, EP-02, EP-03 (parcial) y EP-07, correspondientes al alcance mínimo del PMV definido en el Acta de Constitución.
 
-![Release v1.0.0-MVP en Jira](./evidencias-jira/05-release-mvp.png)
+![Release v1.0.0-MVP en Jira](evidencias-jira/05-release-mvp.png)
 
 ---
 
@@ -91,5 +91,9 @@ Versión creada en Jira: **v1.0.0-MVP**, asociada a las Épicas EP-01, EP-02, EP
 | Versión | Fecha | Autor | Descripción del cambio |
 |---|---|---|---|
 | V_1_0_0 | 11/09/2026 | Tovar Sanchez Carlos Alberto | Configuración de artefactos Jira con Roadmap, backlog priorizado, Sprint Planning, tablero Scrum y Release v1.0.0-MVP, incluyendo evidencias reales. |
+| V_1_1_0 | 29/10/2026 | Tovar Sánchez, Carlos Alberto | Se aclara que la clave real del proyecto Jira es `ELODRSPDSC` y que `ECOL` era un ejemplo; el resto del documento no cambia. |
 
 [← Volver al README Principal](../../README.md)
+
+
+[← Volver al índice correspondiente](README.md)
