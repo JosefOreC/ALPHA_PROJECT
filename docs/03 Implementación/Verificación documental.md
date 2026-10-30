@@ -35,7 +35,7 @@ Las carpetas Sprint 1 y Sprint 2 ya existían: se completaron y versionaron sin 
 | `docs/03 Implementación/Sprint 03/02 Retrospectiva del Sprint V_1_0_0.md` | [02 Retrospectiva del Sprint V_1_2_0.md](Sprint%2003/02%20Retrospectiva%20del%20Sprint%20V_1_2_0.md) | Historial en la tabla de versiones del documento vigente |
 | `docs/03 Implementación/Sprint 03/06 Informe de estado del proyecto V_1_0_0.md` | [01 Revisión del Sprint V_1_2_0.md](Sprint%2003/01%20Revisi%C3%B3n%20del%20Sprint%20V_1_2_0.md) | Retirado; su contenido pasa a la revisión vigente |
 | `docs/03 Implementación/Sprint 03/07 Registro de Impedimentos V_1_0_0.md` | [02 Registro de Impedimentos V_1_5_0.md](Sprint%202/02%20Registro%20de%20Impedimentos%20V_1_5_0.md) | Retirado; IMP-012 a IMP-016 pasan al registro único de impedimentos |
-| *(nuevos)* `Sprint 03/03 Calidad de código`, `04 OWASP` y `05 WCAG` | [03 Calidad de código V_1_0_0.md](Sprint%2003/03%20Calidad%20de%20c%C3%B3digo%20V_1_0_0.md), [04 OWASP V_1_1_0.md](Sprint%2003/04%20OWASP%20V_1_1_0.md) y [05 WCAG V_1_0_0.md](Sprint%2003/05%20WCAG%20V_1_0_0.md) | Documentos nuevos exigidos por la consigna; sin edición anterior |
+| Calidad de código Sprint 03 | [V_1_1_0](Sprint%2003/03%20Calidad%20de%20c%C3%B3digo%20V_1_1_0.md); [V_1_0_0 histórica](Sprint%2003/Hist%C3%B3rico/03%20Calidad%20de%20c%C3%B3digo%20V_1_0_0.md) | Actualizado en rama `docs/sprint03-sonar-evidence`; PR pendiente |
 | `development/Base de datos de pruebas.md` | [Base de datos de pruebas.md](Gu%C3%ADas%20t%C3%A9cnicas/Base%20de%20datos%20de%20pruebas.md) | No se duplica: traslado de la guía |
 | `development/CRUD de pedidos.md` | [CRUD de pedidos.md](Gu%C3%ADas%20t%C3%A9cnicas/CRUD%20de%20pedidos.md) | No se duplica: traslado de la guía |
 | `development/Confirmacion de pedidos.md` | [Confirmacion de pedidos.md](Gu%C3%ADas%20t%C3%A9cnicas/Confirmacion%20de%20pedidos.md) | No se duplica: traslado de la guía |
@@ -84,7 +84,7 @@ Se buscó la consigna por nombres/extensiones y menciones en los archivos dispon
 
 Se mantienen «Personas», «Relaciones», «Procesos», «Herramientas», aprendizajes, aciertos y acciones; estado, cronograma, costos, riesgos y notas del informe; DoD y registro de demostración/reunión. No se eliminan como “no solicitados” sin respaldo. Solo se consolidan duplicados y se sustituyen explicaciones técnicas repetidas por enlaces a guías. La auditoría se conserva como complemento, pendiente de confirmar si forma parte de la entrega académica.
 
-Sprint 3 anuncia documentos 03 Calidad de código, 04 OWASP y 05 WCAG que no están presentes. La referencia a “SonarQube (documentos 03 y 04)” es ambigua y el título “Mapa, indicadores” no coincide exactamente con sus cuatro actividades declaradas. Confirmar consigna, alcance y herramientas antes de emitir evaluaciones; no se inventan informes ni resultados para llenar esos espacios.
+Sprint 3 incluye documentos 03 Calidad de código, 04 OWASP y 05 WCAG. La nueva versión de SonarQube se documenta en V_1_1_0; la captura del 77,9 % requiere evidencia coincidente. La referencia a “SonarQube (documentos 03 y 04)” es ambigua y el título “Mapa, indicadores” no coincide exactamente con sus cuatro actividades declaradas. Confirmar consigna, alcance y herramientas antes de emitir evaluaciones; no se inventan informes ni resultados para llenar esos espacios.
 
 ## Control de cambios
 
