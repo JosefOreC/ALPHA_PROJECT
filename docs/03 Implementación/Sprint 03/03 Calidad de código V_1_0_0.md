@@ -10,7 +10,7 @@
 
 **Commit evaluado (mediciones locales):** `main`, `29ca820` (30/10/2026).
 
-> **Alcance real del análisis.** El equipo ejecutó SonarQube Community Build y compartió capturas; la configuración del escaneo (`sonar-project.properties`, clave `ecologistica`, con las fuentes de backend y frontend, las pruebas y las rutas de cobertura `src/backend/coverage.xml` y `src/frontend/coverage/lcov.info`) y la cobertura de Vitest (proveedor V8, `lcov`) están en la rama de Alex (`feature/alex/spr1/m_conductor/crud`), aún sin integrar a `main`. Los resultados de SonarQube (Quality Gate, duplicación, bugs, code smells y Security Hotspots) **no están en el repositorio y no pude leerlos**: sus campos figuran «Por incorporar» hasta registrar las capturas, y no se estiman. Lo que sí medí el 30/10 con herramientas locales (cobertura, lint, tipos, auditoría de dependencias) se registra con su comando y su resultado. No existe integración continua (`.github/`).
+> **Alcance real del análisis.** El equipo ejecuta SonarQube Cloud (proyecto `JosefOreC / ALPHA_PROJECT`) y compartió capturas; la configuración del escaneo (`sonar-project.properties`, clave `ecologistica`, con las fuentes de backend y frontend, las pruebas y las rutas de cobertura `src/backend/coverage.xml` y `src/frontend/coverage/lcov.info`) y la cobertura de Vitest (proveedor V8, `lcov`) están en la rama de Alex (`feature/alex/spr1/m_conductor/crud`), aún sin integrar a `main`. Los resultados de SonarQube (Quality Gate, duplicación, bugs, code smells y Security Hotspots) **no están en el repositorio y no pude leerlos**: sus campos figuran «Por incorporar» hasta registrar las capturas, y no se estiman. Lo que sí medí el 30/10 con herramientas locales (cobertura, lint, tipos, auditoría de dependencias) se registra con su comando y su resultado. No existe integración continua (`.github/`).
 
 ## 1. Resumen Ejecutivo de Quality Gate
 
@@ -24,7 +24,7 @@ Otros indicadores locales (30/10/2026): `oxlint` sin advertencias, `tsc -b` sin 
 
 | Categoría | Cantidad Detectada | Severidad (Bloqueante / Alta / Media / Baja) |
 |---|---|---|
-| Bugs | Por incorporar de SonarQube | Pendiente |
+| Bugs | **0** nuevos en el PR #26 (0 líneas nuevas); total sobre `main` por incorporar | — |
 | Vulnerabilidades | **0** nuevas en el PR #26 (0 líneas nuevas); total sobre `main` por incorporar. Auditoría de dependencias: `npm audit` 2 altas, `pip-audit` 0 (ver sección 3) | Alta (dependencias de desarrollo) |
 | Code Smells | **0** nuevos en el PR #26 (0 líneas nuevas); total sobre `main` por incorporar. Observación manual: 3 archivos de backend vacíos (`generate_routes.py`, `reoptimize_route.py`, `route.py`) | Pendiente |
 | Security Hotspots | **0** en el análisis del PR #26 (0 líneas nuevas; no evalúa el código existente). Candidatos por inspección manual en el documento [04 OWASP](04%20OWASP%20V_1_1_0.md) | Sin severidad reportada por SonarQube |

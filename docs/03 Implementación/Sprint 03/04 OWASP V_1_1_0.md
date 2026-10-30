@@ -2,7 +2,7 @@
 
 **Nombre del Proyecto:** EcoLogística Lima – Optimizador de Rutas Sostenibles para DistriRápido S.A.C.
 
-**Herramienta de Escaneo:** SonarQube Community Build, ejecutado por el equipo (capturas compartidas); la configuración `sonar-project.properties` (clave `ecologistica`) está en la rama de Alex. Los resultados de SonarQube no están en el repositorio: la tercera columna de la matriz combina la inspección manual del código con los hallazgos de SonarQube cuando se incorporan sus capturas (ver «Pendientes»).
+**Herramienta de Escaneo:** SonarQube Cloud (proyecto `JosefOreC / ALPHA_PROJECT`), ejecutado por el equipo (capturas compartidas); la configuración `sonar-project.properties` (clave `ecologistica`) está en la rama de Alex. Los resultados de SonarQube no están en el repositorio: la tercera columna de la matriz combina la inspección manual del código con los hallazgos de SonarQube cuando se incorporan sus capturas (ver «Pendientes»).
 
 **Versión del documento:** V_1_1_0 · **Fecha:** 30/10/2026 · **Código inspeccionado:** `main`, commit `29ca820`.
 
