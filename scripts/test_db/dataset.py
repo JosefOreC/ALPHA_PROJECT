@@ -218,8 +218,9 @@ def build_dataset(settings: Settings) -> dict[str, list[dict]]:
     data['parametros_algoritmo'].append({'parametro_id': identifier('settings', 1), 'peso_co2': 70, 'tiempo_maximo_seg': 45,
                                         'carga_maxima_pct': 95, 'holgura_ventana_min': 10, 'reoptimizar_automaticamente': True,
                                         'actualizado_por': users['admin'], 'actualizado_en': start})
-    for fuel, (factor, unit, _) in FUELS.items():
-        data['factores_emision'].append({'combustible': fuel, 'factor_kg_co2': factor, 'unidad': 'kg/'+unit, 'fuente': 'Valor sintético de prueba, sin validez normativa.'})
+    for fuel, (factor, unit, consumption) in FUELS.items():
+        data['factores_emision'].append({'combustible': fuel, 'factor_kg_co2': factor, 'unidad': 'kg/'+unit, 'fuente': 'Valor sintético de prueba, sin validez normativa.',
+                                         'consumo_por_km': consumption})
     for key, name in [('db','PostgreSQL + PostGIS'),('map','Cartografía'),('traffic','Tráfico'),('smtp','Correo')]:
         data['integraciones'].append({'integracion_id': key, 'nombre': name, 'estado': 'SIMULADA' if key == 'db' else 'PENDIENTE', 'descripcion': 'Configuración ficticia sin credenciales ni conexión a proveedores externos.'})
     audit('settings', users['admin'], 'ACTUALIZAR_PARAMETROS', 'parametros_algoritmo', identifier('settings',1), start)

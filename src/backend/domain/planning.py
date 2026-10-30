@@ -1,6 +1,7 @@
 """Propuesta inicial por cercanía, capacidad y ventanas. Distancias geográficas estimadas."""
 import math
 from datetime import timedelta
+from domain.emissions import emission_rate, fuel_used
 
 
 def distance(a, b):
@@ -15,13 +16,13 @@ def propose(orders, fleet, depot, factors, config, settings, start):
     if any(order['latitud'] is None or order['longitud'] is None for order in orders):
         raise ValueError('Completa las coordenadas de los pedidos antes de generar rutas.')
     pending = list(orders)
-    vehicles = sorted(fleet,key=lambda row: factors.get(row['tipo_combustible'],float('inf')) if settings['prioritizeLowEmission'] else row['placa'])
+    rates = {row['placa']:emission_rate(row['tipo_combustible'],factors) for row in fleet}
+    vehicles = sorted((row for row in fleet if rates[row['placa']] is not None),
+                      key=lambda row: (rates[row['placa']],row['placa']) if settings['prioritizeLowEmission'] else row['placa'])
     planned = []
     compliant = 0
     for vehicle in vehicles:
         fuel = vehicle['tipo_combustible']
-        if fuel not in factors:
-            continue
         point, moment, kg, km, assigned = depot,start,0,0,[]
         capacity = float(vehicle['capacidad_kg'])*config['maxLoadPercent']/100
         while pending:
@@ -47,11 +48,10 @@ def propose(orders, fleet, depot, factors, config, settings, start):
             pending.remove(order)
         if assigned:
             km += distance(point,depot)
-            # Estimación energética declarada; no representa combustible medido.
-            energy_per_km = .2 if fuel=='ELECTRICO' else .12
             planned.append({'plate':vehicle['placa'],'driver':vehicle['nombre_completo'],
                 'zone':', '.join(sorted({row['distrito'] for row in assigned})),'fuel':fuel,'stops':len(assigned),
-                'km':round(km,2),'load':kg/float(vehicle['capacidad_kg']),'co2Kg':round(km*energy_per_km*factors[fuel],2)})
+                'km':round(km,2),'load':kg/float(vehicle['capacidad_kg']),'co2Kg':round(km*rates[vehicle['placa']],2),
+                'fuelUsed':fuel_used(fuel,km,factors)})
     if pending:
         raise ValueError(f'No se puede asignar {len(pending)} pedidos con la capacidad, las ventanas y los factores disponibles. Revisa la flota o los horarios.')
     return {'routeCount':len(planned),'ordersAssigned':sum(row['stops'] for row in planned),'totalKm':sum(row['km'] for row in planned),

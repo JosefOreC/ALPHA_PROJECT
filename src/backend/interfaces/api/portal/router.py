@@ -49,6 +49,17 @@ class Parameters(BaseModel):
             raise ValueError('Completa los seis factores con valores entre 0 y 100 o null.')
         return value
 
+    # Opcional: los clientes que no lo envían conservan el consumo guardado.
+    fuelConsumption: dict[Literal['DIESEL','GASOLINA','GLP','GNV','ELECTRICO','HIBRIDO'],float | None] | None = None
+
+    @field_validator('fuelConsumption')
+    @classmethod
+    def valid_consumption(cls,value):
+        import math
+        if value is not None and any(rate is not None and (not math.isfinite(rate) or not 0<rate<=10) for rate in value.values()):
+            raise ValueError('El consumo por km debe ser mayor que 0 y como máximo 10, o null.')
+        return value
+
 
 class RouteSettings(BaseModel):
     goal: Literal['co2','balanced','time']
