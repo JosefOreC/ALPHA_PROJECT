@@ -153,6 +153,10 @@ def check():
         by_kind = collections.defaultdict(list)
         current = [p for p in files if p.parent == directory and p.name != 'README.md']
         for p in current:
+            # A short relocation pointer preserves incoming historical links while
+            # the full versioned document lives exclusively under Histórico/.
+            if 'Versión histórica trasladada' in contents[p]:
+                continue
             kind = re.sub(r'^\d+\s+|\s+V_\d+_\d+_\d+\.md$', '', p.name)
             by_kind[kind].append(p)
             version = re.search(r'V_\d+_\d+_\d+', p.name)
