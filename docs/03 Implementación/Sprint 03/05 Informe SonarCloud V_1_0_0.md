@@ -83,7 +83,9 @@ La ausencia de una incidencia asociada a una categoría no equivale a cumplimien
 
 Las pruebas locales previas registraron 93,92 % de líneas y 92,30 % de ramas Python, y 97,58 % de líneas y 90,24 % de ramas frontend. Esas cifras corresponden a su ejecución local, no al análisis remoto de `d36441f`. Las ejecuciones posteriores deben conservar su propio informe y SHA.
 
-La ejecución de GitHub Actions [41101399782](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/41101399782), para `6ba77a6`, se observó en estado queued. No se acredita con ella una ejecución Sonar completada ni la importación de cobertura.
+La ejecución de GitHub Actions [41101399782](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/41101399782), para `6ba77a6`, terminó en failure: el job «Pruebas y SonarCloud» figura success y el job «Auditoría complementaria OWASP» figura failure. Las anotaciones de este último registran dos salidas de proceso con código 1; no incluyen el detalle de los hallazgos. El éxito del primer job no demuestra que el escáner se ejecutara: esa versión permite omitirlo cuando faltan variables. El análisis Sonar consultado sigue siendo `d36441f`, sin cobertura remota.
+
+La configuración y el informe se publicaron en la rama `chore/sonarcloud-owasp-2025`, mediante el [PR #27 en borrador](https://github.com/JosefOreC/ALPHA_PROJECT/pull/27). Su primera ejecución [41102893381](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/41102893381) se observó queued. No se presenta como análisis completado. La validación local de la configuración actualizada aprobó 376 pruebas Python, con cinco omisiones de integración, cobertura de líneas del 94,41 % y de ramas del 92,79 %.
 
 Hay una diferencia de alcance que debe resolverse explícitamente al migrar a CI: el análisis remoto incluye `docs/04 Diseño`, `ecologistica-ui` y `src/frontend/scripts`, mientras que `sonar-project.properties` delimita el análisis operativo y no incluye esas tres rutas. **Una incidencia que deje de aparecer por una exclusión no se considerará corregida.** Mantener seguimiento separado o ampliar el alcance acordado, documentando su impacto en cobertura y resultados. No comparar las cantidades de ambos análisis como si compartieran el mismo alcance.
 
@@ -96,7 +98,7 @@ El propietario indicó que realizará en SonarCloud/GitHub el guardado del token
 3. Añadir o localizar a **Valentino Jhan Pierre Rojas Camayo**, GitHub `ValeRojas1`, en la organización `joseforec`. La API asocia su commit al login `ValeRojas1-6n1Tp@github`; confirmar la cuenta exacta en el selector de SonarCloud.
 4. En Administration → Permissions del proyecto, habilitar los permisos disponibles para revisar código, Administer Issues y Administer Security Hotspots. Browse Project y See Source Code son controles de lectura de proyectos privados; este proyecto es público. Revisar el acceso efectivo sin convertirlo en administrador del proyecto ni compartirle el token de CI.
 5. Configurar y asignar un Quality Gate con el mínimo acordado del 90 % para cobertura global y nueva, según las capacidades del plan. Los archivos locales solo pueden exigir los umbrales de las pruebas y esperar el Quality Gate remoto; no crean sus condiciones.
-6. Publicar la configuración actualizada, ejecutar CI sobre el commit acordado del Sprint 3 y verificar SHA, importación de XML/LCOV, condiciones del Quality Gate y tratamiento de las ocho vulnerabilidades.
+6. Revisar el PR #27, ejecutar CI sobre el commit acordado del Sprint 3 y verificar SHA, importación de XML/LCOV, condiciones del Quality Gate y tratamiento de las ocho vulnerabilidades antes de integrar la configuración.
 
 La [guía técnica](../Gu%C3%ADas%20t%C3%A9cnicas/SonarCloud%20y%20OWASP%202025.md) incluye los comandos de reproducción. El código preparado incorpora los identificadores reales, permite exportar proyectos públicos sin token y distingue la rama principal verificada al consultar hotspots.
 

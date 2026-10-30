@@ -4,7 +4,7 @@
 
 ## Estado y alcance
 
-El proyecto SonarCloud ya existe y es público. Se exportaron los resultados del análisis de `main` / `d36441f` del 30/10/2026: ocho vulnerabilidades abiertas, cinco bugs, veintiún code smells y cobertura remota no disponible. Consultar el [informe remoto del Sprint 3](../Sprint%2003/05%20Informe%20SonarCloud%20V_1_0_0.md) y el [antecedente de verificación local](Informe%20preliminar%20OWASP%202025.md). La configuración CI actualizada aún debe publicarse y ejecutarse; el propietario completará token y permisos desde las páginas de los servicios.
+El proyecto SonarCloud ya existe y es público. Se exportaron los resultados del análisis de `main` / `d36441f` del 30/10/2026: ocho vulnerabilidades abiertas, cinco bugs, veintiún code smells y cobertura remota no disponible. Consultar el [informe remoto del Sprint 3](../Sprint%2003/05%20Informe%20SonarCloud%20V_1_0_0.md) y el [antecedente de verificación local](Informe%20preliminar%20OWASP%202025.md). La configuración CI actualizada está publicada en el [PR #27 en borrador](https://github.com/JosefOreC/ALPHA_PROJECT/pull/27), pendiente de verificación e integración; el propietario completará token y permisos desde las páginas de los servicios.
 
 | Dato de entrega al equipo | Estado |
 |---|---|
