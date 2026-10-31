@@ -2,9 +2,9 @@
 
 **Nombre del Proyecto:** EcoLogística Lima – Optimizador de Rutas Sostenibles para DistriRápido S.A.C.
 
-**Fecha de Análisis:** 2026-10-30
+**Fecha de Análisis:** 30/10/2026
 
-**Versión del Análisis:** V_1_1_0
+**Versión del documento:** V_1_1_0
 
 **Herramienta:** SonarQube Community Build, proyecto `EcoLogistica`, versión 1.0. Es el análisis de referencia de este documento y sus capturas están en `evidencias-sonar/`. El repositorio mantiene además la configuración de **SonarCloud** para el flujo de integración continua (`.github/workflows/sonarcloud.yml`, proyecto `JosefOreC_ALPHA_PROJECT`): son dos ejecuciones distintas y este documento describe la de Community Build. En la captura no se ven la rama ni el commit analizados.
 

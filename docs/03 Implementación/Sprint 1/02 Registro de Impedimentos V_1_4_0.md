@@ -4,7 +4,7 @@
 
 **Versión del documento:** V_1_4_0
 
-**Actualización documental:** 29/10/2026. No es fecha de reunión ni de aceptación.
+**Actualización documental:** 30/10/2026. No es fecha de reunión ni de aceptación.
 
 Se conserva cada identificador. Un **bloqueo** impide trabajo concreto comprometido; un **riesgo** es un posible impacto; una **decisión** requiere acuerdo; una **tarea** es trabajo planificable. Solo se usa «bloqueo de aceptación» cuando falta una condición explícita de la DoD. La reclasificación documental no cierra los registros.
 

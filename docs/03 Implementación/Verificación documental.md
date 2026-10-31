@@ -1,23 +1,23 @@
 # Verificación documental local
 
-**Fecha:** 29/10/2026 (America/Lima). **Versión del informe:** 1.0.0.
+**Fecha de actualización:** 30/10/2026 (America/Lima); verificación original: 29/10/2026. **Versión del informe:** 1.1.0.
 
 **Alcance:** organización, trazabilidad y navegación documental, con una herramienta de comprobación local. No se modifica el funcionamiento de la aplicación. Las comprobaciones documentadas corresponden a la revisión local anterior al commit.
 
 ## Cambios y versiones vigentes
 
 - Sprint 1: informe, impedimentos, revisión y retrospectiva V_1_4_0 (V_1_3_0 al momento de la verificación original).
-- Sprint 2: informe/impedimentos/auditoría V_1_4_0, revisión V_1_3_0 y retrospectiva única V_2_1_0.
+- Sprint 2: informe V_1_5_0, impedimentos V_1_6_0, revisión V_1_4_0, retrospectiva V_2_2_0 y auditoría V_1_5_0.
 - Sprint 3: se conserva el nombre `Sprint 03/`; contiene el índice y cinco documentos (revisión V_1_6_0, retrospectiva V_1_2_0, calidad de código V_1_1_0, OWASP V_1_2_0 y WCAG V_1_0_0). El antiguo `06 Informe SonarCloud` se retiró el 30/10 y su contenido se integra en los documentos 03 y 04.
 - Seis guías trasladadas desde `development/` a `Guías técnicas/`, sin copias activas. Capturas permanecen en las carpetas de evidencias y se enlazan desde la ubicación real.
-- Índices por fase/sprint, histórico, guías, diseño y plantillas; navegación del README a todos los Markdown incluidos por Git, más retornos al índice correspondiente.
-- Matrices de revisión: 32 escenarios en Sprint 1, 60 en Sprint 2 y 16 en Sprint 3. Cada historia/enabler tiene Gold, Feliz, Infeliz y Borde; las variantes nuevas se marcan como propuestas. Ninguna se presenta ejecutada ni aceptada.
+- Índices por fase/sprint, guías, diseño y plantillas; navegación del README a todos los Markdown incluidos por Git, más retornos al índice correspondiente.
+- Matrices de revisión: 32 escenarios en Sprint 1, 60 en Sprint 2 y 16 en Sprint 3. Cada historia/enabler tiene Gold, Feliz, Infeliz y Borde; las variantes nuevas se marcan como propuestas. Los escenarios no se presentan como ejecutados; la aceptación del Sprint 3 se registra con observaciones en su revisión.
 - Impedimentos conservan IMP-001–016 y distinguen bloqueos, riesgos, decisiones y tareas. La lectura estática confirma sesiones, adaptadores PostgreSQL y composición común; no confirma despliegue, recuperación ni cierre.
 - Retrospectivas vinculan problemas con prevención, comprobación y frecuencia propuesta. Nuevas acciones, responsables y fechas siguen por confirmar. Se mantienen los acuerdos atribuidos del Sprint 1 en su fuente.
 
 ## Ubicaciones anteriores, vigentes e historial
 
-Las carpetas Sprint 1 y Sprint 2 ya existían: se completaron y versionaron sin deducir el sprint del número de versión. Se conservan 14 fuentes históricas, con contenido único y registros de cambios; solo se ajustan sus enlaces, retornos y aviso de no vigencia.
+Las carpetas Sprint 1 y Sprint 2 ya existían: se completaron y versionaron sin deducir el sprint del número de versión. Las 14 versiones anteriores listadas abajo se consolidaron en los documentos vigentes: su contenido se conserva en cada tabla de versiones, no como archivos duplicados, y solo se ajustaron enlaces, retornos y avisos de vigencia.
 
 | Ubicación anterior | Ubicación vigente | Historial |
 |---|---|---|
@@ -48,20 +48,20 @@ Las carpetas Sprint 1 y Sprint 2 ya existían: se completaron y versionaron sin 
 | `development/Inicio de sesión y persistencia.md` | [Inicio de sesión y persistencia.md](Gu%C3%ADas%20t%C3%A9cnicas/Inicio%20de%20sesi%C3%B3n%20y%20persistencia.md) | No se duplica: traslado de la guía |
 | `development/Mapa visual de Lima.md` | [Mapa visual de Lima.md](Gu%C3%ADas%20t%C3%A9cnicas/Mapa%20visual%20de%20Lima.md) | No se duplica: traslado de la guía |
 
-La revisión `05 Revisión del Sprint V_2_0_0.md` ya no estaba en el árbol inicial. La revisión anterior documenta su consolidación en Sprint 2 y retirada el 29/10; esa atribución se conserva, sin reconstruir un archivo ausente ni afirmar que se verificó su antiguo contenido en Git. La retrospectiva `06 Retrospectiva del Sprint V_2_0_0.md` sí estaba en Sprint 2: su propio contenido identifica ese sprint; se archiva junto con V_1_3_0 y ambas alimentan V_2_1_0.
+La revisión `05 Revisión del Sprint V_2_0_0.md` ya no estaba en el árbol inicial. La revisión anterior documenta su consolidación en Sprint 2 y retirada el 29/10; esa atribución se conserva, sin reconstruir un archivo ausente ni afirmar que se verificó su antiguo contenido en Git. La retrospectiva `06 Retrospectiva del Sprint V_2_0_0.md` sí estaba en Sprint 2: su propio contenido identifica ese sprint; su contenido se consolida con V_1_3_0 y ambos alimentan la retrospectiva vigente V_2_2_0.
 
 ## Comprobaciones realizadas
 
 | Comprobación ejecutada | Resultado |
 |---|---|
 | `python scripts/check_docs.py --json _doc_check.json` | 89 Markdown; 89 alcanzables desde README; 729 enlaces locales comprobados; 0 errores de rutas, capitalización, encabezados, retornos, versiones o vigencia. |
-| `python scripts/check_docs.py` (30/10/2026, tras la corrección de coherencia) | 75 Markdown; 75 alcanzables desde README; 610 enlaces locales comprobados; 0 errores. |
-| Comparación de conservación contra `git show HEAD:ruta` | 14 históricos y 6 guías conservan su texto, normalizando únicamente destinos de enlaces, espacios, aviso de procedencia y nuevo retorno. |
-| Inspección programática de matrices | 32 + 60 + 16 = 108 escenarios; ocho columnas, cuatro tipos por historia/enabler y aceptación pendiente. |
+| `python scripts/check_docs.py` (30/10/2026, tras la segunda revisión de coherencia) | 75 Markdown; 75 alcanzables desde README; 613 enlaces locales comprobados; 0 errores. |
+| Comparación de conservación contra `git show HEAD:ruta` (29/10/2026) | Las 14 versiones anteriores y las 6 guías conservaron su texto en la consolidación, normalizando únicamente destinos de enlaces, espacios, aviso de procedencia y nuevo retorno. |
+| Inspección programática de matrices (29/10/2026) | 32 + 60 + 16 = 108 escenarios; ocho columnas y cuatro tipos por historia/enabler; en esa fecha, aceptación pendiente. El cierre del Sprint 3 se registra con observaciones en su revisión. |
 | Comprobación de la herramienta documental | 10 comprobaciones de sintaxis: enlaces, imágenes, HTML, referencias, URL entre ángulos, bloques/código ignorados, encabezados repetidos, capitalización y archivo ausente. |
 | Revisión de cambios versionados | Solo Markdown modificado; la única herramienta permanente añadida es `scripts/check_docs.py`. Sin cambios al comportamiento de la aplicación. |
 | `git diff --check` | Sin errores de espacios en los cambios versionados. |
-| Enlaces externos | 38 destinos únicos inventariados; no comprobados por red. |
+| Enlaces externos (30/10/2026) | 47 destinos únicos inventariados; no comprobados por red. |
 
 Para repetir la verificación desde la raíz:
 
@@ -74,7 +74,7 @@ Las comprobaciones de conservación y matrices se ejecutaron con scripts auxilia
 
 El comprobador usa únicamente Python estándar y Git local: valida enlaces Markdown, imágenes, referencias y enlaces HTML, existencia y capitalización exacta, anclas de encabezados con tildes y duplicados, navegación desde README, retornos e identidad de versiones declaradas de sprint. Excluye dependencias/archivos generados e ignora bloques de código. Las rutas escritas como código se conservan como instrucciones relativas a la raíz o al directorio indicado por cada guía, no como enlaces.
 
-Los enlaces externos se enumeran en la salida JSON opcional, pero no se solicitaron por HTTP: **no comprobados**, no clasificados como rotos. No se verificó el estado remoto de Jira/PR, ni se ejecutaron suites de aplicación, PostgreSQL, SonarQube, OWASP o WCAG. Los recuentos históricos de pruebas y capturas no son resultados de esta edición.
+Los enlaces externos se enumeran en la salida JSON opcional, pero no se solicitaron por HTTP: **no comprobados**, no clasificados como rotos. No se verificó el estado remoto de Jira/PR, ni se reejecutaron suites de aplicación, PostgreSQL, SonarQube, OWASP o WCAG en esta verificación; las evaluaciones del Sprint 3 constan en sus documentos 03 a 05. Los recuentos históricos de pruebas y capturas no son resultados de esta edición.
 
 ## Pendientes concretos del equipo
 
@@ -97,9 +97,9 @@ Sprint 3 anunciaba los documentos 03 Calidad de código, 04 OWASP y 05 WCAG, que
 | Versión | Fecha | Cambio |
 |---|---|---|
 | 1.0.0 | 29/10/2026 | Informe local de reorganización, trazabilidad, comprobaciones y pendientes; revisión del equipo pendiente. |
-| 1.1.0 | 30/10/2026 | Se registran el retiro del `06 Informe SonarCloud`, los renombrados de los documentos 01, 03, 04 y del registro de impedimentos, y la comprobación documental del 30/10 sin errores. |
+| 1.1.0 | 30/10/2026 | Se registran el retiro del `06 Informe SonarCloud`, los renombrados de los documentos 01, 03, 04 y del registro de impedimentos, la comprobación documental del 30/10 sin errores y la alineación de fechas, versiones vigentes y estado de las matrices con el cierre del Sprint 3. |
 
 [← Volver al índice de implementación](README.md)
 
 
-> **Actualización 30/10/2026.** Sprint 1, Sprint 2 y Sprint 03 ya no tienen carpeta `Histórico`: cada documento vigente conserva su historial en la tabla de versiones. En el Sprint 03 se retiró el `06 Informe SonarCloud` (su contenido se integra en los documentos 03 y 04) y se renombraron el 01, el 03, el 04 y el registro de impedimentos para alinear el cierre del sprint. `python scripts/check_docs.py` se ejecutó de nuevo sin errores (75 Markdown, 610 enlaces locales).
+> **Actualización 30/10/2026.** Sprint 1, Sprint 2 y Sprint 03 ya no tienen carpeta `Histórico`: cada documento vigente conserva su historial en la tabla de versiones. En el Sprint 03 se retiró el `06 Informe SonarCloud` (su contenido se integra en los documentos 03 y 04) y se renombraron el 01, el 03, el 04 y el registro de impedimentos para alinear el cierre del sprint. `python scripts/check_docs.py` se ejecutó de nuevo sin errores (75 Markdown, 613 enlaces locales).

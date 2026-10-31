@@ -4,7 +4,7 @@
 
 **Versión del documento:** V_1_4_0
 
-**Actualización documental:** 29/10/2026. No es fecha de reunión ni de aceptación.
+**Actualización documental:** 30/10/2026. No es fecha de reunión ni de aceptación.
 
 **Estado:** aceptación técnica y formal pendientes. Esta edición inspecciona documentos y código; no ejecuta la aplicación ni suites funcionales.
 
@@ -106,9 +106,9 @@ Frontend: 273 pruebas Vitest, 9 de Node y 40 de navegador aprobadas; lint, tipos
 | Campo | Registro |
 |---|---|
 | Asistentes / stakeholders | Todo el equipo: Ore Campos, Josef Pablo; Tovar Sánchez, Carlos Alberto; Rojas Camayo, Valentino Jhan Pierre; Rojas Peña, William Mikeiel; Cueva Ricse, Alex Roberto |
-| Decisión por historia | Ninguna historia cumple la Definition of Done: se declaran implementadas y no aceptadas; el trabajo restante vuelve al backlog con su sprint de continuación |
+| Decisión por historia | Ninguna historia del alcance del Sprint 2 cumple la Definition of Done y se acepta en este informe. US-010, US-011, EN-02 y EN-05 son continuidad del Sprint 3 y su aceptación con observaciones se registra en la revisión de ese sprint; no se computan dos veces. |
 | Acuerdos y responsables | Los de la tabla de acciones de la retrospectiva del sprint |
-| Velocidad | No calculada; no contar historias sin aceptación |
+| Velocidad | No calculada en el Sprint 2; no contar historias sin aceptación. |
 
 
 ## Control de versiones del documento

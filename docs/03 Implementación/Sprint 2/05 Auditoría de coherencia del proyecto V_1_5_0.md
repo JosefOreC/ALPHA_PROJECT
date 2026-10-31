@@ -4,7 +4,7 @@
 
 **Versión del documento:** V_1_5_0
 
-**Actualización documental:** 29/10/2026. No es fecha de reunión ni de aceptación.
+**Actualización documental:** 30/10/2026. No es fecha de reunión ni de aceptación.
 
 ## Propósito y alcance
 
@@ -128,7 +128,7 @@ Este complemento solo acredita inspección documental y de código local. No con
 | H-11 | Nuevas ediciones de sprint registran versión e historia; fuentes de Inicio se conservan. | Revisar necesidad de historial en documentos de Inicio con consigna completa. |
 | H-17 | Seis guías trasladadas a Guías técnicas, enlaces corregidos e índices completos; retrospectivas consolidadas. | Revisión del equipo; resultado automatizado en informe documental. |
 
-La revisión suelta `05 Revisión del Sprint V_2_0_0.md` no existe en el árbol inicial. La revisión anterior documenta que ya se consolidó y retiró. No se reconstruye ni se crea copia duplicada. La retrospectiva `06 ... V_2_0_0` sí existía y se archiva como antecedente de V_2_1_0 del Sprint 2.
+La revisión suelta `05 Revisión del Sprint V_2_0_0.md` no existe en el árbol inicial. La revisión anterior documenta que ya se consolidó y retiró. No se reconstruye ni se crea copia duplicada. La retrospectiva `06 ... V_2_0_0` sí existía; su contenido se consolidó como antecedente de la retrospectiva vigente V_2_2_0 del Sprint 2.
 
 Comprobaciones, alcance, mapa de movimientos y pendientes: [informe de verificación documental](../Verificaci%C3%B3n%20documental.md).
 

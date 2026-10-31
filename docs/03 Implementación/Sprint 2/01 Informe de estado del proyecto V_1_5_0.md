@@ -4,7 +4,7 @@
 
 **Versión del documento:** V_1_5_0
 
-**Actualización documental:** 29/10/2026. No es fecha de reunión ni de aceptación.
+**Actualización documental:** 30/10/2026. No es fecha de reunión ni de aceptación.
 
 **Periodo del informe original:** 05/10/2026 - 09/10/2026 (corte parcial del Sprint 2). Esta actualización no cambia el calendario ni declara nuevos acuerdos.
 
@@ -15,7 +15,7 @@
 | Alcance | Implementación parcial; aceptación de todas las historias pendiente de evidencia por criterio y decisión formal. |
 | Cronograma | Fechas y asignación a sprints por conciliar con Jira; no deducir sprint por nombre de rama ni por versión documental. |
 | Costos | No se verificaron gastos; se conserva el presupuesto y el registro histórico, sin nuevas cifras. |
-| Calidad | Ejecución del 30/10/2026 sobre `main` (commit `6ba77a6`): backend con 368 pruebas aprobadas, 5 omitidas (PostgreSQL real) y 36 subpruebas; frontend con 432 pruebas Vitest, 9 de Node y 40 de navegador; lint, tipos y compilación sin errores. Cobertura local: backend 97 % y frontend 95,9 % de sentencias. Rendimiento, seguridad y accesibilidad se evalúan en los documentos 03 a 05 del Sprint 03. |
+| Calidad | Ejecución del 30/10/2026 sobre `main` (commit `6ba77a6`): backend con 368 pruebas aprobadas, 5 omitidas (PostgreSQL real) y 36 subpruebas; frontend con 432 pruebas Vitest, 9 de Node y 40 de navegador; lint, tipos y compilación sin errores. Cobertura local: backend 97 % y frontend 95,9 % de sentencias. Rendimiento, seguridad y accesibilidad se evalúan en los documentos 03 a 05 del Sprint 03, emitidos el 30/10/2026. |
 
 ### Historias de Usuario y alcance
 
@@ -52,7 +52,7 @@ Las cifras de pruebas, decisiones, ramas y PR del informe anterior son anteceden
 | V_1_2_0 | 09/10/2026 | Tovar Sánchez, Carlos Alberto. Se actualiza el enlace a la auditoría de coherencia tras corregir los documentos del Sprint 1. |
 | V_1_3_0 | 29/10/2026 | Tovar Sánchez, Carlos Alberto. Corrige afirmaciones que `main` ya contradecía: la autenticación, la persistencia en PostgreSQL y la API única están integradas; las ramas de Josef están en `main` sin Pull Request; se reemplazan las cifras de pruebas por las del 29/10 sobre `30969da` y se actualizan el estado de cada historia, los riesgos, la demostración y los próximos avances. |
 | V_1_4_0 | 29/10/2026 | Rojas Camayo, Valentino Jhan Pierre (PR #25). Actualización documental; pendiente de revisión del equipo. Síntesis coherente con revisión, impedimentos y retrospectiva; detalle histórico y cifras conservados en archivo. |
-| V_1_5_0 | 30/10/2026 | Tovar Sánchez, Carlos Alberto. Documento único vigente: se retira la carpeta Histórico y se actualizan calidad (ejecución del 29/10 sobre `main`) y alcance (rama de Mikeiel sin PR). |
+| V_1_5_0 | 30/10/2026 | Tovar Sánchez, Carlos Alberto. Documento único vigente: se retira la carpeta Histórico y se actualizan calidad (ejecución del 30/10 sobre `main`, commit `6ba77a6`) y alcance (rama de Mikeiel sin PR). |
 
 
 [← Volver al índice correspondiente](README.md)

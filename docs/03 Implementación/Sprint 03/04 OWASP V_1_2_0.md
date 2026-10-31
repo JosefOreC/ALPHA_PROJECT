@@ -4,7 +4,7 @@
 
 **Herramienta de Escaneo:** SonarQube Community Build (proyecto `EcoLogistica`, versión 1.0), análisis local de referencia de este documento. El flujo de integración continua usa SonarCloud (proyecto `JosefOreC_ALPHA_PROJECT`): son dos ejecuciones distintas y aquí se documenta la de Community Build. Resultado: Quality Gate «Passed», **0 incidencias de seguridad y 0 Security Hotspots**, calificación A, también sobre el código nuevo (ver [03 Calidad de código](03%20Calidad%20de%20c%C3%B3digo%20V_1_1_0.md)). El resumen muestra el aviso «Limited security analysis»: el análisis de seguridad de esta edición es limitado, por lo que 0 incidencias no se interpreta como ausencia de vulnerabilidades. SonarQube no asigna sus incidencias por categoría OWASP; la tercera columna lo combina con la inspección manual del código.
 
-**Versión del documento:** V_1_2_0 · **Fecha:** 30/10/2026 · **Código inspeccionado:** `main`, commit `29ca820`. Las correcciones de dependencias y de construcción de SQL citadas en este documento se integran en el commit `bcc11e5`.
+**Versión del documento:** V_1_2_0 · **Fecha:** 30/10/2026 · **Código inspeccionado (revisión manual):** `main`, commit `29ca820`. Las correcciones de dependencias y de construcción de SQL citadas en este documento se integran en el commit `bcc11e5`.
 
 ## 1. Matriz de Cumplimiento OWASP Top 10 2025
 
