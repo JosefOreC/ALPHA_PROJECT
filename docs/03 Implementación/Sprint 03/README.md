@@ -8,7 +8,7 @@ Una sola edición vigente por tipo de documento; su historial está en la tabla 
 - [04 OWASP V_1_2_0](04%20OWASP%20V_1_2_0.md)
 - [05 WCAG V_1_0_0](05%20WCAG%20V_1_0_0.md)
 
-Las capturas de Jira y de la demostración van en [`evidencias-jira/`](evidencias-jira/). La evidencia de integración continua y de SonarCloud se registra en el documento 03 (calidad de código) y en el 04 (OWASP).
+Las capturas de Jira y de la demostración van en [`evidencias-jira/`](evidencias-jira/). Los documentos 03 y 04 describen las configuraciones de calidad y seguridad, los resultados disponibles y sus límites. El documento 03 especifica que la ejecución conocida de SonarCloud falló por una configuración de análisis automático y no presenta ese ejecución como un control de calidad aprobado.
 
 
 [← Volver al índice correspondiente](../README.md)
