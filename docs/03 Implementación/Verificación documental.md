@@ -97,7 +97,7 @@ Sprint 3 anunciaba los documentos 03 Calidad de código, 04 OWASP y 05 WCAG, que
 | Versión | Fecha | Cambio |
 |---|---|---|
 | 1.0.0 | 29/10/2026 | Informe local de reorganización, trazabilidad, comprobaciones y pendientes; revisión del equipo pendiente. |
-| 1.1.0 | 30/10/2026 | Se registran el retiro del `06 Informe SonarCloud`, los renombrados de los documentos 01, 03, 04 y del registro de impedimentos, la comprobación documental del 30/10 sin errores y la alineación de fechas, versiones vigentes y estado de las matrices con el cierre del Sprint 3. |
+| 1.1.0 | 30/10/2026 | Se registran el retiro del `06 Informe SonarCloud`, los renombrados de los documentos 01, 03, 04 y del registro de impedimentos, la comprobación documental del 30/10 sin errores y la alineación de fechas, versiones vigentes y estado de las matrices con el cierre del Sprint 3. Con aportes de Rojas Camayo, Valentino Jhan Pierre (mejora de los puntos propuestos). |
 
 [← Volver al índice de implementación](README.md)
 

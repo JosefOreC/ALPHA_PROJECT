@@ -46,7 +46,7 @@ Las filas IMP-012 a IMP-016 corresponden al Sprint 3 y continúan los impediment
 | V_1_3_0 | 29/10/2026 | Tovar Sánchez, Carlos Alberto. Se corrigen IMP-006 a IMP-009 (persistencia, autenticación, API única y datos desde la API ya integrados en `main`: resuelto parcial o resuelto), se precisan IMP-002 a IMP-005 con lo verificado el 29/10 y se enlaza el registro del Sprint 3. |
 | V_1_4_0 | 29/10/2026 | Rojas Camayo, Valentino Jhan Pierre (PR #25). Actualización documental; pendiente de revisión del equipo. Separa bloqueos, riesgos, decisiones y tareas; añade impacto, validación y condiciones de desbloqueo sin cierres inferidos. |
 | V_1_5_0 | 30/10/2026 | Tovar Sánchez, Carlos Alberto. Documento único vigente: se retira la carpeta Histórico, se incorporan IMP-012 a IMP-016 del Sprint 3 y se anota la rama de Mikeiel en IMP-003. |
-| V_1_6_0 | 30/10/2026 | Tovar Sánchez, Carlos Alberto. Se alinea el registro con el cierre del Sprint 3: IMP-012, IMP-013 e IMP-014 pasan a «Aceptado con observación» y su seguimiento continúa en el Sprint 4; se enlaza el reporte OWASP vigente. |
+| V_1_6_0 | 30/10/2026 | Tovar Sánchez, Carlos Alberto. Se alinea el registro con el cierre del Sprint 3: IMP-012, IMP-013 e IMP-014 pasan a «Aceptado con observación» y su seguimiento continúa en el Sprint 4; se enlaza el reporte OWASP vigente. Con aportes de Rojas Camayo, Valentino Jhan Pierre (mejora de los puntos propuestos). |
 
 
 [← Volver al índice correspondiente](README.md)

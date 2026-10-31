@@ -44,6 +44,6 @@ El proyecto tiene 11 mil líneas de código (13 mil líneas en total), 0 inciden
 | Versión | Fecha | Autoría / cambio |
 |---|---|---|
 | V_1_0_0 | 30/10/2026 | Tovar Sánchez, Carlos Alberto. Emisión inicial con la plantilla oficial y los resultados de SonarQube Community Build. |
-| V_1_1_0 | 30/10/2026 | Tovar Sánchez, Carlos Alberto. Corrección de coherencia: se distingue el análisis de Community Build del flujo de SonarCloud, se aclaran las «líneas a cubrir» frente al total de líneas, se precisa el alcance de la medida de deuda técnica y se actualizan las correcciones aplicadas (`vite` 8.3.5, `undici` 8.12.3, `psycopg.sql`, `sonar.python.version`). |
+| V_1_1_0 | 30/10/2026 | Tovar Sánchez, Carlos Alberto. Corrección de coherencia: se distingue el análisis de Community Build del flujo de SonarCloud, se aclaran las «líneas a cubrir» frente al total de líneas, se precisa el alcance de la medida de deuda técnica y se actualizan las correcciones aplicadas (`vite` 8.3.5, `undici` 8.12.3, `psycopg.sql`, `sonar.python.version`). Con aportes de Rojas Camayo, Valentino Jhan Pierre (mejora de los puntos propuestos). |
 
 [← Volver al índice correspondiente](README.md)
