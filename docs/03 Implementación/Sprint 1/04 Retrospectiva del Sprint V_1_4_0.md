@@ -4,7 +4,7 @@
 
 **Versión del documento:** V_1_4_0
 
-**Actualización documental:** 29/10/2026. No es fecha de reunión ni de aceptación.
+**Actualización documental:** 30/10/2026. No es fecha de reunión ni de aceptación.
 
 **Estado:** compromisos preventivos acordados por el equipo; asistieron los cinco integrantes.
 

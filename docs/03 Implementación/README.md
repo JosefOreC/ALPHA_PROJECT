@@ -1,6 +1,6 @@
 # Índice — 03 Implementación
 
-Sprint 1: planificación e incremento inicial. Sprint 2: integración, interfaz, mapa, sesiones y persistencia. Sprint 03 conserva su nombre existente y contiene el seguimiento declarado del Sprint 3; la continuidad de historias con Sprint 2 requiere conciliación. Guías técnicas son transversales.
+Sprint 1: planificación e incremento inicial. Sprint 2: integración, interfaz, mapa, sesiones y persistencia. Sprint 03 conserva su nombre existente y contiene el cierre del Sprint 3 (revisión, retrospectiva, calidad de código, OWASP y WCAG), aceptado con observaciones no bloqueantes; el PMV-3 completo continúa en el Sprint 4. Guías técnicas son transversales.
 
 - [Sprint 1](Sprint%201/README.md)
 - [Sprint 2](Sprint%202/README.md)

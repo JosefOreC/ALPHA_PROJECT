@@ -4,7 +4,7 @@
 
 **Fecha:** 30/10/2026, America/Lima. **Proyecto:** EcoLogística Lima / ALPHA_PROJECT.
 
-**Estado de este antecedente:** verificación local previa a la consulta del proyecto remoto. Las métricas siguientes pertenecen a esa ejecución local y no son una certificación ni el informe final del Sprint 3. Ya está disponible el [informe posterior de SonarCloud](../Sprint%2003/06%20Informe%20SonarCloud%20V_1_0_0.md), con el análisis de `d36441f`; no confundir ambos commits, alcances ni coberturas.
+**Estado de este antecedente:** verificación local previa a la consulta del proyecto remoto. Las métricas siguientes pertenecen a esa ejecución local y no son una certificación ni el informe final del Sprint 3. El resultado vigente se documenta en [03 Calidad de código](../Sprint%2003/03%20Calidad%20de%20c%C3%B3digo%20V_1_1_0.md) y el detalle de seguridad en [04 OWASP](../Sprint%2003/04%20OWASP%20V_1_2_0.md); no confundir commits, alcances ni coberturas entre esta verificación y el análisis de referencia del Sprint 3.
 
 ## Referencia y alcance
 
@@ -44,6 +44,6 @@ Los JSON completos y las versiones instaladas se generan localmente en `reports/
 
 ## Cobertura OWASP pendiente
 
-Hay pruebas de autorización, autenticación, CSRF y manejo seguro de fallos, pero aún falta completar y documentar las diez categorías. En particular, verificar despliegue/configuración (A02), amenazas de diseño (A06), integridad de entrega y datos (A08), auditoría/alertas operativas (A09) y excepciones/recursos en condiciones reales (A10). Consultar la [matriz y el procedimiento de integración](SonarCloud%20y%20OWASP%202025.md).
+En esta verificación preliminar había pruebas de autorización, autenticación, CSRF y manejo seguro de fallos, pero faltaba completar y documentar las diez categorías. En particular, verificar despliegue/configuración (A02), amenazas de diseño (A06), integridad de entrega y datos (A08), auditoría/alertas operativas (A09) y excepciones/recursos en condiciones reales (A10). La evaluación final consta en el [04 OWASP](../Sprint%2003/04%20OWASP%20V_1_2_0.md); consultar también la [matriz y el procedimiento de integración](SonarCloud%20y%20OWASP%202025.md).
 
-El siguiente informe debe incorporar el enlace real de SonarCloud, organización, project key, rama/PR, SHA, fecha del análisis, Quality Gate, incidencias y hotspots, sus decisiones de revisión y evidencia posterior a las correcciones. Hasta entonces, **la evaluación OWASP permanece abierta**.
+El siguiente informe debía incorporar el enlace real de SonarCloud, organización, project key, rama/PR, SHA, fecha del análisis, Quality Gate, incidencias y hotspots, sus decisiones de revisión y evidencia posterior a las correcciones. Ese cierre se registra en el [04 OWASP](../Sprint%2003/04%20OWASP%20V_1_2_0.md): diez categorías evaluadas, 0 vulnerabilidades confirmadas, 4 sin hallazgos y 6 con advertencias. Este documento se conserva como antecedente preliminar.
