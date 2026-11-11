@@ -40,7 +40,7 @@ def setup():
     app = create_app(persistent=False)
     app.dependency_overrides[get_sessions] = lambda: sessions
     app.dependency_overrides[get_portal] = lambda: portal
-    return TestClient(app), sessions, portal
+    return TestClient(app, base_url="https://testserver"), sessions, portal
 
 
 def login(client):

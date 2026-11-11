@@ -9,7 +9,8 @@ def get_sessions():
     return DatabaseSessions()
 
 def cookie_options():
-    return {'path': '/', 'samesite': 'lax', 'secure': os.getenv('SESSION_COOKIE_SECURE', 'false').lower() == 'true'}
+    # Secure por defecto (OWASP A02/A04). Solo se desactiva de forma explícita para desarrollo local sin HTTPS.
+    return {'path': '/', 'samesite': 'lax', 'secure': os.getenv('SESSION_COOKIE_SECURE', 'true').strip().lower() != 'false'}
 
 def verify_origin(request: Request):
     origin = request.headers.get('origin')
