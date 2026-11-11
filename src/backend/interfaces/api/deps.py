@@ -17,6 +17,7 @@ from interfaces.api.drivers.router import router as drivers_router
 from interfaces.api.dashboard.router import router as dashboard_router
 from interfaces.api.security.router import router as session_router
 from interfaces.api.security.deps import get_current_identity, protect_mutation as default_protection
+from interfaces.api.security.headers import SecurityHeadersMiddleware
 from interfaces.api.portal.router import router as portal_router
 from infrastructure.persistence.postgres_orders import postgres_repository
 from infrastructure.persistence.postgres_fleet import PostgresVehicles, PostgresDrivers
@@ -42,6 +43,7 @@ def create_app(repository=None, authenticate=get_current_identity, protect_mutat
     app.add_middleware(CORSMiddleware, allow_origins=[origin.strip() for origin in origins if origin.strip() and origin.strip() != "*"],
                        allow_credentials=True, allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE"],
                        allow_headers=["Content-Type", "Accept", "X-CSRF-Token", "Authorization"])
+    app.add_middleware(SecurityHeadersMiddleware)
     @app.exception_handler(RequestValidationError)
     async def invalid_payload(request: Request, error: RequestValidationError):
         return JSONResponse(status_code=422, content={"detail": [
