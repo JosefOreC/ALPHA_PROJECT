@@ -10,7 +10,7 @@
 
 **Actualización documental:** 11/11/2026.
 
-**Estado:** **CERRADO; ACEPTADO CON OBSERVACIONES. La definición de terminado no está completa.** Se implementó el alcance comprometido del Sprint 3 —US-010, US-011, EN-02 y EN-05 (20 puntos)—. Faltan tres condiciones de la definición de terminado: revisión por par (IMP-012), validación independiente en preproducción (IMP-012; EN-02 sí la cumple) y comprobación de los criterios Gherkin (IMP-014). Por eso los 20 puntos se registran como provisionales hasta cerrar esos impedimentos. Las pruebas automatizadas registradas fueron satisfactorias y SonarQube Community Build reporta 0 vulnerabilidades y 0 puntos de revisión de seguridad, con control de calidad aprobado. La evaluación OWASP Top 10 (2025) cubre las diez categorías: 0 vulnerabilidades confirmadas. Al cierre (30/10) quedaron 4 categorías sin hallazgos y 6 con advertencias; en el seguimiento del 11/11/2026 se corrigieron A02 y A03, pendientes de un nuevo análisis SonarQube. El PMV-3 completo (mapa, indicadores y tráfico) no se declara terminado: continúa en el Sprint 4.
+**Estado:** **CERRADO; ACEPTADO CON OBSERVACIONES POR EL EQUIPO. La definición de terminado no está completa y el representante del cliente no respalda todavía la aceptación** (sesión de revisión del 11/11/2026, ver «Registro de la reunión»). Se implementó el alcance comprometido del Sprint 3 —US-010, US-011, EN-02 y EN-05 (20 puntos)—. Faltan tres condiciones de la definición de terminado: revisión por par (IMP-012), validación independiente en preproducción (IMP-012; EN-02 sí la cumple) y comprobación de los criterios Gherkin (IMP-014). Por eso los 20 puntos se registran como provisionales hasta cerrar esos impedimentos. Las pruebas automatizadas registradas fueron satisfactorias y SonarQube Community Build reporta 0 vulnerabilidades y 0 puntos de revisión de seguridad, con control de calidad aprobado. La evaluación OWASP Top 10 (2025) cubre las diez categorías: 0 vulnerabilidades confirmadas. Al cierre (30/10) quedaron 4 categorías sin hallazgos y 6 con advertencias; en el seguimiento del 11/11/2026 se corrigieron A02 y A03, pendientes de un nuevo análisis SonarQube. El PMV-3 completo (mapa, indicadores y tráfico) no se declara terminado: continúa en el Sprint 4.
 
 ## Historias de Usuario completadas en este Sprint
 
@@ -76,12 +76,45 @@ La rama de Mikeiel (`feature/mikeiel/spr3/rutas/optimizacion-co2`) ya está en `
 
 | Campo | Registro |
 |---|---|
-| Fecha de la reunión | **Pendiente de registrar:** el equipo debe aportar la fecha real. El 30/10/2026 es la fecha de actualización documental y no se usa como fecha de reunión. |
-| Asistentes / partes interesadas | Todo el equipo: Ore Campos, Josef Pablo; Tovar Sánchez, Carlos Alberto; Rojas Camayo, Valentino Jhan Pierre; Rojas Peña, William Mikeiel; Cueva Ricse, Alex Roberto |
-| Comentarios de las partes interesadas | **Pendiente de registrar:** comentarios del representante de DistriRápido S.A.C. (o de quien asuma ese rol en la demostración) sobre cada historia. |
-| Decisión por historia | Las historias del Sprint 3 se aceptan con observaciones no bloqueantes. Las condiciones de evidencia (revisión por pares, validación independiente y comprobaciones manuales) quedan registradas en IMP-012, IMP-013 e IMP-014, con seguimiento en el Sprint 4 |
+| Fecha de la reunión | 11/11/2026: sesión breve de revisión con parte del equipo y el representante del cliente. No hubo reunión de revisión registrada antes de esa fecha; el 30/10/2026 es solo la fecha de actualización documental. |
+| Asistentes / partes interesadas | Sesión del 11/11/2026: representante del cliente (DistriRápido S.A.C.) e integrantes del equipo cuyos nombres están **pendientes de registrar**. Equipo del sprint: Ore Campos, Josef Pablo; Tovar Sánchez, Carlos Alberto; Rojas Camayo, Valentino Jhan Pierre; Rojas Peña, William Mikeiel; Cueva Ricse, Alex Roberto |
+| Comentarios de las partes interesadas | Representante del cliente, 11/11/2026: «La documentación permite entender qué se desarrolló y presenta con bastante transparencia las limitaciones de las mediciones; sin embargo, me cuesta respaldar el cierre del Sprint 3 como “aceptado” mientras varios escenarios de US-010, US-011 y EN-05 figuran como no ejecutados, faltan la demostración manual y una fecha de reunión, y siguen pendientes revisiones por pares y validación independiente. Solicito que se aclare quién aceptó formalmente cada historia y con qué evidencia, y que IMP-012, IMP-013 e IMP-014 tengan responsables, fechas y condiciones de cierre confirmadas. También mantendría diferenciadas las métricas de SonarQube y las de CI: la ejecución de SonarCloud no produjo un Quality Gate, y la revisión OWASP señala advertencias pendientes aunque no confirme vulnerabilidades; por eso, antes de presentar la seguridad como validada, necesitamos el análisis posterior a las correcciones y completar las comprobaciones manuales. En accesibilidad, quisiera ver la evidencia de teclado y lector de pantalla que la evaluación reconoce como no realizada, además de la justificación verificable de la alternativa equivalente para los marcadores del mapa.» |
+| Decisión por historia | El equipo acepta las historias del Sprint 3 con observaciones; el representante del cliente no respalda esa aceptación hasta atender sus observaciones (sección siguiente). Las condiciones de evidencia (revisión por pares, validación independiente y comprobaciones manuales) quedan registradas en IMP-012, IMP-013 e IMP-014, con seguimiento en el Sprint 4 |
 | Acuerdos y responsables | Los de la tabla de acciones de la retrospectiva del sprint |
 | Velocidad | 20 puntos comprometidos y provisionales. Se confirman en la planificación del Sprint 4 cuando se cierren IMP-012 e IMP-014; antes de eso no se suman a la serie histórica |
+
+### Aceptación por historia y evidencia
+
+| Historia | Quién aceptó formalmente | Evidencia disponible | Evidencia faltante para la aceptación del cliente |
+|---|---|---|---|
+| US-010 — Reporte de sostenibilidad | **Pendiente de registrar** | Código del endpoint; cobertura del código nuevo (SonarQube) y de CI | 4 escenarios de la matriz sin ejecutar; medición P95; revisión por par (n.º 19); validación en preproducción |
+| US-011 — Exportar CSV | **Pendiente de registrar** | Código del endpoint; cobertura del código nuevo (SonarQube) y de CI | 4 escenarios sin ejecutar; revisión por par (n.º 19); validación en preproducción |
+| EN-02 — Seguridad e identidad | **Pendiente de registrar** | `test_sessions.py` y `test_security_headers.py` aprobadas; documento 04 con correcciones del 11/11/2026 | Bloqueo, registro y notificación de inyección SQL; minimización de datos; nuevo análisis SonarQube; revisión complementaria |
+| EN-05 — Conductor y accesibilidad | **Pendiente de registrar** | `driver.spec.ts` y `accesibilidad.spec.ts` aprobadas; axe-core y Lighthouse (documento 05) | Recorrido manual con teclado y lector de pantalla; escenario de conexión intermitente; revisión por par (n.º 16); validación en preproducción |
+
+### Respuesta a las observaciones del cliente
+
+| Observación | Respuesta del equipo | Estado |
+|---|---|---|
+| Escenarios no ejecutados y falta de demostración manual | Se ejecutarán y registrarán los 16 escenarios con resultado observado y evidencia (IMP-014) | Pendiente |
+| Falta fecha de reunión | Se registra la sesión del 11/11/2026 en este documento | Atendida |
+| Revisión por pares y validación independiente | Revisión de las solicitudes n.º 16 y n.º 19 por un integrante distinto del autor, y validación en preproducción (IMP-012) | Pendiente |
+| Quién aceptó cada historia y con qué evidencia | Tabla «Aceptación por historia y evidencia»; falta registrar el nombre de quien aceptó | Parcial |
+| IMP-012, IMP-013 e IMP-014 con responsables, fechas y condiciones de cierre | Tabla «Condiciones de cierre de los impedimentos»; faltan las fechas confirmadas | Parcial |
+| Diferenciar métricas de SonarQube y de CI | La sección «Evidencia técnica» y el documento 04 las presentan por separado; SonarCloud no produjo control de calidad en la solicitud n.º 38 | Atendida |
+| Análisis de seguridad posterior a las correcciones | Correcciones aplicadas el 11/11/2026 y verificadas con pruebas, Bandit, `pip-audit` y `npm audit`; falta el nuevo análisis SonarQube. La seguridad no se presenta como validada | Pendiente |
+| Evidencia de teclado y lector de pantalla | Recorrido manual pendiente (documento 05, criterios 2.1.1 y 4.1.2) | Pendiente |
+| Justificación de la alternativa equivalente de los marcadores del mapa | La prueba automatizada [`accesibilidad.spec.ts`](../../../src/frontend/tests/ui/accesibilidad.spec.ts) comprueba que cada pin tiene su equivalente en la lista de pedidos y camiones (documento 05, criterio 2.5.8); falta la comprobación manual | Parcial |
+
+### Condiciones de cierre de los impedimentos
+
+| Impedimento | Responsable | Fecha de cierre | Condición de cierre |
+|---|---|---|---|
+| IMP-012 — Revisión independiente | Ore Campos, Josef Pablo | **Por confirmar** | Solicitudes n.º 16 y n.º 19 con al menos una revisión aprobada de un integrante distinto del autor, y validación en preproducción registrada por quien no implementó |
+| IMP-013 — Seguridad de EN-02 | Rojas Peña, William Mikeiel | **Por confirmar** | Bloqueo, registro y notificación de inyección SQL implementados y probados; minimización de datos revisada; nuevo análisis SonarQube con rama y commit identificados |
+| IMP-014 — Evidencia de escenarios | Rojas Peña, William Mikeiel | **Por confirmar** | Los 16 escenarios de la matriz con resultado observado, evidencia y commit; medición P95 de US-010 |
+
+Los responsables provienen de la tabla de acciones de la retrospectiva.
 
 ## Pendientes reales
 
@@ -90,7 +123,8 @@ La rama de Mikeiel (`feature/mikeiel/spr3/rutas/optimizacion-co2`) ya está en `
 | Ejecutar y documentar los 16 escenarios de la matriz con resultado observado y evidencia | US-010, US-011, EN-02, EN-05 | Rojas Peña, William Mikeiel | Sprint 4 | IMP-014 |
 | Revisión por par de las solicitudes de integración n.º 16 y n.º 19 (abiertas y sin revisiones al 11/11/2026) | US-010, US-011, EN-05 | Ore Campos, Josef Pablo | Sprint 4 | IMP-012 |
 | Validación independiente en preproducción | US-010, US-011, EN-05 | Ore Campos, Josef Pablo | Sprint 4 | IMP-012 |
-| Bloqueo, registro y notificación de inyección SQL; auditoría anonimizada; minimización de datos | EN-02 | Tovar Sánchez, Carlos Alberto | Sprint 4 | IMP-013 |
+| Bloqueo, registro y notificación de inyección SQL; auditoría anonimizada; minimización de datos | EN-02 | Rojas Peña, William Mikeiel | Sprint 4 | IMP-013 |
+| Recorrido manual con teclado y lector de pantalla | EN-05 | **Por asignar** | Sprint 4 | Documento 05 |
 | Nuevo análisis SonarQube tras las correcciones del 11/11/2026 | EN-02 | Tovar Sánchez, Carlos Alberto | Sprint 4 | Documento 04 |
 | Decidir rechazo de repetición frente a idempotencia | EN-05 (US-004) | Equipo | Sprint 4 | D-04 |
 | Conciliar roles del Gherkin con la matriz RBAC | US-010, US-011 | Equipo | Sprint 4 | D-10 |
@@ -120,6 +154,6 @@ Los documentos 03 Calidad de código, 04 OWASP y 05 WCAG de esta carpeta recogen
 | V_1_4_0 | 30/10/2026 | Tovar Sánchez, Carlos Alberto. Se actualiza el cierre del Sprint 3 y se organizan las comprobaciones complementarias como acciones de seguimiento. |
 | V_1_5_0 | 30/10/2026 | Tovar Sánchez, Carlos Alberto. Se establece el estado general del Sprint 3 como aceptado y se dejan observaciones puntuales no bloqueantes para seguimiento. |
 | V_1_6_0 | 30/10/2026 | Tovar Sánchez, Carlos Alberto. Corrección de coherencia del cierre: el estado se alinea con el documento 04 (diez categorías evaluadas, 0 vulnerabilidades confirmadas, 4 sin hallazgos y 6 con advertencias), se precisa el alcance (PMV-3 frente a los 20 puntos comprometidos), la aceptación se registra como «con observaciones» y se vincula a IMP-012, IMP-013 e IMP-014, se ajustan las condiciones de la definición de terminado y se unifican las referencias de registro de cambio. Con aportes de Rojas Camayo, Valentino Jhan Pierre (mejora de los puntos propuestos). |
-| V_1_7_0 | 11/11/2026 | Rojas Camayo, Valentino Jhan Pierre. Se alinea el estado con la definición de terminado (aceptación con observaciones, DoD incompleta y velocidad provisional), se añade la tabla de pendientes reales y el registro pendiente de fecha y comentarios de las partes interesadas, y se actualiza el estado de seguridad con las correcciones del 11/11/2026. |
+| V_1_7_0 | 11/11/2026 | Rojas Camayo, Valentino Jhan Pierre. Se alinea el estado con la definición de terminado (aceptación con observaciones, DoD incompleta y velocidad provisional), se añade la tabla de pendientes reales y el registro pendiente de fecha y comentarios de las partes interesadas, y se actualiza el estado de seguridad con las correcciones del 11/11/2026. Se registran la sesión de revisión del 11/11/2026 y los comentarios del representante del cliente, la aceptación por historia con su evidencia, la respuesta a cada observación y las condiciones de cierre de IMP-012, IMP-013 e IMP-014. |
 
 [← Volver al índice correspondiente](README.md)
