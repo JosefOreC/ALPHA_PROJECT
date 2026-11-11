@@ -12,7 +12,7 @@
 
 **Estado:** compromisos preventivos acordados por el equipo; asistieron los cinco integrantes. Las acciones marcadas «Propuesta» se añadieron en V_1_3_0 para completar las cuatro dimensiones y deben ratificarse en la próxima retrospectiva.
 
-**Fecha de la retrospectiva:** **pendiente de registrar** (el equipo debe aportar la fecha real). La fecha de actualización documental no se usa como fecha del evento.
+**Fecha de la retrospectiva:** 11/11/2026.
 
 ## ¿Qué aprendimos?
 
@@ -68,7 +68,7 @@ SonarCloud no publicó su control de calidad por una configuración duplicada, y
 | V_1_0_0 | 29/10/2026 | Tovar Sánchez, Carlos Alberto. Emisión inicial de la retrospectiva del Sprint 3 con la plantilla oficial y acciones por dimensión con responsable, fecha y verificación propuestos. |
 | V_1_1_0 | 29/10/2026 | Rojas Camayo, Valentino Jhan Pierre (solicitud de integración n.º 25). Actualización documental; pendiente de revisión del equipo. Compromisos preventivos propuestos con problema, responsable pendiente, frecuencia y comprobación; fuentes históricas conservadas. |
 | V_1_2_0 | 30/10/2026 | Tovar Sánchez, Carlos Alberto. Documento único vigente: se retira la carpeta Histórico y se actualiza el alcance de las evaluaciones de calidad. |
-| V_1_3_0 | 11/11/2026 | Rojas Camayo, Valentino Jhan Pierre. Aprendizajes y aciertos reescritos con hechos del sprint; problemas concretos por dimensión; columna «Dimensión» en la tabla de acciones y tres acciones propuestas (Personas, Relaciones y Herramientas) pendientes de ratificar; fecha de la retrospectiva marcada como pendiente de registrar. |
+| V_1_3_0 | 11/11/2026 | Rojas Camayo, Valentino Jhan Pierre. Aprendizajes y aciertos reescritos con hechos del sprint; problemas concretos por dimensión; columna «Dimensión» en la tabla de acciones y tres acciones propuestas (Personas, Relaciones y Herramientas) pendientes de ratificar; fecha de la retrospectiva registrada como 11/11/2026. |
 
 
 [← Volver al índice correspondiente](README.md)
