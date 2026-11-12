@@ -4,7 +4,7 @@ from urllib.error import URLError
 
 import pytest
 
-from domain.planning import propose
+from domain.planning import propose, optimize_sequence, two_opt
 from domain.road_network import RoadNetwork, RoadServiceUnavailable
 from infrastructure import road_routing as road
 from tests.test_planning import START, CONFIG, SETTINGS, DIESEL, FLEET, order
@@ -55,6 +55,37 @@ def test_real_geometry_metrics_and_optional_return_share_the_same_legs(returning
     assert len(route['path'])==2*legs+1
     assert route['km']==round(sum(l['km'] for l in route['legs']),2)
     assert route['routing']['returnToDepot']==returning
+
+
+def test_single_order_is_origin_to_destination_without_an_implicit_return():
+    depot = (-12.,-77.)
+    result = road.road_proposal([order('A',-76.99)],FLEET,depot,DIESEL,CONFIG,SETTINGS,START,TestRoadRouter())
+    route = result['routes'][0]
+    assert len(route['legs'])==1
+    assert route['path'][-1]=={'lat':-12.,'lng':-76.99}
+    assert route['routing']['returnToDepot'] is False
+    km = route['legs'][0]['km']
+    assert route['km']==round(km,2)
+    assert route['co2Kg']==round(km*.09*2.68,2)
+
+
+def test_small_directed_route_escapes_a_two_opt_local_minimum():
+    # Every reversal makes ABC worse, but relocating A to the end cuts 12 km to 3.
+    costs = {('D','A'):10,('D','B'):1,('D','C'):20,('A','B'):1,('A','C'):20,
+             ('B','A'):20,('B','C'):1,('C','A'):1,('C','B'):20}
+    def evaluate(sequence):
+        points = ['D']+list(sequence)
+        return sum(costs[a,b] for a,b in zip(points,points[1:]))
+    assert two_opt(list('ABC'),evaluate)==list('ABC')
+    optimized = optimize_sequence(list('ABC'),evaluate)
+    assert optimized==list('BCA')
+    assert evaluate(optimized)==3
+
+
+def test_exact_small_route_still_respects_infeasible_time_windows():
+    def evaluate(sequence):
+        return None if sequence[0]!='A' else {'ABC':5,'ACB':3}[''.join(sequence)]
+    assert optimize_sequence(list('ABC'),evaluate)==list('ACB')
 
 
 def test_provider_reads_road_units_and_preserves_null_unreachable_cells(monkeypatch):

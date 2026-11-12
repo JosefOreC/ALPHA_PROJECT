@@ -150,7 +150,7 @@ def road_proposal(orders,fleet,depot,factors,config,settings,start,router=None):
             a,b = leg['origin'],leg['destination']
             network.costs[(a['lat'],a['lng']),(b['lat'],b['lng'])] = (leg['km'],leg['minutes'])
         sequence = [by_id[stop['id']] for stop in route['sequence']]
-        trip = simulate(sequence,depot,start,settings['respectWindows'],network,settings.get('returnToDepot',True))
+        trip = simulate(sequence,depot,start,settings['respectWindows'],network,settings.get('returnToDepot',False))
         if trip is None:
             raise ValueError('El trazado vial no cumple las ventanas de entrega. Revisa los horarios y vuelve a generar.')
         for stop,order,arrival in zip(route['sequence'],sequence,trip['arrivals']):
@@ -159,7 +159,7 @@ def road_proposal(orders,fleet,depot,factors,config,settings,start,router=None):
         route.update(actual)
         route.update(km=round(trip['km'],2),minutes=round(trip['minutes']),co2Kg=round(trip['km']*emission_rate(route['fuel'],factors),2),
                      fuelUsed=fuel_used(route['fuel'],trip['km'],factors))
-        route['routing']['returnToDepot'] = settings.get('returnToDepot',True)
+        route['routing']['returnToDepot'] = settings.get('returnToDepot',False)
     result['totalKm'] = round(sum(r['km'] for r in result['routes']),2)
     result['co2Kg'] = round(sum(r['co2Kg'] for r in result['routes']),2)
     result['kmSaved'] = round(result['baselineKm']-result['totalKm'],2)+0.0

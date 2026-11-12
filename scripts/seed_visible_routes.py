@@ -84,7 +84,7 @@ def seed(day, dry_run=False):
                        'distrito':district,'latitud':round(lat+dy,7),'longitud':round(lng+dx,7),'peso_kg':8+stop*3,
                        'ventana_inicio':window_start,'ventana_fin':window_end}
                       for stop,(dy,dx) in enumerate(((-.0018,-.0012),(-.0005,.0014),(.0013,.0021),(.0024,-.0007)))]
-            route = propose(orders,[vehicle],origin,factors,config,{'goal':'balanced','respectWindows':True,'prioritizeLowEmission':True},start)['routes'][0]
+            route = propose(orders,[vehicle],origin,factors,config,{'goal':'co2','respectWindows':True,'prioritizeLowEmission':True,'returnToDepot':False},start)['routes'][0]
             by_id = {order['pedido_id']:order for order in orders}
             sequence = [by_id[stop['id']] for stop in route['sequence']]
             for position,order in enumerate(sequence):

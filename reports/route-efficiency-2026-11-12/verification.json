@@ -1,0 +1,743 @@
+{
+  "result": {
+    "date": "2026-11-12",
+    "routes": [
+      {
+        "id": "0f3ec842-9a44-5f75-a65b-c39794878e66",
+        "plate": "TST-002",
+        "previousKm": 14.7,
+        "km": 8.08,
+        "previousCo2Kg": 3.39,
+        "co2Kg": 1.87,
+        "vertices": 310,
+        "legs": 4,
+        "reordered": false
+      },
+      {
+        "id": "30bfce13-5394-549d-bf59-5aff083c6776",
+        "plate": "TST-008",
+        "previousKm": 11.41,
+        "km": 6.76,
+        "previousCo2Kg": 2.64,
+        "co2Kg": 1.56,
+        "vertices": 165,
+        "legs": 4,
+        "reordered": false
+      },
+      {
+        "id": "39021d89-f13c-585e-9f01-48d09eb66738",
+        "plate": "TST-001",
+        "previousKm": 17.62,
+        "km": 8.8,
+        "previousCo2Kg": 4.25,
+        "co2Kg": 2.12,
+        "vertices": 300,
+        "legs": 4,
+        "reordered": true
+      },
+      {
+        "id": "b75e58e0-8ba7-5b0c-9904-c1ee6b2ff7ca",
+        "plate": "TST-003",
+        "previousKm": 6.22,
+        "km": 4.23,
+        "previousCo2Kg": 0.95,
+        "co2Kg": 0.64,
+        "vertices": 197,
+        "legs": 4,
+        "reordered": false
+      }
+    ],
+    "dry_run": false,
+    "optimize": true
+  },
+  "ordersPreserved": 16,
+  "deliveriesPreserved": 3,
+  "vehiclePositionsPreserved": 4,
+  "activeSequencesPreserved": true,
+  "before": {
+    "routes": [
+      {
+        "ruta_id": "0f3ec842-9a44-5f75-a65b-c39794878e66",
+        "conductor_id": "27b07b02-b71a-53b4-a058-dbbe3f96b23f",
+        "vehiculo_id": "b3cc8cca-45e8-5809-afc2-d4122490cb46",
+        "estado": "EN_CURSO",
+        "distancia_total_km": "14.70",
+        "co2_estimado_kg": "3.39",
+        "ruteo": {
+          "mode": "shortest",
+          "baseline": "Mismo recorrido vial con di\u00e9sel",
+          "provider": "Valhalla / OpenStreetMap",
+          "returnToDepot": true
+        },
+        "valid": true,
+        "end_lat": -12.055341,
+        "end_lng": -76.963004
+      },
+      {
+        "ruta_id": "30bfce13-5394-549d-bf59-5aff083c6776",
+        "conductor_id": "3249a59d-1a3c-5e41-a82e-c9d70d3613f5",
+        "vehiculo_id": "2ef9d07d-79b3-5a7c-8db6-d226f66daf0a",
+        "estado": "EN_CURSO",
+        "distancia_total_km": "11.41",
+        "co2_estimado_kg": "2.64",
+        "ruteo": {
+          "mode": "shortest",
+          "baseline": "Mismo recorrido vial con di\u00e9sel",
+          "provider": "Valhalla / OpenStreetMap",
+          "returnToDepot": true
+        },
+        "valid": true,
+        "end_lat": -12.055341,
+        "end_lng": -76.963004
+      },
+      {
+        "ruta_id": "39021d89-f13c-585e-9f01-48d09eb66738",
+        "conductor_id": "64ccaccc-0801-579f-bedf-6cfce76afc4a",
+        "vehiculo_id": "b93c1495-d19f-5356-af6e-8dfae2ef352d",
+        "estado": "GENERADA",
+        "distancia_total_km": "17.62",
+        "co2_estimado_kg": "4.25",
+        "ruteo": {
+          "mode": "shortest",
+          "baseline": "Mismo recorrido vial con di\u00e9sel",
+          "provider": "Valhalla / OpenStreetMap",
+          "returnToDepot": true
+        },
+        "valid": true,
+        "end_lat": -12.055341,
+        "end_lng": -76.963004
+      },
+      {
+        "ruta_id": "b75e58e0-8ba7-5b0c-9904-c1ee6b2ff7ca",
+        "conductor_id": "7563d825-0e2e-54a2-8c8c-66418306b762",
+        "vehiculo_id": "7fd03fc5-e5b7-5c52-b29e-f6714662a8aa",
+        "estado": "EN_CURSO",
+        "distancia_total_km": "6.22",
+        "co2_estimado_kg": "0.95",
+        "ruteo": {
+          "mode": "shortest",
+          "baseline": "Mismo recorrido vial con di\u00e9sel",
+          "provider": "Valhalla / OpenStreetMap",
+          "returnToDepot": true
+        },
+        "valid": true,
+        "end_lat": -12.055341,
+        "end_lng": -76.963004
+      }
+    ],
+    "orders": [
+      {
+        "pedido_id": "069432ec-eb64-5b65-8b75-5c7fce70cced",
+        "conductor_id": "27b07b02-b71a-53b4-a058-dbbe3f96b23f",
+        "estado": "EN_CAMINO",
+        "confirmed_at": null
+      },
+      {
+        "pedido_id": "1ab2b7e8-5b1f-5c38-ad67-aa77c412519b",
+        "conductor_id": "64ccaccc-0801-579f-bedf-6cfce76afc4a",
+        "estado": "PENDIENTE",
+        "confirmed_at": null
+      },
+      {
+        "pedido_id": "1cc67acc-0d95-51d4-9920-f6fae36940a9",
+        "conductor_id": "27b07b02-b71a-53b4-a058-dbbe3f96b23f",
+        "estado": "ENTREGADO",
+        "confirmed_at": "2026-11-12 07:30:00-05:00"
+      },
+      {
+        "pedido_id": "23a50536-193a-5c03-8e93-0591987c8596",
+        "conductor_id": "27b07b02-b71a-53b4-a058-dbbe3f96b23f",
+        "estado": "EN_CAMINO",
+        "confirmed_at": null
+      },
+      {
+        "pedido_id": "2be7eadb-aec1-5829-b52e-9d12dfae87d7",
+        "conductor_id": "64ccaccc-0801-579f-bedf-6cfce76afc4a",
+        "estado": "PENDIENTE",
+        "confirmed_at": null
+      },
+      {
+        "pedido_id": "38c7e664-7f79-5c6f-8804-3bfd1affec19",
+        "conductor_id": "64ccaccc-0801-579f-bedf-6cfce76afc4a",
+        "estado": "PENDIENTE",
+        "confirmed_at": null
+      },
+      {
+        "pedido_id": "422f9bd4-5a89-57dd-ba6f-38a6fa5a9cb8",
+        "conductor_id": "27b07b02-b71a-53b4-a058-dbbe3f96b23f",
+        "estado": "EN_CAMINO",
+        "confirmed_at": null
+      },
+      {
+        "pedido_id": "6848d0c4-8228-55df-8fcc-0828fc1bc4aa",
+        "conductor_id": "64ccaccc-0801-579f-bedf-6cfce76afc4a",
+        "estado": "PENDIENTE",
+        "confirmed_at": null
+      },
+      {
+        "pedido_id": "6e687b2d-165b-50f7-9028-2aba24537e1c",
+        "conductor_id": "3249a59d-1a3c-5e41-a82e-c9d70d3613f5",
+        "estado": "ENTREGADO",
+        "confirmed_at": "2026-11-12 07:30:00-05:00"
+      },
+      {
+        "pedido_id": "6f1a2d86-89f4-5837-8926-3daeb0ba016a",
+        "conductor_id": "3249a59d-1a3c-5e41-a82e-c9d70d3613f5",
+        "estado": "EN_CAMINO",
+        "confirmed_at": null
+      },
+      {
+        "pedido_id": "8bcb4200-88c4-5577-a5de-5224a8d201cd",
+        "conductor_id": "3249a59d-1a3c-5e41-a82e-c9d70d3613f5",
+        "estado": "EN_CAMINO",
+        "confirmed_at": null
+      },
+      {
+        "pedido_id": "92492bae-14e0-58bf-873a-ca53698d8843",
+        "conductor_id": "7563d825-0e2e-54a2-8c8c-66418306b762",
+        "estado": "EN_CAMINO",
+        "confirmed_at": null
+      },
+      {
+        "pedido_id": "a88aa2b3-44ea-5b28-b74a-e98a88bb36b3",
+        "conductor_id": "3249a59d-1a3c-5e41-a82e-c9d70d3613f5",
+        "estado": "EN_CAMINO",
+        "confirmed_at": null
+      },
+      {
+        "pedido_id": "b49b7864-2f74-5bb4-b536-065e0b7e1375",
+        "conductor_id": "7563d825-0e2e-54a2-8c8c-66418306b762",
+        "estado": "EN_CAMINO",
+        "confirmed_at": null
+      },
+      {
+        "pedido_id": "e93e9df0-39d0-5c85-bc64-3b26f824876a",
+        "conductor_id": "7563d825-0e2e-54a2-8c8c-66418306b762",
+        "estado": "ENTREGADO",
+        "confirmed_at": "2026-11-12 07:30:00-05:00"
+      },
+      {
+        "pedido_id": "f86ef5af-4b06-5a5a-998b-065980c21432",
+        "conductor_id": "7563d825-0e2e-54a2-8c8c-66418306b762",
+        "estado": "EN_CAMINO",
+        "confirmed_at": null
+      }
+    ],
+    "sequence": [
+      {
+        "ruta_id": "0f3ec842-9a44-5f75-a65b-c39794878e66",
+        "pedido_id": "1cc67acc-0d95-51d4-9920-f6fae36940a9",
+        "orden_entrega": 1,
+        "latitud": "-12.0487000",
+        "longitud": "-76.9979000"
+      },
+      {
+        "ruta_id": "0f3ec842-9a44-5f75-a65b-c39794878e66",
+        "pedido_id": "23a50536-193a-5c03-8e93-0591987c8596",
+        "orden_entrega": 2,
+        "latitud": "-12.0476000",
+        "longitud": "-77.0007000"
+      },
+      {
+        "ruta_id": "0f3ec842-9a44-5f75-a65b-c39794878e66",
+        "pedido_id": "069432ec-eb64-5b65-8b75-5c7fce70cced",
+        "orden_entrega": 3,
+        "latitud": "-12.0518000",
+        "longitud": "-77.0012000"
+      },
+      {
+        "ruta_id": "0f3ec842-9a44-5f75-a65b-c39794878e66",
+        "pedido_id": "422f9bd4-5a89-57dd-ba6f-38a6fa5a9cb8",
+        "orden_entrega": 4,
+        "latitud": "-12.0505000",
+        "longitud": "-76.9986000"
+      },
+      {
+        "ruta_id": "30bfce13-5394-549d-bf59-5aff083c6776",
+        "pedido_id": "6e687b2d-165b-50f7-9028-2aba24537e1c",
+        "orden_entrega": 1,
+        "latitud": "-12.0326000",
+        "longitud": "-76.9407000"
+      },
+      {
+        "ruta_id": "30bfce13-5394-549d-bf59-5aff083c6776",
+        "pedido_id": "6f1a2d86-89f4-5837-8926-3daeb0ba016a",
+        "orden_entrega": 2,
+        "latitud": "-12.0337000",
+        "longitud": "-76.9379000"
+      },
+      {
+        "ruta_id": "30bfce13-5394-549d-bf59-5aff083c6776",
+        "pedido_id": "8bcb4200-88c4-5577-a5de-5224a8d201cd",
+        "orden_entrega": 3,
+        "latitud": "-12.0355000",
+        "longitud": "-76.9386000"
+      },
+      {
+        "ruta_id": "30bfce13-5394-549d-bf59-5aff083c6776",
+        "pedido_id": "a88aa2b3-44ea-5b28-b74a-e98a88bb36b3",
+        "orden_entrega": 4,
+        "latitud": "-12.0368000",
+        "longitud": "-76.9412000"
+      },
+      {
+        "ruta_id": "39021d89-f13c-585e-9f01-48d09eb66738",
+        "pedido_id": "6848d0c4-8228-55df-8fcc-0828fc1bc4aa",
+        "orden_entrega": 1,
+        "latitud": "-12.0137000",
+        "longitud": "-76.9929000"
+      },
+      {
+        "ruta_id": "39021d89-f13c-585e-9f01-48d09eb66738",
+        "pedido_id": "2be7eadb-aec1-5829-b52e-9d12dfae87d7",
+        "orden_entrega": 2,
+        "latitud": "-12.0126000",
+        "longitud": "-76.9957000"
+      },
+      {
+        "ruta_id": "39021d89-f13c-585e-9f01-48d09eb66738",
+        "pedido_id": "1ab2b7e8-5b1f-5c38-ad67-aa77c412519b",
+        "orden_entrega": 3,
+        "latitud": "-12.0155000",
+        "longitud": "-76.9936000"
+      },
+      {
+        "ruta_id": "39021d89-f13c-585e-9f01-48d09eb66738",
+        "pedido_id": "38c7e664-7f79-5c6f-8804-3bfd1affec19",
+        "orden_entrega": 4,
+        "latitud": "-12.0168000",
+        "longitud": "-76.9962000"
+      },
+      {
+        "ruta_id": "b75e58e0-8ba7-5b0c-9904-c1ee6b2ff7ca",
+        "pedido_id": "e93e9df0-39d0-5c85-bc64-3b26f824876a",
+        "orden_entrega": 1,
+        "latitud": "-12.0437000",
+        "longitud": "-76.9679000"
+      },
+      {
+        "ruta_id": "b75e58e0-8ba7-5b0c-9904-c1ee6b2ff7ca",
+        "pedido_id": "92492bae-14e0-58bf-873a-ca53698d8843",
+        "orden_entrega": 2,
+        "latitud": "-12.0426000",
+        "longitud": "-76.9707000"
+      },
+      {
+        "ruta_id": "b75e58e0-8ba7-5b0c-9904-c1ee6b2ff7ca",
+        "pedido_id": "f86ef5af-4b06-5a5a-998b-065980c21432",
+        "orden_entrega": 3,
+        "latitud": "-12.0455000",
+        "longitud": "-76.9686000"
+      },
+      {
+        "ruta_id": "b75e58e0-8ba7-5b0c-9904-c1ee6b2ff7ca",
+        "pedido_id": "b49b7864-2f74-5bb4-b536-065e0b7e1375",
+        "orden_entrega": 4,
+        "latitud": "-12.0468000",
+        "longitud": "-76.9712000"
+      }
+    ],
+    "deliveries": [
+      {
+        "entrega_id": "6c7d446f-5468-5655-b3ce-2c1869399a81",
+        "pedido_id": "e93e9df0-39d0-5c85-bc64-3b26f824876a",
+        "conductor_id": "7563d825-0e2e-54a2-8c8c-66418306b762",
+        "confirmada_en": "2026-11-12 07:30:00-05:00",
+        "observaciones": "Entrega de demostraci\u00f3n."
+      },
+      {
+        "entrega_id": "709e6825-38aa-58df-b5a9-9e8ee8d23681",
+        "pedido_id": "1cc67acc-0d95-51d4-9920-f6fae36940a9",
+        "conductor_id": "27b07b02-b71a-53b4-a058-dbbe3f96b23f",
+        "confirmada_en": "2026-11-12 07:30:00-05:00",
+        "observaciones": "Entrega de demostraci\u00f3n."
+      },
+      {
+        "entrega_id": "801a3305-0f27-5090-a30b-b0d81b3241a5",
+        "pedido_id": "6e687b2d-165b-50f7-9028-2aba24537e1c",
+        "conductor_id": "3249a59d-1a3c-5e41-a82e-c9d70d3613f5",
+        "confirmada_en": "2026-11-12 07:30:00-05:00",
+        "observaciones": "Entrega de demostraci\u00f3n."
+      }
+    ],
+    "positions": [
+      {
+        "posicion_id": "8c9576a1-f90d-5834-a827-eee03e8d063f",
+        "vehiculo_id": "b3cc8cca-45e8-5809-afc2-d4122490cb46",
+        "ruta_id": "0f3ec842-9a44-5f75-a65b-c39794878e66",
+        "latitud": "-12.0487000",
+        "longitud": "-76.9979000",
+        "registrada_en": "2026-11-12 07:35:00-05:00"
+      },
+      {
+        "posicion_id": "b76a422c-3890-533f-8b79-89ed1f7471f0",
+        "vehiculo_id": "7fd03fc5-e5b7-5c52-b29e-f6714662a8aa",
+        "ruta_id": "b75e58e0-8ba7-5b0c-9904-c1ee6b2ff7ca",
+        "latitud": "-12.0437000",
+        "longitud": "-76.9679000",
+        "registrada_en": "2026-11-12 07:35:00-05:00"
+      },
+      {
+        "posicion_id": "b7785279-48dd-5f8c-b274-111accefbecc",
+        "vehiculo_id": "b93c1495-d19f-5356-af6e-8dfae2ef352d",
+        "ruta_id": "39021d89-f13c-585e-9f01-48d09eb66738",
+        "latitud": "-12.0550000",
+        "longitud": "-76.9630000",
+        "registrada_en": "2026-11-12 07:35:00-05:00"
+      },
+      {
+        "posicion_id": "cb046d4f-d360-5146-b6f2-11cf8b3946f2",
+        "vehiculo_id": "2ef9d07d-79b3-5a7c-8db6-d226f66daf0a",
+        "ruta_id": "30bfce13-5394-549d-bf59-5aff083c6776",
+        "latitud": "-12.0326000",
+        "longitud": "-76.9407000",
+        "registrada_en": "2026-11-12 07:35:00-05:00"
+      }
+    ]
+  },
+  "after": {
+    "routes": [
+      {
+        "ruta_id": "0f3ec842-9a44-5f75-a65b-c39794878e66",
+        "conductor_id": "27b07b02-b71a-53b4-a058-dbbe3f96b23f",
+        "vehiculo_id": "b3cc8cca-45e8-5809-afc2-d4122490cb46",
+        "estado": "EN_CURSO",
+        "distancia_total_km": "8.08",
+        "co2_estimado_kg": "1.87",
+        "ruteo": {
+          "mode": "shortest",
+          "baseline": "Recorrido anterior con di\u00e9sel",
+          "provider": "Valhalla / OpenStreetMap",
+          "returnToDepot": false,
+          "optimizationVersion": 2
+        },
+        "valid": true,
+        "end_lat": -12.050436,
+        "end_lng": -76.998614
+      },
+      {
+        "ruta_id": "30bfce13-5394-549d-bf59-5aff083c6776",
+        "conductor_id": "3249a59d-1a3c-5e41-a82e-c9d70d3613f5",
+        "vehiculo_id": "2ef9d07d-79b3-5a7c-8db6-d226f66daf0a",
+        "estado": "EN_CURSO",
+        "distancia_total_km": "6.76",
+        "co2_estimado_kg": "1.56",
+        "ruteo": {
+          "mode": "shortest",
+          "baseline": "Recorrido anterior con di\u00e9sel",
+          "provider": "Valhalla / OpenStreetMap",
+          "returnToDepot": false,
+          "optimizationVersion": 2
+        },
+        "valid": true,
+        "end_lat": -12.036721,
+        "end_lng": -76.941005
+      },
+      {
+        "ruta_id": "39021d89-f13c-585e-9f01-48d09eb66738",
+        "conductor_id": "64ccaccc-0801-579f-bedf-6cfce76afc4a",
+        "vehiculo_id": "b93c1495-d19f-5356-af6e-8dfae2ef352d",
+        "estado": "GENERADA",
+        "distancia_total_km": "8.80",
+        "co2_estimado_kg": "2.12",
+        "ruteo": {
+          "mode": "shortest",
+          "baseline": "Recorrido anterior con di\u00e9sel",
+          "provider": "Valhalla / OpenStreetMap",
+          "returnToDepot": false,
+          "optimizationVersion": 2
+        },
+        "valid": true,
+        "end_lat": -12.012688,
+        "end_lng": -76.995725
+      },
+      {
+        "ruta_id": "b75e58e0-8ba7-5b0c-9904-c1ee6b2ff7ca",
+        "conductor_id": "7563d825-0e2e-54a2-8c8c-66418306b762",
+        "vehiculo_id": "7fd03fc5-e5b7-5c52-b29e-f6714662a8aa",
+        "estado": "EN_CURSO",
+        "distancia_total_km": "4.23",
+        "co2_estimado_kg": "0.64",
+        "ruteo": {
+          "mode": "shortest",
+          "baseline": "Recorrido anterior con di\u00e9sel",
+          "provider": "Valhalla / OpenStreetMap",
+          "returnToDepot": false,
+          "optimizationVersion": 2
+        },
+        "valid": true,
+        "end_lat": -12.046909,
+        "end_lng": -76.971152
+      }
+    ],
+    "orders": [
+      {
+        "pedido_id": "069432ec-eb64-5b65-8b75-5c7fce70cced",
+        "conductor_id": "27b07b02-b71a-53b4-a058-dbbe3f96b23f",
+        "estado": "EN_CAMINO",
+        "confirmed_at": null
+      },
+      {
+        "pedido_id": "1ab2b7e8-5b1f-5c38-ad67-aa77c412519b",
+        "conductor_id": "64ccaccc-0801-579f-bedf-6cfce76afc4a",
+        "estado": "PENDIENTE",
+        "confirmed_at": null
+      },
+      {
+        "pedido_id": "1cc67acc-0d95-51d4-9920-f6fae36940a9",
+        "conductor_id": "27b07b02-b71a-53b4-a058-dbbe3f96b23f",
+        "estado": "ENTREGADO",
+        "confirmed_at": "2026-11-12 07:30:00-05:00"
+      },
+      {
+        "pedido_id": "23a50536-193a-5c03-8e93-0591987c8596",
+        "conductor_id": "27b07b02-b71a-53b4-a058-dbbe3f96b23f",
+        "estado": "EN_CAMINO",
+        "confirmed_at": null
+      },
+      {
+        "pedido_id": "2be7eadb-aec1-5829-b52e-9d12dfae87d7",
+        "conductor_id": "64ccaccc-0801-579f-bedf-6cfce76afc4a",
+        "estado": "PENDIENTE",
+        "confirmed_at": null
+      },
+      {
+        "pedido_id": "38c7e664-7f79-5c6f-8804-3bfd1affec19",
+        "conductor_id": "64ccaccc-0801-579f-bedf-6cfce76afc4a",
+        "estado": "PENDIENTE",
+        "confirmed_at": null
+      },
+      {
+        "pedido_id": "422f9bd4-5a89-57dd-ba6f-38a6fa5a9cb8",
+        "conductor_id": "27b07b02-b71a-53b4-a058-dbbe3f96b23f",
+        "estado": "EN_CAMINO",
+        "confirmed_at": null
+      },
+      {
+        "pedido_id": "6848d0c4-8228-55df-8fcc-0828fc1bc4aa",
+        "conductor_id": "64ccaccc-0801-579f-bedf-6cfce76afc4a",
+        "estado": "PENDIENTE",
+        "confirmed_at": null
+      },
+      {
+        "pedido_id": "6e687b2d-165b-50f7-9028-2aba24537e1c",
+        "conductor_id": "3249a59d-1a3c-5e41-a82e-c9d70d3613f5",
+        "estado": "ENTREGADO",
+        "confirmed_at": "2026-11-12 07:30:00-05:00"
+      },
+      {
+        "pedido_id": "6f1a2d86-89f4-5837-8926-3daeb0ba016a",
+        "conductor_id": "3249a59d-1a3c-5e41-a82e-c9d70d3613f5",
+        "estado": "EN_CAMINO",
+        "confirmed_at": null
+      },
+      {
+        "pedido_id": "8bcb4200-88c4-5577-a5de-5224a8d201cd",
+        "conductor_id": "3249a59d-1a3c-5e41-a82e-c9d70d3613f5",
+        "estado": "EN_CAMINO",
+        "confirmed_at": null
+      },
+      {
+        "pedido_id": "92492bae-14e0-58bf-873a-ca53698d8843",
+        "conductor_id": "7563d825-0e2e-54a2-8c8c-66418306b762",
+        "estado": "EN_CAMINO",
+        "confirmed_at": null
+      },
+      {
+        "pedido_id": "a88aa2b3-44ea-5b28-b74a-e98a88bb36b3",
+        "conductor_id": "3249a59d-1a3c-5e41-a82e-c9d70d3613f5",
+        "estado": "EN_CAMINO",
+        "confirmed_at": null
+      },
+      {
+        "pedido_id": "b49b7864-2f74-5bb4-b536-065e0b7e1375",
+        "conductor_id": "7563d825-0e2e-54a2-8c8c-66418306b762",
+        "estado": "EN_CAMINO",
+        "confirmed_at": null
+      },
+      {
+        "pedido_id": "e93e9df0-39d0-5c85-bc64-3b26f824876a",
+        "conductor_id": "7563d825-0e2e-54a2-8c8c-66418306b762",
+        "estado": "ENTREGADO",
+        "confirmed_at": "2026-11-12 07:30:00-05:00"
+      },
+      {
+        "pedido_id": "f86ef5af-4b06-5a5a-998b-065980c21432",
+        "conductor_id": "7563d825-0e2e-54a2-8c8c-66418306b762",
+        "estado": "EN_CAMINO",
+        "confirmed_at": null
+      }
+    ],
+    "sequence": [
+      {
+        "ruta_id": "0f3ec842-9a44-5f75-a65b-c39794878e66",
+        "pedido_id": "1cc67acc-0d95-51d4-9920-f6fae36940a9",
+        "orden_entrega": 1,
+        "latitud": "-12.0487000",
+        "longitud": "-76.9979000"
+      },
+      {
+        "ruta_id": "0f3ec842-9a44-5f75-a65b-c39794878e66",
+        "pedido_id": "23a50536-193a-5c03-8e93-0591987c8596",
+        "orden_entrega": 2,
+        "latitud": "-12.0476000",
+        "longitud": "-77.0007000"
+      },
+      {
+        "ruta_id": "0f3ec842-9a44-5f75-a65b-c39794878e66",
+        "pedido_id": "069432ec-eb64-5b65-8b75-5c7fce70cced",
+        "orden_entrega": 3,
+        "latitud": "-12.0518000",
+        "longitud": "-77.0012000"
+      },
+      {
+        "ruta_id": "0f3ec842-9a44-5f75-a65b-c39794878e66",
+        "pedido_id": "422f9bd4-5a89-57dd-ba6f-38a6fa5a9cb8",
+        "orden_entrega": 4,
+        "latitud": "-12.0505000",
+        "longitud": "-76.9986000"
+      },
+      {
+        "ruta_id": "30bfce13-5394-549d-bf59-5aff083c6776",
+        "pedido_id": "6e687b2d-165b-50f7-9028-2aba24537e1c",
+        "orden_entrega": 1,
+        "latitud": "-12.0326000",
+        "longitud": "-76.9407000"
+      },
+      {
+        "ruta_id": "30bfce13-5394-549d-bf59-5aff083c6776",
+        "pedido_id": "6f1a2d86-89f4-5837-8926-3daeb0ba016a",
+        "orden_entrega": 2,
+        "latitud": "-12.0337000",
+        "longitud": "-76.9379000"
+      },
+      {
+        "ruta_id": "30bfce13-5394-549d-bf59-5aff083c6776",
+        "pedido_id": "8bcb4200-88c4-5577-a5de-5224a8d201cd",
+        "orden_entrega": 3,
+        "latitud": "-12.0355000",
+        "longitud": "-76.9386000"
+      },
+      {
+        "ruta_id": "30bfce13-5394-549d-bf59-5aff083c6776",
+        "pedido_id": "a88aa2b3-44ea-5b28-b74a-e98a88bb36b3",
+        "orden_entrega": 4,
+        "latitud": "-12.0368000",
+        "longitud": "-76.9412000"
+      },
+      {
+        "ruta_id": "39021d89-f13c-585e-9f01-48d09eb66738",
+        "pedido_id": "38c7e664-7f79-5c6f-8804-3bfd1affec19",
+        "orden_entrega": 1,
+        "latitud": "-12.0168000",
+        "longitud": "-76.9962000"
+      },
+      {
+        "ruta_id": "39021d89-f13c-585e-9f01-48d09eb66738",
+        "pedido_id": "1ab2b7e8-5b1f-5c38-ad67-aa77c412519b",
+        "orden_entrega": 2,
+        "latitud": "-12.0155000",
+        "longitud": "-76.9936000"
+      },
+      {
+        "ruta_id": "39021d89-f13c-585e-9f01-48d09eb66738",
+        "pedido_id": "6848d0c4-8228-55df-8fcc-0828fc1bc4aa",
+        "orden_entrega": 3,
+        "latitud": "-12.0137000",
+        "longitud": "-76.9929000"
+      },
+      {
+        "ruta_id": "39021d89-f13c-585e-9f01-48d09eb66738",
+        "pedido_id": "2be7eadb-aec1-5829-b52e-9d12dfae87d7",
+        "orden_entrega": 4,
+        "latitud": "-12.0126000",
+        "longitud": "-76.9957000"
+      },
+      {
+        "ruta_id": "b75e58e0-8ba7-5b0c-9904-c1ee6b2ff7ca",
+        "pedido_id": "e93e9df0-39d0-5c85-bc64-3b26f824876a",
+        "orden_entrega": 1,
+        "latitud": "-12.0437000",
+        "longitud": "-76.9679000"
+      },
+      {
+        "ruta_id": "b75e58e0-8ba7-5b0c-9904-c1ee6b2ff7ca",
+        "pedido_id": "92492bae-14e0-58bf-873a-ca53698d8843",
+        "orden_entrega": 2,
+        "latitud": "-12.0426000",
+        "longitud": "-76.9707000"
+      },
+      {
+        "ruta_id": "b75e58e0-8ba7-5b0c-9904-c1ee6b2ff7ca",
+        "pedido_id": "f86ef5af-4b06-5a5a-998b-065980c21432",
+        "orden_entrega": 3,
+        "latitud": "-12.0455000",
+        "longitud": "-76.9686000"
+      },
+      {
+        "ruta_id": "b75e58e0-8ba7-5b0c-9904-c1ee6b2ff7ca",
+        "pedido_id": "b49b7864-2f74-5bb4-b536-065e0b7e1375",
+        "orden_entrega": 4,
+        "latitud": "-12.0468000",
+        "longitud": "-76.9712000"
+      }
+    ],
+    "deliveries": [
+      {
+        "entrega_id": "6c7d446f-5468-5655-b3ce-2c1869399a81",
+        "pedido_id": "e93e9df0-39d0-5c85-bc64-3b26f824876a",
+        "conductor_id": "7563d825-0e2e-54a2-8c8c-66418306b762",
+        "confirmada_en": "2026-11-12 07:30:00-05:00",
+        "observaciones": "Entrega de demostraci\u00f3n."
+      },
+      {
+        "entrega_id": "709e6825-38aa-58df-b5a9-9e8ee8d23681",
+        "pedido_id": "1cc67acc-0d95-51d4-9920-f6fae36940a9",
+        "conductor_id": "27b07b02-b71a-53b4-a058-dbbe3f96b23f",
+        "confirmada_en": "2026-11-12 07:30:00-05:00",
+        "observaciones": "Entrega de demostraci\u00f3n."
+      },
+      {
+        "entrega_id": "801a3305-0f27-5090-a30b-b0d81b3241a5",
+        "pedido_id": "6e687b2d-165b-50f7-9028-2aba24537e1c",
+        "conductor_id": "3249a59d-1a3c-5e41-a82e-c9d70d3613f5",
+        "confirmada_en": "2026-11-12 07:30:00-05:00",
+        "observaciones": "Entrega de demostraci\u00f3n."
+      }
+    ],
+    "positions": [
+      {
+        "posicion_id": "8c9576a1-f90d-5834-a827-eee03e8d063f",
+        "vehiculo_id": "b3cc8cca-45e8-5809-afc2-d4122490cb46",
+        "ruta_id": "0f3ec842-9a44-5f75-a65b-c39794878e66",
+        "latitud": "-12.0487000",
+        "longitud": "-76.9979000",
+        "registrada_en": "2026-11-12 07:35:00-05:00"
+      },
+      {
+        "posicion_id": "b76a422c-3890-533f-8b79-89ed1f7471f0",
+        "vehiculo_id": "7fd03fc5-e5b7-5c52-b29e-f6714662a8aa",
+        "ruta_id": "b75e58e0-8ba7-5b0c-9904-c1ee6b2ff7ca",
+        "latitud": "-12.0437000",
+        "longitud": "-76.9679000",
+        "registrada_en": "2026-11-12 07:35:00-05:00"
+      },
+      {
+        "posicion_id": "b7785279-48dd-5f8c-b274-111accefbecc",
+        "vehiculo_id": "b93c1495-d19f-5356-af6e-8dfae2ef352d",
+        "ruta_id": "39021d89-f13c-585e-9f01-48d09eb66738",
+        "latitud": "-12.0550000",
+        "longitud": "-76.9630000",
+        "registrada_en": "2026-11-12 07:35:00-05:00"
+      },
+      {
+        "posicion_id": "cb046d4f-d360-5146-b6f2-11cf8b3946f2",
+        "vehiculo_id": "2ef9d07d-79b3-5a7c-8db6-d226f66daf0a",
+        "ruta_id": "30bfce13-5394-549d-bf59-5aff083c6776",
+        "latitud": "-12.0326000",
+        "longitud": "-76.9407000",
+        "registrada_en": "2026-11-12 07:35:00-05:00"
+      }
+    ]
+  }
+}

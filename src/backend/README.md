@@ -66,7 +66,11 @@ caminos cortos; tiempo prioriza duración; equilibrado usa el peso configurado.
 `returnToDepot` es opcional y vale `false` por defecto: el último destino cierra
 el recorrido. El CO₂ se estima con kilómetros viales × consumo × factor.
 No se dispone de tráfico en vivo ni de un modelo de emisiones según pendiente,
-ralentí o velocidad. La inserción y 2-opt no garantizan el mínimo global de la flota.
+ralentí o velocidad. Para hasta siete entregas de un vehículo se comparan todas
+las secuencias factibles según la matriz vial; para más entregas se usa 2-opt.
+La asignación entre vehículos no garantiza el mínimo global de la flota.
+El retorno al almacén se agrega únicamente cuando se solicita explícitamente,
+también en los generadores y scripts de demostración.
 
 `ROAD_ROUTER_URL` configura la instancia Valhalla. Por defecto se usa
 `https://valhalla1.openstreetmap.de`, servicio público de desarrollo sin SLA;
@@ -86,6 +90,17 @@ su secuencia, conductor, pedidos y entregas:
 .venv/Scripts/python.exe scripts/refresh_visible_routes.py --dry-run
 .venv/Scripts/python.exe scripts/refresh_visible_routes.py
 ```
+
+Para corregir las rutas de demostración antiguas que incluían retornos forzados:
+
+```powershell
+.venv/Scripts/python.exe scripts/refresh_visible_routes.py --optimize --dry-run
+.venv/Scripts/python.exe scripts/refresh_visible_routes.py --optimize
+```
+
+Este modo reordena solo rutas `GENERADA` con todos los pedidos pendientes;
+las rutas en curso conservan su secuencia y entregas. Quita el regreso artificial,
+recalcula kilómetros, consumo y CO₂ y guarda los cambios en una sola transacción.
 
 El script comprueba el marcador de base de pruebas y los identificadores de la carga;
 si falla cualquier consulta o escritura, revierte la actualización completa.

@@ -6,6 +6,7 @@ Distancias y tiempos de una red vial dirigida. El costo depende del objetivo: 'c
 import math
 from datetime import timedelta
 from functools import lru_cache
+from itertools import permutations
 from domain.emissions import emission_rate, fuel_used
 
 SPEED_KMH = 25
@@ -25,7 +26,7 @@ def position(order):
     return (float(order['latitud']),float(order['longitud']))
 
 
-def simulate(sequence, depot, start, respect_windows, roads, return_to_depot=True):
+def simulate(sequence, depot, start, respect_windows, roads, return_to_depot=False):
     """None si un tramo es inaccesible o incumple una ventana obligatoria."""
     point, moment, km, arrivals = depot, start, 0, []
     for order in sequence:
@@ -78,13 +79,26 @@ def two_opt(sequence, evaluate):
     return best
 
 
+def optimize_sequence(sequence, evaluate):
+    """Resuelve exactamente recorridos pequeños; evita mínimos locales de 2-opt en calles dirigidas."""
+    if len(sequence)>7:
+        return two_opt(sequence,evaluate)
+    best, best_cost = list(sequence), evaluate(sequence)
+    for ordering in permutations(sequence):
+        candidate = list(ordering)
+        value = evaluate(candidate)
+        if value is not None and (best_cost is None or value < best_cost-1e-9):
+            best, best_cost = candidate, value
+    return best
+
+
 def propose(orders, fleet, depot, factors, config, settings, start, roads):
     if not orders:
         raise ValueError('No hay pedidos pendientes con coordenadas para planificar.')
     if any(order['latitud'] is None or order['longitud'] is None for order in orders):
         raise ValueError('Completa las coordenadas de los pedidos antes de generar rutas.')
     respect = settings['respectWindows']
-    returning = settings.get('returnToDepot',True)
+    returning = settings.get('returnToDepot',False)
     rates = {row['placa']:emission_rate(row['tipo_combustible'],factors) for row in fleet}
     vehicles = [row for row in fleet if rates[row['placa']] is not None]
     reference = sum(rates[row['placa']] for row in vehicles)/len(vehicles) if vehicles else 1
@@ -130,7 +144,7 @@ def propose(orders, fleet, depot, factors, config, settings, start, roads):
         plate, fuel = vehicle['placa'], vehicle['tipo_combustible']
         if not routes[plate]:
             continue
-        sequence = two_opt(routes[plate],lambda candidate: evaluate(plate,candidate))
+        sequence = optimize_sequence(routes[plate],lambda candidate: evaluate(plate,candidate))
         trip = simulate(sequence,depot,start,respect,roads,returning)
         baseline = simulate(sorted(sequence,key=lambda row: row['ventana_inicio']),depot,start,False,roads,returning)
         if baseline is None:

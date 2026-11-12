@@ -134,6 +134,6 @@ def test_no_savings_is_reported_as_plain_zero_not_negative_zero():
     import math
     # La ruta optimizada es la línea base recorrida al revés: misma distancia, suma flotante distinta.
     stops = [order('A',-76.95985725423886,-12.046941001696645),order('B',-77.04745541390065,-11.99585875272065,start=START+timedelta(minutes=1))]
-    result = propose(stops,FLEET,(-12,-77),DIESEL,CONFIG,SETTINGS,START)
+    result = propose(stops,FLEET,(-12,-77),DIESEL,CONFIG,{**SETTINGS,'returnToDepot':True},START)
     assert result['kmSaved'] == 0 and math.copysign(1,result['kmSaved']) == 1
     assert result['co2SavedPercent'] == 0 and math.copysign(1,result['co2SavedPercent']) == 1
