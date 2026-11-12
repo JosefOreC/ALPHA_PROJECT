@@ -52,6 +52,7 @@ export function AppShell({ role, current, user, title, section = 'Operación', c
             EcoLogística <span>Lima</span>
           </span>
         </a>
+        <nav className="eco-side__modules" aria-label="Módulos">
         {modules.map((module) => {
           const Icon = MODULE_ICONS[module.id]
           const count = counts?.[module.id]
@@ -74,6 +75,7 @@ export function AppShell({ role, current, user, title, section = 'Operación', c
             </a>
           )
         })}
+        </nav>
         <div className="eco-side__foot">
           {co2 ? (
             <div className="eco-side__co2">
@@ -93,7 +95,7 @@ export function AppShell({ role, current, user, title, section = 'Operación', c
             </span>
             <div>{user.name}</div>
           </div>
-          {session ? <button className="eco-btn eco-btn--on-dark" type="button" onClick={() => void session.logout()}>Cerrar sesión</button> : null}
+          {session ? <button className="eco-btn eco-btn--secondary" type="button" onClick={() => void session.logout()}>Cerrar sesión</button> : null}
         </div>
       </aside>
       <div className="eco-main">

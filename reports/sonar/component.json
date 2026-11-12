@@ -1,0 +1,14 @@
+{
+  "component": {
+    "organization": "joseforec",
+    "key": "JosefOreC_ALPHA_PROJECT",
+    "name": "ALPHA_PROJECT",
+    "qualifier": "TRK",
+    "analysisDate": "2026-10-30T17:34:50+0000",
+    "tags": [],
+    "visibility": "public",
+    "leakPeriodDate": "2026-10-30T17:15:45+0000",
+    "version": "not provided"
+  },
+  "ancestors": []
+}

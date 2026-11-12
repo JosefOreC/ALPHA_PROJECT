@@ -1,0 +1,17 @@
+﻿id,rule,severity,component,line,status
+AaGN8WUfHwZRnh-VsbWJ,githubactions:S8541,MAJOR,JosefOreC_ALPHA_PROJECT:.github/workflows/sonarcloud.yml,38,OPEN
+AaGN8WUfHwZRnh-VsbWK,githubactions:S8544,MAJOR,JosefOreC_ALPHA_PROJECT:.github/workflows/sonarcloud.yml,38,OPEN
+AaGN8WUfHwZRnh-VsbWL,githubactions:S6505,MAJOR,JosefOreC_ALPHA_PROJECT:.github/workflows/sonarcloud.yml,39,OPEN
+AaGN8WUfHwZRnh-VsbWM,githubactions:S8541,MAJOR,JosefOreC_ALPHA_PROJECT:.github/workflows/sonarcloud.yml,116,OPEN
+AaGN8WUfHwZRnh-VsbWN,githubactions:S8544,MAJOR,JosefOreC_ALPHA_PROJECT:.github/workflows/sonarcloud.yml,116,OPEN
+AaGN8WUfHwZRnh-VsbWO,githubactions:S6505,MAJOR,JosefOreC_ALPHA_PROJECT:.github/workflows/sonarcloud.yml,118,OPEN
+AaGN8WTDHwZRnh-VsbWH,pythonsecurity:S8707,MAJOR,JosefOreC_ALPHA_PROJECT:scripts/check_python_coverage.py,26,OPEN
+AaGN8WUXHwZRnh-VsbWI,pythonsecurity:S2083,BLOCKER,JosefOreC_ALPHA_PROJECT:scripts/export_sonar_report.py,92,OPEN
+AaGN1K4Iui_0ctHiza7z,pythonsecurity:S8707,MAJOR,JosefOreC_ALPHA_PROJECT:src/frontend/scripts/generate-basemap-style.py,16,OPEN
+AaGN1K5Vui_0ctHiza8J,jssecurity:S8476,MINOR,JosefOreC_ALPHA_PROJECT:docs/04 Diseño/support.js,159,OPEN
+AaGN1K5Vui_0ctHiza8A,javascript:S1523,CRITICAL,JosefOreC_ALPHA_PROJECT:docs/04 Diseño/support.js,844,OPEN
+AaGN1K5Vui_0ctHiza8B,javascript:S1523,CRITICAL,JosefOreC_ALPHA_PROJECT:docs/04 Diseño/support.js,850,OPEN
+AaGN1K5Vui_0ctHiza8C,javascript:S1523,CRITICAL,JosefOreC_ALPHA_PROJECT:docs/04 Diseño/support.js,1218,OPEN
+AaGN1K5Vui_0ctHiza8D,javascript:S2819,CRITICAL,JosefOreC_ALPHA_PROJECT:docs/04 Diseño/support.js,1387,OPEN
+AaGN1K5Vui_0ctHiza8E,javascript:S2819,CRITICAL,JosefOreC_ALPHA_PROJECT:docs/04 Diseño/support.js,1407,OPEN
+AaGN1K5Vui_0ctHiza8I,javascript:S2819,CRITICAL,JosefOreC_ALPHA_PROJECT:docs/04 Diseño/support.js,1858,OPEN

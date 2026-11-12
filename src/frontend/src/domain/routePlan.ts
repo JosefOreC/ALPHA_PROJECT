@@ -1,12 +1,15 @@
-export type RouteGoal = 'co2' | 'balanced' | 'time'
+import type { GeoPoint, MapData } from './mapData'
+
+export type RouteGoal = 'co2' | 'balanced' | 'time' | 'distance'
 
 export interface RouteSettings {
   goal: RouteGoal
   respectWindows: boolean
   prioritizeLowEmission: boolean
+  returnToDepot?: boolean
 }
 
-export const DEFAULT_ROUTE_SETTINGS: RouteSettings = { goal: 'co2', respectWindows: true, prioritizeLowEmission: true }
+export const DEFAULT_ROUTE_SETTINGS: RouteSettings = { goal: 'co2', respectWindows: true, prioritizeLowEmission: true, returnToDepot: false }
 
 /** Qué se va a planificar: pedidos pendientes y flota disponible. */
 export interface PlanningScope {
@@ -15,6 +18,8 @@ export interface PlanningScope {
   availableVehicles: number
   totalVehicles: number
   vehiclesInService: number
+  unlocatedOrders?: number
+  depotAvailable?: boolean
 }
 
 /** Parada de la propuesta, en el orden en que se visita. */
@@ -37,12 +42,13 @@ export interface PlannedRoute {
   /** Ocupación de la carga, de 0 a 1. */
   load: number
   co2Kg: number
-  /** Duración estimada de la ruta, ida y vuelta al almacén. */
+  /** Duración vial estimada, con esperas, entregas y retorno si se solicita. */
   minutes?: number
   /** Huella por km del vehículo: consumo × factor de emisión. */
   co2PerKm?: number
   fuelUsed?: { amount: number; unit: string }
   sequence?: PlannedStop[]
+  path?: GeoPoint[]
 }
 
 export interface RouteProposal {
@@ -59,7 +65,11 @@ export interface RouteProposal {
   windowTarget: number
   elapsedSeconds: number
   routes: PlannedRoute[]
+  fingerprint?: string
+  mapData?: MapData
 }
+
+export interface ApprovedRoutes { routeIds: string[]; ordersAssigned: number }
 
 /** Pasos informativos del cálculo, en orden. */
 export const PLANNING_STEPS = [

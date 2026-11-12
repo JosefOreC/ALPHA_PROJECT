@@ -1,0 +1,56 @@
+{
+  "component": {
+    "id": "AaGN9unxuF0_WiLutb_S",
+    "key": "JosefOreC_ALPHA_PROJECT",
+    "name": "ALPHA_PROJECT",
+    "qualifier": "TRK",
+    "measures": [
+      {
+        "metric": "coverage",
+        "value": "94.1",
+        "bestValue": false
+      },
+      {
+        "metric": "new_line_coverage",
+        "periods": [
+          {
+            "index": 1,
+            "value": "100.0",
+            "bestValue": true
+          }
+        ]
+      },
+      {
+        "metric": "branch_coverage",
+        "value": "90.8",
+        "bestValue": false
+      },
+      {
+        "metric": "new_coverage",
+        "periods": [
+          {
+            "index": 1,
+            "value": "100.0",
+            "bestValue": true
+          }
+        ]
+      },
+      {
+        "metric": "new_branch_coverage",
+        "periods": [
+          {
+            "index": 1,
+            "value": "100.0",
+            "bestValue": true
+          }
+        ]
+      },
+      {
+        "metric": "line_coverage",
+        "value": "95.9",
+        "bestValue": false
+      }
+    ],
+    "pullRequest": "27"
+  }
+}

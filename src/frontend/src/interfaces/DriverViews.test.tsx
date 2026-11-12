@@ -49,6 +49,13 @@ describe('DriverRouteView', () => {
   const setup = (props: Partial<Parameters<typeof DriverRouteView>[0]> = {}) =>
     render(<DriverRouteView service={createDriverRoute(new DemoOrders())} mapSource={idleMap} {...props} />)
 
+  it('termina en la última entrega cuando no se solicita regresar al almacén', async () => {
+    const route = { ...await new DemoOrders().route(), return_to_depot: false }
+    setup({ service: createDriverRoute({ route: async () => route }) })
+    expect(await screen.findByText('Minimarket Don Lucho →')).toBeInTheDocument()
+    expect(screen.queryByText(/regreso al/)).toBeNull()
+  })
+
   it('muestra avance, CO₂, paradas con su estado y el resto de la ruta', async () => {
     setup()
     expect(await screen.findByText('Minimarket Don Lucho →')).toBeInTheDocument()

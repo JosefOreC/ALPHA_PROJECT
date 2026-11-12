@@ -1,0 +1,28 @@
+{
+  "branches": [
+    {
+      "name": "main",
+      "isMain": true,
+      "type": "LONG",
+      "status": {
+        "qualityGateStatus": "OK",
+        "bugs": 5,
+        "vulnerabilities": 8,
+        "codeSmells": 21
+      },
+      "analysisDate": "2026-10-30T17:34:50+0000",
+      "commit": {
+        "sha": "d36441fc4254ac9865dab6daa5bfc8dfa29ff71e",
+        "author": {
+          "name": "VALENTINO JHAN PIERRE ROJAS CAMAYO",
+          "login": "ValeRojas1-6n1Tp@github",
+          "avatar": "5da9e118356f5a04977984a2c1284844"
+        },
+        "date": "2026-10-30T17:34:44+0000",
+        "message": "docs: preparar matriz OWASP Top 10 2025 del Sprint 3"
+      },
+      "branchId": "bea7f111-f6ff-44cc-8116-faf8b4342940",
+      "branchUuidV1": "AaGNz1eW8JWW6OUFv_Te"
+    }
+  ]
+}

@@ -18,9 +18,7 @@ beforeAll(() => {
   }
 })
 
-// Mapa inactivo: no resuelve nunca, así estas pruebas no dibujan Leaflet (se prueba aparte en RouteMap.test).
-const idleMap = { load: () => new Promise<never>(() => {}) }
-const setup = () => render(<OrderManagementView service={createManagement(new DemoManagement())} demo mapSource={idleMap} />)
+const setup = () => render(<OrderManagementView service={createManagement(new DemoManagement())} />)
 
 describe('formateo', () => {
   it('muestra la ventana en hora de Lima y 24 h', () => {
@@ -44,16 +42,17 @@ describe('OrderManagementView', () => {
     expect(screen.getByText('Planificador')).toBeInTheDocument()
     expect(screen.getByRole('link', { name: /Flota/ })).toBeInTheDocument()
     expect(screen.queryByRole('link', { name: /Administración/ })).toBeNull()
-    expect(screen.getByRole('region', { name: 'Resumen de pedidos' })).toHaveTextContent('6en 4 rutas')
+    expect(screen.getByRole('heading', { name:'Gestión de pedidos' })).toBeVisible()
+    expect(screen.getByRole('region', { name: 'Resumen de pedidos' })).toHaveTextContent('6en reparto')
     expect(screen.getByText('PED-0026')).toBeInTheDocument()
     expect(screen.getByText('de 12 pedidos')).toBeInTheDocument()
   })
 
-  it('el buscador filtra por placa y por distrito, y muestra el estado vacío', async () => {
+  it('el buscador filtra por cliente y por distrito, y muestra el estado vacío', async () => {
     const user = userEvent.setup()
     setup()
     await screen.findByText('PED-0026')
-    await user.type(screen.getByRole('searchbox', { name: 'Buscar pedidos' }), 'fhj-890')
+    await user.type(screen.getByRole('searchbox', { name: 'Buscar pedidos' }), 'farmacia')
     expect(screen.getByText('PED-0044')).toBeInTheDocument()
     expect(screen.queryByText('PED-0026')).toBeNull()
     await user.clear(screen.getByRole('searchbox', { name: 'Buscar pedidos' }))
@@ -86,10 +85,10 @@ describe('OrderManagementView', () => {
     await user.click(screen.getByRole('row', { name: /PED-0026/ }))
     const detail = screen.getByRole('article', { name: 'Detalle del pedido seleccionado' })
     expect(within(detail).getByRole('heading', { name: 'Minimarket Don Lucho' })).toBeInTheDocument()
-    expect(detail).toHaveTextContent('ABC-123 · Luis Huamán')
+    expect(detail).toHaveTextContent('Av. Próceres 1450')
     expect(within(detail).queryByRole('button', { name: 'Cancelar pedido' })).toBeNull()
     expect(within(detail).getByText('Este pedido ya no se puede modificar.')).toBeInTheDocument()
-    expect(within(detail).getByRole('button', { name: 'Seguir en el mapa' })).toBeInTheDocument()
+    expect(within(detail).queryByRole('button', { name: 'Seguir en el mapa' })).toBeNull()
   })
 
   it('cancelar un pedido pendiente pide confirmación y conserva el historial', async () => {
@@ -108,16 +107,14 @@ describe('OrderManagementView', () => {
     expect(await screen.findByText('PED-0024')).toBeInTheDocument()
   })
 
-  it('el selector de vista conmuta lista, lista + mapa y mapa', async () => {
-    const user = userEvent.setup()
+  it('gestiona pedidos sin controles de generación, mapas ni métricas de rutas', async () => {
     setup()
     await screen.findByText('PED-0026')
-    expect(screen.getByRole('group', { name: /Mapa de rutas/ })).toBeInTheDocument()
-    await user.click(screen.getByRole('button', { name: 'Lista', pressed: false }))
     expect(screen.queryByRole('group', { name: /Mapa de rutas/ })).toBeNull()
-    await user.click(screen.getByRole('button', { name: 'Mapa', pressed: false }))
-    expect(screen.queryByRole('region', { name: 'Lista de pedidos' })).toBeNull()
-    expect(screen.getByRole('group', { name: /Mapa de rutas/ })).toBeInTheDocument()
+    expect(screen.getByRole('region', { name: 'Lista de pedidos' })).toBeVisible()
+    expect(screen.queryByRole('button', {name:'Generar rutas'})).toBeNull()
+    expect(screen.queryByRole('link', {name:'Generar rutas'})).toBeNull()
+    expect(screen.queryByText('Huella por pedido')).toBeNull()
   })
 
   it('registrar un pedido valida y agrega el pedido a la lista', async () => {

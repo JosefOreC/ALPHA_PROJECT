@@ -12,7 +12,7 @@ test('la URL y una preferencia demo no elevan los permisos de un auditor en modo
   await expect(page.getByRole('combobox', { name: 'Usuario de demostración' })).toHaveCount(0)
   expect(dashboardCalls).toBe(0)
   await page.getByRole('button', { name: 'Ir a mi inicio' }).click()
-  await expect(page.getByRole('heading', { name: 'Pedidos y rutas' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Gestión de pedidos' })).toBeVisible()
   await expect(page.getByRole('button', { name: /Registrar pedido|Editar pedido|Cancelar pedido/ })).toHaveCount(0)
   await expect(page.getByRole('group', { name: /Mapa/ })).toHaveCount(0)
   await expect(page.getByRole('link', { name: /Auditoría/ })).toBeVisible()
@@ -41,7 +41,7 @@ test('el planificador consulta parámetros y el administrador no obtiene control
   await page.unroute('**/api/session')
   await session(page, 'admin')
   await page.goto('/?vista=rutas')
-  await expect(page.getByRole('heading', { name: 'Rutas del día' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Gestión de rutas' })).toBeVisible()
   await expect(page.getByRole('button', { name: /Generar/ })).toHaveCount(0)
 })
 

@@ -37,6 +37,8 @@ it.each(['orders','routes','vehicles'] as const)('ofrece una lista accesible si 
   render(<RouteMap source={source()} profile={profile} />)
   fireEvent.click(await screen.findByRole('button',{name:'Fallar cartografía'}))
   expect(await screen.findByText('Cartografía no disponible',{exact:false})).toBeVisible()
+  expect(screen.getByText('Cartografía simulada')).toBeVisible()
+  expect(screen.getByRole('group',{name:'Mapa de rutas de Lima Este'})).toBeVisible()
   const label=profile==='orders' ? /p1/ : profile==='routes' ? /r1/ : /v1/
   const pick=screen.getByRole('button',{name:label})
   fireEvent.click(pick)

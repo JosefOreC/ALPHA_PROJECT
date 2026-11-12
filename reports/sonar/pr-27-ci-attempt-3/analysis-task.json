@@ -1,0 +1,24 @@
+{
+  "task": {
+    "id": "AaGOKR0tuF0_WiLutffU",
+    "type": "REPORT",
+    "componentId": "AaGN9unxuF0_WiLutb_S",
+    "componentKey": "JosefOreC_ALPHA_PROJECT",
+    "componentName": "ALPHA_PROJECT",
+    "componentQualifier": "TRK",
+    "analysisId": "aa683391-5607-478e-9138-905441b99644",
+    "status": "SUCCESS",
+    "submittedAt": "2026-10-30T18:53:41+0000",
+    "submitterLogin": "JosefOreC-I2NHD@github",
+    "startedAt": "2026-10-30T18:53:41+0000",
+    "executedAt": "2026-10-30T18:53:48+0000",
+    "executionTimeMs": 6543,
+    "logs": false,
+    "hasScannerContext": true,
+    "organization": "joseforec",
+    "pullRequest": "27",
+    "warningCount": 1,
+    "warnings": []
+  },
+  "source": "GitHub artifact sonar-evidence-41107004270-3"
+}

@@ -2,26 +2,20 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import type { Management } from '../application/manageOrders'
 import { TAB_ORDER, filterOrders, groupByStatus, summarize, tabCounts } from '../application/orderBoard'
 import type { StatusTab } from '../application/orderBoard'
-import { formatDecimal } from '../domain/format'
 import { districts, formatWindow, statusLabels } from '../domain/managedOrder'
 import type { ManagedOrder, OrderPermissions } from '../domain/managedOrder'
-import type { MapDataSource } from '../domain/ports/mapDataSource'
-import { AppShell, Banner, HojaCo2Icon, List, ListGroup, ListRow, PaqueteIcon, Panel, PanelCell, PlusIcon, RutaIcon, SearchInput, TripStatus, VentanaIcon } from '../shared/ui'
+import { AppShell, Banner, List, ListGroup, ListRow, PaqueteIcon, Panel, PanelCell, PlusIcon, SearchInput, TripStatus } from '../shared/ui'
 import type { ModuleId } from '../shared/ui'
 import { OrderForm } from './OrderForm'
 import { CancelDialog } from './orders/CancelDialog'
-import { RouteMap } from './map/RouteMap'
 import { OrderDetail } from './orders/OrderDetail'
 import { tripOf } from './orders/tripState'
-import { can } from '../domain/accessControl'
-import { useActor, useSession } from './session/SessionState'
 
 type Screen = 'board' | 'create' | 'edit'
-type Layout = 'list' | 'split' | 'map'
 
 const PAGE_SIZE = 100
 const MAX_PAGES = 20
-const ROW_COLUMNS = '80px minmax(0, 1fr) 92px 74px'
+const ROW_COLUMNS = '100px minmax(0, 1fr) 110px'
 const TAB_LABELS: Record<StatusTab, string> = { ALL: 'Todos', PENDIENTE: 'Pendientes', EN_CAMINO: 'En camino', ENTREGADO: 'Entregados', CANCELADO: 'Cancelados' }
 const SESSION_USER = { name: 'Planificación', initials: 'PL' }
 
@@ -37,10 +31,7 @@ async function loadAll(service: Management): Promise<ManagedOrder[]> {
 
 const message = (reason: unknown, fallback: string) => (reason instanceof Error ? reason.message : fallback)
 
-export function OrderManagementView({ service, mapSource, onNavigate }: { service: Management; demo?: boolean; mapSource: MapDataSource; onNavigate?: (id: ModuleId, href: string) => void }) {
-  const role = useActor('planner')
-  const session = useSession()
-  const mapAllowed = can(role, 'map.read')
+export function OrderManagementView({ service, onNavigate }: { service: Management; onNavigate?: (id: ModuleId, href: string) => void }) {
   const [screen, setScreen] = useState<Screen>('board')
   const [orders, setOrders] = useState<ManagedOrder[]>([])
   const [permissions, setPermissions] = useState<OrderPermissions>({ can_write: false })
@@ -48,7 +39,6 @@ export function OrderManagementView({ service, mapSource, onNavigate }: { servic
   const [query, setQuery] = useState('')
   const [tab, setTab] = useState<StatusTab>('ALL')
   const [district, setDistrict] = useState('')
-  const [layout, setLayout] = useState<Layout>('split')
   const [closed, setClosed] = useState<Record<string, boolean>>({})
   const [reload, setReload] = useState(0)
   const [loading, setLoading] = useState(true)
@@ -118,7 +108,7 @@ export function OrderManagementView({ service, mapSource, onNavigate }: { servic
     setBusy(true)
     try {
       const fresh = await service.view(order.id)
-      if (request === detailRequest.current) setOrders(current => current.map(item => (item.id === fresh.id ? { ...fresh, tracking: item.tracking } : item)))
+      if (request === detailRequest.current) setOrders(current => current.map(item => (item.id === fresh.id ? fresh : item)))
     } catch (reason) {
       if (request === detailRequest.current) setError(message(reason, 'No se pudo consultar el pedido.'))
     } finally {
@@ -162,8 +152,6 @@ export function OrderManagementView({ service, mapSource, onNavigate }: { servic
     setNotice('')
     refresh()
   }
-  const showList = layout !== 'map'
-  const showMap = mapAllowed && layout !== 'list'
   const filtered = Boolean(query.trim() || tab !== 'ALL' || district)
 
   const actions = (
@@ -174,18 +162,14 @@ export function OrderManagementView({ service, mapSource, onNavigate }: { servic
           Registrar pedido
         </button>
       ) : null}
-      <a className="eco-btn" href="/?vista=rutas" onClick={event => { if (onNavigate) { event.preventDefault(); onNavigate('rutas', '/?vista=rutas') } }}>
-        <RutaIcon />
-        Generar rutas
-      </a>
     </>
   )
 
   return (
-    <AppShell role="planner" current="pedidos" user={SESSION_USER} title="Pedidos y rutas" actions={actions} onNavigate={onNavigate}>
+    <AppShell role="planner" current="pedidos" user={SESSION_USER} title="Gestión de pedidos" actions={actions} onNavigate={onNavigate}>
       <div ref={heading} tabIndex={-1} className="eco-focus-target">
-        <h1 className="eco-h1">{screen === 'board' ? 'Pedidos y rutas' : screen === 'create' ? 'Registrar pedido' : 'Editar pedido'}</h1>
-        <p className="eco-sub">Lima Este · horas de Lima</p>
+        <h1 className="eco-h1">{screen === 'board' ? 'Gestión de pedidos' : screen === 'create' ? 'Registrar pedido' : 'Editar pedido'}</h1>
+        <p className="eco-sub">Registro, edición y consulta de pedidos · Lima Este · horas de Lima</p>
       </div>
       {notice ? <Banner tone="success">{notice}</Banner> : null}
       {error ? (
@@ -204,33 +188,24 @@ export function OrderManagementView({ service, mapSource, onNavigate }: { servic
             <PanelCell
               label={<TripStatus status="pending" label="Pendientes" />}
               value={summary.pending}
-              unit="sin conductor"
-              note="Entran en la próxima generación de rutas"
+              unit="pendientes de envío"
+              note="Revisa los datos de entrega antes de planificar"
             />
             <PanelCell
               label={<TripStatus status="transit" label="En camino" />}
               value={summary.inTransit}
-              unit={`en ${summary.routes} ${summary.routes === 1 ? 'ruta' : 'rutas'}`}
-              note="Con conductor y vehículo asignados"
+              unit="en reparto"
+              note="Pedidos enviados a su destino"
             />
             <PanelCell
               label={<TripStatus status="delivered" label="Entregados" />}
               value={summary.delivered}
-              unit="hoy"
-              note={`${summary.cancelled} ${summary.cancelled === 1 ? 'cancelado' : 'cancelados'}`}
+              unit="con entrega confirmada"
             />
             <PanelCell
-              label={<><VentanaIcon />Ventana en riesgo</>}
-              value={<span className={summary.atRisk.length ? 'eco-panel__value--danger' : undefined}>{summary.atRisk.length}</span>}
-              unit="pedidos en camino"
-              note={summary.atRisk.length ? summary.atRisk.join(' · ') : 'Ninguno por ahora'}
-            />
-            <PanelCell
-              label={<><HojaCo2Icon />Huella por pedido</>}
-              value={summary.averageCo2Kg === null ? '—' : formatDecimal(summary.averageCo2Kg, 2)}
-              unit="kg CO₂"
-              note={summary.averageCo2Kg === null ? 'Sin datos de ruta' : 'Promedio de los pedidos no cancelados'}
-              eco
+              label={<TripStatus status="cancelled" label="Cancelados" />}
+              value={summary.cancelled}
+              unit="con historial conservado"
             />
           </Panel>
 
@@ -239,7 +214,7 @@ export function OrderManagementView({ service, mapSource, onNavigate }: { servic
               label="Buscar pedidos"
               value={query}
               onChange={setQuery}
-              placeholder="Buscar por pedido, cliente, distrito o placa · ej. «Santa Anita» o «ABC-123»"
+              placeholder="Buscar por pedido, cliente, dirección o distrito"
               shortcut="/"
               id="order-search"
             />
@@ -261,11 +236,6 @@ export function OrderManagementView({ service, mapSource, onNavigate }: { servic
               <span className="eco-search__meta eco-toolbar__end">
                 <strong>{visible.length}</strong> de {orders.length} pedidos
               </span>
-              <div className="eco-seg-ctrl" role="group" aria-label="Vista">
-                <button type="button" aria-pressed={layout === 'list'} onClick={() => setLayout('list')}>Lista</button>
-                {mapAllowed ? <><button type="button" aria-pressed={layout === 'split'} onClick={() => setLayout('split')}>Lista + mapa</button>
-                <button type="button" aria-pressed={layout === 'map'} onClick={() => setLayout('map')}>Mapa</button></> : null}
-              </div>
             </div>
           </section>
 
@@ -273,7 +243,6 @@ export function OrderManagementView({ service, mapSource, onNavigate }: { servic
 
           {!loading && !error ? (
             <div className="eco-board">
-              {showList ? (
                 <section className="eco-board__list" aria-label="Lista de pedidos">
                   {visible.length === 0 ? (
                     <Banner
@@ -281,7 +250,7 @@ export function OrderManagementView({ service, mapSource, onNavigate }: { servic
                       title={filtered ? 'Sin resultados.' : 'No hay pedidos registrados.'}
                       action={filtered ? <button className="eco-btn eco-btn--secondary" type="button" onClick={() => { setQuery(''); setTab('ALL'); setDistrict('') }}>Limpiar filtros</button> : undefined}
                     >
-                      {filtered ? 'Prueba con un distrito, una placa o un número de pedido.' : 'Los pedidos nuevos aparecerán aquí.'}
+                      {filtered ? 'Prueba con un distrito, un cliente o un número de pedido.' : 'Los pedidos nuevos aparecerán aquí.'}
                     </Banner>
                   ) : null}
                   <div className="eco-list-scroll">
@@ -296,16 +265,14 @@ export function OrderManagementView({ service, mapSource, onNavigate }: { servic
                         >
                           {group.orders.map(order => (
                             <ListRow key={order.id} columns={ROW_COLUMNS} twoLines selected={order.id === selected?.id} onSelect={() => setSelectedId(order.id)}>
-                              <span className="eco-code">{order.id}</span>
+                              <span className="eco-code" title={order.id}>{order.id}</span>
                               <span className="eco-row__cell">
                                 <span className="eco-row__title">{order.customer}</span>
                                 <span className="eco-row__sub">
                                   {order.district}
-                                  {order.tracking?.note ? ` · ${order.tracking.note}` : ''}
                                 </span>
                               </span>
                               <span className="eco-code">{formatWindow(order.window_start, order.window_end)}</span>
-                              <span className="eco-code eco-muted">{order.tracking?.plate ?? '—'}</span>
                             </ListRow>
                           ))}
                         </ListGroup>
@@ -313,12 +280,8 @@ export function OrderManagementView({ service, mapSource, onNavigate }: { servic
                     </List>
                   </div>
                 </section>
-              ) : null}
 
-              <section className="eco-board__side" aria-label="Mapa y detalle">
-                {showMap ? <RouteMap source={mapSource} profile={role === 'driver' ? 'driver' : 'operations'} scopePlate={role === 'driver' ? session?.user?.plate ?? '' : undefined}
-                  selectedId={selected?.id} query={query} onQueryChange={setQuery} orderStatus={tab} onOrderStatusChange={setTab} district={district}
-                  onClearFilters={() => { setQuery(''); setTab('ALL'); setDistrict('') }} onSelect={setSelectedId} /> : null}
+              <section className="eco-board__side" aria-label="Detalle del pedido">
                 {selected ? (
                   <OrderDetail
                     order={selected}
@@ -326,7 +289,6 @@ export function OrderManagementView({ service, mapSource, onNavigate }: { servic
                     busy={busy}
                     onEdit={() => { setNotice(''); setSelectedId(selected.id); setScreen('edit') }}
                     onCancel={() => openCancel(selected)}
-                    onFollow={() => setLayout(current => (current === 'list' ? 'split' : current))}
                     onRefresh={() => void reconsult(selected)}
                   />
                 ) : null}

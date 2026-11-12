@@ -1,0 +1,15 @@
+Estado actualizado del 30/10/2026
+
+El analisis de main / 155a99a tiene 16 vulnerabilidades y Quality Gate ERROR por seguridad en codigo nuevo.
+La evidencia actual se encuentra en sonar/analysis-155a99a/.
+El informe conserva por separado el snapshot anterior d36441f (8 vulnerabilidades).
+
+Las correcciones estan publicadas en el PR https://github.com/JosefOreC/ALPHA_PROJECT/pull/27.
+Se verificaron 378 pruebas Python y 441 frontend con cobertura superior al 90%, instalacion Python con hashes, y npm sin lifecycle scripts.
+No hay vulnerabilidades conocidas en el entorno Python CI aislado segun pip-audit.
+El estado verde de Sonar todavia no se ha confirmado con un analisis del codigo corregido.
+
+Token: https://sonarcloud.io/account/security -> Generate Token.
+Copiar su valor directamente en https://github.com/JosefOreC/ALPHA_PROJECT/settings/secrets/actions como SONAR_TOKEN.
+El token no es la project key JosefOreC_ALPHA_PROJECT ni la organizacion joseforec.
+La ejecucion anterior del PR indica que falta el secret. No compartir su valor en el chat ni en el repositorio.

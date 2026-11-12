@@ -1,0 +1,1831 @@
+{
+  "total": 34,
+  "p": 1,
+  "ps": 100,
+  "paging": {
+    "pageIndex": 1,
+    "pageSize": 100,
+    "total": 34
+  },
+  "effortTotal": 452,
+  "debtTotal": 452,
+  "issues": [
+    {
+      "key": "AaGN1K4Rui_0ctHiza71",
+      "rule": "python:S8786",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:scripts/check_docs.py",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "line": 52,
+      "hash": "4dd03fc2ad349e70a66820b332dbd733",
+      "textRange": {
+        "startLine": 52,
+        "endLine": 52,
+        "startOffset": 28,
+        "endOffset": 61
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Simplify this regular expression to reduce its runtime, as it has super-linear performance due to backtracking.",
+      "effort": "20min",
+      "debt": "20min",
+      "tags": [
+        "performance",
+        "regex"
+      ],
+      "creationDate": "2026-10-30T04:40:54+0000",
+      "updateDate": "2026-10-30T17:15:45+0000",
+      "type": "CODE_SMELL",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "EFFICIENT",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "projectName": "ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "1599900d-f6ca-4745-8729-af50b6eeef6e",
+      "lastChangeSource": "ANALYSIS"
+    },
+    {
+      "key": "AaGN1K4Rui_0ctHiza72",
+      "rule": "python:S8786",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:scripts/check_docs.py",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "line": 72,
+      "hash": "d0030b1ebe11f3ce298e8d4fb023482c",
+      "textRange": {
+        "startLine": 72,
+        "endLine": 72,
+        "startOffset": 20,
+        "endOffset": 31
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Simplify this regular expression to reduce its runtime, as it has super-linear performance due to backtracking.",
+      "effort": "20min",
+      "debt": "20min",
+      "tags": [
+        "performance",
+        "regex"
+      ],
+      "creationDate": "2026-10-30T04:40:54+0000",
+      "updateDate": "2026-10-30T17:15:45+0000",
+      "type": "CODE_SMELL",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "EFFICIENT",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "projectName": "ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "1599900d-f6ca-4745-8729-af50b6eeef6e",
+      "lastChangeSource": "ANALYSIS"
+    },
+    {
+      "key": "AaGN1K4Rui_0ctHiza73",
+      "rule": "python:S5850",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:scripts/check_docs.py",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "line": 156,
+      "hash": "ac0d1c78a60e92d2fbfc45d60f9b29ae",
+      "textRange": {
+        "startLine": 156,
+        "endLine": 156,
+        "startOffset": 28,
+        "endOffset": 57
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Group parts of the regex together to make the intended operator precedence explicit.",
+      "effort": "10min",
+      "debt": "10min",
+      "tags": [
+        "regex"
+      ],
+      "creationDate": "2026-10-30T04:40:54+0000",
+      "updateDate": "2026-10-30T17:15:45+0000",
+      "type": "BUG",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "projectName": "ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "1599900d-f6ca-4745-8729-af50b6eeef6e",
+      "lastChangeSource": "ANALYSIS"
+    },
+    {
+      "key": "AaGN1K4Rui_0ctHiza74",
+      "rule": "python:S8786",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:scripts/check_docs.py",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "line": 156,
+      "hash": "ac0d1c78a60e92d2fbfc45d60f9b29ae",
+      "textRange": {
+        "startLine": 156,
+        "endLine": 156,
+        "startOffset": 28,
+        "endOffset": 57
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Simplify this regular expression to reduce its runtime, as it has super-linear performance due to backtracking.",
+      "effort": "20min",
+      "debt": "20min",
+      "tags": [
+        "performance",
+        "regex"
+      ],
+      "creationDate": "2026-10-30T04:40:54+0000",
+      "updateDate": "2026-10-30T17:15:45+0000",
+      "type": "CODE_SMELL",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "EFFICIENT",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "projectName": "ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "1599900d-f6ca-4745-8729-af50b6eeef6e",
+      "lastChangeSource": "ANALYSIS"
+    },
+    {
+      "key": "AaGN1K4xui_0ctHiza75",
+      "rule": "python:S8786",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:scripts/create_admin.py",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "line": 38,
+      "hash": "dc012e445c313eeaaca32a3805c3ca0e",
+      "textRange": {
+        "startLine": 38,
+        "endLine": 38,
+        "startOffset": 30,
+        "endOffset": 54
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Simplify this regular expression to reduce its runtime, as it has super-linear performance due to backtracking.",
+      "effort": "20min",
+      "debt": "20min",
+      "assignee": "JosefOreC-I2NHD@github",
+      "tags": [
+        "performance",
+        "regex"
+      ],
+      "creationDate": "2026-10-09T18:05:40+0000",
+      "updateDate": "2026-10-30T17:15:45+0000",
+      "type": "CODE_SMELL",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "EFFICIENT",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "projectName": "ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "1599900d-f6ca-4745-8729-af50b6eeef6e",
+      "lastChangeSource": "ANALYSIS"
+    },
+    {
+      "key": "AaGN1K1Uui_0ctHiza7o",
+      "rule": "python:S8786",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:src/backend/interfaces/api/portal/router.py",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "line": 31,
+      "hash": "cc0475965083967736c66538491a80b8",
+      "textRange": {
+        "startLine": 31,
+        "endLine": 31,
+        "startOffset": 30,
+        "endOffset": 54
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Simplify this regular expression to reduce its runtime, as it has super-linear performance due to backtracking.",
+      "effort": "20min",
+      "debt": "20min",
+      "assignee": "JosefOreC-I2NHD@github",
+      "tags": [
+        "performance",
+        "regex"
+      ],
+      "creationDate": "2026-10-09T18:05:40+0000",
+      "updateDate": "2026-10-30T17:15:45+0000",
+      "type": "CODE_SMELL",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "EFFICIENT",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "projectName": "ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "1599900d-f6ca-4745-8729-af50b6eeef6e",
+      "lastChangeSource": "ANALYSIS"
+    },
+    {
+      "key": "AaGN1K4Iui_0ctHiza7z",
+      "rule": "pythonsecurity:S8707",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:src/frontend/scripts/generate-basemap-style.py",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "line": 16,
+      "hash": "1216288678297185a3d56593682d9d22",
+      "textRange": {
+        "startLine": 16,
+        "endLine": 16,
+        "startOffset": 19,
+        "endOffset": 64
+      },
+      "flows": [
+        {
+          "locations": [
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/scripts/generate-basemap-style.py",
+              "textRange": {
+                "startLine": 16,
+                "endLine": 16,
+                "startOffset": 19,
+                "endOffset": 64
+              },
+              "msg": "Sink: this invocation is not safe; a malicious value can be injected into the caller"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/scripts/generate-basemap-style.py",
+              "textRange": {
+                "startLine": 16,
+                "endLine": 16,
+                "startOffset": 19,
+                "endOffset": 36
+              },
+              "msg": "This invocation can propagate malicious content to its return value"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/scripts/generate-basemap-style.py",
+              "textRange": {
+                "startLine": 16,
+                "endLine": 16,
+                "startOffset": 24,
+                "endOffset": 35
+              },
+              "msg": "A malicious value was previously assigned to this data structure"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/scripts/generate-basemap-style.py",
+              "textRange": {
+                "startLine": 16,
+                "endLine": 16,
+                "startOffset": 24,
+                "endOffset": 32
+              },
+              "msg": "Source: a user can craft an HTTP request with malicious content"
+            }
+          ]
+        }
+      ],
+      "status": "OPEN",
+      "message": "Path Traversal via command-line argument",
+      "effort": "30min",
+      "debt": "30min",
+      "assignee": "JosefOreC-I2NHD@github",
+      "tags": [
+        "cwe"
+      ],
+      "creationDate": "2026-10-09T08:53:59+0000",
+      "updateDate": "2026-10-30T17:15:45+0000",
+      "type": "VULNERABILITY",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "COMPLETE",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "SECURITY",
+          "severity": "HIGH"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "projectName": "ALPHA_PROJECT",
+      "internalTags": [
+        "taint"
+      ],
+      "lastChangeAnalysisUuid": "1599900d-f6ca-4745-8729-af50b6eeef6e",
+      "lastChangeSource": "ANALYSIS"
+    },
+    {
+      "key": "AaGN1K4Iui_0ctHiza7y",
+      "rule": "python:S8786",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:src/frontend/scripts/generate-basemap-style.py",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "line": 18,
+      "hash": "8904da0c3934d1aebe3d0328e79bb9f4",
+      "textRange": {
+        "startLine": 18,
+        "endLine": 18,
+        "startOffset": 28,
+        "endOffset": 59
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Simplify this regular expression to reduce its runtime, as it has super-linear performance due to backtracking.",
+      "effort": "20min",
+      "debt": "20min",
+      "assignee": "JosefOreC-I2NHD@github",
+      "tags": [
+        "performance",
+        "regex"
+      ],
+      "creationDate": "2026-10-09T08:53:59+0000",
+      "updateDate": "2026-10-30T17:15:45+0000",
+      "type": "CODE_SMELL",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "EFFICIENT",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "projectName": "ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "1599900d-f6ca-4745-8729-af50b6eeef6e",
+      "lastChangeSource": "ANALYSIS"
+    },
+    {
+      "key": "AaGN1K3rui_0ctHiza7r",
+      "rule": "typescript:S6848",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/interfaces/map/RouteMap.tsx",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "line": 139,
+      "hash": "00222cd1efa9c7af6f21956e4cb7e1f2",
+      "textRange": {
+        "startLine": 139,
+        "endLine": 141,
+        "startOffset": 27,
+        "endOffset": 9
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Avoid non-native interactive elements. If using native HTML is not possible, add an appropriate role and support for tabbing, mouse, keyboard, and touch inputs to an interactive content element.",
+      "effort": "5min",
+      "debt": "5min",
+      "assignee": "JosefOreC-I2NHD@github",
+      "tags": [
+        "accessibility",
+        "react"
+      ],
+      "creationDate": "2026-10-09T08:53:59+0000",
+      "updateDate": "2026-10-30T17:15:45+0000",
+      "type": "CODE_SMELL",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        },
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "projectName": "ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "1599900d-f6ca-4745-8729-af50b6eeef6e",
+      "lastChangeSource": "ANALYSIS"
+    },
+    {
+      "key": "AaGN1K31ui_0ctHiza7u",
+      "rule": "typescript:S8786",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/features/dashboard/ui/format.ts",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "line": 3,
+      "hash": "c1949cf571cc23c4772dc8eddb1b6601",
+      "textRange": {
+        "startLine": 3,
+        "endLine": 3,
+        "startOffset": 25,
+        "endOffset": 48
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Simplify this regular expression to reduce its runtime, as it has super-linear performance due to backtracking.",
+      "effort": "20min",
+      "debt": "20min",
+      "tags": [
+        "performance",
+        "regex"
+      ],
+      "creationDate": "2026-10-07T01:22:41+0000",
+      "updateDate": "2026-10-30T17:15:45+0000",
+      "type": "CODE_SMELL",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "EFFICIENT",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "projectName": "ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "1599900d-f6ca-4745-8729-af50b6eeef6e",
+      "lastChangeSource": "ANALYSIS"
+    },
+    {
+      "key": "AaGN1K4Cui_0ctHiza7w",
+      "rule": "typescript:S7773",
+      "severity": "MINOR",
+      "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/application/fleetBoard.ts",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "line": 86,
+      "hash": "666fca0fe0a3946a469752b1bc876510",
+      "textRange": {
+        "startLine": 86,
+        "endLine": 86,
+        "startOffset": 13,
+        "endOffset": 23
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `Number.parseFloat` over `parseFloat`.",
+      "effort": "2min",
+      "debt": "2min",
+      "tags": [
+        "convention",
+        "editable-source",
+        "es2015"
+      ],
+      "creationDate": "2026-10-07T00:53:19+0000",
+      "updateDate": "2026-10-30T17:15:45+0000",
+      "type": "CODE_SMELL",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        },
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "projectName": "ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "1599900d-f6ca-4745-8729-af50b6eeef6e",
+      "lastChangeSource": "ANALYSIS"
+    },
+    {
+      "key": "AaGN1K4Cui_0ctHiza7x",
+      "rule": "typescript:S7773",
+      "severity": "MINOR",
+      "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/application/fleetBoard.ts",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "line": 89,
+      "hash": "ff84ba2ee0313b6792c3577a0207187c",
+      "textRange": {
+        "startLine": 89,
+        "endLine": 89,
+        "startOffset": 15,
+        "endOffset": 25
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `Number.parseFloat` over `parseFloat`.",
+      "effort": "2min",
+      "debt": "2min",
+      "tags": [
+        "convention",
+        "editable-source",
+        "es2015"
+      ],
+      "creationDate": "2026-10-07T00:53:19+0000",
+      "updateDate": "2026-10-30T17:15:45+0000",
+      "type": "CODE_SMELL",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        },
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "projectName": "ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "1599900d-f6ca-4745-8729-af50b6eeef6e",
+      "lastChangeSource": "ANALYSIS"
+    },
+    {
+      "key": "AaGN1K3tui_0ctHiza7s",
+      "rule": "typescript:S7773",
+      "severity": "MINOR",
+      "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/interfaces/fleet/VehicleDialog.tsx",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "line": 76,
+      "hash": "07802d23ce7e7600b78685d285080e85",
+      "textRange": {
+        "startLine": 76,
+        "endLine": 76,
+        "startOffset": 20,
+        "endOffset": 30
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `Number.parseFloat` over `parseFloat`.",
+      "effort": "2min",
+      "debt": "2min",
+      "tags": [
+        "convention",
+        "editable-source",
+        "es2015"
+      ],
+      "creationDate": "2026-10-07T00:53:19+0000",
+      "updateDate": "2026-10-30T17:15:45+0000",
+      "type": "CODE_SMELL",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        },
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "projectName": "ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "1599900d-f6ca-4745-8729-af50b6eeef6e",
+      "lastChangeSource": "ANALYSIS"
+    },
+    {
+      "key": "AaGN1K3tui_0ctHiza7t",
+      "rule": "typescript:S7773",
+      "severity": "MINOR",
+      "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/interfaces/fleet/VehicleDialog.tsx",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "line": 77,
+      "hash": "a4b7fae9e27f06fa0f3f7cee5c75d362",
+      "textRange": {
+        "startLine": 77,
+        "endLine": 77,
+        "startOffset": 34,
+        "endOffset": 44
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `Number.parseFloat` over `parseFloat`.",
+      "effort": "2min",
+      "debt": "2min",
+      "tags": [
+        "convention",
+        "editable-source",
+        "es2015"
+      ],
+      "creationDate": "2026-10-07T00:53:19+0000",
+      "updateDate": "2026-10-30T17:15:45+0000",
+      "type": "CODE_SMELL",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        },
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "projectName": "ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "1599900d-f6ca-4745-8729-af50b6eeef6e",
+      "lastChangeSource": "ANALYSIS"
+    },
+    {
+      "key": "AaGN1K3_ui_0ctHiza7v",
+      "rule": "typescript:S8786",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/domain/format.ts",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "line": 4,
+      "hash": "17deb9579d3a522ce2ffc1e4e3c4f4b2",
+      "textRange": {
+        "startLine": 4,
+        "endLine": 4,
+        "startOffset": 34,
+        "endOffset": 57
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Simplify this regular expression to reduce its runtime, as it has super-linear performance due to backtracking.",
+      "effort": "20min",
+      "debt": "20min",
+      "tags": [
+        "performance",
+        "regex"
+      ],
+      "creationDate": "2026-10-07T00:47:37+0000",
+      "updateDate": "2026-10-30T17:15:45+0000",
+      "type": "CODE_SMELL",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "EFFICIENT",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "projectName": "ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "1599900d-f6ca-4745-8729-af50b6eeef6e",
+      "lastChangeSource": "ANALYSIS"
+    },
+    {
+      "key": "AaGN1K4Oui_0ctHiza70",
+      "rule": "css:S9424",
+      "severity": "BLOCKER",
+      "component": "JosefOreC_ALPHA_PROJECT:ecologistica-ui/design-system/eco.css",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "line": 99,
+      "hash": "4a19d2dc72c9aedacf37942690a0366d",
+      "textRange": {
+        "startLine": 99,
+        "endLine": 99,
+        "startOffset": 31,
+        "endOffset": 32
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Unknown value \"5\" for property \"r\"",
+      "effort": "5min",
+      "debt": "5min",
+      "tags": [],
+      "creationDate": "2026-10-07T00:37:36+0000",
+      "updateDate": "2026-10-30T17:15:45+0000",
+      "type": "BUG",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "LOGICAL",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "BLOCKER"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "projectName": "ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "1599900d-f6ca-4745-8729-af50b6eeef6e",
+      "lastChangeSource": "ANALYSIS"
+    },
+    {
+      "key": "AaGN1K3Jui_0ctHiza7p",
+      "rule": "typescript:S8786",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/shared/ui/AppShell.tsx",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "line": 34,
+      "hash": "43fc8fce13625ee61e82ff353d3b1ad1",
+      "textRange": {
+        "startLine": 34,
+        "endLine": 34,
+        "startOffset": 43,
+        "endOffset": 66
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Simplify this regular expression to reduce its runtime, as it has super-linear performance due to backtracking.",
+      "effort": "20min",
+      "debt": "20min",
+      "tags": [
+        "performance",
+        "regex"
+      ],
+      "creationDate": "2026-10-07T00:37:36+0000",
+      "updateDate": "2026-10-30T17:15:45+0000",
+      "type": "CODE_SMELL",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "EFFICIENT",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "projectName": "ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "1599900d-f6ca-4745-8729-af50b6eeef6e",
+      "lastChangeSource": "ANALYSIS"
+    },
+    {
+      "key": "AaGN1K3kui_0ctHiza7q",
+      "rule": "css:S9424",
+      "severity": "BLOCKER",
+      "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/shared/ui/eco.css",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "line": 104,
+      "hash": "4a19d2dc72c9aedacf37942690a0366d",
+      "textRange": {
+        "startLine": 104,
+        "endLine": 104,
+        "startOffset": 31,
+        "endOffset": 32
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Unknown value \"5\" for property \"r\"",
+      "effort": "5min",
+      "debt": "5min",
+      "tags": [],
+      "creationDate": "2026-10-07T00:37:36+0000",
+      "updateDate": "2026-10-30T17:15:45+0000",
+      "type": "BUG",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "LOGICAL",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "BLOCKER"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "projectName": "ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "1599900d-f6ca-4745-8729-af50b6eeef6e",
+      "lastChangeSource": "ANALYSIS"
+    },
+    {
+      "key": "AaGN1K4zui_0ctHiza77",
+      "rule": "Web:S5254",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:docs/04 Diseño/Dashboard del dia.dc.html",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "line": 2,
+      "hash": "166248a6129a1e4370d20adc2d4c23f3",
+      "textRange": {
+        "startLine": 2,
+        "endLine": 2,
+        "startOffset": 0,
+        "endOffset": 6
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Add \"lang\" and/or \"xml:lang\" attributes to the \"<html>\" or \"<body>\" element",
+      "effort": "2min",
+      "debt": "2min",
+      "tags": [
+        "accessibility",
+        "wcag2-a"
+      ],
+      "creationDate": "2026-10-02T05:02:09+0000",
+      "updateDate": "2026-10-30T17:15:45+0000",
+      "type": "BUG",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "COMPLETE",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "projectName": "ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "1599900d-f6ca-4745-8729-af50b6eeef6e",
+      "lastChangeSource": "ANALYSIS"
+    },
+    {
+      "key": "AaGN1K4zui_0ctHiza76",
+      "rule": "Web:PageWithoutTitleCheck",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:docs/04 Diseño/Dashboard del dia.dc.html",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "line": 3,
+      "hash": "babd0daf38a8ba8a6c33c4d1d354eb56",
+      "textRange": {
+        "startLine": 3,
+        "endLine": 3,
+        "startOffset": 0,
+        "endOffset": 6
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Add a <title> tag to this page.",
+      "effort": "5min",
+      "debt": "5min",
+      "tags": [
+        "user-experience"
+      ],
+      "creationDate": "2026-10-02T05:02:09+0000",
+      "updateDate": "2026-10-30T17:15:45+0000",
+      "type": "BUG",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "projectName": "ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "1599900d-f6ca-4745-8729-af50b6eeef6e",
+      "lastChangeSource": "ANALYSIS"
+    },
+    {
+      "key": "AaGN1K5Vui_0ctHiza8J",
+      "rule": "jssecurity:S8476",
+      "severity": "MINOR",
+      "component": "JosefOreC_ALPHA_PROJECT:docs/04 Diseño/support.js",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "line": 159,
+      "hash": "0e72b337beb2314d7ca95a164855aee5",
+      "textRange": {
+        "startLine": 159,
+        "endLine": 159,
+        "startOffset": 6,
+        "endOffset": 11
+      },
+      "flows": [
+        {
+          "locations": [
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:docs/04 Diseño/support.js",
+              "textRange": {
+                "startLine": 159,
+                "endLine": 159,
+                "startOffset": 6,
+                "endOffset": 11
+              },
+              "msg": "Sink: this invocation is not safe; a malicious value can be used as argument"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:docs/04 Diseño/support.js",
+              "textRange": {
+                "startLine": 159,
+                "endLine": 159,
+                "startOffset": 21,
+                "endOffset": 25
+              },
+              "msg": "Source: a user can craft an HTTP request with malicious content"
+            }
+          ]
+        }
+      ],
+      "status": "OPEN",
+      "message": "Client-Side Request Forgery via unsanitized user input",
+      "effort": "20min",
+      "debt": "20min",
+      "tags": [
+        "cwe"
+      ],
+      "creationDate": "2026-10-02T05:02:09+0000",
+      "updateDate": "2026-10-30T17:15:45+0000",
+      "type": "VULNERABILITY",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "TRUSTWORTHY",
+      "cleanCodeAttributeCategory": "RESPONSIBLE",
+      "impacts": [
+        {
+          "softwareQuality": "SECURITY",
+          "severity": "HIGH"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "projectName": "ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "1599900d-f6ca-4745-8729-af50b6eeef6e",
+      "lastChangeSource": "ANALYSIS"
+    },
+    {
+      "key": "AaGN1K5Vui_0ctHiza78",
+      "rule": "javascript:S8786",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:docs/04 Diseño/support.js",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "line": 408,
+      "hash": "80ffeb07bdae7cc7f1f9cdd684c2f6f9",
+      "textRange": {
+        "startLine": 408,
+        "endLine": 408,
+        "startOffset": 30,
+        "endOffset": 51
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Simplify this regular expression to reduce its runtime, as it has super-linear performance due to backtracking.",
+      "effort": "20min",
+      "debt": "20min",
+      "tags": [
+        "performance",
+        "regex"
+      ],
+      "creationDate": "2026-10-02T05:02:09+0000",
+      "updateDate": "2026-10-30T17:15:45+0000",
+      "type": "CODE_SMELL",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "EFFICIENT",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "projectName": "ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "1599900d-f6ca-4745-8729-af50b6eeef6e",
+      "lastChangeSource": "ANALYSIS"
+    },
+    {
+      "key": "AaGN1K5Vui_0ctHiza79",
+      "rule": "javascript:S8786",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:docs/04 Diseño/support.js",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "line": 575,
+      "hash": "b7a662e38c72d4500462f7dc0678485e",
+      "textRange": {
+        "startLine": 575,
+        "endLine": 575,
+        "startOffset": 28,
+        "endOffset": 49
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Simplify this regular expression to reduce its runtime, as it has super-linear performance due to backtracking.",
+      "effort": "20min",
+      "debt": "20min",
+      "tags": [
+        "performance",
+        "regex"
+      ],
+      "creationDate": "2026-10-02T05:02:09+0000",
+      "updateDate": "2026-10-30T17:15:45+0000",
+      "type": "CODE_SMELL",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "EFFICIENT",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "projectName": "ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "1599900d-f6ca-4745-8729-af50b6eeef6e",
+      "lastChangeSource": "ANALYSIS"
+    },
+    {
+      "key": "AaGN1K5Vui_0ctHiza7-",
+      "rule": "javascript:S7773",
+      "severity": "MINOR",
+      "component": "JosefOreC_ALPHA_PROJECT:docs/04 Diseño/support.js",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "line": 614,
+      "hash": "225f24d33bd2d87516def74ee5baa549",
+      "textRange": {
+        "startLine": 614,
+        "endLine": 614,
+        "startOffset": 18,
+        "endOffset": 26
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `Number.parseInt` over `parseInt`.",
+      "effort": "2min",
+      "debt": "2min",
+      "tags": [
+        "convention",
+        "editable-source",
+        "es2015"
+      ],
+      "creationDate": "2026-10-02T05:02:09+0000",
+      "updateDate": "2026-10-30T17:15:45+0000",
+      "type": "CODE_SMELL",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        },
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "projectName": "ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "1599900d-f6ca-4745-8729-af50b6eeef6e",
+      "lastChangeSource": "ANALYSIS"
+    },
+    {
+      "key": "AaGN1K5Vui_0ctHiza7_",
+      "rule": "javascript:S7767",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:docs/04 Diseño/support.js",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "line": 778,
+      "hash": "da3023a35e62ea1567f719519126c032",
+      "textRange": {
+        "startLine": 778,
+        "endLine": 778,
+        "startOffset": 44,
+        "endOffset": 80
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Use `Math.trunc` instead of `| 0`.",
+      "effort": "5min",
+      "debt": "5min",
+      "tags": [
+        "confusing",
+        "es2015"
+      ],
+      "creationDate": "2026-10-02T05:02:09+0000",
+      "updateDate": "2026-10-30T17:15:45+0000",
+      "type": "CODE_SMELL",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "HIGH"
+        },
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "HIGH"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "projectName": "ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "1599900d-f6ca-4745-8729-af50b6eeef6e",
+      "lastChangeSource": "ANALYSIS"
+    },
+    {
+      "key": "AaGN1K5Vui_0ctHiza8A",
+      "rule": "javascript:S1523",
+      "severity": "CRITICAL",
+      "component": "JosefOreC_ALPHA_PROJECT:docs/04 Diseño/support.js",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "line": 844,
+      "hash": "3f76ce0ea71b7df7abaa20eef3fa40b8",
+      "textRange": {
+        "startLine": 844,
+        "endLine": 844,
+        "startOffset": 19,
+        "endOffset": 27
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Make sure that this dynamic injection or execution of code is safe.",
+      "effort": "30min",
+      "debt": "30min",
+      "tags": [
+        "cwe",
+        "former-hotspot"
+      ],
+      "creationDate": "2026-10-02T05:02:09+0000",
+      "updateDate": "2026-10-30T17:15:45+0000",
+      "type": "VULNERABILITY",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "TRUSTWORTHY",
+      "cleanCodeAttributeCategory": "RESPONSIBLE",
+      "impacts": [
+        {
+          "softwareQuality": "SECURITY",
+          "severity": "HIGH"
+        },
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "projectName": "ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "1599900d-f6ca-4745-8729-af50b6eeef6e",
+      "lastChangeSource": "ANALYSIS"
+    },
+    {
+      "key": "AaGN1K5Vui_0ctHiza8B",
+      "rule": "javascript:S1523",
+      "severity": "CRITICAL",
+      "component": "JosefOreC_ALPHA_PROJECT:docs/04 Diseño/support.js",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "line": 850,
+      "hash": "36b72f16b200255300a44eb627387d2b",
+      "textRange": {
+        "startLine": 850,
+        "endLine": 850,
+        "startOffset": 11,
+        "endOffset": 13
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Make sure that this dynamic injection or execution of code is safe.",
+      "effort": "30min",
+      "debt": "30min",
+      "tags": [
+        "cwe",
+        "former-hotspot"
+      ],
+      "creationDate": "2026-10-02T05:02:09+0000",
+      "updateDate": "2026-10-30T17:15:45+0000",
+      "type": "VULNERABILITY",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "TRUSTWORTHY",
+      "cleanCodeAttributeCategory": "RESPONSIBLE",
+      "impacts": [
+        {
+          "softwareQuality": "SECURITY",
+          "severity": "HIGH"
+        },
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "projectName": "ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "1599900d-f6ca-4745-8729-af50b6eeef6e",
+      "lastChangeSource": "ANALYSIS"
+    },
+    {
+      "key": "AaGN1K5Vui_0ctHiza8C",
+      "rule": "javascript:S1523",
+      "severity": "CRITICAL",
+      "component": "JosefOreC_ALPHA_PROJECT:docs/04 Diseño/support.js",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "line": 1218,
+      "hash": "d7c697c3294fcf4be0b7594c25801061",
+      "textRange": {
+        "startLine": 1218,
+        "endLine": 1218,
+        "startOffset": 12,
+        "endOffset": 20
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Make sure that this dynamic injection or execution of code is safe.",
+      "effort": "30min",
+      "debt": "30min",
+      "tags": [
+        "cwe",
+        "former-hotspot"
+      ],
+      "creationDate": "2026-10-02T05:02:09+0000",
+      "updateDate": "2026-10-30T17:15:45+0000",
+      "type": "VULNERABILITY",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "TRUSTWORTHY",
+      "cleanCodeAttributeCategory": "RESPONSIBLE",
+      "impacts": [
+        {
+          "softwareQuality": "SECURITY",
+          "severity": "HIGH"
+        },
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "projectName": "ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "1599900d-f6ca-4745-8729-af50b6eeef6e",
+      "lastChangeSource": "ANALYSIS"
+    },
+    {
+      "key": "AaGN1K5Vui_0ctHiza8D",
+      "rule": "javascript:S2819",
+      "severity": "CRITICAL",
+      "component": "JosefOreC_ALPHA_PROJECT:docs/04 Diseño/support.js",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "line": 1387,
+      "hash": "b739e548958d4971b78f406e675d1515",
+      "textRange": {
+        "startLine": 1387,
+        "endLine": 1387,
+        "startOffset": 8,
+        "endOffset": 33
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Specify a target origin for this message.",
+      "effort": "10min",
+      "debt": "10min",
+      "tags": [
+        "cwe",
+        "html5",
+        "type-dependent"
+      ],
+      "creationDate": "2026-10-02T05:02:09+0000",
+      "updateDate": "2026-10-30T17:15:45+0000",
+      "type": "VULNERABILITY",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "COMPLETE",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "SECURITY",
+          "severity": "HIGH"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "projectName": "ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "1599900d-f6ca-4745-8729-af50b6eeef6e",
+      "lastChangeSource": "ANALYSIS"
+    },
+    {
+      "key": "AaGN1K5Vui_0ctHiza8E",
+      "rule": "javascript:S2819",
+      "severity": "CRITICAL",
+      "component": "JosefOreC_ALPHA_PROJECT:docs/04 Diseño/support.js",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "line": 1407,
+      "hash": "f43ad8f73ec8509af060669753e0f771",
+      "textRange": {
+        "startLine": 1407,
+        "endLine": 1407,
+        "startOffset": 4,
+        "endOffset": 27
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Verify the origin of the received message.",
+      "effort": "10min",
+      "debt": "10min",
+      "tags": [
+        "cwe",
+        "html5",
+        "type-dependent"
+      ],
+      "creationDate": "2026-10-02T05:02:09+0000",
+      "updateDate": "2026-10-30T17:15:45+0000",
+      "type": "VULNERABILITY",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "COMPLETE",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "SECURITY",
+          "severity": "HIGH"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "projectName": "ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "1599900d-f6ca-4745-8729-af50b6eeef6e",
+      "lastChangeSource": "ANALYSIS"
+    },
+    {
+      "key": "AaGN1K5Vui_0ctHiza8F",
+      "rule": "javascript:S2310",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:docs/04 Diseño/support.js",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "line": 1529,
+      "hash": "53920b220076a8094c15de5c9ab92950",
+      "textRange": {
+        "startLine": 1529,
+        "endLine": 1529,
+        "startOffset": 8,
+        "endOffset": 9
+      },
+      "flows": [
+        {
+          "locations": [
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:docs/04 Diseño/support.js",
+              "textRange": {
+                "startLine": 1514,
+                "endLine": 1514,
+                "startOffset": 36,
+                "endOffset": 37
+              },
+              "msg": "Counter variable update"
+            }
+          ]
+        }
+      ],
+      "status": "OPEN",
+      "message": "Remove this assignment of \"i\".",
+      "effort": "5min",
+      "debt": "5min",
+      "tags": [],
+      "creationDate": "2026-10-02T05:02:09+0000",
+      "updateDate": "2026-10-30T17:15:45+0000",
+      "type": "CODE_SMELL",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "projectName": "ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "1599900d-f6ca-4745-8729-af50b6eeef6e",
+      "lastChangeSource": "ANALYSIS"
+    },
+    {
+      "key": "AaGN1K5Vui_0ctHiza8G",
+      "rule": "javascript:S2310",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:docs/04 Diseño/support.js",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "line": 1536,
+      "hash": "c9c83b4a91bbaa4b9ba2e623fa187216",
+      "textRange": {
+        "startLine": 1536,
+        "endLine": 1536,
+        "startOffset": 10,
+        "endOffset": 11
+      },
+      "flows": [
+        {
+          "locations": [
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:docs/04 Diseño/support.js",
+              "textRange": {
+                "startLine": 1514,
+                "endLine": 1514,
+                "startOffset": 36,
+                "endOffset": 37
+              },
+              "msg": "Counter variable update"
+            }
+          ]
+        }
+      ],
+      "status": "OPEN",
+      "message": "Remove this assignment of \"i\".",
+      "effort": "5min",
+      "debt": "5min",
+      "tags": [],
+      "creationDate": "2026-10-02T05:02:09+0000",
+      "updateDate": "2026-10-30T17:15:45+0000",
+      "type": "CODE_SMELL",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "projectName": "ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "1599900d-f6ca-4745-8729-af50b6eeef6e",
+      "lastChangeSource": "ANALYSIS"
+    },
+    {
+      "key": "AaGN1K5Vui_0ctHiza8H",
+      "rule": "javascript:S2310",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:docs/04 Diseño/support.js",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "line": 1561,
+      "hash": "7ff7651069a4bb393ca996379c21d58a",
+      "textRange": {
+        "startLine": 1561,
+        "endLine": 1561,
+        "startOffset": 24,
+        "endOffset": 25
+      },
+      "flows": [
+        {
+          "locations": [
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:docs/04 Diseño/support.js",
+              "textRange": {
+                "startLine": 1548,
+                "endLine": 1548,
+                "startOffset": 36,
+                "endOffset": 37
+              },
+              "msg": "Counter variable update"
+            }
+          ]
+        }
+      ],
+      "status": "OPEN",
+      "message": "Remove this assignment of \"i\".",
+      "effort": "5min",
+      "debt": "5min",
+      "tags": [],
+      "creationDate": "2026-10-02T05:02:09+0000",
+      "updateDate": "2026-10-30T17:15:45+0000",
+      "type": "CODE_SMELL",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "projectName": "ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "1599900d-f6ca-4745-8729-af50b6eeef6e",
+      "lastChangeSource": "ANALYSIS"
+    },
+    {
+      "key": "AaGN1K5Vui_0ctHiza8I",
+      "rule": "javascript:S2819",
+      "severity": "CRITICAL",
+      "component": "JosefOreC_ALPHA_PROJECT:docs/04 Diseño/support.js",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "line": 1858,
+      "hash": "81ed49014c3d2c2b2830f26b08fbcb3a",
+      "textRange": {
+        "startLine": 1858,
+        "endLine": 1858,
+        "startOffset": 8,
+        "endOffset": 33
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Specify a target origin for this message.",
+      "effort": "10min",
+      "debt": "10min",
+      "tags": [
+        "cwe",
+        "html5",
+        "type-dependent"
+      ],
+      "creationDate": "2026-10-02T05:02:09+0000",
+      "updateDate": "2026-10-30T17:15:45+0000",
+      "type": "VULNERABILITY",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "COMPLETE",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "SECURITY",
+          "severity": "HIGH"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "projectName": "ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "1599900d-f6ca-4745-8729-af50b6eeef6e",
+      "lastChangeSource": "ANALYSIS"
+    }
+  ],
+  "components": [
+    {
+      "organization": "joseforec",
+      "key": "JosefOreC_ALPHA_PROJECT:src/frontend/src/interfaces/fleet/VehicleDialog.tsx",
+      "uuid": "AaGN1KqIui_0ctHiza5J",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "VehicleDialog.tsx",
+      "longName": "src/frontend/src/interfaces/fleet/VehicleDialog.tsx",
+      "path": "src/frontend/src/interfaces/fleet/VehicleDialog.tsx"
+    },
+    {
+      "organization": "joseforec",
+      "key": "JosefOreC_ALPHA_PROJECT:docs/04 Diseño/Dashboard del dia.dc.html",
+      "uuid": "AaGN1KqIui_0ctHiza7l",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "Dashboard del dia.dc.html",
+      "longName": "docs/04 Diseño/Dashboard del dia.dc.html",
+      "path": "docs/04 Diseño/Dashboard del dia.dc.html"
+    },
+    {
+      "organization": "joseforec",
+      "key": "JosefOreC_ALPHA_PROJECT:docs/04 Diseño/support.js",
+      "uuid": "AaGN1KqIui_0ctHiza7m",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "support.js",
+      "longName": "docs/04 Diseño/support.js",
+      "path": "docs/04 Diseño/support.js"
+    },
+    {
+      "organization": "joseforec",
+      "key": "JosefOreC_ALPHA_PROJECT:scripts/create_admin.py",
+      "uuid": "AaGN1KqIui_0ctHiza7i",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "create_admin.py",
+      "longName": "scripts/create_admin.py",
+      "path": "scripts/create_admin.py"
+    },
+    {
+      "organization": "joseforec",
+      "key": "JosefOreC_ALPHA_PROJECT",
+      "uuid": "AaGNz1eW8JWW6OUFv_Te",
+      "enabled": true,
+      "qualifier": "TRK",
+      "name": "ALPHA_PROJECT",
+      "longName": "ALPHA_PROJECT"
+    },
+    {
+      "organization": "joseforec",
+      "key": "JosefOreC_ALPHA_PROJECT:src/frontend/scripts/generate-basemap-style.py",
+      "uuid": "AaGN1KqIui_0ctHiza7D",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "generate-basemap-style.py",
+      "longName": "src/frontend/scripts/generate-basemap-style.py",
+      "path": "src/frontend/scripts/generate-basemap-style.py"
+    },
+    {
+      "organization": "joseforec",
+      "key": "JosefOreC_ALPHA_PROJECT:src/frontend/src/interfaces/map/RouteMap.tsx",
+      "uuid": "AaGN1KqIui_0ctHiza5C",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "RouteMap.tsx",
+      "longName": "src/frontend/src/interfaces/map/RouteMap.tsx",
+      "path": "src/frontend/src/interfaces/map/RouteMap.tsx"
+    },
+    {
+      "organization": "joseforec",
+      "key": "JosefOreC_ALPHA_PROJECT:src/frontend/src/domain/format.ts",
+      "uuid": "AaGN1KqIui_0ctHiza6e",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "format.ts",
+      "longName": "src/frontend/src/domain/format.ts",
+      "path": "src/frontend/src/domain/format.ts"
+    },
+    {
+      "organization": "joseforec",
+      "key": "JosefOreC_ALPHA_PROJECT:scripts/check_docs.py",
+      "uuid": "AaGN1KqIui_0ctHiza7f",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "check_docs.py",
+      "longName": "scripts/check_docs.py",
+      "path": "scripts/check_docs.py"
+    },
+    {
+      "organization": "joseforec",
+      "key": "JosefOreC_ALPHA_PROJECT:src/backend/interfaces/api/portal/router.py",
+      "uuid": "AaGN1KqHui_0ctHiza1y",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "router.py",
+      "longName": "src/backend/interfaces/api/portal/router.py",
+      "path": "src/backend/interfaces/api/portal/router.py"
+    },
+    {
+      "organization": "joseforec",
+      "key": "JosefOreC_ALPHA_PROJECT:src/frontend/src/shared/ui/eco.css",
+      "uuid": "AaGN1KqIui_0ctHiza4q",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "eco.css",
+      "longName": "src/frontend/src/shared/ui/eco.css",
+      "path": "src/frontend/src/shared/ui/eco.css"
+    },
+    {
+      "organization": "joseforec",
+      "key": "JosefOreC_ALPHA_PROJECT:src/frontend/src/application/fleetBoard.ts",
+      "uuid": "AaGN1KqIui_0ctHiza6s",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "fleetBoard.ts",
+      "longName": "src/frontend/src/application/fleetBoard.ts",
+      "path": "src/frontend/src/application/fleetBoard.ts"
+    },
+    {
+      "organization": "joseforec",
+      "key": "JosefOreC_ALPHA_PROJECT:src/frontend/src/features/dashboard/ui/format.ts",
+      "uuid": "AaGN1KqIui_0ctHiza5s",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "format.ts",
+      "longName": "src/frontend/src/features/dashboard/ui/format.ts",
+      "path": "src/frontend/src/features/dashboard/ui/format.ts"
+    },
+    {
+      "organization": "joseforec",
+      "key": "JosefOreC_ALPHA_PROJECT:ecologistica-ui/design-system/eco.css",
+      "uuid": "AaGN1KqIui_0ctHiza7U",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "eco.css",
+      "longName": "ecologistica-ui/design-system/eco.css",
+      "path": "ecologistica-ui/design-system/eco.css"
+    },
+    {
+      "organization": "joseforec",
+      "key": "JosefOreC_ALPHA_PROJECT:src/frontend/src/shared/ui/AppShell.tsx",
+      "uuid": "AaGN1KqIui_0ctHiza4n",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "AppShell.tsx",
+      "longName": "src/frontend/src/shared/ui/AppShell.tsx",
+      "path": "src/frontend/src/shared/ui/AppShell.tsx"
+    }
+  ],
+  "organizations": [
+    {
+      "key": "joseforec",
+      "name": "JosefOreC"
+    }
+  ],
+  "rules": [
+    {
+      "key": "python:S5850",
+      "name": "Alternatives in regular expressions should be grouped when used with anchors",
+      "lang": "py",
+      "status": "READY",
+      "langName": "Python"
+    },
+    {
+      "key": "Web:PageWithoutTitleCheck",
+      "name": "\"<title>\" should be present in all pages",
+      "lang": "web",
+      "status": "READY",
+      "langName": "HTML"
+    },
+    {
+      "key": "jssecurity:S8476",
+      "name": "Client-side requests should not be vulnerable to forging attacks",
+      "lang": "js",
+      "status": "READY",
+      "langName": "JavaScript"
+    },
+    {
+      "key": "typescript:S7773",
+      "name": "Number static methods and properties should be preferred over global equivalents",
+      "lang": "ts",
+      "status": "READY",
+      "langName": "TypeScript"
+    },
+    {
+      "key": "Web:S5254",
+      "name": "\"<html>\" or \"<body>\" element should have a language attribute",
+      "lang": "web",
+      "status": "READY",
+      "langName": "HTML"
+    },
+    {
+      "key": "javascript:S7767",
+      "name": "Bitwise operators should not be used to truncate numbers",
+      "lang": "js",
+      "status": "READY",
+      "langName": "JavaScript"
+    },
+    {
+      "key": "javascript:S8786",
+      "name": "Regular expressions should not cause non-linear backtracking",
+      "lang": "js",
+      "status": "READY",
+      "langName": "JavaScript"
+    },
+    {
+      "key": "javascript:S2310",
+      "name": "Loop counters should not be assigned within the loop body",
+      "lang": "js",
+      "status": "READY",
+      "langName": "JavaScript"
+    },
+    {
+      "key": "typescript:S8786",
+      "name": "Regular expressions should not cause non-linear backtracking",
+      "lang": "ts",
+      "status": "READY",
+      "langName": "TypeScript"
+    },
+    {
+      "key": "typescript:S6848",
+      "name": "Non-interactive DOM elements should not have an interactive handler",
+      "lang": "ts",
+      "status": "READY",
+      "langName": "TypeScript"
+    },
+    {
+      "key": "javascript:S7773",
+      "name": "Number static methods and properties should be preferred over global equivalents",
+      "lang": "js",
+      "status": "READY",
+      "langName": "JavaScript"
+    },
+    {
+      "key": "python:S8786",
+      "name": "Regular expressions should not cause non-linear backtracking",
+      "lang": "py",
+      "status": "READY",
+      "langName": "Python"
+    },
+    {
+      "key": "pythonsecurity:S8707",
+      "name": "Agentic workflows should not be vulnerable to path injection attacks",
+      "lang": "py",
+      "status": "READY",
+      "langName": "Python"
+    },
+    {
+      "key": "css:S9424",
+      "name": "CSS property values should be valid",
+      "lang": "css",
+      "status": "READY",
+      "langName": "CSS"
+    },
+    {
+      "key": "javascript:S2819",
+      "name": "Origins should be verified during cross-origin communications",
+      "lang": "js",
+      "status": "READY",
+      "langName": "JavaScript"
+    },
+    {
+      "key": "javascript:S1523",
+      "name": "Dynamic code execution should not use user-controlled data",
+      "lang": "js",
+      "status": "READY",
+      "langName": "JavaScript"
+    }
+  ],
+  "facets": []
+}

@@ -1,0 +1,426 @@
+{
+  "total": 1,
+  "p": 1,
+  "ps": 50,
+  "paging": {
+    "pageIndex": 1,
+    "pageSize": 50,
+    "total": 1
+  },
+  "effortTotal": 30,
+  "debtTotal": 30,
+  "issues": [
+    {
+      "key": "AaGN8WUXHwZRnh-VsbWI",
+      "rule": "pythonsecurity:S2083",
+      "severity": "BLOCKER",
+      "component": "JosefOreC_ALPHA_PROJECT:scripts/export_sonar_report.py",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "line": 92,
+      "hash": "feec746e989b5b443b3521786f07f799",
+      "textRange": {
+        "startLine": 92,
+        "endLine": 92,
+        "startOffset": 4,
+        "endOffset": 117
+      },
+      "flows": [
+        {
+          "locations": [
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:scripts/export_sonar_report.py",
+              "textRange": {
+                "startLine": 92,
+                "endLine": 92,
+                "startOffset": 4,
+                "endOffset": 117
+              },
+              "msg": "Sink: this invocation is not safe; a malicious value can be used as argument"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:scripts/export_sonar_report.py",
+              "textRange": {
+                "startLine": 92,
+                "endLine": 92,
+                "startOffset": 52,
+                "endOffset": 98
+              },
+              "msg": "This invocation can propagate malicious content to its return value"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:scripts/export_sonar_report.py",
+              "textRange": {
+                "startLine": 90,
+                "endLine": 90,
+                "startOffset": 17,
+                "endOffset": 21
+              },
+              "msg": "This instruction can propagate malicious content"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:scripts/export_sonar_report.py",
+              "textRange": {
+                "startLine": 90,
+                "endLine": 90,
+                "startOffset": 4,
+                "endOffset": 16
+              },
+              "msg": "This instruction can propagate malicious content"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:scripts/export_sonar_report.py",
+              "textRange": {
+                "startLine": 120,
+                "endLine": 120,
+                "startOffset": 8,
+                "endOffset": 49
+              },
+              "msg": "This instruction can propagate malicious content"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:scripts/export_sonar_report.py",
+              "textRange": {
+                "startLine": 117,
+                "endLine": 119,
+                "startOffset": 8,
+                "endOffset": 48
+              },
+              "msg": "A malicious value can be assigned to variable \u2018data\u2019"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:scripts/export_sonar_report.py",
+              "textRange": {
+                "startLine": 117,
+                "endLine": 119,
+                "startOffset": 15,
+                "endOffset": 48
+              },
+              "msg": "This invocation can propagate malicious content to its return value"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:scripts/export_sonar_report.py",
+              "textRange": {
+                "startLine": 86,
+                "endLine": 86,
+                "startOffset": 34,
+                "endOffset": 54
+              },
+              "msg": "A malicious value can be assigned to this data structure"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:scripts/export_sonar_report.py",
+              "textRange": {
+                "startLine": 65,
+                "endLine": 65,
+                "startOffset": 4,
+                "endOffset": 67
+              },
+              "msg": "A malicious value can be assigned to variable \u2018gate\u2019"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:scripts/export_sonar_report.py",
+              "textRange": {
+                "startLine": 65,
+                "endLine": 65,
+                "startOffset": 11,
+                "endOffset": 67
+              },
+              "msg": "This invocation can propagate malicious content to its return value"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:scripts/export_sonar_report.py",
+              "textRange": {
+                "startLine": 30,
+                "endLine": 30,
+                "startOffset": 19,
+                "endOffset": 38
+              },
+              "msg": "Source: a user can craft an HTTP request with malicious content"
+            }
+          ]
+        }
+      ],
+      "status": "OPEN",
+      "message": "Path Traversal via file content in export_sonar_report.write_report()",
+      "effort": "30min",
+      "debt": "30min",
+      "assignee": "JosefOreC-I2NHD@github",
+      "tags": [
+        "cwe"
+      ],
+      "transitions": [],
+      "actions": [],
+      "comments": [],
+      "creationDate": "2026-10-30T17:42:58+0000",
+      "updateDate": "2026-10-30T17:46:23+0000",
+      "type": "VULNERABILITY",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "COMPLETE",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "SECURITY",
+          "severity": "BLOCKER"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "projectName": "ALPHA_PROJECT",
+      "internalTags": [
+        "taint"
+      ],
+      "lastChangeAnalysisUuid": "27a829ad-78c9-4fcf-b031-a03e3c1b47b0",
+      "lastChangeSource": "ANALYSIS"
+    }
+  ],
+  "components": [
+    {
+      "organization": "joseforec",
+      "key": "JosefOreC_ALPHA_PROJECT:scripts/export_sonar_report.py",
+      "uuid": "AaGN8WF0HwZRnh-VsbWE",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "export_sonar_report.py",
+      "longName": "scripts/export_sonar_report.py",
+      "path": "scripts/export_sonar_report.py"
+    },
+    {
+      "organization": "joseforec",
+      "key": "JosefOreC_ALPHA_PROJECT",
+      "uuid": "AaGNz1eW8JWW6OUFv_Te",
+      "enabled": true,
+      "qualifier": "TRK",
+      "name": "ALPHA_PROJECT",
+      "longName": "ALPHA_PROJECT"
+    }
+  ],
+  "organizations": [
+    {
+      "key": "joseforec",
+      "name": "JosefOreC"
+    }
+  ],
+  "rules": [
+    {
+      "key": "pythonsecurity:S2083",
+      "name": "I/O function calls should not be vulnerable to path injection attacks",
+      "lang": "py",
+      "status": "READY",
+      "langName": "Python"
+    }
+  ],
+  "users": [
+    {
+      "login": "JosefOreC-I2NHD@github",
+      "name": "JosefOreC",
+      "avatar": "cc1f4261960307ce8d96c155dc4684ab",
+      "active": true
+    }
+  ],
+  "languages": [
+    {
+      "key": "abap",
+      "name": "ABAP"
+    },
+    {
+      "key": "ansible",
+      "name": "Ansible"
+    },
+    {
+      "key": "apex",
+      "name": "Apex"
+    },
+    {
+      "key": "azurepipelines",
+      "name": "Azure Pipelines"
+    },
+    {
+      "key": "azureresourcemanager",
+      "name": "Azure Resource Manager"
+    },
+    {
+      "key": "c",
+      "name": "C"
+    },
+    {
+      "key": "cloudformation",
+      "name": "CloudFormation"
+    },
+    {
+      "key": "cobol",
+      "name": "COBOL"
+    },
+    {
+      "key": "cpp",
+      "name": "C++"
+    },
+    {
+      "key": "cs",
+      "name": "C#"
+    },
+    {
+      "key": "css",
+      "name": "CSS"
+    },
+    {
+      "key": "dart",
+      "name": "Dart"
+    },
+    {
+      "key": "dataweave",
+      "name": "DataWeave"
+    },
+    {
+      "key": "docker",
+      "name": "Docker"
+    },
+    {
+      "key": "flex",
+      "name": "Flex"
+    },
+    {
+      "key": "githubactions",
+      "name": "GitHub Actions"
+    },
+    {
+      "key": "go",
+      "name": "Go"
+    },
+    {
+      "key": "gosu",
+      "name": "Gosu"
+    },
+    {
+      "key": "groovy",
+      "name": "Groovy"
+    },
+    {
+      "key": "ipynb",
+      "name": "IPython Notebooks"
+    },
+    {
+      "key": "java",
+      "name": "Java"
+    },
+    {
+      "key": "jcl",
+      "name": "JCL"
+    },
+    {
+      "key": "js",
+      "name": "JavaScript"
+    },
+    {
+      "key": "json",
+      "name": "JSON"
+    },
+    {
+      "key": "jsp",
+      "name": "JSP"
+    },
+    {
+      "key": "kotlin",
+      "name": "Kotlin"
+    },
+    {
+      "key": "kubernetes",
+      "name": "Kubernetes"
+    },
+    {
+      "key": "objc",
+      "name": "Objective-C"
+    },
+    {
+      "key": "php",
+      "name": "PHP"
+    },
+    {
+      "key": "pli",
+      "name": "PL/I"
+    },
+    {
+      "key": "plsql",
+      "name": "PL/SQL"
+    },
+    {
+      "key": "postgres",
+      "name": "PostgreSQL"
+    },
+    {
+      "key": "powershell",
+      "name": "PowerShell"
+    },
+    {
+      "key": "py",
+      "name": "Python"
+    },
+    {
+      "key": "r",
+      "name": "R"
+    },
+    {
+      "key": "rpg",
+      "name": "RPG"
+    },
+    {
+      "key": "ruby",
+      "name": "Ruby"
+    },
+    {
+      "key": "rust",
+      "name": "Rust"
+    },
+    {
+      "key": "scala",
+      "name": "Scala"
+    },
+    {
+      "key": "secrets",
+      "name": "Secrets"
+    },
+    {
+      "key": "shell",
+      "name": "Shell"
+    },
+    {
+      "key": "swift",
+      "name": "Swift"
+    },
+    {
+      "key": "terraform",
+      "name": "Terraform"
+    },
+    {
+      "key": "text",
+      "name": "Text"
+    },
+    {
+      "key": "ts",
+      "name": "TypeScript"
+    },
+    {
+      "key": "tsql",
+      "name": "T-SQL"
+    },
+    {
+      "key": "vb",
+      "name": "Vb"
+    },
+    {
+      "key": "vbnet",
+      "name": "VB.NET"
+    },
+    {
+      "key": "web",
+      "name": "HTML"
+    },
+    {
+      "key": "xml",
+      "name": "XML"
+    },
+    {
+      "key": "yaml",
+      "name": "YAML"
+    }
+  ],
+  "facets": []
+}

@@ -43,7 +43,8 @@ export class DemoMapData implements MapDataSource {
         const index = ROUTES.findIndex(route => route.id === route_id)
         const stop = index >= 0 ? ROUTES[index].path.findIndex(point => point.lat === position.lat && point.lng === position.lng) : -1
         const snapped = stop >= 0 ? ROAD_FIXTURES[index].stops[stop] : null
-        return { id, customer, district, status, route_id, position: snapped ? p(snapped[0], snapped[1]) : position, window, co2_kg }
+        return { id, customer, district, status, route_id, stop_number: stop > 0 ? stop : null,
+          position: snapped ? p(snapped[0], snapped[1]) : position, window, co2_kg }
       }),
       routes,
       vehicles: routes.map(route => ({

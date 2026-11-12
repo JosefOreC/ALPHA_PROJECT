@@ -1,0 +1,9 @@
+﻿issue_id,rule,severity,file,line,status,owasp_2025_proposed
+AaGN1K4Iui_0ctHiza7z,pythonsecurity:S8707,MAJOR,src/frontend/scripts/generate-basemap-style.py,16,OPEN,A01
+AaGN1K5Vui_0ctHiza8J,jssecurity:S8476,MINOR,docs/04 Diseño/support.js,159,OPEN,A05
+AaGN1K5Vui_0ctHiza8A,javascript:S1523,CRITICAL,docs/04 Diseño/support.js,844,OPEN,A05
+AaGN1K5Vui_0ctHiza8B,javascript:S1523,CRITICAL,docs/04 Diseño/support.js,850,OPEN,A05
+AaGN1K5Vui_0ctHiza8C,javascript:S1523,CRITICAL,docs/04 Diseño/support.js,1218,OPEN,A05
+AaGN1K5Vui_0ctHiza8D,javascript:S2819,CRITICAL,docs/04 Diseño/support.js,1387,OPEN,A08
+AaGN1K5Vui_0ctHiza8E,javascript:S2819,CRITICAL,docs/04 Diseño/support.js,1407,OPEN,A08
+AaGN1K5Vui_0ctHiza8I,javascript:S2819,CRITICAL,docs/04 Diseño/support.js,1858,OPEN,A08

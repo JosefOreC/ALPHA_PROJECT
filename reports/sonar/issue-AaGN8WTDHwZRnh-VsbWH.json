@@ -1,0 +1,357 @@
+{
+  "total": 1,
+  "p": 1,
+  "ps": 50,
+  "paging": {
+    "pageIndex": 1,
+    "pageSize": 50,
+    "total": 1
+  },
+  "effortTotal": 30,
+  "debtTotal": 30,
+  "issues": [
+    {
+      "key": "AaGN8WTDHwZRnh-VsbWH",
+      "rule": "pythonsecurity:S8707",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:scripts/check_python_coverage.py",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "line": 26,
+      "hash": "d68eaafda6a23f113b2ff0de4a529f0b",
+      "textRange": {
+        "startLine": 26,
+        "endLine": 26,
+        "startOffset": 43,
+        "endOffset": 82
+      },
+      "flows": [
+        {
+          "locations": [
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:scripts/check_python_coverage.py",
+              "textRange": {
+                "startLine": 26,
+                "endLine": 26,
+                "startOffset": 43,
+                "endOffset": 82
+              },
+              "msg": "Sink: this invocation is not safe; a malicious value can be injected into the caller"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:scripts/check_python_coverage.py",
+              "textRange": {
+                "startLine": 26,
+                "endLine": 26,
+                "startOffset": 43,
+                "endOffset": 54
+              },
+              "msg": "A malicious value was previously assigned to the field \u2018report\u2019"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:scripts/check_python_coverage.py",
+              "textRange": {
+                "startLine": 24,
+                "endLine": 24,
+                "startOffset": 4,
+                "endOffset": 34
+              },
+              "msg": "A malicious value can be assigned to variable \u2018args\u2019"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:scripts/check_python_coverage.py",
+              "textRange": {
+                "startLine": 24,
+                "endLine": 24,
+                "startOffset": 11,
+                "endOffset": 34
+              },
+              "msg": "Source: a user can craft an HTTP request with malicious content"
+            }
+          ]
+        }
+      ],
+      "status": "OPEN",
+      "message": "Path Traversal via faulty LLM-supplied CLI arguments in check_python_coverage.main()",
+      "effort": "30min",
+      "debt": "30min",
+      "assignee": "JosefOreC-I2NHD@github",
+      "tags": [
+        "cwe"
+      ],
+      "transitions": [],
+      "actions": [],
+      "comments": [],
+      "creationDate": "2026-10-30T17:42:58+0000",
+      "updateDate": "2026-10-30T17:46:23+0000",
+      "type": "VULNERABILITY",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "COMPLETE",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "SECURITY",
+          "severity": "HIGH"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "projectName": "ALPHA_PROJECT",
+      "internalTags": [
+        "taint",
+        "advanced"
+      ],
+      "lastChangeAnalysisUuid": "27a829ad-78c9-4fcf-b031-a03e3c1b47b0",
+      "lastChangeSource": "ANALYSIS"
+    }
+  ],
+  "components": [
+    {
+      "organization": "joseforec",
+      "key": "JosefOreC_ALPHA_PROJECT:scripts/check_python_coverage.py",
+      "uuid": "AaGN8WF0HwZRnh-VsbWD",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "check_python_coverage.py",
+      "longName": "scripts/check_python_coverage.py",
+      "path": "scripts/check_python_coverage.py"
+    },
+    {
+      "organization": "joseforec",
+      "key": "JosefOreC_ALPHA_PROJECT",
+      "uuid": "AaGNz1eW8JWW6OUFv_Te",
+      "enabled": true,
+      "qualifier": "TRK",
+      "name": "ALPHA_PROJECT",
+      "longName": "ALPHA_PROJECT"
+    }
+  ],
+  "organizations": [
+    {
+      "key": "joseforec",
+      "name": "JosefOreC"
+    }
+  ],
+  "rules": [
+    {
+      "key": "pythonsecurity:S8707",
+      "name": "Agentic workflows should not be vulnerable to path injection attacks",
+      "lang": "py",
+      "status": "READY",
+      "langName": "Python"
+    }
+  ],
+  "users": [
+    {
+      "login": "JosefOreC-I2NHD@github",
+      "name": "JosefOreC",
+      "avatar": "cc1f4261960307ce8d96c155dc4684ab",
+      "active": true
+    }
+  ],
+  "languages": [
+    {
+      "key": "abap",
+      "name": "ABAP"
+    },
+    {
+      "key": "ansible",
+      "name": "Ansible"
+    },
+    {
+      "key": "apex",
+      "name": "Apex"
+    },
+    {
+      "key": "azurepipelines",
+      "name": "Azure Pipelines"
+    },
+    {
+      "key": "azureresourcemanager",
+      "name": "Azure Resource Manager"
+    },
+    {
+      "key": "c",
+      "name": "C"
+    },
+    {
+      "key": "cloudformation",
+      "name": "CloudFormation"
+    },
+    {
+      "key": "cobol",
+      "name": "COBOL"
+    },
+    {
+      "key": "cpp",
+      "name": "C++"
+    },
+    {
+      "key": "cs",
+      "name": "C#"
+    },
+    {
+      "key": "css",
+      "name": "CSS"
+    },
+    {
+      "key": "dart",
+      "name": "Dart"
+    },
+    {
+      "key": "dataweave",
+      "name": "DataWeave"
+    },
+    {
+      "key": "docker",
+      "name": "Docker"
+    },
+    {
+      "key": "flex",
+      "name": "Flex"
+    },
+    {
+      "key": "githubactions",
+      "name": "GitHub Actions"
+    },
+    {
+      "key": "go",
+      "name": "Go"
+    },
+    {
+      "key": "gosu",
+      "name": "Gosu"
+    },
+    {
+      "key": "groovy",
+      "name": "Groovy"
+    },
+    {
+      "key": "ipynb",
+      "name": "IPython Notebooks"
+    },
+    {
+      "key": "java",
+      "name": "Java"
+    },
+    {
+      "key": "jcl",
+      "name": "JCL"
+    },
+    {
+      "key": "js",
+      "name": "JavaScript"
+    },
+    {
+      "key": "json",
+      "name": "JSON"
+    },
+    {
+      "key": "jsp",
+      "name": "JSP"
+    },
+    {
+      "key": "kotlin",
+      "name": "Kotlin"
+    },
+    {
+      "key": "kubernetes",
+      "name": "Kubernetes"
+    },
+    {
+      "key": "objc",
+      "name": "Objective-C"
+    },
+    {
+      "key": "php",
+      "name": "PHP"
+    },
+    {
+      "key": "pli",
+      "name": "PL/I"
+    },
+    {
+      "key": "plsql",
+      "name": "PL/SQL"
+    },
+    {
+      "key": "postgres",
+      "name": "PostgreSQL"
+    },
+    {
+      "key": "powershell",
+      "name": "PowerShell"
+    },
+    {
+      "key": "py",
+      "name": "Python"
+    },
+    {
+      "key": "r",
+      "name": "R"
+    },
+    {
+      "key": "rpg",
+      "name": "RPG"
+    },
+    {
+      "key": "ruby",
+      "name": "Ruby"
+    },
+    {
+      "key": "rust",
+      "name": "Rust"
+    },
+    {
+      "key": "scala",
+      "name": "Scala"
+    },
+    {
+      "key": "secrets",
+      "name": "Secrets"
+    },
+    {
+      "key": "shell",
+      "name": "Shell"
+    },
+    {
+      "key": "swift",
+      "name": "Swift"
+    },
+    {
+      "key": "terraform",
+      "name": "Terraform"
+    },
+    {
+      "key": "text",
+      "name": "Text"
+    },
+    {
+      "key": "ts",
+      "name": "TypeScript"
+    },
+    {
+      "key": "tsql",
+      "name": "T-SQL"
+    },
+    {
+      "key": "vb",
+      "name": "Vb"
+    },
+    {
+      "key": "vbnet",
+      "name": "VB.NET"
+    },
+    {
+      "key": "web",
+      "name": "HTML"
+    },
+    {
+      "key": "xml",
+      "name": "XML"
+    },
+    {
+      "key": "yaml",
+      "name": "YAML"
+    }
+  ],
+  "facets": []
+}

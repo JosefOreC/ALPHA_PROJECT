@@ -1,6 +1,6 @@
 """Propuesta de rutas por inserción de menor costo entre toda la flota y mejora 2-opt por ruta.
 
-Distancias geográficas estimadas. El costo depende del objetivo: 'co2' minimiza kg CO2
+Distancias y tiempos de una red vial dirigida. El costo depende del objetivo: 'co2' minimiza kg CO2
 (km × consumo × factor del vehículo), 'time' minimiza minutos y 'balanced' combina ambos con co2Weight.
 """
 import math
@@ -14,7 +14,7 @@ SERVICE_MINUTES = 5
 BASELINE_FUEL = 'DIESEL'
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=65536)
 def distance(a, b):
     lat1, lon1, lat2, lon2 = map(math.radians, (*a,*b))
     value = math.sin((lat2-lat1)/2)**2 + math.cos(lat1)*math.cos(lat2)*math.sin((lon2-lon1)/2)**2
@@ -25,34 +25,42 @@ def position(order):
     return (float(order['latitud']),float(order['longitud']))
 
 
-def simulate(sequence, depot, start, respect_windows):
-    """Recorre la secuencia desde el almacén y vuelve; None si llega tarde a una ventana obligatoria."""
+def simulate(sequence, depot, start, respect_windows, roads, return_to_depot=True):
+    """None si un tramo es inaccesible o incumple una ventana obligatoria."""
     point, moment, km, arrivals = depot, start, 0, []
     for order in sequence:
         target = position(order)
-        leg = distance(point,target)
-        arrival = max(moment+timedelta(hours=leg/SPEED_KMH),order['ventana_inicio'])
+        road = roads.leg(point,target)
+        if road is None:
+            return None
+        leg, minutes = road
+        arrival = max(moment+timedelta(minutes=minutes),order['ventana_inicio'])
         if respect_windows and arrival > order['ventana_fin']:
             return None
         km += leg
         arrivals.append(arrival)
         moment = arrival+timedelta(minutes=SERVICE_MINUTES)
         point = target
-    back = distance(point,depot) if sequence else 0
-    end = moment+timedelta(hours=back/SPEED_KMH) if sequence else start
-    return {'km':km+back,'minutes':(end-start).total_seconds()/60,'arrivals':arrivals}
+    back = roads.leg(point,depot) if sequence and return_to_depot else (0,0)
+    if back is None:
+        return None
+    end = moment+timedelta(minutes=back[1]) if sequence else start
+    return {'km':km+back[0],'minutes':(end-start).total_seconds()/60,'arrivals':arrivals}
 
 
 def make_cost(goal, co2_weight, reference_rate):
     def cost(trip, rate):
         co2 = trip['km']*rate
         if goal == 'co2':
-            return co2
+            # Desempata por kilómetros incluso con vehículos de emisión operativa cero.
+            return co2 + trip['km']*1e-6
+        if goal == 'distance':
+            return trip['km']
         if goal == 'time':
             return trip['minutes']
         # Ambos términos en km equivalentes para que co2Weight sea un porcentaje real.
         share = co2_weight/100
-        return share*co2/reference_rate + (1-share)*trip['minutes']*SPEED_KMH/60
+        return share*co2/reference_rate + (1-share)*trip['minutes']*SPEED_KMH/60 + trip['km']*1e-6
     return cost
 
 
@@ -70,12 +78,13 @@ def two_opt(sequence, evaluate):
     return best
 
 
-def propose(orders, fleet, depot, factors, config, settings, start):
+def propose(orders, fleet, depot, factors, config, settings, start, roads):
     if not orders:
         raise ValueError('No hay pedidos pendientes con coordenadas para planificar.')
     if any(order['latitud'] is None or order['longitud'] is None for order in orders):
         raise ValueError('Completa las coordenadas de los pedidos antes de generar rutas.')
     respect = settings['respectWindows']
+    returning = settings.get('returnToDepot',True)
     rates = {row['placa']:emission_rate(row['tipo_combustible'],factors) for row in fleet}
     vehicles = [row for row in fleet if rates[row['placa']] is not None]
     reference = sum(rates[row['placa']] for row in vehicles)/len(vehicles) if vehicles else 1
@@ -87,7 +96,7 @@ def propose(orders, fleet, depot, factors, config, settings, start):
     pending = []
 
     def evaluate(plate, sequence):
-        trip = simulate(sequence,depot,start,respect)
+        trip = simulate(sequence,depot,start,respect,roads,returning)
         return None if trip is None else cost(trip,rates[plate])
 
     # Primero las ventanas que cierran antes: son las que menos posiciones factibles tienen.
@@ -122,22 +131,29 @@ def propose(orders, fleet, depot, factors, config, settings, start):
         if not routes[plate]:
             continue
         sequence = two_opt(routes[plate],lambda candidate: evaluate(plate,candidate))
-        trip = simulate(sequence,depot,start,respect)
-        baseline_km += simulate(sorted(sequence,key=lambda row: row['ventana_inicio']),depot,start,False)['km']
+        trip = simulate(sequence,depot,start,respect,roads,returning)
+        baseline = simulate(sorted(sequence,key=lambda row: row['ventana_inicio']),depot,start,False,roads,returning)
+        if baseline is None:
+            raise ValueError('No existe un camino vial para comparar la secuencia de referencia. Revisa los destinos.')
+        route_baseline_km = baseline['km']
+        baseline_km += route_baseline_km
         stops = []
         for order, arrival in zip(sequence,trip['arrivals']):
             on_time = order['ventana_inicio'] <= arrival <= order['ventana_fin']
             compliant += on_time
             stops.append({'id':str(order.get('pedido_id','')),'customer':order.get('cliente_nombre'),'district':order['distrito'],
                           'eta':arrival.astimezone(start.tzinfo).strftime('%H:%M'),'onTime':on_time})
+        path = [depot] + [position(order) for order in sequence] + ([depot] if returning else [])
         planned.append({'plate':plate,'driver':vehicle['nombre_completo'],
+            'waypoints':[{'lat':point[0],'lng':point[1]} for point in path],
+            'baselineCo2Kg':round(route_baseline_km*baseline_rate,2) if baseline_rate is not None else None,
             'zone':', '.join(sorted({row['distrito'] for row in sequence})),'fuel':fuel,'stops':len(sequence),
             'km':round(trip['km'],2),'minutes':round(trip['minutes']),'load':loads[plate]/float(vehicle['capacidad_kg']),
             'co2Kg':round(trip['km']*rates[plate],2),'co2PerKm':round(rates[plate],4),'fuelUsed':fuel_used(fuel,trip['km'],factors),
             'sequence':stops})
     total_km = sum(row['km'] for row in planned)
     co2 = sum(row['co2Kg'] for row in planned)
-    baseline_co2 = round(baseline_km*baseline_rate,2) if baseline_rate else None
+    baseline_co2 = round(baseline_km*baseline_rate,2) if baseline_rate is not None else None
     # «+ 0.0» descarta el -0.0 que deja redondear una diferencia flotante mínima.
     return {'routeCount':len(planned),'ordersAssigned':sum(row['stops'] for row in planned),'totalKm':round(total_km,2),
             'kmSaved':round(baseline_km-total_km,2)+0.0,'co2Kg':round(co2,2),'baselineKm':round(baseline_km,2),'baselineCo2Kg':baseline_co2,

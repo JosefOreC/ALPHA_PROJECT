@@ -45,7 +45,7 @@ describe('RoutePlanningView', () => {
     await user.click(screen.getByRole('switch', { name: 'Priorizar vehículos de bajas emisiones' }))
     await user.click(screen.getByRole('button', { name: 'Generar rutas' }))
     const summary = await screen.findByRole('region', { name: 'Resumen de la propuesta' })
-    expect(optimize.mock.calls[0][1]).toEqual({ goal: 'balanced', respectWindows: true, prioritizeLowEmission: false })
+    expect(optimize.mock.calls[0][1]).toEqual({ goal: 'balanced', respectWindows: true, prioritizeLowEmission: false, returnToDepot: false })
     expect(summary).toHaveTextContent('13')
     expect(summary).toHaveTextContent('1 284km')
     expect(summary).toHaveTextContent('−212 km')

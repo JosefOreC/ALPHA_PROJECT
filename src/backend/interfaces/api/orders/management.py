@@ -23,6 +23,8 @@ class CreateOrderBody(BaseModel):
     window_end: str = Field(min_length=1, max_length=40)
     weight_kg: float = Field(gt=0, le=99999999.99)
     instructions: str = Field(default="", max_length=1000)
+    latitude: float | None = Field(default=None, ge=-90, le=90)
+    longitude: float | None = Field(default=None, ge=-180, le=180)
 
     def order_data(self) -> OrderData:
         return OrderData(**self.model_dump(include=set(OrderData.__dataclass_fields__)))
@@ -50,6 +52,8 @@ class OrderRead(BaseModel):
     confirmed_at: str | None
     assigned: bool
     version: int
+    latitude: float | None = None
+    longitude: float | None = None
 
 
 class OrderPage(BaseModel):

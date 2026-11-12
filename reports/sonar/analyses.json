@@ -1,0 +1,31 @@
+{
+  "paging": {
+    "pageIndex": 1,
+    "pageSize": 5,
+    "total": 2
+  },
+  "analyses": [
+    {
+      "key": "7bafcf24-f960-40ea-a76d-4f31f9d160ee",
+      "date": "2026-10-30T17:34:50+0000",
+      "events": [
+        {
+          "key": "AaGN5mQ2FOqWrBDz3rg9",
+          "category": "VERSION",
+          "name": "not provided"
+        }
+      ],
+      "projectVersion": "not provided",
+      "manualNewCodePeriodBaseline": false,
+      "revision": "d36441fc4254ac9865dab6daa5bfc8dfa29ff71e"
+    },
+    {
+      "key": "1599900d-f6ca-4745-8729-af50b6eeef6e",
+      "date": "2026-10-30T17:15:45+0000",
+      "events": [],
+      "projectVersion": "not provided",
+      "manualNewCodePeriodBaseline": false,
+      "revision": "29ca820f2749147a3e194b50c4f35571a7426e13"
+    }
+  ]
+}

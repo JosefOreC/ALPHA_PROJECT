@@ -18,7 +18,7 @@ import { createManagement } from './application/manageOrders';
 import { HttpManagement } from './infrastructure/httpManagement';
 import { OrderManagementView } from './interfaces/OrderManagementView';
 import { FleetView } from './interfaces/FleetView';
-import { RoutePlanningView } from './interfaces/RoutePlanningView';
+import { RouteManagementView } from './interfaces/RouteManagementView';
 import { SustainabilityView } from './interfaces/SustainabilityView';
 import { AdminView } from './interfaces/AdminView';
 import { createAdministration } from './application/administration';
@@ -27,7 +27,7 @@ import { BrowserFileSaver } from './infrastructure/browserFileSaver';
 import { createGenerateRoutes } from './application/generateRoutes';
 
 import { DashboardPage, HttpDashboardGateway } from './features/dashboard';
-import { HttpAlgorithmSettings, HttpDashboardInsights, HttpDriverRoute, HttpIntegrationCatalog, HttpMapData, HttpPlanningSource, HttpRouteOptimizer, HttpSustainabilityReport, HttpUserDirectory } from './infrastructure/httpPortal';
+import { HttpAlgorithmSettings, HttpDashboardInsights, HttpDriverRoute, HttpIntegrationCatalog, HttpMapData, HttpPlanningSource, HttpRouteMapData, HttpRouteOptimizer, HttpSustainabilityReport, HttpUserDirectory } from './infrastructure/httpPortal';
 import { apiBaseUrl, getCsrfToken } from './infrastructure/httpClient';
 import { RecordsView } from './interfaces/RecordsView';
 import { DriversView } from './interfaces/DriversView';
@@ -42,6 +42,7 @@ const driverRouteService = createDriverRoute(new HttpDriverRoute());
 const DEFAULT_ORDER = '';
 const managementService = createManagement(new HttpManagement(apiBaseUrl, getCsrfToken));
 const mapSource = new HttpMapData();
+const routeMapSource = new HttpRouteMapData();
 const algorithmSettings = new HttpAlgorithmSettings();
 const administration = createAdministration({ settings: algorithmSettings, users: new HttpUserDirectory(), integrations: new HttpIntegrationCatalog() });
 const routeService = createGenerateRoutes({ optimizer: new HttpRouteOptimizer(), planning: new HttpPlanningSource(), settings: algorithmSettings });
@@ -164,11 +165,11 @@ function AuthorizedApp() {
 
       {/* Vista 2: Gestión de Pedidos */}
       {activeView === 'pedidos' && (
-        <OrderManagementView service={secured.management} mapSource={mapSource} onNavigate={navigateModule} />
+        <OrderManagementView service={secured.management} onNavigate={navigateModule} />
       )}
 
       {/* Vista 3: Generar rutas del día (US-005) */}
-      {activeView === 'rutas' && <RoutePlanningView service={secured.planning} renderMap={can(user.role, 'map.read') ? <RouteMap source={mapSource} profile="operations" /> : undefined} onNavigate={navigateModule} />}
+      {activeView === 'rutas' && <RouteManagementView service={secured.planning} mapSource={can(user.role, 'map.read') ? routeMapSource : undefined} onNavigate={navigateModule} />}
 
       {/* Vista 4: Reporte de sostenibilidad (US-010 / US-011) */}
       {activeView === 'sostenibilidad' && <SustainabilityView service={secured.sustainability} onNavigate={navigateModule} />}

@@ -13,6 +13,7 @@ export interface ManagedOrder extends Order { assigned: boolean; version: number
 export interface OrderData {
   customer: string; address: string; district: string; window_start: string
   window_end: string; weight_kg: number; instructions: string
+  latitude?: number | null; longitude?: number | null
 }
 export interface OrderFilters { limit: number; offset: number; status?: OrderStatus; district?: string }
 export interface OrderPage { items: ManagedOrder[]; limit: number; offset: number; has_more: boolean }
@@ -67,6 +68,9 @@ export function validTimestamp(value: string): boolean {
 }
 
 export function validateOrder(data: OrderData): void {
+  if ((data.latitude == null) !== (data.longitude == null)) throw new ManagementError('Completa la latitud y la longitud de la entrega.')
+  if ((data.latitude != null && (!Number.isFinite(data.latitude) || Math.abs(data.latitude) > 90)) ||
+      (data.longitude != null && (!Number.isFinite(data.longitude) || Math.abs(data.longitude) > 180))) throw new ManagementError('Las coordenadas de entrega no son válidas.')
   for (const [value, label, limit] of [[data.customer, 'Destinatario', 200], [data.address, 'Dirección', 500], [data.instructions, 'Indicaciones', 1000]] as const) {
     if (typeof value !== 'string' || value.length > limit || (label !== 'Indicaciones' && !value.trim())) throw new ManagementError(`${label}: revisa el campo (máximo ${limit} caracteres).`)
   }

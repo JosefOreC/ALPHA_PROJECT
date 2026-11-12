@@ -10,6 +10,16 @@ beforeAll(() => {
   HTMLDialogElement.prototype.showModal=function() { this.setAttribute('open','') }
   HTMLDialogElement.prototype.close=function() { this.removeAttribute('open'); this.dispatchEvent(new Event('close')) }
 })
+it('conserva y envía las coordenadas al editar un pedido geolocalizado', async () => {
+  const located = { ...order,latitude:-12.04,longitude:-76.95 }
+  const service = { update:vi.fn().mockResolvedValue(located) }
+  render(<OrderForm service={service as never} order={located} onSaved={vi.fn()} onBack={vi.fn()} />)
+  expect(screen.getByLabelText('Latitud de entrega')).toHaveValue(-12.04)
+  fireEvent.change(screen.getByLabelText('Longitud de entrega'),{ target:{ value:'-76.94' } })
+  fireEvent.submit(screen.getByRole('button',{ name:'Guardar cambios' }).closest('form')!)
+  await act(async () => {})
+  expect(service.update).toHaveBeenCalledWith(located,expect.objectContaining({ latitude:-12.04,longitude:-76.94 }))
+})
 it('edita el pedido conservando precisión temporal y evita guardados duplicados', async () => {
   let finish!: (value: ManagedOrder) => void
   const service={ update:vi.fn(() => new Promise<ManagedOrder>(resolve => { finish=resolve })), create:vi.fn() }

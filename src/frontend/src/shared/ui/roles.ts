@@ -29,8 +29,8 @@ export const ROLE_LABELS = Object.fromEntries(Object.entries(ROLE_METADATA).map(
 
 const MODULES: Record<ModuleId, AppModule> = {
   dashboard: { id: 'dashboard', label: 'Dashboard del día', href: '/' },
-  pedidos: { id: 'pedidos', label: 'Pedidos y rutas', href: '/?vista=pedidos' },
-  rutas: { id: 'rutas', label: 'Generar rutas', href: '/?vista=rutas' },
+  pedidos: { id: 'pedidos', label: 'Pedidos', href: '/?vista=pedidos' },
+  rutas: { id: 'rutas', label: 'Rutas', href: '/?vista=rutas' },
   flota: { id: 'flota', label: 'Flota', href: '/?vista=flota' },
   sostenibilidad: { id: 'sostenibilidad', label: 'Sostenibilidad', href: '/?vista=sostenibilidad' },
   admin: { id: 'admin', label: 'Administración', href: '/?vista=admin' },
@@ -60,8 +60,6 @@ export function modulesForRole(role: Role): AppModule[] {
   const ordered = Object.hasOwn(ROLE_MODULES, role) ? ROLE_MODULES[role] : []
   return ordered.filter(id => MODULE_PERMISSIONS[id].some(permission => can(role, permission))).map((id) => ({ ...MODULES[id],
     ...(id === 'admin' && role !== 'admin' ? { label: 'Parámetros' } : {}),
-    ...(id === 'rutas' && !can(role, 'routes.generate') ? { label: 'Rutas del día' } : {}),
-    ...(id === 'pedidos' && !can(role, 'map.read') ? { label: 'Pedidos' } : {}),
   }))
 }
 

@@ -5,13 +5,15 @@ import type { MapRoute, MapVehicle } from '../../domain/mapData'
 // Marcadores SVG; los colores y estados se resuelven dentro de `.eco-map`.
 
 /** Pin de ubicación con símbolo de estado; la punta coincide con la coordenada. */
-export function pinHtml(status: OrderStatus, selected: boolean, dimmed: boolean): string {
-  const classes = ['pin', `pin--${ORDER_STATUS_CLASS[status]}`, selected ? 'is-sel' : '', dimmed ? 'is-dim' : ''].filter(Boolean).join(' ')
+export function pinHtml(status: OrderStatus, selected: boolean, dimmed: boolean, assignment?: { color: MapRoute['color']; stop?: number | null }): string {
+  const classes = ['pin', `pin--${ORDER_STATUS_CLASS[status]}`, assignment ? `pin--assigned r${assignment.color}` : 'pin--unassigned', selected ? 'is-sel' : '', dimmed ? 'is-dim' : ''].filter(Boolean).join(' ')
+  const number = Number.isInteger(assignment?.stop) && assignment!.stop! > 0 ? String(assignment!.stop) : '·'
   return (
     `<svg class="${classes}" viewBox="-18 -18 36 44" width="36" height="44" aria-hidden="true" focusable="false">` +
     '<circle class="hit" r="17"></circle><circle class="halo" cy="-3" r="15"></circle>' +
     '<path class="pin-body" d="M0 20C-3 15-12 5-12-3a12 12 0 1 1 24 0C12 5 3 15 0 20z"></path>' +
-    '<g transform="translate(0,-3)"><circle class="pc" r="4.5"></circle>' +
+    `<circle class="pin-number-bg" cy="-3" r="8.5"></circle><text class="pin-number" y="1" text-anchor="middle">${assignment ? number : '—'}</text>` +
+    '<g class="pin-status" transform="translate(11,5) scale(.72)"><circle class="pin-status-bg" r="8"></circle><circle class="pc" r="4.5"></circle>' +
     '<rect class="pd" x="-3.5" y="-3.5" width="7" height="7" rx="1" transform="rotate(45)"></rect>' +
     '<path class="pk" d="M-4 0l2.5 2.5L4-3"></path><path class="px" d="M-3 -3l6 6M3 -3l-6 6"></path></g></svg>'
   )

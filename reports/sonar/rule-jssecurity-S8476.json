@@ -1,0 +1,45 @@
+{
+  "rule": {
+    "key": "jssecurity:S8476",
+    "repo": "jssecurity",
+    "name": "Client-side requests should not be vulnerable to forging attacks",
+    "createdAt": "2026-04-14T14:31:05+0000",
+    "severity": "MINOR",
+    "status": "READY",
+    "isTemplate": false,
+    "sysTags": [
+      "cwe"
+    ],
+    "lang": "js",
+    "langName": "JavaScript",
+    "params": [],
+    "defaultDebtRemFnType": "CONSTANT_ISSUE",
+    "defaultDebtRemFnOffset": "20min",
+    "debtRemFnType": "CONSTANT_ISSUE",
+    "debtRemFnOffset": "20min",
+    "type": "VULNERABILITY",
+    "defaultRemFnType": "CONSTANT_ISSUE",
+    "defaultRemFnBaseEffort": "20min",
+    "remFnType": "CONSTANT_ISSUE",
+    "remFnBaseEffort": "20min",
+    "scope": "MAIN",
+    "isExternal": false,
+    "cleanCodeAttribute": "TRUSTWORTHY",
+    "cleanCodeAttributeCategory": "RESPONSIBLE",
+    "impacts": [
+      {
+        "softwareQuality": "SECURITY",
+        "severity": "HIGH"
+      }
+    ],
+    "securityStandards": [
+      "cwe:20",
+      "owaspAsvs-4.0:5.1.3",
+      "owaspAsvs-4.0:5.1.4",
+      "owaspTop10-2021:a3",
+      "pciDss-4.0:6.2.4"
+    ],
+    "requiredEntitlements": []
+  },
+  "actives": []
+}

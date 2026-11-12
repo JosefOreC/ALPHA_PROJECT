@@ -96,10 +96,11 @@ CREATE TABLE rutas (
     energia_estimada NUMERIC(10,2) NOT NULL CHECK (energia_estimada >= 0),
     unidad_energia VARCHAR(10) NOT NULL CHECK (unidad_energia IN ('L','m3','kWh')),
     co2_estimado_kg NUMERIC(10,2) NOT NULL CHECK (co2_estimado_kg >= 0),
-    co2_base_kg NUMERIC(10,2) NOT NULL CHECK (co2_base_kg >= co2_estimado_kg),
+    co2_base_kg NUMERIC(10,2) NOT NULL CHECK (co2_base_kg >= 0),
     estado VARCHAR(20) NOT NULL CHECK (estado IN ('GENERADA','EN_CURSO','COMPLETADA')),
     version INTEGER NOT NULL DEFAULT 1 CHECK (version > 0),
     geometria GEOMETRY(LINESTRING,4326) NOT NULL,
+    ruteo JSONB NOT NULL DEFAULT '{}'::jsonb,
     generada_en TIMESTAMPTZ NOT NULL,
     UNIQUE (conductor_id, fecha_operacion),
     UNIQUE (vehiculo_id, fecha_operacion)

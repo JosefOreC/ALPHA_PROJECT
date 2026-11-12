@@ -1,18 +1,24 @@
 """Consultas operativas del esquema PostgreSQL compartido por todas las vistas."""
 import json
+import hashlib
 from datetime import datetime, timedelta
 from uuid import uuid4
 from zoneinfo import ZoneInfo
 from psycopg import sql
 from domain.access_control import canonical_role
 from domain.emissions import FUEL_UNITS, REFERENCE_CONSUMPTION
-from domain.planning import propose
+from infrastructure.road_routing import road_proposal as propose
 from infrastructure.persistence.database import connection, rows
 from infrastructure.security import hash_password
 from infrastructure.persistence.postgres_dashboard import DISTRICTS, PostgresDashboard
 
 LIMA = ZoneInfo('America/Lima')
 FUELS = ('DIESEL','GASOLINA','GLP','GNV','ELECTRICO','HIBRIDO')
+AVAILABLE_FLEET = """SELECT v.*,c.conductor_id,c.nombre_completo FROM vehiculos v
+    JOIN conductores c USING(vehiculo_id) JOIN usuarios u USING(usuario_id)
+    WHERE v.estado='DISPONIBLE' AND c.estado='ACTIVO' AND u.estado='ACTIVO' AND NOT EXISTS
+    (SELECT 1 FROM rutas r WHERE r.fecha_operacion=%s AND (r.vehiculo_id=v.vehiculo_id OR r.conductor_id=c.conductor_id))
+    ORDER BY placa LIMIT 15"""
 
 
 def now():
@@ -57,12 +63,12 @@ class PostgresPortal:
         return [{'id':str(row['usuario_id']),'name':row['nombre']} for row in rows("""SELECT u.usuario_id,u.nombre FROM usuarios u LEFT JOIN conductores c USING(usuario_id)
             WHERE u.rol IN ('CONDUCTOR','driver','ROL-03') AND u.estado='ACTIVO' AND c.conductor_id IS NULL ORDER BY nombre""")]
 
-    def parameters(self):
-        result = rows('SELECT * FROM parametros_algoritmo ORDER BY actualizado_en DESC LIMIT 1')
+    def parameters(self, query=rows):
+        result = query('SELECT * FROM parametros_algoritmo ORDER BY actualizado_en DESC LIMIT 1')
         if not result:
             raise ValueError('No hay parámetros configurados en la base de datos.')
         row = result[0]
-        stored = rows('SELECT * FROM factores_emision')
+        stored = query('SELECT * FROM factores_emision')
         factors = {fuel:None for fuel in FUELS}
         factors.update({item['combustible']:float(item['factor_kg_co2']) for item in stored})
         consumption = {fuel:None for fuel in FUELS}
@@ -109,27 +115,39 @@ class PostgresPortal:
             WHERE fecha_operacion=%s''') + sql.SQL(' AND r.conductor_id=%s' if driver_id else '') + sql.SQL(' ORDER BY v.placa'),
             (day or now().date(),driver_id) if driver_id else (day or now().date(),))
 
-    def map(self, driver_id=None):
+    def map(self, driver_id=None, active_only=False):
         route_rows = self.route_rows(driver_id=driver_id)
         route_ids = [row['ruta_id'] for row in route_rows]
         depots = rows('SELECT nombre,latitud,longitud FROM almacenes ORDER BY nombre LIMIT 1')
-        orders = rows(sql.SQL('''SELECT p.*,rp.ruta_id FROM pedidos p LEFT JOIN ruta_pedido rp USING(pedido_id)
+        orders = rows(sql.SQL('''SELECT p.*,rp.ruta_id,rp.orden_entrega FROM pedidos p LEFT JOIN ruta_pedido rp USING(pedido_id)
             WHERE (ventana_inicio AT TIME ZONE 'America/Lima')::date=%s AND latitud IS NOT NULL AND longitud IS NOT NULL''')
+            + sql.SQL(" AND p.estado IN ('PENDIENTE','EN_CAMINO')" if active_only else '')
             + sql.SQL(' AND p.conductor_id=%s' if driver_id else ''),(now().date(),driver_id) if driver_id else (now().date(),))
-        routes = [{'id':str(row['ruta_id']),'plate':row['placa'],'color':i%4+1,
+        if active_only:
+            active_ids = {row['ruta_id'] for row in orders if row['estado'] in ('PENDIENTE','EN_CAMINO')}
+            route_rows = [row for row in route_rows if row['estado']!='COMPLETADA' and row['ruta_id'] in active_ids]
+            route_ids = [row['ruta_id'] for row in route_rows]
+            orders = [row for row in orders if row['estado'] in ('PENDIENTE','EN_CAMINO')
+                      and (row['ruta_id'] in route_ids or (row['ruta_id'] is None and depots))]
+        routes = [{'id':str(row['ruta_id']),'plate':row['placa'],'driver':row['nombre_completo'],'color':i%4+1,
                    'path':[{'lat':point[1],'lng':point[0]} for point in row['geo']['coordinates']], 'done_until':0} for i,row in enumerate(route_rows)]
         vehicles = rows(sql.SQL('''SELECT DISTINCT ON (p.vehiculo_id) p.*,v.placa,v.estado FROM posiciones_vehiculos p JOIN vehiculos v USING(vehiculo_id)
             WHERE (p.registrada_en AT TIME ZONE 'America/Lima')::date=%s''')+sql.SQL(' AND p.ruta_id=ANY(%s)' if driver_id else '')+sql.SQL(' ORDER BY p.vehiculo_id,p.registrada_en DESC'),
             (now().date(),route_ids) if driver_id else (now().date(),))
+        if active_only:
+            vehicles = [row for row in vehicles if row['ruta_id'] in route_ids]
         return {'depot':{'name':depots[0]['nombre'],'position':{'lat':float(depots[0]['latitud']),'lng':float(depots[0]['longitud'])}} if depots else None,
                 'orders':[{'id':str(row['pedido_id']),'customer':row['cliente_nombre'],'district':row['distrito'],'status':row['estado'],
                            'position':{'lat':float(row['latitud']),'lng':float(row['longitud'])},
                            'window':row['ventana_inicio'].astimezone(LIMA).strftime('%H:%M')+'–'+row['ventana_fin'].astimezone(LIMA).strftime('%H:%M'),
-                           'route_id':str(row['ruta_id']) if row['ruta_id'] else None,'co2_kg':None} for row in orders],
+                           'route_id':str(row['ruta_id']) if row['ruta_id'] else None,'stop_number':row.get('orden_entrega'),'co2_kg':None} for row in orders],
                 'routes':routes,'vehicles':[{'id':str(row['vehiculo_id']),'plate':row['placa'],
                     'position':{'lat':float(row['latitud']),'lng':float(row['longitud'])},'route_id':str(row['ruta_id']) if row['ruta_id'] else None,
                     'color':next((route['color'] for route in routes if route['id']==str(row['ruta_id'])),1),
                     'status':'En ruta' if row['estado']=='EN_RUTA' else 'Disponible' if row['estado']=='DISPONIBLE' else 'Detenido'} for row in vehicles]}
+
+    def route_map(self, driver_id=None):
+        return self.map(driver_id,active_only=True)
 
     def driver_route(self, driver_id):
         result = self.route_rows(driver_id=driver_id)
@@ -146,7 +164,7 @@ class PostgresPortal:
                 'stops':[{'order_id':str(row['pedido_id']),'customer':row['cliente_nombre'],'address':row['direccion_entrega'],
                           'time':row['ventana_inicio'].astimezone(LIMA).strftime('%H:%M'),'kind':'done' if row['estado']=='ENTREGADO' else 'now' if row['pedido_id']==current else 'next'} for row in stops],
                 'remaining_stops':len(stops)-delivered,'return_time':(route['generada_en'].astimezone(LIMA)+timedelta(minutes=route['tiempo_estimado_min'])).strftime('%H:%M'),
-                'depot':route['depot'],'change':None}
+                'return_to_depot':(route.get('ruteo') or {}).get('returnToDepot',True),'depot':route['depot'],'change':None}
 
     def report(self, period):
         today = now().date()
@@ -241,25 +259,86 @@ class PostgresPortal:
         return {'id':str(identifier),'status':'ABIERTA'}
 
     def scope(self):
-        pending = rows("SELECT count(*) AS n,count(DISTINCT distrito) AS districts FROM pedidos WHERE estado='PENDIENTE' AND conductor_id IS NULL AND (ventana_inicio AT TIME ZONE 'America/Lima')::date=%s",(now().date(),))[0]
+        pending = rows("""SELECT count(*) FILTER (WHERE latitud IS NOT NULL AND longitud IS NOT NULL) AS n,
+            count(DISTINCT distrito) FILTER (WHERE latitud IS NOT NULL AND longitud IS NOT NULL) AS districts,
+            count(*) FILTER (WHERE latitud IS NULL OR longitud IS NULL) AS unlocated
+            FROM pedidos WHERE estado='PENDIENTE' AND conductor_id IS NULL AND (ventana_inicio AT TIME ZONE 'America/Lima')::date=%s""",(now().date(),))[0]
+        depot_available = bool(rows('SELECT almacen_id FROM almacenes LIMIT 1'))
         fleet = rows('SELECT estado FROM vehiculos')
-        return {'pendingOrders':pending['n'],'districts':pending['districts'],'availableVehicles':sum(row['estado']=='DISPONIBLE' for row in fleet),
+        return {'pendingOrders':pending['n'] if depot_available else 0,'districts':pending['districts'] if depot_available else 0,
+                'unlocatedOrders':pending.get('unlocated',0),'depotAvailable':depot_available,
+                'availableVehicles':len(rows(AVAILABLE_FLEET,(now().date(),))),
                 'totalVehicles':len(fleet),'vehiclesInService':sum(row['estado']=='MANTENIMIENTO' for row in fleet)}
 
     def proposal(self, settings):
+        return self._calculate_proposal(settings, rows, now())[0]
+
+    def _calculate_proposal(self, settings, query, start):
         import time
         started = time.monotonic()
-        orders = rows("SELECT * FROM pedidos WHERE estado='PENDIENTE' AND conductor_id IS NULL AND (ventana_inicio AT TIME ZONE 'America/Lima')::date=%s ORDER BY ventana_inicio LIMIT 151",(now().date(),))
+        orders = query("SELECT * FROM pedidos WHERE estado='PENDIENTE' AND conductor_id IS NULL AND latitud IS NOT NULL AND longitud IS NOT NULL AND (ventana_inicio AT TIME ZONE 'America/Lima')::date=%s ORDER BY ventana_inicio,pedido_id LIMIT 151",(start.date(),))
         if len(orders)>150:
             raise ValueError('Selecciona como máximo 150 pedidos para planificar.')
-        fleet = rows("""SELECT v.*,c.nombre_completo FROM vehiculos v JOIN conductores c USING(vehiculo_id)
-            WHERE v.estado='DISPONIBLE' AND c.estado='ACTIVO' AND NOT EXISTS
-            (SELECT 1 FROM rutas r WHERE r.fecha_operacion=%s AND (r.vehiculo_id=v.vehiculo_id OR r.conductor_id=c.conductor_id)) ORDER BY placa LIMIT 15""",(now().date(),))
-        depots = rows('SELECT latitud,longitud FROM almacenes ORDER BY nombre LIMIT 1')
+        fleet = query(AVAILABLE_FLEET,(start.date(),))
+        depots = query('SELECT latitud,longitud,almacen_id,nombre FROM almacenes ORDER BY nombre,almacen_id LIMIT 1')
         if not depots or not fleet:
             raise ValueError('Se requiere un almacén y vehículos disponibles con conductor para planificar.')
         profiles = {row['combustible']:{'factor':float(row['factor_kg_co2']),
-                    'consumption':float(row['consumo_por_km']) if row.get('consumo_por_km') is not None else None} for row in rows('SELECT * FROM factores_emision')}
-        result = propose(orders,fleet,(float(depots[0]['latitud']),float(depots[0]['longitud'])),profiles,self.parameters(),settings,now())
+                    'consumption':float(row['consumo_por_km']) if row.get('consumo_por_km') is not None else None} for row in query('SELECT * FROM factores_emision')}
+        config = self.parameters(query)
+        depot = depots[0]
+        result = propose(orders,fleet,(float(depot['latitud']),float(depot['longitud'])),profiles,config,settings,start)
+        layout = [(route['plate'],[stop['id'] for stop in route['sequence']]) for route in result['routes']]
+        # Detecta cambios de recursos y de secuencia sin depender de los segundos que tarda el usuario en revisar.
+        source = {'day':start.date(),'orders':orders,'fleet':fleet,'depot':depot,'profiles':profiles,'config':config,'settings':settings,'layout':layout,
+                  'roads':[(r.get('routing'),r.get('legs'),r['path']) for r in result['routes']]}
+        result['fingerprint'] = hashlib.sha256(json.dumps(source,sort_keys=True,default=str).encode()).hexdigest()
+        routes = [{'id':'proposal:'+route['plate'],'plate':route['plate'],'driver':route['driver'],'color':index%4+1,'path':route['path'],'done_until':0}
+                  for index,route in enumerate(result['routes'])]
+        assignments = {stop['id']:route['id'] for route,planned in zip(routes,result['routes']) for stop in planned['sequence']}
+        stop_numbers = {stop['id']:index for route in result['routes'] for index,stop in enumerate(route['sequence'],1)}
+        result['mapData'] = {'depot':{'name':depot.get('nombre','Almacén'),'position':{'lat':float(depot['latitud']),'lng':float(depot['longitud'])}},
+            'routes':routes,'vehicles':[],
+            'orders':[{'id':str(order['pedido_id']),'customer':order['cliente_nombre'],'district':order['distrito'],'status':order['estado'],
+                       'position':{'lat':float(order['latitud']),'lng':float(order['longitud'])},'route_id':assignments[str(order['pedido_id'])],
+                       'stop_number':stop_numbers[str(order['pedido_id'])],
+                       'window':order['ventana_inicio'].astimezone(LIMA).strftime('%H:%M')+'–'+order['ventana_fin'].astimezone(LIMA).strftime('%H:%M'),
+                       'co2_kg':None} for order in orders]}
         result['elapsedSeconds'] = round(time.monotonic()-started,2)
-        return result
+        return result, fleet, depot
+
+    def approve_proposal(self, settings, fingerprint, actor):
+        with connection() as conn, conn.transaction():
+            # Bloquea los recursos durante la revalidación y el guardado de toda la propuesta.
+            conn.execute('LOCK TABLE pedidos,vehiculos,conductores,usuarios,almacenes,parametros_algoritmo,factores_emision,rutas IN SHARE ROW EXCLUSIVE MODE')
+            query = lambda statement, params=(): conn.execute(statement,params).fetchall()
+            start = now()
+            result, fleet, depot = self._calculate_proposal(settings,query,start)
+            if result['fingerprint'] != fingerprint:
+                raise ValueError('Los pedidos, la flota o la propuesta cambiaron. Vuelve a generar las rutas antes de aprobar.')
+            if any(route['baselineCo2Kg'] is None for route in result['routes']):
+                raise ValueError('Configura el factor y el consumo diésel para guardar la línea base de las rutas.')
+            route_ids = []
+            for route in result['routes']:
+                identifier = uuid4()
+                vehicle = next(row for row in fleet if row['placa']==route['plate'])
+                points = route['path']
+                geometry = json.dumps({'type':'LineString','coordinates':[[p['lng'],p['lat']] for p in points]})
+                energy = route['fuelUsed']
+                conn.execute('''INSERT INTO rutas(ruta_id,conductor_id,vehiculo_id,almacen_id,fecha_operacion,distancia_total_km,
+                    tiempo_estimado_min,combustible_estimado_l,energia_estimada,unidad_energia,co2_estimado_kg,co2_base_kg,estado,geometria,generada_en)
+                    VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,'GENERADA',ST_SetSRID(ST_GeomFromGeoJSON(%s),4326),%s)''',
+                    (identifier,vehicle['conductor_id'],vehicle['vehiculo_id'],depot['almacen_id'],start.date(),route['km'],route['minutes'],
+                     energy['amount'] if energy['unit']=='L' else None,energy['amount'],energy['unit'],route['co2Kg'],route['baselineCo2Kg'],geometry,start))
+                for index, stop in enumerate(route['sequence'],1):
+                    conn.execute('INSERT INTO ruta_pedido(ruta_id,pedido_id,orden_entrega) VALUES (%s,%s,%s)',(identifier,stop['id'],index))
+                    conn.execute('UPDATE pedidos SET conductor_id=%s,version=version+1 WHERE pedido_id=%s',(vehicle['conductor_id'],stop['id']))
+                conn.execute('UPDATE rutas SET ruteo=%s::jsonb WHERE ruta_id=%s',(json.dumps(route['routing']),identifier))
+                for index,leg in enumerate(route['legs'],1):
+                    origin,target,km = leg['origin'],leg['destination'],leg['km']
+                    conn.execute('''INSERT INTO tramos(tramo_id,ruta_id,orden_tramo,latitud_origen,longitud_origen,latitud_destino,
+                        longitud_destino,distancia_km,tiempo_estimado_min,co2_estimado_kg) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)''',
+                        (uuid4(),identifier,index,origin['lat'],origin['lng'],target['lat'],target['lng'],round(km,2),round(leg['minutes']),round(km*route['co2PerKm'],2)))
+                audit(conn,actor,'GENERAR_RUTA','rutas',identifier,{'pedidos':route['stops'],'placa':route['plate']})
+                route_ids.append(str(identifier))
+        return {'routeIds':route_ids,'ordersAssigned':result['ordersAssigned']}

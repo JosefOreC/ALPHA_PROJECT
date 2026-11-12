@@ -27,12 +27,11 @@ export function SessionGate() {
   return <main className="eco-root eco-login" data-theme="light">
     <section className="eco-login__intro" aria-label="EcoLogística Lima">
       <a href="/" className="eco-login__brand"><LogoHojaRuta /> EcoLogística <span>Lima</span></a>
-      <div><span className="eco-login__eyebrow">OPERACIÓN SOSTENIBLE</span><h2>Cada entrega cuenta.<br />Cada ruta, también.</h2><p>Organiza tu operación, acompaña a tu equipo y sigue el impacto de tus entregas desde un solo lugar.</p></div>
-      <span className="eco-login__foot">DistriRápido · Lima, Perú</span>
+      <span className="eco-login__foot">Acceso administrativo · DistriRápido</span>
     </section>
     <section className="eco-login__panel">
       <div className="eco-login__form eco-stack eco-stack--loose">
-        <div><p className="eco-login__eyebrow">BIENVENIDO A ECOLOGÍSTICA</p><h1 className="eco-h1">Inicia sesión</h1><p className="eco-sub">Ingresa con la cuenta asignada por tu administrador.</p></div>
+        <div><p className="eco-login__eyebrow">ACCESO AL SISTEMA</p><h1 className="eco-h1">Inicia sesión</h1><p className="eco-sub">Ingresa con la cuenta asignada por tu administrador.</p></div>
         {session.loading ? <p role="status">Verificando sesión…</p> : <form className="eco-stack" onSubmit={async event => {
           event.preventDefault(); if (busy) return; setBusy(true)
           try { await session.login(email.trim(), password); setPassword('') } catch { setPassword('') } finally { setBusy(false) }

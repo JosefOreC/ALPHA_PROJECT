@@ -1,6 +1,13 @@
 from datetime import datetime, timedelta, timezone
 import pytest
-from domain.planning import propose
+from domain.planning import propose as plan, position
+from tests.road_fixtures import TestRoadRouter
+
+
+def propose(orders,fleet,depot,factors,config,settings,start):
+    # Test costs are injected explicitly; production has no geographic fallback.
+    points = [depot]+[position(o) for o in orders if o['latitud'] is not None and o['longitud'] is not None]
+    return plan(orders,fleet,depot,factors,config,settings,start,TestRoadRouter().matrix(points))
 
 START = datetime(2026,10,9,10,tzinfo=timezone.utc)
 ORDER = {'latitud':-12.02,'longitud':-77.01,'peso_kg':50,'ventana_inicio':START,'ventana_fin':START+timedelta(hours=4),'distrito':'Ate'}

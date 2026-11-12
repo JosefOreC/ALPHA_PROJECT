@@ -3,7 +3,7 @@ import { decodeOrder, HttpManagement } from './httpManagement'
 import { HttpSession } from './httpSession'
 import { HttpOrders } from './httpOrders'
 import { getCsrfToken, requestJson, setCsrfToken } from './httpClient'
-import { HttpAlgorithmSettings, HttpDashboardInsights, HttpDriverRoute, HttpIntegrationCatalog, HttpMapData, HttpPlanningSource, HttpRouteOptimizer, HttpSustainabilityReport, HttpUserDirectory } from './httpPortal'
+import { HttpAlgorithmSettings, HttpDashboardInsights, HttpDriverRoute, HttpIntegrationCatalog, HttpMapData, HttpPlanningSource, HttpRouteMapData, HttpRouteOptimizer, HttpSustainabilityReport, HttpUserDirectory } from './httpPortal'
 import type { OrderData } from '../domain/managedOrder'
 
 const data: OrderData = { customer: 'Ana', address: 'Calle 1', district: 'Ate', window_start: '2026-10-30T10:00:00-05:00', window_end: '2026-10-30T12:00:00-05:00', weight_kg: 2, instructions: '' }
@@ -12,6 +12,13 @@ const session = { subject_id: 'u1', name: 'Ana', role: 'driver', driver_id: 'd1'
 const fetchMock = vi.fn<typeof fetch>()
 beforeEach(() => { vi.stubGlobal('fetch', fetchMock); fetchMock.mockReset(); setCsrfToken(null) })
 afterEach(() => { vi.unstubAllGlobals(); setCsrfToken(null) })
+
+it('el mapa de Rutas utiliza su propia consulta de pedidos activos',async () => {
+  const map = {depot:null,orders:[],routes:[],vehicles:[]}
+  fetchMock.mockResolvedValue(Response.json(map))
+  expect(await new HttpRouteMapData().load()).toEqual(map)
+  expect(fetchMock.mock.calls[0][0]).toBe('/api/routes/map')
+})
 
 describe('HTTP de gestión de pedidos', () => {
   it('codifica identificadores y filtros y transmite versiones y CSRF solo al escribir', async () => {

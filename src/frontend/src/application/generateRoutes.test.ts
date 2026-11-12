@@ -28,6 +28,16 @@ describe('GenerateRoutes', () => {
     expect(optimize).not.toHaveBeenCalled()
   })
 
+  it.each([
+    [{depotAvailable:false},'almacén de origen'],
+    [{pendingOrders:0,unlocatedOrders:2},'coordenadas de destino'],
+  ] as const)('explica los datos de origen o destino incompletos antes de calcular: %o',async (changes,message) => {
+    const optimize = vi.fn()
+    const service = createGenerateRoutes({optimizer:{optimize},planning:planning(scope(changes))})
+    await expect(service.generate(DEFAULT_ROUTE_SETTINGS)).rejects.toThrow(message)
+    expect(optimize).not.toHaveBeenCalled()
+  })
+
   it('entrega al motor el alcance y la configuración, y devuelve su propuesta', async () => {
     const optimize = vi.fn(async () => proposal)
     const current = scope()

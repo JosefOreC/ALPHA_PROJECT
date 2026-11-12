@@ -24,7 +24,7 @@ async function fitsControls(page: Page, controls: Locator) {
 
 test('390 px: filtrar el mapa por estado y pedido conserva controles dentro de pantalla', async ({ page }) => {
   await stubTiles(page)
-  await page.goto('/tests/ui/demo.html')
+  await page.goto('/tests/ui/map.html?board')
   const map = page.getByRole('group', { name: /Mapa de rutas de Lima Este/ })
   const filters = page.getByRole('group', { name: 'Filtros del mapa' })
   await expect(map.locator('svg.pin')).toHaveCount(12)
@@ -98,4 +98,18 @@ test('390 px: mensajes largos sin espacios no desbordan', async ({ page }) => {
   await expect(page.getByRole('alert')).toContainText('Error ficticio')
   await fitsPage(page)
   await fitsControls(page, page.getByRole('button', { name: 'Volver a cargar' }))
+})
+
+test('390 px: seleccionar destino en mapa conserva los controles dentro de la pantalla',async ({page}) => {
+  await stubTiles(page)
+  await page.goto('/tests/ui/demo.html')
+  await page.getByRole('button',{name:'Registrar pedido',exact:true}).click()
+  await page.getByRole('button',{name:'Seleccionar en mapa'}).click()
+  const map = page.getByRole('group',{name:'Mapa para seleccionar destino'})
+  await expect(map.locator('.leaflet-container')).toHaveAttribute('data-basemap-ready','true')
+  await fitsControls(page,map.getByRole('button'))
+  await map.getByRole('button',{name:'Usar centro del mapa'}).click()
+  expect(Number(await page.getByLabel('Latitud de entrega').inputValue())).toBeCloseTo(-12.04,3)
+  expect(Number(await page.getByLabel('Longitud de entrega').inputValue())).toBeCloseTo(-76.96,3)
+  await fitsPage(page)
 })

@@ -1,0 +1,38 @@
+{
+  "pullRequests": [
+    {
+      "key": "27",
+      "title": "Integrar SonarCloud, endurecer CI y documentar OWASP 2025",
+      "branch": "chore/sonarcloud-owasp-2025",
+      "base": "main",
+      "status": {
+        "qualityGateStatus": "OK",
+        "bugs": 0,
+        "vulnerabilities": 0,
+        "codeSmells": 0
+      },
+      "analysisDate": "2026-10-30T18:52:43+0000",
+      "url": "https://github.com/JosefOreC/ALPHA_PROJECT/pull/27",
+      "target": "main",
+      "commit": {
+        "sha": "21248b14a39e3053390bc4ab4038bd1b51981f4f",
+        "author": {
+          "name": "JosefOreC",
+          "login": "JosefOreC-I2NHD@github",
+          "avatar": "cc1f4261960307ce8d96c155dc4684ab"
+        },
+        "date": "2026-10-30T18:26:38+0000",
+        "message": "Merge remote-tracking branch 'origin/main' into chore/sonarcloud-owasp-2025"
+      },
+      "contributors": [
+        {
+          "name": "JosefOreC",
+          "login": "JosefOreC-I2NHD@github",
+          "avatar": "cc1f4261960307ce8d96c155dc4684ab"
+        }
+      ],
+      "pullRequestUuidV1": "AaGN9unxuF0_WiLutb_S",
+      "pullRequestId": "ab6b3019-978c-4655-b8d5-f0f726ff97bf"
+    }
+  ]
+}

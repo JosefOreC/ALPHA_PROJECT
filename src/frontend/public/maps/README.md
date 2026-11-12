@@ -15,5 +15,13 @@ python scripts/generate-basemap-style.py .test-deps/liberty-style.json
 
 Review the generated cartography after regeneration: upstream schema/style changes can affect the result.
 
+If the vector source fails or does not load within eight seconds, the viewer uses
+OpenStreetMap raster tiles and retains its route and order overlays. Browser caching
+and visible attribution are preserved; no offline downloads or prefetch are implemented.
+See the [OpenStreetMap tile usage policy](https://operations.osmfoundation.org/policies/tiles/).
+Deployments can configure `VITE_RASTER_TILE_URL` and `VITE_RASTER_TILE_ATTRIBUTION`
+to use their own tile provider. If both sources fail, route and order overlays remain
+visible with a warning and the operational list stays available.
+
 
 [← Volver al índice correspondiente](../../README.md)

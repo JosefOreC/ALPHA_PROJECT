@@ -1,0 +1,140 @@
+{
+  "exported_at_utc": "2026-10-30T18:53:53.677846+00:00",
+  "project_key": "JosefOreC_ALPHA_PROJECT",
+  "scope": {
+    "pullRequest": "27"
+  },
+  "workflow_commit": "d5eb106129b0a3c4842442e2788288d23f0b20ac",
+  "analysis_task": {
+    "id": "AaGOKR0tuF0_WiLutffU",
+    "type": "REPORT",
+    "componentId": "AaGN9unxuF0_WiLutb_S",
+    "componentKey": "JosefOreC_ALPHA_PROJECT",
+    "componentName": "ALPHA_PROJECT",
+    "componentQualifier": "TRK",
+    "analysisId": "aa683391-5607-478e-9138-905441b99644",
+    "status": "SUCCESS",
+    "submittedAt": "2026-10-30T18:53:41+0000",
+    "submitterLogin": "JosefOreC-I2NHD@github",
+    "startedAt": "2026-10-30T18:53:41+0000",
+    "executedAt": "2026-10-30T18:53:48+0000",
+    "executionTimeMs": 6543,
+    "logs": false,
+    "hasScannerContext": true,
+    "organization": "joseforec",
+    "pullRequest": "27",
+    "warningCount": 1,
+    "warnings": []
+  },
+  "snapshot": {
+    "organization": "joseforec",
+    "visibility": "public"
+  },
+  "dashboard": "https://sonarcloud.io/dashboard?id=JosefOreC_ALPHA_PROJECT&pullRequest=27",
+  "notice": "Consulta del estado actual, no snapshot atómico. Confirmar el commit del análisis en SonarCloud. No certifica cumplimiento OWASP.",
+  "measures": {
+    "component": {
+      "id": "AaGN9unxuF0_WiLutb_S",
+      "key": "JosefOreC_ALPHA_PROJECT",
+      "name": "ALPHA_PROJECT",
+      "qualifier": "TRK",
+      "measures": [
+        {
+          "metric": "coverage",
+          "value": "94.1",
+          "bestValue": false
+        },
+        {
+          "metric": "bugs",
+          "value": "0",
+          "bestValue": true
+        },
+        {
+          "metric": "duplicated_lines_density",
+          "value": "0.1",
+          "bestValue": false
+        },
+        {
+          "metric": "code_smells",
+          "value": "0",
+          "bestValue": true
+        },
+        {
+          "metric": "ncloc",
+          "value": "306"
+        },
+        {
+          "metric": "vulnerabilities",
+          "value": "0",
+          "bestValue": true
+        },
+        {
+          "metric": "security_hotspots",
+          "value": "0",
+          "bestValue": true
+        }
+      ],
+      "pullRequest": "27"
+    }
+  },
+  "quality_gate": {
+    "projectStatus": {
+      "status": "OK",
+      "conditions": [
+        {
+          "status": "OK",
+          "metricKey": "new_reliability_rating",
+          "comparator": "GT",
+          "periodIndex": 1,
+          "errorThreshold": "1",
+          "actualValue": "1"
+        },
+        {
+          "status": "OK",
+          "metricKey": "new_security_rating",
+          "comparator": "GT",
+          "periodIndex": 1,
+          "errorThreshold": "1",
+          "actualValue": "1"
+        },
+        {
+          "status": "OK",
+          "metricKey": "new_maintainability_rating",
+          "comparator": "GT",
+          "periodIndex": 1,
+          "errorThreshold": "1",
+          "actualValue": "1"
+        },
+        {
+          "status": "OK",
+          "metricKey": "new_coverage",
+          "comparator": "LT",
+          "periodIndex": 1,
+          "errorThreshold": "80",
+          "actualValue": "100.0"
+        },
+        {
+          "status": "OK",
+          "metricKey": "new_duplicated_lines_density",
+          "comparator": "GT",
+          "periodIndex": 1,
+          "errorThreshold": "3",
+          "actualValue": "0.0"
+        },
+        {
+          "status": "OK",
+          "metricKey": "new_security_hotspots_reviewed",
+          "comparator": "LT",
+          "periodIndex": 1,
+          "errorThreshold": "100",
+          "actualValue": "100.0"
+        }
+      ],
+      "periods": [],
+      "ignoredConditions": false
+    }
+  },
+  "issues": [],
+  "hotspots": null,
+  "hotspots_export_status": "No exportados: la API no anuncia soporte para este ámbito. Revisar en el dashboard; no interpretar como cero hotspots."
+}

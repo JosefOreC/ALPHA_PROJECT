@@ -15,6 +15,10 @@ Desde la raíz, configurar `DATABASE_URL` en `.env` y ejecutar:
 ```
 
 La API escucha en `http://127.0.0.1:8000`; la documentación está en `/docs`.
+También se puede iniciar desde `scripts` con `python .\run_backend.py`;
+la recarga vigila `src/backend` independientemente del directorio de la terminal.
+Ejecutar una sola instancia: si el puerto 8000 está ocupado por otro backend,
+cerrarlo con `Ctrl+C` en su terminal antes de volver a iniciar.
 No existe registro público: únicamente un administrador autenticado puede crear
 cuentas mediante `POST /api/admin/users`. El comando `scripts/create_admin.py`
 crea la primera cuenta si todavía no hay administrador.
@@ -24,6 +28,69 @@ ejecutar `scripts/create_admin.py --from-env`. La contraseña requiere 12 caract
 Todos los módulos operativos consultan el esquema compartido de PostgreSQL.
 Los repositorios en memoria están reservados para pruebas con dependencias
 inyectadas; no se activan por una caída de la base.
+
+Para generar rutas, ingresar como operador/planificador, registrar pedidos para
+el día actual con latitud y longitud y disponer de un almacén y vehículos con
+conductor y cuenta activos. En «Rutas → Generar rutas», generar la propuesta, revisar el mapa
+y pulsar «Aprobar y guardar rutas». La aprobación conserva rutas, secuencia,
+tramos y asignaciones en una transacción; si cambian los recursos, exige generar
+una nueva propuesta. Las rutas quedan en estado `GENERADA`, con los pedidos
+`PENDIENTE` asignados al conductor.
+
+Pedidos es un módulo independiente de registro y consulta. El mapa operativo de
+Rutas (`GET /api/routes/map`) muestra solo pendientes de envío y pedidos en camino
+con origen y destino definidos; omite entregados, cancelados y rutas completadas.
+La generación excluye pendientes sin coordenadas e informa su cantidad en
+`unlocatedOrders`; `depotAvailable` indica si existe un origen configurado.
+Los pedidos en camino se supervisan en Rutas y no se reasignan en la generación.
+
+Para añadir una jornada visible de demostración sin borrar historial, ejecutar:
+
+```powershell
+.venv/Scripts/python.exe scripts/seed_visible_routes.py --dry-run
+.venv/Scripts/python.exe scripts/seed_visible_routes.py
+```
+
+El comando usa la fecha de Lima (o `--date YYYY-MM-DD`), requiere una base marcada
+como `ecologistica-test-db` y cuatro vehículos disponibles con conductor activo.
+Añade 24 pedidos geolocalizados, cuatro rutas, sus tramos y posiciones sintéticas;
+una segunda ejecución para la misma fecha conserva la carga existente.
+
+`POST /api/routes/proposal` calcula la vista previa con `mapData` y `fingerprint`.
+`POST /api/routes/approve` recibe `{settings, fingerprint}` y requiere permiso
+`routes.generate` y CSRF. El motor Valhalla consulta la red vial de OpenStreetMap:
+matriz dirigida de kilómetros/minutos para asignar y ordenar las entregas,
+geometría por calles y un tramo persistido por entrega (más el retorno opcional).
+`goal` admite `co2`, `distance`, `balanced` y `time`. CO₂ y distancia solicitan
+caminos cortos; tiempo prioriza duración; equilibrado usa el peso configurado.
+`returnToDepot` es opcional y vale `false` por defecto: el último destino cierra
+el recorrido. El CO₂ se estima con kilómetros viales × consumo × factor.
+No se dispone de tráfico en vivo ni de un modelo de emisiones según pendiente,
+ralentí o velocidad. La inserción y 2-opt no garantizan el mínimo global de la flota.
+
+`ROAD_ROUTER_URL` configura la instancia Valhalla. Por defecto se usa
+`https://valhalla1.openstreetmap.de`, servicio público de desarrollo sin SLA;
+para uso de producción o cargas grandes configurar una instancia propia.
+Las consultas públicas se espacian al menos un segundo y se cachean diez minutos
+(máximo 128 respuestas). El presupuesto de red respeta `maxSeconds` (máximo 45 s);
+lotes grandes pueden requerir menos pedidos o un servidor propio. Un fallo del
+servicio devuelve HTTP 503; destinos inaccesibles devuelven 422. Nunca se sustituyen
+los resultados por líneas rectas. Los accesos deben estar a menos de 300 m del punto.
+
+La migración `004_road_routing.sql` agrega `ruteo` para identificar el proveedor,
+criterio y retorno; las geometrías históricas no se convierten automáticamente.
+Para convertir solo las cuatro rutas de demostración de una fecha, conservando
+su secuencia, conductor, pedidos y entregas:
+
+```powershell
+.venv/Scripts/python.exe scripts/refresh_visible_routes.py --dry-run
+.venv/Scripts/python.exe scripts/refresh_visible_routes.py
+```
+
+El script comprueba el marcador de base de pruebas y los identificadores de la carga;
+si falla cualquier consulta o escritura, revierte la actualización completa.
+Ejecutar `scripts/migrate.py` también en instalaciones existentes para permitir
+guardar una línea base inferior a las emisiones de la ruta sin falsear el ahorro.
 
 Consultar [inicio de sesión, migración y arranque](../../docs/03%20Implementaci%C3%B3n/Gu%C3%ADas%20t%C3%A9cnicas/Inicio%20de%20sesi%C3%B3n%20y%20persistencia.md).
 

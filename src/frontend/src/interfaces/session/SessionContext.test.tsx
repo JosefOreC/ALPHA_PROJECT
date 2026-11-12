@@ -97,7 +97,7 @@ it('la barra del conductor navega sus consultas y se oculta sin sesión', async 
   const onNavigate=vi.fn()
   const source={ load:vi.fn().mockResolvedValue({ ...account,role:'driver' as const }),login:vi.fn(),logout:vi.fn() }
   render(<SessionProvider source={source}><SessionToolbar onNavigate={onNavigate} /></SessionProvider>)
-  const link=await screen.findByRole('link',{ name:'Pedidos y rutas' ,hidden:true })
+  const link=await screen.findByRole('link',{ name:'Pedidos' ,hidden:true })
   fireEvent.click(link)
   expect(onNavigate).toHaveBeenCalledWith('pedidos','/?vista=pedidos')
 })

@@ -3,6 +3,7 @@ import type { Management } from '../application/manageOrders'
 import { districts } from '../domain/managedOrder'
 import type { ManagedOrder, OrderData } from '../domain/managedOrder'
 import { Banner } from '../shared/ui'
+import { OrderDestinationPicker } from './orders/OrderDestinationPicker'
 
 function localInput(value: string) {
   if (!value || !Number.isFinite(Date.parse(value))) return ''
@@ -15,20 +16,27 @@ export function OrderForm({ service, order, onSaved, onBack }: {
 }) {
   const [fields, setFields] = useState({ customer: order?.customer ?? '', address: order?.address ?? '',
     district: order?.district ?? '', window_start: localInput(order?.window_start ?? ''),
-    window_end: localInput(order?.window_end ?? ''), weight_kg: order ? String(order.weight_kg) : '', instructions: order?.instructions ?? '' })
+    window_end: localInput(order?.window_end ?? ''), weight_kg: order ? String(order.weight_kg) : '', instructions: order?.instructions ?? '',
+    latitude: order?.latitude == null ? '' : String(order.latitude), longitude: order?.longitude == null ? '' : String(order.longitude) })
   const [saving, setSaving] = useState(false)
+  const [locating, setLocating] = useState(false)
   const [error, setError] = useState('')
   const inFlight = useRef(false)
   const errorBox = useRef<HTMLParagraphElement>(null)
   const change = (key: keyof typeof fields, value: string) => setFields(current => ({ ...current, [key]: value }))
+  const lat = fields.latitude.trim() ? Number(fields.latitude) : NaN
+  const lng = fields.longitude.trim() ? Number(fields.longitude) : NaN
+  const destination = Number.isFinite(lat) && Number.isFinite(lng) && Math.abs(lat)<=90 && Math.abs(lng)<=180 ? {lat,lng} : null
   async function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault()
-    if (inFlight.current) return
+    if (inFlight.current || locating) return
     inFlight.current = true; setSaving(true); setError('')
     const form = new FormData(event.currentTarget)
     const start = String(form.get('window_start') ?? '')
     const end = String(form.get('window_end') ?? '')
     const data: OrderData = { ...fields, weight_kg: Number(fields.weight_kg),
+      latitude: fields.latitude.trim() ? Number(fields.latitude) : null,
+      longitude: fields.longitude.trim() ? Number(fields.longitude) : null,
       window_start: `${start.length === 16 ? start + ':00' : start}-05:00`,
       window_end: `${end.length === 16 ? end + ':00' : end}-05:00` }
     try { onSaved(await (order ? service.update(order, data) : service.create(data))) }
@@ -57,6 +65,13 @@ export function OrderForm({ service, order, onSaved, onBack }: {
           <option value="">Selecciona un distrito</option>{districts.map(district => <option key={district}>{district}</option>)}
         </select>
       </div>
+      <OrderDestinationPicker value={destination} coordinatesKey={`${fields.latitude}:${fields.longitude}`} disabled={saving} locating={locating} onLocatingChange={setLocating}
+        onChange={point => setFields(current => ({...current,latitude:String(point.lat),longitude:String(point.lng)}))} />
+      <div className="eco-form-grid">
+        <div className="eco-field"><label htmlFor="latitude">Latitud de entrega</label><input className="eco-input" id="latitude" name="latitude" type="number" min="-90" max="90" step="any" required={!!fields.longitude.trim()} value={fields.latitude} onChange={event => change('latitude', event.target.value)} /></div>
+        <div className="eco-field"><label htmlFor="longitude">Longitud de entrega</label><input className="eco-input" id="longitude" name="longitude" type="number" min="-180" max="180" step="any" required={!!fields.latitude.trim()} value={fields.longitude} onChange={event => change('longitude', event.target.value)} /></div>
+      </div>
+      <p className="eco-field__hint">Las coordenadas se completan al elegir el destino. También puedes ajustarlas manualmente para incluir el pedido en la planificación de rutas.</p>
       <div className="eco-form-grid">
         <div className="eco-field"><label htmlFor="window-start">Inicio de ventana · Lima *</label><input className="eco-input" id="window-start" name="window_start" type="datetime-local" step="any" required defaultValue={fields.window_start} /></div>
         <div className="eco-field"><label htmlFor="window-end">Fin de ventana · Lima *</label><input className="eco-input" id="window-end" name="window_end" type="datetime-local" step="any" required defaultValue={fields.window_end} /></div>
@@ -71,7 +86,7 @@ export function OrderForm({ service, order, onSaved, onBack }: {
         <textarea className="eco-input eco-textarea" id="instructions" name="instructions" rows={4} maxLength={1000} value={fields.instructions} onChange={event => change('instructions', event.target.value)} />
       </div>
     </fieldset>
-    <div className="eco-sheet__actions"><button className="eco-btn eco-btn--secondary" type="button" disabled={saving} onClick={onBack}>Volver</button><button type="submit" className="eco-btn" disabled={saving}>{saving ? 'Guardando…' : order ? 'Guardar cambios' : 'Registrar pedido'}</button></div>
+    <div className="eco-sheet__actions"><button className="eco-btn eco-btn--secondary" type="button" disabled={saving} onClick={onBack}>Volver</button><button type="submit" className="eco-btn" disabled={saving || locating}>{saving ? 'Guardando…' : order ? 'Guardar cambios' : 'Registrar pedido'}</button></div>
     <p className="eco-field__hint">El pedido se registra pendiente y sin conductor.</p>
   </form>
 }

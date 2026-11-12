@@ -19,6 +19,8 @@ def database_client(monkeypatch):
     from infrastructure.security import hash_password
     from infrastructure.persistence.postgres_orders import PostgresOrderRepository
     from interfaces.api.deps import create_app
+    from tests.road_fixtures import TestRoadRouter
+    monkeypatch.setattr('infrastructure.road_routing.ValhallaRouter',TestRoadRouter)
 
     load_environment()
     conn = psycopg.connect(os.environ['DATABASE_URL'], row_factory=dict_row, connect_timeout=5)
@@ -136,3 +138,112 @@ def test_database_login_user_creation_fleet_orders_and_operational_views(databas
     assert incident.status_code==201
     assert any(item['id']==incident.json()['id'] for item in client.get('/api/incidents').json())
     assert client.delete('/api/session',headers={'X-CSRF-Token':csrf}).status_code==204
+
+
+def test_generate_preview_approve_and_reload_routes_with_real_postgis(database_client, monkeypatch):
+    """Regresión: un pedido registrado desde la API debe llegar al mapa y a su conductor."""
+    from infrastructure.persistence import postgres_portal
+    client, conn, csrf, actor = database_client
+    headers = {'X-CSRF-Token':csrf}
+    start = datetime.now(ZoneInfo('America/Lima')).replace(hour=8,minute=0,second=0,microsecond=0)
+    monkeypatch.setattr(postgres_portal,'now',lambda: start)
+    # Aislar el alcance diario sin conservar cambios de los datos existentes.
+    conn.execute("UPDATE pedidos SET estado='CANCELADO' WHERE estado='PENDIENTE' AND conductor_id IS NULL AND (ventana_inicio AT TIME ZONE 'America/Lima')::date=%s",(start.date(),))
+    conn.execute("UPDATE vehiculos SET estado='MANTENIMIENTO' WHERE estado='DISPONIBLE'")
+    depot = uuid4()
+    conn.execute("INSERT INTO almacenes VALUES (%s,'! Routing integration depot','Test address',-12.03,-76.96)",(depot,))
+    email = f'{uuid4()}@integration.invalid'
+    account = client.post('/api/admin/users',headers=headers,json={
+        'name':'Routing driver','email':email,'password':'Routing-test-password','role':'driver'})
+    assert account.status_code==201, account.text
+    vehicle = client.post('/api/v1/vehicles',headers=headers,json={
+        'placa':f'R{uuid4().hex[:8]}','capacidad_kg':1000,'tipo_combustible':'DIESEL'})
+    assert vehicle.status_code==201, vehicle.text
+    driver = client.post('/api/v1/drivers',headers=headers,json={
+        'nombre_completo':'Routing driver','dni':str(uuid4().int % 100000000).zfill(8),
+        'licencia':uuid4().hex,'vehiculo_id':vehicle.json()['vehiculo_id'],'usuario_id':account.json()['id']})
+    assert driver.status_code==201, driver.text
+    factors = {fuel:None for fuel in ('DIESEL','GASOLINA','GNV','GLP','ELECTRICO','HIBRIDO')}
+    factors['DIESEL'] = 2.68
+    assert client.put('/api/admin/parameters',headers=headers,json={
+        'co2Weight':70,'maxSeconds':45,'maxLoadPercent':95,'windowSlackMinutes':10,
+        'autoReoptimize':False,'emissionFactors':factors,'fuelConsumption':{'DIESEL':0.09}}).status_code==200
+    settings = {'goal':'co2','respectWindows':True,'prioritizeLowEmission':True}
+    assert client.post('/api/routes/proposal',headers=headers,json=settings).status_code==403
+    conn.execute("UPDATE usuarios SET rol='OPERADOR' WHERE usuario_id=%s",(actor,))
+    payload = {'customer':'Routing customer','address':'Routing address','district':'Ate',
+        'window_start':start.isoformat(),'window_end':(start+timedelta(hours=8)).isoformat(),'weight_kg':25.0}
+    created = client.post('/api/pedidos',headers=headers,json=payload)
+    assert created.status_code==201, created.text
+    order_id = created.json()['id']
+    assert client.get('/api/routes/scope').json()['unlocatedOrders']==1
+    assert client.get('/api/routes/scope').json()['pendingOrders']==0
+    assert not any(item['id']==order_id for item in client.get('/api/routes/map').json()['orders'])
+    missing = client.post('/api/routes/proposal',headers=headers,json=settings)
+    assert missing.status_code==422 and 'No hay pedidos pendientes' in missing.text
+    payload.update(latitude=-12.04,longitude=-76.95)
+    updated = client.put(f'/api/pedidos/{order_id}',headers=headers,json={**payload,'expected_version':1})
+    assert updated.status_code==200, updated.text
+    assert updated.json()['latitude']==-12.04 and updated.json()['longitude']==-76.95
+    assert client.get('/api/routes/scope').json()['availableVehicles']==1
+    assert any(item['id']==order_id for item in client.get('/api/routes/map').json()['orders'])
+    proposal = client.post('/api/routes/proposal',headers=headers,json=settings)
+    assert proposal.status_code==200, proposal.text
+    plan = proposal.json()
+    assert plan['ordersAssigned']==1
+    assert len(plan['mapData']['routes'][0]['path'])==3
+    assert plan['routes'][0]['routing']['returnToDepot'] is False
+    assert plan['mapData']['orders'][0]['id']==order_id
+    assert plan['mapData']['orders'][0]['route_id']==plan['mapData']['routes'][0]['id']
+    approval = {'settings':settings,'fingerprint':plan['fingerprint']}
+    assert client.post('/api/routes/approve',json=approval).status_code==403
+    assert client.post('/api/routes/approve',headers=headers,json={**approval,'fingerprint':'0'*64}).status_code==422
+    assert conn.execute('SELECT count(*) AS n FROM ruta_pedido WHERE pedido_id=%s',(order_id,)).fetchone()['n']==0
+    # Un cambio de pedido invalida la vista previa, sin asignaciones parciales.
+    payload['weight_kg'] = 30.0
+    assert client.put(f'/api/pedidos/{order_id}',headers=headers,json={**payload,'expected_version':2}).status_code==200
+    stale = client.post('/api/routes/approve',headers=headers,json=approval)
+    assert stale.status_code==422 and 'cambiaron' in stale.text
+    plan = client.post('/api/routes/proposal',headers=headers,json=settings).json()
+    approval['fingerprint'] = plan['fingerprint']
+    # Un fallo después de guardar ruta, asignaciones y tramos revierte la operación completa.
+    original_audit = postgres_portal.audit
+    def fail_audit(*args):
+        raise ValueError('Fallo de auditoría simulado')
+    monkeypatch.setattr(postgres_portal,'audit',fail_audit)
+    failed = client.post('/api/routes/approve',headers=headers,json=approval)
+    assert failed.status_code==422
+    assert conn.execute('SELECT count(*) AS n FROM ruta_pedido WHERE pedido_id=%s',(order_id,)).fetchone()['n']==0
+    assert client.get(f'/api/pedidos/{order_id}').json()['assigned'] is False
+    assert conn.execute('SELECT count(*) AS n FROM rutas WHERE vehiculo_id=%s',(vehicle.json()['vehiculo_id'],)).fetchone()['n']==0
+    monkeypatch.setattr(postgres_portal,'audit',original_audit)
+    saved = client.post('/api/routes/approve',headers=headers,json=approval)
+    assert saved.status_code==201, saved.text
+    route_id = saved.json()['routeIds'][0]
+    assert client.get('/api/routes/scope').json()['pendingOrders']==0
+    assert client.get('/api/routes/scope').json()['availableVehicles']==0
+    map_data = client.get('/api/map').json()
+    assert next(row for row in map_data['orders'] if row['id']==order_id)['route_id']==route_id
+    assert next(row for row in map_data['routes'] if row['id']==route_id)['path']==plan['routes'][0]['path']
+    stored = conn.execute('SELECT estado,ST_IsValid(geometria) AS valid FROM rutas WHERE ruta_id=%s',(route_id,)).fetchone()
+    assert stored=={'estado':'GENERADA','valid':True}
+    assert conn.execute('SELECT count(*) AS n FROM tramos WHERE ruta_id=%s',(route_id,)).fetchone()['n']==1
+    assert conn.execute('SELECT ruteo FROM rutas WHERE ruta_id=%s',(route_id,)).fetchone()['ruteo']['provider']=='Test network'
+    assert client.get(f'/api/pedidos/{order_id}').json()['assigned'] is True
+    assert client.post('/api/routes/approve',headers=headers,json=approval).status_code==422
+    assert conn.execute('SELECT count(*) AS n FROM ruta_pedido WHERE pedido_id=%s',(order_id,)).fetchone()['n']==1
+    # Un pedido en camino permanece en seguimiento y no vuelve al generador.
+    conn.execute("UPDATE pedidos SET estado='EN_CAMINO' WHERE pedido_id=%s",(order_id,))
+    route_map = client.get('/api/routes/map')
+    assert route_map.status_code==200,route_map.text
+    assert next(row for row in route_map.json()['orders'] if row['id']==order_id)['status']=='EN_CAMINO'
+    assert client.get('/api/routes/scope').json()['pendingOrders']==0
+    assert client.post('/api/routes/proposal',headers=headers,json=settings).status_code==422
+    # El conductor consulta la ruta desde su propia sesión y los datos guardados.
+    assert client.delete('/api/session',headers=headers).status_code==204
+    logged = client.post('/api/session',json={'email':email,'password':'Routing-test-password'})
+    assert logged.status_code==200, logged.text
+    assigned = client.get('/api/conductor/ruta')
+    assert assigned.status_code==200, assigned.text
+    assert assigned.json()['stops'][0]['order_id']==order_id
+    assert client.post('/api/routes/approve',headers={'X-CSRF-Token':logged.json()['csrf_token']},json=approval).status_code==403
