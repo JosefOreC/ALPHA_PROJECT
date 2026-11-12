@@ -6,11 +6,11 @@
 
 **Sprint:** Sprint 3 (10/10/2026 - 30/10/2026)
 
-**Versión del documento:** V_1_2_0
+**Versión del documento:** V_1_3_0
 
-**Actualización documental:** 29/10/2026. No es fecha de reunión ni de aceptación.
+**Actualización documental:** 30/10/2026. No es fecha de reunión ni de aceptación.
 
-**Estado:** ninguna actividad cumple la Definition of Done. Las pruebas automatizadas asociadas se ejecutaron el 29 y 30/10/2026; los escenarios no se ejecutaron manualmente.
+**Estado:** Las correcciones de seguridad identificadas durante la inspección del código fueron implementadas. SonarQube Community Build reporta 0 vulnerabilidades y 0 Security Hotspots, con Quality Gate aprobado. La evaluación OWASP Top 10 (2025) registra 8 categorías en estado LIMPIO y 2 categorías BAJO REVISIÓN (A01 y A06). Sin embargo, ninguna actividad cumple todavía la Definition of Done completa: las pruebas automatizadas asociadas se ejecutaron el 29 y 30/10/2026, pero los escenarios de demostración no se ejecutaron manualmente y siguen pendientes la revisión por un par, la verificación independiente en staging y la aceptación formal.
 
 ## Historias de Usuario completadas en este Sprint
 
@@ -23,7 +23,7 @@ La fuente declara US-010, US-011, EN-02 y EN-05 (20 puntos); Jira no se ha consu
 | Criterio | US-010 | US-011 | EN-05 | EN-02 |
 |---|---|---|---|---|
 | Cobertura ≥80 % del código nuevo | Cumple: SonarQube 80,4 % del código completo y 93,5 % del código nuevo; medición local backend 97 % y frontend 95,9 % | Ídem | Ídem | Ídem |
-| Análisis estático sin vulnerabilidades críticas | Cumple: SonarQube con 0 vulnerabilidades y 0 hotspots; lint y tipos sin errores | Ídem | Ídem | Ídem |
+| Análisis estático sin vulnerabilidades críticas | Cumple: SonarQube Community Build con 0 vulnerabilidades y 0 Security Hotspots; Quality Gate aprobado. Las correcciones de seguridad identificadas fueron implementadas. El análisis de SonarQube es limitado y se complementa con inspección manual y auditorías de dependencias. | Ídem | Ídem | Ídem |
 | Revisión por un par mediante PR | No cumple: PR #19 abierto | No cumple: PR #19 abierto | No cumple: PR #16 abierto | No cumple: integrado a `main` sin Pull Request |
 | Staging verificado por quien no implementó | No cumple: sin verificación independiente | Ídem | Ídem | Ídem |
 | Documentación de API actualizada | Parcial: OpenAPI automático de FastAPI, sin verificación específica | Ídem | Ídem | Ídem |
@@ -53,7 +53,7 @@ La tabla es el guion reproducible de la demostración. Un enlace a código o tes
 | US-011 — Exportar CSV | CA1; borde propuesto | Borde | Registro con coma, comillas y salto de línea en un campo exportable. | Escapado CSV válido, sin desplazar columnas ni perder registros. | Sin prueba automatizada asociada; el escenario no se ejecutó | [Referencia de código; caso por verificar, no ejecución](../../../src/backend/interfaces/api/portal/router.py) | No aceptado: sin evidencia ejecutada |
 | EN-02 — Seguridad e identidad | CA2 minimización de datos | Gold | Registrar conductor o destinatario mediante sesión autorizada; inspeccionar campos persistidos. | Solo datos necesarios para la operación; documentar justificación y revisión de privacidad. | Prueba automatizada asociada aprobada (test_sessions.py, 6 pruebas, 30/10/2026); el escenario no se ejecutó manualmente | [Tests relacionados; caso por verificar, no ejecutados](../../../src/backend/tests/test_sessions.py) | Parcial: falta ejecución manual y revisión de un par |
 | EN-02 — Seguridad e identidad | Soporte de CA1/CA2: sesión | Feliz | Cuenta activa inicia sesión, realiza mutación con CSRF válido y cierra sesión. | Identidad verificada; sesión revocada tras salir. Esto por sí solo no acredita EN-02. | Prueba automatizada asociada aprobada (test_sessions.py, 6 pruebas, 30/10/2026); el escenario no se ejecutó manualmente | [Tests relacionados; caso por verificar, no ejecutados](../../../src/backend/tests/test_sessions.py) | Parcial: falta ejecución manual y revisión de un par |
-| EN-02 — Seguridad e identidad | CA1 inyección SQL | Infeliz | En entorno aislado autorizado, enviar intento de inyección al endpoint de autenticación. | Bloqueo, log de auditoría y notificación al equipo de seguridad según criterio; consultas parametrizadas no prueban todo el flujo. | Prueba automatizada asociada aprobada (test_sessions.py, 6 pruebas, 30/10/2026); el escenario no se ejecutó manualmente | [Tests relacionados; caso por verificar, no ejecutados](../../../src/backend/tests/test_sessions.py) | Parcial: falta ejecución manual y revisión de un par |
+| EN-02 — Seguridad e identidad | CA1 inyección SQL | Infeliz | En entorno aislado autorizado, enviar intento de inyección al endpoint de autenticación. | Bloqueo, log de auditoría y notificación al equipo de seguridad según criterio; consultas parametrizadas no prueban todo el flujo. | Prueba automatizada asociada aprobada (test_sessions.py, 6 pruebas, 30/10/2026); el escenario específico no se ejecutó manualmente | [Tests relacionados; caso por verificar, no ejecutados](../../../src/backend/tests/test_sessions.py) | Parcial: falta ejecución manual y revisión de un par |
 | EN-02 — Seguridad e identidad | Soporte: expiración/límite | Borde | Sesión al límite de 8 h; también probar intento 10 y 11 dentro de 15 min. | Expiración y limitación coherentes con código; documentar reloj y conteos sin exponer credenciales. | Prueba automatizada asociada aprobada (test_sessions.py, 6 pruebas, 30/10/2026); el escenario no se ejecutó manualmente | [Tests relacionados; caso por verificar, no ejecutados](../../../src/backend/tests/test_sessions.py) | Parcial: falta ejecución manual y revisión de un par |
 | EN-05 — Conductor y accesibilidad | CA1 primer uso | Gold | Conductor sin capacitación previa en móvil; ejecutar confirmación completa. | Completa sin errores; evidencia de criterios WCAG 2.1 AA aplicables, no solo ancho de pantalla. | Prueba automatizada asociada aprobada (driver.spec.ts, 3 pruebas, 30/10/2026); el escenario no se ejecutó manualmente | [Tests UI relacionados; caso por verificar, no ejecutados](../../../src/frontend/tests/ui/driver.spec.ts) | Parcial: falta ejecución manual y revisión de un par |
 | EN-05 — Conductor y accesibilidad | CA1; modalidad propuesta | Feliz | Recorrer confirmación mediante teclado y lector de pantalla. | Foco, etiquetas, errores y confirmación accesibles según evaluación documentada. | Prueba automatizada asociada aprobada (driver.spec.ts, 3 pruebas, 30/10/2026); el escenario no se ejecutó manualmente | [Tests UI relacionados; caso por verificar, no ejecutados](../../../src/frontend/tests/ui/driver.spec.ts) | Parcial: falta ejecución manual y revisión de un par |
@@ -62,7 +62,7 @@ La tabla es el guion reproducible de la demostración. Un enlace a código o tes
 
 ### Evidencia técnica (29 y 30/10/2026)
 
-Sobre `main` (commit `6ba77a6`, 30/10): frontend con 432 pruebas Vitest, 9 de Node y 40 de navegador aprobadas; backend con 368 pruebas aprobadas, 5 omitidas (PostgreSQL real, no ejecutado) y 36 subpruebas; lint, tipos y compilación sin errores. Cobertura local: backend 97 % y frontend 95,9 % de sentencias (90,2 % de ramas y 97,6 % de líneas); SonarQube Community Build reporta 80,4 % del código completo y 93,5 % del código nuevo. Estas cifras son agregadas: no sustituyen la ejecución por escenario de la matriz ni la aceptación formal.
+Sobre `main` (commit `6ba77a6`, 30/10): frontend con 432 pruebas Vitest, 9 de Node y 40 de navegador aprobadas; backend con 368 pruebas aprobadas, 5 omitidas (PostgreSQL real, no ejecutado) y 36 subpruebas; lint, tipos y compilación sin errores. Cobertura local: backend 97 % y frontend 95,9 % de sentencias (90,2 % de ramas y 97,6 % de líneas); SonarQube Community Build reporta 80,4 % del código completo y 93,5 % del código nuevo. El análisis de seguridad de SonarQube es limitado; sus 0 vulnerabilidades y 0 Security Hotspots se complementan con la inspección manual y las auditorías de dependencias. Estas cifras son agregadas: no sustituyen la ejecución por escenario de la matriz ni la aceptación formal.
 
 La rama de Mikeiel (`feature/mikeiel/spr3/rutas/optimizacion-co2`) ya está en `main` desde el 30/10: propuesta de rutas por inserción de menor costo con mejora 2-opt, huella de CO₂ por consumo de combustible, detalle de cada ruta en la interfaz y migración `002_consumo_por_km.sql`. Avanza US-005/EN-01 y el cálculo ambiental de US-010; no es un solucionador VRPTW exacto y no incluye aprobación ni despacho. Medición del 30/10 con datos sintéticos (10 corridas de 150 pedidos y 15 vehículos): mediana 3,5 s y máximo 6,6 s.
 
@@ -71,18 +71,19 @@ La rama de Mikeiel (`feature/mikeiel/spr3/rutas/optimizacion-co2`) ya está en `
 | Campo | Registro |
 |---|---|
 | Asistentes / stakeholders | Todo el equipo: Ore Campos, Josef Pablo; Tovar Sánchez, Carlos Alberto; Rojas Camayo, Valentino Jhan Pierre; Rojas Peña, William Mikeiel; Cueva Ricse, Alex Roberto |
-| Decisión por historia | Ninguna historia cumple la Definition of Done: se declaran implementadas y no aceptadas; el trabajo restante vuelve al backlog con su sprint de continuación |
+| Decisión por historia | Ninguna historia cumple la Definition of Done completa: se declaran implementadas y no aceptadas; el trabajo restante vuelve al backlog con su sprint de continuación |
 | Acuerdos y responsables | Los de la tabla de acciones de la retrospectiva del sprint |
 | Velocidad | No calculada; no contar historias sin aceptación |
 
 ## Pendientes
 
-- Ejecutar manualmente cada escenario sobre un commit identificado y registrar entorno, precondiciones, comandos, resultado y artefacto; hoy solo hay pruebas automatizadas asociadas.
+- Ejecutar manualmente cada escenario sobre un commit identificado y registrar entorno, precondiciones, comandos, resultado y artefacto; actualmente existen pruebas automatizadas asociadas, pero no ejecución manual documentada de los escenarios.
 - Resolver D-04 (rechazo de repetición frente a idempotencia) y D-10 (roles del Gherkin frente a matriz RBAC) en [decisiones](../../../development/decisiones.md); no adaptar criterios silenciosamente al código.
-- La DoD global exige cobertura ≥80 %, análisis estático, revisión por un par, staging independiente, documentación API y criterios comprobados. Todo queda pendiente de evidencia por historia, sin inferir cumplimiento de la existencia de tests.
-- Validar migraciones/recuperación y seguridad; solucionador VRPTW exacto (hoy hay una heurística), aprobación y despacho de rutas, fuentes GPS/ETA y factores ambientales siguen pendientes según [impedimentos](../Sprint%202/02%20Registro%20de%20Impedimentos%20V_1_5_0.md).
+- Completar la DoD global mediante revisión por un par, staging independiente, documentación de API y comprobación de criterios Gherkin. La cobertura y el análisis estático cuentan con resultados registrados, pero no sustituyen los demás criterios de aceptación.
+- Validar migraciones/recuperación. El solucionador VRPTW exacto (hoy hay una heurística), aprobación y despacho de rutas, fuentes GPS/ETA y factores ambientales siguen pendientes según [impedimentos](../Sprint%202/02%20Registro%20de%20Impedimentos%20V_1_5_0.md).
+- En seguridad, A01 (Broken Access Control) y A06 (Insecure Design) permanecen BAJO REVISIÓN en el reporte OWASP 2025: faltan completar las pruebas de penetración y la revisión integral de endpoints, así como documentar el modelo de amenazas y realizar una evaluación formal del diseño.
 
-Los documentos 03 Calidad de código, 04 OWASP y 05 WCAG de esta carpeta recogen las evaluaciones exigidas por la consigna del Sprint 3. El equipo ejecutó SonarQube (configuración en la rama de Alex); sus resultados se incorporan a los documentos 03 y 04 cuando se registren las capturas. La accesibilidad se evaluó con axe-core sobre páginas de prueba; faltan Lighthouse y la revisión manual.
+Los documentos 03 Calidad de código, 04 OWASP y 05 WCAG de esta carpeta recogen las evaluaciones exigidas por la consigna del Sprint 3. En el documento 04 se registra el resultado de 8 categorías OWASP 2025 en estado LIMPIO y 2 BAJO REVISIÓN (A01 y A06). SonarQube Community Build reporta 0 vulnerabilidades y 0 Security Hotspots, con Quality Gate aprobado; debido al aviso «Limited security analysis», el resultado se complementa con la inspección manual y las auditorías de dependencias. La accesibilidad se evaluó con axe-core sobre páginas de prueba; faltan Lighthouse y la revisión manual.
 
 ## Control de versiones del documento
 
@@ -92,6 +93,6 @@ Los documentos 03 Calidad de código, 04 OWASP y 05 WCAG de esta carpeta recogen
 | V_1_0_0 | 29/10/2026 | Tovar Sánchez, Carlos Alberto. Emisión inicial del informe del Sprint 3, contrastada con `main` (`30969da`). |
 | V_1_1_0 | 29/10/2026 | Rojas Camayo, Valentino Jhan Pierre (PR #25). Actualización documental; pendiente de revisión del equipo. Matriz por criterio y cuatro rutas; resultados pendientes y separación entre verificación técnica y aceptación formal. |
 | V_1_2_0 | 30/10/2026 | Tovar Sánchez, Carlos Alberto. Documento único vigente: se retiran la carpeta Histórico y los documentos 06 y 07 (los impedimentos IMP-012 a IMP-016 pasan al registro de impedimentos del Sprint 2), se mide la cobertura y se registra la rama de Mikeiel. |
-
+| V_1_3_0 | 30/10/2026 | Tovar Sánchez, Carlos Alberto. Se actualiza el estado de seguridad con las correcciones implementadas y los resultados del reporte OWASP 2025: 8 categorías LIMPIAS y 2 BAJO REVISIÓN. Se mantiene la distinción entre verificación técnica, demostración manual y aceptación formal de las historias. |
 
 [← Volver al índice correspondiente](README.md)
