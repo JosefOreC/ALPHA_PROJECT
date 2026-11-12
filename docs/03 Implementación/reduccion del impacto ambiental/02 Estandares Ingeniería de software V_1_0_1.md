@@ -4,7 +4,11 @@
 
 **Líder del Proyecto:** Ore Campos, Josef Pablo
 
-**Versión del documento:** V_1_0_0 · **Fecha:** 11/11/2026 · **Autor:** Tovar Sánchez, Carlos Alberto
+**Versión del documento:** V_1_0_1
+
+**Autor:** Tovar Sánchez, Carlos Alberto
+
+**Actualización documental:** 12/11/2026.
 
 **Alcance:** fundamentación en normativas internacionales, reglas arquitectónicas de código limpio, guía de desarrollo verde y matriz de mapeo entre las optimizaciones y los estándares (criterio «Estándares internacionales, arquitectura y guía de desarrollo verde» de la rúbrica de la Inspección 04).
 
@@ -23,7 +27,7 @@ La rúbrica y el informe de referencia describen un stack MERN (MongoDB, Express
 | 7 | Cabeceras `Cache-Control` / ETag / React Query | Cabeceras de caché y caché de peticiones en el cliente |
 | 8 | Compresión Brotli / Gzip | Compresión de respuestas en FastAPI o en el servidor de estáticos |
 
-El estado de cada área se verificó en el código el 11/11/2026 y se informa en la matriz de la sección 4, sin atribuir mejoras que el repositorio no tiene. Las métricas cuantitativas (Lighthouse y modelo SWDM) no se repiten aquí.
+El estado de cada área se verificó en el código el 11/11/2026 y se informa en la matriz de la sección 4, sin atribuir mejoras que el repositorio no tiene. Las métricas cuantitativas (Lighthouse y modelo SWDM) se presentan en el documento 01 y no se repiten aquí.
 
 ## 2. Fundamentación en normativas internacionales
 
@@ -48,19 +52,19 @@ Se aplican los cuatro principios de eficiencia y conciencia del carbono:
 |---|---|---|
 | Eficiencia de carbono | Emitir la menor cantidad de carbono posible por unidad de trabajo | Planificación de rutas con una heurística que responde en segundos en lugar de un cálculo exhaustivo; listados paginados para no transferir datos innecesarios. |
 | Eficiencia energética | Usar la menor energía posible | Índices en consultas frecuentes, carga diferida del mapa y actualización del dashboard cada 60 s en lugar de consultas continuas. |
-| Conciencia de carbono | Hacer más trabajo cuando la electricidad es más limpia | No aplicado todavía: el despliegue no está definido. Propuesta: programar fuera de la hora punta las tareas diferibles (recálculo de reportes) cuando exista un servidor propio. |
-| Eficiencia de hardware | Usar menos hardware y prolongar la vida útil de los dispositivos | Cliente liviano (seis dependencias de producción) y vistas probadas a 390 px para que los conductores usen móviles de gama baja. |
+| Conciencia de carbono | Hacer más trabajo cuando la electricidad es más limpia | Aún no se aplica, porque el despliegue no está definido. Propuesta: programar fuera de la hora punta las tareas diferibles (recálculo de reportes) cuando exista un servidor propio. |
+| Eficiencia de hardware | Usar menos hardware y prolongar la vida útil de los dispositivos | Cliente ligero (seis dependencias de producción) y vistas probadas a 390 px para que los conductores usen móviles de gama baja. |
 
 Como referencia de medición, la especificación de intensidad de carbono del software (SCI, ISO/IEC 21031:2024) define `SCI = ((E × I) + M) por R`, donde E es la energía consumida, I la intensidad de carbono de la electricidad, M el carbono incorporado del hardware y R la unidad funcional (en este proyecto, un pedido o una ruta planificada).
 
 ### 2.3 W3C Web Sustainability Guidelines (WSG)
 
-El texto oficial consultado el 11/11/2026 es un borrador de nota del grupo de trabajo (Group Note Draft, 16/10/2026) y numera sus secciones así: 2 Diseño de la experiencia de usuario, 3 Desarrollo web, 4 Alojamiento, infraestructura y sistemas, y 5 Estrategia de negocio y gestión de producto. La rúbrica cita las pautas «1.2, 2.4 y 3.1»: en el texto oficial la **2.4** es «Design efficient and streamlined user journeys» y la **3.1** es «Set goals based on performance and energy impact», mientras que el numeral 1.2 pertenece a la introducción («WSG layers of guidance») y no es una pauta. Este documento cubre la 2.4 y la 3.1 con su título oficial y, para la intención que la rúbrica atribuye a «1.2» (medios optimizados), la pauta **2.9**, «Optimize media to reduce resource use».
+El texto oficial consultado el 11/11/2026 es un borrador de nota del grupo de trabajo (Group Note Draft, 16/10/2026) y numera sus secciones así: 2 Diseño de la experiencia de usuario, 3 Desarrollo web, 4 Alojamiento, infraestructura y sistemas, y 5 Estrategia de negocio y gestión de producto. La rúbrica cita las pautas «1.2, 2.4 y 3.1»: en el texto oficial la **2.4** es «Design efficient and streamlined user journeys» y la **3.1** es «Set goals based on performance and energy impact», mientras que el numeral 1.2 pertenece a la introducción («WSG layers of guidance») y no es una pauta. Los títulos de las pautas se citan en su idioma original. Este documento cubre la 2.4 y la 3.1 con su título oficial y, para la intención que la rúbrica atribuye a «1.2» (medios optimizados), la pauta **2.9**, «Optimize media to reduce resource use».
 
 | Pauta oficial | Título | Aplicación en EcoLogística Lima |
 |---|---|---|
 | 2.4 | Design efficient and streamlined user journeys | Cada rol llega a su tarea en pocos pasos: el conductor confirma una entrega desde «Mi ruta» y «Pedido actual», y el planificador genera rutas en una sola pantalla. |
-| 2.9 | Optimize media to reduce resource use | No hay imágenes ráster; los iconos son SVG y el mapa es vectorial. Si se agregan imágenes se usarán WebP o AVIF con `<picture>` y `loading="lazy"`. |
+| 2.9 | Optimize media to reduce resource use | No hay imágenes ráster; los iconos son SVG y el mapa es vectorial. Si se agregan imágenes, se usarán WebP o AVIF con `<picture>` y `loading="lazy"`. |
 | 3.1 | Set goals based on performance and energy impact | Metas medibles: 45 s (P95) para generar rutas (RNF-001), cobertura mínima del 90 % y puntaje de Lighthouse como objetivo del informe de reducción del impacto ambiental. |
 | 3.2 | Minify and remove unused code | El build de producción (`vite build`) minimiza el código y se ejecuta en cada Pull Request; `oxlint` detecta código sin uso. |
 | 3.3 | Modularize bandwidth-heavy components | El componente de mapa (`LeafletCanvas`) se carga con `React.lazy` y `Suspense`. |
@@ -129,18 +133,19 @@ El texto oficial consultado el 11/11/2026 es un borrador de nota del grupo de tr
 | 7 | Cabeceras de caché y caché de peticiones | Eficiencia: comportamiento temporal | Eficiencia energética | 3.1 y 3.11 | Pendiente: no hay `Cache-Control`, ETag ni caché de peticiones en el cliente. |
 | 8 | Compresión de respuestas (GZip o Brotli) | Eficiencia: capacidad | Eficiencia de carbono | 3.1 y 3.11 | Pendiente: FastAPI no tiene `GZipMiddleware`. |
 
-De las ocho áreas, tres están cumplidas, tres parcialmente y dos pendientes; las pendientes y parciales son el insumo del informe de refactorización (documento 01).
+De las ocho áreas, tres están cumplidas, tres parcialmente y dos pendientes; las pendientes y parciales son el insumo del informe de reducción del impacto ambiental (documento 01).
 
 ## 5. Referencias
 
 - ISO/IEC 25010:2011, *Systems and software engineering — Systems and software Quality Requirements and Evaluation (SQuaRE) — System and software quality models*.
 - Green Software Foundation, *Green Software Principles* y especificación de intensidad de carbono del software (ISO/IEC 21031:2024).
-- W3C, *Web Sustainability Guidelines (WSG)*: https://www.w3.org/TR/web-sustainability-guidelines/ (consultado el 11/11/2026).
+- W3C, [*Web Sustainability Guidelines (WSG)*](https://www.w3.org/TR/web-sustainability-guidelines/) (consultado el 11/11/2026).
 
 ## Control de versiones del documento
 
 | Versión | Fecha | Autoría / cambio |
 |---|---|---|
 | V_1_0_0 | 11/11/2026 | Tovar Sánchez, Carlos Alberto. Emisión inicial: fundamentación en ISO/IEC 25010, GSF y W3C WSG, reglas de código limpio para backend y frontend, guía de desarrollo verde y matriz de mapeo de las ocho optimizaciones, adaptadas al stack del proyecto. |
+| V_1_0_1 | 12/11/2026 | Rojas Camayo, Valentino Jhan Pierre. Revisión de formato y redacción: metadatos en líneas separadas, como en el resto de la documentación; referencia de la W3C como enlace; referencia cruzada al documento 01; ajustes de puntuación y de estilo formal. Sin cambios de contenido técnico. |
 
 [← Volver al índice correspondiente](README.md)
