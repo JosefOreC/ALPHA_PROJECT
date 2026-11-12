@@ -1,0 +1,12 @@
+# US-010 · CA1 · Borde: registros en los límites del rango (America/Lima)
+Ejecución: 11/11/2026 21:19:42 (America/Lima)
+Commit probado: 5315ac3 (rama fix/sprint4-owasp-revision)
+Entorno: Ubuntu 26.04, Python 3.14, PostgreSQL 18 + PostGIS 3.6, datos ficticios de scripts/create_test_db.py
+
+Rango semanal informado: 05/11/2026 – 11/11/2026 | primer punto 05/11 119.9 | último 11/11 119.64 current= True
+SQL 05/11: 119.900 | SQL 11/11: 119.640
+Ruta movida temporalmente al 04/11 (un día antes del inicio), CO2 8.32 kg:
+  semana: 842.960 -> 834.640 kg (diferencia 8.320) -> excluida: True
+  mes (13/10–11/11): 842.960 kg -> incluida: True
+Ruta restaurada al 05/11.
+Zona horaria: el servidor calcula «hoy» con America/Lima y filtra fecha_operacion (tipo DATE) con BETWEEN inicio y hoy, ambos incluidos.

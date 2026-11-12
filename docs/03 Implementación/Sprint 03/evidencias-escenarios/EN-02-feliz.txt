@@ -1,0 +1,13 @@
+# EN-02 · Soporte · Feliz: sesión, mutación con CSRF y cierre de sesión
+Ejecución: 11/11/2026 21:22:34 (America/Lima)
+Commit probado: 5315ac3 (rama fix/sprint4-owasp-revision)
+Entorno: Ubuntu 26.04, Python 3.14, PostgreSQL 18 + PostGIS 3.6, datos ficticios de scripts/create_test_db.py
+
+Login -> 200 | Set-Cookie: eco_session=<token>; HttpOnly; Max-Age=28800; Path=/; SameSite=lax
+PUT /api/admin/parameters sin X-CSRF-Token -> 403 No se pudo verificar la protección de la operación.
+PUT con CSRF incorrecto -> 403 No se pudo verificar la protección de la operación.
+PUT con CSRF válido (mismos valores) -> 200
+DELETE /api/session -> 204
+Sesiones vigentes del administrador en BD: antes del cierre 2 | después 1
+Nota: la cookie no lleva Secure porque el .env local usa SESSION_COOKIE_SECURE=false (HTTP sin TLS); sin esa variable es Secure por defecto (test_security_headers.py).
+Reutilizar el token después del cierre -> 401

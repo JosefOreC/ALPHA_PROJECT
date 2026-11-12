@@ -1,0 +1,14 @@
+# US-011 · CA1 · Borde: campo con coma, comillas y salto de línea
+Verificación del archivo: 11/11/2026 21:27:44 (America/Lima)
+Descarga del CSV desde la interfaz (Chromium 153 con Playwright, rol Logística): 11/11/2026 entre 21:19 y 21:22 (America/Lima)
+Commit probado: 5315ac3 (rama fix/sprint4-owasp-revision)
+Entorno: Ubuntu 26.04, Python 3.14, PostgreSQL 18 + PostGIS 3.6, datos ficticios de scripts/create_test_db.py
+
+Precondición: placa TST-001 cambiada temporalmente a «A,"B"⏎C» directamente en la BD; restaurada después.
+Archivo descargado desde la interfaz: US-011-borde.csv | 1369 bytes | BOM UTF-8: True | filas: 43
+Encabezados de sección: Indicador / Etiqueta / Distrito / Placa
+CO2 emitido CSV 842.96 vs API 842.96 | CO2 evitado CSV 210.74 vs API 210.74 | periodo CSV «05/11/2026 – 11/11/2026» vs API «05/11/2026 – 11/11/2026»
+Filas de vehículos: CSV 10 vs API 10 | todas con 5 columnas: True
+Fila del vehículo modificado leída con csv de Python: ['A,"B"\nC', 'DIESEL', '395.09', '95.35', '24.13374167911109']
+Texto crudo de esa fila en el archivo: '"A,""B""\nC",DIESEL,395.09,95.35,24.13374167911109'
+Observaciones: algunos encabezados van sin tilde («Linea base», «vehiculo», «diesel»); varios valores se exportan con ruido de coma flotante (p. ej. 149.89000000000001) y el número de entregas del periodo no se incluye.

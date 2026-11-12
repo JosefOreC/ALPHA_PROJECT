@@ -1,0 +1,43 @@
+﻿Reporte de sostenibilidad
+Periodo,Semana
+Detalle,05/11/2026 – 11/11/2026
+
+Resumen
+Indicador,Valor,Unidad
+CO2 evitado,210.74,kg
+CO2 emitido,842.96,kg
+Linea base (rutas sin optimizar),1053.7,kg
+Ahorro frente a la linea base,20,%
+Combustible ahorrado (equivalente diesel),78.63432835820895,L
+Km evitados,Sin dato,km
+Flota de bajas emisiones,6,de 13 vehiculos
+
+Emisiones por día
+Etiqueta,CO2 emitido (kg),CO2 evitado (kg),Linea base (kg)
+05/11,119.9,29.99,149.89000000000001
+06/11,122.04,30.5,152.54000000000002
+07/11,121,30.24,151.24
+08/11,119.74,29.93,149.67
+09/11,120.34,30.09,150.43
+10/11,120.30000000000001,30.08,150.38
+11/11,119.64,29.91,149.55
+
+Por distrito
+Distrito,CO2 emitido (kg),Ahorro (%)
+Ate,265.96,20
+El Agustino,265.96,20
+San Juan de Lurigancho,155.52,20
+Santa Anita,155.52,20
+
+Por vehiculo
+Placa,Combustible,Km,CO2 (kg),kg de CO2 cada 100 km
+TST-001,DIESEL,395.09,95.35,24.13374167911109
+TST-002,GASOLINA,572.85,132.34,23.102033691193157
+TST-003,GNV,379.92,57.73,15.195304274584121
+TST-004,GLP,569.9,94.05,16.502895244779786
+TST-005,ELECTRICO,392.56,7.8,1.9869574077847971
+TST-006,HIBRIDO,567.34,78.61,13.855888884971973
+TST-007,DIESEL,384.22,92.7,24.126802352818697
+TST-008,GASOLINA,580.3,134.06,23.101843873858353
+TST-009,GNV,378.05,57.46,15.199047745007274
+TST-010,GLP,563.01,92.86,16.49349034653026

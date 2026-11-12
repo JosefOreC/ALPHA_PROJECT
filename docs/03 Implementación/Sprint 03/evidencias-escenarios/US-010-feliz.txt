@@ -1,0 +1,13 @@
+# US-010 · CA1 · Feliz: semana y luego mes con datos conocidos
+Ejecución: 11/11/2026 21:19:41 (America/Lima)
+Commit probado: 5315ac3 (rama fix/sprint4-owasp-revision)
+Entorno: Ubuntu 26.04, Python 3.14, PostgreSQL 18 + PostGIS 3.6, datos ficticios de scripts/create_test_db.py
+
+period=week (05/11/2026 – 11/11/2026), unidad de serie: día, puntos: 7
+  API: emitido 842.960 kg, base 1053.700 kg, km 4783.24
+  SQL: emitido 842.960 kg, base 1053.700 kg, km 4783.24
+  Coinciden: True | suma de la serie: 842.96
+period=month (13/10/2026 – 11/11/2026), unidad de serie: semana, puntos: 5
+  API: emitido 842.960 kg, base 1053.700 kg, km 4783.24
+  SQL: emitido 842.960 kg, base 1053.700 kg, km 4783.24
+  Coinciden: True | suma de la serie: 842.96

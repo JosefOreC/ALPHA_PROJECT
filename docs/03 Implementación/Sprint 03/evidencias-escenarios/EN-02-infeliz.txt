@@ -1,0 +1,11 @@
+# EN-02 · CA1 · Infeliz: intento de inyección SQL en la autenticación
+Ejecución: 11/11/2026 21:22:35 (America/Lima)
+Commit probado: 5315ac3 (rama fix/sprint4-owasp-revision)
+Entorno: Ubuntu 26.04, Python 3.14, PostgreSQL 18 + PostGIS 3.6, datos ficticios de scripts/create_test_db.py
+
+POST /api/session email="admin@example.invalid' OR '1'='1' --" -> 401 Correo o contraseña incorrectos. | cookie emitida: False
+POST /api/session email="' OR 1=1; DROP TABLE usuarios; --" -> 401 Correo o contraseña incorrectos. | cookie emitida: False
+Tabla usuarios intacta: 20 usuarios
+Nuevos eventos en auditoria: 0
+Intentos registrados en intentos_sesion: 2
+Notificación al equipo de seguridad: no existe mecanismo en el código (sin integración de alertas).

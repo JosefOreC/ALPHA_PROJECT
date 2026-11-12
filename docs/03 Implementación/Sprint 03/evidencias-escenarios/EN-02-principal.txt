@@ -1,0 +1,18 @@
+# EN-02 · CA2 · Principal: minimización de datos al registrar conductor
+Ejecución: 11/11/2026 21:22:33 (America/Lima)
+Commit probado: 5315ac3 (rama fix/sprint4-owasp-revision)
+Entorno: Ubuntu 26.04, Python 3.14, PostgreSQL 18 + PostGIS 3.6, datos ficticios de scripts/create_test_db.py
+
+Login admin: 200
+Hallazgo: alta con DNI nuevo y un vehículo que ya tiene conductor -> 409 El DNI ingresado ya corresponde a un conductor registrado en el sistema (el mensaje atribuye el conflicto al DNI; la causa es la restricción única del vehículo)
+POST /api/v1/vehicles (vehículo libre para la prueba) -> 201
+POST /api/admin/users (cuenta de conductor) -> 201 | respuesta: {"id": "a2e4551f-cf39-4e2f-9931-3e855070a40a", "name": "Conductor Prueba Escenario", "email": "<omitido>", "role": "driver", "status": "active", "lastAccess": "Sin acceso"}
+Columnas de la tabla usuarios: usuario_id, nombre, email, password_hash, rol, estado, ultimo_acceso, creado_en
+POST /api/v1/drivers -> 201
+  Respuesta: {"conductor_id": "5fe06c09-88c6-4bf7-bab8-a4edd06117d5", "nombre_completo": "Conductor Prueba Escenario", "dni": "<DNI enviado>", "licencia": "Q-PRUEBA-01", "vehiculo_id": "853f7dba-9fd4-4ecb-a408-aaac91cdcf42", "estado": "ACTIVO", "creado_en": "2026-11-12T02:22:34.527728+00:00"}
+Columnas de la tabla conductores: conductor_id, usuario_id, vehiculo_id, nombre_completo, dni, licencia, telefono, estado, creado_en
+Fila persistida (nombre|dni|licencia|telefono|estado): Conductor Prueba Escenario|<DNI enviado>|Q-PRUEBA-01|NULL|ACTIVO
+Columnas de pedidos (datos del destinatario): pedido_id, conductor_id, cliente_nombre, direccion_entrega, distrito, latitud, longitud, peso_kg, ventana_inicio, ventana_fin, instrucciones, prioridad, estado, confirmed_at, version, creado_en
+Eventos de auditoría nuevos durante las altas (vehículo, cuenta y conductor): 1 | CREAR_USUARIO usuarios; ACTUALIZAR_PARAMETROS parametros_algoritmo; CREAR_USUARIO usuarios
+Lista de campos con justificación y revisión de privacidad documentadas: no existe en el repositorio.
+Cuenta y conductor de prueba eliminados tras la verificación.

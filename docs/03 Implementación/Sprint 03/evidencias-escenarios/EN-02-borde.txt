@@ -1,0 +1,16 @@
+# EN-02 · Soporte · Borde: límite de intentos (10 en 15 min) y expiración de 8 h
+Ejecución: 11/11/2026 21:22:52 (America/Lima)
+Commit probado: 5315ac3 (rama fix/sprint4-owasp-revision)
+Entorno: Ubuntu 26.04, Python 3.14, PostgreSQL 18 + PostGIS 3.6, datos ficticios de scripts/create_test_db.py
+
+Intento 9 con contraseña incorrecta -> 401 Correo o contraseña incorrectos.
+Intento 10 con contraseña incorrecta -> 401 Correo o contraseña incorrectos.
+Intento 11 con contraseña incorrecta -> 429 Demasiados intentos. Intenta en 15 minutos.
+Intento 12 con la contraseña correcta dentro de la ventana -> 429 Demasiados intentos. Intenta en 15 minutos.
+Clave del contador: correo + IP de origen (infrastructure/security.py); la ventana es de 15 minutos sobre intentos_sesion.creado_en.
+Tras desplazar los intentos 16 minutos al pasado (simula el paso del tiempo), login correcto -> 200
+Duración registrada de la sesión nueva: 07:59:59.991361 | Max-Age de la cookie: [' Max-Age=28800']
+GET /api/session con la sesión vigente -> 200
+Sesión a 1 minuto de expirar -> 200
+Sesión con expira_en 1 s en el pasado (simula 8 h cumplidas) -> 401 Se requiere una sesión verificada.
+Reloj: hora del servidor PostgreSQL; el tiempo se simuló editando expira_en y creado_en, no esperando 8 h ni 15 min.

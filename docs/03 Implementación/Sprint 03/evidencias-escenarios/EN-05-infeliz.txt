@@ -1,0 +1,13 @@
+# EN-05 · CA2 · Infeliz: conexión perdida durante la confirmación y restablecida
+Ejecución: 11/11/2026 21:26:13 (America/Lima)
+Commit probado: 5315ac3 (rama fix/sprint4-owasp-revision)
+Entorno: Chromium headless 153 (Playwright), emulación Pixel 7 (412×915, táctil), frontend Vite + API FastAPI + PostgreSQL 18 locales, datos ficticios
+
+Pedido: Cliente ficticio 094 | BD antes: EN_CAMINO | confirmed_at - | versión 1 | filas en entregas 0
+Conexión desactivada (modo sin conexión del navegador; simula la pérdida de 4G).
+Mensajes visibles sin conexión: ["No se pudo completar la operación. Failed to fetch"]
+BD sin conexión: EN_CAMINO | confirmed_at - | versión 1 | filas en entregas 0
+Conexión restablecida; espera de 15 s sin tocar la pantalla.
+Tras reconectar: «Entrega confirmada» visible: false | indicador de sincronización: false | BD: EN_CAMINO | confirmed_at - | versión 1 | filas en entregas 0
+Registro del servidor: ningún POST /confirmacion llegó durante ni después del corte; la aplicación no reintenta automáticamente.
+El mensaje muestra el texto técnico del navegador en inglés («Failed to fetch»).

@@ -1,0 +1,16 @@
+# EN-05 · CA2 · Borde: el servidor confirma, se pierde la respuesta y el cliente reintenta
+Ejecución: 11/11/2026 21:26:35 (America/Lima)
+Commit probado: 5315ac3 (rama fix/sprint4-owasp-revision)
+Entorno: Chromium headless 153 (Playwright), emulación Pixel 7 (412×915, táctil), frontend Vite + API FastAPI + PostgreSQL 18 locales, datos ficticios
+
+Pedido: Cliente ficticio 094 | BD antes: EN_CAMINO | confirmed_at - | versión 1 | filas en entregas 0
+Solicitud 1 llegó al servidor -> respuesta 200 (descartada antes de llegar al navegador)
+BD tras la solicitud 1: ENTREGADO | confirmed_at 21:26:35.572 | versión 2 | filas en entregas 0
+Interfaz tras perder la respuesta: ["No se pudo completar la operación. Failed to fetch"]
+Reintento desde la interfaz: no se emitió un segundo POST (registro del servidor: 1 POST /confirmacion y luego GET del pedido); la vista recargó el pedido y mostró: ["Entrega confirmada · 21:26 · hora de Lima"]
+BD tras el reintento: ENTREGADO | confirmed_at 21:26:35.572 | versión 2 | filas en entregas 0 | hora de la primera confirmación conservada: true | entregas duplicadas: no (misma versión)
+
+Repetición directa del POST de confirmación (misma sesión del conductor, 11/11/2026 21:27:04): 200, estado ENTREGADO
+  confirmed_at y versión antes 21:26:35.572 v2 | después 21:26:35.572 v2 | sin cambios: True
+Comportamiento: domain/entities/order.py devuelve el pedido sin cambios si ya está entregado (idempotencia). D-04 (rechazar la repetición o aceptarla de forma idempotente) sigue sin decisión formal.
+Nota: la confirmación actualiza pedidos.estado, confirmed_at y version; no inserta filas en la tabla entregas.

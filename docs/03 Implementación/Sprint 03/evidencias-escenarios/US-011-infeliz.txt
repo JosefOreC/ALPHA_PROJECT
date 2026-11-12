@@ -1,0 +1,9 @@
+# US-011 · CA2 · Infeliz: solicitar un formato de exportación no admitido
+Ejecución: 11/11/2026 21:23:11 (America/Lima)
+Commit probado: 5315ac3 (rama fix/sprint4-owasp-revision)
+Entorno: Ubuntu 26.04, Python 3.14, PostgreSQL 18 + PostGIS 3.6, datos ficticios de scripts/create_test_db.py
+
+GET /api/reports/sustainability?period=week&format=pdf -> 200 | content-type: application/json | «Formato de exportación no disponible»: False
+GET /api/reports/sustainability/export?format=pdf -> 404 | content-type: application/json | «Formato de exportación no disponible»: False
+GET /api/reports/export?format=xlsx -> 404 | content-type: application/json | «Formato de exportación no disponible»: False
+Interfaz: la vista solo ofrece el botón «Exportar CSV»; no hay selector de formato (src/frontend/src/interfaces/SustainabilityView.tsx). El CSV se genera en el navegador (getSustainabilityReport.ts); no existe endpoint de exportación en la API.

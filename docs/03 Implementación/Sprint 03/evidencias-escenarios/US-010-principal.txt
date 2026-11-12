@@ -1,0 +1,15 @@
+# US-010 · CA1 · Principal: generar reporte y medir P95
+Ejecución: 11/11/2026 21:19:34 (America/Lima)
+Commit probado: 5315ac3 (rama fix/sprint4-owasp-revision)
+Entorno: Ubuntu 26.04, Python 3.14, PostgreSQL 18 + PostGIS 3.6, datos ficticios de scripts/create_test_db.py
+
+Login admin@example.invalid: 200 rol admin
+GET period=week -> 200 | periodo 05/11/2026 – 11/11/2026
+  CO2 emitido 842.960 kg | línea base 1053.700 kg | evitado 210.740 kg | combustible ahorrado 78.634 L | km evitados None
+  km recorridos (suma por vehículo) 4783.24 | vehículos 10
+  Entregas del periodo en BD: 780 | ¿la respuesta incluye número de entregas? False
+Rendimiento 100 solicitudes secuenciales (cliente local, period=week): mediana 60.8 ms, P95 73.0 ms, máx 87.9 ms; umbral P95 ≤ 1500 ms -> cumple
+Acceso con logistica: 200
+Acceso con operador: 200
+Acceso con auditor: 200
+Acceso con conductor01: 403

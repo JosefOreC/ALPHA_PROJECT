@@ -1,0 +1,12 @@
+# US-011 · CA1 · Principal: descarga del CSV (rol Logística)
+Verificación del archivo: 11/11/2026 21:27:44 (America/Lima)
+Descarga del CSV desde la interfaz (Chromium 153 con Playwright, rol Logística): 11/11/2026 entre 21:19 y 21:22 (America/Lima)
+Commit probado: 5315ac3 (rama fix/sprint4-owasp-revision)
+Entorno: Ubuntu 26.04, Python 3.14, PostgreSQL 18 + PostGIS 3.6, datos ficticios de scripts/create_test_db.py
+
+Administrador (actor del Gherkin): la vista no muestra «Exportar CSV»; la matriz RBAC no le concede reports.export (src/backend/domain/access_control.py). Conflicto registrado en D-10. Se ejecuta con el rol Logística, que sí tiene el permiso.
+Archivo descargado desde la interfaz: US-011-principal.csv | 1365 bytes | BOM UTF-8: True | filas: 43
+Encabezados de sección: Indicador / Etiqueta / Distrito / Placa
+CO2 emitido CSV 842.96 vs API 842.96 | CO2 evitado CSV 210.74 vs API 210.74 | periodo CSV «05/11/2026 – 11/11/2026» vs API «05/11/2026 – 11/11/2026»
+Filas de vehículos: CSV 10 vs API 10 | todas con 5 columnas: True
+Observaciones: algunos encabezados van sin tilde («Linea base», «vehiculo», «diesel»); varios valores se exportan con ruido de coma flotante (p. ej. 149.89000000000001) y el número de entregas del periodo no se incluye.

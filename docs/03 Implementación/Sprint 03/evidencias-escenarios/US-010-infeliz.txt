@@ -1,0 +1,13 @@
+# US-010 · CA2 · Infeliz: periodo sin registros operativos
+Ejecución: 11/11/2026 21:16:48 (America/Lima)
+Commit probado: 5315ac3 (rama fix/sprint4-owasp-revision)
+Entorno: Ubuntu 26.04, Python 3.14, PostgreSQL 18 + PostGIS 3.6, datos ficticios de scripts/create_test_db.py
+
+Precondición: rutas en BD entre 2026-10-03 y 2026-10-09 ; hoy 11/11/2026
+Login admin: 200
+GET /api/reports/sustainability?period=week -> 200
+  subtitle: 05/11/2026 – 11/11/2026 | emittedKg: 0 | baselineKg: 0 | byVehicle: 0 | byDistrict: 0
+  ¿mensaje «No se encontraron registros operativos para el período seleccionado»? False
+GET /api/reports/sustainability?period=month -> 200
+  subtitle: 13/10/2026 – 11/11/2026 | emittedKg: 0 | baselineKg: 0 | byVehicle: 0 | byDistrict: 0
+  ¿mensaje «No se encontraron registros operativos para el período seleccionado»? False
