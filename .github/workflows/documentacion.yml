@@ -34,4 +34,7 @@ jobs:
         run: python scripts/check_docs.py
       - name: Sintaxis Markdown (markdownlint)
         # Archivos y reglas definidos en .markdownlint-cli2.jsonc
-        run: npx --yes markdownlint-cli2@0.24.1
+        # Instalación sin scripts de ciclo de vida (regla githubactions:S6505).
+        run: |
+          npm install --global --ignore-scripts markdownlint-cli2@0.24.1
+          markdownlint-cli2
