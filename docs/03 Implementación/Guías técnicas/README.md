@@ -8,6 +8,6 @@
 - [Mapa visual de Lima](Mapa%20visual%20de%20Lima.md)
 - [SonarCloud y OWASP 2025](SonarCloud%20y%20OWASP%202025.md)
 - [Informe preliminar OWASP 2025](Informe%20preliminar%20OWASP%202025.md)
-
+- [Guía de estilo documental](Gu%C3%ADa%20de%20estilo%20documental.md)
 
 [← Volver al índice correspondiente](../README.md)
