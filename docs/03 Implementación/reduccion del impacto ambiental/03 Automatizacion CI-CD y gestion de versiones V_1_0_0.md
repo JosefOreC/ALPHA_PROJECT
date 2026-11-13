@@ -34,7 +34,7 @@ El archivo [`.github/workflows/green-audit.yml`](../../../.github/workflows/gree
 | 2 | Configurar Node.js 24 con caché npm | `actions/setup-node` v4.4.0, caché sobre `src/frontend/package-lock.json` |
 | 3 | Instalar dependencias | `npm ci --ignore-scripts --prefix src/frontend` |
 | 4 | Compilar el frontend de producción | `npm run build` (`tsc -b && vite build`) en `src/frontend` |
-| 5 | Ejecutar Lighthouse CI | `./src/frontend/node_modules/.bin/lhci autorun --config=./lighthouserc.json` (`@lhci/cli` 0.15.1 fijado en `devDependencies`, sin `npx`) |
+| 5 | Ejecutar Lighthouse CI | `./src/frontend/node_modules/.bin/lhci autorun --config=./lighthouserc.json` (`@lhci/cli` 0.16.1 fijado en `devDependencies`, sin `npx`; `basic-ftp` forzado a 6.2.6 con `overrides` para que `npm audit` quede limpio) |
 | 6 | Resumen de puntuaciones | Tabla de las cuatro categorías en el resumen del job (`GITHUB_STEP_SUMMARY`) |
 | 7 | Guardar reportes | `actions/upload-artifact` v4.6.2: reportes HTML y JSON durante 30 días |
 
