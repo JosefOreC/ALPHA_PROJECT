@@ -24,11 +24,10 @@
 
 | Elemento | Regla | Ejemplo |
 |---|---|---|
-| Nombre de archivo | Número de orden, nombre y versión | `02 Estandares Ingeniería de software V_1_0_0.md` |
+| Nombre de archivo | Número de orden, nombre y versión | `02 Estandares Ingeniería de software V_1_0_1.md` |
 | Versión | `V_MAYOR_MENOR_CORRECCIÓN`: la mayor cambia la estructura, la menor añade contenido y la corrección ajusta formato o redacción | `V_1_0_0` → `V_1_0_1` |
 | Coherencia | La versión del nombre coincide con el campo «Versión del documento» y con la última fila del control de versiones | `scripts/check_docs.py` lo verifica |
-| Cambio de versión | Se renombra el archivo con `git mv` y se actualizan los enlaces que apuntan a él | Índice de la carpeta |
-| Nombre fijado por la rúbrica | Se conserva el nombre exigido y los cambios se registran solo en el control de versiones | Documentos 01 y 02 de reducción del impacto ambiental |
+| Cambio de versión | Todo cambio sube la versión según su magnitud; se renombra el archivo con `git mv` y se actualizan los enlaces que apuntan a él | Índice de la carpeta |
 
 ## 3. Redacción técnica formal
 
@@ -89,5 +88,6 @@ La validación de sintaxis cubre la carpeta de reducción del impacto ambiental 
 |---|---|---|
 | — | 12/11/2026 | Rojas Camayo, Valentino Jhan Pierre. Emisión inicial: estructura, nombres y versiones, redacción formal, sintaxis Markdown y verificación automática. |
 | — | 12/11/2026 | Rojas Camayo, Valentino Jhan Pierre. Excepción para los nombres de archivo fijados por la rúbrica. |
+| — | 13/11/2026 | Rojas Camayo, Valentino Jhan Pierre. Se retira esa excepción, según lo acordado con el docente: todo cambio sube la versión del documento. |
 
 [← Volver al índice correspondiente](README.md)
