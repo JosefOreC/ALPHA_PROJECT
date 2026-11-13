@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 import type { Locator } from '@playwright/test'
-import { mockSession, stubTiles } from './fixtures'
+import { captureEvidence, mockSession, stubTiles } from './fixtures'
 import type { MapData } from '../../src/domain/mapData'
 
 const DEMO = '/tests/ui/map.html?board'
@@ -13,6 +13,84 @@ async function openLayers(map: Locator) {
 
 test.beforeEach(async ({ page }) => {
   page.on('pageerror', error => { throw error })
+})
+
+test('al filtrar un pedido conserva discretamente las otras paradas de su ruta', async ({ page }) => {
+  await stubTiles(page)
+  await page.goto('/tests/ui/map.html')
+  const map = page.getByRole('group', { name: /Mapa de rutas/ })
+  const filter = page.getByRole('combobox', { name: 'Filtrar por pedido en el mapa' })
+  const stops = map.locator('svg.route-stop-icon')
+  await expect(map.locator('svg.pin')).toHaveCount(12)
+  await expect(stops).toHaveCount(0)
+  await page.getByRole('combobox', { name: 'Estado de los pedidos en el mapa' }).selectOption('EN_CAMINO')
+  await filter.selectOption('PED-0029')
+  await expect(map.locator('svg.pin')).toHaveCount(1)
+  await expect(stops).toHaveCount(2)
+  await expect(map.locator('svg.route-stop-icon.r1')).toHaveCount(2)
+  await expect(stops.first()).toHaveAttribute('width', '12')
+  await expect(stops.first()).toHaveCSS('opacity', '0.7')
+  const stop = map.getByTitle('Otra parada · PED-0021 · Comercial Hermanos Quispe · Vehículo ABC-123')
+  await stop.focus()
+  await stop.press('Enter')
+  const tooltip = map.getByRole('tooltip').filter({ hasText: 'Otra parada de esta ruta' })
+  await expect(tooltip).toContainText('Parada 1 · Comercial Hermanos Quispe')
+  await expect(tooltip).toContainText('PED-0021 · Vehículo ABC-123')
+  await expect(filter).toHaveValue('PED-0029')
+  await expect(map.locator('.eco-map__card')).toContainText('Panadería San Hilarión')
+  await captureEvidence(page, 'otras-paradas-escritorio.png')
+
+  const layers = await openLayers(map)
+  await layers.getByRole('button', { name: 'Rutas', exact: true }).click()
+  await expect(stops).toHaveCount(0)
+  await layers.getByRole('button', { name: 'Rutas', exact: true }).click()
+  await expect(stops).toHaveCount(2)
+  await layers.getByRole('button', { name: 'Pedidos', exact: true }).click()
+  await expect(stops).toHaveCount(0)
+  await layers.getByRole('button', { name: 'Pedidos', exact: true }).click()
+  await expect(stops).toHaveCount(2)
+  await map.getByRole('button', { name: 'Capas', exact: true }).click()
+  await page.setViewportSize({ width: 390, height: 844 })
+  await expect(stops).toHaveCount(2)
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
+  await captureEvidence(page, 'otras-paradas-movil.png')
+
+  await page.getByRole('button', { name: 'Limpiar filtros del mapa' }).click()
+  await expect(map.locator('svg.pin')).toHaveCount(12)
+  await expect(stops).toHaveCount(0)
+  await filter.selectOption('PED-0024')
+  await expect(map.locator('svg.pin')).toHaveCount(1)
+  await expect(map.locator('path.route')).toHaveCount(0)
+  await expect(stops).toHaveCount(0)
+})
+
+test('un icono discreto explica los accesos de ida y vuelta aunque el pedido esté filtrado', async ({page}) => {
+  await mockSession(page,'planner')
+  await stubTiles(page)
+  const before={lat:-12.014,lng:-76.994}, entrance={lat:-12.01388,lng:-76.99325}
+  const middle={lat:-12.01364,lng:-76.993045}, tip={lat:-12.01371,lng:-76.992905}
+  const after={lat:-12.013,lng:-76.9938}
+  const data:MapData={depot:{name:'Almacén',position:before},vehicles:[],
+    routes:[{id:'r1',plate:'TST-001',color:1,done_until:0,path:[before,entrance,middle,tip,middle,entrance,after]}],
+    orders:[{id:'shown',customer:'Cliente visible',district:'Ate',status:'PENDIENTE',position:after,window:'08:00–18:00',route_id:'r1',co2_kg:null},
+      {id:'access-order',customer:'Cliente del acceso',district:'Ate',status:'PENDIENTE',position:tip,window:'08:00–18:00',route_id:'r1',co2_kg:null}]}
+  await page.route('**/api/routes/map',route=>route.fulfill({json:data}))
+  await page.goto('/?vista=rutas')
+  const map=page.getByRole('group',{name:/Mapa de rutas/})
+  await expect(map.locator('svg.pin')).toHaveCount(2)
+  await page.getByRole('combobox',{name:'Filtrar por pedido en el mapa'}).selectOption('shown')
+  await expect(map.locator('svg.pin')).toHaveCount(1)
+  while(Number(await map.locator('.leaflet-container').getAttribute('data-map-zoom'))<17) await map.getByRole('button',{name:'Acercar',exact:true}).click()
+  const access=map.getByTitle('Acceso de ida y vuelta · Vehículo TST-001')
+  await expect(access).toBeVisible()
+  await expect(map.locator('svg.route-access-icon')).toHaveCount(1)
+  await expect(map.locator('svg.route-access-icon')).toHaveAttribute('width','18')
+  await access.focus()
+  await access.press('Enter')
+  await expect(map.locator('.eco-map__access-tooltip')).toContainText('La ruta entra por este ramal y vuelve al mismo cruce.')
+  await map.getByRole('button',{name:'Capas',exact:true}).click()
+  await map.getByRole('button',{name:'Rutas',exact:true}).click()
+  await expect(map.locator('svg.route-access-icon')).toHaveCount(0)
 })
 
 test('generar y aprobar dibuja la propuesta y conserva la ruta al recargar', async ({ page }) => {

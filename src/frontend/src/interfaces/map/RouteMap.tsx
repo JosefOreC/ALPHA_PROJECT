@@ -86,6 +86,12 @@ function MapInstance({ source, selectedId, query = '', onQueryChange, orderStatu
   // Si otro filtro excluye el pedido elegido, vuelve al conjunto que sí coincide.
   const activeOrderFilter = options?.orders.some(order => order.id === orderFilter) ? orderFilter : ''
   const context = useMemo(() => options ? filterMapOrders(options, { orderId: activeOrderFilter }) : null, [options, activeOrderFilter])
+  const otherStops = useMemo(() => {
+    if (!prepared || !context) return []
+    const routeIds = new Set(context.routes.map(route => route.id))
+    const visibleIds = new Set(context.orders.map(order => order.id))
+    return prepared.data.orders.filter(order => order.route_id !== null && routeIds.has(order.route_id) && !visibleIds.has(order.id))
+  }, [prepared, context])
   const filtered = status !== 'ALL' || !!query.trim() || !!search.trim() || !!activeOrderFilter || !!district
   const clearFilters = () => {
     setMapQuery(''); setMapStatus('ALL'); setOrderFilter('')
@@ -165,7 +171,7 @@ function MapInstance({ source, selectedId, query = '', onQueryChange, orderStatu
       {context ? <MapFallback data={context} allowed={allowed} select={select} selection={selection} /> : null}
     </> : <div className={'eco-map' + (compact ? ' eco-map--compact' : '') + (strip ? ' eco-map--strip' : '')} role="group" aria-label="Mapa de rutas de Lima Este">
       {context ? <Suspense fallback={<span className="eco-map__note" role="status">Cargando mapa…</span>}>
-        <LeafletCanvas data={context} selection={selection} layers={layers} compact={compact} card={card}
+        <LeafletCanvas data={context} otherStops={otherStops} selection={selection} layers={layers} compact={compact} card={card}
           onSelect={select} onDismiss={dismiss} onReady={setMap} onBasemapError={setBasemapError} />
       </Suspense> : <span className="eco-map__note" role="status">Cargando mapa…</span>}
       {showLayerControls ? <div className="eco-map__layers" onKeyDown={event => {
@@ -194,9 +200,11 @@ function MapInstance({ source, selectedId, query = '', onQueryChange, orderStatu
         <summary><SlidersIcon />Leyenda</summary>
         <div className="eco-map__legend-items">
           {layers.routes ? <><span><i className="eco-map__key eco-map__key--route" />Línea de color: tramo por recorrer · flechas: dirección</span>
-            <span><i className="eco-map__key eco-map__key--done" />Gris: tramo recorrido</span></> : null}
+            <span><i className="eco-map__key eco-map__key--done" />Gris: tramo recorrido</span>
+            <span><span aria-hidden="true">↩</span>Acceso de ida y vuelta</span></> : null}
           {layers.vehicles ? <span><CamionetaIcon />Camión · placa y estado</span> : null}
           {layers.pins ? <>
+            {layers.routes && otherStops.length ? <span><i className="eco-map__key eco-map__key--other-stop" />Círculo pequeño: otra parada de la misma ruta</span> : null}
             <span><i className="eco-map__key eco-map__key--pending" />Pendiente · rombo</span>
             <span><i className="eco-map__key eco-map__key--transit" />En camino · anillo</span>
             <span><i className="eco-map__key eco-map__key--delivered" />Entregado · check</span>

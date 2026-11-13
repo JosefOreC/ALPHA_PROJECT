@@ -4,7 +4,7 @@ import { Fragment, useEffect } from 'react'
 import type { ComponentProps } from 'react'
 import { MapContainer, Marker, Pane, Polyline, Popup, Tooltip, useMap, useMapEvents } from 'react-leaflet'
 import { doneSegment, pendingSegment } from '../../domain/mapData'
-import type { MapData, MapSelection } from '../../domain/mapData'
+import type { MapData, MapOrder, MapSelection } from '../../domain/mapData'
 import { LIMA_REGION } from '../../domain/mapPresentation'
 import type { MapLayers } from '../../domain/mapPresentation'
 import { formatDecimal } from '../../domain/format'
@@ -14,9 +14,10 @@ import { depotHtml, pinHtml, vehicleHtml } from './markers'
 import { fitVisible, LIMA_BOUNDS, toTuple } from './viewport'
 import VectorBasemap from './VectorBasemap'
 import { RouteDirections } from './RouteDirections'
+import { RouteAccessMarkers } from './RouteAccessMarkers'
 
 type Props = {
-  data: MapData; selection: MapSelection | null; layers: MapLayers
+  data: MapData; otherStops: MapOrder[]; selection: MapSelection | null; layers: MapLayers
   compact: boolean; card: boolean; onSelect: (selection: MapSelection) => void
   onDismiss: () => void
   onReady: (map: L.Map) => void; onBasemapError: (message: string) => void
@@ -80,7 +81,7 @@ function MapLifecycle({ data, layers, onReady }: Pick<Props, 'data' | 'layers' |
   return null
 }
 
-export default function LeafletCanvas({ data, selection, layers, compact, card, onSelect, onDismiss, onReady, onBasemapError }: Props) {
+export default function LeafletCanvas({ data, otherStops, selection, layers, compact, card, onSelect, onDismiss, onReady, onBasemapError }: Props) {
   const order = selection?.kind === 'order' ? data.orders.find(item => item.id === selection.id) : undefined
   const vehicle = selection?.kind === 'vehicle' ? data.vehicles?.find(item => item.id === selection.id) : undefined
   const route = selection?.kind === 'route' ? data.routes.find(item => item.id === selection.id) : undefined
@@ -100,6 +101,8 @@ export default function LeafletCanvas({ data, selection, layers, compact, card, 
       <Pane name="map-focus-route" style={{ zIndex: 430 }} />
       <Pane name="map-directions" style={{ zIndex: 440, pointerEvents: 'none' }} />
       <Pane name="map-route-hit" style={{ zIndex: 450 }} />
+      <Pane name="map-other-stops" style={{ zIndex: 500 }} />
+      <Pane name="map-accesses" style={{ zIndex: 510 }} />
       <Pane name="map-depot" style={{ zIndex: 520 }} />
       <Pane name="map-orders" style={{ zIndex: 540 }} />
       <Pane name="map-vehicles" style={{ zIndex: 560 }} />
@@ -122,12 +125,31 @@ export default function LeafletCanvas({ data, selection, layers, compact, card, 
             eventHandlers={{ click: () => onSelect({ kind: 'route', id: item.id }) }}>
           </Polyline>
           <RouteDirections route={item} dimmed={!!dim} showLabel={!compact && (!focus || focus === item.id)} />
+          <RouteAccessMarkers route={item} dimmed={!!dim} />
         </Fragment>
       }) : null}
 
       {layers.depot && data.depot ? <Marker pane="map-depot" position={toTuple(data.depot.position)}
         icon={L.divIcon({ className: 'eco-map__marker', html: depotHtml(data.depot.name), iconSize: [120, 28], iconAnchor: [14, 14] })}
         interactive={false} keyboard={false} /> : null}
+
+      {layers.routes && layers.pins ? otherStops.map(item => {
+        const owner = data.routes.find(route => route.id === item.route_id)
+        if (!owner) return null
+        const dimmed = focus !== null && owner.id !== focus
+        const label = `Otra parada · ${item.id} · ${item.customer} · Vehículo ${owner.plate}`
+        return <Marker key={item.id} pane="map-other-stops" position={toTuple(item.position)}
+          title={label} alt={label} keyboard bubblingMouseEvents={false}
+          eventHandlers={{ click: event => event.target.openTooltip() }}
+          icon={L.divIcon({ className: 'eco-map__other-stop-marker', iconSize: [28, 28], iconAnchor: [14, 14],
+            html: `<svg class="route-stop-icon r${owner.color}${dimmed ? ' is-dim' : ''}" width="12" height="12" viewBox="0 0 16 16" aria-hidden="true"><circle class="route-stop-ring" cx="8" cy="8" r="6"/><circle class="route-stop-dot" cx="8" cy="8" r="2"/></svg>` })}>
+          <MapTooltip direction="top" offset={[0, -10]} className="eco-map__stop-label">
+            <strong>{item.stop_number ? `Parada ${item.stop_number} · ` : ''}{item.customer}</strong>
+            <span>{item.id} · Vehículo {owner.plate}</span>
+            <span>Otra parada de esta ruta · {statusLabels[item.status]}</span>
+          </MapTooltip>
+        </Marker>
+      }) : null}
 
       {layers.pins ? data.orders.map(item => {
         const owner = data.routes.find(route => route.id === item.route_id)

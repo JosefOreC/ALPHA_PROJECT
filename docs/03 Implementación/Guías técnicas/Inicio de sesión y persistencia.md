@@ -82,7 +82,7 @@ Para un conductor, después vincular esa cuenta a su perfil y vehículo desde
 - Diez intentos por correo y dirección de conexión en quince minutos bloquean
   temporalmente el acceso. Detrás de un proxy, configurar sus direcciones de
   confianza antes de habilitar el reenvío de IP del cliente.
-- En HTTPS configurar `SESSION_COOKIE_SECURE=true`.
+- La cookie de sesión es `Secure` por defecto. Solo en desarrollo local sin HTTPS se define `SESSION_COOKIE_SECURE=false`. Detrás de un proxy con TLS, `SECURITY_HSTS=true` activa HSTS.
 - Dashboard, pedidos, flota, conductores, mapa, ruta del conductor, sostenibilidad,
   usuarios, parámetros, integraciones, incidencias y auditoría consultan la API y
   PostgreSQL. Los errores de conexión son visibles; no se sustituyen por ejemplos.

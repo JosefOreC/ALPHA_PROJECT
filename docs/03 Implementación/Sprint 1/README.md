@@ -1,4 +1,4 @@
-# Índice — Sprint 1
+# Índice — Sprint 01
 
 Una sola edición vigente por tipo de documento; su historial está en la tabla de versiones de cada documento. La versión del documento no determina el número del sprint.
 

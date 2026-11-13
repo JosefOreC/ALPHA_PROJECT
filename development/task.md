@@ -1,14 +1,14 @@
 ## Corte documental actual — 29/10/2026
 
-La lectura estática actual encuentra API común en `src/backend/interfaces/api/deps.py`, sesiones PostgreSQL en `src/backend/infrastructure/security.py`, adaptadores SQL y endpoints de portal. Las afirmaciones anteriores de ausencia de autenticación, PostgreSQL o API HTTP corresponden al diagnóstico fechado, no al estado actual. No se ejecutaron suites, base de datos ni despliegue en esta edición. Permanecen pendientes seguridad completa, migraciones/recuperación, motor VRPTW, despacho, GPS/ETA operativos, factores ambientales y aceptación.
+La lectura estática actual encuentra API común en `src/backend/interfaces/api/deps.py`, sesiones PostgreSQL en `src/backend/infrastructure/security.py`, adaptadores SQL y endpoints de portal. Las afirmaciones anteriores de ausencia de autenticación, PostgreSQL o API HTTP corresponden al diagnóstico fechado, no al estado actual. No se ejecutaron suites, base de datos ni despliegue en esta edición. Permanecen pendientes seguridad completa (EN-02), migraciones/recuperación, motor VRPTW, despacho, GPS/ETA operativos y factores ambientales; el Sprint 3 se cerró el 30/10/2026 con aceptación y observaciones no bloqueantes y la aceptación final del producto sigue pendiente.
 
-Estado detallado: [impedimentos vigentes](../docs/03%20Implementaci%C3%B3n/Sprint%202/02%20Registro%20de%20Impedimentos%20V_1_5_0.md) y [revisión por criterios](../docs/03%20Implementaci%C3%B3n/Sprint%202/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_4_0.md).
+Estado detallado: [impedimentos vigentes](../docs/03%20Implementaci%C3%B3n/Sprint%202/02%20Registro%20de%20Impedimentos%20V_1_6_0.md) y [revisión por criterios](../docs/03%20Implementaci%C3%B3n/Sprint%202/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_4_0.md).
 
 ---
 
 # Trabajo inmediato de coordinación y recuperación
 
-Rama actual: `feature/josef/spr2/map`. Fecha: **08/10/2026**. Este tablero local sirve para ejecutar el [roadmap](roadmap.md); no sustituye Jira. Las casillas pendientes no se cierran por la existencia de código demo.
+Rama de apertura del tablero: `feature/josef/spr2/map`. Fecha de apertura: **08/10/2026**; actualización documental: **30/10/2026**. Este tablero local sirve para ejecutar el [roadmap](roadmap.md); no sustituye Jira. Las casillas pendientes no se cierran por la existencia de código demo.
 
 ## Foco actual — mapa visual de Lima
 
@@ -61,7 +61,7 @@ Por indicación del usuario, el siguiente trabajo es [T-MAP-VIS: mapa visual](ta
 
 ## Siguientes bloques
 
-PMV-3: T-05/06/07, US-006–011 y cierre transversal de seguridad. PMV-4: EN-01/03/04/05/06, benchmark final, manuales y aceptación. El detalle está en [sprints.md](sprints.md).
+PMV-3: T-05/06/07 y US-006–011; el 30/10/2026 se cerraron US-010, US-011, EN-02 y EN-05 (20 SP) y el resto del PMV-3 queda para el Sprint 4. PMV-4: EN-01/03/04/06, benchmark final, manuales y aceptación. El detalle está en [sprints.md](sprints.md).
 
 ## Actualización por tarea
 

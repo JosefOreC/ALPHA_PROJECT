@@ -2,7 +2,7 @@
 
 La lectura estática actual encuentra API común en `src/backend/interfaces/api/deps.py`, sesiones PostgreSQL en `src/backend/infrastructure/security.py`, adaptadores SQL y endpoints de portal. Las afirmaciones anteriores de ausencia de autenticación, PostgreSQL o API HTTP corresponden al diagnóstico fechado, no al estado actual. No se ejecutaron suites, base de datos ni despliegue en esta edición. Permanecen pendientes seguridad completa, migraciones/recuperación, motor VRPTW, despacho, GPS/ETA operativos, factores ambientales y aceptación.
 
-Estado detallado: [impedimentos vigentes](../docs/03%20Implementaci%C3%B3n/Sprint%202/02%20Registro%20de%20Impedimentos%20V_1_5_0.md) y [revisión por criterios](../docs/03%20Implementaci%C3%B3n/Sprint%202/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_4_0.md).
+Estado detallado: [impedimentos vigentes](../docs/03%20Implementaci%C3%B3n/Sprint%202/02%20Registro%20de%20Impedimentos%20V_1_6_0.md) y [revisión por criterios](../docs/03%20Implementaci%C3%B3n/Sprint%202/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_4_0.md).
 
 ---
 
@@ -23,12 +23,12 @@ Fuente de IDs, prioridades y estimaciones: [Transformando a ágil](../docs/02%20
 | US-012 / RF-007 / EP-07 | Registrar conductor | 3 / Alta | spr1 | Alex | Persistir, validar DNI/licencia y vincular vehículo; permisos y UI de gestión. |
 | US-013 / RF-007 / EP-07 | Activar/desactivar conductor | 2 / Media | spr1 → spr2 | Alex | Conservar historial; probar bloqueo con ruta activa después de T-04. |
 | US-005 / RF-003 / EP-03 | Generar rutas del día | 13 / Alta | spr2 → spr4 | William | Sustituir optimizador demo, rutas persistentes y aprobación; respetar capacidad/ventanas; caso sin vehículo. |
-| US-006 / RF-004 / EP-04 | Visualizar rutas activas | 8 / Alta | spr3 | Josef | Fuente HTTP, estados/posición del día, permisos, actualización y lista alternativa cuando falla mapa. |
-| US-007 / RF-004 / EP-04 | Detalle vehicular en mapa | 3 / Media | spr3 | Josef | Panel de ruta, pedidos y ETA; caso sin ruta; origen/antigüedad de posición. |
-| US-008 / RF-005 / EP-05 | Dashboard operativo | 5 / Media | spr3 | William | Leer entregados/pendientes, ventanas, km y CO₂ de la misma operación; ausencia de datos en cero. |
-| US-009 / RF-005 / EP-05 | Filtrar dashboard por zona | 3 / Baja | spr3 | William | Todos los indicadores usan el distrito; zona sin operación devuelve cero sin error. |
-| US-010 / RF-006 / EP-06 | Reporte de sostenibilidad | 5 / Media | spr3 | William + Carlos | API/cálculo por rango, kg/litros/km/entregas; vacío explícito; ≤1.5 s P95. |
-| US-011 / RF-006 / EP-06 | Exportar CSV | 2 / Baja | spr3 | Valentino | Reutilizar exportador, conciliar totales y encabezados en español; formatos inválidos. |
+| US-006 / RF-004 / EP-04 | Visualizar rutas activas | 8 / Alta | spr3 parcial → spr4 cierre | Josef | Fuente HTTP, estados/posición del día, permisos, actualización y lista alternativa cuando falla mapa. |
+| US-007 / RF-004 / EP-04 | Detalle vehicular en mapa | 3 / Media | spr3 parcial → spr4 cierre | Josef | Panel de ruta, pedidos y ETA; caso sin ruta; origen/antigüedad de posición. |
+| US-008 / RF-005 / EP-05 | Dashboard operativo | 5 / Media | spr3 parcial → spr4 cierre | William | Leer entregados/pendientes, ventanas, km y CO₂ de la misma operación; ausencia de datos en cero. |
+| US-009 / RF-005 / EP-05 | Filtrar dashboard por zona | 3 / Baja | spr3 parcial → spr4 cierre | William | Todos los indicadores usan el distrito; zona sin operación devuelve cero sin error. |
+| US-010 / RF-006 / EP-06 | Reporte de sostenibilidad | 5 / Media | spr3 (cerrado 30/10) | William + Carlos | API/cálculo por rango, kg/litros/km/entregas; vacío explícito; ≤1.5 s P95. |
+| US-011 / RF-006 / EP-06 | Exportar CSV | 2 / Baja | spr3 (cerrado 30/10) | Valentino | Reutilizar exportador, conciliar totales y encabezados en español; formatos inválidos. |
 
 ## Enablers
 
@@ -38,10 +38,10 @@ Los responsables siguientes son una propuesta de coordinación, no nuevas asigna
 |---|---|---|---|---|
 | EN-00 / BD | 5 / Alta | spr1 | Carlos | Migraciones PostgreSQL/PostGIS, constraints/relaciones, carga sintética y rollback real; reconciliar DDL con entidades. |
 | EN-01 / RNF-001 | 13 / Alta | spr2 inicial → spr4 cierre | William | Motor VRPTW/Green VRP aislado; factibilidad y CO₂ secundario; benchmark 150/15 ≤45 s P95. |
-| EN-02 / RNF-002 | 8 / Alta | spr1 base → spr3 cierre | Carlos + William | Identidad y RBAC en API, protección de mutaciones, auditoría, tratamiento de datos y análisis de seguridad. |
+| EN-02 / RNF-002 | 8 / Alta | spr1 base → spr3 cierre (observaciones en spr4) | Carlos + William | Identidad y RBAC en API, protección de mutaciones, auditoría, tratamiento de datos y análisis de seguridad. |
 | EN-03 / RNF-003 | 8 / Media | spr4 | Carlos | Staging/infraestructura, failover medido RTO ≤30 s, RPO ≤5 s y monitoreo SLA ≥99.5 %. |
 | EN-04 / RNF-004 | 8 / Alta | spr4 | William + Carlos | Evento válido, ruta versionada y aviso al conductor; objetivo <30 s; caso sin alternativa y consistencia. |
-| EN-05 / RNF-005 | 5 / Media | spr1 base → spr4 cierre | Valentino + Alex | Validación WCAG 2.1 AA, flujo móvil y reintentos; estado de sincronización sin duplicar entregas. |
+| EN-05 / RNF-005 | 5 / Media | spr1 base → spr3 cierre (observaciones en spr4) | Valentino + Alex | Validación WCAG 2.1 AA, flujo móvil y reintentos; estado de sincronización sin duplicar entregas. |
 | EN-06 / RNF-006 | 8 / Baja | spr4 | Carlos + Alex | Carga 1,000/50 y escalamiento sin rediseño; aclarar baseline/degradación ≤20 % antes de medir. |
 
 Hay **13 US (57 SP) + 7 EN (55 SP) = 112 SP**. El total escrito de 111 SP en la fuente es una discrepancia D-01. No se cambian puntos individuales ni se asigna doble puntaje a enablers que atraviesan varios sprints.
@@ -81,9 +81,9 @@ RNF-007/008/009 tentativos deben formalizarse después de D-07. El umbral de cob
 | IMP-002/009 → T-03/T-05/T-06/T-07 | Acordar fuentes operativas y factores con D-08. | Decisión y evidencia pendientes. |
 | IMP-003 → EN-01/T-04/T-08 | Implementar motor/despacho y benchmark. | Pendiente. |
 | IMP-004/005/012 → T-08 | Revisión de pares y protección de rama. | Confirmación remota pendiente. |
-| IMP-007/013 → EN-02/T-09 | Verificar seguridad integral e identidad. | Parcial; aceptación pendiente. |
+| IMP-007/013 → EN-02/T-09 | Verificar seguridad integral e identidad. | IMP-013 aceptado con observación (30/10/2026); IMP-007 continúa abierto; seguimiento en Sprint 4. |
 | IMP-011/015/016 → T-10 | Revisar documentación corregida y conciliar Jira. | Correcciones locales; confirmación pendiente. |
-| IMP-014 → US-010/011/T-06 | Verificar vacío, formato inválido, P95 y factores. | Pendiente. |
+| IMP-014 → US-010/011/T-06 | Verificar vacío, formato inválido, P95 y factores. | Aceptado con observación (30/10/2026); seguimiento en Sprint 4. |
 
 
 [← Volver al índice correspondiente](README.md)

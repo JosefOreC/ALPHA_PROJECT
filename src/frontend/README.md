@@ -7,9 +7,10 @@ inicio de sesión mediante correo y contraseña. Las cuentas se crean desde el
 administrador; no existe registro público ni selección de perfiles de ejemplo.
 
 Todos los módulos comparten una cabecera de navegación horizontal, superficies
-blancas y acentos verdes sobre un fondo degradado. En pantallas pequeñas la
-navegación se desplaza horizontalmente; tablas y listados conservan su propio
-desplazamiento para no desbordar la página.
+blancas y acentos verdes sobre un fondo gris neutro. La presentación corporativa
+usa bordes discretos, radios contenidos y una pestaña activa subrayada. En pantallas
+pequeñas la navegación se desplaza horizontalmente; tablas y listados conservan su
+propio desplazamiento para no desbordar la página.
 
 Desde `src/frontend`:
 
@@ -43,6 +44,11 @@ los tramos recorridos se muestran en gris. Los números de parada provienen de
 la secuencia guardada y se conservan al filtrar. Los pedidos sin ruta usan un
 marcador gris. Al elegir una placa, se destaca su recorrido y se muestran sus
 paradas; elegir una parada de la lista acerca el mapa a ese cliente.
+
+Al filtrar un pedido, las otras paradas de su misma ruta se conservan como
+círculos pequeños del color del recorrido. Al enfocarlos con el teclado o pasar
+el cursor se muestra el pedido y su número de parada, sin cambiar el filtro.
+Estos indicadores se ocultan al desactivar las capas de Rutas o Pedidos.
 
 En el formulario de pedido, «Seleccionar en mapa» permite fijar el destino con
 un clic, arrastrar el marcador o elegir el centro del mapa con teclado.
