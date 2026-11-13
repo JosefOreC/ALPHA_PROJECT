@@ -1,12 +1,12 @@
-# Plantilla del informe de reducción del impacto ambiental
+# Informe de reducción del impacto ambiental y optimización del sistema
 
 <!--
-Uso de esta plantilla
-1. Copiar este archivo como «01 Informe de reduccion del impacto ambiental V_1_0_0.md» en esta misma carpeta.
-2. Reemplazar el título por «Informe de reducción del impacto ambiental y optimización del sistema» y completar los metadatos.
+Instrucciones de redacción (borrar este comentario al terminar)
+1. Este archivo conserva el nombre exacto que exige la rúbrica; no se renombra.
+2. Completar los metadatos y cambiar el estado a «Emitido» cuando el informe esté terminado.
 3. Reemplazar cada texto entre corchetes «[...]» por el contenido real y borrar estos comentarios.
 4. Registrar solo valores medidos en el sistema EcoLogística Lima. Los valores del informe de referencia MERN son un ejemplo y no se copian.
-5. Enlazar el documento desde el README.md de la carpeta y comprobarlo con `python scripts/check_docs.py` y `npx --yes markdownlint-cli2@0.24.1`.
+5. Comprobar el documento con `python scripts/check_docs.py` y `npx --yes markdownlint-cli2@0.24.1`.
 Las reglas de redacción y formato están en la Guía de estilo documental (docs/03 Implementación/Guías técnicas).
 -->
 
@@ -14,13 +14,15 @@ Las reglas de redacción y formato están en la Guía de estilo documental (docs
 
 **Líder del Proyecto:** Ore Campos, Josef Pablo
 
-**Versión del documento:** [V_1_0_0]
+**Versión del documento:** V_1_0_0
+
+**Estado:** en redacción
 
 **Autor:** [Apellidos, Nombres]
 
 **Actualización documental:** [DD/MM/AAAA].
 
-**Alcance:** auditoría, refactorización y medición del rendimiento del sistema, y estimación de la reducción de emisiones (criterio «Informe de reducción del impacto ambiental» de la rúbrica de la Inspección 04). Los estándares que fundamentan cada optimización están en el documento [02 Estándares de ingeniería de software](02%20Estandares%20Ingenier%C3%ADa%20de%20software%20V_1_0_1.md).
+**Alcance:** auditoría, refactorización y medición del rendimiento del sistema, y estimación de la reducción de emisiones (criterio «Informe de reducción del impacto ambiental» de la rúbrica de la Inspección 04). Los estándares que fundamentan cada optimización están en el documento [02 Estándares de ingeniería de software](02%20Estandares%20Ingenier%C3%ADa%20de%20software%20V_1_0_0.md).
 
 ## 1. Informe de reducción del impacto ambiental
 
@@ -186,6 +188,7 @@ Guardar las capturas y los reportes HTML o JSON de Lighthouse en una carpeta «e
 
 | Versión | Fecha | Autoría / cambio |
 |---|---|---|
-| [V_1_0_0] | [DD/MM/AAAA] | [Apellidos, Nombres]. Emisión inicial. |
+| V_1_0_0 | 12/11/2026 | Rojas Camayo, Valentino Jhan Pierre. Estructura del documento (secciones 1.1 a 1.6) sin contenido, para su redacción. |
+| V_1_0_0 | [DD/MM/AAAA] | [Apellidos, Nombres]. [Redacción del contenido y mediciones.] |
 
 [← Volver al índice correspondiente](README.md)
