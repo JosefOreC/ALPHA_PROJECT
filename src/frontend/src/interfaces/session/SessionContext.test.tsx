@@ -9,6 +9,24 @@ function Screen() { const session = useSession()!; return session.user ? <Sessio
 afterEach(() => { cleanup(); sessionStorage.clear() })
 const account = { subjectId: 'u1', name: 'Administrador verificado', role: 'admin' as const, driverId: null, plate: null }
 
+it('conserva el formulario al verificar la sesión y bloquea el envío hasta terminar', async () => {
+  let finish!: (value: null) => void
+  const source = { load: vi.fn(() => new Promise<null>(resolve => { finish = resolve })), login: vi.fn(), logout: vi.fn() }
+  render(<SessionProvider source={source}><Screen /></SessionProvider>)
+  const email = screen.getByLabelText('Correo electrónico')
+  const password = screen.getByLabelText('Contraseña')
+  const button = screen.getByRole('button', { name: 'Verificando sesión…' })
+  expect(email).toBeDisabled()
+  expect(password).toBeDisabled()
+  expect(button).toBeDisabled()
+  fireEvent.submit(button.closest('form')!)
+  expect(source.login).not.toHaveBeenCalled()
+  await act(async () => finish(null))
+  expect(screen.getByLabelText('Correo electrónico')).toBe(email)
+  expect(screen.getByLabelText('Contraseña')).toBe(password)
+  expect(screen.getByRole('button', { name: 'Ingresar' })).toBeEnabled()
+})
+
 describe('Inicio y cierre de sesión', () => {
   it('solo entra con credenciales verificadas y cierra la sesión en el servidor', async () => {
     sessionStorage.setItem('ecologistica.demo-account', 'demo-admin')

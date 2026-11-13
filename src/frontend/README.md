@@ -73,7 +73,7 @@ PostgreSQL configurado y la migración aplicada.
 ## Carga y consultas eficientes
 
 Las vistas se cargan por módulo con `React.lazy` y `Suspense`. Las fuentes se
-resuelven desde el sistema operativo, sin solicitudes a Google Fonts. Pedidos,
+resuelven desde el sistema operativo, sin solicitudes a Google Fonts.
 Flota, Conductores, Auditoría e Incidencias disponen de paginación; en Flota los
 indicadores identifican explícitamente los vehículos de la página mostrada.
 
@@ -81,5 +81,11 @@ Solo parámetros y catálogo de integraciones optan por caché en memoria, con
 vigencia máxima de 60 segundos y ETag. Las escrituras y los cambios de sesión la
 invalidan; una petición antigua no puede rellenar la caché de la sesión nueva.
 Los datos operativos no utilizan esa retención temporal por defecto.
+
+El formulario conserva sus dimensiones durante la verificación, con controles
+deshabilitados hasta completarla. Pedidos reserva también su acción superior
+mientras carga permisos. La compilación genera `.br` y `.gz` de los recursos
+estáticos usando las APIs de Node; la configuración HTTPS/HTTP/2 del servidor
+se describe en el [README del backend](../backend/README.md).
 
 [← Volver al índice correspondiente](../../README.md)

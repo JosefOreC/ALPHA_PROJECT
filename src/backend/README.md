@@ -137,4 +137,30 @@ operativa, estado y ventana. No se ejecuta automáticamente sobre la base del
 usuario. La consulta de planificación conserva `version` para invalidar una
 propuesta incluso si cambia un campo que no modifica el recorrido.
 
+El build actual genera representaciones `.br` y `.gz` de JavaScript/CSS. El
+servidor selecciona el formato admitido y su calidad, conserva el MIME original,
+envía `Vary: Accept-Encoding` y usa un ETag propio de la representación.
+Si no existe el archivo precomprimido, sirve el archivo original.
+
+### HTTPS y HTTP/2
+
+Para reproducir las auditorías móviles de rendimiento se necesita el build de
+producción y HTTP/2. Uvicorn en desarrollo continúa usando HTTP/1.1. Instalar el
+servidor opcional y ejecutar desde la raíz del repositorio:
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install -r src/backend/requirements-http2.txt
+$env:PYTHONPATH = 'src/backend'
+$env:FRONTEND_DIST = (Resolve-Path 'src/frontend/dist').Path
+.\.venv\Scripts\python.exe -m hypercorn interfaces.api.main:app --bind 127.0.0.1:8443 --certfile C:/certificados/fullchain.pem --keyfile C:/certificados/privkey.pem
+```
+
+Las rutas del certificado y la clave son entradas del despliegue: sustituirlas
+por archivos propios y usar un certificado válido para el dominio. Hypercorn
+negocia `h2` o `http/1.1` mediante ALPN. También se puede terminar TLS/HTTP/2 en
+el proxy inverso existente. Los certificados autofirmados de las mediciones son
+exclusivos de localhost; no se instalan en el sistema ni se suben al repositorio.
+
+Consultar [Hypercorn y su configuración oficial](https://hypercorn.readthedocs.io/en/latest/how_to_guides/configuring.html).
+
 [← Volver al índice correspondiente](../../README.md)

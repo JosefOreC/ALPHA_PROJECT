@@ -1,8 +1,13 @@
 """Isolated local performance fixture. Never loads production credentials or data."""
 import sys
+import os
 from pathlib import Path
 from fastapi import Response
 from fastapi.staticfiles import StaticFiles
+try:
+    from interfaces.api.static_assets import PrecompressedStaticFiles
+except ImportError:
+    PrecompressedStaticFiles = StaticFiles  # Archived before-state backend.
 from domain.entities.order import Order
 from domain.value_objects import OrderStatus
 from application.use_cases.manage_orders import ManagementPrincipal
@@ -54,8 +59,19 @@ def map_data():
     return {'depot': None, 'orders': [], 'routes': [], 'vehicles': []}
 
 
-app.mount('/', StaticFiles(directory=Path(sys.argv[1]).resolve(), html=True), name='measurement-static')
+app.mount('/', PrecompressedStaticFiles(directory=Path(sys.argv[1]).resolve(), html=True), name='measurement-static')
 
 if __name__ == '__main__':
-    import uvicorn
-    uvicorn.run(app, host='127.0.0.1', port=5189, log_level='warning')
+    if os.getenv('GREEN_IT_TLS_CERT'):
+        import asyncio
+        from hypercorn.asyncio import serve
+        from hypercorn.config import Config
+        config = Config()
+        config.bind = ['127.0.0.1:5189']
+        config.certfile = os.environ['GREEN_IT_TLS_CERT']
+        config.keyfile = os.environ['GREEN_IT_TLS_KEY']
+        config.loglevel = 'warning'
+        asyncio.run(serve(app, config))
+    else:
+        import uvicorn
+        uvicorn.run(app, host='127.0.0.1', port=5189, log_level='warning')

@@ -22,6 +22,7 @@ from interfaces.api.security.router import router as session_router
 from interfaces.api.security.deps import get_current_identity, protect_mutation as default_protection
 from interfaces.api.security.headers import SecurityHeadersMiddleware
 from interfaces.api.http_efficiency import HttpEfficiencyMiddleware
+from interfaces.api.static_assets import PrecompressedStaticFiles
 from interfaces.api.portal.router import router as portal_router
 from infrastructure.persistence.postgres_orders import postgres_repository
 from infrastructure.persistence.postgres_fleet import PostgresVehicles, PostgresDrivers
@@ -45,7 +46,7 @@ def create_app(repository=None, authenticate=get_current_identity, protect_mutat
         static_root = Path(static_root).resolve()
         if not (static_root / 'index.html').is_file():
             raise ValueError('FRONTEND_DIST debe contener el build de producción del frontend.')
-        app.mount('/assets', StaticFiles(directory=static_root / 'assets'), name='assets')
+        app.mount('/assets', PrecompressedStaticFiles(directory=static_root / 'assets'), name='assets')
         if (static_root / 'maps').is_dir():
             app.mount('/maps', StaticFiles(directory=static_root / 'maps'), name='maps')
         @app.get('/favicon.svg', include_in_schema=False)

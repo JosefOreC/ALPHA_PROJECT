@@ -156,10 +156,10 @@ export function OrderManagementView({ service, onNavigate }: { service: Manageme
 
   const actions = (
     <>
-      {permissions.can_write && screen === 'board' ? (
+      {(permissions.can_write || loading) && screen === 'board' ? (
         <button className="eco-btn eco-btn--secondary" type="button" disabled={loading} onClick={() => { setNotice(''); setScreen('create') }}>
           <PlusIcon />
-          Registrar pedido
+          {loading ? 'Cargando permisos…' : 'Registrar pedido'}
         </button>
       ) : null}
     </>

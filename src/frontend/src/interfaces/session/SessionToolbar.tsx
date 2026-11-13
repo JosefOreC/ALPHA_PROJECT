@@ -32,15 +32,15 @@ export function SessionGate() {
     <section className="eco-login__panel">
       <div className="eco-login__form eco-stack eco-stack--loose">
         <div><p className="eco-login__eyebrow">ACCESO AL SISTEMA</p><h1 className="eco-h1">Inicia sesión</h1><p className="eco-sub">Ingresa con la cuenta asignada por tu administrador.</p></div>
-        {session.loading ? <p role="status">Verificando sesión…</p> : <form className="eco-stack" onSubmit={async event => {
-          event.preventDefault(); if (busy) return; setBusy(true)
+        <form className="eco-stack" aria-busy={session.loading || busy} onSubmit={async event => {
+          event.preventDefault(); if (busy || session.loading) return; setBusy(true)
           try { await session.login(email.trim(), password); setPassword('') } catch { setPassword('') } finally { setBusy(false) }
         }}>
-          <div className="eco-field"><label htmlFor="login-email">Correo electrónico</label><input id="login-email" className="eco-input" type="email" autoComplete="username" required maxLength={255} value={email} onChange={event => setEmail(event.target.value)} disabled={busy} placeholder="tu.nombre@empresa.pe" /></div>
-          <div className="eco-field"><label htmlFor="login-password">Contraseña</label><div className="eco-login__password"><input id="login-password" className="eco-input" type={showPassword ? 'text' : 'password'} autoComplete="current-password" required maxLength={256} value={password} onChange={event => setPassword(event.target.value)} disabled={busy} /><button type="button" className="eco-btn eco-btn--ghost" aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'} onClick={() => setShowPassword(value => !value)}>{showPassword ? 'Ocultar' : 'Mostrar'}</button></div></div>
+          <div className="eco-field"><label htmlFor="login-email">Correo electrónico</label><input id="login-email" className="eco-input" type="email" autoComplete="username" required maxLength={255} value={email} onChange={event => setEmail(event.target.value)} disabled={session.loading || busy} placeholder="tu.nombre@empresa.pe" /></div>
+          <div className="eco-field"><label htmlFor="login-password">Contraseña</label><div className="eco-login__password"><input id="login-password" className="eco-input" type={showPassword ? 'text' : 'password'} autoComplete="current-password" required maxLength={256} value={password} onChange={event => setPassword(event.target.value)} disabled={session.loading || busy} /><button type="button" className="eco-btn eco-btn--ghost" aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'} onClick={() => setShowPassword(value => !value)}>{showPassword ? 'Ocultar' : 'Mostrar'}</button></div></div>
           {session.error ? <p className="eco-login__error" role="alert">{session.error}</p> : null}
-          <button className="eco-btn eco-btn--block" type="submit" disabled={busy}>{busy ? 'Iniciando sesión…' : 'Ingresar'}</button>
-        </form>}
+          <button className="eco-btn eco-btn--block" type="submit" disabled={session.loading || busy}>{session.loading ? 'Verificando sesión…' : busy ? 'Iniciando sesión…' : 'Ingresar'}</button>
+        </form>
         <p className="eco-muted eco-note">Para obtener una cuenta o recuperar el acceso, contacta al administrador de tu organización.</p>
       </div>
     </section>
