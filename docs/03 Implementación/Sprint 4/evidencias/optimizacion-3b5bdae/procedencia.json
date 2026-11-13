@@ -1,0 +1,141 @@
+{
+  "captured_lima": "2026-11-12T22:17:22-05:00",
+  "branch": "refactor/mern",
+  "before_commit": "3b5bdae3930856101e8f8d7955813bc9ddaa9619",
+  "implementation_commit": "9f953d6acc79d569d3896ab1e2a161d8321b3720",
+  "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "source_matches_implementation_commit": true,
+  "lighthouse_reports": [
+    {
+      "file": "before-login-1.json",
+      "fetch_time": "2026-11-13T02:27:58.795Z",
+      "lighthouse": "13.6.0",
+      "runtime_error": null
+    },
+    {
+      "file": "before-login-2.json",
+      "fetch_time": "2026-11-13T02:28:08.741Z",
+      "lighthouse": "13.6.0",
+      "runtime_error": null
+    },
+    {
+      "file": "before-login-3.json",
+      "fetch_time": "2026-11-13T02:28:14.656Z",
+      "lighthouse": "13.6.0",
+      "runtime_error": null
+    },
+    {
+      "file": "before-pedidos-1.json",
+      "fetch_time": "2026-11-13T02:28:20.476Z",
+      "lighthouse": "13.6.0",
+      "runtime_error": null
+    },
+    {
+      "file": "before-pedidos-2.json",
+      "fetch_time": "2026-11-13T02:28:26.715Z",
+      "lighthouse": "13.6.0",
+      "runtime_error": null
+    },
+    {
+      "file": "before-pedidos-3.json",
+      "fetch_time": "2026-11-13T02:28:32.893Z",
+      "lighthouse": "13.6.0",
+      "runtime_error": null
+    },
+    {
+      "file": "after-login-1.json",
+      "fetch_time": "2026-11-13T02:57:40.839Z",
+      "lighthouse": "13.6.0",
+      "runtime_error": null
+    },
+    {
+      "file": "after-login-2.json",
+      "fetch_time": "2026-11-13T02:57:50.874Z",
+      "lighthouse": "13.6.0",
+      "runtime_error": null
+    },
+    {
+      "file": "after-login-3.json",
+      "fetch_time": "2026-11-13T02:57:56.621Z",
+      "lighthouse": "13.6.0",
+      "runtime_error": null
+    },
+    {
+      "file": "after-pedidos-1.json",
+      "fetch_time": "2026-11-13T02:58:02.250Z",
+      "lighthouse": "13.6.0",
+      "runtime_error": null
+    },
+    {
+      "file": "after-pedidos-2.json",
+      "fetch_time": "2026-11-13T02:58:08.764Z",
+      "lighthouse": "13.6.0",
+      "runtime_error": null
+    },
+    {
+      "file": "after-pedidos-3.json",
+      "fetch_time": "2026-11-13T02:58:15.228Z",
+      "lighthouse": "13.6.0",
+      "runtime_error": null
+    }
+  ],
+  "note": "Earlier receipts retain their actual HEAD and dirty-tree state. Those source edits were incorporated into the implementation commit. The before stage explicitly loaded an archived backend and pre-edit build; the after stage used the working production build. Coverage exports preserve the latest completed suite totals, not a new test execution.",
+  "artifacts": {
+    "after-login-1.html": "e906789211bd78b68139dde8155df170534ec165323a4705995c5113628f93aa",
+    "after-login-1.json": "a8001b07a4c2cf85db471cadce42f45848b03e8c7ad3938f825d27e719af5691",
+    "after-login-2.html": "d66200c7da18bd3fa2c8242028b7f5c831c2be189db43916a4c5b043a58a38d0",
+    "after-login-2.json": "c53d5d41c70c6c731a71cc93c8cfa3b8e992f91979dbcd672d7856cb45dad2ab",
+    "after-login-3.html": "1bb1cabdd3d8155c6abcd09b3ed6b6e0bcb8b967cd5c8db213f7b121d4707033",
+    "after-login-3.json": "cfe7d8d39a7fbd64481c8ca510d1720251000ffb5c5f32b127e18dfbad722672",
+    "after-login.jpg": "a8bbb854b0f4e6b138616066022b2482822bdb3826d43b1a6183071030bcec31",
+    "after-pedidos-1.html": "7438bb9c9dfcb9b50101458945c7a3e6e158e035ed03342732f5ea48445be873",
+    "after-pedidos-1.json": "37986593c2d20005b1a263548850e3121ffb9b3763b4c07eb78ba9ffb219a7ba",
+    "after-pedidos-2.html": "792f1e176a3646e73bedb551382dbc635b58f45cacb2401cbfbb3f25d760ff3b",
+    "after-pedidos-2.json": "7b273d4b87881f325f01187931be4e71c8260c0a1edbbd9b710b4821c0eefa17",
+    "after-pedidos-3.html": "cc49172ec0b36bd8f4a60e2e81379313e46d704abb22b0bd490583f389fde0cb",
+    "after-pedidos-3.json": "a8c7959e98b1a47ff2a126efb3be73b30707cb5bd66e4e96dd6aeb0c3bc7b314",
+    "after-pedidos.jpg": "e6c16e63f39306633343f2dc8222c685efb51657b864f48f2382e72997a34366",
+    "after-server.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "after-summary.json": "2d4d09e6e749e65949ae999029d37ac0a15f5f3af71743fc6aa01542105998b9",
+    "api-after.json": "607de2438b90bafcde95f74a48a687fca73ff9cc6cb92a1dbc389d48adcd8b2d",
+    "api-before.json": "075797d2bd9135ec2f02a016c096fa97a12fb1a8baa30548604cfb4605e7b814",
+    "backend-cobertura-resumen.json": "551d20180b73cf6909435ff7ee48820d02be596a9dfaea46e813d4999bd31e14",
+    "backend-cobertura.json": "b50708970a4deb265bf7eb29dcdf5c6ec3292b1b20dd70e4349d1f3fd5049b7b",
+    "backend-cobertura.txt": "513759425ea6af97fc1800cb527e9868aff2512b01714d155e207a4f8452f279",
+    "backend-umbral.json": "578eadb22ffbf70b5da52fdbfae8510732be93a20e97f2396c70dba05488d188",
+    "backend-umbral.txt": "7bcce1989eedfa6d8f94e11b02c7c5533e5c2b9a1fd307156573b8b671d8fce1",
+    "before-login-1.html": "686617e47046ba717eee36dd1e7fc9936622c501abebb58fc7a8de2603f87d35",
+    "before-login-1.json": "dec50c01c6ae993ee84f41e7048315eee29a38f0db28761e8e6885122e950b89",
+    "before-login-2.html": "d3f881bd324bed227f1ee3e2f09efdad6f534c0e426d515b9d4fa2fb504ba9df",
+    "before-login-2.json": "0f2fe3666df54a560ca25359017448fbf63c36d6e8f1e280d9e67e89c98a08c4",
+    "before-login-3.html": "e790e6eda018f8b6f51fe0b911069b0b4bbefa4c828c76fdfefe58e330046b52",
+    "before-login-3.json": "49cd88e77523caef4b2b327d48034e37eb74b1c3edf01e93fcf92daf80436073",
+    "before-login.jpg": "a8bbb854b0f4e6b138616066022b2482822bdb3826d43b1a6183071030bcec31",
+    "before-pedidos-1.html": "251302d135b495dd39d83a554db684dce0456df64b4185eb154ebc8e2a734f54",
+    "before-pedidos-1.json": "43a42fe5507ee6f6f75ac1ec5b68e0c34bd5a5dfcc1a35a3043401ba61b216ea",
+    "before-pedidos-2.html": "25a9f2d19192788d08591fe999d5b17ac1b106cfd5dd6b56c23f91e1bbe648d8",
+    "before-pedidos-2.json": "483ea8a90542ab970195d340b38f8124eeecfddc1843cddb98650186b61355a9",
+    "before-pedidos-3.html": "6ed0c7469f1fe8506158cc1743fbec931fa858164073694406387573f581df21",
+    "before-pedidos-3.json": "744bc55c30374e07673a403b911d4edf14196d7e5fa96676349d066846ab254d",
+    "before-pedidos.jpg": "e6c16e63f39306633343f2dc8222c685efb51657b864f48f2382e72997a34366",
+    "before-server.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "before-summary.json": "332fb38c9d8294482e14c6bd66336df8ccbc5077884980c757e0bb686f329d6e",
+    "comparacion.json": "395986fb7b7b89f824e9050222bc2ad72c78326c6c4ab0fbfafe49e35145a856",
+    "comparar_resultados.py": "edf01d6864bd607e8aeba7a2312226147102ba181568ef0b6ea0319f0769d325",
+    "compilacion.json": "57d6a35ef2801aba132c5c8c7ee1a8c3b0b6361e26e6cc2ea805fa654046cbdf",
+    "compilacion.txt": "8d392474e4e0ba71f8e19cb4bcf977daa89062a85e1eeb63ccd722f86b6f8d5a",
+    "frontend-cobertura-resumen.json": "a8c37cfe94d247316910ce829843069bbd0010f76a56222c7f8501780ea8a330",
+    "frontend-cobertura.json": "64dcc4cfd7b5c7855e5471a21194768823e3862cdced9454720c83f0ac5ee301",
+    "frontend-cobertura.txt": "4c8e80f22993ea7055195b502d2e1afec2d92161e196132598b5d9f57e9b1e89",
+    "integracion-postgres.txt": "ca4ec7e79a66b894a77615b6064a563f6cb0acebed3518a6b3da2d91a39d1c55",
+    "interfaz-pruebas.json": "24dab35500f659abcc4ee0d573ef22bffe800b3f7671a0be56d43bd28c49ae51",
+    "interfaz-pruebas.txt": "2c7b842fa8bda28910690fcc618e80c3485750e9f7b982fee0698a8132b17a2d",
+    "lint.json": "347badb9cbfd1701f2bbce835465afc9e575ad833ec6c02a707a9f47db1b4bc7",
+    "lint.txt": "a158119ae505ca8b2400122fd9341710f7cf751fe0d558c8cb5049990f44ffce",
+    "medir_postgres.py": "d2cd5013f53b78270b0fa70fbcb04ad4a378ab023733ab968e81f1456b1f8ba0",
+    "npm-audit.json": "ff7758d1cb674b88605ac40c0d303a7a64b61ecbf91f88c26228a0eac3f454d4",
+    "pip-audit-inicial.json": "2a1a6116768b0b0971a8d3348b999205e0eef367b142b753e9fc8bb433bebf7b",
+    "pip-audit.json": "aa8b47c92b75fb2fab1ee20f884fcbb1717a6ececda3c234a07c6aca20238473",
+    "postgres-planes.json": "16607cb52c9ec7dd48de14d4820f2d93836ba0839937afc3b590f271df14c24e"
+  }
+}

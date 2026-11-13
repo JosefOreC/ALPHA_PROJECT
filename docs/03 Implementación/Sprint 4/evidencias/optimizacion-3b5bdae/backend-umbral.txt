@@ -1,0 +1,2 @@
+Líneas: 93.93 % (mínimo 90 %)
+Ramas: 90.27 % (mínimo 90 %)

@@ -1,0 +1,76 @@
+{
+  "captured_utc": "2026-11-13T03:09:17.869511+00:00",
+  "before_commit": "3b5bdae3930856101e8f8d7955813bc9ddaa9619",
+  "implementation_commit": "9f953d6acc79d569d3896ab1e2a161d8321b3720",
+  "method": "median of 3 production-build mobile Lighthouse runs; controlled fixture; localhost HTTP",
+  "model": {
+    "name": "SWDM v4, first visit, global intensity",
+    "kwh_per_GB": 0.3,
+    "gCO2e_per_kwh": 494,
+    "GB_bytes": 1000000000,
+    "new_visitor_ratio": 1,
+    "return_visitor_ratio": 0,
+    "green_hosting_factor": 0,
+    "source": "https://sustainablewebdesign.org/estimating-digital-emissions/",
+    "annual_visits_scenario": 10000,
+    "annual_visits_are_observed": false
+  },
+  "pages": {
+    "login": {
+      "before": {
+        "performance": 98,
+        "accessibility": 100,
+        "fcp_ms": 1661.9740000000002,
+        "lcp_ms": 1661.9740000000002,
+        "tbt_ms": 0,
+        "cls": 0.07538892738405782,
+        "transfer_bytes": 484043,
+        "requests": 8,
+        "estimated_kwh_per_visit": 0.0001452129,
+        "estimated_gCO2e_per_visit": 0.0717351726
+      },
+      "after": {
+        "performance": 99,
+        "accessibility": 100,
+        "fcp_ms": 1237.5136499999999,
+        "lcp_ms": 1237.5136499999999,
+        "tbt_ms": 0,
+        "cls": 0.07538892738405782,
+        "transfer_bytes": 107355,
+        "requests": 7,
+        "estimated_kwh_per_visit": 3.22065e-05,
+        "estimated_gCO2e_per_visit": 0.015910010999999998
+      },
+      "transfer_reduction_percent": 77.82118530791686,
+      "scenario_annual_kgCO2e_saved": 0.558251616
+    },
+    "pedidos": {
+      "before": {
+        "performance": 85,
+        "accessibility": 100,
+        "fcp_ms": 1658.4678,
+        "lcp_ms": 4279.99955,
+        "tbt_ms": 0,
+        "cls": 0.03190469583932674,
+        "transfer_bytes": 540336,
+        "requests": 12,
+        "estimated_kwh_per_visit": 0.00016210079999999998,
+        "estimated_gCO2e_per_visit": 0.0800777952
+      },
+      "after": {
+        "performance": 99,
+        "accessibility": 100,
+        "fcp_ms": 1234.9661,
+        "lcp_ms": 1981.6782000000003,
+        "tbt_ms": 0,
+        "cls": 0.03190469583932674,
+        "transfer_bytes": 119920,
+        "requests": 13,
+        "estimated_kwh_per_visit": 3.5976e-05,
+        "estimated_gCO2e_per_visit": 0.017772144
+      },
+      "transfer_reduction_percent": 77.80640194249504,
+      "scenario_annual_kgCO2e_saved": 0.6230565119999999
+    }
+  }
+}

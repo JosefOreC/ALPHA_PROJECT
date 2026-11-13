@@ -4,22 +4,27 @@
 
 **Líder del Proyecto:** Ore Campos, Josef Pablo
 
-**Autoría:** elaboración técnica asistida por Codex, por solicitud del usuario; revisión del equipo pendiente.
+**Autoría:** implementación y elaboración técnica asistidas por Codex, a solicitud del usuario; revisión del equipo pendiente.
 
-**Corte de código:** 12/11/2026, 20:56:09, America/Lima (UTC−05:00).
+**Actualización:** 2026-11-12T22:17:22-05:00, America/Lima (UTC−05:00).
 
-**Rama y commit:** `refactor/mern`, `7ea33a185619d5c06ab8ce8c090b3e334b45a9ce`.
+**Rama:** `refactor/mern`.
 
-**Estado:** en curso. Esta carpeta registra el incremento de la sesión, la comprobación del software actual y el trabajo pendiente; no acredita una ceremonia, aceptación del cliente ni cierre del sprint.
+**Código anterior:** `3b5bdae3930856101e8f8d7955813bc9ddaa9619`.
 
-- [01 Revisión del Sprint V_1_0_0](01%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md)
-- [02 Retrospectiva del Sprint V_1_0_0](02%20Retrospectiva%20del%20Sprint%20V_1_0_0.md)
-- [03 Informe de reducción del impacto ambiental V_1_0_0](03%20Informe%20de%20reducci%C3%B3n%20del%20impacto%20ambiental%20V_1_0_0.md)
-- [04 Estándares, arquitectura y guía de desarrollo verde V_1_0_0](04%20Est%C3%A1ndares%20arquitectura%20y%20gu%C3%ADa%20de%20desarrollo%20verde%20V_1_0_0.md)
-- [Evidencias, comandos, horas y resultados](evidencias/README.md)
+**Código implementado:** `9f953d6acc79d569d3896ab1e2a161d8321b3720`; commit local, sin publicación ni fusión.
 
-El alcance de la rúbrica se reconstruye exclusivamente de los documentos internos existentes: informe ambiental; estándares, arquitectura y guía verde; estructura y comunicación documental. No se recibió el archivo original con ponderaciones, niveles o umbrales de calificación. Se presenta una evaluación explícita de estos criterios y de las ocho áreas técnicas documentadas, sin atribuir una nota ni cumplimiento integral.
+**Estado:** ocho áreas técnicas documentadas implementadas y verificadas. La aceptación formal del sprint y su calendario requieren el registro del equipo. Las versiones anteriores se conservan en Git y en las evidencias históricas.
 
-La denominación de la rama no implica migración a MongoDB, Express o Node. El código inspeccionado mantiene React, FastAPI y PostgreSQL/PostGIS. La actualización documental es un cambio de trabajo posterior al commit citado; su futuro commit de integración todavía no existe.
+- [01 Revisión del Sprint V_1_1_0](01%20Revisi%C3%B3n%20del%20Sprint%20V_1_1_0.md).
+- [02 Retrospectiva del Sprint V_1_1_0](02%20Retrospectiva%20del%20Sprint%20V_1_1_0.md).
+- [03 Informe de reducción del impacto ambiental V_1_1_0](03%20Informe%20de%20reducci%C3%B3n%20del%20impacto%20ambiental%20V_1_1_0.md).
+- [04 Estándares arquitectura y guía de desarrollo verde V_1_1_0](04%20Est%C3%A1ndares%20arquitectura%20y%20gu%C3%ADa%20de%20desarrollo%20verde%20V_1_1_0.md).
+- [Evidencias actuales: mediciones, pruebas, auditorías y reproducción](evidencias/optimizacion-3b5bdae/README.md).
+- [Diagnóstico histórico y capturas de la sesión](evidencias/README.md).
+
+Las ocho áreas son consultas e índices, paginación, recursos adecuados, carga modular, dependencias auditadas, SVG, caché y compresión HTTP. La matriz del documento 04 identifica código, evidencia y límites aplicables. El documento 03 cuantifica el antes/después y separa transferencia medida de energía y emisiones estimadas.
+
+El archivo original de la rúbrica con ponderaciones no fue suministrado ni localizado. El cumplimiento técnico se refiere a los criterios reconstruidos de los documentos internos de la Inspección 04; no se asigna una nota ni una certificación. El stack real sigue siendo React, FastAPI y PostgreSQL/PostGIS, aunque la rama se llame refactor/mern.
 
 [← Volver al índice correspondiente](../README.md)

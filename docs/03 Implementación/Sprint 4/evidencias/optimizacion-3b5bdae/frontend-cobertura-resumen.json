@@ -1,0 +1,3054 @@
+{
+  "exported_lima": "2026-11-12T22:17:22-05:00",
+  "implementation_commit": "9f953d6acc79d569d3896ab1e2a161d8321b3720",
+  "summary": {
+    "total": {
+      "lines": {
+        "total": 2032,
+        "covered": 1975,
+        "skipped": 0,
+        "pct": 97.19
+      },
+      "statements": {
+        "total": 2702,
+        "covered": 2576,
+        "skipped": 0,
+        "pct": 95.33
+      },
+      "functions": {
+        "total": 976,
+        "covered": 921,
+        "skipped": 0,
+        "pct": 94.36
+      },
+      "branches": {
+        "total": 2451,
+        "covered": 2207,
+        "skipped": 0,
+        "pct": 90.04
+      },
+      "branchesTrue": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\App.tsx": {
+      "lines": {
+        "total": 83,
+        "covered": 82,
+        "skipped": 0,
+        "pct": 98.79
+      },
+      "functions": {
+        "total": 36,
+        "covered": 36,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 119,
+        "covered": 118,
+        "skipped": 0,
+        "pct": 99.15
+      },
+      "branches": {
+        "total": 107,
+        "covered": 103,
+        "skipped": 0,
+        "pct": 96.26
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\main.tsx": {
+      "lines": {
+        "total": 1,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 0
+      },
+      "functions": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 1,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 0
+      },
+      "branches": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\application\\administration.ts": {
+      "lines": {
+        "total": 9,
+        "covered": 9,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 6,
+        "covered": 6,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 11,
+        "covered": 10,
+        "skipped": 0,
+        "pct": 90.9
+      },
+      "branches": {
+        "total": 4,
+        "covered": 3,
+        "skipped": 0,
+        "pct": 75
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\application\\authorizedServices.ts": {
+      "lines": {
+        "total": 33,
+        "covered": 32,
+        "skipped": 0,
+        "pct": 96.96
+      },
+      "functions": {
+        "total": 27,
+        "covered": 26,
+        "skipped": 0,
+        "pct": 96.29
+      },
+      "statements": {
+        "total": 59,
+        "covered": 57,
+        "skipped": 0,
+        "pct": 96.61
+      },
+      "branches": {
+        "total": 18,
+        "covered": 18,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\application\\driverOrders.ts": {
+      "lines": {
+        "total": 6,
+        "covered": 6,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 3,
+        "covered": 3,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 8,
+        "covered": 6,
+        "skipped": 0,
+        "pct": 75
+      },
+      "branches": {
+        "total": 4,
+        "covered": 2,
+        "skipped": 0,
+        "pct": 50
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\application\\driverRoute.ts": {
+      "lines": {
+        "total": 1,
+        "covered": 1,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 2,
+        "covered": 2,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 2,
+        "covered": 2,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\application\\fleetBoard.ts": {
+      "lines": {
+        "total": 32,
+        "covered": 32,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 22,
+        "covered": 22,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 52,
+        "covered": 52,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 31,
+        "covered": 30,
+        "skipped": 0,
+        "pct": 96.77
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\application\\generateRoutes.ts": {
+      "lines": {
+        "total": 22,
+        "covered": 20,
+        "skipped": 0,
+        "pct": 90.9
+      },
+      "functions": {
+        "total": 8,
+        "covered": 7,
+        "skipped": 0,
+        "pct": 87.5
+      },
+      "statements": {
+        "total": 29,
+        "covered": 26,
+        "skipped": 0,
+        "pct": 89.65
+      },
+      "branches": {
+        "total": 18,
+        "covered": 14,
+        "skipped": 0,
+        "pct": 77.77
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\application\\getSustainabilityReport.ts": {
+      "lines": {
+        "total": 14,
+        "covered": 14,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 11,
+        "covered": 11,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 18,
+        "covered": 18,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 10,
+        "covered": 8,
+        "skipped": 0,
+        "pct": 80
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\application\\manageOrders.ts": {
+      "lines": {
+        "total": 10,
+        "covered": 9,
+        "skipped": 0,
+        "pct": 90
+      },
+      "functions": {
+        "total": 7,
+        "covered": 6,
+        "skipped": 0,
+        "pct": 85.71
+      },
+      "statements": {
+        "total": 13,
+        "covered": 12,
+        "skipped": 0,
+        "pct": 92.3
+      },
+      "branches": {
+        "total": 4,
+        "covered": 4,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\application\\orderBoard.ts": {
+      "lines": {
+        "total": 15,
+        "covered": 15,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 17,
+        "covered": 17,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 28,
+        "covered": 28,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 12,
+        "covered": 12,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\domain\\accessControl.ts": {
+      "lines": {
+        "total": 7,
+        "covered": 7,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 4,
+        "covered": 4,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 10,
+        "covered": 10,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 12,
+        "covered": 12,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\domain\\admin.ts": {
+      "lines": {
+        "total": 4,
+        "covered": 4,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 2,
+        "covered": 2,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 6,
+        "covered": 6,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\domain\\algorithmSettings.ts": {
+      "lines": {
+        "total": 22,
+        "covered": 22,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 5,
+        "covered": 5,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 27,
+        "covered": 27,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 23,
+        "covered": 23,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\domain\\driverRoute.ts": {
+      "lines": {
+        "total": 4,
+        "covered": 4,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 5,
+        "covered": 5,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 8,
+        "covered": 8,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 6,
+        "covered": 4,
+        "skipped": 0,
+        "pct": 66.66
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\domain\\format.ts": {
+      "lines": {
+        "total": 3,
+        "covered": 3,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 1,
+        "covered": 1,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 3,
+        "covered": 3,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 5,
+        "covered": 5,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\domain\\managedOrder.ts": {
+      "lines": {
+        "total": 28,
+        "covered": 27,
+        "skipped": 0,
+        "pct": 96.42
+      },
+      "functions": {
+        "total": 9,
+        "covered": 9,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 43,
+        "covered": 41,
+        "skipped": 0,
+        "pct": 95.34
+      },
+      "branches": {
+        "total": 59,
+        "covered": 53,
+        "skipped": 0,
+        "pct": 89.83
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\domain\\mapData.ts": {
+      "lines": {
+        "total": 9,
+        "covered": 9,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 6,
+        "covered": 6,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 15,
+        "covered": 15,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 4,
+        "covered": 4,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\domain\\mapPresentation.ts": {
+      "lines": {
+        "total": 29,
+        "covered": 29,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 26,
+        "covered": 26,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 46,
+        "covered": 46,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 78,
+        "covered": 75,
+        "skipped": 0,
+        "pct": 96.15
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\domain\\order.ts": {
+      "lines": {
+        "total": 1,
+        "covered": 1,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 1,
+        "covered": 1,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 2,
+        "covered": 2,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\domain\\role.ts": {
+      "lines": {
+        "total": 2,
+        "covered": 2,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 1,
+        "covered": 1,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 2,
+        "covered": 2,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 2,
+        "covered": 2,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\domain\\routePlan.ts": {
+      "lines": {
+        "total": 10,
+        "covered": 10,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 3,
+        "covered": 3,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 10,
+        "covered": 10,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 4,
+        "covered": 2,
+        "skipped": 0,
+        "pct": 50
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\domain\\session.ts": {
+      "lines": {
+        "total": 5,
+        "covered": 5,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 1,
+        "covered": 1,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 6,
+        "covered": 6,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 19,
+        "covered": 19,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\domain\\sustainability.ts": {
+      "lines": {
+        "total": 8,
+        "covered": 8,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 2,
+        "covered": 2,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 8,
+        "covered": 8,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 6,
+        "covered": 5,
+        "skipped": 0,
+        "pct": 83.33
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\domain\\ports\\adminDirectory.ts": {
+      "lines": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 0
+      },
+      "functions": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 0
+      },
+      "statements": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 0
+      },
+      "branches": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 0
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\domain\\ports\\algorithmSettings.ts": {
+      "lines": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 0
+      },
+      "functions": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 0
+      },
+      "statements": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 0
+      },
+      "branches": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 0
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\domain\\ports\\fileSaver.ts": {
+      "lines": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 0
+      },
+      "functions": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 0
+      },
+      "statements": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 0
+      },
+      "branches": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 0
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\domain\\ports\\mapDataSource.ts": {
+      "lines": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 0
+      },
+      "functions": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 0
+      },
+      "statements": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 0
+      },
+      "branches": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 0
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\domain\\ports\\planningSource.ts": {
+      "lines": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 0
+      },
+      "functions": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 0
+      },
+      "statements": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 0
+      },
+      "branches": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 0
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\domain\\ports\\routeOptimizer.ts": {
+      "lines": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 0
+      },
+      "functions": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 0
+      },
+      "statements": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 0
+      },
+      "branches": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 0
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\domain\\ports\\sustainabilityReportSource.ts": {
+      "lines": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 0
+      },
+      "functions": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 0
+      },
+      "statements": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 0
+      },
+      "branches": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 0
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\features\\dashboard\\index.ts": {
+      "lines": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 0
+      },
+      "functions": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 0
+      },
+      "statements": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 0
+      },
+      "branches": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 0
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\features\\dashboard\\application\\useDashboard.ts": {
+      "lines": {
+        "total": 45,
+        "covered": 45,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 16,
+        "covered": 14,
+        "skipped": 0,
+        "pct": 87.5
+      },
+      "statements": {
+        "total": 50,
+        "covered": 49,
+        "skipped": 0,
+        "pct": 98
+      },
+      "branches": {
+        "total": 24,
+        "covered": 21,
+        "skipped": 0,
+        "pct": 87.5
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\features\\dashboard\\application\\useDashboardInsights.ts": {
+      "lines": {
+        "total": 17,
+        "covered": 17,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 7,
+        "covered": 7,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 21,
+        "covered": 21,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 12,
+        "covered": 10,
+        "skipped": 0,
+        "pct": 83.33
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\features\\dashboard\\domain\\gateway.ts": {
+      "lines": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 0
+      },
+      "functions": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 0
+      },
+      "statements": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 0
+      },
+      "branches": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 0
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\features\\dashboard\\domain\\types.ts": {
+      "lines": {
+        "total": 1,
+        "covered": 1,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 1,
+        "covered": 1,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\features\\dashboard\\infrastructure\\DemoDashboardInsights.ts": {
+      "lines": {
+        "total": 3,
+        "covered": 3,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 2,
+        "covered": 2,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 3,
+        "covered": 3,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\features\\dashboard\\infrastructure\\HttpDashboardGateway.ts": {
+      "lines": {
+        "total": 14,
+        "covered": 14,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 5,
+        "covered": 5,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 17,
+        "covered": 17,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 14,
+        "covered": 12,
+        "skipped": 0,
+        "pct": 85.71
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\features\\dashboard\\infrastructure\\mappers.ts": {
+      "lines": {
+        "total": 2,
+        "covered": 2,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 2,
+        "covered": 2,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 2,
+        "covered": 2,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\features\\dashboard\\test\\fakes.ts": {
+      "lines": {
+        "total": 19,
+        "covered": 19,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 9,
+        "covered": 9,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 20,
+        "covered": 20,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 3,
+        "covered": 3,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\features\\dashboard\\ui\\Co2Hero.tsx": {
+      "lines": {
+        "total": 7,
+        "covered": 7,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 6,
+        "covered": 6,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 9,
+        "covered": 9,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 34,
+        "covered": 32,
+        "skipped": 0,
+        "pct": 94.11
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\features\\dashboard\\ui\\DashboardHeader.tsx": {
+      "lines": {
+        "total": 2,
+        "covered": 2,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 1,
+        "covered": 1,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 2,
+        "covered": 2,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 10,
+        "covered": 10,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\features\\dashboard\\ui\\DashboardPage.tsx": {
+      "lines": {
+        "total": 20,
+        "covered": 20,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 6,
+        "covered": 6,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 23,
+        "covered": 23,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 32,
+        "covered": 31,
+        "skipped": 0,
+        "pct": 96.87
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\features\\dashboard\\ui\\DistrictFilter.tsx": {
+      "lines": {
+        "total": 6,
+        "covered": 5,
+        "skipped": 0,
+        "pct": 83.33
+      },
+      "functions": {
+        "total": 5,
+        "covered": 4,
+        "skipped": 0,
+        "pct": 80
+      },
+      "statements": {
+        "total": 7,
+        "covered": 6,
+        "skipped": 0,
+        "pct": 85.71
+      },
+      "branches": {
+        "total": 2,
+        "covered": 1,
+        "skipped": 0,
+        "pct": 50
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\features\\dashboard\\ui\\OrdersHero.tsx": {
+      "lines": {
+        "total": 10,
+        "covered": 10,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 4,
+        "covered": 4,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 10,
+        "covered": 10,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 33,
+        "covered": 32,
+        "skipped": 0,
+        "pct": 96.96
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\features\\dashboard\\ui\\RiskList.tsx": {
+      "lines": {
+        "total": 4,
+        "covered": 4,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 3,
+        "covered": 3,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 5,
+        "covered": 5,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 20,
+        "covered": 20,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\features\\dashboard\\ui\\StatusBanner.tsx": {
+      "lines": {
+        "total": 6,
+        "covered": 6,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 2,
+        "covered": 2,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 6,
+        "covered": 6,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 4,
+        "covered": 4,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\features\\dashboard\\ui\\format.ts": {
+      "lines": {
+        "total": 18,
+        "covered": 18,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 10,
+        "covered": 10,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 23,
+        "covered": 23,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 7,
+        "covered": 7,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\features\\dashboard\\ui\\shared.tsx": {
+      "lines": {
+        "total": 3,
+        "covered": 3,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 3,
+        "covered": 3,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 3,
+        "covered": 3,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 2,
+        "covered": 2,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\infrastructure\\browserFileSaver.ts": {
+      "lines": {
+        "total": 8,
+        "covered": 8,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 1,
+        "covered": 1,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 8,
+        "covered": 8,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\infrastructure\\demoAdmin.ts": {
+      "lines": {
+        "total": 14,
+        "covered": 14,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 11,
+        "covered": 11,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 17,
+        "covered": 17,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\infrastructure\\demoManagement.ts": {
+      "lines": {
+        "total": 24,
+        "covered": 23,
+        "skipped": 0,
+        "pct": 95.83
+      },
+      "functions": {
+        "total": 12,
+        "covered": 12,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 32,
+        "covered": 31,
+        "skipped": 0,
+        "pct": 96.87
+      },
+      "branches": {
+        "total": 22,
+        "covered": 21,
+        "skipped": 0,
+        "pct": 95.45
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\infrastructure\\demoMapData.ts": {
+      "lines": {
+        "total": 13,
+        "covered": 13,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 9,
+        "covered": 9,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 17,
+        "covered": 17,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 10,
+        "covered": 10,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\infrastructure\\demoOrders.ts": {
+      "lines": {
+        "total": 26,
+        "covered": 26,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 11,
+        "covered": 11,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 34,
+        "covered": 33,
+        "skipped": 0,
+        "pct": 97.05
+      },
+      "branches": {
+        "total": 18,
+        "covered": 16,
+        "skipped": 0,
+        "pct": 88.88
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\infrastructure\\demoRoutePlanning.ts": {
+      "lines": {
+        "total": 11,
+        "covered": 11,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 7,
+        "covered": 6,
+        "skipped": 0,
+        "pct": 85.71
+      },
+      "statements": {
+        "total": 15,
+        "covered": 13,
+        "skipped": 0,
+        "pct": 86.66
+      },
+      "branches": {
+        "total": 6,
+        "covered": 4,
+        "skipped": 0,
+        "pct": 66.66
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\infrastructure\\demoSession.ts": {
+      "lines": {
+        "total": 7,
+        "covered": 7,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 3,
+        "covered": 3,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 9,
+        "covered": 9,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 6,
+        "covered": 6,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\infrastructure\\demoSustainability.ts": {
+      "lines": {
+        "total": 21,
+        "covered": 21,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 9,
+        "covered": 9,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 23,
+        "covered": 23,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 5,
+        "covered": 5,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\infrastructure\\httpClient.ts": {
+      "lines": {
+        "total": 35,
+        "covered": 35,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 5,
+        "covered": 5,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 47,
+        "covered": 47,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 68,
+        "covered": 65,
+        "skipped": 0,
+        "pct": 95.58
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\infrastructure\\httpManagement.ts": {
+      "lines": {
+        "total": 33,
+        "covered": 33,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 13,
+        "covered": 13,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 41,
+        "covered": 41,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 68,
+        "covered": 60,
+        "skipped": 0,
+        "pct": 88.23
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\infrastructure\\httpOrders.ts": {
+      "lines": {
+        "total": 9,
+        "covered": 9,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 4,
+        "covered": 4,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 9,
+        "covered": 9,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 9,
+        "covered": 9,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\infrastructure\\httpPortal.ts": {
+      "lines": {
+        "total": 19,
+        "covered": 18,
+        "skipped": 0,
+        "pct": 94.73
+      },
+      "functions": {
+        "total": 13,
+        "covered": 12,
+        "skipped": 0,
+        "pct": 92.3
+      },
+      "statements": {
+        "total": 21,
+        "covered": 20,
+        "skipped": 0,
+        "pct": 95.23
+      },
+      "branches": {
+        "total": 4,
+        "covered": 4,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\infrastructure\\httpSession.ts": {
+      "lines": {
+        "total": 21,
+        "covered": 21,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 5,
+        "covered": 5,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 28,
+        "covered": 28,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 18,
+        "covered": 18,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\infrastructure\\limaRoadFixtures.ts": {
+      "lines": {
+        "total": 1,
+        "covered": 1,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 1,
+        "covered": 1,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\infrastructure\\livePlanningSource.ts": {
+      "lines": {
+        "total": 14,
+        "covered": 14,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 6,
+        "covered": 6,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 17,
+        "covered": 17,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 2,
+        "covered": 1,
+        "skipped": 0,
+        "pct": 50
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\interfaces\\AdminView.tsx": {
+      "lines": {
+        "total": 42,
+        "covered": 41,
+        "skipped": 0,
+        "pct": 97.61
+      },
+      "functions": {
+        "total": 21,
+        "covered": 19,
+        "skipped": 0,
+        "pct": 90.47
+      },
+      "statements": {
+        "total": 58,
+        "covered": 52,
+        "skipped": 0,
+        "pct": 89.65
+      },
+      "branches": {
+        "total": 49,
+        "covered": 39,
+        "skipped": 0,
+        "pct": 79.59
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\interfaces\\DriverOrderView.tsx": {
+      "lines": {
+        "total": 60,
+        "covered": 46,
+        "skipped": 0,
+        "pct": 76.66
+      },
+      "functions": {
+        "total": 21,
+        "covered": 15,
+        "skipped": 0,
+        "pct": 71.42
+      },
+      "statements": {
+        "total": 71,
+        "covered": 52,
+        "skipped": 0,
+        "pct": 73.23
+      },
+      "branches": {
+        "total": 73,
+        "covered": 51,
+        "skipped": 0,
+        "pct": 69.86
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\interfaces\\DriverRouteView.tsx": {
+      "lines": {
+        "total": 27,
+        "covered": 27,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 12,
+        "covered": 12,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 34,
+        "covered": 34,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 42,
+        "covered": 37,
+        "skipped": 0,
+        "pct": 88.09
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\interfaces\\DriversView.tsx": {
+      "lines": {
+        "total": 30,
+        "covered": 30,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 19,
+        "covered": 19,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 59,
+        "covered": 59,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 50,
+        "covered": 49,
+        "skipped": 0,
+        "pct": 98
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\interfaces\\FleetView.tsx": {
+      "lines": {
+        "total": 84,
+        "covered": 81,
+        "skipped": 0,
+        "pct": 96.42
+      },
+      "functions": {
+        "total": 29,
+        "covered": 26,
+        "skipped": 0,
+        "pct": 89.65
+      },
+      "statements": {
+        "total": 101,
+        "covered": 92,
+        "skipped": 0,
+        "pct": 91.08
+      },
+      "branches": {
+        "total": 82,
+        "covered": 70,
+        "skipped": 0,
+        "pct": 85.36
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\interfaces\\OrderForm.tsx": {
+      "lines": {
+        "total": 33,
+        "covered": 33,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 17,
+        "covered": 17,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 44,
+        "covered": 44,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 64,
+        "covered": 62,
+        "skipped": 0,
+        "pct": 96.87
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\interfaces\\OrderManagementView.tsx": {
+      "lines": {
+        "total": 109,
+        "covered": 108,
+        "skipped": 0,
+        "pct": 99.08
+      },
+      "functions": {
+        "total": 42,
+        "covered": 40,
+        "skipped": 0,
+        "pct": 95.23
+      },
+      "statements": {
+        "total": 138,
+        "covered": 135,
+        "skipped": 0,
+        "pct": 97.82
+      },
+      "branches": {
+        "total": 73,
+        "covered": 67,
+        "skipped": 0,
+        "pct": 91.78
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\interfaces\\RecordsView.tsx": {
+      "lines": {
+        "total": 33,
+        "covered": 33,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 20,
+        "covered": 20,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 59,
+        "covered": 59,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 48,
+        "covered": 47,
+        "skipped": 0,
+        "pct": 97.91
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\interfaces\\RouteManagementView.tsx": {
+      "lines": {
+        "total": 8,
+        "covered": 8,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 3,
+        "covered": 3,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 8,
+        "covered": 8,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 12,
+        "covered": 11,
+        "skipped": 0,
+        "pct": 91.66
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\interfaces\\RoutePlanningView.tsx": {
+      "lines": {
+        "total": 87,
+        "covered": 86,
+        "skipped": 0,
+        "pct": 98.85
+      },
+      "functions": {
+        "total": 38,
+        "covered": 35,
+        "skipped": 0,
+        "pct": 92.1
+      },
+      "statements": {
+        "total": 113,
+        "covered": 108,
+        "skipped": 0,
+        "pct": 95.57
+      },
+      "branches": {
+        "total": 172,
+        "covered": 161,
+        "skipped": 0,
+        "pct": 93.6
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\interfaces\\SustainabilityView.tsx": {
+      "lines": {
+        "total": 42,
+        "covered": 42,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 17,
+        "covered": 17,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 52,
+        "covered": 48,
+        "skipped": 0,
+        "pct": 92.3
+      },
+      "branches": {
+        "total": 42,
+        "covered": 31,
+        "skipped": 0,
+        "pct": 73.8
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\interfaces\\admin\\IntegrationsPanel.tsx": {
+      "lines": {
+        "total": 7,
+        "covered": 7,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 2,
+        "covered": 2,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 8,
+        "covered": 7,
+        "skipped": 0,
+        "pct": 87.5
+      },
+      "branches": {
+        "total": 4,
+        "covered": 3,
+        "skipped": 0,
+        "pct": 75
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\interfaces\\admin\\ParametersPanel.tsx": {
+      "lines": {
+        "total": 18,
+        "covered": 18,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 13,
+        "covered": 13,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 24,
+        "covered": 23,
+        "skipped": 0,
+        "pct": 95.83
+      },
+      "branches": {
+        "total": 34,
+        "covered": 30,
+        "skipped": 0,
+        "pct": 88.23
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\interfaces\\admin\\UserDialog.tsx": {
+      "lines": {
+        "total": 18,
+        "covered": 18,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 10,
+        "covered": 10,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 29,
+        "covered": 29,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 10,
+        "covered": 10,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\interfaces\\admin\\UsersPanel.tsx": {
+      "lines": {
+        "total": 19,
+        "covered": 19,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 12,
+        "covered": 12,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 24,
+        "covered": 24,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 25,
+        "covered": 24,
+        "skipped": 0,
+        "pct": 96
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\interfaces\\admin\\useParameters.ts": {
+      "lines": {
+        "total": 45,
+        "covered": 45,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 18,
+        "covered": 18,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 55,
+        "covered": 52,
+        "skipped": 0,
+        "pct": 94.54
+      },
+      "branches": {
+        "total": 31,
+        "covered": 23,
+        "skipped": 0,
+        "pct": 74.19
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\interfaces\\fleet\\VehicleDialog.tsx": {
+      "lines": {
+        "total": 35,
+        "covered": 30,
+        "skipped": 0,
+        "pct": 85.71
+      },
+      "functions": {
+        "total": 16,
+        "covered": 11,
+        "skipped": 0,
+        "pct": 68.75
+      },
+      "statements": {
+        "total": 41,
+        "covered": 34,
+        "skipped": 0,
+        "pct": 82.92
+      },
+      "branches": {
+        "total": 50,
+        "covered": 46,
+        "skipped": 0,
+        "pct": 92
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\interfaces\\map\\DestinationMap.tsx": {
+      "lines": {
+        "total": 23,
+        "covered": 23,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 11,
+        "covered": 10,
+        "skipped": 0,
+        "pct": 90.9
+      },
+      "statements": {
+        "total": 32,
+        "covered": 31,
+        "skipped": 0,
+        "pct": 96.87
+      },
+      "branches": {
+        "total": 24,
+        "covered": 22,
+        "skipped": 0,
+        "pct": 91.66
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\interfaces\\map\\LeafletCanvas.tsx": {
+      "lines": {
+        "total": 65,
+        "covered": 57,
+        "skipped": 0,
+        "pct": 87.69
+      },
+      "functions": {
+        "total": 35,
+        "covered": 25,
+        "skipped": 0,
+        "pct": 71.42
+      },
+      "statements": {
+        "total": 81,
+        "covered": 67,
+        "skipped": 0,
+        "pct": 82.71
+      },
+      "branches": {
+        "total": 114,
+        "covered": 87,
+        "skipped": 0,
+        "pct": 76.31
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\interfaces\\map\\MapFilters.tsx": {
+      "lines": {
+        "total": 8,
+        "covered": 8,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 7,
+        "covered": 7,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 9,
+        "covered": 9,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 8,
+        "covered": 7,
+        "skipped": 0,
+        "pct": 87.5
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\interfaces\\map\\RouteAccessMarkers.tsx": {
+      "lines": {
+        "total": 7,
+        "covered": 5,
+        "skipped": 0,
+        "pct": 71.42
+      },
+      "functions": {
+        "total": 7,
+        "covered": 3,
+        "skipped": 0,
+        "pct": 42.85
+      },
+      "statements": {
+        "total": 11,
+        "covered": 7,
+        "skipped": 0,
+        "pct": 63.63
+      },
+      "branches": {
+        "total": 2,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 0
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\interfaces\\map\\RouteDirections.tsx": {
+      "lines": {
+        "total": 7,
+        "covered": 7,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 6,
+        "covered": 5,
+        "skipped": 0,
+        "pct": 83.33
+      },
+      "statements": {
+        "total": 12,
+        "covered": 11,
+        "skipped": 0,
+        "pct": 91.66
+      },
+      "branches": {
+        "total": 9,
+        "covered": 6,
+        "skipped": 0,
+        "pct": 66.66
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\interfaces\\map\\RouteMap.tsx": {
+      "lines": {
+        "total": 110,
+        "covered": 105,
+        "skipped": 0,
+        "pct": 95.45
+      },
+      "functions": {
+        "total": 62,
+        "covered": 57,
+        "skipped": 0,
+        "pct": 91.93
+      },
+      "statements": {
+        "total": 160,
+        "covered": 150,
+        "skipped": 0,
+        "pct": 93.75
+      },
+      "branches": {
+        "total": 243,
+        "covered": 225,
+        "skipped": 0,
+        "pct": 92.59
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\interfaces\\map\\VectorBasemap.tsx": {
+      "lines": {
+        "total": 73,
+        "covered": 73,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 16,
+        "covered": 16,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 97,
+        "covered": 93,
+        "skipped": 0,
+        "pct": 95.87
+      },
+      "branches": {
+        "total": 59,
+        "covered": 51,
+        "skipped": 0,
+        "pct": 86.44
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\interfaces\\map\\markers.ts": {
+      "lines": {
+        "total": 6,
+        "covered": 6,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 5,
+        "covered": 5,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 8,
+        "covered": 8,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 17,
+        "covered": 16,
+        "skipped": 0,
+        "pct": 94.11
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\interfaces\\map\\routeTrace.ts": {
+      "lines": {
+        "total": 30,
+        "covered": 30,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 8,
+        "covered": 7,
+        "skipped": 0,
+        "pct": 87.5
+      },
+      "statements": {
+        "total": 43,
+        "covered": 42,
+        "skipped": 0,
+        "pct": 97.67
+      },
+      "branches": {
+        "total": 16,
+        "covered": 16,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\interfaces\\map\\viewport.ts": {
+      "lines": {
+        "total": 6,
+        "covered": 5,
+        "skipped": 0,
+        "pct": 83.33
+      },
+      "functions": {
+        "total": 2,
+        "covered": 2,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 8,
+        "covered": 7,
+        "skipped": 0,
+        "pct": 87.5
+      },
+      "branches": {
+        "total": 2,
+        "covered": 1,
+        "skipped": 0,
+        "pct": 50
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\interfaces\\orders\\CancelDialog.tsx": {
+      "lines": {
+        "total": 9,
+        "covered": 9,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 4,
+        "covered": 4,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 13,
+        "covered": 12,
+        "skipped": 0,
+        "pct": 92.3
+      },
+      "branches": {
+        "total": 16,
+        "covered": 15,
+        "skipped": 0,
+        "pct": 93.75
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\interfaces\\orders\\OrderDestinationPicker.tsx": {
+      "lines": {
+        "total": 41,
+        "covered": 38,
+        "skipped": 0,
+        "pct": 92.68
+      },
+      "functions": {
+        "total": 12,
+        "covered": 12,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 51,
+        "covered": 45,
+        "skipped": 0,
+        "pct": 88.23
+      },
+      "branches": {
+        "total": 38,
+        "covered": 34,
+        "skipped": 0,
+        "pct": 89.47
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\interfaces\\orders\\OrderDetail.tsx": {
+      "lines": {
+        "total": 2,
+        "covered": 2,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 1,
+        "covered": 1,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 2,
+        "covered": 2,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 14,
+        "covered": 11,
+        "skipped": 0,
+        "pct": 78.57
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\interfaces\\orders\\tripState.ts": {
+      "lines": {
+        "total": 1,
+        "covered": 1,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 1,
+        "covered": 1,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\interfaces\\session\\SessionContext.tsx": {
+      "lines": {
+        "total": 18,
+        "covered": 18,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 10,
+        "covered": 10,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 35,
+        "covered": 35,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 12,
+        "covered": 12,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\interfaces\\session\\SessionState.ts": {
+      "lines": {
+        "total": 3,
+        "covered": 3,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 2,
+        "covered": 2,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 4,
+        "covered": 4,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 2,
+        "covered": 2,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\interfaces\\session\\SessionToolbar.tsx": {
+      "lines": {
+        "total": 16,
+        "covered": 16,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 11,
+        "covered": 11,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 30,
+        "covered": 30,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 22,
+        "covered": 21,
+        "skipped": 0,
+        "pct": 95.45
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\interfaces\\sustainability\\EmissionsChart.tsx": {
+      "lines": {
+        "total": 19,
+        "covered": 19,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 6,
+        "covered": 6,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 22,
+        "covered": 22,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 10,
+        "covered": 6,
+        "skipped": 0,
+        "pct": 60
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\interfaces\\sustainability\\chartScale.ts": {
+      "lines": {
+        "total": 4,
+        "covered": 4,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 3,
+        "covered": 3,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 7,
+        "covered": 7,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 4,
+        "covered": 3,
+        "skipped": 0,
+        "pct": 75
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\services\\vehicleApi.ts": {
+      "lines": {
+        "total": 9,
+        "covered": 8,
+        "skipped": 0,
+        "pct": 88.88
+      },
+      "functions": {
+        "total": 4,
+        "covered": 3,
+        "skipped": 0,
+        "pct": 75
+      },
+      "statements": {
+        "total": 15,
+        "covered": 13,
+        "skipped": 0,
+        "pct": 86.66
+      },
+      "branches": {
+        "total": 8,
+        "covered": 6,
+        "skipped": 0,
+        "pct": 75
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\shared\\ui\\AppShell.tsx": {
+      "lines": {
+        "total": 14,
+        "covered": 13,
+        "skipped": 0,
+        "pct": 92.85
+      },
+      "functions": {
+        "total": 6,
+        "covered": 5,
+        "skipped": 0,
+        "pct": 83.33
+      },
+      "statements": {
+        "total": 15,
+        "covered": 14,
+        "skipped": 0,
+        "pct": 93.33
+      },
+      "branches": {
+        "total": 21,
+        "covered": 19,
+        "skipped": 0,
+        "pct": 90.47
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\shared\\ui\\Banner.tsx": {
+      "lines": {
+        "total": 3,
+        "covered": 3,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 1,
+        "covered": 1,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 3,
+        "covered": 3,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 9,
+        "covered": 9,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\shared\\ui\\DriverFrame.tsx": {
+      "lines": {
+        "total": 7,
+        "covered": 7,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 5,
+        "covered": 5,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 7,
+        "covered": 7,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 6,
+        "covered": 5,
+        "skipped": 0,
+        "pct": 83.33
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\shared\\ui\\List.tsx": {
+      "lines": {
+        "total": 14,
+        "covered": 14,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 5,
+        "covered": 5,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 16,
+        "covered": 16,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 32,
+        "covered": 29,
+        "skipped": 0,
+        "pct": 90.62
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\shared\\ui\\Pagination.tsx": {
+      "lines": {
+        "total": 3,
+        "covered": 3,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 3,
+        "covered": 3,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 3,
+        "covered": 3,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 7,
+        "covered": 7,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\shared\\ui\\Panel.tsx": {
+      "lines": {
+        "total": 3,
+        "covered": 3,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 2,
+        "covered": 2,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 3,
+        "covered": 3,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 12,
+        "covered": 11,
+        "skipped": 0,
+        "pct": 91.66
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\shared\\ui\\SearchInput.tsx": {
+      "lines": {
+        "total": 4,
+        "covered": 4,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 2,
+        "covered": 2,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 4,
+        "covered": 4,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 4,
+        "covered": 4,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\shared\\ui\\Switch.tsx": {
+      "lines": {
+        "total": 2,
+        "covered": 2,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 2,
+        "covered": 2,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 2,
+        "covered": 2,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\shared\\ui\\icons.tsx": {
+      "lines": {
+        "total": 23,
+        "covered": 22,
+        "skipped": 0,
+        "pct": 95.65
+      },
+      "functions": {
+        "total": 22,
+        "covered": 21,
+        "skipped": 0,
+        "pct": 95.45
+      },
+      "statements": {
+        "total": 23,
+        "covered": 22,
+        "skipped": 0,
+        "pct": 95.65
+      },
+      "branches": {
+        "total": 6,
+        "covered": 6,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\shared\\ui\\index.ts": {
+      "lines": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 0
+      },
+      "functions": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 0
+      },
+      "statements": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 0
+      },
+      "branches": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 0
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\shared\\ui\\moduleIcons.ts": {
+      "lines": {
+        "total": 1,
+        "covered": 1,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 1,
+        "covered": 1,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\shared\\ui\\roles.ts": {
+      "lines": {
+        "total": 9,
+        "covered": 9,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 9,
+        "covered": 8,
+        "skipped": 0,
+        "pct": 88.88
+      },
+      "statements": {
+        "total": 15,
+        "covered": 14,
+        "skipped": 0,
+        "pct": 93.33
+      },
+      "branches": {
+        "total": 6,
+        "covered": 5,
+        "skipped": 0,
+        "pct": 83.33
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\shared\\ui\\status.tsx": {
+      "lines": {
+        "total": 2,
+        "covered": 2,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 2,
+        "covered": 2,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 2,
+        "covered": 2,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 8,
+        "covered": 8,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\shared\\ui\\statusLabels.ts": {
+      "lines": {
+        "total": 2,
+        "covered": 2,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 2,
+        "covered": 2,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\src\\frontend\\src\\types\\vehicle.ts": {
+      "lines": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 0
+      },
+      "functions": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 0
+      },
+      "statements": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 0
+      },
+      "branches": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 0
+      }
+    }
+  }
+}

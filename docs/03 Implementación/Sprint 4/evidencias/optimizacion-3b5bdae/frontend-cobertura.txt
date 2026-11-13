@@ -1,0 +1,50 @@
+
+> frontend@0.0.0 test:coverage
+> vitest run --coverage && node --test tests/*.test.cjs
+
+
+ RUN  v5.0.3 D:/DESARROLLO_APLICACIONES/Python/ALPHA_PROJECT/src/frontend
+      Coverage enabled with v8
+
+
+ Test Files  50 passed (50)
+      Tests  469 passed (469)
+   Start at  21:57:18
+   Duration  10.25s (environment 57%, tests 27%, setup 8%, import 4%, transform 2%, worker 2%)
+
+Environment  jsdom was created 50 times · 94.81s total, 57% of tracked time
+             create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+             learn more: https://vitest.dev/guide/improving-performance#test-environments
+
+ % Coverage report from v8
+
+=============================== Coverage summary ===============================
+Statements   : 95.33% ( 2576/2702 )
+Branches     : 90.04% ( 2207/2451 )
+Functions    : 94.36% ( 921/976 )
+Lines        : 97.19% ( 1975/2032 )
+================================================================================
+✔ the exported dashboard boots with static logic and never executes streamed source (189.0899ms)
+✔ preview messages require both the allowed origin and the actual parent window (50.2036ms)
+✔ ventanas rechazan fechas imposibles, horas, offset ausente y fin anterior (0.8665ms)
+✔ validación rechaza campos vacíos, excesivos, distrito y pesos inválidos (0.3057ms)
+✔ caso de uso no envía formulario inválido ni muta un pedido protegido (0.2203ms)
+✔ demo crea, lista, consulta, edita y cancela con versión y sin persistencia compartida (1.1222ms)
+✔ demo filtra, pagina y no permite mutar DTO para alterar almacenamiento (0.2127ms)
+✔ adaptador HTTP rechaza respuestas inválidas en tiempo de ejecución (0.7318ms)
+✔ HTTP envía cookies, JSON y token CSRF sin enviar rol ni conductor (9.9456ms)
+✔ HTTP traduce autorización, conflicto, validación y fallos de red sin fallback demo (0.933ms)
+✔ HTTP valida listado y permisos, codifica filtros e identificadores (1.1497ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 979.3411
+npm notice
+npm notice New minor version of npm available! 11.6.2 -> 11.21.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.21.2
+npm notice To update run: npm install -g npm@11.21.2
+npm notice

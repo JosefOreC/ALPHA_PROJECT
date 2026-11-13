@@ -1,0 +1,4 @@
+markdownlint-cli2 v0.24.1 (markdownlint v0.42.1)
+Finding: docs/03 Implementación/Sprint 4/**/*.md docs/03 Implementación/reduccion del impacto ambiental/**/*.md docs/03 Implementación/Guías técnicas/Guía de estilo documental.md docs/03 Implementación/Guías técnicas/README.md
+Linting: 12 files
+Summary: 0 issues in 0 files

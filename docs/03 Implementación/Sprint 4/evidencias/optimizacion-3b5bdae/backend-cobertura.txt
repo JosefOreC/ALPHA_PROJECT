@@ -1,0 +1,75 @@
+........................................................................ [ 16%]
+........................................................................ [ 33%]
+............................................................................................................ [ 58%]
+......................................sss............................... [ 75%]
+........................................................................ [ 91%]
+.....ssss...........................                                     [100%]
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  D:\DESARROLLO_APLICACIONES\Python\ALPHA_PROJECT\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+tests/test_fleet_edge_cases.py::test_fleet_api_missing_records_conflicts_and_domain_validation
+  D:\DESARROLLO_APLICACIONES\Python\ALPHA_PROJECT\.venv\Lib\site-packages\fastapi\telemetry\_api.py:240: StarletteDeprecationWarning: 'HTTP_422_UNPROCESSABLE_ENTITY' is deprecated. Use 'HTTP_422_UNPROCESSABLE_CONTENT' instead.
+    return function(**arguments)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=============================== tests coverage ================================
+_______________ coverage: platform win32, python 3.14.2-final-0 _______________
+
+Name                                                                     Stmts   Miss Branch BrPart   Cover
+-----------------------------------------------------------------------------------------------------------
+scripts\check_database.py                                                   43      7      4      2  80.85%
+scripts\check_docs.py                                                      150      8     80      2  94.78%
+scripts\check_python_coverage.py                                            25      1      8      1  93.94%
+scripts\create_admin.py                                                     50      8     16      1  86.36%
+scripts\create_test_db.py                                                   39     20      8      1  42.55%
+scripts\export_sonar_report.py                                             126      2     38      1  98.17%
+scripts\initialize_database.py                                              50      8     18      1  86.76%
+scripts\migrate.py                                                          16      0      4      1  95.00%
+scripts\refresh_visible_routes.py                                           89     12     28      3  87.18%
+scripts\run_backend.py                                                      20      3      2      1  81.82%
+scripts\seed_visible_routes.py                                             106     15     36      1  88.73%
+scripts\test_db\config.py                                                   61      3     26      1  95.40%
+scripts\test_db\database.py                                                 92      3     36      1  96.88%
+src\backend\application\use_cases\get_drivers.py                             9      1      0      0  88.89%
+src\backend\application\use_cases\get_vehicles.py                           19      2      2      0  90.48%
+src\backend\application\use_cases\update_driver.py                          19      0      6      1  96.00%
+src\backend\domain\exceptions\vehicle_exceptions.py                         14      2      0      0  85.71%
+src\backend\domain\order_management.py                                      76      3     30      2  95.28%
+src\backend\domain\planning.py                                             135      4     56      4  95.81%
+src\backend\domain\ports\driver_repository.py                               21      5      0      0  76.19%
+src\backend\domain\ports\order_management.py                                 7      0      2      1  88.89%
+src\backend\domain\ports\vehicle_repository.py                              23      5      0      0  78.26%
+src\backend\domain\road_network.py                                           9      1      2      1  81.82%
+src\backend\domain\value_objects\order_status.py                             8      1      0      0  87.50%
+src\backend\infrastructure\persistence\in_memory_driver_repository.py       23      1      4      0  96.30%
+src\backend\infrastructure\persistence\in_memory_vehicle_repository.py      32      1     10      0  97.62%
+src\backend\infrastructure\persistence\postgres_orders.py                   92      6     16      3  91.67%
+src\backend\infrastructure\persistence\postgres_portal.py                  222     28     48      0  85.93%
+src\backend\infrastructure\road_routing.py                                 150     27     54     11  76.47%
+src\backend\interfaces\api\deps.py                                         115      4     18      2  95.49%
+src\backend\interfaces\api\drivers\router.py                                62      3      6      1  94.12%
+src\backend\interfaces\api\main.py                                           2      2      0      0   0.00%
+src\backend\interfaces\api\orders\management.py                             82      1      0      0  98.78%
+src\backend\interfaces\api\portal\deps.py                                    3      1      0      0  66.67%
+src\backend\interfaces\api\portal\router.py                                126     24     24      4  77.33%
+src\backend\interfaces\api\security\router.py                               31      1      4      1  94.29%
+src\backend\interfaces\api\vehicles\router.py                               41      1      2      1  95.35%
+src\frontend\scripts\generate-basemap-style.py                              91      1     46      1  98.54%
+src\frontend\scripts\generate-map-fixtures.py                               32      1      8      1  95.00%
+-----------------------------------------------------------------------------------------------------------
+TOTAL                                                                     3560    216    874     51  93.21%
+
+79 files skipped due to complete coverage.
+Coverage JSON written to file reports/coverage/backend.json
+Required test coverage of 90.0% reached. Total coverage: 93.21%
+=========================== short test summary info ===========================
+SKIPPED [1] src\backend\tests\test_postgres_views.py:61: Activar ECOLOGISTICA_VERIFY_DATABASE=1 para verificar PostgreSQL con rollback.
+SKIPPED [1] src\backend\tests\test_postgres_views.py:79: Activar ECOLOGISTICA_VERIFY_DATABASE=1 para verificar PostgreSQL con rollback.
+SKIPPED [1] src\backend\tests\test_postgres_views.py:161: Activar ECOLOGISTICA_VERIFY_DATABASE=1 para verificar PostgreSQL con rollback.
+SKIPPED [1] src\backend\tests\test_test_database.py:135: Configurar ECOLOGISTICA_TEST_ENV_FILE para integración PostgreSQL + PostGIS explícita.
+SKIPPED [1] src\backend\tests\test_test_database.py:145: Configurar ECOLOGISTICA_TEST_ENV_FILE para integración PostgreSQL + PostGIS explícita.
+SKIPPED [1] src\backend\tests\test_test_database.py:165: Configurar ECOLOGISTICA_TEST_ENV_FILE para integración PostgreSQL + PostGIS explícita.
+SKIPPED [1] src\backend\tests\test_test_database.py:177: Configurar ECOLOGISTICA_TEST_ENV_FILE para integración PostgreSQL + PostGIS explícita.
+425 passed, 7 skipped, 2 warnings, 36 subtests passed in 8.31s

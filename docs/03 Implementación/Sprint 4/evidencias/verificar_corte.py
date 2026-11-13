@@ -19,6 +19,9 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[4]
 OUTPUT = Path(__file__).resolve().parent
+if len(sys.argv) > 2:
+    OUTPUT = Path(sys.argv[2]).resolve()
+OUTPUT.mkdir(parents=True, exist_ok=True)
 FRONTEND = ROOT / 'src/frontend'
 LIMA = timezone(timedelta(hours=-5), 'America/Lima')
 
@@ -46,6 +49,7 @@ def run(name, command, cwd):
                   started_lima=now(), command=command, cwd=Path(cwd).relative_to(ROOT).as_posix() or '.',
                   database_integration=False, status='running', python=platform.python_version(),
                   working_tree=git('status', '--porcelain'))
+    record['source_diff_sha256'] = sha256(subprocess.check_output(['git','diff','--binary','HEAD','--','src','scripts','.coveragerc'],cwd=ROOT)).hexdigest()
     save(name + '.json', record)
     with (OUTPUT / (name + '.txt')).open('w', encoding='utf-8') as output:
         result = subprocess.run(command, cwd=cwd, env=env, stdout=output, stderr=subprocess.STDOUT)
@@ -97,6 +101,8 @@ if __name__ == '__main__':
         'docs-baseline': ('documentacion-previa', [sys.executable, 'scripts/check_docs.py'], ROOT),
         'node': ('frontend-node', [npm, 'run', 'test:orders'], FRONTEND),
         'backend-after-docs': ('backend-postdocumentacion', [sys.executable, '-m', 'pytest', 'src/backend/tests', '-q', '-rs', '-p', 'no:cacheprovider'], ROOT),
+        'backend-coverage': ('backend-cobertura', [sys.executable, '-m', 'pytest', 'src/backend/tests', '-q', '-rs', '-p', 'no:cacheprovider', '--cov', '--cov-config=.coveragerc', '--cov-report=json:reports/coverage/backend.json', '--cov-report=term:skip-covered'], ROOT),
+        'python-gate': ('backend-umbral', [sys.executable, 'scripts/check_python_coverage.py'], ROOT),
         'markdown': ('markdown', [npm, 'exec', '--cache', str(ROOT / '.npm-cache'), '--ignore-scripts', '--yes', '--package=markdownlint-cli2@0.24.1', '--', 'markdownlint-cli2'], ROOT),
     }
     sys.exit(run(*commands[task]))

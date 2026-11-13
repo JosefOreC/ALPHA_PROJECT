@@ -1,0 +1,5 @@
+# Original measurements: preserve exact bytes and output whitespace for SHA-256.
+*.json -text -whitespace
+*.html -text -whitespace
+*.txt -text -whitespace
+*.jpg -text

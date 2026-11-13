@@ -10,6 +10,10 @@
 
 **Rama y commit:** `refactor/mern`, `7ea33a185619d5c06ab8ce8c090b3e334b45a9ce`.
 
+## Evidencia vigente de la optimización
+
+El diagnóstico que sigue es histórico y conserva sus fallos originales. Las correcciones y resultados actuales corresponden al commit `9f953d6acc79d569d3896ab1e2a161d8321b3720`: [índice de optimización](optimizacion-3b5bdae/README.md). No deben interpretarse las cifras de este diagnóstico como el estado final del software.
+
 ## 1. Procedencia y resultados
 
 Cada pareja JSON/TXT conserva comando, directorio, horas locales, versión de Python, código de salida y SHA-256 de la salida. Los JSON generados después de mejorar el ejecutor incluyen el estado del árbol de trabajo. La documentación añadida o normalizada es posterior al commit citado; no se presenta como contenido ya integrado. Las pruebas iniciales terminaron antes de archivar los documentos antiguos y sus fallos se conservan.

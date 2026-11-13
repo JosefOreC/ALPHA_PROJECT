@@ -1,0 +1,7 @@
+{
+  "markdown_files": 94,
+  "reachable_markdown": 94,
+  "local_links_checked": 824,
+  "external_urls_not_checked": 56,
+  "errors": []
+}
