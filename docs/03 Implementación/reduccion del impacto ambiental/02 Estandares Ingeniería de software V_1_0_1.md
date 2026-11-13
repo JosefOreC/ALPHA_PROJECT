@@ -4,7 +4,7 @@
 
 **Líder del Proyecto:** Ore Campos, Josef Pablo
 
-**Versión del documento:** V_1_0_0
+**Versión del documento:** V_1_0_1
 
 **Autor:** Tovar Sánchez, Carlos Alberto
 
@@ -146,6 +146,6 @@ De las ocho áreas, tres están cumplidas, tres parcialmente y dos pendientes; l
 | Versión | Fecha | Autoría / cambio |
 |---|---|---|
 | V_1_0_0 | 11/11/2026 | Tovar Sánchez, Carlos Alberto. Emisión inicial: fundamentación en ISO/IEC 25010, GSF y W3C WSG, reglas de código limpio para backend y frontend, guía de desarrollo verde y matriz de mapeo de las ocho optimizaciones, adaptadas al stack del proyecto. |
-| V_1_0_0 | 12/11/2026 | Rojas Camayo, Valentino Jhan Pierre. Revisión de formato y redacción, sin cambio de versión porque la rúbrica exige el nombre de archivo con V_1_0_0: metadatos en líneas separadas, como en el resto de la documentación; referencia de la W3C como enlace; referencia cruzada al documento 01; ajustes de puntuación y de estilo formal. Sin cambios de contenido técnico. |
+| V_1_0_1 | 12/11/2026 | Rojas Camayo, Valentino Jhan Pierre. Revisión de formato y redacción: metadatos en líneas separadas, como en el resto de la documentación; referencia de la W3C como enlace; referencia cruzada al documento 01; ajustes de puntuación y de estilo formal. Sin cambios de contenido técnico. |
 
 [← Volver al índice correspondiente](README.md)
