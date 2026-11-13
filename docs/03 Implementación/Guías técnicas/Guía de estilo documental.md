@@ -90,4 +90,4 @@ La validación de sintaxis cubre la carpeta de reducción del impacto ambiental 
 | — | 12/11/2026 | Rojas Camayo, Valentino Jhan Pierre. Excepción para los nombres de archivo fijados por la rúbrica. |
 | — | 13/11/2026 | Rojas Camayo, Valentino Jhan Pierre. Se retira esa excepción, según lo acordado con el docente: todo cambio sube la versión del documento. |
 
-[← Volver al índice correspondiente](README.md)
+[← Volver al índice correspondiente](README-NO-EXISTE.md)
