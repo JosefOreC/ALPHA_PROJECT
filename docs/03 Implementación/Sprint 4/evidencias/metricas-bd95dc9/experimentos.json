@@ -1,0 +1,640 @@
+{
+  "archived_lima": "2026-11-13T01:40:49-05:00",
+  "experiments": [
+    {
+      "summary": "candidate-1-summary.json",
+      "stage": "candidate-1",
+      "selected_as_final": false,
+      "results": [
+        {
+          "scenario": "login",
+          "run": 1,
+          "performance": 99,
+          "accessibility": 100,
+          "fcp_ms": 1687.7507500000002,
+          "lcp_ms": 1687.7507500000002,
+          "tbt_ms": 0,
+          "cls": 0,
+          "transfer_bytes": 167270,
+          "requests": 6,
+          "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36 Edg/157.0.0.0",
+          "lighthouse": "13.6.0"
+        },
+        {
+          "scenario": "pedidos",
+          "run": 1,
+          "performance": 97,
+          "accessibility": 100,
+          "fcp_ms": 1687.031117131016,
+          "lcp_ms": 2432.0933513930477,
+          "tbt_ms": 0,
+          "cls": 0.0003636511032405169,
+          "transfer_bytes": 179849,
+          "requests": 12,
+          "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36 Edg/157.0.0.0",
+          "lighthouse": "13.6.0"
+        }
+      ],
+      "origin": null,
+      "started_utc": "2026-11-13T05:23:50.024Z",
+      "finished_utc": "2026-11-13T05:24:07.816Z"
+    },
+    {
+      "summary": "candidate-2-summary.json",
+      "stage": "candidate-2",
+      "selected_as_final": false,
+      "results": [
+        {
+          "scenario": "login",
+          "run": 1,
+          "performance": 88,
+          "accessibility": 100,
+          "fcp_ms": 1243.7269999999999,
+          "lcp_ms": 1243.7269999999999,
+          "tbt_ms": 0,
+          "cls": 0.244892922235723,
+          "transfer_bytes": 119395,
+          "requests": 15,
+          "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36 Edg/157.0.0.0",
+          "lighthouse": "13.6.0"
+        },
+        {
+          "scenario": "pedidos",
+          "run": 1,
+          "performance": 87,
+          "accessibility": 100,
+          "fcp_ms": 1239.8651,
+          "lcp_ms": 2041.5953,
+          "tbt_ms": 1,
+          "cls": 0.24525657333896353,
+          "transfer_bytes": 131994,
+          "requests": 21,
+          "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36 Edg/157.0.0.0",
+          "lighthouse": "13.6.0"
+        }
+      ],
+      "origin": null,
+      "started_utc": "2026-11-13T05:27:37.907Z",
+      "finished_utc": "2026-11-13T05:27:55.609Z"
+    },
+    {
+      "summary": "candidate-3-summary.json",
+      "stage": "candidate-3",
+      "selected_as_final": false,
+      "results": [
+        {
+          "scenario": "login",
+          "run": 1,
+          "performance": 100,
+          "accessibility": 100,
+          "fcp_ms": 1239.1118000000001,
+          "lcp_ms": 1239.1118000000001,
+          "tbt_ms": 0,
+          "cls": 0,
+          "transfer_bytes": 119467,
+          "requests": 15,
+          "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36 Edg/157.0.0.0",
+          "lighthouse": "13.6.0"
+        },
+        {
+          "scenario": "pedidos",
+          "run": 1,
+          "performance": 99,
+          "accessibility": 100,
+          "fcp_ms": 1239.0482,
+          "lcp_ms": 2035.1445999999996,
+          "tbt_ms": 0,
+          "cls": 0.0003636511032405169,
+          "transfer_bytes": 132077,
+          "requests": 21,
+          "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36 Edg/157.0.0.0",
+          "lighthouse": "13.6.0"
+        }
+      ],
+      "origin": null,
+      "started_utc": "2026-11-13T05:28:42.167Z",
+      "finished_utc": "2026-11-13T05:28:59.995Z"
+    },
+    {
+      "summary": "candidate-4-summary.json",
+      "stage": "candidate-4",
+      "selected_as_final": false,
+      "results": [
+        {
+          "scenario": "login",
+          "run": 1,
+          "performance": 100,
+          "accessibility": 100,
+          "fcp_ms": 1239.13845,
+          "lcp_ms": 1239.13845,
+          "tbt_ms": 0,
+          "cls": 0,
+          "transfer_bytes": 128328,
+          "requests": 15,
+          "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36 Edg/157.0.0.0",
+          "lighthouse": "13.6.0"
+        },
+        {
+          "scenario": "pedidos",
+          "run": 1,
+          "performance": 98,
+          "accessibility": 100,
+          "fcp_ms": 1239.877,
+          "lcp_ms": 2213.508,
+          "tbt_ms": 0,
+          "cls": 0.0003636511032405169,
+          "transfer_bytes": 140945,
+          "requests": 21,
+          "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36 Edg/157.0.0.0",
+          "lighthouse": "13.6.0"
+        }
+      ],
+      "origin": null,
+      "started_utc": "2026-11-13T05:30:46.523Z",
+      "finished_utc": "2026-11-13T05:31:04.499Z"
+    },
+    {
+      "summary": "candidate-5-summary.json",
+      "stage": "candidate-5",
+      "selected_as_final": false,
+      "results": [
+        {
+          "scenario": "login",
+          "run": 1,
+          "performance": 100,
+          "accessibility": 100,
+          "fcp_ms": 1241.9398999999999,
+          "lcp_ms": 1241.9398999999999,
+          "tbt_ms": 0,
+          "cls": 0,
+          "transfer_bytes": 129071,
+          "requests": 15,
+          "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36 Edg/157.0.0.0",
+          "lighthouse": "13.6.0"
+        },
+        {
+          "scenario": "pedidos",
+          "run": 1,
+          "performance": 99,
+          "accessibility": 100,
+          "fcp_ms": 1238.35675,
+          "lcp_ms": 2016.7134999999998,
+          "tbt_ms": 0,
+          "cls": 0.0003636511032405169,
+          "transfer_bytes": 141688,
+          "requests": 21,
+          "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36 Edg/157.0.0.0",
+          "lighthouse": "13.6.0"
+        }
+      ],
+      "origin": null,
+      "started_utc": "2026-11-13T05:31:35.037Z",
+      "finished_utc": "2026-11-13T05:31:52.691Z"
+    },
+    {
+      "summary": "h2-candidate-10-summary.json",
+      "stage": "h2-candidate-10",
+      "selected_as_final": false,
+      "results": [
+        {
+          "scenario": "login",
+          "run": 1,
+          "performance": 100,
+          "accessibility": 100,
+          "fcp_ms": 799.1525,
+          "lcp_ms": 799.1525,
+          "tbt_ms": 0,
+          "cls": 0,
+          "transfer_bytes": 112062,
+          "requests": 8,
+          "protocols": [
+            "h2"
+          ],
+          "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+          "lighthouse": "13.6.0"
+        },
+        {
+          "scenario": "pedidos",
+          "run": 1,
+          "performance": 100,
+          "accessibility": 100,
+          "fcp_ms": 787.3088,
+          "lcp_ms": 1368.3088,
+          "tbt_ms": 0,
+          "cls": 0.00036365110324051693,
+          "transfer_bytes": 121009,
+          "requests": 14,
+          "protocols": [
+            "h2",
+            "data"
+          ],
+          "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+          "lighthouse": "13.6.0"
+        }
+      ],
+      "origin": "https://127.0.0.1:5189",
+      "started_utc": "2026-11-13T06:18:32.537Z",
+      "finished_utc": "2026-11-13T06:18:46.189Z"
+    },
+    {
+      "summary": "isolated-candidate-6-summary.json",
+      "stage": "isolated-candidate-6",
+      "selected_as_final": false,
+      "results": [
+        {
+          "scenario": "login",
+          "run": 1,
+          "performance": 100,
+          "accessibility": 100,
+          "fcp_ms": 645.969,
+          "lcp_ms": 645.969,
+          "tbt_ms": 0,
+          "cls": 0,
+          "transfer_bytes": 118389,
+          "requests": 13,
+          "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+          "lighthouse": "13.6.0"
+        },
+        {
+          "scenario": "pedidos",
+          "run": 1,
+          "performance": 99,
+          "accessibility": 100,
+          "fcp_ms": 641.88265,
+          "lcp_ms": 1961.7653,
+          "tbt_ms": 0,
+          "cls": 0.00036365110324051693,
+          "transfer_bytes": 130982,
+          "requests": 19,
+          "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+          "lighthouse": "13.6.0"
+        }
+      ],
+      "origin": null,
+      "started_utc": "2026-11-13T05:34:27.078Z",
+      "finished_utc": "2026-11-13T05:34:40.696Z"
+    },
+    {
+      "summary": "isolated-candidate-7-summary.json",
+      "stage": "isolated-candidate-7",
+      "selected_as_final": false,
+      "results": [
+        {
+          "scenario": "login",
+          "run": 1,
+          "performance": 100,
+          "accessibility": 100,
+          "fcp_ms": 649.632,
+          "lcp_ms": 649.632,
+          "tbt_ms": 0,
+          "cls": 0,
+          "transfer_bytes": 118474,
+          "requests": 13,
+          "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+          "lighthouse": "13.6.0"
+        },
+        {
+          "scenario": "pedidos",
+          "run": 1,
+          "performance": 99,
+          "accessibility": 100,
+          "fcp_ms": 644.1581,
+          "lcp_ms": 2159.4743,
+          "tbt_ms": 0,
+          "cls": 0.00036365110324051693,
+          "transfer_bytes": 131064,
+          "requests": 19,
+          "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+          "lighthouse": "13.6.0"
+        }
+      ],
+      "origin": null,
+      "started_utc": "2026-11-13T06:04:01.408Z",
+      "finished_utc": "2026-11-13T06:04:16.347Z"
+    },
+    {
+      "summary": "isolated-candidate-8-summary.json",
+      "stage": "isolated-candidate-8",
+      "selected_as_final": false,
+      "results": [
+        {
+          "scenario": "login",
+          "run": 1,
+          "performance": 100,
+          "accessibility": 100,
+          "fcp_ms": 652.016,
+          "lcp_ms": 652.016,
+          "tbt_ms": 0,
+          "cls": 0,
+          "transfer_bytes": 114828,
+          "requests": 9,
+          "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+          "lighthouse": "13.6.0"
+        },
+        {
+          "scenario": "pedidos",
+          "run": 1,
+          "performance": 100,
+          "accessibility": 100,
+          "fcp_ms": 646.26625,
+          "lcp_ms": 1827.5324999999998,
+          "tbt_ms": 0,
+          "cls": 0.00036365110324051693,
+          "transfer_bytes": 127426,
+          "requests": 15,
+          "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+          "lighthouse": "13.6.0"
+        }
+      ],
+      "origin": null,
+      "started_utc": "2026-11-13T06:05:49.647Z",
+      "finished_utc": "2026-11-13T06:06:03.255Z"
+    },
+    {
+      "summary": "isolated-candidate-9-summary.json",
+      "stage": "isolated-candidate-9",
+      "selected_as_final": false,
+      "results": [
+        {
+          "scenario": "login",
+          "run": 1,
+          "performance": 100,
+          "accessibility": 100,
+          "fcp_ms": 642.7095,
+          "lcp_ms": 642.7095,
+          "tbt_ms": 0,
+          "cls": 0,
+          "transfer_bytes": 116613,
+          "requests": 8,
+          "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+          "lighthouse": "13.6.0"
+        },
+        {
+          "scenario": "pedidos",
+          "run": 1,
+          "performance": 100,
+          "accessibility": 100,
+          "fcp_ms": 640.78785,
+          "lcp_ms": 1807.5757,
+          "tbt_ms": 0,
+          "cls": 0.00036365110324051693,
+          "transfer_bytes": 129226,
+          "requests": 14,
+          "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+          "lighthouse": "13.6.0"
+        }
+      ],
+      "origin": null,
+      "started_utc": "2026-11-13T06:12:30.546Z",
+      "finished_utc": "2026-11-13T06:12:44.178Z"
+    },
+    {
+      "summary": "isolated-candidate-summary.json",
+      "stage": "isolated-candidate",
+      "selected_as_final": false,
+      "results": [
+        {
+          "scenario": "login",
+          "run": 1,
+          "performance": 100,
+          "accessibility": 100,
+          "fcp_ms": 649.638,
+          "lcp_ms": 649.638,
+          "tbt_ms": 5.5,
+          "cls": 0,
+          "transfer_bytes": 118205,
+          "requests": 13,
+          "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+          "lighthouse": "13.6.0"
+        },
+        {
+          "scenario": "pedidos",
+          "run": 1,
+          "performance": 99,
+          "accessibility": 100,
+          "fcp_ms": 641.51445,
+          "lcp_ms": 1963.0288999999998,
+          "tbt_ms": 0,
+          "cls": 0.00036365110324051693,
+          "transfer_bytes": 130800,
+          "requests": 19,
+          "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+          "lighthouse": "13.6.0"
+        }
+      ],
+      "origin": null,
+      "started_utc": "2026-11-13T05:32:59.635Z",
+      "finished_utc": "2026-11-13T05:33:19.211Z"
+    },
+    {
+      "summary": "isolated-h2-candidate-9-summary.json",
+      "stage": "isolated-h2-candidate-9",
+      "selected_as_final": false,
+      "results": [
+        {
+          "scenario": "login",
+          "run": 1,
+          "performance": 100,
+          "accessibility": 100,
+          "fcp_ms": 648.9015,
+          "lcp_ms": 648.9015,
+          "tbt_ms": 0,
+          "cls": 0,
+          "transfer_bytes": 116613,
+          "requests": 8,
+          "protocols": [
+            "http/1.1"
+          ],
+          "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+          "lighthouse": "13.6.0"
+        },
+        {
+          "scenario": "pedidos",
+          "run": 1,
+          "performance": 99,
+          "accessibility": 100,
+          "fcp_ms": 637.92815,
+          "lcp_ms": 1986.7844499999999,
+          "tbt_ms": 0,
+          "cls": 0.00036365110324051693,
+          "transfer_bytes": 129226,
+          "requests": 14,
+          "protocols": [
+            "http/1.1",
+            "data"
+          ],
+          "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+          "lighthouse": "13.6.0"
+        }
+      ],
+      "origin": "http://127.0.0.1:5189",
+      "started_utc": "2026-11-13T06:17:58.923Z",
+      "finished_utc": "2026-11-13T06:18:17.580Z"
+    },
+    {
+      "summary": "minimal-candidate-summary.json",
+      "stage": "minimal-candidate",
+      "selected_as_final": false,
+      "results": [
+        {
+          "scenario": "login",
+          "run": 1,
+          "performance": 100,
+          "accessibility": 100,
+          "fcp_ms": 904.106,
+          "lcp_ms": 904.106,
+          "tbt_ms": 0,
+          "cls": 0,
+          "transfer_bytes": 93508,
+          "requests": 5,
+          "protocols": [
+            "h2"
+          ],
+          "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+          "lighthouse": "13.6.0"
+        },
+        {
+          "scenario": "pedidos",
+          "run": 1,
+          "performance": 100,
+          "accessibility": 100,
+          "fcp_ms": 765.0911,
+          "lcp_ms": 1238.0911,
+          "tbt_ms": 0,
+          "cls": 0.00036365110324051693,
+          "transfer_bytes": 102171,
+          "requests": 11,
+          "protocols": [
+            "h2",
+            "data"
+          ],
+          "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+          "lighthouse": "13.6.0"
+        }
+      ],
+      "origin": "https://127.0.0.1:5189",
+      "started_utc": "2026-11-13T06:26:33.429Z",
+      "finished_utc": "2026-11-13T06:26:47.296Z"
+    },
+    {
+      "summary": "verified-after-summary.json",
+      "stage": "verified-after",
+      "selected_as_final": false,
+      "results": [
+        {
+          "scenario": "login",
+          "run": 1,
+          "performance": 100,
+          "accessibility": 100,
+          "fcp_ms": 797.801,
+          "lcp_ms": 797.801,
+          "tbt_ms": 0,
+          "cls": 0,
+          "transfer_bytes": 103045,
+          "requests": 8,
+          "protocols": [
+            "h2"
+          ],
+          "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+          "lighthouse": "13.6.0"
+        },
+        {
+          "scenario": "login",
+          "run": 2,
+          "performance": 100,
+          "accessibility": 100,
+          "fcp_ms": 801.4131,
+          "lcp_ms": 801.4131,
+          "tbt_ms": 0,
+          "cls": 0,
+          "transfer_bytes": 102293,
+          "requests": 8,
+          "protocols": [
+            "h2"
+          ],
+          "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+          "lighthouse": "13.6.0"
+        },
+        {
+          "scenario": "login",
+          "run": 3,
+          "performance": 100,
+          "accessibility": 100,
+          "fcp_ms": 796.6185,
+          "lcp_ms": 796.6185,
+          "tbt_ms": 0,
+          "cls": 0,
+          "transfer_bytes": 102293,
+          "requests": 8,
+          "protocols": [
+            "h2"
+          ],
+          "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+          "lighthouse": "13.6.0"
+        },
+        {
+          "scenario": "pedidos",
+          "run": 1,
+          "performance": 100,
+          "accessibility": 100,
+          "fcp_ms": 792.1415,
+          "lcp_ms": 1372.1415,
+          "tbt_ms": 0,
+          "cls": 0.00036365110324051693,
+          "transfer_bytes": 111613,
+          "requests": 14,
+          "protocols": [
+            "h2",
+            "data"
+          ],
+          "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+          "lighthouse": "13.6.0"
+        },
+        {
+          "scenario": "pedidos",
+          "run": 2,
+          "performance": 100,
+          "accessibility": 100,
+          "fcp_ms": 793.3136,
+          "lcp_ms": 1393.3136,
+          "tbt_ms": 0,
+          "cls": 0.00036365110324051693,
+          "transfer_bytes": 111302,
+          "requests": 14,
+          "protocols": [
+            "h2",
+            "data"
+          ],
+          "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+          "lighthouse": "13.6.0"
+        },
+        {
+          "scenario": "pedidos",
+          "run": 3,
+          "performance": 100,
+          "accessibility": 100,
+          "fcp_ms": 793.8721,
+          "lcp_ms": 1368.8721,
+          "tbt_ms": 0,
+          "cls": 0.00036365110324051693,
+          "transfer_bytes": 111302,
+          "requests": 14,
+          "protocols": [
+            "h2",
+            "data"
+          ],
+          "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+          "lighthouse": "13.6.0"
+        }
+      ],
+      "origin": "https://127.0.0.1:5189",
+      "started_utc": "2026-11-13T06:21:20.742Z",
+      "finished_utc": "2026-11-13T06:22:03.362Z"
+    }
+  ],
+  "notes": [
+    "Intermediate raw files remain local in .test-deps/metricas-experimentos; summaries are versioned.",
+    "isolated-h2-candidate-9 actually ran HTTP/1.1 after test-certificate preparation failed; its recorded origin and protocols are authoritative. It is not final evidence.",
+    "SSR/startup experiments were discarded. Final source uses the original React entry plus stable loading slots and precompression."
+  ]
+}

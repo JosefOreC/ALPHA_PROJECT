@@ -1,0 +1,25 @@
+{
+  "commit": "1d525069686ad1222a1bbe8b58a018bdae2542a2",
+  "branch": "refactor/mern",
+  "started_lima": "2026-11-13T01:42:54-05:00",
+  "command": [
+    "C:\\Program Files\\nodejs\\npm.cmd",
+    "exec",
+    "--cache",
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\.npm-cache",
+    "--ignore-scripts",
+    "--yes",
+    "--package=markdownlint-cli2@0.24.1",
+    "--",
+    "markdownlint-cli2"
+  ],
+  "cwd": ".",
+  "database_integration": false,
+  "status": "finished",
+  "python": "3.14.2",
+  "working_tree": "M .gitignore\n D \"docs/03 Implementaci\\303\\263n/Sprint 4/01 Revisi\\303\\263n del Sprint V_1_1_0.md\"\n D \"docs/03 Implementaci\\303\\263n/Sprint 4/02 Retrospectiva del Sprint V_1_1_0.md\"\n D \"docs/03 Implementaci\\303\\263n/Sprint 4/03 Informe de reducci\\303\\263n del impacto ambiental V_1_1_0.md\"\n D \"docs/03 Implementaci\\303\\263n/Sprint 4/04 Est\\303\\241ndares arquitectura y gu\\303\\255a de desarrollo verde V_1_1_0.md\"\n M \"docs/03 Implementaci\\303\\263n/Sprint 4/README.md\"\n M \"docs/03 Implementaci\\303\\263n/Sprint 4/evidencias/README.md\"\n M src/frontend/index.html\n M src/frontend/src/App.tsx\n M src/frontend/src/infrastructure/httpSession.ts\n M src/frontend/src/main.tsx\n M src/frontend/vite.config.ts\n?? \"docs/03 Implementaci\\303\\263n/Sprint 4/01 Revisi\\303\\263n del Sprint V_1_2_0.md\"\n?? \"docs/03 Implementaci\\303\\263n/Sprint 4/02 Retrospectiva del Sprint V_1_2_0.md\"\n?? \"docs/03 Implementaci\\303\\263n/Sprint 4/03 Informe de reducci\\303\\263n del impacto ambiental V_1_2_0.md\"\n?? \"docs/03 Implementaci\\303\\263n/Sprint 4/04 Est\\303\\241ndares arquitectura y gu\\303\\255a de desarrollo verde V_1_2_0.md\"\n?? \"docs/03 Implementaci\\303\\263n/Sprint 4/06 Auditor\\303\\255a consolidada de m\\303\\251tricas V_1_0_0.md\"\n?? \"docs/03 Implementaci\\303\\263n/Sprint 4/evidencias/metricas-bd95dc9/\"",
+  "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "finished_lima": "2026-11-13T01:42:55-05:00",
+  "exit_code": 0,
+  "output_sha256": "0f401927019c3c9354f87be41c8e00a9744a5db1b566705803a554bf63ab884f"
+}

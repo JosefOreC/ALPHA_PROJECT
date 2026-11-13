@@ -10,7 +10,11 @@
 
 **Rama y commit:** `refactor/mern`, `7ea33a185619d5c06ab8ce8c090b3e334b45a9ce`.
 
-## Evidencia vigente de la optimización
+## Evidencia vigente de métricas
+
+El corte actual corresponde al código 1d52506 y a los umbrales originales ya verificados: [auditoría de métricas](metricas-bd95dc9/README.md). Los apartados siguientes conservan los diagnósticos anteriores, con sus fechas y fallos originales.
+
+## Evidencia de la optimización anterior
 
 El diagnóstico que sigue es histórico y conserva sus fallos originales. Las correcciones y resultados actuales corresponden al commit `9f953d6acc79d569d3896ab1e2a161d8321b3720`: [índice de optimización](optimizacion-3b5bdae/README.md). No deben interpretarse las cifras de este diagnóstico como el estado final del software.
 

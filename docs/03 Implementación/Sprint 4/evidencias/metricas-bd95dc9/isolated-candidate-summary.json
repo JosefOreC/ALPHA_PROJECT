@@ -1,0 +1,38 @@
+{
+  "stage": "isolated-candidate",
+  "commit": "bd95dc9315c9e2526fcb06add520e982f8310cf6",
+  "started_utc": "2026-11-13T05:32:59.635Z",
+  "finished_utc": "2026-11-13T05:33:19.211Z",
+  "scenarios": "150 synthetic orders; real HTTP; no database; external fonts blocked equally; mobile simulated throttling",
+  "source_diff": "scripts/measure_green_it.mjs\nsrc/frontend/index.html\nsrc/frontend/package.json\nsrc/frontend/src/App.tsx\nsrc/frontend/src/infrastructure/httpSession.ts\nsrc/frontend/src/interfaces/OrderManagementView.tsx\nsrc/frontend/src/interfaces/session/SessionToolbar.tsx\nsrc/frontend/src/main.tsx\nsrc/frontend/vite.config.ts\n",
+  "results": [
+    {
+      "scenario": "login",
+      "run": 1,
+      "performance": 100,
+      "accessibility": 100,
+      "fcp_ms": 649.638,
+      "lcp_ms": 649.638,
+      "tbt_ms": 5.5,
+      "cls": 0,
+      "transfer_bytes": 118205,
+      "requests": 13,
+      "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+      "lighthouse": "13.6.0"
+    },
+    {
+      "scenario": "pedidos",
+      "run": 1,
+      "performance": 99,
+      "accessibility": 100,
+      "fcp_ms": 641.51445,
+      "lcp_ms": 1963.0288999999998,
+      "tbt_ms": 0,
+      "cls": 0.00036365110324051693,
+      "transfer_bytes": 130800,
+      "requests": 19,
+      "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+      "lighthouse": "13.6.0"
+    }
+  ]
+}

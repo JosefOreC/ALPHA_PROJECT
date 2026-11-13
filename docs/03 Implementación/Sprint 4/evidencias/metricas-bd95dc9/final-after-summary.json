@@ -1,0 +1,117 @@
+{
+  "stage": "final-after",
+  "commit": "bd95dc9315c9e2526fcb06add520e982f8310cf6",
+  "started_utc": "2026-11-13T06:27:43.808Z",
+  "finished_utc": "2026-11-13T06:28:21.940Z",
+  "scenarios": "150 synthetic orders; real HTTP; no database; external fonts blocked equally; mobile simulated throttling",
+  "origin": "https://127.0.0.1:5189",
+  "tls_certificate": "self-signed isolated test certificate; browser exception for this measurement only",
+  "source_diff": "scripts/green_it_fixture.py\nscripts/measure_green_it.mjs\nsrc/backend/README.md\nsrc/backend/interfaces/api/deps.py\nsrc/frontend/README.md\nsrc/frontend/package.json\nsrc/frontend/src/interfaces/OrderManagementView.tsx\nsrc/frontend/src/interfaces/session/SessionContext.test.tsx\nsrc/frontend/src/interfaces/session/SessionToolbar.tsx\n",
+  "results": [
+    {
+      "scenario": "login",
+      "run": 1,
+      "performance": 100,
+      "accessibility": 100,
+      "fcp_ms": 904.735,
+      "lcp_ms": 904.735,
+      "tbt_ms": 0,
+      "cls": 0,
+      "transfer_bytes": 93508,
+      "requests": 5,
+      "protocols": [
+        "h2"
+      ],
+      "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+      "lighthouse": "13.6.0"
+    },
+    {
+      "scenario": "login",
+      "run": 2,
+      "performance": 100,
+      "accessibility": 100,
+      "fcp_ms": 765.8413,
+      "lcp_ms": 765.8413,
+      "tbt_ms": 0,
+      "cls": 0,
+      "transfer_bytes": 92862,
+      "requests": 5,
+      "protocols": [
+        "h2"
+      ],
+      "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+      "lighthouse": "13.6.0"
+    },
+    {
+      "scenario": "login",
+      "run": 3,
+      "performance": 100,
+      "accessibility": 100,
+      "fcp_ms": 768.1499,
+      "lcp_ms": 768.1499,
+      "tbt_ms": 0,
+      "cls": 0,
+      "transfer_bytes": 92862,
+      "requests": 5,
+      "protocols": [
+        "h2"
+      ],
+      "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+      "lighthouse": "13.6.0"
+    },
+    {
+      "scenario": "pedidos",
+      "run": 1,
+      "performance": 100,
+      "accessibility": 100,
+      "fcp_ms": 765.0107,
+      "lcp_ms": 1237.0107,
+      "tbt_ms": 0,
+      "cls": 0.00036365110324051693,
+      "transfer_bytes": 102171,
+      "requests": 11,
+      "protocols": [
+        "h2",
+        "data"
+      ],
+      "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+      "lighthouse": "13.6.0"
+    },
+    {
+      "scenario": "pedidos",
+      "run": 2,
+      "performance": 100,
+      "accessibility": 100,
+      "fcp_ms": 764.2762,
+      "lcp_ms": 1213.2762,
+      "tbt_ms": 0,
+      "cls": 0.00036365110324051693,
+      "transfer_bytes": 101814,
+      "requests": 11,
+      "protocols": [
+        "h2",
+        "data"
+      ],
+      "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+      "lighthouse": "13.6.0"
+    },
+    {
+      "scenario": "pedidos",
+      "run": 3,
+      "performance": 100,
+      "accessibility": 100,
+      "fcp_ms": 764.2119,
+      "lcp_ms": 1212.2119,
+      "tbt_ms": 0,
+      "cls": 0.00036365110324051693,
+      "transfer_bytes": 101837,
+      "requests": 11,
+      "protocols": [
+        "h2",
+        "data"
+      ],
+      "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+      "lighthouse": "13.6.0"
+    }
+  ]
+}

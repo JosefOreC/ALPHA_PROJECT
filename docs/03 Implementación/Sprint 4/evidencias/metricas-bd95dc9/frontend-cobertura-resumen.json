@@ -1,0 +1,35 @@
+{
+  "implementation_commit": "1d525069686ad1222a1bbe8b58a018bdae2542a2",
+  "totals": {
+    "lines": {
+      "total": 2032,
+      "covered": 1975,
+      "skipped": 0,
+      "pct": 97.19
+    },
+    "statements": {
+      "total": 2702,
+      "covered": 2576,
+      "skipped": 0,
+      "pct": 95.33
+    },
+    "functions": {
+      "total": 976,
+      "covered": 921,
+      "skipped": 0,
+      "pct": 94.36
+    },
+    "branches": {
+      "total": 2464,
+      "covered": 2220,
+      "skipped": 0,
+      "pct": 90.09
+    },
+    "branchesTrue": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    }
+  }
+}

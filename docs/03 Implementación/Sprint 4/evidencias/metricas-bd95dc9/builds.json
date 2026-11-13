@@ -1,0 +1,443 @@
+{
+  "captured_lima": "2026-11-13T01:40:49-05:00",
+  "baseline_build_commit": "bd95dc9315c9e2526fcb06add520e982f8310cf6",
+  "implementation_commit": "1d525069686ad1222a1bbe8b58a018bdae2542a2",
+  "builds": {
+    "before": {
+      "assets/AdminView-BxFJQhgj.js": {
+        "bytes": 16624,
+        "sha256": "31d5b093036a0d9bbc305d64e852a356ce9c46e7eea7cd00970cad59be76bb84"
+      },
+      "assets/DashboardPage-AyVcWmjR.js": {
+        "bytes": 16381,
+        "sha256": "bf7f62a67a9d69f9d6c68f18eb9d47da8b5c22b8e915f3206c6e874e9b5f85dd"
+      },
+      "assets/DestinationMap-BtYcxu11.js": {
+        "bytes": 2419,
+        "sha256": "198abd7cb3029b0f600cf50dabee8fad1445dbb2da87a856ab5792c46c66fb26"
+      },
+      "assets/DriverOrderView-CdWLYNfm.js": {
+        "bytes": 6010,
+        "sha256": "df9ffda547f650afa1816206b7b80e68f946e20b7b7ca48bee3d6659fb4867d3"
+      },
+      "assets/driverRoute-CLu5D2RZ.js": {
+        "bytes": 196,
+        "sha256": "38cb749b012a2b1e20af8d4b8b3109a6a0976a39ec3d2b56c3cbd52ba3e30baa"
+      },
+      "assets/DriverRouteView-_cE9Y-F1.js": {
+        "bytes": 3615,
+        "sha256": "89295cab161bf32ab63ce341e985a202d3b2af1a700ab2561a3ec98fabe834cc"
+      },
+      "assets/DriversView-CFi4M2_m.js": {
+        "bytes": 5662,
+        "sha256": "06c5db96d673d6a27ebea9bae319fe2c7c20d2fe08f4d059b9437adf71cf3c84"
+      },
+      "assets/fleetBoard-Bc27wUUi.js": {
+        "bytes": 1876,
+        "sha256": "94dc363c5f2e3edc72f6bf0a03481f22a75d85fec573cca3e89f12b9a922bb8b"
+      },
+      "assets/FleetView-Br2EW1U8.js": {
+        "bytes": 12204,
+        "sha256": "30de7e86721fbf24b5ba6273788a07a5298f8bf6b272f19d2d9c4719d7f029f4"
+      },
+      "assets/index-BtZM_Mrz.css": {
+        "bytes": 75635,
+        "sha256": "2f1700c64b22bff7c9c82496d8bfb18301c07dd56c40a9975b922df4315eddfd"
+      },
+      "assets/index-C47CJJ7d.js": {
+        "bytes": 269647,
+        "sha256": "5aea5622313a433e6a3215f9787b171a6fbead8f54443bd72d87ebc3f0a43486"
+      },
+      "assets/leaflet-src-Dtl8lBO1.js": {
+        "bytes": 148604,
+        "sha256": "7ef990c4311104f69563bd739282574c90adc00cac64798784ba6781a896c064"
+      },
+      "assets/LeafletCanvas-ANN70z72.js": {
+        "bytes": 13497,
+        "sha256": "783a6c147ec1425eeccb6b62de1fb4a46e799722b4b294880e2a00511796aa5d"
+      },
+      "assets/maplibre-gl-worker-CEzvAyZY.js": {
+        "bytes": 507694,
+        "sha256": "c71da9f14bdb4500fb65b19d894d60af023d13749657e903e1dcde4aab63b5c6"
+      },
+      "assets/mapPresentation-Br34faox.js": {
+        "bytes": 2600,
+        "sha256": "d4fea011721eac63e47a35a38e2b1cf854584bc65380a63eb74256b0e101f51c"
+      },
+      "assets/markers-BF3vGKQu.js": {
+        "bytes": 1041460,
+        "sha256": "c381e79015b5aabcf49b0a76080a09b6abb8f0728d1f1ad1eacbd07952b4c954"
+      },
+      "assets/markers-v5LtwDI9.css": {
+        "bytes": 98056,
+        "sha256": "c5af74e972535ec981b4a613259035a693db7f3ae19927acf45d7e69340dc40a"
+      },
+      "assets/OrderManagementView-V_hjQiD2.js": {
+        "bytes": 21212,
+        "sha256": "bb3f84d75a7a14c212b8d33e0d4fc5c8e70028480694ce6ee24230325890da74"
+      },
+      "assets/Pagination-Bj8wv_6F.js": {
+        "bytes": 614,
+        "sha256": "accce38836cfab56a53d7f3137063e6d1473a8649698423130f3ce24432b6244"
+      },
+      "assets/RecordsView-Ah8wDtf3.js": {
+        "bytes": 4454,
+        "sha256": "705a0d53134a31f6a9c5fd95817a20f8fccbefb0f128c6fe89c319213504d26b"
+      },
+      "assets/rolldown-runtime-WkwZ5CU-.js": {
+        "bytes": 599,
+        "sha256": "2629f2ad3cb75a57d98de697127f5af7d777ef572bbcdfa6e3ce8f438cd4527e"
+      },
+      "assets/RouteManagementView-B0YUIoDM.js": {
+        "bytes": 17091,
+        "sha256": "f8f2f169b9e4f56d1f61fdf7f6462d803ecb6fd6f4da482ebe1b41dc7ba8acef"
+      },
+      "assets/RouteMap-BfMUYhq-.js": {
+        "bytes": 14541,
+        "sha256": "b139ca03a1d5a4aabae82bfeaa31a9214e4a923f12f9e13ebd22520d99f5fdcc"
+      },
+      "assets/SustainabilityView-Ye1o5mcS.js": {
+        "bytes": 8603,
+        "sha256": "0021d82a8a3716562284e27a9d1ac9bbfcdee679cfba1af32743705ef54da938"
+      },
+      "assets/tripState-nVnDJ7Ha.js": {
+        "bytes": 107,
+        "sha256": "b6fab7b4a9b9daf44e7f30c31e663aa0b502c097bdbc3a52fe76df70f2b47e3a"
+      },
+      "assets/viewport-BF8sWe9Z.js": {
+        "bytes": 474,
+        "sha256": "633f6c02ea297832ad254ddfcf2c30a0c1f8cd7f46eae481358a42d8df9524e4"
+      },
+      "favicon.svg": {
+        "bytes": 9522,
+        "sha256": "61bc9a161de58248288e6905425d7180f0624c2865007b97d763fdac12043a66"
+      },
+      "icons.svg": {
+        "bytes": 5055,
+        "sha256": "7ca2d67c9c3aebf50cdc8709ee8aacf8cdb8cc7ea6325ea94939caef5da1c53d"
+      },
+      "index.html": {
+        "bytes": 710,
+        "sha256": "da7b45b134041b877a9ade7228bf65a3013b0760a4d3fb9279d3d3801b94f986"
+      },
+      "maps/LICENSE-OpenFreeMap.md": {
+        "bytes": 4239,
+        "sha256": "ca0be2a9a368081bbc9877047d024203377317f5ab6cbc0381974a9ddc9a09f6"
+      },
+      "maps/LICENSE-OSM-Liberty.md": {
+        "bytes": 3317,
+        "sha256": "4e8929cc5d218b1689731fd7ea225feb4a01fd1315899988c7c1375413e776d5"
+      },
+      "maps/lima-pastel.json": {
+        "bytes": 99943,
+        "sha256": "c960cf45046aedfaa22962c86472991cc68f6fcb377ccc79af39cd99f2dcbbcd"
+      },
+      "maps/README.md": {
+        "bytes": 1924,
+        "sha256": "f0129af03fc3081db7b1e57c3322117a1c00153a089479c7513ddb30da8c7edd"
+      }
+    },
+    "after": {
+      "assets/AdminView-C23w0kPB.js": {
+        "bytes": 16624,
+        "sha256": "a7728ea1c0ebf851b7defb80c9f45ea2c9ca1fb3ac07cf6430e4553e8dd1f9e9"
+      },
+      "assets/AdminView-C23w0kPB.js.br": {
+        "bytes": 4788,
+        "sha256": "886a675319eba858f8908642dbe7184ecb05dcd076c414bef8249fcf2b2caae0"
+      },
+      "assets/AdminView-C23w0kPB.js.gz": {
+        "bytes": 5003,
+        "sha256": "94b9f22dfa6ff2d4eee06083dd7971b3dd6324ad247cd05f730151a5d4232371"
+      },
+      "assets/DashboardPage-B1WJLA3Z.js": {
+        "bytes": 16381,
+        "sha256": "a67ccb2fea6f2132cef081a2b57c346fee1bc63df025028de89b96638eda9286"
+      },
+      "assets/DashboardPage-B1WJLA3Z.js.br": {
+        "bytes": 5104,
+        "sha256": "25b628930c8e224c77df02d6a98e458863bd0a08dbf1e1626a8257e9a4e31dc8"
+      },
+      "assets/DashboardPage-B1WJLA3Z.js.gz": {
+        "bytes": 5327,
+        "sha256": "7be6a92fcf6cd942021690f28a81084e78dde94fdba1adaeada0d0ec35601006"
+      },
+      "assets/DestinationMap-C1V0DnLf.js": {
+        "bytes": 2419,
+        "sha256": "96f83fa02946bbf5e62e8c778fd1c895f9f23266b592b94c721a3ae435c29ff5"
+      },
+      "assets/DestinationMap-C1V0DnLf.js.br": {
+        "bytes": 1068,
+        "sha256": "79060c2939406f5e8746dd0a93090375d6a5deb1737ca14627a298171f9129bc"
+      },
+      "assets/DestinationMap-C1V0DnLf.js.gz": {
+        "bytes": 1141,
+        "sha256": "b77d575de5f8e7c3abcb55eee56765d42ec5a87ef314ebcafe71a7fb36ae8f05"
+      },
+      "assets/DriverOrderView-DnAPWH9v.js": {
+        "bytes": 6010,
+        "sha256": "20496e8a898f062a7cd67da6066dfba4bbdfafa6dd75db26c4c064bba808f1b7"
+      },
+      "assets/DriverOrderView-DnAPWH9v.js.br": {
+        "bytes": 2088,
+        "sha256": "87e180f54d744d3d11242e33d92d1dcbad558ad78a879868a4aaf6f081311b5b"
+      },
+      "assets/DriverOrderView-DnAPWH9v.js.gz": {
+        "bytes": 2202,
+        "sha256": "6675c67fdee2587be0bce7b256770f234c2fea45594471052a07317c94e0a9c3"
+      },
+      "assets/driverRoute-CLu5D2RZ.js": {
+        "bytes": 196,
+        "sha256": "38cb749b012a2b1e20af8d4b8b3109a6a0976a39ec3d2b56c3cbd52ba3e30baa"
+      },
+      "assets/DriverRouteView-BssAFpRP.js": {
+        "bytes": 3615,
+        "sha256": "6dbb139be3a6f25a9312d3e46992d4a089e6e9629b8a4b76d55b6fc0af7df957"
+      },
+      "assets/DriverRouteView-BssAFpRP.js.br": {
+        "bytes": 1339,
+        "sha256": "8bf5229130cc2275df910d642f247a0e91d65b561b5e7e228e7e419f81f8003c"
+      },
+      "assets/DriverRouteView-BssAFpRP.js.gz": {
+        "bytes": 1426,
+        "sha256": "6d6e059bdd79222cb262162045e11a7498f8f6f3eb9856e3757f3427d741e875"
+      },
+      "assets/DriversView-DtZjWmJw.js": {
+        "bytes": 5662,
+        "sha256": "8b9474c7311952e4906b5006a4834e53c3fd2a8d95bc538164c39dcfb59e53cf"
+      },
+      "assets/DriversView-DtZjWmJw.js.br": {
+        "bytes": 1819,
+        "sha256": "98a4ff11d42e1a82c6ca75ec5453eb9cfb4db83243901616d3f5400966355424"
+      },
+      "assets/DriversView-DtZjWmJw.js.gz": {
+        "bytes": 1922,
+        "sha256": "c96f328602b0e9fba039449baa71f4ebc643565381759a9fbadc0aeff730ffe9"
+      },
+      "assets/fleetBoard-Bc27wUUi.js": {
+        "bytes": 1876,
+        "sha256": "94dc363c5f2e3edc72f6bf0a03481f22a75d85fec573cca3e89f12b9a922bb8b"
+      },
+      "assets/fleetBoard-Bc27wUUi.js.br": {
+        "bytes": 915,
+        "sha256": "dbfde5e3ec3f345b90cbb85a1437c504fb4352f1c4b6082ae283bb1cdbaea254"
+      },
+      "assets/fleetBoard-Bc27wUUi.js.gz": {
+        "bytes": 979,
+        "sha256": "61546dfb3dae50b35908e80d7eb1bfcf73f010296eb44e9f2af5a1ba0009dc0c"
+      },
+      "assets/FleetView-PkSO5NaA.js": {
+        "bytes": 12204,
+        "sha256": "2d48c24cedadad053d8e3b2d4bf6eedaa5e19ad9add64702f9688e6cee6961db"
+      },
+      "assets/FleetView-PkSO5NaA.js.br": {
+        "bytes": 4092,
+        "sha256": "dbb0b19cd9b4fe573d944218da52783c34f4b0b61e8f12c4726c34787347adfe"
+      },
+      "assets/FleetView-PkSO5NaA.js.gz": {
+        "bytes": 4259,
+        "sha256": "5e595dcc93881b9b01bb98fc8aa312cd30211e4bdf7016f313a4d39fd204d2ac"
+      },
+      "assets/index-BtZM_Mrz.css": {
+        "bytes": 75635,
+        "sha256": "2f1700c64b22bff7c9c82496d8bfb18301c07dd56c40a9975b922df4315eddfd"
+      },
+      "assets/index-BtZM_Mrz.css.br": {
+        "bytes": 13623,
+        "sha256": "fe01a6a1c06ce380304b8258a5a0406675d265b40059593b69a19c568f721a86"
+      },
+      "assets/index-BtZM_Mrz.css.gz": {
+        "bytes": 14527,
+        "sha256": "6c5017adf309a592ff127f1df7541be7c25fe863084135a441f14bafe8b798ca"
+      },
+      "assets/index-HzZVUlnf.js": {
+        "bytes": 269678,
+        "sha256": "d5400a0a0f28fe225d86f8247ac10dc9f81efa03524db78cfed1849830dffb06"
+      },
+      "assets/index-HzZVUlnf.js.br": {
+        "bytes": 78165,
+        "sha256": "b38afa9eef9a8ebb7c25179a7fb0bb6d77030165117941e3ef4db728329ef578"
+      },
+      "assets/index-HzZVUlnf.js.gz": {
+        "bytes": 83863,
+        "sha256": "3ad560a71b11140dc000b508db5971a5861fc8564c3bf71f77770f47c6b1da6b"
+      },
+      "assets/leaflet-src-Dtl8lBO1.js": {
+        "bytes": 148604,
+        "sha256": "7ef990c4311104f69563bd739282574c90adc00cac64798784ba6781a896c064"
+      },
+      "assets/leaflet-src-Dtl8lBO1.js.br": {
+        "bytes": 40179,
+        "sha256": "e7e43155e909f58f807b89b4e931976038e3243169ca834692ea30c2b8089be3"
+      },
+      "assets/leaflet-src-Dtl8lBO1.js.gz": {
+        "bytes": 42801,
+        "sha256": "a2713eec410fc733ec351a52f438610fcf363a53c571856c3b0ba0f499cb81bf"
+      },
+      "assets/LeafletCanvas-D3NwMGBI.js": {
+        "bytes": 13497,
+        "sha256": "3745278ef8a2dd3f3f5e9d4226c6ea5c6f37845fe0e2419ce7b01b45b2457841"
+      },
+      "assets/LeafletCanvas-D3NwMGBI.js.br": {
+        "bytes": 4433,
+        "sha256": "4ff8ff1038c01168ba4a601119e1e7d2831d9297024a5f1b579bb0a8f525aa2a"
+      },
+      "assets/LeafletCanvas-D3NwMGBI.js.gz": {
+        "bytes": 4636,
+        "sha256": "a6944410a459b02dc914ddd2490e539b78635e895886b75f43df0257ee0815c0"
+      },
+      "assets/maplibre-gl-worker-CEzvAyZY.js": {
+        "bytes": 507694,
+        "sha256": "c71da9f14bdb4500fb65b19d894d60af023d13749657e903e1dcde4aab63b5c6"
+      },
+      "assets/maplibre-gl-worker-CEzvAyZY.js.br": {
+        "bytes": 130026,
+        "sha256": "8e0f8f5d33ea6d5c10709da9ac7cf7e99542452a700d7f3ba3498d906e86a32f"
+      },
+      "assets/maplibre-gl-worker-CEzvAyZY.js.gz": {
+        "bytes": 144323,
+        "sha256": "2b103c4eebdb8a50b1948d798ac55c5c3764ee2201f9db2b2e57c0126c0aa561"
+      },
+      "assets/mapPresentation-Br34faox.js": {
+        "bytes": 2600,
+        "sha256": "d4fea011721eac63e47a35a38e2b1cf854584bc65380a63eb74256b0e101f51c"
+      },
+      "assets/mapPresentation-Br34faox.js.br": {
+        "bytes": 1067,
+        "sha256": "ce8efe1f06e1b49a5babbddecb8669b22ac2a042590a5d45163e043cb0d3cd29"
+      },
+      "assets/mapPresentation-Br34faox.js.gz": {
+        "bytes": 1149,
+        "sha256": "0618c46d50de55a7f7d43bf63313fcf6aec02ecd4363c25b2ca0f07349cb6c1c"
+      },
+      "assets/markers-C5RRoDMX.js": {
+        "bytes": 1041460,
+        "sha256": "9a1dfdced6bc3a746440d3aa73605b4928606bed0923d4bb1a6f67027b44b1aa"
+      },
+      "assets/markers-C5RRoDMX.js.br": {
+        "bytes": 250601,
+        "sha256": "7965c979130d4576adb59e286682da21d0864e03021fdad0499f940e088b7c1f"
+      },
+      "assets/markers-C5RRoDMX.js.gz": {
+        "bytes": 279351,
+        "sha256": "a4e1a7ea27994fa25640485449ab3d38b8fa5bc115d8d22c63c881e05f6aff06"
+      },
+      "assets/markers-v5LtwDI9.css": {
+        "bytes": 98056,
+        "sha256": "c5af74e972535ec981b4a613259035a693db7f3ae19927acf45d7e69340dc40a"
+      },
+      "assets/markers-v5LtwDI9.css.br": {
+        "bytes": 14836,
+        "sha256": "eb051e7de77f19b45e71a52f4a4809a0f57615da589682f2527afa8eba01762d"
+      },
+      "assets/markers-v5LtwDI9.css.gz": {
+        "bytes": 16840,
+        "sha256": "0a05ab229d55f3713455fac0011fe4b9f31c51bd66ce012bfb3790a9631fb009"
+      },
+      "assets/OrderManagementView-CdV20oKX.js": {
+        "bytes": 21242,
+        "sha256": "d8b2a04f10ae7e4897a0f674ebce31183a36da6bdd87a092974951a7ddd115f8"
+      },
+      "assets/OrderManagementView-CdV20oKX.js.br": {
+        "bytes": 6348,
+        "sha256": "76b11615ac08858dcc80f60a32d61ac1025d6d5e1be6c6ab9b6b25cb61c94bc1"
+      },
+      "assets/OrderManagementView-CdV20oKX.js.gz": {
+        "bytes": 6654,
+        "sha256": "33b33a879b0910cf3fa73dbf08a16016838914008deeb08fe5cc82185c59b3b7"
+      },
+      "assets/Pagination-BQ6Pz3s_.js": {
+        "bytes": 614,
+        "sha256": "e98cfa12a6086506e3f5c1da7e4de6c61f1b8b153c847dc16dc4769639770de0"
+      },
+      "assets/RecordsView-Bvohv8Np.js": {
+        "bytes": 4454,
+        "sha256": "64e32a5ff47e0639d5ad85da7401bb3c41c3af8e5decacedfa5663deee0b2d65"
+      },
+      "assets/RecordsView-Bvohv8Np.js.br": {
+        "bytes": 1746,
+        "sha256": "aef4abfd50a555baba16e7743ec40292ab4b9d7f4ddeb63413941cc1cea375f0"
+      },
+      "assets/RecordsView-Bvohv8Np.js.gz": {
+        "bytes": 1862,
+        "sha256": "44096f59ef4597dc153823417c9e72ceacce011d7e514a0b86ee3ceb0402c9e3"
+      },
+      "assets/rolldown-runtime-WkwZ5CU-.js": {
+        "bytes": 599,
+        "sha256": "2629f2ad3cb75a57d98de697127f5af7d777ef572bbcdfa6e3ce8f438cd4527e"
+      },
+      "assets/RouteManagementView-BqcUm9Y2.js": {
+        "bytes": 17091,
+        "sha256": "99b22ab8b6ad2ec39ffc09982be25e0c9c9553555f484b2c3b8a1b6555f1ee9b"
+      },
+      "assets/RouteManagementView-BqcUm9Y2.js.br": {
+        "bytes": 5243,
+        "sha256": "ed09fb065c7313c44f261c79b65cd055a5774163e492b02ac535473589c6b0a9"
+      },
+      "assets/RouteManagementView-BqcUm9Y2.js.gz": {
+        "bytes": 5451,
+        "sha256": "0187f36db1be403ede32b94614735321803e13aeb57a4a7c19600f8db34cbbd0"
+      },
+      "assets/RouteMap-D3KoWHfd.js": {
+        "bytes": 14541,
+        "sha256": "8f0812508cf1918f94ffc30337ab2c7d3ed6971ceb4ad66bb80ec15907ecaa2a"
+      },
+      "assets/RouteMap-D3KoWHfd.js.br": {
+        "bytes": 4630,
+        "sha256": "fd8eefae8a80f589e046f4ad578d6a2e6d1199e0bbaa0a731e40c99a962a25e1"
+      },
+      "assets/RouteMap-D3KoWHfd.js.gz": {
+        "bytes": 4811,
+        "sha256": "fb75c538dfa50fb93c2bb865c169eb93304e9ea87598df45aa7312290ddf0e36"
+      },
+      "assets/SustainabilityView-maQ0pL57.js": {
+        "bytes": 8603,
+        "sha256": "fd3777ad5b3e67ad953f074781a69bf1a0034fa89c02f9066a430c2072dbeecb"
+      },
+      "assets/SustainabilityView-maQ0pL57.js.br": {
+        "bytes": 2961,
+        "sha256": "f049a5c53260ee514e54e3c3e4bf50f1d8dbd053c87420a862b7c443126c5c11"
+      },
+      "assets/SustainabilityView-maQ0pL57.js.gz": {
+        "bytes": 3086,
+        "sha256": "fd430fd72d0f03a85c3be04a456582f221a64ec1178accaba062c868dd9cc491"
+      },
+      "assets/tripState-nVnDJ7Ha.js": {
+        "bytes": 107,
+        "sha256": "b6fab7b4a9b9daf44e7f30c31e663aa0b502c097bdbc3a52fe76df70f2b47e3a"
+      },
+      "assets/viewport-BF8sWe9Z.js": {
+        "bytes": 474,
+        "sha256": "633f6c02ea297832ad254ddfcf2c30a0c1f8cd7f46eae481358a42d8df9524e4"
+      },
+      "favicon.svg": {
+        "bytes": 9522,
+        "sha256": "61bc9a161de58248288e6905425d7180f0624c2865007b97d763fdac12043a66"
+      },
+      "icons.svg": {
+        "bytes": 5055,
+        "sha256": "7ca2d67c9c3aebf50cdc8709ee8aacf8cdb8cc7ea6325ea94939caef5da1c53d"
+      },
+      "index.html": {
+        "bytes": 696,
+        "sha256": "ffd558c360c37927d6ff7d6c2676514ac7a89fe4f540859522cfe3483b0dba41"
+      },
+      "maps/LICENSE-OpenFreeMap.md": {
+        "bytes": 4239,
+        "sha256": "ca0be2a9a368081bbc9877047d024203377317f5ab6cbc0381974a9ddc9a09f6"
+      },
+      "maps/LICENSE-OSM-Liberty.md": {
+        "bytes": 3317,
+        "sha256": "4e8929cc5d218b1689731fd7ea225feb4a01fd1315899988c7c1375413e776d5"
+      },
+      "maps/lima-pastel.json": {
+        "bytes": 99943,
+        "sha256": "c960cf45046aedfaa22962c86472991cc68f6fcb377ccc79af39cd99f2dcbbcd"
+      },
+      "maps/README.md": {
+        "bytes": 1924,
+        "sha256": "f0129af03fc3081db7b1e57c3322117a1c00153a089479c7513ddb30da8c7edd"
+      }
+    }
+  }
+}

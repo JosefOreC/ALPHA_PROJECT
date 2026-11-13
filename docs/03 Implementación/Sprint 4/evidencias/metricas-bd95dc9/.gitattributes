@@ -1,0 +1,5 @@
+# Preserve exact audit bytes and whitespace for SHA-256 verification.
+*.json -text -whitespace
+*.html -text -whitespace
+*.txt -text -whitespace
+*.jpg -text

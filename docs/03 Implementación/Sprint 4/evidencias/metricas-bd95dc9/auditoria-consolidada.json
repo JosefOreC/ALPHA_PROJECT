@@ -1,0 +1,665 @@
+{
+  "analysed_lima": "2026-11-13T01:35:47-05:00",
+  "branch": "refactor/mern",
+  "baseline_build_commit": "bd95dc9315c9e2526fcb06add520e982f8310cf6",
+  "implementation_commit": "1d525069686ad1222a1bbe8b58a018bdae2542a2",
+  "thresholds": {
+    "performance": [
+      ">=",
+      90
+    ],
+    "fcp_ms": [
+      "<=",
+      1000
+    ],
+    "lcp_ms": [
+      "<=",
+      1400
+    ],
+    "tbt_ms": [
+      "<=",
+      85
+    ],
+    "cls": [
+      "<=",
+      0.02
+    ],
+    "transfer_bytes": [
+      "<",
+      1100000
+    ]
+  },
+  "model": {
+    "name": "SWDM v4",
+    "source": "https://sustainablewebdesign.org/estimating-digital-emissions/",
+    "grid_gCO2e_per_kwh": 494,
+    "GB_bytes": 1000000000,
+    "new_visitor_ratio": 1,
+    "return_visitor_ratio": 0,
+    "cache_ratio": 0,
+    "green_hosting_ratio": 0,
+    "annual_visits_scenario": 10000,
+    "annual_visits_are_observed": false
+  },
+  "pages": {
+    "login": {
+      "before": {
+        "median": {
+          "performance": 99.0,
+          "fcp_ms": 908.1148,
+          "lcp_ms": 908.1148,
+          "tbt_ms": 0,
+          "cls": 0.07538892738405782,
+          "transfer_bytes": 101268
+        },
+        "environmental": {
+          "operational_kwh": "0.000019645992",
+          "embodied_equivalent_kwh": "0.000010734408",
+          "total_equivalent_kwh": "0.000030380400",
+          "total_gCO2e": "0.015007917600",
+          "segments": {
+            "data_centers": {
+              "operational_kwh": "0.000005569740",
+              "embodied_equivalent_kwh": "0.000001215216",
+              "operational_gCO2e": "0.002751451560",
+              "embodied_gCO2e": "0.000600316704"
+            },
+            "networks": {
+              "operational_kwh": "0.000005974812",
+              "embodied_equivalent_kwh": "0.000001316484",
+              "operational_gCO2e": "0.002951557128",
+              "embodied_gCO2e": "0.000650343096"
+            },
+            "user_devices": {
+              "operational_kwh": "0.000008101440",
+              "embodied_equivalent_kwh": "0.000008202708",
+              "operational_gCO2e": "0.004002111360",
+              "embodied_gCO2e": "0.004052137752"
+            }
+          }
+        },
+        "range": {
+          "performance": [
+            99.0,
+            99.0
+          ],
+          "fcp_ms": [
+            907.8594,
+            909.762
+          ],
+          "lcp_ms": [
+            907.8594,
+            909.762
+          ],
+          "tbt_ms": [
+            0,
+            0
+          ],
+          "cls": [
+            0.07538892738405782,
+            0.07538892738405782
+          ],
+          "transfer_bytes": [
+            101268,
+            101881
+          ]
+        }
+      },
+      "after": {
+        "median": {
+          "performance": 100,
+          "fcp_ms": 768.1499,
+          "lcp_ms": 768.1499,
+          "tbt_ms": 0,
+          "cls": 0,
+          "transfer_bytes": 92862
+        },
+        "environmental": {
+          "operational_kwh": "0.000018015228",
+          "embodied_equivalent_kwh": "0.000009843372",
+          "total_equivalent_kwh": "0.000027858600",
+          "total_gCO2e": "0.013762148400",
+          "segments": {
+            "data_centers": {
+              "operational_kwh": "0.000005107410",
+              "embodied_equivalent_kwh": "0.000001114344",
+              "operational_gCO2e": "0.002523060540",
+              "embodied_gCO2e": "0.000550485936"
+            },
+            "networks": {
+              "operational_kwh": "0.000005478858",
+              "embodied_equivalent_kwh": "0.000001207206",
+              "operational_gCO2e": "0.002706555852",
+              "embodied_gCO2e": "0.000596359764"
+            },
+            "user_devices": {
+              "operational_kwh": "0.000007428960",
+              "embodied_equivalent_kwh": "0.000007521822",
+              "operational_gCO2e": "0.003669906240",
+              "embodied_gCO2e": "0.003715780068"
+            }
+          }
+        },
+        "range": {
+          "performance": [
+            100,
+            100
+          ],
+          "fcp_ms": [
+            765.8413,
+            904.735
+          ],
+          "lcp_ms": [
+            765.8413,
+            904.735
+          ],
+          "tbt_ms": [
+            0,
+            0
+          ],
+          "cls": [
+            0,
+            0
+          ],
+          "transfer_bytes": [
+            92862,
+            93508
+          ]
+        }
+      },
+      "annual_scenario_saved_kgCO2e": "0.012457692000"
+    },
+    "pedidos": {
+      "before": {
+        "median": {
+          "performance": 100,
+          "fcp_ms": 904.2948,
+          "lcp_ms": 1382.6424,
+          "tbt_ms": 0,
+          "cls": 0.03190469583932674,
+          "transfer_bytes": 110575
+        },
+        "environmental": {
+          "operational_kwh": "0.000021451550",
+          "embodied_equivalent_kwh": "0.000011720950",
+          "total_equivalent_kwh": "0.000033172500",
+          "total_gCO2e": "0.016387215000",
+          "segments": {
+            "data_centers": {
+              "operational_kwh": "0.000006081625",
+              "embodied_equivalent_kwh": "0.000001326900",
+              "operational_gCO2e": "0.003004322750",
+              "embodied_gCO2e": "0.000655488600"
+            },
+            "networks": {
+              "operational_kwh": "0.000006523925",
+              "embodied_equivalent_kwh": "0.000001437475",
+              "operational_gCO2e": "0.003222818950",
+              "embodied_gCO2e": "0.000710112650"
+            },
+            "user_devices": {
+              "operational_kwh": "0.000008846000",
+              "embodied_equivalent_kwh": "0.000008956575",
+              "operational_gCO2e": "0.004369924000",
+              "embodied_gCO2e": "0.004424548050"
+            }
+          }
+        },
+        "range": {
+          "performance": [
+            100,
+            100
+          ],
+          "fcp_ms": [
+            904.1424,
+            906.2746
+          ],
+          "lcp_ms": [
+            1374.7948000000001,
+            1395.2746
+          ],
+          "tbt_ms": [
+            0,
+            0
+          ],
+          "cls": [
+            0.03190469583932674,
+            0.03190469583932674
+          ],
+          "transfer_bytes": [
+            110552,
+            110858
+          ]
+        }
+      },
+      "after": {
+        "median": {
+          "performance": 100,
+          "fcp_ms": 764.2762,
+          "lcp_ms": 1213.2762,
+          "tbt_ms": 0,
+          "cls": 0.00036365110324051693,
+          "transfer_bytes": 101837
+        },
+        "environmental": {
+          "operational_kwh": "0.000019756378",
+          "embodied_equivalent_kwh": "0.000010794722",
+          "total_equivalent_kwh": "0.000030551100",
+          "total_gCO2e": "0.015092243400",
+          "segments": {
+            "data_centers": {
+              "operational_kwh": "0.000005601035",
+              "embodied_equivalent_kwh": "0.000001222044",
+              "operational_gCO2e": "0.002766911290",
+              "embodied_gCO2e": "0.000603689736"
+            },
+            "networks": {
+              "operational_kwh": "0.000006008383",
+              "embodied_equivalent_kwh": "0.000001323881",
+              "operational_gCO2e": "0.002968141202",
+              "embodied_gCO2e": "0.000653997214"
+            },
+            "user_devices": {
+              "operational_kwh": "0.000008146960",
+              "embodied_equivalent_kwh": "0.000008248797",
+              "operational_gCO2e": "0.004024598240",
+              "embodied_gCO2e": "0.004074905718"
+            }
+          }
+        },
+        "range": {
+          "performance": [
+            100,
+            100
+          ],
+          "fcp_ms": [
+            764.2119,
+            765.0107
+          ],
+          "lcp_ms": [
+            1212.2119,
+            1237.0107
+          ],
+          "tbt_ms": [
+            0,
+            0
+          ],
+          "cls": [
+            0.00036365110324051693,
+            0.00036365110324051693
+          ],
+          "transfer_bytes": [
+            101814,
+            102171
+          ]
+        }
+      },
+      "annual_scenario_saved_kgCO2e": "0.012949716000"
+    }
+  },
+  "reports": [
+    {
+      "file": "verified-before-login-1.json",
+      "html": "verified-before-login-1.html",
+      "sha256": "d9e885cd454892d3035d9846a9e5a9853730bf97eff78a021b8dee56cebe3704",
+      "phase": "before",
+      "page": "login",
+      "fetch_time_utc": "2026-11-13T06:23:41.684Z",
+      "metrics": {
+        "fcp_ms": 909.762,
+        "lcp_ms": 909.762,
+        "tbt_ms": 0,
+        "cls": 0.07538892738405782,
+        "transfer_bytes": 101881,
+        "performance": 99.0
+      },
+      "checks": {
+        "fcp_ms": true,
+        "lcp_ms": true,
+        "tbt_ms": true,
+        "cls": false,
+        "transfer_bytes": true,
+        "performance": true
+      },
+      "all_thresholds_pass": false
+    },
+    {
+      "file": "verified-before-login-2.json",
+      "html": "verified-before-login-2.html",
+      "sha256": "b1577dd6cdd3b6d748aa343faafc8dd13b853a3a8c9adf7c308aa8d740aadcc8",
+      "phase": "before",
+      "page": "login",
+      "fetch_time_utc": "2026-11-13T06:23:47.611Z",
+      "metrics": {
+        "fcp_ms": 908.1148,
+        "lcp_ms": 908.1148,
+        "tbt_ms": 0,
+        "cls": 0.07538892738405782,
+        "transfer_bytes": 101268,
+        "performance": 99.0
+      },
+      "checks": {
+        "fcp_ms": true,
+        "lcp_ms": true,
+        "tbt_ms": true,
+        "cls": false,
+        "transfer_bytes": true,
+        "performance": true
+      },
+      "all_thresholds_pass": false
+    },
+    {
+      "file": "verified-before-login-3.json",
+      "html": "verified-before-login-3.html",
+      "sha256": "289403ce271438e34976150151b65828b4673529dff5b6da8079430c9b7a2284",
+      "phase": "before",
+      "page": "login",
+      "fetch_time_utc": "2026-11-13T06:23:53.384Z",
+      "metrics": {
+        "fcp_ms": 907.8594,
+        "lcp_ms": 907.8594,
+        "tbt_ms": 0,
+        "cls": 0.07538892738405782,
+        "transfer_bytes": 101268,
+        "performance": 99.0
+      },
+      "checks": {
+        "fcp_ms": true,
+        "lcp_ms": true,
+        "tbt_ms": true,
+        "cls": false,
+        "transfer_bytes": true,
+        "performance": true
+      },
+      "all_thresholds_pass": false
+    },
+    {
+      "file": "final-after-login-1.json",
+      "html": "final-after-login-1.html",
+      "sha256": "0d0877c2a7acd6f62bb7d351ccb9f8a051b3027833969db537cd594300035681",
+      "phase": "after",
+      "page": "login",
+      "fetch_time_utc": "2026-11-13T06:27:46.307Z",
+      "metrics": {
+        "fcp_ms": 904.735,
+        "lcp_ms": 904.735,
+        "tbt_ms": 0,
+        "cls": 0,
+        "transfer_bytes": 93508,
+        "performance": 100
+      },
+      "checks": {
+        "fcp_ms": true,
+        "lcp_ms": true,
+        "tbt_ms": true,
+        "cls": true,
+        "transfer_bytes": true,
+        "performance": true
+      },
+      "all_thresholds_pass": true
+    },
+    {
+      "file": "final-after-login-2.json",
+      "html": "final-after-login-2.html",
+      "sha256": "7c1c84a1d76486f53749c3343b1ed64a107cbf78636a818d267fb940f966cdca",
+      "phase": "after",
+      "page": "login",
+      "fetch_time_utc": "2026-11-13T06:27:52.302Z",
+      "metrics": {
+        "fcp_ms": 765.8413,
+        "lcp_ms": 765.8413,
+        "tbt_ms": 0,
+        "cls": 0,
+        "transfer_bytes": 92862,
+        "performance": 100
+      },
+      "checks": {
+        "fcp_ms": true,
+        "lcp_ms": true,
+        "tbt_ms": true,
+        "cls": true,
+        "transfer_bytes": true,
+        "performance": true
+      },
+      "all_thresholds_pass": true
+    },
+    {
+      "file": "final-after-login-3.json",
+      "html": "final-after-login-3.html",
+      "sha256": "33f6d1f026c5896c523b67d26ae07cbe25234b70f116daa340a334d3f3a81935",
+      "phase": "after",
+      "page": "login",
+      "fetch_time_utc": "2026-11-13T06:27:58.178Z",
+      "metrics": {
+        "fcp_ms": 768.1499,
+        "lcp_ms": 768.1499,
+        "tbt_ms": 0,
+        "cls": 0,
+        "transfer_bytes": 92862,
+        "performance": 100
+      },
+      "checks": {
+        "fcp_ms": true,
+        "lcp_ms": true,
+        "tbt_ms": true,
+        "cls": true,
+        "transfer_bytes": true,
+        "performance": true
+      },
+      "all_thresholds_pass": true
+    },
+    {
+      "file": "verified-before-pedidos-1.json",
+      "html": "verified-before-pedidos-1.html",
+      "sha256": "4c213b8cc90a1fcee1618d5eb3ca53372da3a43b90e0d614a86d1953cb01b5af",
+      "phase": "before",
+      "page": "pedidos",
+      "fetch_time_utc": "2026-11-13T06:24:04.248Z",
+      "metrics": {
+        "fcp_ms": 906.2746,
+        "lcp_ms": 1395.2746,
+        "tbt_ms": 0,
+        "cls": 0.03190469583932674,
+        "transfer_bytes": 110858,
+        "performance": 100
+      },
+      "checks": {
+        "fcp_ms": true,
+        "lcp_ms": true,
+        "tbt_ms": true,
+        "cls": false,
+        "transfer_bytes": true,
+        "performance": true
+      },
+      "all_thresholds_pass": false
+    },
+    {
+      "file": "verified-before-pedidos-2.json",
+      "html": "verified-before-pedidos-2.html",
+      "sha256": "e8ded0792698464c54aeb8afd987e08e35867000a15d5fe557bcdc3c4a820e62",
+      "phase": "before",
+      "page": "pedidos",
+      "fetch_time_utc": "2026-11-13T06:24:10.595Z",
+      "metrics": {
+        "fcp_ms": 904.2948,
+        "lcp_ms": 1374.7948000000001,
+        "tbt_ms": 0,
+        "cls": 0.03190469583932674,
+        "transfer_bytes": 110575,
+        "performance": 100
+      },
+      "checks": {
+        "fcp_ms": true,
+        "lcp_ms": true,
+        "tbt_ms": true,
+        "cls": false,
+        "transfer_bytes": true,
+        "performance": true
+      },
+      "all_thresholds_pass": false
+    },
+    {
+      "file": "verified-before-pedidos-3.json",
+      "html": "verified-before-pedidos-3.html",
+      "sha256": "4c65fab42ec49f0b00893f8c1a99b1e2d80eb30100e99b6056a03ea2ac26576d",
+      "phase": "before",
+      "page": "pedidos",
+      "fetch_time_utc": "2026-11-13T06:24:17.134Z",
+      "metrics": {
+        "fcp_ms": 904.1424,
+        "lcp_ms": 1382.6424,
+        "tbt_ms": 0,
+        "cls": 0.03190469583932674,
+        "transfer_bytes": 110552,
+        "performance": 100
+      },
+      "checks": {
+        "fcp_ms": true,
+        "lcp_ms": true,
+        "tbt_ms": true,
+        "cls": false,
+        "transfer_bytes": true,
+        "performance": true
+      },
+      "all_thresholds_pass": false
+    },
+    {
+      "file": "final-after-pedidos-1.json",
+      "html": "final-after-pedidos-1.html",
+      "sha256": "ec5b295cebaaa3941db47781801e5c77d21af5926487fa978e94e9b7929a068d",
+      "phase": "after",
+      "page": "pedidos",
+      "fetch_time_utc": "2026-11-13T06:28:03.912Z",
+      "metrics": {
+        "fcp_ms": 765.0107,
+        "lcp_ms": 1237.0107,
+        "tbt_ms": 0,
+        "cls": 0.00036365110324051693,
+        "transfer_bytes": 102171,
+        "performance": 100
+      },
+      "checks": {
+        "fcp_ms": true,
+        "lcp_ms": true,
+        "tbt_ms": true,
+        "cls": true,
+        "transfer_bytes": true,
+        "performance": true
+      },
+      "all_thresholds_pass": true
+    },
+    {
+      "file": "final-after-pedidos-2.json",
+      "html": "final-after-pedidos-2.html",
+      "sha256": "6f0d349cac4e2633f8aea63ce316111969cc36a5ef5cbaab830e97056a3d1734",
+      "phase": "after",
+      "page": "pedidos",
+      "fetch_time_utc": "2026-11-13T06:28:10.368Z",
+      "metrics": {
+        "fcp_ms": 764.2762,
+        "lcp_ms": 1213.2762,
+        "tbt_ms": 0,
+        "cls": 0.00036365110324051693,
+        "transfer_bytes": 101814,
+        "performance": 100
+      },
+      "checks": {
+        "fcp_ms": true,
+        "lcp_ms": true,
+        "tbt_ms": true,
+        "cls": true,
+        "transfer_bytes": true,
+        "performance": true
+      },
+      "all_thresholds_pass": true
+    },
+    {
+      "file": "final-after-pedidos-3.json",
+      "html": "final-after-pedidos-3.html",
+      "sha256": "44471148fb462bab7cebcd5896727f9221e6dcd19f917ebd5274671926b18c1b",
+      "phase": "after",
+      "page": "pedidos",
+      "fetch_time_utc": "2026-11-13T06:28:16.732Z",
+      "metrics": {
+        "fcp_ms": 764.2119,
+        "lcp_ms": 1212.2119,
+        "tbt_ms": 0,
+        "cls": 0.00036365110324051693,
+        "transfer_bytes": 101837,
+        "performance": 100
+      },
+      "checks": {
+        "fcp_ms": true,
+        "lcp_ms": true,
+        "tbt_ms": true,
+        "cls": true,
+        "transfer_bytes": true,
+        "performance": true
+      },
+      "all_thresholds_pass": true
+    }
+  ],
+  "all_after_runs_pass": true,
+  "lighthouse_version": "13.6.0",
+  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+  "settings": {
+    "output": [
+      "json",
+      "html"
+    ],
+    "maxWaitForFcp": 30000,
+    "maxWaitForLoad": 45000,
+    "pauseAfterFcpMs": 1000,
+    "pauseAfterLoadMs": 1000,
+    "networkQuietThresholdMs": 1000,
+    "cpuQuietThresholdMs": 1000,
+    "formFactor": "mobile",
+    "throttling": {
+      "rttMs": 150,
+      "throughputKbps": 1638.4,
+      "requestLatencyMs": 562.5,
+      "downloadThroughputKbps": 1474.5600000000002,
+      "uploadThroughputKbps": 675,
+      "cpuSlowdownMultiplier": 4
+    },
+    "throttlingMethod": "simulate",
+    "screenEmulation": {
+      "mobile": true,
+      "width": 412,
+      "height": 823,
+      "deviceScaleFactor": 1.75,
+      "disabled": false
+    },
+    "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36",
+    "auditMode": false,
+    "gatherMode": false,
+    "clearStorageTypes": [
+      "file_systems",
+      "shader_cache",
+      "service_workers",
+      "cache_storage"
+    ],
+    "disableStorageReset": false,
+    "debugNavigation": false,
+    "channel": "node",
+    "usePassiveGathering": false,
+    "disableFullPageScreenshot": false,
+    "skipAboutBlank": false,
+    "blankPage": "about:blank",
+    "ignoreStatusCode": false,
+    "locale": "en-US",
+    "blockedUrlPatterns": [
+      "*kaspersky-labs.com*"
+    ],
+    "additionalTraceCategories": null,
+    "extraHeaders": null,
+    "precomputedLanternData": null,
+    "onlyAudits": null,
+    "onlyCategories": [
+      "performance",
+      "accessibility"
+    ],
+    "skipAudits": null
+  },
+  "method": "3 independent navigations per phase/page; identical mobile settings/browser/HTTP2; medians and every individual after-run checked"
+}

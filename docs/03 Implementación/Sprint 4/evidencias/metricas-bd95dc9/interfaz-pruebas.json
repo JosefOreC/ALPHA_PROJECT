@@ -1,0 +1,19 @@
+{
+  "commit": "bd95dc9315c9e2526fcb06add520e982f8310cf6",
+  "branch": "refactor/mern",
+  "started_lima": "2026-11-13T01:29:25-05:00",
+  "command": [
+    "C:\\Program Files\\nodejs\\npm.cmd",
+    "run",
+    "test:ui"
+  ],
+  "cwd": "src/frontend",
+  "database_integration": false,
+  "status": "finished",
+  "python": "3.14.2",
+  "working_tree": "M .gitignore\n M scripts/green_it_fixture.py\n M scripts/measure_green_it.mjs\n M src/backend/README.md\n M src/backend/interfaces/api/deps.py\n M src/frontend/README.md\n M src/frontend/index.html\n M src/frontend/package.json\n M src/frontend/src/App.tsx\n M src/frontend/src/infrastructure/httpSession.ts\n M src/frontend/src/interfaces/OrderManagementView.tsx\n M src/frontend/src/interfaces/session/SessionContext.test.tsx\n M src/frontend/src/interfaces/session/SessionToolbar.tsx\n M src/frontend/src/main.tsx\n M src/frontend/vite.config.ts\n?? \"docs/03 Implementaci\\303\\263n/Sprint 4/evidencias/metricas-bd95dc9/\"\n?? src/backend/interfaces/api/static_assets.py\n?? src/backend/requirements-http2.txt\n?? src/backend/tests/test_static_assets.py\n?? src/frontend/scripts/precompress.mjs\n?? src/frontend/tests/precompress.test.cjs",
+  "source_diff_sha256": "996650578074f1b75f16673cc7a23a737ca31ced8fb635c83b7ee4e8b6d1738b",
+  "finished_lima": "2026-11-13T01:33:33-05:00",
+  "exit_code": 0,
+  "output_sha256": "35e89c3e832b572a81e8e8f4651054b2561c3bb67744f3e4e60672ac2dfa0151"
+}

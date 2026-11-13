@@ -1,0 +1,38 @@
+<!doctype html><html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Auditoría consolidada — Sprint 4</title><style>body{font:16px system-ui;margin:2rem auto;padding:0 1rem;max-width:1100px;color:#1e2d3d;background:#f6f8fa}h1,h2{color:#0b4937}table{border-collapse:collapse;width:100%;margin:1rem 0;background:white}th,td{padding:.65rem;border:1px solid #d8dfe6;text-align:left}code{overflow-wrap:anywhere}.pass{color:#196c3f}.fail{color:#b3261e}a{color:#0b5aa8}@media print{body{background:white}}</style>
+<h1>Auditoría consolidada de métricas — Sprint 4</h1>
+<p>Fecha: 2026-11-13T01:35:47-05:00 · America/Lima</p>
+<p>Rama: refactor/mern · Código: <code>1d525069686ad1222a1bbe8b58a018bdae2542a2</code></p>
+<p>Base frontend: <code>bd95dc9315c9e2526fcb06add520e982f8310cf6</code></p>
+<p>Doce informes originales. Mismo navegador, perfil móvil simulado, límites de red/CPU, datos ficticios y HTTP/2 antes/después. TLS local autofirmado, exclusivamente en este banco de pruebas. Sin cambios al antivirus ni al almacén de certificados del sistema.</p>
+<p><strong>Las seis corridas finales cumplen todos los umbrales: SÍ.</strong></p>
+<h2>Login: medianas de tres corridas</h2><table><tr><th>Métrica</th><th>Antes</th><th>Después</th><th>Exigencia</th><th>Cumple después</th></tr>
+<tr><th>performance</th><td>99</td><td>100</td><td>&gt;= 90</td><td class="pass">Sí</td></tr>
+<tr><th>fcp_ms</th><td>908.1148</td><td>768.1499</td><td>&lt;= 1000</td><td class="pass">Sí</td></tr>
+<tr><th>lcp_ms</th><td>908.1148</td><td>768.1499</td><td>&lt;= 1400</td><td class="pass">Sí</td></tr>
+<tr><th>tbt_ms</th><td>0</td><td>0</td><td>&lt;= 85</td><td class="pass">Sí</td></tr>
+<tr><th>cls</th><td>0.07538893</td><td>0</td><td>&lt;= 0.02</td><td class="pass">Sí</td></tr>
+<tr><th>transfer_bytes</th><td>101268</td><td>92862</td><td>&lt; 1100000</td><td class="pass">Sí</td></tr>
+</table><p>SWDM v4: 0.015007917600 → 0.013762148400 g CO₂e/visita. Escenario de 10000 visitas/año: 0.012457692000 kg CO₂e evitados estimados.</p>
+<h2>Pedidos: medianas de tres corridas</h2><table><tr><th>Métrica</th><th>Antes</th><th>Después</th><th>Exigencia</th><th>Cumple después</th></tr>
+<tr><th>performance</th><td>100</td><td>100</td><td>&gt;= 90</td><td class="pass">Sí</td></tr>
+<tr><th>fcp_ms</th><td>904.2948</td><td>764.2762</td><td>&lt;= 1000</td><td class="pass">Sí</td></tr>
+<tr><th>lcp_ms</th><td>1382.642</td><td>1213.276</td><td>&lt;= 1400</td><td class="pass">Sí</td></tr>
+<tr><th>tbt_ms</th><td>0</td><td>0</td><td>&lt;= 85</td><td class="pass">Sí</td></tr>
+<tr><th>cls</th><td>0.0319047</td><td>0.0003636511</td><td>&lt;= 0.02</td><td class="pass">Sí</td></tr>
+<tr><th>transfer_bytes</th><td>110575</td><td>101837</td><td>&lt; 1100000</td><td class="pass">Sí</td></tr>
+</table><p>SWDM v4: 0.016387215000 → 0.015092243400 g CO₂e/visita. Escenario de 10000 visitas/año: 0.012949716000 kg CO₂e evitados estimados.</p>
+<h2>Reportes y dictamen por corrida</h2><table><tr><th>Reporte</th><th>Fecha UTC</th><th>FCP ms</th><th>LCP ms</th><th>CLS</th><th>Cumple todos</th></tr>
+<tr><td><a href="verified-before-login-1.html">verified-before-login-1.html</a> · <a href="verified-before-login-1.json">JSON</a></td><td>2026-11-13T06:23:41.684Z</td><td>909.762</td><td>909.762</td><td>0.07538893</td><td>No</td></tr>
+<tr><td><a href="verified-before-login-2.html">verified-before-login-2.html</a> · <a href="verified-before-login-2.json">JSON</a></td><td>2026-11-13T06:23:47.611Z</td><td>908.115</td><td>908.115</td><td>0.07538893</td><td>No</td></tr>
+<tr><td><a href="verified-before-login-3.html">verified-before-login-3.html</a> · <a href="verified-before-login-3.json">JSON</a></td><td>2026-11-13T06:23:53.384Z</td><td>907.859</td><td>907.859</td><td>0.07538893</td><td>No</td></tr>
+<tr><td><a href="final-after-login-1.html">final-after-login-1.html</a> · <a href="final-after-login-1.json">JSON</a></td><td>2026-11-13T06:27:46.307Z</td><td>904.735</td><td>904.735</td><td>0.00000000</td><td>Sí</td></tr>
+<tr><td><a href="final-after-login-2.html">final-after-login-2.html</a> · <a href="final-after-login-2.json">JSON</a></td><td>2026-11-13T06:27:52.302Z</td><td>765.841</td><td>765.841</td><td>0.00000000</td><td>Sí</td></tr>
+<tr><td><a href="final-after-login-3.html">final-after-login-3.html</a> · <a href="final-after-login-3.json">JSON</a></td><td>2026-11-13T06:27:58.178Z</td><td>768.150</td><td>768.150</td><td>0.00000000</td><td>Sí</td></tr>
+<tr><td><a href="verified-before-pedidos-1.html">verified-before-pedidos-1.html</a> · <a href="verified-before-pedidos-1.json">JSON</a></td><td>2026-11-13T06:24:04.248Z</td><td>906.275</td><td>1395.275</td><td>0.03190470</td><td>No</td></tr>
+<tr><td><a href="verified-before-pedidos-2.html">verified-before-pedidos-2.html</a> · <a href="verified-before-pedidos-2.json">JSON</a></td><td>2026-11-13T06:24:10.595Z</td><td>904.295</td><td>1374.795</td><td>0.03190470</td><td>No</td></tr>
+<tr><td><a href="verified-before-pedidos-3.html">verified-before-pedidos-3.html</a> · <a href="verified-before-pedidos-3.json">JSON</a></td><td>2026-11-13T06:24:17.134Z</td><td>904.142</td><td>1382.642</td><td>0.03190470</td><td>No</td></tr>
+<tr><td><a href="final-after-pedidos-1.html">final-after-pedidos-1.html</a> · <a href="final-after-pedidos-1.json">JSON</a></td><td>2026-11-13T06:28:03.912Z</td><td>765.011</td><td>1237.011</td><td>0.00036365</td><td>Sí</td></tr>
+<tr><td><a href="final-after-pedidos-2.html">final-after-pedidos-2.html</a> · <a href="final-after-pedidos-2.json">JSON</a></td><td>2026-11-13T06:28:10.368Z</td><td>764.276</td><td>1213.276</td><td>0.00036365</td><td>Sí</td></tr>
+<tr><td><a href="final-after-pedidos-3.html">final-after-pedidos-3.html</a> · <a href="final-after-pedidos-3.json">JSON</a></td><td>2026-11-13T06:28:16.732Z</td><td>764.212</td><td>1212.212</td><td>0.00036365</td><td>Sí</td></tr>
+</table><h2>Supuestos y alcance</h2><p>El cálculo usa GB decimal, primera visita, hosting verde cero y 494 g CO₂e/kWh. Intensidades operativas: 0,055/0,059/0,080; incorporadas equivalentes: 0,012/0,013/0,081 kWh/GB. No se mide electricidad ni tráfico anual real. El JSON conserva el desglose y todas las condiciones.</p><p>Esta auditoría verifica métricas; no acredita por sí sola las ocho optimizaciones MERN literales ni certificación WCAG completa.</p><p><a href="auditoria-consolidada.json">Datos y huellas</a> · <a href="README.md">Índice y reproducción</a> · <a href="https://sustainablewebdesign.org/estimating-digital-emissions/">Modelo SWDM v4</a></p></html>

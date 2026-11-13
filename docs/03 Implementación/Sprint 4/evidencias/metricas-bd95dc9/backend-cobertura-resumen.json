@@ -1,0 +1,19 @@
+{
+  "implementation_commit": "1d525069686ad1222a1bbe8b58a018bdae2542a2",
+  "totals": {
+    "covered_lines": 3375,
+    "num_statements": 3591,
+    "percent_covered": 93.27073552425665,
+    "percent_covered_display": "93.27",
+    "missing_lines": 216,
+    "excluded_lines": 39,
+    "percent_statements_covered": 93.98496240601504,
+    "percent_statements_covered_display": "93.98",
+    "num_branches": 882,
+    "num_partial_branches": 51,
+    "covered_branches": 797,
+    "missing_branches": 85,
+    "percent_branches_covered": 90.36281179138322,
+    "percent_branches_covered_display": "90.36"
+  }
+}

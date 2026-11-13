@@ -1,0 +1,28 @@
+{
+  "commit": "bd95dc9315c9e2526fcb06add520e982f8310cf6",
+  "branch": "refactor/mern",
+  "started_lima": "2026-11-13T01:24:31-05:00",
+  "command": [
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\.venv\\Scripts\\python.exe",
+    "-m",
+    "pytest",
+    "src/backend/tests",
+    "-q",
+    "-rs",
+    "-p",
+    "no:cacheprovider",
+    "--cov",
+    "--cov-config=.coveragerc",
+    "--cov-report=json:reports/coverage/backend.json",
+    "--cov-report=term:skip-covered"
+  ],
+  "cwd": ".",
+  "database_integration": false,
+  "status": "finished",
+  "python": "3.14.2",
+  "working_tree": "M .gitignore\n M scripts/green_it_fixture.py\n M scripts/measure_green_it.mjs\n M src/backend/README.md\n M src/backend/interfaces/api/deps.py\n M src/frontend/README.md\n M src/frontend/index.html\n M src/frontend/package.json\n M src/frontend/src/App.tsx\n M src/frontend/src/infrastructure/httpSession.ts\n M src/frontend/src/interfaces/OrderManagementView.tsx\n M src/frontend/src/interfaces/session/SessionToolbar.tsx\n M src/frontend/src/main.tsx\n M src/frontend/vite.config.ts\n?? \"docs/03 Implementaci\\303\\263n/Sprint 4/evidencias/metricas-bd95dc9/\"\n?? src/backend/interfaces/api/static_assets.py\n?? src/backend/requirements-http2.txt\n?? src/backend/tests/test_static_assets.py\n?? src/frontend/scripts/prerender.mjs\n?? src/frontend/src/App.preloaded.test.tsx\n?? src/frontend/src/bootstrap.test.ts\n?? src/frontend/src/bootstrap.ts\n?? src/frontend/src/infrastructure/httpSessionPreload.test.ts\n?? src/frontend/src/interfaces/viewLoaders.ts\n?? src/frontend/src/prerender.tsx",
+  "source_diff_sha256": "563c43189d7aa0def92317858407b3cfd60c04785a92153e2073b0987d83f2d8",
+  "finished_lima": "2026-11-13T01:24:41-05:00",
+  "exit_code": 0,
+  "output_sha256": "4dc29dc60e21be51d4fdfd34c2f0fcd7aafa9f5a986c4f380506bedf07c4dabe"
+}
