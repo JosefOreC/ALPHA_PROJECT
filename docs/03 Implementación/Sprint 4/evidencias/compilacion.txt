@@ -1,0 +1,32 @@
+
+> frontend@0.0.0 build
+> tsc -b && vite build
+
+vite v8.3.5 building client environment for production...
+transforming...
+✓ 159 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                 0.99 kB │ gzip:   0.52 kB
+dist/assets/maplibre-gl-worker-CEzvAyZY.js    507.69 kB
+dist/assets/index-BtZM_Mrz.css                 75.63 kB │ gzip:  14.70 kB
+dist/assets/markers-v5LtwDI9.css               98.05 kB │ gzip:  17.18 kB
+dist/assets/viewport-BSSpXiJi.js                0.45 kB │ gzip:   0.33 kB
+dist/assets/rolldown-runtime-WkwZ5CU-.js        0.59 kB │ gzip:   0.36 kB
+dist/assets/DestinationMap-GiDAxiwV.js          2.37 kB │ gzip:   1.12 kB
+dist/assets/LeafletCanvas-pQQJkOE3.js          13.45 kB │ gzip:   4.62 kB
+dist/assets/leaflet-src-Dtl8lBO1.js           148.60 kB │ gzip:  43.33 kB
+dist/assets/index-Bh8rZZLG.js                 393.29 kB │ gzip: 115.85 kB
+dist/assets/markers--dK1sG2F.js             1,041.41 kB │ gzip: 282.63 kB
+
+✓ built in 1.11s
+[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+npm notice
+npm notice New minor version of npm available! 11.6.2 -> 11.21.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.21.2
+npm notice To update run: npm install -g npm@11.21.2
+npm notice

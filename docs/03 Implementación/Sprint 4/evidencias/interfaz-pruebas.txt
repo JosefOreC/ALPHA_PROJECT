@@ -1,0 +1,136 @@
+
+> frontend@0.0.0 test:ui
+> tsc -p tsconfig.ui.json && playwright test
+
+[WebServer] (node:8932) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:18224) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:52180) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 59 tests using 1 worker
+
+(node:19752) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [escritorio] › tests\ui\accesibilidad.spec.ts:13:5 › /tests/ui/sostenibilidad.html: sin incumplimientos WCAG 2.2 AA (escritorio) (9.9s)
+  x   2 [escritorio] › tests\ui\accesibilidad.spec.ts:13:5 › /tests/ui/map.html: sin incumplimientos WCAG 2.2 AA (escritorio) (9.7s)
+(node:37832) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  3 [escritorio] › tests\ui\accesibilidad.spec.ts:13:5 › /tests/ui/demo.html: sin incumplimientos WCAG 2.2 AA (escritorio) (9.7s)
+  -   4 [escritorio] › tests\ui\accesibilidad.spec.ts:13:5 › /tests/ui/driver.html: sin incumplimientos WCAG 2.2 AA (movil-390)
+  ok  5 [escritorio] › tests\ui\accesibilidad.spec.ts:30:1 › cada pin del mapa tiene su equivalente fuera del mapa (excepción «Equivalente» de WCAG 2.5.8) (9.4s)
+  ok  6 [escritorio] › tests\ui\components.spec.ts:6:1 › Pedidos y Rutas funcionan como módulos separados (8.8s)
+  ok  7 [escritorio] › tests\ui\components.spec.ts:32:1 › registro válido muestra éxito y los datos guardados (8.7s)
+  ok  8 [escritorio] › tests\ui\components.spec.ts:44:1 › el destino se elige por ubicación actual y se ajusta en el mapa antes de guardar (1.7s)
+  ok  9 [escritorio] › tests\ui\components.spec.ts:81:1 › el destino puede elegirse en el mapa sin permiso de ubicación y corregirse con teclado (1.6s)
+  ok 10 [escritorio] › tests\ui\components.spec.ts:103:1 › campos obligatorios y ventana inválida no envían y conservan el formulario (653ms)
+  ok 11 [escritorio] › tests\ui\components.spec.ts:121:1 › edición precarga datos y guarda campos permitidos con versión (646ms)
+  ok 12 [escritorio] › tests\ui\components.spec.ts:138:1 › cancelación: Volver conserva el pedido y confirmar lo cancela (652ms)
+  ok 13 [escritorio] › tests\ui\components.spec.ts:156:1 › solo lectura no ofrece registro, edición ni cancelación (532ms)
+  ok 14 [escritorio] › tests\ui\components.spec.ts:167:1 › error de API visible sin sustitución por demostración (522ms)
+  ok 15 [escritorio] › tests\ui\components.spec.ts:176:1 › fallo al guardar conserva los campos y no muestra éxito (638ms)
+  ok 16 [escritorio] › tests\ui\components.spec.ts:190:1 › demostración explícita permite registrar, editar y cancelar con datos ficticios (505ms)
+  ok 17 [escritorio] › tests\ui\login.spec.ts:4:1 › inicio, creación de usuario por administrador y cierre de sesión (630ms)
+  ok 18 [escritorio] › tests\ui\map.spec.ts:18:1 › al filtrar un pedido conserva discretamente las otras paradas de su ruta (985ms)
+  ok 19 [escritorio] › tests\ui\map.spec.ts:67:1 › un icono discreto explica los accesos de ida y vuelta aunque el pedido esté filtrado (1.4s)
+  ok 20 [escritorio] › tests\ui\map.spec.ts:96:1 › generar y aprobar dibuja la propuesta y conserva la ruta al recargar (2.6s)
+  ok 21 [escritorio] › tests\ui\map.spec.ts:138:1 › el mapa dibuja rutas, pedidos y vehículos sobre OpenStreetMap (715ms)
+  ok 22 [escritorio] › tests\ui\map.spec.ts:156:1 › placas, colores, números y flechas permiten seguir una ruta y sus entregas (1.3s)
+  ok 23 [escritorio] › tests\ui\map.spec.ts:192:1 › elegir un pin selecciona el pedido, resalta su ruta y muestra la tarjeta (998ms)
+  ok 24 [escritorio] › tests\ui\map.spec.ts:208:1 › elegir una fila de la lista lleva la selección al mapa (685ms)
+  ok 25 [escritorio] › tests\ui\map.spec.ts:219:1 › la búsqueda oculta lo que no coincide y las capas se pueden apagar (740ms)
+  ok 26 [escritorio] › tests\ui\map.spec.ts:237:1 › los botones de zoom acercan y alejan el mapa (1.2s)
+  ok 27 [escritorio] › tests\ui\map.spec.ts:256:1 › si los tiles no cargan avisa y deja usar la lista de pedidos (US-006) (1.2s)
+  ok 28 [escritorio] › tests\ui\map.spec.ts:269:1 › los filtros de estado y pedido ocultan rutas ajenas y se pueden limpiar (986ms)
+  ok 29 [escritorio] › tests\ui\map.spec.ts:305:1 › los filtros de búsqueda, distrito y estado del listado también filtran el mapa (834ms)
+  ok 30 [escritorio] › tests\ui\map.spec.ts:329:1 › las tarjetas de pedidos, camiones y rutas se cierran con el ratón y se pueden reabrir (1.4s)
+  ok 31 [escritorio] › tests\ui\map.spec.ts:385:1 › ocho combinaciones de capas y almacén independiente (1.1s)
+  ok 32 [escritorio] › tests\ui\map.spec.ts:412:1 › perfiles aislados, camión sin ruta y contexto del conductor (849ms)
+  ok 33 [escritorio] › tests\ui\map.spec.ts:438:1 › el margen ampliado se puede explorar y restablecer conserva los pedidos de interés (7.4s)
+  ok 34 [escritorio] › tests\ui\map.spec.ts:470:1 › zoom restringido, reencuadre y recuperación de fuente (1.5s)
+  ok 35 [escritorio] › tests\ui\map.spec.ts:504:1 › contingencia de solo camiones y reintento cartográfico (1.2s)
+  ok 36 [escritorio] › tests\ui\map.spec.ts:516:1 › si falla el servidor vectorial conserva la lista operativa (1.2s)
+  ok 37 [escritorio] › tests\ui\map.spec.ts:529:1 › el mapa alternativo conserva rutas y pedidos si falla el proveedor vectorial (1.2s)
+  ok 38 [escritorio] › tests\ui\map.spec.ts:546:1 › un navegador sin gráficos compatibles muestra contingencia sin errores de página (1.1s)
+  ok 39 [escritorio] › tests\ui\roles.spec.ts:4:1 › la URL y una preferencia demo no elevan los permisos de un auditor en modo HTTP (526ms)
+  ok 40 [escritorio] › tests\ui\roles.spec.ts:21:1 › una sesión ausente o de evaluador no monta módulos ni consulta pedidos (736ms)
+[WebServer] 8:59:54 p. m. [vite] http proxy error: /api/admin/parameters
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:8000
+[WebServer]     at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[WebServer] 8:59:54 p. m. [vite] http proxy error: /api/admin/parameters
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:8000
+[WebServer]     at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+  ok 41 [escritorio] › tests\ui\roles.spec.ts:35:1 › el planificador consulta parámetros y el administrador no obtiene controles de ejecución (763ms)
+  ok 42 [escritorio] › tests\ui\roles.spec.ts:49:3 › logistics: consulta flota sin escrituras y no accede a administración (749ms)
+  ok 43 [escritorio] › tests\ui\roles.spec.ts:49:3 › driver: consulta flota sin escrituras y no accede a administración (742ms)
+  ok 44 [escritorio] › tests\ui\sostenibilidad.spec.ts:6:1 › Exportar CSV descarga un archivo real con los datos del periodo (484ms)
+  ok 45 [escritorio] › tests\ui\sostenibilidad.spec.ts:25:1 › el gráfico cambia de escala con el periodo y las barras siguen dentro del lienzo (366ms)
+  ok 46 [escritorio] › tests\ui\sostenibilidad.spec.ts:45:3 › 390 px › el reporte cabe en pantalla sin desbordar la página (280ms)
+(node:49268) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  -  47 [movil-390] › tests\ui\accesibilidad.spec.ts:13:5 › /tests/ui/sostenibilidad.html: sin incumplimientos WCAG 2.2 AA (escritorio)
+  -  48 [movil-390] › tests\ui\accesibilidad.spec.ts:13:5 › /tests/ui/map.html: sin incumplimientos WCAG 2.2 AA (escritorio)
+  -  49 [movil-390] › tests\ui\accesibilidad.spec.ts:13:5 › /tests/ui/demo.html: sin incumplimientos WCAG 2.2 AA (escritorio)
+  ok 50 [movil-390] › tests\ui\accesibilidad.spec.ts:13:5 › /tests/ui/driver.html: sin incumplimientos WCAG 2.2 AA (movil-390) (9.6s)
+  -  51 [movil-390] › tests\ui\accesibilidad.spec.ts:30:1 › cada pin del mapa tiene su equivalente fuera del mapa (excepción «Equivalente» de WCAG 2.5.8)
+  ok 52 [movil-390] › tests\ui\driver.spec.ts:21:1 › 390 px: Mi ruta cabe en pantalla y sus controles miden 48 px (8.4s)
+  ok 53 [movil-390] › tests\ui\driver.spec.ts:32:1 › 390 px: confirmar la entrega actualiza el avance y lleva a la siguiente parada (8.6s)
+  ok 54 [movil-390] › tests\ui\driver.spec.ts:60:1 › 390 px: un nombre y una dirección muy largos no desbordan (8.4s)
+  ok 55 [movil-390] › tests\ui\login.spec.ts:4:1 › inicio, creación de usuario por administrador y cierre de sesión (8.8s)
+  ok 56 [movil-390] › tests\ui\mobile.spec.ts:25:1 › 390 px: filtrar el mapa por estado y pedido conserva controles dentro de pantalla (771ms)
+  ok 57 [movil-390] › tests\ui\mobile.spec.ts:43:1 › 390 px: listado, formulario, detalle y diálogo sin recortes ni desbordamiento de página (570ms)
+  ok 58 [movil-390] › tests\ui\mobile.spec.ts:96:1 › 390 px: mensajes largos sin espacios no desbordan (282ms)
+  ok 59 [movil-390] › tests\ui\mobile.spec.ts:103:1 › 390 px: seleccionar destino en mapa conserva los controles dentro de la pantalla (1.2s)
+[WebServer] npm notice
+[WebServer] npm notice New minor version of npm available! 11.6.2 -> 11.21.2
+[WebServer] npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.21.2
+[WebServer] npm notice To update run: npm install -g npm@11.21.2
+[WebServer] npm notice
+
+
+  1) [escritorio] › tests\ui\accesibilidad.spec.ts:13:5 › /tests/ui/map.html: sin incumplimientos WCAG 2.2 AA (escritorio) 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 12
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "id": "label-content-name-mismatch",
+    +     "nodes": Array [
+    +       "button[aria-label=\"Todas las rutas\"]",
+    +       "button[aria-label=\"Ruta ABC-123\"]",
+    +       "button[aria-label=\"Ruta BCD-456\"]",
+    +       "button[aria-label=\"Ruta EGH-567\"]",
+    +       "button[aria-label=\"Ruta FHJ-890\"]",
+    +     ],
+    +   },
+    + ]
+
+      23 |         .map(rule => ({ id: rule.id, nodes: rule.nodes.filter(node => !(rule.id === 'target-size' && isPin(node.html, node.target.join(' ')))).map(node => node.target.join(' ')) }))
+      24 |         .filter(rule => rule.nodes.length > 0)
+    > 25 |       expect(violations).toEqual([])
+         |                          ^
+      26 |     })
+      27 |   }
+      28 | }
+        at D:\DESARROLLO_APLICACIONES\Python\ALPHA_PROJECT\src\frontend\tests\ui\accesibilidad.spec.ts:25:26
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    .test-deps\playwright-results\accesibilidad--tests-ui-ma-36922-tos-WCAG-2-2-AA-escritorio--escritorio\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: .test-deps\playwright-results\accesibilidad--tests-ui-ma-36922-tos-WCAG-2-2-AA-escritorio--escritorio\error-context.md
+
+  1 failed
+    [escritorio] › tests\ui\accesibilidad.spec.ts:13:5 › /tests/ui/map.html: sin incumplimientos WCAG 2.2 AA (escritorio) 
+  5 skipped
+  53 passed (2.8m)
+npm notice
+npm notice New minor version of npm available! 11.6.2 -> 11.21.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.21.2
+npm notice To update run: npm install -g npm@11.21.2
+npm notice

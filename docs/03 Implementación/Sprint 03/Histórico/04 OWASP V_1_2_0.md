@@ -1,8 +1,10 @@
 # Reporte de Seguridad OWASP Top 10 (2025)
 
+> HISTÓRICO — no vigente. Conservado el 12/11/2026; no describe el corte del Sprint 4. Documento vigente: [04 OWASP V_1_3_0](../04%20OWASP%20V_1_3_0.md).
+
 **Nombre del Proyecto:** EcoLogística Lima – Optimizador de Rutas Sostenibles para DistriRápido S.A.C.
 
-**Herramienta de Escaneo:** SonarQube Community Build (proyecto `EcoLogistica`, versión 1.0): Quality Gate «Passed», **0 incidencias de seguridad y 0 Security Hotspots**, calificación A, también sobre el código nuevo (ver [03 Calidad de código](03%20Calidad%20de%20c%C3%B3digo%20V_1_0_0.md)). El resumen muestra el aviso «Limited security analysis», por lo que los resultados se complementan con la inspección manual del código y otras herramientas de análisis.
+**Herramienta de Escaneo:** SonarQube Community Build (proyecto `EcoLogistica`, versión 1.0): Quality Gate «Passed», **0 incidencias de seguridad y 0 Security Hotspots**, calificación A, también sobre el código nuevo (ver [03 Calidad de código](../03%20Calidad%20de%20c%C3%B3digo%20V_1_1_0.md)). El resumen muestra el aviso «Limited security analysis», por lo que los resultados se complementan con la inspección manual del código y otras herramientas de análisis.
 
 **Versión del documento:** V_1_2_0 · **Fecha:** 30/10/2026 · **Código inspeccionado:** `main`, commit `PENDIENTE_DE_ACTUALIZAR`.
 
@@ -53,4 +55,4 @@ Las categorías A01 y A06 permanecen bajo revisión debido a la necesidad de com
 | V_1_1_0 | 30/10/2026 | Tovar Sánchez, Carlos Alberto. Se incorpora la inspección estática manual del código, la auditoría de dependencias y los resultados de SonarQube Community Build. |
 | V_1_2_0 | 30/10/2026 | Tovar Sánchez, Carlos Alberto. Actualización de la matriz OWASP 2025 después de implementar las correcciones de seguridad. Se establece un resultado de 8 categorías LIMPIAS y 2 BAJO REVISIÓN. Se actualizan los hallazgos y las correcciones de seguridad. |
 
-[← Volver al índice correspondiente](README.md)
+[← Volver al índice correspondiente](../README.md)

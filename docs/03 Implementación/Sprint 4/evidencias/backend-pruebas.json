@@ -1,0 +1,22 @@
+{
+  "commit": "7ea33a185619d5c06ab8ce8c090b3e334b45a9ce",
+  "branch": "refactor/mern",
+  "started_lima": "2026-11-12T20:58:05-05:00",
+  "command": [
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\.venv\\Scripts\\python.exe",
+    "-m",
+    "pytest",
+    "src/backend/tests",
+    "-q",
+    "-rs",
+    "-p",
+    "no:cacheprovider"
+  ],
+  "cwd": ".",
+  "database_integration": false,
+  "status": "finished",
+  "python": "3.14.2",
+  "finished_lima": "2026-11-12T20:58:20-05:00",
+  "exit_code": 1,
+  "output_sha256": "63d3a43ad9998f883e4c667717c686933a3f799eabc0a8c89278c433e0ede37f"
+}

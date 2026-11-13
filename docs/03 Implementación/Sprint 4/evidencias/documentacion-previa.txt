@@ -1,0 +1,26 @@
+{
+  "markdown_files": 85,
+  "reachable_markdown": 79,
+  "local_links_checked": 654,
+  "external_urls_not_checked": 53,
+  "errors": [
+    "Ruta ausente o capitalización incorrecta: docs/03 Implementación/Sprint 03/01 Revisión del Sprint V_1_2_0.md:83: ../Sprint%202/02%20Registro%20de%20Impedimentos%20V_1_5_0.md",
+    "Versión interna distinta: docs\\03 Implementación\\Sprint 03\\01 Revisión del Sprint V_1_2_0.md",
+    "Ruta ausente o capitalización incorrecta: docs/03 Implementación/Sprint 03/04 OWASP V_1_1_0.md:5: 03%20Calidad%20de%20c%C3%B3digo%20V_1_0_0.md",
+    "Versión interna distinta: docs\\03 Implementación\\Sprint 03\\04 OWASP V_1_1_0.md",
+    "Sin retorno a índice: reports\\sonar\\analysis-155a99a\\sonar-report.md",
+    "Sin retorno a índice: reports\\sonar\\analysis-4218a97\\sonar-report.md",
+    "Sin retorno a índice: reports\\sonar\\pr-27-ci-attempt-3\\sonar-report.md",
+    "Sin retorno a índice: reports\\sonar\\sonar-report.md",
+    "Markdown no navegable desde README: docs\\03 Implementación\\Sprint 03\\01 Revisión del Sprint V_1_2_0.md",
+    "Markdown no navegable desde README: docs\\03 Implementación\\Sprint 03\\04 OWASP V_1_1_0.md",
+    "Markdown no navegable desde README: reports\\sonar\\analysis-155a99a\\sonar-report.md",
+    "Markdown no navegable desde README: reports\\sonar\\analysis-4218a97\\sonar-report.md",
+    "Markdown no navegable desde README: reports\\sonar\\pr-27-ci-attempt-3\\sonar-report.md",
+    "Markdown no navegable desde README: reports\\sonar\\sonar-report.md",
+    "Versión vigente no enlazada por su índice: docs\\03 Implementación\\Sprint 03\\01 Revisión del Sprint V_1_2_0.md",
+    "Versión vigente no enlazada por su índice: docs\\03 Implementación\\Sprint 03\\04 OWASP V_1_1_0.md",
+    "Varias versiones activas de Revisión del Sprint: docs\\03 Implementación\\Sprint 03",
+    "Varias versiones activas de OWASP: docs\\03 Implementación\\Sprint 03"
+  ]
+}

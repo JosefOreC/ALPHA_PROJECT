@@ -81,3 +81,5 @@ Tipos: `{'VULNERABILITY': 16, 'CODE_SMELL': 21, 'BUG': 5}`.
 
 El Quality Gate depende de sus condiciones y del período de código nuevo; revisar también las vulnerabilidades del código global.
 Si no se devuelve una métrica de cobertura, registrarla como no disponible; no sustituirla con los porcentajes de las pruebas locales.
+
+[← Volver al índice correspondiente](../README.md)

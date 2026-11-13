@@ -1,0 +1,18 @@
+{
+  "commit": "7ea33a185619d5c06ab8ce8c090b3e334b45a9ce",
+  "branch": "refactor/mern",
+  "started_lima": "2026-11-12T21:00:03-05:00",
+  "command": [
+    "C:\\Program Files\\nodejs\\npm.cmd",
+    "run",
+    "test:orders"
+  ],
+  "cwd": "src/frontend",
+  "database_integration": false,
+  "status": "finished",
+  "python": "3.14.2",
+  "working_tree": "?? \"docs/03 Implementaci\\303\\263n/Sprint 4/\"",
+  "finished_lima": "2026-11-12T21:00:04-05:00",
+  "exit_code": 0,
+  "output_sha256": "70ad45abfb3264cd4d880c9c14e7484de0e7e83a06a4840046dc39ab161867f7"
+}

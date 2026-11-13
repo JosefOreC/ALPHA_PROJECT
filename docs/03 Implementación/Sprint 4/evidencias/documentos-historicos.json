@@ -1,0 +1,19 @@
+{
+  "captured_lima": "2026-11-12T21:01:31-05:00",
+  "moves": [
+    {
+      "original_pattern": "01 *V_1_2_0.md",
+      "archived": "docs/03 Implementación/Sprint 03/Histórico/01 Revisión del Sprint V_1_3_0.md",
+      "source_sha256": "b72534fde2d38e6bcbfa60d1e8fae9e7bc4174e6a3ec412f516e0690bf297d39",
+      "archived_sha256": "1f67a135423ed3dcc2baa6b67a00e1b48e878c19ff367248835edc87a26f19c7",
+      "changes": "Move obsolete duplicate; align filename to existing internal version; add historical notice; repair relative/current references."
+    },
+    {
+      "original_pattern": "04 *V_1_1_0.md",
+      "archived": "docs/03 Implementación/Sprint 03/Histórico/04 OWASP V_1_2_0.md",
+      "source_sha256": "9ed088e20e22cfb4cbd9f379f58ca3cc4ec4f7c0f2a9e3dca4aadd7f2562d141",
+      "archived_sha256": "f53e2d57fc64f415d90737e9b37324205b3a64fedd8cefeab5cc98419710910b",
+      "changes": "Move obsolete duplicate; align filename to existing internal version; add historical notice; repair relative/current references."
+    }
+  ]
+}

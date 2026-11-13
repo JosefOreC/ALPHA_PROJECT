@@ -1,0 +1,22 @@
+{
+  "commit": "7ea33a185619d5c06ab8ce8c090b3e334b45a9ce",
+  "branch": "refactor/mern",
+  "started_lima": "2026-11-12T21:10:08-05:00",
+  "command": [
+    "C:\\Program Files\\nodejs\\npm.cmd",
+    "exec",
+    "--offline",
+    "--yes",
+    "--package=markdownlint-cli2@0.24.1",
+    "--",
+    "markdownlint-cli2"
+  ],
+  "cwd": ".",
+  "database_integration": false,
+  "status": "finished",
+  "python": "3.14.2",
+  "working_tree": "M .markdownlint-cli2.jsonc\n M \"docs/03 Implementaci\\303\\263n/README.md\"\n D \"docs/03 Implementaci\\303\\263n/Sprint 03/01 Revisi\\303\\263n del Sprint V_1_2_0.md\"\n D \"docs/03 Implementaci\\303\\263n/Sprint 03/04 OWASP V_1_1_0.md\"\n M \"docs/03 Implementaci\\303\\263n/Sprint 03/README.md\"\n M reports/sonar/analysis-155a99a/sonar-report.md\n M reports/sonar/analysis-4218a97/sonar-report.md\n M reports/sonar/pr-27-ci-attempt-3/sonar-report.md\n M reports/sonar/sonar-report.md\n?? \"docs/03 Implementaci\\303\\263n/Sprint 03/Hist\\303\\263rico/\"\n?? \"docs/03 Implementaci\\303\\263n/Sprint 4/\"\n?? reports/sonar/README.md",
+  "finished_lima": "2026-11-12T21:10:09-05:00",
+  "exit_code": 1,
+  "output_sha256": "e1dfa71bafc400411054d61a2448da78b127d2acfb56dad5958d0a736a5b22bd"
+}

@@ -1,0 +1,28 @@
+
+> frontend@0.0.0 test:orders
+> node --test tests/*.test.cjs
+
+✔ the exported dashboard boots with static logic and never executes streamed source (186.706ms)
+✔ preview messages require both the allowed origin and the actual parent window (52.3726ms)
+✔ ventanas rechazan fechas imposibles, horas, offset ausente y fin anterior (1.0128ms)
+✔ validación rechaza campos vacíos, excesivos, distrito y pesos inválidos (0.3012ms)
+✔ caso de uso no envía formulario inválido ni muta un pedido protegido (0.2219ms)
+✔ demo crea, lista, consulta, edita y cancela con versión y sin persistencia compartida (1.1202ms)
+✔ demo filtra, pagina y no permite mutar DTO para alterar almacenamiento (0.1988ms)
+✔ adaptador HTTP rechaza respuestas inválidas en tiempo de ejecución (0.7112ms)
+✔ HTTP envía cookies, JSON y token CSRF sin enviar rol ni conductor (10.4031ms)
+✔ HTTP traduce autorización, conflicto, validación y fallos de red sin fallback demo (0.9271ms)
+✔ HTTP valida listado y permisos, codifica filtros e identificadores (0.7709ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 944.9206
+npm notice
+npm notice New minor version of npm available! 11.6.2 -> 11.21.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.21.2
+npm notice To update run: npm install -g npm@11.21.2
+npm notice

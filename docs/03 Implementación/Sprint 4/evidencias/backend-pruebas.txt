@@ -1,0 +1,87 @@
+........................................................................ [ 17%]
+........................................................................ [ 34%]
+............................................................................................................ [ 61%]
+..............................ss.F..................F................... [ 78%]
+....................................................................ssss [ 96%]
+................                                                         [100%]
+================================== FAILURES ===================================
+________________ test_documentation_checks_current_repository _________________
+
+    def test_documentation_checks_current_repository():
+        result = load('check_docs').check()
+>       assert result['markdown_files'] > 0 and result['errors'] == []
+E       AssertionError: assert (85 > 0 and ['Ruta ausent...port.md', ...] == []
+E         
+E         Left contains 18 more items, first extra item: 'Ruta ausente o capitalización incorrecta: docs/03 Implementación/Sprint 03/01 Revisión del Sprint V_1_2_0.md:83: ../Sprint%202/02%20Registro%20de%20Impedimentos%20V_1_5_0.md'
+E         Use -v to get more diff)
+
+src\backend\tests\test_project_scripts.py:68: AssertionError
+_____________ test_backend_launcher_passes_explicit_local_binding _____________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000018A63DA7CB0>
+
+    def test_backend_launcher_passes_explicit_local_binding(monkeypatch):
+        import uvicorn
+        run=MagicMock();monkeypatch.setattr(uvicorn,'run',run)
+>       runpy.run_path(str(ROOT/'scripts/run_backend.py'),run_name='__main__')
+
+src\backend\tests\test_project_scripts.py:169: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+<frozen runpy>:287: in run_path
+    ???
+<frozen runpy>:98: in _run_module_code
+    ???
+<frozen runpy>:88: in _run_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+    """Inicia la API usando .env de la raíz."""
+    from pathlib import Path
+    import socket
+    import sys
+    from dotenv import load_dotenv
+    import uvicorn
+    
+    ROOT = Path(__file__).resolve().parents[1]
+    load_dotenv(ROOT / '.env', override=True)
+    
+    def main():
+        host, port = '127.0.0.1', 8000
+        # Explica el conflicto antes de que el recargador muestre un error de socket genérico.
+        try:
+            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as probe:
+                probe.bind((host, port))
+        except OSError as error:
+            print(f'No se puede iniciar la API en http://{host}:{port}: el puerto está ocupado o el sistema bloquea su uso. '
+                  'Si hay otro backend ejecutándose, ciérralo con Ctrl+C en su terminal y vuelve a intentar. '
+                  f'(Código: {error.winerror if hasattr(error, "winerror") else error.errno})', file=sys.stderr)
+            return 1
+        backend = str(ROOT / 'src/backend')
+        uvicorn.run('interfaces.api.main:app', app_dir=backend, host=host, port=port,
+                    reload=True, reload_dirs=[backend])
+        return 0
+    
+    
+    if __name__ == '__main__':
+>       raise SystemExit(main())
+E       SystemExit: 0
+
+scripts\run_backend.py:29: SystemExit
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  D:\DESARROLLO_APLICACIONES\Python\ALPHA_PROJECT\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+tests/test_fleet_edge_cases.py::test_fleet_api_missing_records_conflicts_and_domain_validation
+  D:\DESARROLLO_APLICACIONES\Python\ALPHA_PROJECT\.venv\Lib\site-packages\fastapi\telemetry\_api.py:240: StarletteDeprecationWarning: 'HTTP_422_UNPROCESSABLE_ENTITY' is deprecated. Use 'HTTP_422_UNPROCESSABLE_CONTENT' instead.
+    return function(**arguments)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+SKIPPED [1] src\backend\tests\test_postgres_views.py:61: Activar ECOLOGISTICA_VERIFY_DATABASE=1 para verificar PostgreSQL con rollback.
+SKIPPED [1] src\backend\tests\test_postgres_views.py:143: Activar ECOLOGISTICA_VERIFY_DATABASE=1 para verificar PostgreSQL con rollback.
+SKIPPED [1] src\backend\tests\test_test_database.py:135: Configurar ECOLOGISTICA_TEST_ENV_FILE para integración PostgreSQL + PostGIS explícita.
+SKIPPED [1] src\backend\tests\test_test_database.py:145: Configurar ECOLOGISTICA_TEST_ENV_FILE para integración PostgreSQL + PostGIS explícita.
+SKIPPED [1] src\backend\tests\test_test_database.py:165: Configurar ECOLOGISTICA_TEST_ENV_FILE para integración PostgreSQL + PostGIS explícita.
+SKIPPED [1] src\backend\tests\test_test_database.py:177: Configurar ECOLOGISTICA_TEST_ENV_FILE para integración PostgreSQL + PostGIS explícita.
+2 failed, 404 passed, 6 skipped, 2 warnings, 36 subtests passed in 14.30s

@@ -1,0 +1,17 @@
+{
+  "commit": "7ea33a185619d5c06ab8ce8c090b3e334b45a9ce",
+  "branch": "refactor/mern",
+  "started_lima": "2026-11-12T20:58:06-05:00",
+  "command": [
+    "C:\\Program Files\\nodejs\\npm.cmd",
+    "run",
+    "test:ui"
+  ],
+  "cwd": "src/frontend",
+  "database_integration": false,
+  "status": "finished",
+  "python": "3.14.2",
+  "finished_lima": "2026-11-12T21:00:57-05:00",
+  "exit_code": 1,
+  "output_sha256": "e87f938d2857c265151af59cd0a2e071252f8853dd11dc3eef46f832ce9741ec"
+}

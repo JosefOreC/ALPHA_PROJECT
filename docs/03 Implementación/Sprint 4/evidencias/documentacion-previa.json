@@ -1,0 +1,17 @@
+{
+  "commit": "7ea33a185619d5c06ab8ce8c090b3e334b45a9ce",
+  "branch": "refactor/mern",
+  "started_lima": "2026-11-12T21:00:02-05:00",
+  "command": [
+    "D:\\DESARROLLO_APLICACIONES\\Python\\ALPHA_PROJECT\\.venv\\Scripts\\python.exe",
+    "scripts/check_docs.py"
+  ],
+  "cwd": ".",
+  "database_integration": false,
+  "status": "finished",
+  "python": "3.14.2",
+  "working_tree": "?? \"docs/03 Implementaci\\303\\263n/Sprint 4/\"",
+  "finished_lima": "2026-11-12T21:00:03-05:00",
+  "exit_code": 1,
+  "output_sha256": "799832d9a00b008d649b9711de252412098841a4b540a0364a1173997bf5c70f"
+}

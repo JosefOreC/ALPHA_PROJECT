@@ -1,0 +1,86 @@
+{
+  "captured_lima": "2026-11-12T20:59:03-05:00",
+  "timezone": "America/Lima (UTC-05:00)",
+  "commit": "7ea33a185619d5c06ab8ce8c090b3e334b45a9ce",
+  "branch": "refactor/mern",
+  "python": "3.14.2",
+  "os": "Windows-11-10.0.26200-SP0",
+  "python_packages": {
+    "fastapi": "0.142.2",
+    "starlette": "1.7.0",
+    "pytest": "9.1.1",
+    "pytest-cov": "7.1.0",
+    "psycopg": "3.3.6"
+  },
+  "node": "v24.11.1",
+  "source_diff": "",
+  "assets": [
+    {
+      "path": "assets/DestinationMap-GiDAxiwV.js",
+      "bytes": 2374,
+      "gzip_bytes": 1116,
+      "sha256": "149e724242fbeb12bdae0b8447d604cb5204f48dd3ea79d7e8c184ce1a69c3a7"
+    },
+    {
+      "path": "assets/index-Bh8rZZLG.js",
+      "bytes": 393292,
+      "gzip_bytes": 114792,
+      "sha256": "e14f53a159a5247e7d665b445732df3c3842c047644fb8080241c51e53ed94a4"
+    },
+    {
+      "path": "assets/index-BtZM_Mrz.css",
+      "bytes": 75635,
+      "gzip_bytes": 14542,
+      "sha256": "2f1700c64b22bff7c9c82496d8bfb18301c07dd56c40a9975b922df4315eddfd"
+    },
+    {
+      "path": "assets/leaflet-src-Dtl8lBO1.js",
+      "bytes": 148604,
+      "gzip_bytes": 42897,
+      "sha256": "7ef990c4311104f69563bd739282574c90adc00cac64798784ba6781a896c064"
+    },
+    {
+      "path": "assets/LeafletCanvas-pQQJkOE3.js",
+      "bytes": 13451,
+      "gzip_bytes": 4619,
+      "sha256": "da22d97c651a2e888a7459c2e1b88d89c6dde2e96083bb3546b1c0ad50f00876"
+    },
+    {
+      "path": "assets/maplibre-gl-worker-CEzvAyZY.js",
+      "bytes": 507694,
+      "gzip_bytes": 144244,
+      "sha256": "c71da9f14bdb4500fb65b19d894d60af023d13749657e903e1dcde4aab63b5c6"
+    },
+    {
+      "path": "assets/markers--dK1sG2F.js",
+      "bytes": 1041410,
+      "gzip_bytes": 279277,
+      "sha256": "93f3d1db5458bbbbe2c76ad3da5975c5e1cfbac580f63058497d76ae3d066de9"
+    },
+    {
+      "path": "assets/markers-v5LtwDI9.css",
+      "bytes": 98056,
+      "gzip_bytes": 16895,
+      "sha256": "c5af74e972535ec981b4a613259035a693db7f3ae19927acf45d7e69340dc40a"
+    },
+    {
+      "path": "assets/rolldown-runtime-WkwZ5CU-.js",
+      "bytes": 599,
+      "gzip_bytes": 368,
+      "sha256": "2629f2ad3cb75a57d98de697127f5af7d777ef572bbcdfa6e3ce8f438cd4527e"
+    },
+    {
+      "path": "assets/viewport-BSSpXiJi.js",
+      "bytes": 459,
+      "gzip_bytes": 339,
+      "sha256": "f6b28ad37f91e4114ab7461989b56da58a4896db7a517d0954cfa748d9352936"
+    },
+    {
+      "path": "index.html",
+      "bytes": 997,
+      "gzip_bytes": 529,
+      "sha256": "51f9ec2a4766378c61c7fa7d6dc538801324826ad7959508f1a220b1fc8b1674"
+    }
+  ],
+  "note": "Build artifact bytes, not measured HTTP transfer or emissions."
+}
