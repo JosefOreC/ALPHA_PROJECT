@@ -1,151 +1,211 @@
 # Estándares de Ingeniería de Software y Guía de Desarrollo Verde
 
-**Nombre del Proyecto:** EcoLogística Lima – Optimizador de Rutas Sostenibles para DistriRápido S.A.C.
+**Proyecto:** EcoLogística Lima – Optimizador de Rutas Sostenibles para DistriRápido S.A.C.
 
-**Líder del Proyecto:** Ore Campos, Josef Pablo
+**Líder del proyecto:** Ore Campos, Josef Pablo.
 
-**Versión del documento:** V_1_0_1
+**Sprint:** 4.
 
-**Autor:** Tovar Sánchez, Carlos Alberto
+**Versión del documento:** V_1_0_1.
 
-**Actualización documental:** 12/11/2026.
+**Versión de entrega:** v1.0.0.
 
-**Alcance:** fundamentación en normativas internacionales, reglas arquitectónicas de código limpio, guía de desarrollo verde y matriz de mapeo entre las optimizaciones y los estándares (criterio «Estándares internacionales, arquitectura y guía de desarrollo verde» de la rúbrica de la Inspección 04).
+**Fecha de actualización:** 13/11/2026, America/Lima (UTC−05:00).
 
-## 1. Contexto y adaptación al stack
+**Responsable documental:** Equipo del proyecto.
 
-La rúbrica y el informe de referencia describen un stack MERN (MongoDB, Express, React y Node). EcoLogística Lima usa **React 19 con Vite y TypeScript** en el frontend, **FastAPI (Python)** en el backend y **PostgreSQL con PostGIS** como base de datos. Se conservan las ocho áreas de optimización de la rúbrica y se traducen a su equivalente en este stack:
+**Revisión técnica y documental:** Ore Campos, Josef Pablo; Cueva Ricse, Alex.
 
-| # | Área de la rúbrica (MERN) | Equivalente en EcoLogística Lima |
+**Rama de trabajo:** `refactor/mern`.
+
+**Base de comparación vigente:** `6e36e35`.
+
+**Alcance de publicación:** actualización de documentación Markdown. Las implementaciones y las mediciones descritas corresponden al incremento local auditado; sus archivos productivos y nuevos artefactos no se incorporan con esta publicación.
+
+## 1. Arquitectura y alcance
+
+La aplicación conserva React/TypeScript/Vite en presentación, FastAPI en servicios y PostgreSQL/PostGIS en persistencia. La organización por dominio, casos de uso, puertos y adaptadores permite optimizar las consultas y la interfaz sin trasladar reglas de negocio al transporte HTTP.
+
+La rúbrica se aplica mediante equivalencias tecnológicas explícitas. Las proyecciones e índices SQL cubren el propósito de consultas magras solicitado para MongoDB/Mongoose. Esta adaptación mantiene las transacciones, la autorización y las operaciones geográficas existentes.
+
+## 2. Matriz de las ocho áreas
+
+| Área | Implementación del proyecto | Verificación |
 |---|---|---|
-| 1 | Consultas magras `.select()` / `.lean()` e índices en MongoDB | Columnas explícitas (sin `SELECT *`) e índices en PostgreSQL |
-| 2 | Paginación en backend y frontend | `limit` y `offset` en FastAPI y paginación en la interfaz |
-| 3 | Imágenes WebP/AVIF adaptativas con `<picture>` | Medios optimizados: el proyecto usa SVG y mapa vectorial, no imágenes ráster |
-| 4 | `React.lazy` / `Suspense` para code splitting | Igual, en React con Vite |
-| 5 | Sustitución de librerías por APIs nativas | Dependencias mínimas y auditadas |
-| 6 | Inlining de SVG | Iconos SVG como componentes React |
-| 7 | Cabeceras `Cache-Control` / ETag / React Query | Cabeceras de caché y caché de peticiones en el cliente |
-| 8 | Compresión Brotli / Gzip | Compresión de respuestas en FastAPI o en el servidor de estáticos |
+| 1. Consultas magras e índices | Proyecciones SQL, parámetros enlazados, índices B-tree/GiST y reducción de consultas repetidas | Historial SQL, planes aislados y pruebas de persistencia. |
+| 2. Paginación de 12 | Pedidos, Flota, Conductores y Registros; filtros y permisos antes de LIMIT/OFFSET | Pruebas de contratos, navegación y búsqueda; integración real. |
+| 3. Imágenes modernas | picture AVIF/WebP/JPEG, tamaños 360/640/960 y espacio reservado | Selección de fuente, decodificación y fallback en móvil/escritorio. |
+| 4. Carga diferida | React.lazy/Suspense en vistas y mapas | Diff histórico y build con módulos separados. |
+| 5. APIs nativas | Cálculo de extremos geográficos con Math.min/Math.max | Comparación directa de resultados con el auxiliar Leaflet anterior. |
+| 6. SVG en línea | Iconos React y marcadores SVG | Código, historial y comprobaciones automatizadas de interfaz/accesibilidad. |
+| 7. Caché | Cache-Control, ETag/304 y React Query en Registros | Aislamiento por identidad, invalidación y pruebas HTTP. |
+| 8. Compresión | Brotli/Gzip de recursos y gzip dinámico | Descompresión, negociación de calidad y respuestas de contingencia. |
 
-El estado de cada área se verificó en el código el 11/11/2026 y se informa en la matriz de la sección 4, sin atribuir mejoras que el repositorio no tiene. Las métricas cuantitativas (Lighthouse y modelo SWDM) se presentan en el documento 01 y no se repiten aquí.
+La adaptación del punto 1 utiliza PostgreSQL/PostGIS; la del punto 5 sustituye un uso auxiliar de Leaflet, conservando el paquete para operar el mapa. El documento 05 establece estos alcances frente a la redacción literal de la rúbrica.
 
-## 2. Fundamentación en normativas internacionales
+## 3. Reglas de implementación
 
-### 2.1 ISO/IEC 25010 (calidad del producto de software)
+1. Aplicar permisos y filtros en el servidor antes de paginar; mantener separados el total filtrado y los indicadores globales.
+2. Proyectar columnas y enlazar parámetros SQL. Revisar índices mediante planes representativos cuando cambien consultas o volumen.
+3. Mantener estable el contenido durante la carga y verificar sesión antes de habilitar escrituras.
+4. Cargar vistas de forma diferida y comprobar qué módulos entran realmente en cada navegación.
+5. Identificar las entradas de caché por usuario, rol, módulo y página; invalidarlas después de una modificación.
+6. Reservar dimensiones de imágenes y conservar una representación compatible de respaldo.
+7. Negociar compresión respetando calidades, MIME, Vary y validadores; conservar los originales.
+8. Medir cada umbral de rendimiento y calcular emisiones con unidades, parámetros y escenario anual explícitos.
 
-| Característica | Subcaracterística | Aplicación en EcoLogística Lima |
+## 4. Contratos y funcionamiento
+
+La paginación conserva los puertos de aplicación y adapta sus contratos de consulta. Pedidos devuelve la página solicitada, metadatos de navegación y conteos; las operaciones de creación, edición y cancelación mantienen sus comprobaciones de autorización. Los catálogos de selección se distinguen de los listados paginados.
+
+La búsqueda compartida se ubica en `domain/managedOrder.ts`; `application/orderBoard.ts` mantiene la exportación anterior para conservar compatibilidad con sus consumidores. El adaptador de demostración reutiliza esa regla desde dominio.
+
+React Query permanece en el módulo diferido de Registros. Las claves incluyen identidad, rol, módulo, desplazamiento y recarga; el cliente define 15 s de frescura y 60 s de retención inactiva. La limpieza al desmontar evita reutilizar consultas entre sesiones, y las mutaciones invalidan los datos correspondientes. Pedidos conserva su carga nativa de una página.
+
+Las respuestas JSON privadas admiten ETag semántico débil y 304; sesión, mutaciones y errores usan no-store. Los recursos con nombre versionado se sirven con caché inmutable. Los validadores y la negociación de compresión se verifican también cuando la respuesta es 304.
+
+## 5. Reglas de medición y despliegue
+
+El build se genera mediante `npm run build`. El banco medido sirve React y API en el mismo origen mediante HTTPS/HTTP/2; el [README del backend](https://github.com/JosefOreC/ALPHA_PROJECT/blob/6e36e355e0d39c83c5700a83eb0987b6fd849a10/src/backend/README.md#https-y-http2) describe la configuración. El despliegue deberá usar un certificado válido de su dominio y repetir la auditoría en condiciones representativas.
+
+El perfil, las réplicas, las versiones y los datos se registran junto con cada reporte. Los criterios se comprueban sobre valores originales y se conserva el peor resultado además de la mediana. Los informes ambientales distinguen energía estimada, energía incorporada equivalente y tráfico anual hipotético.
+
+## 6. Trazabilidad del diagnóstico
+
+El diagnóstico inicial identificó precarga masiva de Pedidos, páginas de tamaño distinto de 12, ausencia de picture y React Query, y casos de negociación HTTP sin cubrir. El incremento resolvió esos puntos y conservó la arquitectura. Los informes previos se mantienen como antecedentes, identificados por su base y entorno.
+
+La reducción histórica de cinco a dos lecturas por resumen y las proyecciones SQL se revisan en los antecedentes de código (`antecedentes.patch`, registro local). Los cambios del incremento (`cambios-producto.patch`, registro local) documentan paginación, caché y compresión. La [evidencia de imagen y cálculo nativo](../Sprint%204/evidencias/raster-native/README.md) completa las áreas 3 y 5.
+
+## 7. Implementación adaptada posterior a la fase 2
+
+### 7.1 Procedencia de los fragmentos
+
+Los fragmentos siguientes resumen código real y omiten contexto mediante puntos suspensivos. El historial distingue las mejoras introducidas durante el sprint de implementaciones anteriores que se conservan. La creación de SVG inline se presenta como incorporación del sistema de iconos, no como una conversión histórica desde imágenes raster.
+
+### 7.2 Código comparativo por área
+
+| Área | Antes | Después | Código y procedencia |
+|---|---|---|---|
+| 1. Consultas SQL | `SELECT * FROM pedidos ...`; lecturas repetidas para el resumen | `SELECT pedido_id, cliente_nombre, distrito, estado, latitud, longitud, ventana_inicio, ventana_fin, peso_kg, version ...`; resumen reutilizado por petición | Diff 3b5bdae → 9f953d6 de postgres_portal/postgres_dashboard e índices de migración 005. La proyección de planificación es distinta del listado paginado. |
+| 2. Paginación | `const PAGE_SIZE = 100`; bucle `loadAll(service)` antes de filtrar | `const PAGE_SIZE = 12`; `service.list({ limit: PAGE_SIZE, offset, ... })`; filtros SQL antes de `LIMIT %s OFFSET %s` | OrderManagementView, postgres_orders y contratos frontend/backend; comparación sobre 6e36e35. |
+| 3. Imagen adaptativa | Acceso sin fotografía ni elemento picture | `<picture><source type="image/avif" ... /><source type="image/webp" ... /><img ... /></picture>` | LoginIllustration.tsx; recurso incorporado y variantes del mismo recorte. |
+| 4. Carga diferida | `import { OrderManagementView } from './interfaces/OrderManagementView'` | `lazy(() => import('./interfaces/OrderManagementView').then(...))` con `<Suspense ...>` | Diff histórico 3b5bdae → 9f953d6 de App.tsx; implementación conservada. |
+| 5. API nativa | `L.latLngBounds(points.map(toTuple))` | `boundsOf(points)` con `Math.min/Math.max`; importación Leaflet solo de tipos en viewport.ts | viewport.ts y pruebas de equivalencia; Leaflet sigue gestionando la cámara. |
+| 6. SVG inline | Sistema de iconos todavía no existente en el padre de c142f0d | `function Glyph(...) { return (<svg ... aria-hidden="true">{children}</svg>) }` | Introducción del sistema de iconos en c142f0d y marcadores inline conservados. |
+| 7. Caché de consultas | Carga manual de Registros con `requestJson(...).then(...)`, sin React Query | `useQuery({ queryKey: ['records', user.subjectId, user.role, module, offset, reload], queryFn: ... }, queryClient)`; `invalidateQueries(...)` | RecordsView; Cache-Control y ETag conservados; validador semántico ajustado a `W/"..."`. |
+| 8. Compresión | Selección de `('br', 'gzip')`; original de respaldo sin Vary | `representation_order(...)` incluye identity; `add_vary_header('Accept-Encoding')`; 406 si ninguna variante es aceptable | static_assets, http_efficiency y deps; precompresión nativa de Node conservada. |
+
+### 7.3 Integridad funcional y validación
+
+Las pruebas verifican búsqueda sobre más de 2000 pedidos, normalización de tildes, literales `%` y `_`, parámetros SQL, conteos globales/filtrados, reinicio de página, creación, edición, cancelación, permisos y comportamiento de caché en StrictMode. Las integraciones con PostgreSQL/PostGIS comprueban persistencia y rutas en una base desechable.
+
+El arranque de React se ejecuta mediante `setTimeout(() => { createRoot(...).render(...) }, 0)` para separar su inicialización de la evaluación del módulo principal. La auditoría comprueba su comportamiento sobre series completas. La regresión de interfaz conserva el formulario y bloquea el envío mientras se verifica la sesión.
+
+## 8. Cierre adaptado de imagen y sustitución auxiliar nativa
+
+La imagen dispone de fuentes 360/640/960, atributo sizes, dimensiones 960 × 320 y texto alternativo. AVIF se ofrece primero, WebP como segunda opción y JPEG como respaldo. La carga se habilita al resolver la sesión; durante la espera se reserva el mismo espacio. Las pruebas retiran fuentes para verificar cada formato y comprueban decodificación, formulario y ausencia de desbordamiento horizontal.
+
+El recurso es ilustrativo y su procedencia se conserva en el registro del recurso (`generation.json`, registro local). A 640 px, AVIF ocupa 9515 bytes, WebP 21010 y JPEG 31480. La conversión se realiza offline con Pillow; esa herramienta no forma parte del navegador ni del backend productivo.
+
+El cálculo nativo recorre las coordenadas para obtener los extremos sur, oeste, norte y este. Evita crear tuplas y objetos LatLng por punto para ese cálculo y conserva padding, zoom, animación y límites de Lima al llamar a `map.fitBounds`. Se comparan resultados con Leaflet sobre puntos individuales, repetidos, negativos y conjuntos de 150 puntos. Esta sustitución es auxiliar y no implica eliminar el motor cartográfico ni una reducción global de bundle medida.
+
+## 9. Fundamentación en estándares internacionales
+
+### 9.1 Calidad del producto: ISO/IEC 25010:2023
+
+Se utiliza el modelo de calidad de producto ISO/IEC 25010:2023 para relacionar decisiones técnicas con atributos evaluables. El mapeo representa una justificación de ingeniería; no constituye una certificación.
+
+| Característica / subcaracterística | Relación con la refactorización | Evidencia del proyecto |
 |---|---|---|
-| Eficiencia de desempeño | Comportamiento temporal | El requisito RNF-001 fija un máximo de 45 s (P95) para generar rutas con 150 pedidos y 15 vehículos; la prueba `test_benchmark_scale_of_150_orders_and_15_vehicles_stays_fast` lo vigila y la medición del 30/10/2026 (10 corridas sintéticas) dio una mediana de 3,5 s y un máximo de 6,6 s. El mapa se carga bajo demanda. |
-| Eficiencia de desempeño | Utilización de recursos | Consultas con parámetros, diez índices en `schema.sql` (por ejemplo `idx_pedidos_estado_distrito` y un índice GIST de geometrías) y seis dependencias de producción en el frontend. |
-| Eficiencia de desempeño | Capacidad | Listados con `limit` entre 1 y 100 (20 por defecto) y `offset` acotado; la prueba de escala de 150 pedidos y 15 vehículos. |
-| Mantenibilidad | Modularidad | Arquitectura hexagonal (`domain`, `application`, `infrastructure`, `interfaces`) con la prueba `test_architecture.py`; frontend en capas (`domain`, `application`, `infrastructure`, `interfaces`, `shared`). |
-| Mantenibilidad | Reusabilidad | Sistema de diseño compartido en `shared/ui`; puertos y adaptadores intercambiables (por ejemplo `RouteOptimizer` y `AlgorithmSettings`). |
-| Mantenibilidad | Analizabilidad | Lint con `oxlint`, comprobación de tipos con `tsc`, análisis estático con SonarQube y documentación versionada. |
-| Mantenibilidad | Modificabilidad | Configuración por variables de entorno (`DATABASE_URL`, `CORS_ALLOW_ORIGINS`, `SESSION_COOKIE_SECURE`) y objetivos de optimización intercambiables (CO₂, tiempo o mixto). |
-| Mantenibilidad | Capacidad de ser probado | Umbral de cobertura del 90 % en frontend (`vite.config.ts`) y en Python (flujo de integración continua); 368 pruebas de backend y 435 de frontend al 30/10/2026. |
+| Eficiencia de desempeño / comportamiento temporal | Menos trabajo inicial y módulos diferidos | FCP, LCP y TBT; seis cargas finales. |
+| Eficiencia de desempeño / utilización de recursos | Proyecciones, caché, formatos y compresión | Consultas, bytes y validadores HTTP. |
+| Eficiencia de desempeño / capacidad | Cargas acotadas por página | Páginas de 12 y prueba de escala de planificación. |
+| Mantenibilidad / modularidad | Separación de dominio, casos de uso y adaptadores | Estructura por capas y prueba de arquitectura. |
+| Mantenibilidad / reusabilidad | Reglas y componentes compartidos | Búsqueda en dominio; iconos en shared/ui. |
+| Mantenibilidad / analizabilidad | Tipos, lint y trazabilidad | Compilación, diagnósticos y manifiestos. |
+| Mantenibilidad / modificabilidad | Cambios mediante contratos y configuración | Puertos de repositorios y adaptadores intercambiables. |
+| Mantenibilidad / capacidad de prueba | Regresiones e integración aislada | Cobertura, Playwright y PostGIS real. |
 
-### 2.2 Green Software Foundation (GSF)
+### 9.2 Principios de la Green Software Foundation
 
-Se aplican los cuatro principios de eficiencia y conciencia del carbono:
+La Green Software Foundation (GSF) aporta cuatro principios relacionados con el análisis solicitado. Su aplicación se diferencia de la medición eléctrica y de las capacidades de despliegue aún no implementadas.
 
-| Principio | Qué plantea | Aplicación en EcoLogística Lima |
+| Principio | Aplicación y justificación | Alcance |
 |---|---|---|
-| Eficiencia de carbono | Emitir la menor cantidad de carbono posible por unidad de trabajo | Planificación de rutas con una heurística que responde en segundos en lugar de un cálculo exhaustivo; listados paginados para no transferir datos innecesarios. |
-| Eficiencia energética | Usar la menor energía posible | Índices en consultas frecuentes, carga diferida del mapa y actualización del dashboard cada 60 s en lugar de consultas continuas. |
-| Conciencia de carbono | Hacer más trabajo cuando la electricidad es más limpia | Aún no se aplica, porque el despliegue no está definido. Propuesta: programar fuera de la hora punta las tareas diferibles (recálculo de reportes) cuando exista un servidor propio. |
-| Eficiencia de hardware | Usar menos hardware y prolongar la vida útil de los dispositivos | Cliente ligero (seis dependencias de producción) y vistas probadas a 390 px para que los conductores usen móviles de gama baja. |
+| Eficiencia de carbono | SWDM permite comparar el coste estimado por carga; formatos, caché y compresión limitan transferencia. | Se informa también el incremento de Acceso; no se supone reducción neta del sitio. |
+| Eficiencia energética | Proyecciones, índices y paginación evitan trabajo y datos innecesarios. | La mejora se fundamenta en operaciones y transferencia; no hay medición eléctrica directa. |
+| Eficiencia de hardware | Menor trabajo inicial y mapa diferido reducen requisitos de arranque del cliente. | Las pruebas móviles no demuestran por sí solas prolongación de vida útil del hardware. |
+| Conciencia de carbono | Las tareas diferibles podrán programarse con señales de intensidad de carbono regional. | Es una regla de evolución: no hay planificador conectado a señales de red eléctrica ni ahorro temporal acreditado. |
 
-Como referencia de medición, la especificación de intensidad de carbono del software (SCI, ISO/IEC 21031:2024) define `SCI = ((E × I) + M) por R`, donde E es la energía consumida, I la intensidad de carbono de la electricidad, M el carbono incorporado del hardware y R la unidad funcional (en este proyecto, un pedido o una ruta planificada).
+La especificación Software Carbon Intensity (SCI) relaciona energía, intensidad de carbono, carbono incorporado y unidad funcional. Este informe usa SWDM para cargas web; no presenta el resultado como una medición SCI de una ruta o pedido.
 
-### 2.3 W3C Web Sustainability Guidelines (WSG)
+### 9.3 Correspondencia con W3C WSG
 
-El texto oficial consultado el 11/11/2026 es un borrador de nota del grupo de trabajo (Group Note Draft, 16/10/2026) y numera sus secciones así: 2 Diseño de la experiencia de usuario, 3 Desarrollo web, 4 Alojamiento, infraestructura y sistemas, y 5 Estrategia de negocio y gestión de producto. La rúbrica cita las pautas «1.2, 2.4 y 3.1»: en el texto oficial la **2.4** es «Design efficient and streamlined user journeys» y la **3.1** es «Set goals based on performance and energy impact», mientras que el numeral 1.2 pertenece a la introducción («WSG layers of guidance») y no es una pauta. Los títulos de las pautas se citan en su idioma original. Este documento cubre la 2.4 y la 3.1 con su título oficial y, para la intención que la rúbrica atribuye a «1.2» (medios optimizados), la pauta **2.9**, «Optimize media to reduce resource use».
+Se consultó la versión de las Web Sustainability Guidelines (WSG) publicada como borrador de nota de grupo el 16/10/2026. La rúbrica menciona los numerales 1.2, 2.4 y 3.1; se conserva su correspondencia con el texto oficial, evitando atribuirles los títulos diferentes del ejemplo HTML.
 
-| Pauta oficial | Título | Aplicación en EcoLogística Lima |
-|---|---|---|
-| 2.4 | Design efficient and streamlined user journeys | Cada rol llega a su tarea en pocos pasos: el conductor confirma una entrega desde «Mi ruta» y «Pedido actual», y el planificador genera rutas en una sola pantalla. |
-| 2.9 | Optimize media to reduce resource use | No hay imágenes ráster; los iconos son SVG y el mapa es vectorial. Si se agregan imágenes, se usarán WebP o AVIF con `<picture>` y `loading="lazy"`. |
-| 3.1 | Set goals based on performance and energy impact | Metas medibles: 45 s (P95) para generar rutas (RNF-001), cobertura mínima del 90 % y puntaje de Lighthouse como objetivo del informe de reducción del impacto ambiental. |
-| 3.2 | Minify and remove unused code | El build de producción (`vite build`) minimiza el código y se ejecuta en cada Pull Request; `oxlint` detecta código sin uso. |
-| 3.3 | Modularize bandwidth-heavy components | El componente de mapa (`LeafletCanvas`) se carga con `React.lazy` y `Suspense`. |
-| 3.4 | Avoid redundancy and duplication in code | Una sola implementación del cálculo de CO₂ por km (`domain/emissions.py`) y un único cliente HTTP (`requestJson`). |
-| 3.11 | Use sustainable JavaScript and APIs | Peticiones paginadas con `limit` y `offset`, y respuestas con solo los datos necesarios. |
-| 3.12 | Use dependencies sparingly and maintain them | Seis dependencias de producción; `npm audit` y `pip-audit` sin hallazgos y Bandit sin alertas medias o altas (verificado el 30/10/2026). |
-| 3.16 | Reduce the number and complexity of database queries | Índices para los filtros frecuentes y consultas con parámetros; las consultas con `SELECT *` se reemplazarán por columnas explícitas. |
+| Numeral citado | Contenido oficial y aplicación |
+|---|---|
+| 1.2 | Describe las capas de orientación de WSG; sirve para separar principios, pautas y criterios comprobables. No es la pauta de optimización de imágenes. |
+| 2.4 | Trata recorridos de uso eficientes; se relaciona con navegación por rol y consulta paginada. |
+| 3.1 | Establece objetivos de rendimiento e impacto energético; se relaciona con umbrales, auditorías y estimaciones. |
 
-## 3. Reglas arquitectónicas y guía de desarrollo verde
+Para medios se utiliza además 2.9; para modularización, 3.3; para dependencias, 3.12; y para complejidad de consultas, 3.16. Las reglas se aplican según su contenido y la versión consultada. La referencia WSG es un documento en desarrollo, no una certificación del producto.
 
-### 3.1 Principios de código limpio aplicados
+### 9.4 Matriz directa de las ocho optimizaciones
 
-| Principio | Backend (Python y FastAPI) | Frontend (React y TypeScript) |
-|---|---|---|
-| Clean Code | Funciones cortas con un propósito; comentarios que explican el porqué; nombres del dominio en español. | Componentes pequeños por responsabilidad; tipos explícitos; `oxlint` y `tsc` sin avisos. |
-| SOLID, responsabilidad única | Un caso de uso por archivo en `application/use_cases`. | Una vista, un servicio y un adaptador por responsabilidad. |
-| SOLID, abierto y cerrado | Nuevos objetivos de optimización o combustibles se agregan por configuración, sin modificar los casos de uso. | Nuevos paneles se agregan como componentes sin modificar el `AppShell`. |
-| SOLID, sustitución e interfaces | Puertos pequeños en `domain/ports` (por ejemplo repositorios de vehículos y conductores). | Servicios inyectados por interfaz; adaptadores HTTP y de demostración intercambiables. |
-| SOLID, inversión de dependencias | El dominio solo depende de puertos; `test_architecture.py` falla si importa infraestructura o frameworks. | `domain` no importa de `infrastructure` ni de `interfaces`. |
-| DRY | Consultas fijas como constantes de módulo; cálculo de emisiones en un solo lugar. | Componentes comunes en `shared/ui` y un único cliente HTTP. |
-| YAGNI | Redis, OAuth2/JWT y Docker Compose permanecen como arquitectura objetivo hasta que se necesiten. | Sin librerías de estado global ni de fechas mientras bastan las APIs nativas. |
+| Área | ISO/IEC 25010 | Principio GSF | WSG | Comprobación |
+|---|---|---|---|---|
+| 1. Proyecciones e índices SQL | Utilización de recursos | Energía y hardware | 3.16 | Consultas, índices y planes aislados. |
+| 2. Paginación de 12 | Capacidad | Energía | 2.4, 3.1 | Contratos, navegación y conteos. |
+| 3. AVIF/WebP adaptativas | Comportamiento temporal | Carbono | 2.9 | Fuentes, tamaños y decodificación. |
+| 4. React.lazy/Suspense | Modularidad | Hardware y energía | 3.3 | Chunks y solicitudes de arranque. |
+| 5. Cálculo nativo | Analizabilidad y modificabilidad | Energía | 3.12 | Comparación con el auxiliar anterior. |
+| 6. SVG inline | Reusabilidad | Carbono | 2.9 | Iconos y marcadores integrados. |
+| 7. Caché y React Query | Comportamiento temporal | Energía | 2.4, 3.1 | 304, aislamiento e invalidación. |
+| 8. Brotli/Gzip | Utilización de recursos | Carbono | 3.1 | Negociación y transferencia. |
 
-### 3.2 Reglas para el backend
+## 10. Código limpio y reglas verificables
 
-1. El dominio no importa FastAPI, psycopg ni ningún framework; la dependencia va de afuera hacia adentro.
-2. Toda consulta SQL usa parámetros (`%s`); las consultas nuevas listan sus columnas y no usan `SELECT *`.
-3. Todo listado es paginado con un límite máximo (hoy 100 registros) y se rechaza lo que lo excede.
-4. Cada filtro frecuente nuevo se entrega con su índice en `schema.sql`.
-5. Los cálculos pesados (planificación) tienen un tiempo máximo configurable y una medición asociada (RNF-001).
-6. Las respuestas JSON de más de 1 KB se comprimen (GZip o Brotli) y los recursos estáticos llevan cabeceras de caché (propuesta, no implementada).
-7. Las dependencias se fijan y se auditan en cada Pull Request (`pip-audit` y Bandit).
-8. La cobertura de Python se mantiene en 90 % o más, en líneas y en ramas.
+| Principio | Backend | Frontend | Verificación |
+|---|---|---|---|
+| Clean Code | Casos de uso con propósito explícito y consultas legibles | Vistas y componentes por responsabilidad | Revisión, tipos y lint. |
+| SOLID: responsabilidad única | Casos de uso separados de persistencia | Presentación separada de adaptadores HTTP | Estructura y pruebas por capa. |
+| SOLID: abierto/cerrado | Puertos permiten incorporar adaptadores | Servicios se consumen por contrato | Dobles y adaptadores de demostración. |
+| SOLID: sustitución e interfaces | Repositorios mantienen sus contratos | Adaptadores HTTP y demo comparten tipos | Regresiones de contratos; excepciones documentadas. |
+| SOLID: inversión de dependencias | Dominio independiente de FastAPI/psycopg | Dominio independiente de UI y transporte | Prueba de arquitectura e inspección de importaciones. |
+| DRY | Agregados y reglas de negocio reutilizados | Regla de búsqueda y componentes compartidos | Pruebas de resultados y consumidores existentes. |
+| YAGNI | Sin incorporar servicios de caché que el alcance no requiere | APIs nativas cuando resuelven el problema; Query acotado a Registros | Revisión del uso y coste de cada dependencia. |
 
-### 3.3 Reglas para el frontend
+En backend se exige autorización antes de consultar listados, parámetros SQL enlazados, límites acotados, índices justificados por consultas y transacciones en escrituras. La regla de proyección se aplica a las consultas auditadas; no se interpreta como una afirmación de que todo el repositorio carece de SELECT *.
 
-1. Se respetan las capas `domain`, `application`, `infrastructure`, `interfaces` y `shared`; el dominio no importa de las demás.
-2. Los componentes pesados se cargan con `React.lazy` y `Suspense` (hecho para el mapa; pendiente para administración y reportes).
-3. Los iconos son componentes SVG; no se suben imágenes ráster sin necesidad y, si se suben, serán WebP o AVIF de menos de 200 KB con `<picture>` y `loading="lazy"` bajo el pliegue.
-4. Toda dependencia nueva se justifica y se revisa su peso en el build; `npm audit` no admite hallazgos altos.
-5. Las peticiones son paginadas y sin consultas continuas innecesarias (el dashboard actualiza cada 60 s).
-6. Las reglas de diseño y accesibilidad se vigilan con pruebas automáticas (`designRules.test.ts` y axe-core en Playwright).
-7. La cobertura mínima es del 90 % (líneas, sentencias, funciones y ramas).
-8. El build de producción se genera minimizado y sin avisos de lint ni de tipos.
+En frontend se exige paginación bajo demanda, dimensiones reservadas, texto alternativo, carga diferida de vistas pesadas y separación de caché por identidad. Las imágenes fuera del primer contenido visible usarán carga diferida; la imagen principal de Acceso conserva carga prioritaria por su papel en LCP. Las dependencias se justifican y el build minimizado se audita.
 
-### 3.4 Cómo se comprueba cada regla
+Los cambios deben conservar cobertura mínima del 90 %, verificaciones de seguridad y accesibilidad automatizada, además de los controles de formato documental. Cada nueva medición identifica versión, entorno, datos y límites. La revisión manual de accesibilidad se registra de forma independiente.
 
-| Regla | Mecanismo | Dónde |
-|---|---|---|
-| Dominio sin frameworks | `test_architecture.py` | Pruebas del backend |
-| SQL parametrizado | Bandit sin hallazgos medios o altos | Flujo de integración continua (`.github/workflows/sonarcloud.yml`) |
-| Cobertura de 90 % | `scripts/check_python_coverage.py` y umbral de Vitest | Flujo de integración continua |
-| Dependencias sin hallazgos | `pip-audit` y `npm audit` | Flujo de integración continua |
-| Lint y tipos | `oxlint` y `tsc -b` | Pruebas y compilación del frontend |
-| Reglas de diseño y accesibilidad | `designRules.test.ts` y `accesibilidad.spec.ts` | Pruebas del frontend |
+## 11. Referencias
 
-## 4. Matriz de mapeo directo: estándares y optimizaciones
+- ISO, [ISO/IEC 25010:2023 — Product quality model](https://www.iso.org/standard/78176.html).
+- Green Software Foundation, [formación y principios de software verde](https://greensoftware.foundation/education/).
+- Green Software Foundation, [Software Carbon Intensity Specification](https://sci.greensoftware.foundation/).
+- W3C, [Web Sustainability Guidelines, versión del 16/10/2026](https://www.w3.org/TR/2026/DNOTE-web-sustainability-guidelines-20261016/).
+- Sustainable Web Design, [Estimating Digital Emissions, SWDM v4](https://sustainablewebdesign.org/estimating-digital-emissions/).
 
-| # | Optimización | ISO/IEC 25010 | Green Software Foundation | W3C WSG | Estado verificado en el código (11/11/2026) |
-|---|---|---|---|---|---|
-| 1 | Consultas con columnas explícitas e índices en PostgreSQL | Eficiencia: utilización de recursos | Eficiencia de hardware y energética | 3.16 | Parcial: diez índices en `schema.sql`; quedan 15 usos de `SELECT *` por reemplazar. |
-| 2 | Paginación en backend y frontend | Eficiencia: capacidad | Eficiencia energética | 2.4 y 3.11 | Parcial: el backend limita a 100 registros (20 por defecto) y la interfaz pagina de 100 en 100; la regla de 12 registros por vista no está aplicada. |
-| 3 | Medios optimizados | Eficiencia: comportamiento temporal | Eficiencia de carbono | 2.9 | Cumplido por diseño: sin imágenes ráster; iconos SVG y mapa vectorial. |
-| 4 | Code splitting con `React.lazy` y `Suspense` | Mantenibilidad: modularidad; eficiencia: comportamiento temporal | Eficiencia energética y de hardware | 3.3 | Parcial: `LeafletCanvas` se carga bajo demanda; las demás vistas van en el paquete principal. |
-| 5 | Dependencias mínimas y auditadas | Mantenibilidad: analizabilidad | Eficiencia de hardware | 3.2 y 3.12 | Cumplido: seis dependencias de producción, sin librerías de fechas ni utilidades; `npm audit` en 0. |
-| 6 | Iconos SVG como componentes | Eficiencia: comportamiento temporal | Eficiencia de carbono | 2.9 y 3.4 | Cumplido: `shared/ui/icons.tsx` define los iconos como componentes React. |
-| 7 | Cabeceras de caché y caché de peticiones | Eficiencia: comportamiento temporal | Eficiencia energética | 3.1 y 3.11 | Pendiente: no hay `Cache-Control`, ETag ni caché de peticiones en el cliente. |
-| 8 | Compresión de respuestas (GZip o Brotli) | Eficiencia: capacidad | Eficiencia de carbono | 3.1 y 3.11 | Pendiente: FastAPI no tiene `GZipMiddleware`. |
+Las fuentes se consultaron el 13/11/2026. Las relaciones de las tablas constituyen el análisis del proyecto sobre estos marcos.
 
-De las ocho áreas, tres están cumplidas, tres parcialmente y dos pendientes; las pendientes y parciales son el insumo del informe de reducción del impacto ambiental (documento 01).
+## 12. Automatización y gestión de versiones
 
-## 5. Referencias
+El [registro CI/Git del Sprint 4](../Sprint%204/07%20Automatizacion%20CI%20y%20gestion%20de%20versiones%20V_1_0_0.md) documenta el workflow LHCI, las rutas exactas, la versión v1.0.0 y la secuencia de publicación. Los resultados locales y la ejecución remota se mantienen separados.
 
-- ISO/IEC 25010:2011, *Systems and software engineering — Systems and software Quality Requirements and Evaluation (SQuaRE) — System and software quality models*.
-- Green Software Foundation, *Green Software Principles* y especificación de intensidad de carbono del software (ISO/IEC 21031:2024).
-- W3C, [*Web Sustainability Guidelines (WSG)*](https://www.w3.org/TR/web-sustainability-guidelines/) (consultado el 11/11/2026).
+## Validación automatizada posterior
+
+La validación LHCI posterior registró un incumplimiento de TBT en Acceso (167 ms frente al límite de 85 ms) y tres cargas conformes en Pedidos. La serie histórica raster-sesion conserva sus seis cargas conformes; el nuevo resultado se presenta por separado y deja pendiente comprobar la estabilidad del gate de Acceso. Véase el [registro de automatización](../Sprint%204/07%20Automatizacion%20CI%20y%20gestion%20de%20versiones%20V_1_0_0.md).
 
 ## Control de versiones del documento
 
 | Versión | Fecha | Autoría / cambio |
 |---|---|---|
-| V_1_0_0 | 11/11/2026 | Tovar Sánchez, Carlos Alberto. Emisión inicial: fundamentación en ISO/IEC 25010, GSF y W3C WSG, reglas de código limpio para backend y frontend, guía de desarrollo verde y matriz de mapeo de las ocho optimizaciones, adaptadas al stack del proyecto. |
-| V_1_0_1 | 12/11/2026 | Rojas Camayo, Valentino Jhan Pierre. Revisión de formato y redacción: metadatos en líneas separadas, como en el resto de la documentación; referencia de la W3C como enlace; referencia cruzada al documento 01; ajustes de puntuación y de estilo formal. Sin cambios de contenido técnico. |
+| V_1_0_0 | 11/11/2026 | Tovar Sánchez, Carlos Alberto. Fundamentación inicial en estándares y reglas verdes. |
+| V_1_0_1, antecedente | 12/11/2026 | Rojas Camayo, Valentino Jhan Pierre. Revisión de redacción y formato. |
+| V_1_0_1 | 13/11/2026 | Ore Campos, Josef Pablo; Cueva Ricse, Alex. Revisión técnica y documental del estado final; se conserva la versión documental vigente integrada en main. |
 
 [← Volver al índice correspondiente](README.md)
