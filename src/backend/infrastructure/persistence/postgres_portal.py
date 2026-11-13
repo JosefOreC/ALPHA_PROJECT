@@ -14,7 +14,7 @@ from infrastructure.persistence.postgres_dashboard import DISTRICTS, PostgresDas
 
 LIMA = ZoneInfo('America/Lima')
 FUELS = ('DIESEL','GASOLINA','GLP','GNV','ELECTRICO','HIBRIDO')
-AVAILABLE_FLEET = """SELECT v.*,c.conductor_id,c.nombre_completo FROM vehiculos v
+AVAILABLE_FLEET = """SELECT v.vehiculo_id,v.placa,v.capacidad_kg,v.tipo_combustible,c.conductor_id,c.nombre_completo FROM vehiculos v
     JOIN conductores c USING(vehiculo_id) JOIN usuarios u USING(usuario_id)
     WHERE v.estado='DISPONIBLE' AND c.estado='ACTIVO' AND u.estado='ACTIVO' AND NOT EXISTS
     (SELECT 1 FROM rutas r WHERE r.fecha_operacion=%s AND (r.vehiculo_id=v.vehiculo_id OR r.conductor_id=c.conductor_id))
@@ -38,7 +38,7 @@ def audit(conn, actor, action, entity, identifier, detail):
 
 class PostgresPortal:
     def users(self):
-        items = [user_dto(row) for row in rows('SELECT * FROM usuarios ORDER BY nombre')]
+        items = [user_dto(row) for row in rows('SELECT usuario_id,nombre,email,rol,estado,ultimo_acceso FROM usuarios ORDER BY nombre,usuario_id')]
         counts = {role:sum(item['role']==role for item in items) for role in ('admin','planner','driver','logistics','auditor')}
         return {'items':items,'total':len(items),'roleCounts':counts}
 
@@ -52,7 +52,7 @@ class PostgresPortal:
         try:
             with connection() as conn:
                 row = conn.execute('''INSERT INTO usuarios(usuario_id,nombre,email,password_hash,rol,estado)
-                    VALUES (%s,%s,%s,%s,%s,'ACTIVO') RETURNING *''',
+                    VALUES (%s,%s,%s,%s,%s,'ACTIVO') RETURNING usuario_id,nombre,email,rol,estado,ultimo_acceso''',
                     (identifier,payload['name'].strip(),payload['email'].strip().lower(),hash_password(payload['password']),role)).fetchone()
                 audit(conn,actor,'CREAR_USUARIO','usuarios',identifier,{'rol':role})
         except psycopg.errors.UniqueViolation:
@@ -64,11 +64,11 @@ class PostgresPortal:
             WHERE u.rol IN ('CONDUCTOR','driver','ROL-03') AND u.estado='ACTIVO' AND c.conductor_id IS NULL ORDER BY nombre""")]
 
     def parameters(self, query=rows):
-        result = query('SELECT * FROM parametros_algoritmo ORDER BY actualizado_en DESC LIMIT 1')
+        result = query('SELECT peso_co2,tiempo_maximo_seg,carga_maxima_pct,holgura_ventana_min,reoptimizar_automaticamente FROM parametros_algoritmo ORDER BY actualizado_en DESC LIMIT 1')
         if not result:
             raise ValueError('No hay parámetros configurados en la base de datos.')
         row = result[0]
-        stored = query('SELECT * FROM factores_emision')
+        stored = query('SELECT combustible,factor_kg_co2,consumo_por_km FROM factores_emision')
         factors = {fuel:None for fuel in FUELS}
         factors.update({item['combustible']:float(item['factor_kg_co2']) for item in stored})
         consumption = {fuel:None for fuel in FUELS}
@@ -105,12 +105,12 @@ class PostgresPortal:
         return self.parameters()
 
     def integrations(self):
-        result = rows('SELECT * FROM integraciones ORDER BY nombre')
+        result = rows('SELECT integracion_id,nombre,descripcion FROM integraciones ORDER BY nombre')
         return [{'id':row['integracion_id'],'name':row['nombre'],'description':row['descripcion'],
                  'status':'connected' if row['integracion_id']=='db' else 'pending'} for row in result]
 
     def route_rows(self, day=None, driver_id=None):
-        return rows(sql.SQL('''SELECT r.*,v.placa,v.tipo_combustible,c.nombre_completo,a.nombre AS depot,ST_AsGeoJSON(r.geometria)::json AS geo
+        return rows(sql.SQL('''SELECT r.ruta_id,r.fecha_operacion,r.vehiculo_id,r.conductor_id,r.almacen_id,r.distancia_total_km,r.tiempo_estimado_min,r.co2_estimado_kg,r.co2_base_kg,r.estado,r.version,r.ruteo,r.generada_en,v.placa,v.tipo_combustible,c.nombre_completo,a.nombre AS depot,ST_AsGeoJSON(r.geometria)::json AS geo
             FROM rutas r JOIN vehiculos v USING(vehiculo_id) JOIN conductores c USING(conductor_id) JOIN almacenes a USING(almacen_id)
             WHERE fecha_operacion=%s''') + sql.SQL(' AND r.conductor_id=%s' if driver_id else '') + sql.SQL(' ORDER BY v.placa'),
             (day or now().date(),driver_id) if driver_id else (day or now().date(),))
@@ -119,7 +119,7 @@ class PostgresPortal:
         route_rows = self.route_rows(driver_id=driver_id)
         route_ids = [row['ruta_id'] for row in route_rows]
         depots = rows('SELECT nombre,latitud,longitud FROM almacenes ORDER BY nombre LIMIT 1')
-        orders = rows(sql.SQL('''SELECT p.*,rp.ruta_id,rp.orden_entrega FROM pedidos p LEFT JOIN ruta_pedido rp USING(pedido_id)
+        orders = rows(sql.SQL('''SELECT p.pedido_id,p.cliente_nombre,p.distrito,p.estado,p.latitud,p.longitud,p.ventana_inicio,p.ventana_fin,rp.ruta_id,rp.orden_entrega FROM pedidos p LEFT JOIN ruta_pedido rp USING(pedido_id)
             WHERE (ventana_inicio AT TIME ZONE 'America/Lima')::date=%s AND latitud IS NOT NULL AND longitud IS NOT NULL''')
             + sql.SQL(" AND p.estado IN ('PENDIENTE','EN_CAMINO')" if active_only else '')
             + sql.SQL(' AND p.conductor_id=%s' if driver_id else ''),(now().date(),driver_id) if driver_id else (now().date(),))
@@ -131,7 +131,7 @@ class PostgresPortal:
                       and (row['ruta_id'] in route_ids or (row['ruta_id'] is None and depots))]
         routes = [{'id':str(row['ruta_id']),'plate':row['placa'],'driver':row['nombre_completo'],'color':i%4+1,
                    'path':[{'lat':point[1],'lng':point[0]} for point in row['geo']['coordinates']], 'done_until':0} for i,row in enumerate(route_rows)]
-        vehicles = rows(sql.SQL('''SELECT DISTINCT ON (p.vehiculo_id) p.*,v.placa,v.estado FROM posiciones_vehiculos p JOIN vehiculos v USING(vehiculo_id)
+        vehicles = rows(sql.SQL('''SELECT DISTINCT ON (p.vehiculo_id) p.vehiculo_id,p.latitud,p.longitud,p.ruta_id,v.placa,v.estado FROM posiciones_vehiculos p JOIN vehiculos v USING(vehiculo_id)
             WHERE (p.registrada_en AT TIME ZONE 'America/Lima')::date=%s''')+sql.SQL(' AND p.ruta_id=ANY(%s)' if driver_id else '')+sql.SQL(' ORDER BY p.vehiculo_id,p.registrada_en DESC'),
             (now().date(),route_ids) if driver_id else (now().date(),))
         if active_only:
@@ -154,7 +154,7 @@ class PostgresPortal:
         if not result:
             return None
         route = result[0]
-        stops = rows('SELECT p.* FROM ruta_pedido rp JOIN pedidos p USING(pedido_id) WHERE ruta_id=%s AND estado<>\'CANCELADO\' ORDER BY orden_entrega',(route['ruta_id'],))
+        stops = rows('SELECT p.pedido_id,p.cliente_nombre,p.direccion_entrega,p.ventana_inicio,p.estado FROM ruta_pedido rp JOIN pedidos p USING(pedido_id) WHERE ruta_id=%s AND estado<>\'CANCELADO\' ORDER BY orden_entrega',(route['ruta_id'],))
         current = next((row['pedido_id'] for row in stops if row['estado']!='ENTREGADO'),None)
         delivered = sum(row['estado']=='ENTREGADO' for row in stops)
         base, co2 = float(route['co2_base_kg']),float(route['co2_estimado_kg'])
@@ -169,7 +169,7 @@ class PostgresPortal:
     def report(self, period):
         today = now().date()
         start = today-timedelta(days={'week':6,'month':29,'quarter':89}[period])
-        routes = rows('''SELECT r.*,v.placa,v.tipo_combustible FROM rutas r JOIN vehiculos v USING(vehiculo_id)
+        routes = rows('''SELECT r.fecha_operacion,r.distancia_total_km,r.co2_estimado_kg,r.co2_base_kg,v.placa,v.tipo_combustible FROM rutas r JOIN vehiculos v USING(vehiculo_id)
             WHERE fecha_operacion BETWEEN %s AND %s ORDER BY fecha_operacion''',(start,today))
         baseline = sum(float(row['co2_base_kg']) for row in routes)
         emitted = sum(float(row['co2_estimado_kg']) for row in routes)
@@ -216,11 +216,11 @@ class PostgresPortal:
     def insights(self, day, district=None):
         if district and district not in DISTRICTS:
             raise ValueError('Distrito no encontrado.')
-        dashboard = PostgresDashboard()
+        dashboard = PostgresDashboard(cache=True)
         route_rows = dashboard.route_metrics(day,district)
         base = sum(float(row['co2_base_kg'])*(row['fraction'] or 0) for row in route_rows)
         avoided = sum(float(row['co2_base_kg']-row['co2_estimado_kg'])*(row['fraction'] or 0) for row in route_rows)
-        risks = rows('''SELECT * FROM pedidos WHERE estado IN ('PENDIENTE','EN_CAMINO')
+        risks = rows('''SELECT pedido_id,cliente_nombre,distrito,ventana_inicio,ventana_fin,estado,conductor_id FROM pedidos WHERE estado IN ('PENDIENTE','EN_CAMINO')
             AND (ventana_inicio AT TIME ZONE 'America/Lima')::date=%s AND ventana_fin BETWEEN %s AND %s''',(day,now(),now()+timedelta(minutes=30)))
         if district:
             risks = [row for row in risks if row['distrito']==DISTRICTS.get(district,district)]
@@ -237,14 +237,14 @@ class PostgresPortal:
                     'status':'pending' if row['estado']=='PENDIENTE' else 'inTransit','note':'Sin conductor' if row['conductor_id'] is None else 'Ventana por vencer'} for row in risks],
                 'riskMinutes':30,'suggestion':None}
 
-    def records(self, module, driver_id=None):
+    def records(self, module, driver_id=None, limit=200, offset=0):
         if module=='auditoria':
             return rows('''SELECT a.registrada_en AS fecha,u.nombre AS usuario,a.accion,a.entidad,a.detalle
-                FROM auditoria a JOIN usuarios u USING(usuario_id) ORDER BY registrada_en DESC LIMIT 200''')
+                FROM auditoria a JOIN usuarios u USING(usuario_id) ORDER BY registrada_en DESC,a.evento_id DESC LIMIT %s OFFSET %s''', (limit,offset))
         if module=='incidencias':
             return rows(sql.SQL('''SELECT i.incidencia_id AS id,i.reportada_en AS fecha,p.cliente_nombre AS cliente,c.nombre_completo AS conductor,i.tipo,i.descripcion,i.estado
                 FROM incidencias i JOIN pedidos p USING(pedido_id) JOIN conductores c ON c.conductor_id=i.conductor_id''')
-                + sql.SQL(' WHERE i.conductor_id=%s' if driver_id else '') + sql.SQL(' ORDER BY reportada_en DESC LIMIT 200'), (driver_id,) if driver_id else ())
+                + sql.SQL(' WHERE i.conductor_id=%s' if driver_id is not None else '') + sql.SQL(' ORDER BY reportada_en DESC,i.incidencia_id DESC LIMIT %s OFFSET %s'), ((driver_id,) if driver_id is not None else ())+(limit,offset))
         raise ValueError('Sección no válida.')
 
     def create_incident(self, payload, identity):
@@ -276,7 +276,7 @@ class PostgresPortal:
     def _calculate_proposal(self, settings, query, start):
         import time
         started = time.monotonic()
-        orders = query("SELECT * FROM pedidos WHERE estado='PENDIENTE' AND conductor_id IS NULL AND latitud IS NOT NULL AND longitud IS NOT NULL AND (ventana_inicio AT TIME ZONE 'America/Lima')::date=%s ORDER BY ventana_inicio,pedido_id LIMIT 151",(start.date(),))
+        orders = query("SELECT pedido_id,cliente_nombre,distrito,estado,latitud,longitud,ventana_inicio,ventana_fin,peso_kg,version FROM pedidos WHERE estado='PENDIENTE' AND conductor_id IS NULL AND latitud IS NOT NULL AND longitud IS NOT NULL AND (ventana_inicio AT TIME ZONE 'America/Lima')::date=%s ORDER BY ventana_inicio,pedido_id LIMIT 151",(start.date(),))
         if len(orders)>150:
             raise ValueError('Selecciona como máximo 150 pedidos para planificar.')
         fleet = query(AVAILABLE_FLEET,(start.date(),))
@@ -284,7 +284,7 @@ class PostgresPortal:
         if not depots or not fleet:
             raise ValueError('Se requiere un almacén y vehículos disponibles con conductor para planificar.')
         profiles = {row['combustible']:{'factor':float(row['factor_kg_co2']),
-                    'consumption':float(row['consumo_por_km']) if row.get('consumo_por_km') is not None else None} for row in query('SELECT * FROM factores_emision')}
+                    'consumption':float(row['consumo_por_km']) if row.get('consumo_por_km') is not None else None} for row in query('SELECT combustible,factor_kg_co2,consumo_por_km FROM factores_emision')}
         config = self.parameters(query)
         depot = depots[0]
         result = propose(orders,fleet,(float(depot['latitud']),float(depot['longitud'])),profiles,config,settings,start)

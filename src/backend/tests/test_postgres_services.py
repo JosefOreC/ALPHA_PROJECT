@@ -152,7 +152,7 @@ def test_driver_repository_checks_linked_account_and_vehicle(db):
 
 
 def test_dashboard_aggregates_statuses_windows_and_fractional_emissions(db):
-    db.responses = {'SELECT * FROM pedidos': [order(s) for s in ('ENTREGADO', 'EN_CAMINO', 'PENDIENTE', 'CANCELADO')],
+    db.responses = {'FROM pedidos WHERE': [order(s) for s in ('ENTREGADO', 'EN_CAMINO', 'PENDIENTE', 'CANCELADO')],
                     'SELECT r.distancia': [route(fraction=0.5), route(fraction=None)]}
     service = dashboard.PostgresDashboard()
     counts = service.get_order_counts(TODAY.date(), None)
@@ -173,7 +173,7 @@ def test_dashboard_aggregates_statuses_windows_and_fractional_emissions(db):
 def test_portal_user_creation_normalizes_email_hashes_password_and_audits(db):
     service = portal.PostgresPortal()
     account = user()
-    db.responses = {'SELECT rol': [{'rol': 'ADMIN'}, {'rol': 'CONDUCTOR'}], 'INSERT INTO usuarios': [account], 'SELECT * FROM usuarios': [account]}
+    db.responses = {'SELECT rol': [{'rol': 'ADMIN'}, {'rol': 'CONDUCTOR'}], 'INSERT INTO usuarios': [account], 'SELECT usuario_id,nombre,email,rol': [account]}
     payload = dict(name=' Ana Pérez ', email=' ANA@EXAMPLE.INVALID ', password='Test password 123!', role='driver')
     created = service.create_user(payload, 'actor')
     assert created['role'] == 'driver' and created['lastAccess'] == 'Sin acceso'
@@ -194,8 +194,8 @@ def test_portal_user_creation_normalizes_email_hashes_password_and_audits(db):
 
 @pytest.mark.parametrize('existing', [False, True])
 def test_parameters_preserve_legacy_consumption_and_remove_disabled_factors(db, existing):
-    db.responses = {'SELECT * FROM parametros': [parameters()], 'SELECT parametro_id': [{'parametro_id': uuid4()}] if existing else [],
-                    'SELECT * FROM factores': [{'combustible': 'DIESEL', 'factor_kg_co2': Decimal('2.68'), 'consumo_por_km': Decimal('.1')},
+    db.responses = {'SELECT peso_co2': [parameters()], 'SELECT parametro_id': [{'parametro_id': uuid4()}] if existing else [],
+                    'SELECT combustible,factor_kg_co2': [{'combustible': 'DIESEL', 'factor_kg_co2': Decimal('2.68'), 'consumo_por_km': Decimal('.1')},
                                                {'combustible': 'GNV', 'factor_kg_co2': 2, 'consumo_por_km': None}]}
     service = portal.PostgresPortal()
     data = service.parameters()
@@ -214,8 +214,8 @@ def test_parameters_preserve_legacy_consumption_and_remove_disabled_factors(db, 
 @pytest.mark.parametrize('driver_id', [None, 'driver-1'])
 def test_map_preserves_geography_scopes_queries_and_vehicle_states(db, driver_id):
     r = route()
-    db.responses = {'SELECT r.*': [r], 'SELECT nombre,latitud': [{'nombre': 'Central', 'latitud': -12, 'longitud': -77}],
-                    'SELECT p.*': [order(ruta_id=r['ruta_id'],orden_entrega=3), order()],
+    db.responses = {'FROM rutas r JOIN vehiculos': [r], 'SELECT nombre,latitud': [{'nombre': 'Central', 'latitud': -12, 'longitud': -77}],
+                    'SELECT p.pedido_id': [order(ruta_id=r['ruta_id'],orden_entrega=3), order()],
                     'SELECT DISTINCT': [dict(vehiculo_id=uuid4(), placa='TST-001', ruta_id=r['ruta_id'] if i == 0 else None,
                                              latitud=-12, longitud=-77, estado=state) for i, state in enumerate(('EN_RUTA','DISPONIBLE','MANTENIMIENTO'))]}
     result = portal.PostgresPortal().map(driver_id)
@@ -235,9 +235,9 @@ def test_route_map_only_exposes_active_orders_with_origin_and_destination(db):
     completed = route(estado='COMPLETADA',placa='TST-002')
     pending = order()
     transit = order('EN_CAMINO',ruta_id=active['ruta_id'])
-    db.responses = {'SELECT r.*':[active,completed],
+    db.responses = {'FROM rutas r JOIN vehiculos':[active,completed],
         'SELECT nombre,latitud':[{'nombre':'Central','latitud':-12,'longitud':-77}],
-        'SELECT p.*':[pending,transit,order('ENTREGADO',ruta_id=active['ruta_id']),order('CANCELADO'),order(ruta_id=completed['ruta_id'])],
+        'SELECT p.pedido_id':[pending,transit,order('ENTREGADO',ruta_id=active['ruta_id']),order('CANCELADO'),order(ruta_id=completed['ruta_id'])],
         'SELECT DISTINCT':[{'vehiculo_id':uuid4(),'placa':'TST-001','ruta_id':active['ruta_id'],'latitud':-12,'longitud':-77,'estado':'EN_RUTA'}]}
     result = portal.PostgresPortal().route_map()
     assert {row['id'] for row in result['orders']}=={str(pending['pedido_id']),str(transit['pedido_id'])}
@@ -251,7 +251,7 @@ def test_route_map_only_exposes_active_orders_with_origin_and_destination(db):
 
 def test_planning_scope_counts_only_located_pending_orders_and_requires_origin(db):
     db.responses = {'SELECT count(*)':[{'n':2,'districts':1,'unlocated':3}],
-                    'SELECT almacen_id':[{'almacen_id':uuid4()}],'SELECT v.*':[{'placa':'TST-001'}]}
+                    'SELECT almacen_id':[{'almacen_id':uuid4()}],'SELECT v.vehiculo_id':[{'placa':'TST-001'}]}
     result = portal.PostgresPortal().scope()
     assert result['pendingOrders']==2 and result['unlocatedOrders']==3 and result['depotAvailable'] is True
     assert any('latitud IS NOT NULL AND longitud IS NOT NULL' in statement for statement,_ in db.calls)
@@ -263,7 +263,7 @@ def test_planning_scope_counts_only_located_pending_orders_and_requires_origin(d
 @pytest.mark.parametrize('baseline', [0, 20])
 def test_driver_route_selects_next_stop_and_handles_zero_baseline(db, baseline):
     r = route(co2_base_kg=baseline)
-    db.responses = {'SELECT r.*': [r], 'SELECT p.*': [order('ENTREGADO'), order(), order()], 'SELECT distancia_km': [{'distancia_km': Decimal('3.5')}]}
+    db.responses = {'FROM rutas r JOIN vehiculos': [r], 'SELECT p.pedido_id': [order('ENTREGADO'), order(), order()], 'SELECT distancia_km': [{'distancia_km': Decimal('3.5')}]}
     result = portal.PostgresPortal().driver_route('driver-1')
     assert [stop['kind'] for stop in result['stops']] == ['done', 'now', 'next']
     assert result['delivered'] == 1 and result['km_remaining'] == 3.5
@@ -274,7 +274,7 @@ def test_driver_route_selects_next_stop_and_handles_zero_baseline(db, baseline):
 
 @pytest.mark.parametrize('period,unit', [('week','día'), ('month','semana'), ('quarter','mes')])
 def test_sustainability_report_aggregates_routes_without_duplicating_emissions(db, period, unit):
-    db.responses = {'SELECT r.*': [route(), route(placa='TST-002', distancia_total_km=0)],
+    db.responses = {'FROM rutas r JOIN vehiculos': [route(), route(placa='TST-002', distancia_total_km=0)],
                     'SELECT tipo_combustible': [{'tipo_combustible':'GNV'}, {'tipo_combustible':'DIESEL'}],
                     'WITH counts': [{'distrito':'Ate', 'emitted':Decimal('10'), 'base':Decimal('20')}, {'distrito':'Santa Anita','emitted':0,'base':0}],
                     'SELECT factor_kg_co2': [{'factor_kg_co2': 2}]}
@@ -289,7 +289,7 @@ def test_sustainability_report_aggregates_routes_without_duplicating_emissions(d
 
 
 def test_insights_filters_district_and_handles_missing_metrics(db):
-    db.responses = {'SELECT r.distancia': [route(), route(fraction=None)], 'SELECT * FROM pedidos': [order(), order('EN_CAMINO', conductor_id='driver-1')],
+    db.responses = {'SELECT r.distancia': [route(), route(fraction=None)], 'FROM pedidos WHERE': [order(), order('EN_CAMINO', conductor_id='driver-1')],
                     'SELECT factor_kg_co2': [{'factor_kg_co2': 2}]}
     result = portal.PostgresPortal().insights(TODAY.date(), '150103')
     assert result['co2Avoided']['avoidedKg'] == 10
@@ -305,15 +305,15 @@ def test_insights_filters_district_and_handles_missing_metrics(db):
 
 def test_records_incidents_scope_and_integrations(db):
     service = portal.PostgresPortal()
-    db.responses = {'SELECT * FROM integraciones': [{'integracion_id': value, 'nombre': value, 'descripcion':'Integración'} for value in ('db','map')],
+    db.responses = {'SELECT integracion_id': [{'integracion_id': value, 'nombre': value, 'descripcion':'Integración'} for value in ('db','map')],
                     'SELECT count(*)': [{'n': 3, 'districts': 2}], 'SELECT estado': [{'estado':'DISPONIBLE'}, {'estado':'MANTENIMIENTO'}],
-                    'SELECT v.*': [{'placa':'TST-001'}]}
+                    'SELECT v.vehiculo_id': [{'placa':'TST-001'}]}
     assert [item['status'] for item in service.integrations()] == ['connected','pending']
     assert service.scope()['availableVehicles'] == 1
     for module in ('auditoria','incidencias'):
         assert service.records(module) == []
     assert service.records('incidencias','driver-1') == []
-    assert db.calls[-1][1] == ('driver-1',)
+    assert db.calls[-1][1] == ('driver-1',200,0)
     with pytest.raises(ValueError, match='Sección'):
         service.records('untrusted')
     identity = Identity('user-1','Ana','driver','driver-1')
@@ -328,15 +328,15 @@ def test_records_incidents_scope_and_integrations(db):
 
 def test_proposal_rejects_oversized_or_unavailable_scope_and_passes_profiles(db, monkeypatch):
     service = portal.PostgresPortal()
-    db.responses = {'SELECT * FROM pedidos': [order()]*151}
+    db.responses = {'FROM pedidos WHERE': [order()]*151}
     with pytest.raises(ValueError, match='150'):
         service.proposal({})
     db.responses = {}
     with pytest.raises(ValueError, match='almacén'):
         service.proposal({})
-    db.responses = {'SELECT * FROM pedidos': [order()], 'SELECT v.*': [{'placa':'TST-001'}],
-                    'SELECT latitud': [{'latitud':-12,'longitud':-77}], 'SELECT * FROM factores': [{'combustible':'DIESEL','factor_kg_co2':2,'consumo_por_km':None}],
-                    'SELECT * FROM parametros': [parameters()]}
+    db.responses = {'FROM pedidos WHERE': [order()], 'SELECT v.vehiculo_id': [{'placa':'TST-001'}],
+                    'SELECT latitud': [{'latitud':-12,'longitud':-77}], 'SELECT combustible,factor_kg_co2': [{'combustible':'DIESEL','factor_kg_co2':2,'consumo_por_km':None}],
+                    'SELECT peso_co2': [parameters()]}
     def optimizer(orders, vehicles, depot, profiles, config, settings, now):
         assert len(orders) == len(vehicles) == 1
         assert depot == (-12,-77) and profiles['DIESEL']['consumption'] is None
@@ -352,7 +352,7 @@ def test_database_login_rate_limit_invalid_credentials_and_hashed_tokens(db, mon
     account['password_hash'] = 'verified-hash'
     account['estado'] = 'INACTIVO' if scenario == 'inactive' else 'ACTIVO'
     db.responses = {'SELECT count(*)': [{'n':10 if scenario == 'limited' else 0}],
-                    'SELECT * FROM usuarios': [] if scenario == 'unknown' else [account]}
+                    'SELECT usuario_id,password_hash': [] if scenario == 'unknown' else [account]}
     checks = []
     monkeypatch.setattr(security,'verify_password',lambda password, stored: checks.append(stored) or scenario != 'password')
     result, error = security.DatabaseSessions().login('ANA@EXAMPLE.INVALID','password','client')

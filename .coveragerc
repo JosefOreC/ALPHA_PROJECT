@@ -7,6 +7,8 @@ source =
     src/frontend/scripts
 omit =
     src/backend/tests/*
+    scripts/green_it_fixture.py
+    scripts/measure_api_http.py
 
 [report]
 fail_under = 90

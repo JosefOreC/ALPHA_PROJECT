@@ -1,7 +1,7 @@
 from datetime import date
 from typing import Literal
 from uuid import UUID
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query
 from pydantic import BaseModel, Field, field_validator
 from domain.access_control import scope_for, can
 from interfaces.api.security.deps import require_permission, protect_mutation
@@ -147,15 +147,16 @@ def approve_proposal(payload:ApproveProposal,identity=Depends(require_permission
     return portal.approve_proposal(payload.settings.model_dump(),payload.fingerprint,identity.subject_id)
 
 @router.get('/audit',dependencies=[Depends(require_permission('audit.read'))])
-def audit(portal=Depends(get_portal)):
-    return portal.records('auditoria')
+def audit(limit:int | None=Query(None,ge=1,le=100),offset:int=Query(0,ge=0,le=1000000),portal=Depends(get_portal)):
+    return portal.records('auditoria',limit=limit+1,offset=offset) if limit is not None else portal.records('auditoria')
 
 @router.get('/incidents')
-def incidents(identity=Depends(require_permission('orders.read')),portal=Depends(get_portal)):
+def incidents(limit:int | None=Query(None,ge=1,le=100),offset:int=Query(0,ge=0,le=1000000),identity=Depends(require_permission('orders.read')),portal=Depends(get_portal)):
+    paging = {'limit':limit+1,'offset':offset} if limit is not None else {}
     if can(identity.role,'incidents.read'):
-        return portal.records('incidencias')
+        return portal.records('incidencias',**paging)
     if identity.role in ('driver','CONDUCTOR','ROL-03') and identity.driver_id:
-        return portal.records('incidencias',identity.driver_id)
+        return portal.records('incidencias',identity.driver_id,**paging)
     raise HTTPException(403,'No tienes permiso para consultar incidencias.')
 
 @router.post('/incidents',status_code=201,dependencies=[Depends(protect_mutation)])

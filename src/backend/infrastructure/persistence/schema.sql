@@ -227,3 +227,5 @@ CREATE INDEX idx_posiciones_vehiculo_fecha ON posiciones_vehiculos(vehiculo_id, 
 CREATE INDEX idx_zonas_geometria ON zonas_restringidas USING GIST(geometria);
 CREATE INDEX idx_rutas_geometria ON rutas USING GIST(geometria);
 CREATE INDEX idx_auditoria_usuario_fecha ON auditoria(usuario_id, registrada_en DESC);
+CREATE INDEX idx_pedidos_dia_estado_ventana ON pedidos (((ventana_inicio AT TIME ZONE 'America/Lima')::date), estado, ventana_inicio, pedido_id);
+CREATE UNIQUE INDEX idx_usuarios_email_lower ON usuarios(lower(email));

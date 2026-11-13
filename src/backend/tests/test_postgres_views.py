@@ -58,6 +58,24 @@ def database_client(monkeypatch):
         conn.close()
 
 
+def test_catalogue_pages_are_stable_bounded_and_driver_scope_precedes_pagination(database_client):
+    client, conn, _, _ = database_client
+    vehicles = [client.get(f'/api/v1/vehicles?limit=5&offset={offset}').json() for offset in (0,5)]
+    assert all(len(page['vehiculos'])==5 and page['has_more'] for page in vehicles)
+    assert set(item['vehiculo_id'] for item in vehicles[0]['vehiculos']).isdisjoint(item['vehiculo_id'] for item in vehicles[1]['vehiculos'])
+    assert client.get('/api/v1/vehicles?limit=20&q=NO-SUCH-PLATE').json()['total']==0
+    drivers=client.get('/api/v1/drivers?limit=5&offset=0').json()
+    assert len(drivers['items'])==5 and drivers['total']>=15
+    for url in ('/api/v1/vehicles?limit=0','/api/v1/drivers?offset=-1&limit=20','/api/audit?limit=101'):
+        assert client.get(url).status_code==422
+    signed=client.post('/api/session',json={'email':'conductor01@example.invalid','password':os.environ['SEED_PASSWORD']})
+    assert signed.status_code==200
+    own=client.get('/api/v1/drivers?limit=1').json()
+    assert len(own['items'])==own['total']==1
+    assert client.get('/api/v1/drivers?limit=1&offset=1').json()['items']==[]
+    assert client.get('/api/audit?limit=20').status_code==403
+
+
 def test_database_login_user_creation_fleet_orders_and_operational_views(database_client):
     client, conn, csrf, actor = database_client
     headers = {'X-CSRF-Token':csrf}
@@ -200,7 +218,7 @@ def test_generate_preview_approve_and_reload_routes_with_real_postgis(database_c
     assert client.post('/api/routes/approve',headers=headers,json={**approval,'fingerprint':'0'*64}).status_code==422
     assert conn.execute('SELECT count(*) AS n FROM ruta_pedido WHERE pedido_id=%s',(order_id,)).fetchone()['n']==0
     # Un cambio de pedido invalida la vista previa, sin asignaciones parciales.
-    payload['weight_kg'] = 30.0
+    payload['instructions'] = 'Cambio de instrucciones sin modificar el recorrido'
     assert client.put(f'/api/pedidos/{order_id}',headers=headers,json={**payload,'expected_version':2}).status_code==200
     stale = client.post('/api/routes/approve',headers=headers,json=approval)
     assert stale.status_code==422 and 'cambiaron' in stale.text

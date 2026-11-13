@@ -1,6 +1,6 @@
 import { decodeSession } from '../domain/session'
 import type { SessionSource } from '../domain/session'
-import { setCsrfToken } from './httpClient'
+import { clearRequestCache, setCsrfToken } from './httpClient'
 
 export class HttpSession implements SessionSource {
   private readonly baseUrl: string
@@ -15,6 +15,7 @@ export class HttpSession implements SessionSource {
     return user
   }
   async login(email: string, password: string) {
+    clearRequestCache()
     let response: Response
     try { response = await fetch(`${this.baseUrl.replace(/\/$/, '')}/api/session`, {
       method: 'POST', credentials: 'include', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
@@ -27,6 +28,7 @@ export class HttpSession implements SessionSource {
     return user
   }
   async logout() {
+    clearRequestCache()
     const token = document.querySelector<HTMLMetaElement>('meta[name="csrf-token"]')?.content
     const response = await fetch(`${this.baseUrl.replace(/\/$/, '')}/api/session`, { method: 'DELETE', credentials: 'include', headers: token ? { 'X-CSRF-Token': token } : {} })
     if (!response.ok && response.status !== 401) throw new Error('No se pudo cerrar la sesión. Intenta de nuevo.')

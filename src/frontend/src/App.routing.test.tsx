@@ -16,7 +16,7 @@ function Page({ label, ...props }: Props & { label: string }) {
     {typeof props.renderMap === 'function' ? props.renderMap({ selectedId: null, onSelect: vi.fn() }) : props.renderMap}
   </div>
 }
-vi.mock('./features/dashboard', () => ({ HttpDashboardGateway: class {}, DashboardPage: (props: Props) => <Page label="Dashboard" {...props} /> }))
+vi.mock('./features/dashboard/ui/DashboardPage', () => ({ HttpDashboardGateway: class {}, DashboardPage: (props: Props) => <Page label="Dashboard" {...props} /> }))
 vi.mock('./interfaces/FleetView', () => ({ FleetView: (props: Props) => <Page label="Flota" {...props} /> }))
 vi.mock('./interfaces/OrderManagementView', () => ({ OrderManagementView: (props: Props) => <Page label="Pedidos" {...props} /> }))
 vi.mock('./interfaces/RouteManagementView', () => ({ RouteManagementView: (props: Props) => <Page label="Rutas" {...props} /> }))
@@ -39,58 +39,58 @@ it.each([
   ['admin','admin','Administración'], ['sostenibilidad','logistics','Sostenibilidad'],
   ['mi-ruta','driver','Mi ruta'], ['conductor','driver','Pedido actual'], ['conductores','admin','Conductores'],
   ['auditoria','auditor','Auditoría'], ['incidencias','driver','Incidencias'], ['unknown','planner','Dashboard'],
-] as const)('abre la vista %s para el rol %s', (view, role, title) => {
+] as const)('abre la vista %s para el rol %s', async (view, role, title) => {
   state.session.user!.role = role
   window.history.replaceState({}, '', `/?vista=${view}&pedido=${view === 'unknown' ? '' : 'order-1'}`)
   render(<App />)
-  expect(screen.getByRole('heading', { name: title })).toBeVisible()
+  expect(await screen.findByRole('heading', { name: title })).toBeVisible()
 })
 
-it('navega entre módulos y restaura la vista usando atrás/adelante', () => {
+it('navega entre módulos y restaura la vista usando atrás/adelante', async () => {
   window.history.replaceState({}, '', '/?vista=pedidos')
   render(<App />)
   for (const [id, title] of [['flota','Flota'], ['rutas','Rutas'], ['sostenibilidad','Sostenibilidad'], ['conductores','Conductores'], ['incidencias','Incidencias'], ['dashboard','Dashboard']] as const) {
-    fireEvent.click(screen.getByRole('button', { name: id }))
-    expect(screen.getByRole('heading', { name: title })).toBeVisible()
+    fireEvent.click(await screen.findByRole('button', { name: id }))
+    expect(await screen.findByRole('heading', { name: title })).toBeVisible()
     expect(window.location.search).toBe(id === 'dashboard' ? '' : `?vista=${id}`)
   }
   act(() => { window.history.replaceState({}, '', '/?vista=pedidos'); window.dispatchEvent(new PopStateEvent('popstate')) })
-  expect(screen.getByRole('heading', { name: 'Pedidos' })).toBeVisible()
+  expect(await screen.findByRole('heading', { name: 'Pedidos' })).toBeVisible()
   act(() => { window.history.replaceState({}, '', '/'); window.dispatchEvent(new PopStateEvent('popstate')) })
-  expect(screen.getByRole('heading', { name: 'Dashboard' })).toBeVisible()
+  expect(await screen.findByRole('heading', { name: 'Dashboard' })).toBeVisible()
 })
 
-it('deniega módulos ajenos y permite volver al inicio de su rol', () => {
+it('deniega módulos ajenos y permite volver al inicio de su rol', async () => {
   state.session.user!.role = 'driver'
   window.history.replaceState({}, '', '/?vista=admin')
   render(<App />)
-  expect(screen.getByRole('heading', { name: 'Acceso restringido' })).toBeVisible()
-  fireEvent.click(screen.getByRole('button', { name: 'Ir a mi inicio' }))
-  expect(screen.getByRole('heading', { name: 'Mi ruta' })).toBeVisible()
+  expect(await screen.findByRole('heading', { name: 'Acceso restringido' })).toBeVisible()
+  fireEvent.click(await screen.findByRole('button', { name: 'Ir a mi inicio' }))
+  expect(await screen.findByRole('heading', { name: 'Mi ruta' })).toBeVisible()
 })
 
-it('abre pedidos desde la ruta y permite volver al pedido actual sin identificador', () => {
+it('abre pedidos desde la ruta y permite volver al pedido actual sin identificador', async () => {
   state.session.user!.role = 'driver'
   render(<App />)
-  expect(screen.getByRole('heading', { name: 'Mi ruta' })).toBeVisible()
-  fireEvent.click(screen.getByRole('button', { name: 'Abrir pedido' }))
+  expect(await screen.findByRole('heading', { name: 'Mi ruta' })).toBeVisible()
+  fireEvent.click(await screen.findByRole('button', { name: 'Abrir pedido' }))
   expect(window.location.search).toBe('?vista=conductor&pedido=order%2F1')
-  expect(screen.getByText('order/1')).toBeVisible()
-  fireEvent.click(screen.getByRole('button', { name: 'Abrir pedido' }))
-  fireEvent.click(screen.getByRole('button', { name: 'pedido-actual' }))
+  expect(await screen.findByText('order/1')).toBeVisible()
+  fireEvent.click(await screen.findByRole('button', { name: 'Abrir pedido' }))
+  fireEvent.click(await screen.findByRole('button', { name: 'pedido-actual' }))
   expect(window.location.search).toBe('?vista=conductor')
 })
 
-it('una URL con pedido abre directamente la vista del conductor', () => {
+it('una URL con pedido abre directamente la vista del conductor', async () => {
   state.session.user!.role = 'driver'
   window.history.replaceState({}, '', '/?pedido=order-1')
   render(<App />)
-  expect(screen.getByRole('heading', { name: 'Pedido actual' })).toBeVisible()
+  expect(await screen.findByRole('heading', { name: 'Pedido actual' })).toBeVisible()
 })
 
-it.each([true, false])('requiere autenticación si loading=%s', loading => {
+it.each([true, false])('requiere autenticación si loading=%s', async loading => {
   state.session.loading = loading
   if (!loading) state.session.user = null
   render(<App />)
-  expect(screen.getByRole('heading', { name: 'Login requerido' })).toBeVisible()
+  expect(await screen.findByRole('heading', { name: 'Login requerido' })).toBeVisible()
 })

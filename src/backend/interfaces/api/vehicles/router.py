@@ -63,8 +63,13 @@ def register_vehicle(
 def list_vehicles(
     status_filter: Optional[VehicleStates] = Query(None, alias="status", description="Filtrar por estado (ej. DISPONIBLE, EN_RUTA, MANTENIMIENTO, INACTIVO)"),
     only_available: bool = Query(False, description="Filtrar únicamente vehículos disponibles"),
+    limit: int | None = Query(None, ge=1, le=100),
+    offset: int = Query(0, ge=0, le=1000000),
+    q: str = Query('', max_length=200),
     use_case: GetVehiclesUseCase = Depends(get_vehicles_use_case),
 ):
+    if limit is not None:
+        return use_case.page(limit=limit, offset=offset, status=status_filter, query=q, only_available=only_available)
     return use_case.execute(status=status_filter, only_available=only_available)
 
 

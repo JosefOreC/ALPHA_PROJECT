@@ -5,6 +5,7 @@ import { useSession } from './session/SessionState'
 import { can } from '../domain/accessControl'
 import { requestJson } from '../infrastructure/httpClient'
 import type { VehicleListResponse } from '../types/vehicle'
+import { Pagination } from '../shared/ui/Pagination'
 
 type Driver = { conductor_id: string; nombre_completo: string; dni: string; licencia: string; vehiculo_id: string; estado: string }
 type Account = { id: string; name: string }
@@ -20,13 +21,15 @@ export function DriversView({ onNavigate }: { onNavigate?: (id: ModuleId, href: 
   const [showForm, setShowForm] = useState(false)
   const [busy, setBusy] = useState(false)
   const [notice, setNotice] = useState('')
+  const [offset, setOffset] = useState(0)
+  const [total, setTotal] = useState(0)
   useEffect(() => {
     const controller = new AbortController()
-    Promise.all([requestJson<{ items: Driver[] }>('/api/v1/drivers', { signal: controller.signal }), requestJson<VehicleListResponse>('/api/v1/vehicles', { signal: controller.signal }), writable ? requestJson<Account[]>('/api/drivers/accounts', { signal: controller.signal }) : Promise.resolve([])])
-      .then(([drivers, fleet, users]) => { if (!controller.signal.aborted) { setItems(drivers.items); setVehicles(fleet); setAccounts(users); setError('') } })
+    Promise.all([requestJson<{ items: Driver[]; total: number }>(`/api/v1/drivers?limit=20&offset=${offset}`, { signal: controller.signal }), requestJson<VehicleListResponse>('/api/v1/vehicles', { signal: controller.signal }), writable ? requestJson<Account[]>('/api/drivers/accounts', { signal: controller.signal }) : Promise.resolve([])])
+      .then(([drivers, fleet, users]) => { if (!controller.signal.aborted) { setItems(drivers.items); setTotal(drivers.total); setVehicles(fleet); setAccounts(users); setError('') } })
       .catch(reason => { if (!controller.signal.aborted) setError(reason instanceof Error ? reason.message : 'No se pudieron cargar los conductores.') })
     return () => controller.abort()
-  }, [reload, writable])
+  }, [reload, writable, offset])
   return <AppShell role={user.role} current="conductores" user={{ name: user.name, initials: user.name[0] }} title="Conductores" onNavigate={onNavigate} actions={writable ? <button className="eco-btn" type="button" onClick={() => setShowForm(value => !value)}>{showForm ? 'Cerrar formulario' : 'Registrar conductor'}</button> : undefined}>
     <div><h1 className="eco-h1">Conductores</h1><p className="eco-sub">Equipo de reparto y vehículos asignados · {ROLE_LABELS[user.role]}</p></div>
     {notice ? <p role="status" className="eco-notice">{notice}</p> : null}
@@ -49,5 +52,6 @@ export function DriversView({ onNavigate }: { onNavigate?: (id: ModuleId, href: 
     </form> : null}
     {error ? <Banner tone="error" action={<button className="eco-btn eco-btn--secondary" type="button" onClick={() => setReload(value => value + 1)}>Reintentar</button>}>{error}</Banner> : null}
     {!items && !error ? <p role="status">Cargando conductores…</p> : items?.length === 0 ? <Banner title="Sin conductores">Todavía no hay conductores registrados.</Banner> : items ? <div className="eco-data-scroll"><table className="eco-data-table"><caption className="eco-sr">Conductores registrados</caption><thead><tr><th scope="col">Conductor</th><th scope="col">DNI</th><th scope="col">Licencia</th><th scope="col">Vehículo</th><th scope="col">Estado</th>{writable ? <th scope="col">Acciones</th> : null}</tr></thead><tbody>{items.map(driver => <tr key={driver.conductor_id}><td>{driver.nombre_completo}</td><td className="eco-code">{driver.dni}</td><td>{driver.licencia}</td><td>{vehicles?.vehiculos.find(vehicle => vehicle.vehiculo_id === driver.vehiculo_id)?.placa ?? '—'}</td><td>{driver.estado === 'ACTIVO' ? 'Activo' : 'Inactivo'}</td>{writable ? <td><button className="eco-btn eco-btn--ghost" type="button" disabled={busy} onClick={async () => { setBusy(true); setError(''); try { await requestJson(`/api/v1/drivers/${driver.conductor_id}/${driver.estado === 'ACTIVO' ? 'deactivate' : 'activate'}`, { method: 'PATCH' }); setReload(value => value + 1) } catch (reason) { setError(reason instanceof Error ? reason.message : 'No se pudo guardar.') } finally { setBusy(false) } }}>{driver.estado === 'ACTIVO' ? 'Desactivar' : 'Activar'}</button></td> : null}</tr>)}</tbody></table></div> : null}
+    <Pagination offset={offset} hasMore={offset + (items?.length ?? 0) < total} onPage={setOffset} label="Páginas de conductores" />
   </AppShell>
 }

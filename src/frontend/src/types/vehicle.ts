@@ -34,4 +34,7 @@ export interface VehicleListResponse {
   total: number;
   vehiculos: Vehicle[];
   mensaje?: string | null;
+  limit?: number | null;
+  offset?: number;
+  has_more?: boolean;
 }

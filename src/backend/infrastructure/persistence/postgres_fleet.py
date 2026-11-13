@@ -26,16 +26,27 @@ def vehicle(row):
 
 
 class PostgresVehicles(VehicleRepositoryPort):
+    def find_page(self, *, status=None, query='', limit=20, offset=0):
+        where = sql.SQL(" WHERE (placa || ' ' || tipo_combustible || ' ' || estado) ILIKE %s")
+        params = ['%' + query.replace('\\', '\\\\').replace('%', '\\%').replace('_', '\\_') + '%']
+        if status:
+            where += sql.SQL(' AND estado=%s')
+            params.append(status.value)
+        total = rows(sql.SQL('SELECT count(*) AS n FROM vehiculos') + where, tuple(params))[0]['n']
+        result = rows(sql.SQL('SELECT vehiculo_id,placa,capacidad_kg,capacidad_m3,tipo_combustible,estado,creado_en FROM vehiculos')
+                      + where + sql.SQL(' ORDER BY placa,vehiculo_id LIMIT %s OFFSET %s'), tuple(params)+(limit,offset))
+        return [vehicle(row) for row in result], total
+
     def find_all(self, status=None):
-        query = sql.SQL('SELECT * FROM vehiculos') + sql.SQL(' WHERE estado=%s' if status else '') + sql.SQL(' ORDER BY placa')
+        query = sql.SQL('SELECT vehiculo_id,placa,capacidad_kg,capacidad_m3,tipo_combustible,estado,creado_en FROM vehiculos') + sql.SQL(' WHERE estado=%s' if status else '') + sql.SQL(' ORDER BY placa')
         return [vehicle(row) for row in rows(query, (status.value,) if status else ())]
 
     def find_by_id(self, value):
-        result = rows('SELECT * FROM vehiculos WHERE vehiculo_id=%s', (value,)) if valid_id(value) else []
+        result = rows('SELECT vehiculo_id,placa,capacidad_kg,capacidad_m3,tipo_combustible,estado,creado_en FROM vehiculos WHERE vehiculo_id=%s', (value,)) if valid_id(value) else []
         return vehicle(result[0]) if result else None
 
     def find_by_plate(self, value):
-        result = rows('SELECT * FROM vehiculos WHERE placa=%s', (value.upper(),))
+        result = rows('SELECT vehiculo_id,placa,capacidad_kg,capacidad_m3,tipo_combustible,estado,creado_en FROM vehiculos WHERE placa=%s', (value.upper(),))
         return vehicle(result[0]) if result else None
 
     def _write(self, item, update=False):
@@ -65,15 +76,23 @@ def driver(row):
 
 
 class PostgresDrivers(DriverRepository):
+    def find_page(self, *, limit=20, offset=0, driver_id=None):
+        where = sql.SQL(' WHERE conductor_id=%s' if driver_id is not None else '')
+        params = (driver_id,) if driver_id is not None else ()
+        total = rows(sql.SQL('SELECT count(*) AS n FROM conductores') + where, params)[0]['n']
+        result = rows(sql.SQL('SELECT conductor_id,usuario_id,nombre_completo,dni,licencia,vehiculo_id,estado,creado_en FROM conductores')
+                      + where + sql.SQL(' ORDER BY nombre_completo,conductor_id LIMIT %s OFFSET %s'), params+(limit,offset))
+        return [driver(row) for row in result], total
+
     def find_all(self):
-        return [driver(row) for row in rows('SELECT * FROM conductores ORDER BY nombre_completo')]
+        return [driver(row) for row in rows('SELECT conductor_id,usuario_id,nombre_completo,dni,licencia,vehiculo_id,estado,creado_en FROM conductores ORDER BY nombre_completo')]
 
     def find_by_id(self, value):
-        result = rows('SELECT * FROM conductores WHERE conductor_id=%s', (value,)) if valid_id(value) else []
+        result = rows('SELECT conductor_id,usuario_id,nombre_completo,dni,licencia,vehiculo_id,estado,creado_en FROM conductores WHERE conductor_id=%s', (value,)) if valid_id(value) else []
         return driver(result[0]) if result else None
 
     def find_by_dni(self, value):
-        result = rows('SELECT * FROM conductores WHERE dni=%s', (value,))
+        result = rows('SELECT conductor_id,usuario_id,nombre_completo,dni,licencia,vehiculo_id,estado,creado_en FROM conductores WHERE dni=%s', (value,))
         return driver(result[0]) if result else None
 
     def _write(self, item, update=False):

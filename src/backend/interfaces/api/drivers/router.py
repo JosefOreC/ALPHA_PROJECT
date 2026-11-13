@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Query
 from domain.access_control import Identity, scope_for
 from interfaces.api.security.deps import protect_mutation, require_permission
 
@@ -68,9 +68,15 @@ def register_driver(
     response_model=DriverListResponse,
 )
 def get_drivers(
+    limit: int | None = Query(None, ge=1, le=100),
+    offset: int = Query(0, ge=0, le=1000000),
     use_case: GetDrivers = Depends(get_get_drivers),
     principal: Identity = Depends(require_permission("drivers.read")),
 ):
+    if limit is not None:
+        own = scope_for(principal.role, 'drivers.read') == 'own'
+        drivers, total = use_case.page(limit=limit, offset=offset, driver_id=(principal.driver_id or '') if own else None)
+        return DriverListResponse(items=[DriverResponse.from_domain(driver) for driver in drivers], total=total)
     drivers = use_case.execute()
     if scope_for(principal.role, "drivers.read") == "own":
         drivers = [driver for driver in drivers if driver.conductor_id == principal.driver_id]

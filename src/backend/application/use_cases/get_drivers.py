@@ -9,3 +9,6 @@ class GetDrivers:
 
     def execute(self) -> list[Driver]:
         return self.driver_repository.find_all()
+
+    def page(self, *, limit=20, offset=0, driver_id=None):
+        return self.driver_repository.find_page(limit=limit, offset=offset, driver_id=driver_id)

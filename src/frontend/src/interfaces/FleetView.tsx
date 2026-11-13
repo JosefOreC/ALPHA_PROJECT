@@ -9,6 +9,7 @@ import type { CreateVehicleInput, UpdateVehicleInput, Vehicle, VehicleStatus } f
 import { VehicleDialog } from './fleet/VehicleDialog'
 import { can } from '../domain/accessControl'
 import { useActor } from './session/SessionState'
+import { Pagination } from '../shared/ui/Pagination'
 
 const UNIT_OF: Record<VehicleStatus, UnitState> = { EN_RUTA: 'moving', DISPONIBLE: 'ready', MANTENIMIENTO: 'service', INACTIVO: 'off' }
 const STATUS_LABEL: Record<VehicleStatus, string> = { EN_RUTA: 'En ruta', DISPONIBLE: 'Disponible', MANTENIMIENTO: 'Mantenimiento', INACTIVO: 'Inactivo' }
@@ -35,14 +36,20 @@ export function FleetView({ onNavigate }: { onNavigate?: (id: ModuleId, href: st
   const [submitting, setSubmitting] = useState(false)
 
   const [reload, setReload] = useState(0)
+  const [offset, setOffset] = useState(0)
+  const [pageInfo, setPageInfo] = useState({ total: 0, hasMore: false, paged: false })
+  const [previousFilter, setPreviousFilter] = useState('ALL:')
+  const filterKey = `${tab}:${query}`
+  if (previousFilter !== filterKey) { setPreviousFilter(filterKey); setOffset(0) }
 
   useEffect(() => {
     let active = true
     vehicleApi
-      .getVehicles()
+      .getVehicles(tab === 'ALL' ? undefined : tab, false, { limit: 20, offset, query: query.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/en ruta/ig, 'EN_RUTA') })
       .then(result => {
         if (!active) return
         setVehicles(result.data.vehiculos)
+        setPageInfo({ total: result.data.total, hasMore: result.data.has_more ?? false, paged: result.data.limit != null })
         setServerMessage(result.data.mensaje || null)
         setNotice(current => current?.tone === 'error' ? null : current)
       })
@@ -55,18 +62,18 @@ export function FleetView({ onNavigate }: { onNavigate?: (id: ModuleId, href: st
     return () => {
       active = false
     }
-  }, [reload])
+  }, [reload, offset, query, tab])
 
   const load = () => {
     setLoading(true)
     setReload(value => value + 1)
   }
 
-  const visible = useMemo(() => filterVehicles(vehicles, query, tab), [vehicles, query, tab])
+  const visible = useMemo(() => pageInfo.paged ? vehicles : filterVehicles(vehicles, query, tab), [vehicles, query, tab, pageInfo.paged])
   const counts = useMemo(() => fleetTabCounts(vehicles, query), [vehicles, query])
   const groups = useMemo(() => groupVehicles(visible), [visible])
   const summary = useMemo(() => summarizeFleet(vehicles), [vehicles])
-  const noActive = !loading && notice?.tone !== 'error' && (summary.active === 0 || serverMessage === NO_ACTIVE)
+  const noActive = !loading && notice?.tone !== 'error' && (!pageInfo.paged || (!query.trim() && tab === 'ALL' && pageInfo.total === 0)) && (summary.active === 0 || serverMessage === NO_ACTIVE)
 
   function openCreate() {
     if (!can(role, 'fleet.create')) return
@@ -127,11 +134,11 @@ export function FleetView({ onNavigate }: { onNavigate?: (id: ModuleId, href: st
   )
 
   return (
-    <AppShell role="planner" current="flota" user={SESSION_USER} title="Flota" counts={{ flota: summary.total }} actions={actions} onNavigate={onNavigate}>
+    <AppShell role="planner" current="flota" user={SESSION_USER} title="Flota" counts={{ flota: pageInfo.total }} actions={actions} onNavigate={onNavigate}>
       <div>
         <h1 className="eco-h1">Flota</h1>
         <p className="eco-sub">
-          {summary.total} {summary.total === 1 ? 'camioneta' : 'camionetas'} de DistriRápido · Lima Este
+          {pageInfo.total} {pageInfo.total === 1 ? 'camioneta' : 'camionetas'} de DistriRápido · Lima Este{pageInfo.paged ? ` · ${summary.total} en esta página` : ''}
         </p>
       </div>
 
@@ -144,7 +151,7 @@ export function FleetView({ onNavigate }: { onNavigate?: (id: ModuleId, href: st
         </Banner>
       ) : null}
 
-      <Panel label="Resumen de la flota">
+      <Panel label={pageInfo.paged ? 'Resumen de los vehículos mostrados' : 'Resumen de la flota'}>
         <PanelCell
           label={<><FlotaIcon />Vehículos activos</>}
           value={summary.active}
@@ -169,7 +176,7 @@ export function FleetView({ onNavigate }: { onNavigate?: (id: ModuleId, href: st
           <div className="eco-tabs" role="tablist" aria-label="Filtrar por estado">
             {FLEET_TABS.map(value => (
               <button key={value} className="eco-tab" type="button" role="tab" aria-selected={tab === value} onClick={() => setTab(value)}>
-                {TAB_LABEL[value]} <span className="eco-code">{counts[value]}</span>
+                {TAB_LABEL[value]} {!pageInfo.paged ? <span className="eco-code">{counts[value]}</span> : null}
               </button>
             ))}
           </div>
@@ -238,6 +245,7 @@ export function FleetView({ onNavigate }: { onNavigate?: (id: ModuleId, href: st
               </List>
             </div>
           ) : null}
+          <Pagination offset={offset} hasMore={pageInfo.hasMore} busy={loading} onPage={setOffset} label="Páginas de vehículos" />
         </section>
       ) : null}
 

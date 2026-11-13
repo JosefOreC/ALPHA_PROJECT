@@ -165,8 +165,14 @@ def test_migration_cli_applies_scripts_or_exits_on_failure(monkeypatch,fail,caps
 
 def test_backend_launcher_passes_explicit_local_binding(monkeypatch):
     import uvicorn
+    import socket
+    import dotenv
+    monkeypatch.setattr(socket,'socket',MagicMock())
+    monkeypatch.setattr(dotenv,'load_dotenv',lambda *args,**kwargs:None)
     run=MagicMock();monkeypatch.setattr(uvicorn,'run',run)
-    runpy.run_path(str(ROOT/'scripts/run_backend.py'),run_name='__main__')
+    with pytest.raises(SystemExit) as caught:
+        runpy.run_path(str(ROOT/'scripts/run_backend.py'),run_name='__main__')
+    assert caught.value.code==0
     assert run.call_args.kwargs['host']=='127.0.0.1' and run.call_args.kwargs['port']==8000
 
 

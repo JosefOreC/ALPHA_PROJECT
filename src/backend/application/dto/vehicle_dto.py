@@ -95,3 +95,6 @@ class VehicleListResponseDTO(BaseModel):
     total: int
     vehiculos: List[VehicleResponseDTO]
     mensaje: Optional[str] = None
+    limit: int | None = None
+    offset: int = 0
+    has_more: bool = False

@@ -70,4 +70,16 @@ en escritorio y móvil. Usan respuestas HTTP aisladas; la persistencia real requ
 PostgreSQL configurado y la migración aplicada.
 
 
+## Carga y consultas eficientes
+
+Las vistas se cargan por módulo con `React.lazy` y `Suspense`. Las fuentes se
+resuelven desde el sistema operativo, sin solicitudes a Google Fonts. Pedidos,
+Flota, Conductores, Auditoría e Incidencias disponen de paginación; en Flota los
+indicadores identifican explícitamente los vehículos de la página mostrada.
+
+Solo parámetros y catálogo de integraciones optan por caché en memoria, con
+vigencia máxima de 60 segundos y ETag. Las escrituras y los cambios de sesión la
+invalidan; una petición antigua no puede rellenar la caché de la sesión nueva.
+Los datos operativos no utilizan esa retención temporal por defecto.
+
 [← Volver al índice correspondiente](../../README.md)

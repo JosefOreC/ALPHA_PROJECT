@@ -142,11 +142,11 @@ function MapInstance({ source, selectedId, query = '', onQueryChange, orderStatu
       <div className="eco-map-routes__heading"><strong>Rutas por vehículo</strong><span>El color une el recorrido y sus paradas · los números indican el orden de entrega</span></div>
       {context.orders.some(item => item.route_id === null) ? <p className="eco-map-routes__unassigned">{context.orders.filter(item => item.route_id === null).length} pedidos sin ruta · puntos grises</p> : null}
       <div className="eco-map-routes__choices" role="group" aria-label="Rutas por vehículo">
-        <button type="button" className="eco-map-route-choice" aria-label="Todas las rutas" aria-pressed={!focusedRoute} onClick={() => {
+        <button type="button" className="eco-map-route-choice" aria-pressed={!focusedRoute} onClick={() => {
           dismiss()
           if (map) void import('./viewport').then(({ fitVisible }) => fitVisible(map, context, layers))
-        }}><RutaIcon /><strong>Todas las rutas</strong><span>{context.routes.length} vehículos</span></button>
-        {context.routes.map(item => <button key={item.id} type="button" className="eco-map-route-choice" aria-label={'Ruta ' + item.plate}
+        }}><RutaIcon /><strong>Todas las rutas</strong>{' '}<span>{context.routes.length} vehículos</span></button>
+        {context.routes.map(item => <button key={item.id} type="button" className="eco-map-route-choice"
           aria-pressed={focusedRoute?.id === item.id} onClick={() => {
             select({ kind: 'route', id: item.id })
             if (map) void import('./viewport').then(({ fitVisible }) => fitVisible(map, {
@@ -155,7 +155,7 @@ function MapInstance({ source, selectedId, query = '', onQueryChange, orderStatu
             }, layers))
           }}>
           <i className="eco-map-route-choice__line" style={{ backgroundColor: `var(--map-route-${item.color})` }} aria-hidden="true" />
-          <strong>{item.plate}</strong><span title={item.driver}>{item.driver ?? 'Vehículo asignado'}</span>
+          <strong>{item.plate}</strong>{' '}<span title={item.driver}>{item.driver ?? 'Vehículo asignado'}</span>{' '}
           <small>{context.orders.filter(order => order.route_id === item.id).length} pedidos visibles</small>
         </button>)}
       </div>

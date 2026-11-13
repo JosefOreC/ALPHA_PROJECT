@@ -118,4 +118,23 @@ $env:ECOLOGISTICA_VERIFY_DATABASE='1'
 ```
 
 
+## Eficiencia HTTP y servidor de producción
+
+La API comprime con Gzip respuestas de al menos 1000 bytes y nivel 5 cuando el
+cliente lo admite. Las lecturas JSON autorizadas tienen ETag y revalidación
+privada; autenticación, escrituras y errores usan `no-store`. Una petición
+condicional siempre vuelve a comprobar la autorización antes de responder 304.
+
+Para servir el build de React desde el mismo origen, ejecutar `npm.cmd run build`
+en `src/frontend` y configurar `FRONTEND_DIST` con la ruta absoluta a su carpeta
+`dist`. Reiniciar la API después de cambiar esa configuración. Los archivos
+con huella de contenido bajo `/assets` reciben caché inmutable de un año; HTML
+y mapas se revalidan. La página aplica una CSP propia y la API conserva su CSP
+restrictiva. En producción se conserva HTTPS y la cookie `Secure` predeterminada.
+
+La migración aditiva `005_read_indexes.sql` incorpora el índice de fecha
+operativa, estado y ventana. No se ejecuta automáticamente sobre la base del
+usuario. La consulta de planificación conserva `version` para invalidar una
+propuesta incluso si cambia un campo que no modifica el recorrido.
+
 [← Volver al índice correspondiente](../../README.md)

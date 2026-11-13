@@ -7,6 +7,11 @@ from domain.value_objects import VehicleStates
 class VehicleRepositoryPort(ABC):
     """Puerto de salida (Outbound Port) para la persistencia y consulta de vehículos."""
 
+    def find_page(self, *, status=None, query='', limit=20, offset=0):
+        items = [item for item in self.find_all(status) if query.casefold() in
+                 f'{item.placa} {item.tipo_combustible.value} {item.estado.value}'.casefold()]
+        return items[offset:offset+limit], len(items)
+
     @abstractmethod
     def save(self, vehicle: Vehicle) -> Vehicle:
         """Guarda un vehículo nuevo en la persistencia."""

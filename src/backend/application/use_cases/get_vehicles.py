@@ -9,6 +9,12 @@ class GetVehiclesUseCase:
     def __init__(self, vehicle_repository: VehicleRepositoryPort):
         self.vehicle_repository = vehicle_repository
 
+    def page(self, *, limit=20, offset=0, status=None, query='', only_available=False):
+        items, total = self.vehicle_repository.find_page(status=VehicleStates.DISPONIBLE if only_available else status,
+                                                       query=query, limit=limit, offset=offset)
+        return VehicleListResponseDTO(total=total, vehiculos=[VehicleResponseDTO.from_domain(item) for item in items],
+                                      limit=limit, offset=offset, has_more=offset+len(items)<total)
+
     def execute(
         self,
         status: Optional[VehicleStates] = None,

@@ -40,7 +40,7 @@ class DatabaseSessions:
             if attempts >= 10:
                 return None, 'limited'
             conn.execute('INSERT INTO intentos_sesion(clave) VALUES (%s)', (key,))
-            user = conn.execute('SELECT * FROM usuarios WHERE lower(email)=%s', (email.lower(),)).fetchone()
+            user = conn.execute('SELECT usuario_id,password_hash,estado FROM usuarios WHERE lower(email)=%s', (email.lower(),)).fetchone()
             # Mismo trabajo criptográfico cuando el correo no existe.
             stored = user['password_hash'] if user else 'pbkdf2_sha256$600000$unavailable$' + '0'*64
             valid = verify_password(password, stored)

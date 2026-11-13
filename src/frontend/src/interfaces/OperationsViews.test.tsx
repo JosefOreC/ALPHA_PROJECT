@@ -17,7 +17,7 @@ function mount(view: React.ReactNode, role: Role = 'admin') {
 beforeEach(() => { request.mockReset() })
 afterEach(() => vi.restoreAllMocks())
 function driversApi(items = [active]) {
-  request.mockImplementation(async path => path === '/api/v1/drivers' ? { items } : path === '/api/v1/vehicles' ? vehicles : [{ id: 'u2', name: 'Nueva cuenta' }])
+  request.mockImplementation(async path => path.startsWith('/api/v1/drivers?') ? { items } : path === '/api/v1/vehicles' ? vehicles : [{ id: 'u2', name: 'Nueva cuenta' }])
 }
 
 it('muestra conductores, vehículos vinculados y permisos de solo lectura', async () => {

@@ -14,11 +14,11 @@ export class HttpUserDirectory {
   create(data: NewUser) { return requestJson<AdminUser>('/api/admin/users', { method: 'POST', body: data }) }
 }
 export class HttpAlgorithmSettings {
-  load() { return requestJson<AlgorithmParameters>('/api/admin/parameters') }
+  load() { return requestJson<AlgorithmParameters>('/api/admin/parameters', { cacheMs: 60_000 }) }
   save(data: AlgorithmParameters) { return requestJson<AlgorithmParameters>('/api/admin/parameters', { method: 'PUT', body: data }) }
 }
 export class HttpIntegrationCatalog {
-  list(signal?: AbortSignal) { return requestJson<Integration[]>('/api/admin/integrations', { signal }) }
+  list(signal?: AbortSignal) { return requestJson<Integration[]>('/api/admin/integrations', { signal, cacheMs: 30_000 }) }
 }
 export class HttpMapData {
   load() { return requestJson<MapData>('/api/map') }

@@ -4,6 +4,7 @@ import type { ModuleId } from '../shared/ui'
 import { useSession } from './session/SessionState'
 import { requestJson } from '../infrastructure/httpClient'
 import type { DriverRoute } from '../domain/driverRoute'
+import { Pagination } from '../shared/ui/Pagination'
 
 const labels: Record<string, string> = { fecha: 'Fecha', usuario: 'Usuario', accion: 'Acción', entidad: 'Entidad', detalle: 'Detalle', cliente: 'Cliente', conductor: 'Conductor', tipo: 'Tipo', descripcion: 'Descripción', estado: 'Estado' }
 function cell(value: unknown) {
@@ -23,14 +24,16 @@ export function RecordsView({ module, onNavigate }: { module: 'auditoria' | 'inc
   const [orderId, setOrderId] = useState('')
   const [type, setType] = useState('Entrega')
   const [description, setDescription] = useState('')
+  const [offset, setOffset] = useState(0)
+  const [hasMore, setHasMore] = useState(false)
   useEffect(() => {
     const controller = new AbortController()
     const path = module === 'auditoria' ? '/api/audit' : '/api/incidents'
-    requestJson<Record<string, unknown>[]>(path, { signal: controller.signal })
-      .then(value => { if (!controller.signal.aborted) { setItems(value); setError('') } }).catch(reason => { if (!controller.signal.aborted) setError(reason instanceof Error ? reason.message : 'No se pudo cargar el listado.') })
+    requestJson<Record<string, unknown>[]>(`${path}?limit=20&offset=${offset}`, { signal: controller.signal })
+      .then(value => { if (!controller.signal.aborted) { setItems(value.slice(0,20)); setHasMore(value.length>20); setError('') } }).catch(reason => { if (!controller.signal.aborted) setError(reason instanceof Error ? reason.message : 'No se pudo cargar el listado.') })
     if (user.role === 'driver' && module === 'incidencias') requestJson<DriverRoute>('/api/conductor/ruta', { signal: controller.signal }).then(setRoute).catch(() => undefined)
     return () => controller.abort()
-  }, [module, reload, user.role])
+  }, [module, reload, user.role, offset])
   const columns = items?.length ? Object.keys(items[0]).filter(key => key !== 'id') : []
   return <AppShell role={user.role} current={module} user={{ name: user.name, initials: user.name[0] }} title={title} onNavigate={onNavigate} actions={<button className="eco-btn eco-btn--secondary" type="button" onClick={() => setReload(value => value + 1)}>Actualizar</button>}>
     <div><h1 className="eco-h1">{title}</h1><p className="eco-sub">{module === 'auditoria' ? 'Historial de acciones y cambios en la plataforma' : 'Seguimiento de los eventos reportados durante las entregas'}</p></div>
@@ -47,6 +50,7 @@ export function RecordsView({ module, onNavigate }: { module: 'auditoria' | 'inc
       <button className="eco-btn" type="submit" disabled={busy}>{busy ? 'Enviando…' : 'Reportar incidencia'}</button>
     </form> : null}
     {notice ? <p role="status" className="eco-notice">{notice}</p> : null}
-    {error ? <Banner tone="error">{error}</Banner> : !items ? <p role="status">Cargando registros…</p> : !items.length ? <Banner title="Sin registros">Todavía no hay registros en esta sección.</Banner> : <div className="eco-data-scroll"><table className="eco-data-table"><caption className="eco-sr">{title} · últimos 200 registros</caption><thead><tr>{columns.map(key => <th key={key} scope="col">{labels[key] ?? key}</th>)}</tr></thead><tbody>{items.map((item, index) => <tr key={String(item.id ?? index)}>{columns.map(key => <td key={key}>{cell(item[key])}</td>)}</tr>)}</tbody></table></div>}
+    {error ? <Banner tone="error">{error}</Banner> : !items ? <p role="status">Cargando registros…</p> : !items.length ? <Banner title="Sin registros">Todavía no hay registros en esta sección.</Banner> : <div className="eco-data-scroll"><table className="eco-data-table"><caption className="eco-sr">{title} · página actual</caption><thead><tr>{columns.map(key => <th key={key} scope="col">{labels[key] ?? key}</th>)}</tr></thead><tbody>{items.map((item, index) => <tr key={String(item.id ?? index)}>{columns.map(key => <td key={key}>{cell(item[key])}</td>)}</tr>)}</tbody></table></div>}
+    <Pagination offset={offset} hasMore={hasMore} onPage={setOffset} label={`Páginas de ${title.toLowerCase()}`} />
   </AppShell>
 }

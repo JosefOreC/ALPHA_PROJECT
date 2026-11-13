@@ -50,14 +50,13 @@ describe('sistema de diseño', () => {
     expect(offenders(/\b(rgba?|hsla?)\(/)).toEqual([])
   })
 
-  it('no hay fuentes sueltas: la identidad es Geist por las variables del sistema', () => {
+  it('usa fuentes del sistema desde los tokens sin descargar fuentes remotas', () => {
     expect(offenders(/font-family|fontFamily/)).toEqual([])
     const html = readFileSync(join(FRONTEND, 'index.html'), 'utf8')
-    expect(html).toContain('family=Geist:')
-    expect(html).toContain('family=Geist+Mono:')
+    expect(html).not.toMatch(/fonts\.googleapis|fonts\.gstatic|@font-face/)
     expect(html).not.toMatch(/Inter|Plus\+Jakarta|JetBrains/)
     const tokens = readFileSync(join(SRC, 'shared/ui/tokens.css'), 'utf8')
-    expect(tokens).toMatch(/--font-sans: Geist/)
+    expect(tokens).toMatch(/--font-sans: "Segoe UI"/)
     expect(tokens).toMatch(/--font-mono: "Geist Mono"/)
   })
 

@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, lazy, Suspense } from 'react';
 import { authorizeAdministration, authorizeDriver, authorizeManagement, authorizePlanning, authorizeSustainability } from './application/authorizedServices';
 import { can } from './domain/accessControl';
 import { HttpSession } from './infrastructure/httpSession';
@@ -11,28 +11,30 @@ import { canOpenModule, homeModule } from './shared/ui/roles';
 import { createDriverOrders } from './application/driverOrders';
 import { createDriverRoute } from './application/driverRoute';
 import { HttpOrders } from './infrastructure/httpOrders';
-import { DriverOrderView } from './interfaces/DriverOrderView';
-import { DriverRouteView } from './interfaces/DriverRouteView';
 
 import { createManagement } from './application/manageOrders';
 import { HttpManagement } from './infrastructure/httpManagement';
-import { OrderManagementView } from './interfaces/OrderManagementView';
-import { FleetView } from './interfaces/FleetView';
-import { RouteManagementView } from './interfaces/RouteManagementView';
-import { SustainabilityView } from './interfaces/SustainabilityView';
-import { AdminView } from './interfaces/AdminView';
 import { createAdministration } from './application/administration';
 import { createGetSustainabilityReport } from './application/getSustainabilityReport';
 import { BrowserFileSaver } from './infrastructure/browserFileSaver';
 import { createGenerateRoutes } from './application/generateRoutes';
 
-import { DashboardPage, HttpDashboardGateway } from './features/dashboard';
+import { HttpDashboardGateway } from './features/dashboard/infrastructure/HttpDashboardGateway';
 import { HttpAlgorithmSettings, HttpDashboardInsights, HttpDriverRoute, HttpIntegrationCatalog, HttpMapData, HttpPlanningSource, HttpRouteMapData, HttpRouteOptimizer, HttpSustainabilityReport, HttpUserDirectory } from './infrastructure/httpPortal';
 import { apiBaseUrl, getCsrfToken } from './infrastructure/httpClient';
-import { RecordsView } from './interfaces/RecordsView';
-import { DriversView } from './interfaces/DriversView';
-import { RouteMap } from './interfaces/map/RouteMap';
 import type { ModuleId } from './shared/ui';
+
+const DriverOrderView = lazy(() => import('./interfaces/DriverOrderView').then(m => ({ default: m.DriverOrderView })));
+const DriverRouteView = lazy(() => import('./interfaces/DriverRouteView').then(m => ({ default: m.DriverRouteView })));
+const OrderManagementView = lazy(() => import('./interfaces/OrderManagementView').then(m => ({ default: m.OrderManagementView })));
+const FleetView = lazy(() => import('./interfaces/FleetView').then(m => ({ default: m.FleetView })));
+const RouteManagementView = lazy(() => import('./interfaces/RouteManagementView').then(m => ({ default: m.RouteManagementView })));
+const SustainabilityView = lazy(() => import('./interfaces/SustainabilityView').then(m => ({ default: m.SustainabilityView })));
+const AdminView = lazy(() => import('./interfaces/AdminView').then(m => ({ default: m.AdminView })));
+const RecordsView = lazy(() => import('./interfaces/RecordsView').then(m => ({ default: m.RecordsView })));
+const DriversView = lazy(() => import('./interfaces/DriversView').then(m => ({ default: m.DriversView })));
+const RouteMap = lazy(() => import('./interfaces/map/RouteMap').then(m => ({ default: m.RouteMap })));
+const DashboardPage = lazy(() => import('./features/dashboard/ui/DashboardPage').then(m => ({ default: m.DashboardPage })));
 
 const dashboardGateway = new HttpDashboardGateway({ baseUrl: apiBaseUrl });
 const sessionSource = new HttpSession(apiBaseUrl);
@@ -90,7 +92,7 @@ export function App() {
 function SessionApp() {
   const session = useSession()!;
   if (!session.user || session.loading) return <SessionGate />;
-  return <AuthorizedApp key={session.user.subjectId} />;
+  return <Suspense fallback={<main className="eco-root eco-content"><p role="status">Cargando módulo…</p></main>}><AuthorizedApp key={session.user.subjectId} /></Suspense>;
 }
 
 function AuthorizedApp() {

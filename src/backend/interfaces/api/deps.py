@@ -3,7 +3,10 @@ import os
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from starlette.middleware.gzip import GZipMiddleware
+from fastapi.responses import JSONResponse, FileResponse
+from fastapi.staticfiles import StaticFiles
+from pathlib import Path
 
 from application.use_cases.confirm_delivery import DriverOrders
 from application.use_cases.manage_orders import ManageOrders
@@ -18,6 +21,7 @@ from interfaces.api.dashboard.router import router as dashboard_router
 from interfaces.api.security.router import router as session_router
 from interfaces.api.security.deps import get_current_identity, protect_mutation as default_protection
 from interfaces.api.security.headers import SecurityHeadersMiddleware
+from interfaces.api.http_efficiency import HttpEfficiencyMiddleware
 from interfaces.api.portal.router import router as portal_router
 from infrastructure.persistence.postgres_orders import postgres_repository
 from infrastructure.persistence.postgres_fleet import PostgresVehicles, PostgresDrivers
@@ -31,11 +35,22 @@ from application.use_cases.list_districts import ListDistricts
 from interfaces.api.dashboard.deps import get_dashboard_summary_use_case, get_list_districts_use_case
 from infrastructure.persistence.in_memory_dashboard import SystemClock as DashboardClock
 
-def create_app(repository=None, authenticate=get_current_identity, protect_mutation=default_protection, persistent=None):
+def create_app(repository=None, authenticate=get_current_identity, protect_mutation=default_protection, persistent=None, frontend_dist=None):
     persistent = (repository is None and authenticate is get_current_identity and protect_mutation is default_protection) if persistent is None else persistent
     if persistent:
         load_environment()
     app = FastAPI(title="EcoLogística Lima", version="1.0.0")
+    static_root = frontend_dist or (os.getenv('FRONTEND_DIST') if persistent else None)
+    if static_root:
+        static_root = Path(static_root).resolve()
+        if not (static_root / 'index.html').is_file():
+            raise ValueError('FRONTEND_DIST debe contener el build de producción del frontend.')
+        app.mount('/assets', StaticFiles(directory=static_root / 'assets'), name='assets')
+        if (static_root / 'maps').is_dir():
+            app.mount('/maps', StaticFiles(directory=static_root / 'maps'), name='maps')
+        @app.get('/favicon.svg', include_in_schema=False)
+        def favicon():
+            return FileResponse(static_root / 'favicon.svg')
     if authenticate is not get_current_identity:
         app.dependency_overrides[get_current_identity] = authenticate
     if protect_mutation is not default_protection:
@@ -43,8 +58,11 @@ def create_app(repository=None, authenticate=get_current_identity, protect_mutat
     origins = os.getenv("CORS_ALLOW_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173").split(",")
     app.add_middleware(CORSMiddleware, allow_origins=[origin.strip() for origin in origins if origin.strip() and origin.strip() != "*"],
                        allow_credentials=True, allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE"],
-                       allow_headers=["Content-Type", "Accept", "X-CSRF-Token", "Authorization"])
+                       allow_headers=["Content-Type", "Accept", "X-CSRF-Token", "Authorization", "If-None-Match"],
+                       expose_headers=["ETag"])
+    app.add_middleware(HttpEfficiencyMiddleware)
     app.add_middleware(SecurityHeadersMiddleware)
+    app.add_middleware(GZipMiddleware, minimum_size=1000, compresslevel=5)
     @app.exception_handler(RequestValidationError)
     async def invalid_payload(request: Request, error: RequestValidationError):
         return JSONResponse(status_code=422, content={"detail": [
@@ -82,7 +100,10 @@ def create_app(repository=None, authenticate=get_current_identity, protect_mutat
                 return provide
             app.dependency_overrides[provider] = provider_for(factory,repo)
         metrics, districts = PostgresDashboard(), PostgresDistrictCatalog()
-        app.dependency_overrides[get_dashboard_summary_use_case] = lambda: GetDashboardSummary(metrics,districts,metrics,DashboardClock())
+        def dashboard_summary():
+            request_metrics = PostgresDashboard(cache=True)
+            return GetDashboardSummary(request_metrics,districts,request_metrics,DashboardClock())
+        app.dependency_overrides[get_dashboard_summary_use_case] = dashboard_summary
         app.dependency_overrides[get_list_districts_use_case] = lambda: ListDistricts(districts)
     else:
         repository = repository if repository is not None else MemoryOrderRepository()
@@ -108,5 +129,8 @@ def create_app(repository=None, authenticate=get_current_identity, protect_mutat
         return {"status": "ok", "service": "ALPHA_PROJECT Backend"}
     @app.get("/")
     def root():
+        if static_root:
+            return FileResponse(static_root / 'index.html', headers={'Content-Security-Policy':
+                "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self'; connect-src 'self' https:; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'none'; form-action 'self'"})
         return {"message": "ALPHA_PROJECT API funcionando correctamente"}
     return app
