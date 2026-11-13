@@ -19,9 +19,6 @@ concurrency:
   group: green-audit-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-env:
-  LHCI_VERSION: 0.15.1
-
 jobs:
   lighthouse:
     name: Auditoría Lighthouse CI
@@ -50,7 +47,10 @@ jobs:
 
       - name: Ejecutar Lighthouse CI (collect, assert, upload)
         # Chrome viene preinstalado en ubuntu-latest; LHCI sirve src/frontend/dist.
-        run: npx --yes "@lhci/cli@${LHCI_VERSION}" autorun --config=./lighthouserc.json
+        # @lhci/cli está fijado en devDependencies y bloqueado en package-lock.json,
+        # así que se instala con `npm ci --ignore-scripts` y se ejecuta el binario
+        # local, sin npx (que descarga paquetes bajo demanda y corre sus scripts).
+        run: ./src/frontend/node_modules/.bin/lhci autorun --config=./lighthouserc.json
 
       - name: Resumen de puntuaciones
         if: always() && hashFiles('reports/lighthouse/manifest.json') != ''
