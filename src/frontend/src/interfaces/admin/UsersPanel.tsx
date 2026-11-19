@@ -95,10 +95,10 @@ export function UsersPanel({ page, error, onRetry, onEditAccount }: UsersPanelPr
                   <span className="eco-row__cell">
                     <span className="eco-row__title">{user.name}</span>
                     <span className="eco-row__sub">{user.email}</span>
-                    {onEditAccount ? <span>
+                    {onEditAccount ? <details className="eco-record-actions"><summary>Acciones de cuenta</summary><div>
                       <button type="button" className="eco-btn eco-btn--ghost" aria-label={`Cambiar correo de ${user.name}`} onClick={() => onEditAccount(user, 'email')}>Cambiar correo</button>
                       <button type="button" className="eco-btn eco-btn--ghost" aria-label={`Cambiar contraseña de ${user.name}`} onClick={() => onEditAccount(user, 'password')}>Cambiar contraseña</button>
-                    </span> : null}
+                    </div></details> : null}
                   </span>
                 </span>
                 <span><span className="eco-tag">{ROLE_LABELS[user.role]}</span></span>

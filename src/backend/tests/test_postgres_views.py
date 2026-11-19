@@ -233,7 +233,10 @@ def test_generate_preview_approve_and_reload_routes_with_real_postgis(database_c
     assert client.post('/api/routes/approve',headers=headers,json=approval).status_code==422
     assert conn.execute('SELECT count(*) AS n FROM ruta_pedido WHERE pedido_id=%s',(order_id,)).fetchone()['n']==1
     # Un pedido en camino permanece en seguimiento y no vuelve al generador.
-    conn.execute("UPDATE pedidos SET estado='EN_CAMINO' WHERE pedido_id=%s",(order_id,))
+    dispatch = f'/api/pedidos/{order_id}/despacho'
+    assert client.post(dispatch).status_code == 403
+    assert client.post(dispatch, headers=headers).status_code == 204
+    assert client.post(dispatch, headers=headers).status_code == 204
     route_map = client.get('/api/routes/map')
     assert route_map.status_code==200,route_map.text
     assert next(row for row in route_map.json()['orders'] if row['id']==order_id)['status']=='EN_CAMINO'
@@ -246,6 +249,11 @@ def test_generate_preview_approve_and_reload_routes_with_real_postgis(database_c
     assigned = client.get('/api/conductor/ruta')
     assert assigned.status_code==200, assigned.text
     assert assigned.json()['stops'][0]['order_id']==order_id
+    driver_headers = {'X-CSRF-Token': logged.json()['csrf_token']}
+    assert client.post(dispatch, headers=driver_headers).status_code == 403
+    delivered = client.post(f'/api/conductor/pedidos/{order_id}/confirmacion', headers=driver_headers)
+    assert delivered.status_code == 200, delivered.text
+    assert delivered.json()['status'] == 'ENTREGADO'
     assert client.post('/api/routes/approve',headers={'X-CSRF-Token':logged.json()['csrf_token']},json=approval).status_code==403
 
 

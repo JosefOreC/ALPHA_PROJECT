@@ -336,6 +336,27 @@ class PostgresPortal:
         result['elapsedSeconds'] = round(time.monotonic()-started,2)
         return result, fleet, depot
 
+    def start_delivery(self, order_id, actor):
+        with connection() as conn:
+            assigned = conn.execute(
+                """SELECT p.estado, r.ruta_id FROM pedidos p
+                   JOIN ruta_pedido rp USING(pedido_id) JOIN rutas r USING(ruta_id)
+                   WHERE p.pedido_id=%s AND p.conductor_id=r.conductor_id
+                     AND r.fecha_operacion=%s AND r.estado IN ('GENERADA','EN_CURSO')
+                   FOR UPDATE OF p""",
+                (order_id, now().date()),
+            ).fetchone()
+            if not assigned or assigned['estado'] not in ('PENDIENTE', 'EN_CAMINO'):
+                raise ValueError('Solo se puede despachar un pedido pendiente asignado a una ruta activa de hoy.')
+            if assigned['estado'] == 'EN_CAMINO':
+                return
+            conn.execute(
+                "UPDATE rutas SET estado='EN_CURSO',version=version+1 WHERE ruta_id=%s AND estado='GENERADA'",
+                (assigned['ruta_id'],),
+            )
+            conn.execute("UPDATE pedidos SET estado='EN_CAMINO',version=version+1 WHERE pedido_id=%s", (order_id,))
+            audit(conn,actor,'DESPACHAR_PEDIDO','pedidos',order_id,{'ruta_id':str(assigned['ruta_id'])})
+
     def approve_proposal(self, settings, fingerprint, actor):
         with connection() as conn, conn.transaction():
             # Bloquea los recursos durante la revalidación y el guardado de toda la propuesta.

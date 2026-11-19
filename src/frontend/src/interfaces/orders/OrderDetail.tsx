@@ -9,10 +9,11 @@ type OrderDetailProps = {
   busy: boolean
   onEdit: () => void
   onCancel: () => void
+  onDispatch?: () => void
   onRefresh: () => void
 }
 
-export function OrderDetail({ order, canWrite, busy, onEdit, onCancel, onRefresh }: OrderDetailProps) {
+export function OrderDetail({ order, canWrite, busy, onEdit, onCancel, onDispatch, onRefresh }: OrderDetailProps) {
   const editable = canEdit(order)
   return (
     <article className="eco-sheet" aria-label="Detalle del pedido seleccionado">
@@ -47,6 +48,9 @@ export function OrderDetail({ order, canWrite, busy, onEdit, onCancel, onRefresh
         {order.instructions || 'Sin indicaciones adicionales.'}
       </div>
       <div className="eco-sheet__actions">
+        {canWrite && order.assigned && order.status === 'PENDIENTE' && onDispatch ? (
+          <button className="eco-btn" type="button" disabled={busy} onClick={onDispatch}>Marcar en camino</button>
+        ) : null}
         {canWrite && editable ? (
           <>
             <button className="eco-btn eco-btn--secondary" type="button" onClick={onEdit}>

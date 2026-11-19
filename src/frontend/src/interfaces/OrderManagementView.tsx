@@ -9,6 +9,7 @@ import type { ModuleId } from '../shared/ui'
 import { OrderForm } from './OrderForm'
 import { CancelDialog } from './orders/CancelDialog'
 import { OrderDetail } from './orders/OrderDetail'
+import { requestJson } from '../infrastructure/httpClient'
 import { tripOf } from './orders/tripState'
 
 type Screen = 'board' | 'create' | 'edit'
@@ -121,6 +122,21 @@ export function OrderManagementView({ service, onNavigate }: { service: Manageme
     setScreen('board')
     setNotice('Pedido guardado correctamente.')
     refresh()
+  }
+
+  async function dispatch(order: ManagedOrder) {
+    if (busy) return
+    setBusy(true)
+    setError('')
+    try {
+      await requestJson(`/api/pedidos/${encodeURIComponent(order.id)}/despacho`, { method: 'POST' })
+      setNotice('Pedido en camino. El conductor ya puede confirmar su entrega.')
+      refresh()
+    } catch (reason) {
+      setError(message(reason, 'No se pudo despachar el pedido.'))
+    } finally {
+      setBusy(false)
+    }
   }
 
   function openCancel(order: ManagedOrder) {
@@ -289,6 +305,7 @@ export function OrderManagementView({ service, onNavigate }: { service: Manageme
                     busy={busy}
                     onEdit={() => { setNotice(''); setSelectedId(selected.id); setScreen('edit') }}
                     onCancel={() => openCancel(selected)}
+                    onDispatch={() => void dispatch(selected)}
                     onRefresh={() => void reconsult(selected)}
                   />
                 ) : null}

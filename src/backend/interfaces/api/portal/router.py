@@ -176,6 +176,11 @@ def proposal(payload:RouteSettings,portal=Depends(get_portal)):
 def approve_proposal(payload:ApproveProposal,identity=Depends(require_permission('routes.generate')),portal=Depends(get_portal)):
     return portal.approve_proposal(payload.settings.model_dump(),payload.fingerprint,identity.subject_id)
 
+@router.post('/pedidos/{order_id}/despacho',status_code=204,dependencies=[Depends(protect_mutation)])
+def dispatch_order(order_id: UUID,identity=Depends(require_permission('orders.update')),portal=Depends(get_portal)):
+    portal.start_delivery(order_id, identity.subject_id)
+
+
 @router.get('/audit',dependencies=[Depends(require_permission('audit.read'))])
 def audit(portal=Depends(get_portal)):
     return portal.records('auditoria')

@@ -971,3 +971,8 @@ dialog.eco-dialog--sheet { width: 100%; max-width: 480px; margin: auto auto 0; b
   .eco-login { padding: 28px 16px; }
   .eco-login .eco-login__panel { padding: 26px 22px; }
 }
+
+
+.eco-record-actions { margin-top: 4px; color: var(--ink-muted); }
+.eco-record-actions summary { cursor: pointer; padding: 4px 0; width: fit-content; }
+.eco-record-actions > div { display: flex; flex-wrap: wrap; gap: 4px; }
