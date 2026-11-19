@@ -6,7 +6,7 @@
 
 **Sprint:** 4.
 
-**Versión del documento:** V_1_0_1.
+**Versión del documento:** V_1_0_2.
 
 **Versión de entrega:** v1.0.0.
 
@@ -74,7 +74,7 @@ El perfil, las réplicas, las versiones y los datos se registran junto con cada 
 
 El diagnóstico inicial identificó precarga masiva de Pedidos, páginas de tamaño distinto de 12, ausencia de picture y React Query, y casos de negociación HTTP sin cubrir. El incremento resolvió esos puntos y conservó la arquitectura. Los informes previos se mantienen como antecedentes, identificados por su base y entorno.
 
-La reducción histórica de cinco a dos lecturas por resumen y las proyecciones SQL se revisan en los antecedentes de código (`antecedentes.patch`, registro local). Los cambios del incremento (`cambios-producto.patch`, registro local) documentan paginación, caché y compresión. La [evidencia de imagen y cálculo nativo](../Sprint%204/evidencias/raster-native/README.md) completa las áreas 3 y 5.
+La reducción histórica de cinco a dos lecturas por resumen y las proyecciones SQL se revisan en los antecedentes de código (`antecedentes.patch`, registro local). Los cambios del incremento (`cambios-producto.patch`, registro local) documentan paginación, caché y compresión. La [evidencia de imagen y cálculo nativo](../Sprint%204/Green%20IT/evidencias/raster-native/README.md) completa las áreas 3 y 5.
 
 ## 7. Implementación adaptada posterior a la fase 2
 
@@ -194,11 +194,11 @@ Las fuentes se consultaron el 13/11/2026. Las relaciones de las tablas constituy
 
 ## 12. Automatización y gestión de versiones
 
-El [registro CI/Git del Sprint 4](../Sprint%204/07%20Automatizacion%20CI%20y%20gestion%20de%20versiones%20V_1_0_0.md) documenta el workflow LHCI, las rutas exactas, la versión v1.0.0 y la secuencia de publicación. Los resultados locales y la ejecución remota se mantienen separados.
+El [registro CI/Git del Sprint 4](../Sprint%204/Green%20IT/07%20Automatizacion%20CI%20y%20gestion%20de%20versiones%20V_1_0_1.md) documenta el workflow LHCI, las rutas exactas, la versión v1.0.0 y la secuencia de publicación. Los resultados locales y la ejecución remota se mantienen separados.
 
 ## Validación automatizada posterior
 
-La validación LHCI posterior registró un incumplimiento de TBT en Acceso (167 ms frente al límite de 85 ms) y tres cargas conformes en Pedidos. La serie histórica raster-sesion conserva sus seis cargas conformes; el nuevo resultado se presenta por separado y deja pendiente comprobar la estabilidad del gate de Acceso. Véase el [registro de automatización](../Sprint%204/07%20Automatizacion%20CI%20y%20gestion%20de%20versiones%20V_1_0_0.md).
+La validación LHCI posterior registró un incumplimiento de TBT en Acceso (167 ms frente al límite de 85 ms) y tres cargas conformes en Pedidos. La serie histórica raster-sesion conserva sus seis cargas conformes; el nuevo resultado se presenta por separado y deja pendiente comprobar la estabilidad del gate de Acceso. Véase el [registro de automatización](../Sprint%204/Green%20IT/07%20Automatizacion%20CI%20y%20gestion%20de%20versiones%20V_1_0_1.md).
 
 ## Control de versiones del documento
 
@@ -207,5 +207,6 @@ La validación LHCI posterior registró un incumplimiento de TBT en Acceso (167 
 | V_1_0_0 | 11/11/2026 | Tovar Sánchez, Carlos Alberto. Fundamentación inicial en estándares y reglas verdes. |
 | V_1_0_1, antecedente | 12/11/2026 | Rojas Camayo, Valentino Jhan Pierre. Revisión de redacción y formato. |
 | V_1_0_1 | 13/11/2026 | Ore Campos, Josef Pablo; Cueva Ricse, Alex. Revisión técnica y documental del estado final; se conserva la versión documental vigente integrada en main. |
+| V_1_0_2 | 19/11/2026 | Rojas Camayo, Valentino Jhan Pierre. Ajuste de enlaces por reorganización de la carpeta Sprint 4. |
 
 [← Volver al índice correspondiente](README.md)

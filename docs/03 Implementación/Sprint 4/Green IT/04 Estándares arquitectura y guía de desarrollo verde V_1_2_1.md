@@ -6,7 +6,7 @@
 
 **Sprint:** 4.
 
-**Versión del documento:** V_1_2_0.
+**Versión del documento:** V_1_2_1.
 
 **Fecha de actualización:** 13/11/2026, America/Lima (UTC−05:00).
 
@@ -197,5 +197,8 @@ Las fuentes se consultaron el 13/11/2026. Las relaciones de las tablas constituy
 | V_1_0_0 | 12/11/2026 | Diagnóstico inicial de rendimiento y optimización. |
 | V_1_1_0 | 12/11/2026 | Primera implementación y documentación de las mejoras. |
 | V_1_2_0 | 13/11/2026 | Ore Campos, Josef Pablo; Cueva Ricse, Alex. Consolidación de resultados finales, trazabilidad de las ocho áreas, validaciones funcionales y revisión de coherencia documental. |
+| V_1_2_1 | 19/11/2026 | Rojas Camayo, Valentino Jhan Pierre. Ajuste de enlaces por reorganización de la carpeta Sprint 4 y enlace de vuelta al README principal. |
 
 [← Volver al índice del Sprint 4](README.md)
+
+[← Volver al README principal](../../../../README.md)

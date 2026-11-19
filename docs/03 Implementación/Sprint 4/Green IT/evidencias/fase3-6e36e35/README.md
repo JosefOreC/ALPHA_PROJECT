@@ -2,7 +2,7 @@
 
 **Rama:** `refactor/mern`. **Base:** `6e36e355e0d39c83c5700a83eb0987b6fd849a10`.
 
-Los cambios permanecen sin commit. Los recibos identifican HEAD, estado del árbol, hash del diff de fuentes, comando, horas Lima y huella de la salida. El HEAD de las mediciones identifica su base, no la totalidad del incremento local. La matriz y las comparaciones por área están en la sección 7 del [documento 04](../../04%20Est%C3%A1ndares%20arquitectura%20y%20gu%C3%ADa%20de%20desarrollo%20verde%20V_1_2_0.md). La implementación seleccionada usa el prefijo de medición **fase3-arranque**.
+Los cambios permanecen sin commit. Los recibos identifican HEAD, estado del árbol, hash del diff de fuentes, comando, horas Lima y huella de la salida. El HEAD de las mediciones identifica su base, no la totalidad del incremento local. La matriz y las comparaciones por área están en la sección 7 del [documento 04](../../04%20Est%C3%A1ndares%20arquitectura%20y%20gu%C3%ADa%20de%20desarrollo%20verde%20V_1_2_1.md). La implementación seleccionada usa el prefijo de medición **fase3-arranque**.
 
 ## Código y validaciones
 
@@ -82,3 +82,5 @@ python "$evidence/validar_evidencias.py"
 Ejecutar mediciones secuencialmente, sin suites de pruebas concurrentes. `GREEN_IT_PYTHON` y `GREEN_IT_BACKEND_ROOT` permiten elegir explícitamente el intérprete y las fuentes del estado medido; no cambian credenciales ni configuración del producto. El consolidador verifica navegador/perfil/protocolo, carga 200 del listado, una sola petición de 12 y ausencia de descarga del motor cartográfico; falla si alguna corrida final supera un umbral. Conserva el modelo ambiental parametrizado, los rangos y las huellas de los informes.
 
 [← Volver al índice del Sprint 4](../../README.md)
+
+[← Volver al README principal](../../../../../../README.md)

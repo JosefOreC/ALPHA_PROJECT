@@ -80,3 +80,5 @@ Los ejecutores [Lighthouse](https://github.com/JosefOreC/ALPHA_PROJECT/blob/6e36
 Una revisión manual WCAG completa, una certificación o la aceptación académica no se deducen de estos controles automáticos. No se recibió la rúbrica original con ponderaciones.
 
 [← Volver al índice correspondiente](../README.md)
+
+[← Volver al README principal](../../../../../../README.md)

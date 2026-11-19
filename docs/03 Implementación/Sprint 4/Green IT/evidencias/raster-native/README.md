@@ -53,3 +53,5 @@ python "$evidence/validar.py"
 La adaptación SQL frente a MongoDB y el alcance auxiliar de la sustitución nativa se presentan expresamente al evaluador; no se atribuye una aprobación académica recibida ni se migra la arquitectura. Los resultados del corte anterior y sus manifiestos corresponden a sus fuentes originales: no se supone que su validador de fuentes deba pasar después de nuevas modificaciones del producto.
 
 [← Volver al Sprint 4](../../README.md)
+
+[← Volver al README principal](../../../../../../README.md)

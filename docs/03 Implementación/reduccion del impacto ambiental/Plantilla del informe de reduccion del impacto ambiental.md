@@ -20,7 +20,7 @@ Las reglas de redacción y formato están en la Guía de estilo documental (docs
 
 **Actualización documental:** [DD/MM/AAAA].
 
-**Alcance:** auditoría, refactorización y medición del rendimiento del sistema, y estimación de la reducción de emisiones (criterio «Informe de reducción del impacto ambiental» de la rúbrica de la Inspección 04). Los estándares que fundamentan cada optimización están en el documento [02 Estándares de ingeniería de software](02%20Estandares%20Ingenier%C3%ADa%20de%20software%20V_1_0_1.md).
+**Alcance:** auditoría, refactorización y medición del rendimiento del sistema, y estimación de la reducción de emisiones (criterio «Informe de reducción del impacto ambiental» de la rúbrica de la Inspección 04). Los estándares que fundamentan cada optimización están en el documento [02 Estándares de ingeniería de software](02%20Estandares%20Ingenier%C3%ADa%20de%20software%20V_1_0_2.md).
 
 **Alcance de publicación:** actualización de documentación Markdown. Las implementaciones y las mediciones descritas corresponden al incremento local auditado; sus archivos productivos y nuevos artefactos no se incorporan con esta publicación.
 

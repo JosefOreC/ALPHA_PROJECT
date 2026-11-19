@@ -123,3 +123,5 @@ La ruta de Chromium indica el binario realmente utilizado (Playwright revisión 
 El [ejecutor Lighthouse](https://github.com/JosefOreC/ALPHA_PROJECT/blob/6e36e355e0d39c83c5700a83eb0987b6fd849a10/scripts/measure_green_it.mjs), el [fixture](https://github.com/JosefOreC/ALPHA_PROJECT/blob/6e36e355e0d39c83c5700a83eb0987b6fd849a10/scripts/green_it_fixture.py) y el [ejecutor de calidad](https://github.com/JosefOreC/ALPHA_PROJECT/blob/6e36e355e0d39c83c5700a83eb0987b6fd849a10/docs/03%20Implementaci%C3%B3n/Sprint%204/evidencias/verificar_corte.py) están versionados. Ejecutar mediciones secuencialmente; todas usan localhost:5189. Los controles ordinarios desactivan integración real con la base del usuario.
 
 [← Volver al índice correspondiente](../README.md)
+
+[← Volver al README principal](../../../../../../README.md)

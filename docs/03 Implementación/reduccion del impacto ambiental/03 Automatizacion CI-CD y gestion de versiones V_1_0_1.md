@@ -4,11 +4,11 @@
 
 **Líder del Proyecto:** Ore Campos, Josef Pablo
 
-**Versión del documento:** V_1_0_0
+**Versión del documento:** V_1_0_1
 
 **Autor:** Equipo de desarrollo EcoLogística Lima
 
-**Actualización documental:** 13/11/2026.
+**Actualización documental:** 19/11/2026.
 
 **Alcance:** flujo de integración continua `green-audit.yml` con Lighthouse CI (LHCI), estructura de directorios del criterio, versionado semántico `v1.0.0` y secuencia de comandos Git CLI utilizada (criterio «Automatización CI/CD y gestión de versiones con Git» de la rúbrica de la Inspección 04).
 
@@ -50,7 +50,7 @@ Las acciones se fijan por SHA de commit, igual que en los flujos `documentacion.
 
 La accesibilidad es bloqueante porque el proyecto ya cumple WCAG (documento de Sprint 3) y una regresión afecta a usuarios reales. Las demás categorías emiten advertencias para no bloquear integraciones por variaciones del entorno del runner.
 
-La aplicación exige inicio de sesión, por lo que la URL pública auditada es la pantalla de acceso. Las vistas autenticadas se miden manualmente con Chrome DevTools, según el documento [01 Informe de reducción del impacto ambiental](01%20Informe%20de%20reduccion%20del%20impacto%20ambiental%20V_1_0_0.md).
+La aplicación exige inicio de sesión, por lo que la URL pública auditada es la pantalla de acceso. Las vistas autenticadas se miden manualmente con Chrome DevTools, según el documento [01 Informe de reducción del impacto ambiental](01%20Informe%20de%20reduccion%20del%20impacto%20ambiental%20V_1_0_1.md).
 
 ### 1.4 Ejecución local de verificación
 
@@ -127,5 +127,12 @@ git push origin v1.0.0
 ```
 
 Los reportes generados (`reports/`, `.lighthouseci/`) y las dependencias (`node_modules/`) están excluidos en `.gitignore`.
+
+## Control de versiones del documento
+
+| Versión | Fecha | Autoría / cambio |
+|---|---|---|
+| V_1_0_0 | 13/11/2026 | Equipo de desarrollo EcoLogística Lima. Publicación inicial del registro de automatización CI/CD y gestión de versiones. |
+| V_1_0_1 | 19/11/2026 | Rojas Camayo, Valentino Jhan Pierre. Ajuste de enlaces por reorganización de la carpeta Sprint 4. |
 
 [← Volver al índice correspondiente](README.md)
