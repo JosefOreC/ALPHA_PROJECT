@@ -275,3 +275,27 @@ def test_admin_password_reset_revokes_sessions_and_keeps_role(database_client):
         assert login.json()['role'] == 'driver'
     change = conn.execute("SELECT detalle FROM auditoria WHERE accion='CAMBIAR_CONTRASENA' AND entidad_id=%s", (identifier,)).fetchone()
     assert change['detalle'] == {}
+
+def test_admin_changes_email_without_replacing_account(database_client):
+    client, _, csrf, _ = database_client
+    old_email, new_email = (f'{uuid4()}@integration.invalid' for _ in range(2))
+    password = 'Email-change-password-2026'
+    headers = {'X-CSRF-Token': csrf}
+    created = client.post('/api/admin/users', headers=headers, json={
+        'name': 'Email change fixture', 'email': old_email, 'password': password, 'role': 'driver',
+    })
+    assert created.status_code == 201
+    identifier = created.json()['id']
+    path = f'/api/admin/users/{identifier}/email'
+    with TestClient(client.app, base_url='https://testserver') as driver:
+        login = driver.post('/api/session', json={'email': old_email, 'password': password})
+        assert login.status_code == 200
+        assert driver.put(path, headers={'X-CSRF-Token': login.json()['csrf_token']}, json={'email': new_email}).status_code == 403
+        assert client.put(path, json={'email': new_email}).status_code == 403
+        assert client.put(path, headers=headers, json={'email': new_email.upper()}).status_code == 204
+        assert driver.get('/api/session').status_code == 401
+        assert driver.post('/api/session', json={'email': old_email, 'password': password}).status_code == 401
+        login = driver.post('/api/session', json={'email': new_email, 'password': password})
+        assert login.status_code == 200
+        assert login.json()['subject_id'] == identifier
+        assert login.json()['role'] == 'driver'

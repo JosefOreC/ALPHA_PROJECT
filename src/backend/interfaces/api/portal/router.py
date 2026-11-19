@@ -10,6 +10,14 @@ from interfaces.api.portal.deps import get_portal
 router = APIRouter(prefix='/api',tags=['Operación'])
 
 
+def normalize_email(value: str) -> str:
+    import re
+    value = value.strip().lower()
+    if not re.fullmatch(r'[^\s@]+@[^\s@]+\.[^\s@]+',value):
+        raise ValueError('Ingresa un correo válido.')
+    return value
+
+
 class CreateUser(BaseModel):
     name: str = Field(min_length=2,max_length=200)
     email: str = Field(min_length=5,max_length=255)
@@ -27,10 +35,7 @@ class CreateUser(BaseModel):
     @field_validator('email')
     @classmethod
     def valid_email(cls,value):
-        import re
-        if not re.fullmatch(r'[^\s@]+@[^\s@]+\.[^\s@]+',value):
-            raise ValueError('Ingresa un correo válido.')
-        return value
+        return normalize_email(value)
 
 
 class Parameters(BaseModel):
@@ -84,6 +89,21 @@ def users(portal=Depends(get_portal)):
 @router.post('/admin/users',status_code=201,dependencies=[Depends(protect_mutation)])
 def create_user(payload:CreateUser,identity=Depends(require_permission('users.create')),portal=Depends(get_portal)):
     return portal.create_user(payload.model_dump(),identity.subject_id)
+
+class UpdateUserEmail(BaseModel):
+    email: str = Field(min_length=5, max_length=255)
+
+    @field_validator('email')
+    @classmethod
+    def valid_email(cls, value):
+        return normalize_email(value)
+
+
+@router.put('/admin/users/{user_id}/email',status_code=204,dependencies=[Depends(protect_mutation)])
+def update_user_email(user_id: UUID,payload: UpdateUserEmail,identity=Depends(require_permission('users.update')),portal=Depends(get_portal)):
+    if not portal.update_user_email(user_id, payload.email, identity.subject_id):
+        raise HTTPException(404, 'La cuenta no existe.')
+
 
 class ResetPassword(BaseModel):
     password: str = Field(min_length=12, max_length=256)

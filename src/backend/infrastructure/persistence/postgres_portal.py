@@ -59,6 +59,22 @@ class PostgresPortal:
             raise ValueError('Ya existe una cuenta con ese correo.') from None
         return user_dto(row)
 
+    def update_user_email(self, identifier, email, actor):
+        import psycopg
+        try:
+            with connection() as conn:
+                user = conn.execute(
+                    'UPDATE usuarios SET email=%s WHERE usuario_id=%s RETURNING usuario_id',
+                    (email, identifier),
+                ).fetchone()
+                if not user:
+                    return False
+                conn.execute('DELETE FROM sesiones WHERE usuario_id=%s', (identifier,))
+                audit(conn,actor,'CAMBIAR_CORREO','usuarios',identifier,{})
+        except psycopg.errors.UniqueViolation:
+            raise ValueError('Ya existe una cuenta con ese correo.') from None
+        return True
+
     def reset_user_password(self, identifier, password, actor):
         digest = hash_password(password)
         with connection() as conn:
