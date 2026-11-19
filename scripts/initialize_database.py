@@ -1,4 +1,5 @@
 """Prepara una base nueva con esquema y catálogos; no carga datos de ejemplo."""
+import argparse
 import json
 import os
 import sys
@@ -13,23 +14,25 @@ ROOT = Path(__file__).resolve().parents[1]
 load_dotenv(ROOT / '.env', override=True)
 
 
-def main():
+def main(*, existing=False):
     dsn = os.getenv('DATABASE_URL','')
     parsed = urlsplit(dsn)
     name = unquote(parsed.path.lstrip('/'))
     admin = os.getenv('DATABASE_ADMIN_DB','postgres')
     if parsed.scheme not in ('postgres','postgresql') or not name or '/' in name or name in ('postgres','template0','template1') or name==admin:
         raise ValueError('Selecciona una base de aplicación válida en DATABASE_URL.')
-    with psycopg.connect(make_conninfo(dsn,dbname=admin),autocommit=True,connect_timeout=5) as maintenance:
-        available = maintenance.execute("SELECT 1 FROM pg_available_extensions WHERE name='postgis'").fetchone()
-        if not available:
-            raise ValueError('Instala la extensión PostGIS para esta versión de PostgreSQL antes de preparar el esquema.')
-        if not maintenance.execute('SELECT 1 FROM pg_database WHERE datname=%s',(name,)).fetchone():
-            maintenance.execute(sql.SQL('CREATE DATABASE {}').format(sql.Identifier(name)))
-            print('Base de aplicación creada.')
+    if not existing:
+        with psycopg.connect(make_conninfo(dsn,dbname=admin),autocommit=True,connect_timeout=5) as maintenance:
+            available = maintenance.execute("SELECT 1 FROM pg_available_extensions WHERE name='postgis'").fetchone()
+            if not available:
+                raise ValueError('Instala la extensión PostGIS para esta versión de PostgreSQL antes de preparar el esquema.')
+            if not maintenance.execute('SELECT 1 FROM pg_database WHERE datname=%s',(name,)).fetchone():
+                maintenance.execute(sql.SQL('CREATE DATABASE {}').format(sql.Identifier(name)))
+                print('Base de aplicación creada.')
     with psycopg.connect(dsn,connect_timeout=5) as conn:
-        existing = conn.execute("SELECT 1 FROM pg_tables WHERE schemaname='public' AND tablename<>'spatial_ref_sys' LIMIT 1").fetchone()
-        if existing:
+        conn.execute('SELECT pg_advisory_xact_lock(73120)')
+        existing_tables = conn.execute("SELECT 1 FROM pg_tables WHERE schemaname='public' AND tablename<>'spatial_ref_sys' LIMIT 1").fetchone()
+        if existing_tables:
             print('La base ya contiene tablas. No se modificó su esquema; ejecuta scripts/migrate.py.')
             return
         conn.execute((ROOT / 'src/backend/infrastructure/persistence/schema.sql').read_text(encoding='utf-8'))
@@ -51,8 +54,11 @@ def main():
 
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--existing', action='store_true', help='Usar una base ya provisionada sin conectar a mantenimiento.')
+    args = parser.parse_args()
     try:
-        main()
+        main(existing=args.existing)
     except ValueError as error:
         print(str(error))
         sys.exit(1)

@@ -16,8 +16,8 @@ Este sprint reúne la optimización de consultas, paginación, recursos visuales
 
 ## Documentación del sprint
 
-- [01. Revisión del sprint](01%20Revisi%C3%B3n%20del%20Sprint%20V_1_2_0.md).
-- [02. Retrospectiva](02%20Retrospectiva%20del%20Sprint%20V_1_2_0.md).
+- [01. Revisión del sprint](Hist%C3%B3rico/01%20Revisi%C3%B3n%20del%20Sprint%20V_1_2_0.md).
+- [02. Retrospectiva](Hist%C3%B3rico/02%20Retrospectiva%20del%20Sprint%20V_1_2_0.md).
 - [03. Informe de impacto ambiental](03%20Informe%20de%20reducci%C3%B3n%20del%20impacto%20ambiental%20V_1_2_0.md).
 - [04. Estándares, arquitectura y guía de desarrollo verde](04%20Est%C3%A1ndares%20arquitectura%20y%20gu%C3%ADa%20de%20desarrollo%20verde%20V_1_2_0.md).
 - [05. Correspondencia con la rúbrica](05%20Consigna%20original%20y%20brechas%20de%20calificaci%C3%B3n%20V_1_0_0.md).
@@ -25,6 +25,13 @@ Este sprint reúne la optimización de consultas, paginación, recursos visuales
 
 - [07. Automatización CI y gestión de versiones](07%20Automatizacion%20CI%20y%20gestion%20de%20versiones%20V_1_0_0.md).
 - [Paquete de entrega con nombres de la rúbrica](../reduccion%20del%20impacto%20ambiental/README.md).
+
+## Inspección 5
+
+- [Revisión del sprint](01%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md)
+- [Retrospectiva del sprint](02%20Retrospectiva%20del%20Sprint%20V_1_0_0.md)
+- [Playwright, rendimiento y disponibilidad](03%20Analisis%20PlayWrigth%20V_1_0_0.md)
+- [Usabilidad SUS](04%20Usabilidad%20V_1_0_0.md)
 
 ## Resultados al cierre
 

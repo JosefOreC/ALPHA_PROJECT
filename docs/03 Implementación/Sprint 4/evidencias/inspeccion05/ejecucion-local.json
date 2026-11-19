@@ -1,0 +1,139 @@
+{
+  "date_lima": "2026-11-19T11:48:13.058000-05:00",
+  "environment": "Local Windows, loopback, production frontend build, real FastAPI, disposable PostGIS",
+  "seeded_orders": 60,
+  "seeded_routes": 10,
+  "seeded_users": 20,
+  "report_sha256": "748fe33321e10834a5d826f2c2436e71fa48d18b5809d7356327a735b425d6d7",
+  "screenshot_sha256": "6bb347dfd70eddb6f2047703ffd7b1f5c7582b7d572e5a2910108428324710e0",
+  "stats": {
+    "startTime": "2026-11-19T16:48:13.058Z",
+    "duration": 20186.792999999998,
+    "expected": 9,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "tests": [
+    {
+      "browser": "chromium",
+      "title": "acceso, permisos, validación y persistencia de pedidos",
+      "status": "passed",
+      "duration_ms": 2683
+    },
+    {
+      "browser": "chromium",
+      "title": "consulta la ruta asignada y confirma una entrega como conductor",
+      "status": "passed",
+      "duration_ms": 732
+    },
+    {
+      "browser": "chromium",
+      "title": "disponibilidad, recuperación ante error de red y tiempos de acceso",
+      "status": "passed",
+      "duration_ms": 520
+    },
+    {
+      "browser": "firefox",
+      "title": "acceso, permisos, validación y persistencia de pedidos",
+      "status": "passed",
+      "duration_ms": 4317
+    },
+    {
+      "browser": "firefox",
+      "title": "consulta la ruta asignada y confirma una entrega como conductor",
+      "status": "passed",
+      "duration_ms": 693
+    },
+    {
+      "browser": "firefox",
+      "title": "disponibilidad, recuperación ante error de red y tiempos de acceso",
+      "status": "passed",
+      "duration_ms": 913
+    },
+    {
+      "browser": "webkit",
+      "title": "acceso, permisos, validación y persistencia de pedidos",
+      "status": "passed",
+      "duration_ms": 3534
+    },
+    {
+      "browser": "webkit",
+      "title": "consulta la ruta asignada y confirma una entrega como conductor",
+      "status": "passed",
+      "duration_ms": 708
+    },
+    {
+      "browser": "webkit",
+      "title": "disponibilidad, recuperación ante error de red y tiempos de acceso",
+      "status": "passed",
+      "duration_ms": 903
+    }
+  ],
+  "metrics_ms": {
+    "chromium": {
+      "orderListMs": 63.79880000000003,
+      "browser": "chromium",
+      "healthMs": 6.5085999999992055,
+      "ttfbMs": 4.8999998569488525,
+      "fcpMs": 52,
+      "lcpMs": 68
+    },
+    "firefox": {
+      "orderListMs": 68.17439999999988,
+      "browser": "firefox",
+      "healthMs": 8.47320000000036,
+      "ttfbMs": 6,
+      "fcpMs": 82,
+      "lcpMs": 175
+    },
+    "webkit": {
+      "orderListMs": 73.07449999999972,
+      "browser": "webkit",
+      "healthMs": 9.626399999999194,
+      "ttfbMs": 6,
+      "fcpMs": 70,
+      "lcpMs": 70
+    }
+  },
+  "integration": {
+    "started_lima": "2026-11-19T11:46:44.894912-05:00",
+    "image": "postgis/postgis:17-3.5",
+    "container": "alpha-sprint4-d168882637",
+    "no_host_mounts": true,
+    "no_user_env_loaded": true,
+    "head": "6e36e355e0d39c83c5700a83eb0987b6fd849a10",
+    "seed_counts": {
+      "roles": 5,
+      "permisos": 36,
+      "rol_permisos": 81,
+      "usuarios": 20,
+      "vehiculos": 15,
+      "conductores": 15,
+      "almacenes": 1,
+      "pedidos": 1050,
+      "rutas": 70,
+      "ruta_pedido": 840,
+      "tramos": 910,
+      "entregas": 780,
+      "incidencias": 21,
+      "reoptimizaciones": 7,
+      "posiciones_vehiculos": 215,
+      "zonas_restringidas": 4,
+      "reportes": 10,
+      "ruta_reporte": 280,
+      "parametros_algoritmo": 1,
+      "factores_emision": 6,
+      "integraciones": 4,
+      "auditoria": 861
+    },
+    "dataset_exit_code": 0,
+    "postgres": "PostgreSQL 17.5 (Debian 17.5-1.pgdg110+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 10.2.1-6) 10.2.1 20210110, 64-bit",
+    "postgis": "POSTGIS=\"3.5.2 dea6d0a\" [EXTENSION] PGSQL=\"170\" GEOS=\"3.9.0-CAPI-1.16.2\" PROJ=\"7.2.1 NETWORK_ENABLED=OFF URL_ENDPOINT=https://cdn.proj.org USER_WRITABLE_DIRECTORY=/var/lib/postgresql/.local/share/proj DATABASE_PATH=/usr/share/proj/proj.db\" (compiled against PROJ 7.2.1) LIBXML=\"2.9.10\" LIBJSON=\"0.15\" LIBPROTOBUF=\"1.3.3\" WAGYU=\"0.5.0 (Internal)\"",
+    "views_exit_code": 0,
+    "image_id": "sha256:01a6a70e41e6c4467c8f55f6063555ed72db2d6662cd0d571040d42eadaeb6f6",
+    "container_stop_exit_code": 0,
+    "finished_lima": "2026-11-19T11:47:16.012860-05:00",
+    "source_sha256": "62acd5b752218b7b989abdc8500faa457e2bc019630950693b825f96cbd5f42b"
+  }
+}

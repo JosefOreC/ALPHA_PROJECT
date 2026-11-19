@@ -1,0 +1,146 @@
+import { randomUUID } from 'node:crypto'
+import { performance as nodePerformance } from 'node:perf_hooks'
+import { expect, test } from '@playwright/test'
+
+test('acceso, permisos, validación y persistencia de pedidos', async ({ page, baseURL }, testInfo) => {
+  const password = process.env.E2E_PASSWORD
+  if (!password || !baseURL || !['127.0.0.1', 'localhost'].includes(new URL(baseURL).hostname)) {
+    throw new Error('La prueba de escritura requiere una instancia local aislada y E2E_PASSWORD.')
+  }
+
+  const response = await page.goto('/?vista=pedidos')
+  expect(response?.status()).toBe(200)
+  const email = page.getByLabel('Correo electrónico')
+  const passwordInput = page.getByLabel('Contraseña', { exact: true })
+  const submit = page.getByRole('button', { name: 'Ingresar' })
+  await expect(email).toBeEnabled()
+  expect(await email.evaluate(input => (input as HTMLInputElement).validity.valueMissing)).toBe(true)
+  await email.fill('operador@example.invalid')
+  await passwordInput.fill('contraseña-incorrecta')
+  const rejection = page.waitForResponse(result => result.url().endsWith('/api/session') && result.request().method() === 'POST')
+  await submit.click()
+  expect((await rejection).status()).toBe(401)
+
+  await passwordInput.fill(password)
+  const unavailableMessage = 'El servicio no está disponible temporalmente.'
+  await page.route('**/api/session', route => route.fulfill({
+    status: 503,
+    json: { detail: unavailableMessage },
+  }), { times: 1 })
+  const unavailable = page.waitForResponse(result => result.url().endsWith('/api/session') && result.request().method() === 'POST')
+  await submit.click()
+  expect((await unavailable).status()).toBe(503)
+  await expect(page.getByRole('alert')).toHaveText(unavailableMessage)
+  await expect(submit).toBeEnabled()
+  await expect(passwordInput).toHaveValue('')
+  await passwordInput.fill(password)
+
+  const accepted = page.waitForResponse(result => result.url().endsWith('/api/session') && result.request().method() === 'POST')
+  await submit.click()
+  expect((await accepted).status()).toBe(200)
+  await expect(page.getByRole('heading', { name: 'Gestión de pedidos', exact: true })).toBeVisible()
+
+  const session = await page.request.get('/api/session')
+  const identity = await session.json()
+  expect(identity.role).toBe('planner')
+  expect((await page.request.get('/api/admin/users')).status()).toBe(403)
+  const headers = { 'X-CSRF-Token': identity.csrf_token }
+  const customer = 'Inspección 5 ' + randomUUID()
+  const date = new Date(Date.now() + 86400000).toISOString().slice(0, 10)
+  const order = {
+    customer,
+    address: 'Dirección de prueba',
+    district: 'Ate',
+    window_start: date + "T08:00:00-05:00",
+    window_end: date + "T18:00:00-05:00",
+    weight_kg: 2.5,
+  }
+  expect((await page.request.post('/api/pedidos', { headers, data: { ...order, weight_kg: 0 } })).status()).toBe(422)
+  const created = await page.request.post('/api/pedidos', { headers, data: order })
+  expect(created.status()).toBe(201)
+  const saved = await created.json()
+  const listStart = nodePerformance.now()
+  const found = await page.request.get('/api/pedidos', { params: { q: customer, limit: 12 } })
+  const orderListMs = nodePerformance.now() - listStart
+  expect(found.ok()).toBeTruthy()
+  expect((await found.json()).items).toEqual(expect.arrayContaining([expect.objectContaining({ id: saved.id })]))
+
+  await testInfo.attach('rendimiento-api-pedidos', {
+    body: JSON.stringify({ orderListMs }),
+    contentType: 'application/json',
+  })
+  await page.getByRole('button', { name: 'Cerrar sesión' }).click()
+  await expect(submit).toBeVisible()
+  expect((await page.request.get('/api/session')).status()).toBe(401)
+})
+
+test('consulta la ruta asignada y confirma una entrega como conductor', async ({ request, baseURL }, testInfo) => {
+  const password = process.env.E2E_PASSWORD
+  if (!password || !baseURL || !['127.0.0.1', 'localhost'].includes(new URL(baseURL).hostname)) {
+    throw new Error('La prueba de escritura requiere una instancia local aislada y E2E_PASSWORD.')
+  }
+  const driver = ['04', '05', '06'][testInfo.project.name === 'chromium' ? 0 : testInfo.project.name === 'firefox' ? 1 : 2]
+  const login = await request.post('/api/session', {
+    data: { email: `conductor${driver}@example.invalid`, password },
+  })
+  expect(login.status()).toBe(200)
+  const identity = await login.json()
+  expect(identity.role).toBe('driver')
+  expect((await request.get('/api/routes/scope')).status()).toBe(403)
+  const assigned = await request.get('/api/conductor/ruta')
+  expect(assigned.ok()).toBeTruthy()
+  const route = await assigned.json()
+  const stop = route.stops.find((item: { kind: string }) => item.kind === 'now')
+  expect(stop).toBeDefined()
+  const order = `/api/conductor/pedidos/${stop.order_id}`
+  const confirmed = await request.post(`${order}/confirmacion`, {
+    headers: { 'X-CSRF-Token': identity.csrf_token },
+  })
+  expect(confirmed.ok()).toBeTruthy()
+  expect((await confirmed.json()).status).toBe('ENTREGADO')
+  const persisted = await request.get(order)
+  expect(persisted.ok()).toBeTruthy()
+  expect((await persisted.json()).status).toBe('ENTREGADO')
+})
+
+test('disponibilidad, recuperación ante error de red y tiempos de acceso', async ({ page }, testInfo) => {
+  await page.addInitScript(() => {
+    if (PerformanceObserver.supportedEntryTypes.includes('largest-contentful-paint')) {
+      const observer = new PerformanceObserver(entries => {
+        const last = entries.getEntries().at(-1)
+        if (last) document.documentElement?.setAttribute('data-e2e-lcp', String(last.startTime))
+      })
+      observer.observe({ type: 'largest-contentful-paint', buffered: true })
+    }
+  })
+  const start = nodePerformance.now()
+  const health = await page.request.get('/health')
+  const healthMs = nodePerformance.now() - start
+  expect(health.status()).toBe(200)
+  expect((await health.json()).status).toBe('ok')
+  expect((await page.request.get('/api/inspection5-unknown-route')).status()).toBe(404)
+
+  // Solo este escenario inyecta un fallo de transporte. La recarga usa la API real.
+  await page.route('**/api/session', route => route.abort('failed'), { times: 1 })
+  await page.goto('/')
+  await expect(page.getByRole('button', { name: 'Ingresar' })).toBeVisible()
+  const session = page.waitForResponse(result => result.url().endsWith('/api/session'))
+  await page.reload()
+  expect((await session).status()).toBe(401)
+  await expect(page.getByRole('button', { name: 'Ingresar' })).toBeVisible()
+
+  const navigation = await page.evaluate(() => {
+    const [entry] = performance.getEntriesByType('navigation') as PerformanceNavigationTiming[]
+    const rawLcp = document.documentElement.getAttribute('data-e2e-lcp')
+    return {
+      ttfbMs: entry.responseStart - entry.startTime,
+      fcpMs: performance.getEntriesByName('first-contentful-paint')[0]?.startTime ?? null,
+      lcpMs: rawLcp === null ? null : Number(rawLcp),
+    }
+  })
+  await testInfo.attach('rendimiento-acceso', {
+    body: JSON.stringify({ browser: testInfo.project.name, healthMs, ...navigation }, null, 2),
+    contentType: 'application/json',
+  })
+  await testInfo.attach('acceso-operativo', { body: await page.screenshot(), contentType: 'image/png' })
+})

@@ -1,0 +1,81 @@
+name: Deploy production
+on:
+  workflow_run:
+    workflows: [Tests]
+    types: [completed]
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push' && github.event.workflow_run.head_repository.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment:
+      name: production
+      url: ${{ vars.PRODUCTION_URL }}
+    env:
+      RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+      RENDER_SERVICE_ID: ${{ vars.RENDER_SERVICE_ID }}
+      PRODUCTION_URL: ${{ vars.PRODUCTION_URL }}
+      CANDIDATE: ${{ github.event.workflow_run.head_sha }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Desplegar commit validado y comprobar disponibilidad
+        shell: bash
+        run: |
+          set -euo pipefail
+          : "${RENDER_API_KEY:?Configura RENDER_API_KEY}" "${RENDER_SERVICE_ID:?Configura RENDER_SERVICE_ID}" "${PRODUCTION_URL:?Configura PRODUCTION_URL}"
+          [[ "$PRODUCTION_URL" == https://* ]]
+          current="$(gh api "repos/$GITHUB_REPOSITORY/commits/main" --jq .sha)"
+          if [[ "$CANDIDATE" != "$current" ]]; then
+            echo "La rama main avanzó. El candidato posterior debe superar sus propias pruebas."
+            exit 0
+          fi
+          api="https://api.render.com/v1/services/$RENDER_SERVICE_ID/deploys"
+          data="$(jq -nc --arg sha "$CANDIDATE" '{commitId:$sha}')"
+          deploy="$(curl -fsS --max-time 30 -X POST -H "Authorization: Bearer $RENDER_API_KEY" -H 'Content-Type: application/json' -d "$data" "$api" | jq -er .id)"
+          for attempt in {1..75}; do
+            result="$(curl -fsS --max-time 15 -H "Authorization: Bearer $RENDER_API_KEY" "$api/$deploy")"
+            case "$(jq -er .status <<< "$result")" in
+              live)
+                jq -e --arg sha "$CANDIDATE" '.commit.id == $sha' <<< "$result" >/dev/null
+                curl -fsS --max-time 15 "${PRODUCTION_URL%/}/health" | jq -e '.status == "ok"'
+                curl -fsS --max-time 15 "${PRODUCTION_URL%/}/" | grep -i '<html' >/dev/null
+                break
+                ;;
+              *_failed|canceled|deactivated) echo "El despliegue $deploy no llegó a live"; exit 1 ;;
+            esac
+            sleep 10
+          done
+          if [[ "$(jq -er .status <<< "$result")" != live ]]; then
+            echo "Se agotó la espera del despliegue $deploy"
+            exit 1
+          fi
+          printf 'utc,check,http,time_seconds,result\n' > availability.csv
+          successes=0
+          for sample in {1..5}; do
+            if [[ "$sample" -gt 1 ]]; then sleep 15; fi
+            result=failed
+            metrics="$(curl -sS --max-time 10 --output health.json --write-out '%{http_code},%{time_total}' "${PRODUCTION_URL%/}/health" || true)"
+            if [[ "$metrics" == 200,* ]] && jq -e '.status == "ok"' health.json >/dev/null; then
+              result=ok
+              successes=$((successes + 1))
+            fi
+            printf '%s,%s,%s,%s\n' "$(date -u +%FT%TZ)" "$sample" "$metrics" "$result" >> availability.csv
+          done
+          echo "Disponibilidad observada: $successes/5" >> "$GITHUB_STEP_SUMMARY"
+          test "$successes" -eq 5
+      - name: Subir evidencia de disponibilidad
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: inspection5-production-availability
+          path: availability.csv
+          if-no-files-found: ignore

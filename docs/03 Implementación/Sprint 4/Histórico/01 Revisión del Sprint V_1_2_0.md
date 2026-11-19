@@ -1,5 +1,9 @@
 # Revisión del sprint
 
+**HISTÓRICO — no vigente**
+
+[Documento vigente de la Inspección 5](../01%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md)
+
 **Proyecto:** EcoLogística Lima – Optimizador de Rutas Sostenibles para DistriRápido S.A.C.
 
 **Líder del proyecto:** Ore Campos, Josef Pablo.
@@ -17,8 +21,6 @@
 **Rama de trabajo:** `refactor/mern`.
 
 **Base de comparación vigente:** `6e36e35`.
-
-**Alcance de publicación:** actualización de documentación Markdown. Las implementaciones y las mediciones descritas corresponden al incremento local auditado; sus archivos productivos y nuevos artefactos no se incorporan con esta publicación.
 
 ## 1. Objetivo e incremento entregado
 
@@ -57,13 +59,13 @@ La medición utiliza el build de producción en un banco local HTTPS/HTTP/2, per
 
 | Control | Resultado registrado | Evidencia |
 |---|---|---|
-| Compilación y lint | Ambos códigos de salida 0 | [Salidas finales](evidencias/raster-native/README.md). |
-| Pruebas frontend | 475 aprobadas; líneas 97,15 % y ramas 90,29 % | Cobertura (`frontend-cobertura.txt`, registro local). |
-| Pruebas backend | 447 aprobadas, 36 subpruebas; 7 integraciones omitidas en esa ejecución | [Validación backend](evidencias/fase3-6e36e35/README.md). |
-| Integración PostgreSQL/PostGIS | 4 pruebas de datos y 3 funcionales aprobadas en ejecución independiente | [Integración aislada](evidencias/integracion-aislada/README.md). |
-| Pruebas Node | 12 aprobadas | [Recibos del incremento](evidencias/fase3-6e36e35/README.md). |
-| Navegador | 56 aprobadas y 5 omitidas según viewport | Suite de interfaz (`interfaz-pruebas.txt`, registro local). |
-| Regresión final de acceso e imagen | 6 aprobadas en escritorio y móvil | Acceso y sesión (`interfaz-arranque.txt`, registro local). |
+| Compilación y lint | Ambos códigos de salida 0 | [Salidas finales](../evidencias/raster-native/README.md). |
+| Pruebas frontend | 475 aprobadas; líneas 97,15 % y ramas 90,29 % | [Cobertura](../evidencias/raster-native/seleccion/frontend-cobertura.txt). |
+| Pruebas backend | 447 aprobadas, 36 subpruebas; 7 integraciones omitidas en esa ejecución | [Validación backend](../evidencias/fase3-6e36e35/README.md). |
+| Integración PostgreSQL/PostGIS | 4 pruebas de datos y 3 funcionales aprobadas en ejecución independiente | [Integración aislada](../evidencias/integracion-aislada/README.md). |
+| Pruebas Node | 12 aprobadas | [Recibos del incremento](../evidencias/fase3-6e36e35/README.md). |
+| Navegador | 56 aprobadas y 5 omitidas según viewport | [Suite de interfaz](../evidencias/raster-native/interfaz-pruebas.txt). |
+| Regresión final de acceso e imagen | 6 aprobadas en escritorio y móvil | [Acceso y sesión](../evidencias/raster-native/sesion-final/interfaz-arranque.txt). |
 
 Los resultados pertenecen a ejecuciones distintas. Las siete integraciones independientes completan los casos omitidos del control backend ordinario; no se suman como una única ejecución. Los umbrales de cobertura se mantuvieron en el 90 %. La compilación conserva una advertencia de tamaño del motor cartográfico diferido.
 
@@ -95,4 +97,6 @@ La validación LHCI posterior registró un incumplimiento de TBT en Acceso (167 
 | V_1_1_0 | 12/11/2026 | Primera implementación y documentación de las mejoras. |
 | V_1_2_0 | 13/11/2026 | Ore Campos, Josef Pablo; Cueva Ricse, Alex. Consolidación de resultados finales, trazabilidad de las ocho áreas, validaciones funcionales y revisión de coherencia documental. |
 
-[← Volver al índice del Sprint 4](README.md)
+[← Volver al índice del Sprint 4](../README.md)
+
+[← Volver al README principal](../../../../README.md)

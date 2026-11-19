@@ -1,5 +1,9 @@
 # Retrospectiva del sprint
 
+**HISTÓRICO — no vigente**
+
+[Documento vigente de la Inspección 5](../02%20Retrospectiva%20del%20Sprint%20V_1_0_0.md)
+
 **Proyecto:** EcoLogística Lima – Optimizador de Rutas Sostenibles para DistriRápido S.A.C.
 
 **Líder del proyecto:** Ore Campos, Josef Pablo.
@@ -17,8 +21,6 @@
 **Rama de trabajo:** `refactor/mern`.
 
 **Base de comparación vigente:** `6e36e35`.
-
-**Alcance de publicación:** actualización de documentación Markdown. Las implementaciones y las mediciones descritas corresponden al incremento local auditado; sus archivos productivos y nuevos artefactos no se incorporan con esta publicación.
 
 ## 1. Resultados observados
 
@@ -65,7 +67,7 @@ Las pruebas funcionales y Lighthouse se ejecutarán en momentos separados para r
 
 ## 6. Evidencias para seguimiento
 
-La [auditoría consolidada](06%20Auditor%C3%ADa%20consolidada%20de%20m%C3%A9tricas%20V_1_0_0.md) reúne condiciones y mediciones; el [registro de implementación](evidencias/fase3-6e36e35/README.md) conserva los experimentos, y la [ampliación de imagen y cálculo nativo](evidencias/raster-native/README.md) contiene las regresiones finales. La [integración aislada](evidencias/integracion-aislada/README.md) completa la evidencia funcional de persistencia y rutas.
+La [auditoría consolidada](../06%20Auditor%C3%ADa%20consolidada%20de%20m%C3%A9tricas%20V_1_0_0.md) reúne condiciones y mediciones; el [registro de implementación](../evidencias/fase3-6e36e35/README.md) conserva los experimentos, y la [ampliación de imagen y cálculo nativo](../evidencias/raster-native/README.md) contiene las regresiones finales. La [integración aislada](../evidencias/integracion-aislada/README.md) completa la evidencia funcional de persistencia y rutas.
 
 ## Control de versiones del documento
 
@@ -75,4 +77,6 @@ La [auditoría consolidada](06%20Auditor%C3%ADa%20consolidada%20de%20m%C3%A9tric
 | V_1_1_0 | 12/11/2026 | Primera implementación y documentación de las mejoras. |
 | V_1_2_0 | 13/11/2026 | Ore Campos, Josef Pablo; Cueva Ricse, Alex. Consolidación de resultados finales, trazabilidad de las ocho áreas, validaciones funcionales y revisión de coherencia documental. |
 
-[← Volver al índice del Sprint 4](README.md)
+[← Volver al índice del Sprint 4](../README.md)
+
+[← Volver al README principal](../../../../README.md)

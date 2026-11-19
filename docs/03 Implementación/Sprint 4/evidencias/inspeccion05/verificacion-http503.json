@@ -1,0 +1,70 @@
+{
+  "scope": "Local. FastAPI, build de producción y PostGIS desechable.",
+  "scenario": "Un HTTP 503 inducido en el POST de sesión. Se comprueban el mensaje de error, la limpieza de contraseña y el inicio de sesión al reintentar contra la API real.",
+  "run": {
+    "startTime": "2026-11-19T17:41:46.888Z",
+    "duration": 23070.469,
+    "expected": 9,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "cases": [
+    {
+      "project": "chromium",
+      "case": "acceso, permisos, validación y persistencia de pedidos",
+      "status": "passed",
+      "duration_ms": 2821
+    },
+    {
+      "project": "chromium",
+      "case": "consulta la ruta asignada y confirma una entrega como conductor",
+      "status": "passed",
+      "duration_ms": 608
+    },
+    {
+      "project": "chromium",
+      "case": "disponibilidad, recuperación ante error de red y tiempos de acceso",
+      "status": "passed",
+      "duration_ms": 544
+    },
+    {
+      "project": "firefox",
+      "case": "acceso, permisos, validación y persistencia de pedidos",
+      "status": "passed",
+      "duration_ms": 6295
+    },
+    {
+      "project": "firefox",
+      "case": "consulta la ruta asignada y confirma una entrega como conductor",
+      "status": "passed",
+      "duration_ms": 626
+    },
+    {
+      "project": "firefox",
+      "case": "disponibilidad, recuperación ante error de red y tiempos de acceso",
+      "status": "passed",
+      "duration_ms": 838
+    },
+    {
+      "project": "webkit",
+      "case": "acceso, permisos, validación y persistencia de pedidos",
+      "status": "passed",
+      "duration_ms": 4316
+    },
+    {
+      "project": "webkit",
+      "case": "consulta la ruta asignada y confirma una entrega como conductor",
+      "status": "passed",
+      "duration_ms": 614
+    },
+    {
+      "project": "webkit",
+      "case": "disponibilidad, recuperación ante error de red y tiempos de acceso",
+      "status": "passed",
+      "duration_ms": 908
+    }
+  ],
+  "report_sha256": "27bac1179eb9b068e005e267e25bb79989f843b7209b5552c9deb6a17bf0ef36",
+  "test_source_sha256": "1f6f241f78e975e31da684458ed8d36d254590502a12a41463c45c3688461367"
+}

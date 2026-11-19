@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: ecologistica-lima
+    runtime: docker
+    plan: free
+    region: oregon
+    autoDeployTrigger: off
+    healthCheckPath: /health
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: ecologistica-lima-db
+          property: connectionString
+      - key: ADMIN_INITIAL_EMAIL
+        sync: false
+      - key: ADMIN_INITIAL_PASSWORD
+        sync: false
+      - key: SESSION_COOKIE_SECURE
+        value: 'true'
+
+databases:
+  - name: ecologistica-lima-db
+    databaseName: ecologistica_lima
+    plan: free
+    region: oregon
+    postgresMajorVersion: '17'
+    ipAllowList: []

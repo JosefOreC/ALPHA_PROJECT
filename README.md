@@ -336,6 +336,15 @@ Evidencias de Jira: [evidencias-jira/](docs/02%20Planificaci%C3%B3n/evidencias-j
 | [Reducción del impacto ambiental](docs/03%20Implementaci%C3%B3n/reduccion%20del%20impacto%20ambiental/README.md) | Estándares de ingeniería de software (ISO/IEC 25010, Green Software Foundation y W3C WSG), guía de desarrollo verde, informe de reducción del impacto ambiental (en redacción) y automatización CI/CD con Lighthouse CI y versión `v1.0.0`. |
 | [Guías técnicas](docs/03%20Implementaci%C3%B3n/Gu%C3%ADas%20t%C3%A9cnicas/README.md) | Las seis guías y sus evidencias, sin copias activas en development. |
 
+### Inspección 5 del Sprint 4
+
+- [Revisión del sprint](docs/03%20Implementaci%C3%B3n/Sprint%204/01%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md)
+- [Retrospectiva del sprint](docs/03%20Implementaci%C3%B3n/Sprint%204/02%20Retrospectiva%20del%20Sprint%20V_1_0_0.md)
+- [Playwright, rendimiento y disponibilidad](docs/03%20Implementaci%C3%B3n/Sprint%204/03%20Analisis%20PlayWrigth%20V_1_0_0.md)
+- [Usabilidad SUS](docs/03%20Implementaci%C3%B3n/Sprint%204/04%20Usabilidad%20V_1_0_0.md)
+
+[![CI](https://github.com/JosefOreC/ALPHA_PROJECT/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/JosefOreC/ALPHA_PROJECT/actions/workflows/ci.yml) [![Tests](https://github.com/JosefOreC/ALPHA_PROJECT/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/JosefOreC/ALPHA_PROJECT/actions/workflows/tests.yml) [![Deploy production](https://github.com/JosefOreC/ALPHA_PROJECT/actions/workflows/deploy-production.yml/badge.svg?branch=main)](https://github.com/JosefOreC/ALPHA_PROJECT/actions/workflows/deploy-production.yml)
+
 ### Guías técnicas de implementación
 
 | Documento | Descripción |

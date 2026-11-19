@@ -4,5 +4,5 @@
     "types": ["node", "vite/client"],
     "incremental": false
   },
-  "include": ["tests/ui", "playwright.config.ts"]
+  "include": ["tests/ui", "tests/e2e", "playwright.config.ts", "playwright.e2e.config.ts"]
 }
