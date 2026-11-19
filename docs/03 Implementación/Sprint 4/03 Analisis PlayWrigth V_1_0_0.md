@@ -28,6 +28,18 @@ El [Blueprint de Render](../../../render.yaml) provisiona un servicio web Docker
 4. Tras el despliegue automático, conservar el enlace a los workflows y sus artefactos. El despliegue comprueba la página de entrada y guarda cinco observaciones de salud espaciadas aproximadamente 15 segundos. Si la versión deja de responder, revisar el registro del proveedor y restaurar la última versión operativa desde el panel.
 
 
+### Datos para la demostración
+
+Con `COURSE_DEMO_DATA=true`, establecer `COURSE_DEMO_PASSWORD` en Render con una contraseña nueva de 12 a 256 caracteres y desplegar el último commit. La carga agrega cuentas separadas de las cuentas operativas y tres pedidos ficticios para la fecha de Lima. Cada reinicio durante el mismo día conserva las asignaciones y entregas ya registradas.
+
+| Cuenta de prueba | Tarea |
+|---|---|
+| `demo-operador@example.invalid` | Abrir **Rutas → Planificación**, generar y aprobar una propuesta con los dos pedidos demo pendientes. Si hay otros pedidos elegibles, también pueden entrar en la propuesta. |
+| `demo-conductor1@example.invalid` | Abrir **Mi ruta**, entrar al pedido actual y confirmar la entrega ficticia ya en camino. |
+| `demo-conductor2@example.invalid` | Verificar la ruta asignada si la propuesta del operador seleccionó el vehículo **DMO-002** y se guardó. |
+
+Las cuentas nuevas usan la contraseña guardada en Render. Cambiar la variable después de crearlas conserva sus contraseñas actuales. El trazado de la ruta de demostración preparada para el primer conductor es ilustrativo. Los factores y sus métricas corresponden a datos ficticios del curso. Retirar la variable de contraseña impide que futuros arranques agreguen escenarios de otros días y conserva los datos ya creados.
+
 ### Verificación local del paquete de despliegue
 
 El 19/11/2026 se construyó la imagen Docker y se verificó el primer arranque contra una base PostgreSQL/PostGIS 17 inicialmente vacía. La aplicación respondió en `/health`, sirvió el frontend e inició sesión con el administrador creado durante el arranque. Se verificó la cookie segura y se repitió el arranque con la misma base y sin reenviar las credenciales de creación del administrador. Las 43 pruebas de scripts de proyecto también aprobaron. Estos resultados corresponden al contenedor local. La comprobación de la URL pública se detalla en el apartado siguiente. La ejecución en GitHub Actions sigue pendiente.
