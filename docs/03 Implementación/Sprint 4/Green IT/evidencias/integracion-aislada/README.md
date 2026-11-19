@@ -28,3 +28,5 @@ python "$evidence/validar.py"
 El runner crea su propia base y credenciales efímeras. Repetirlo sustituye el recibo; conservar previamente los artefactos si se necesita mantener otra ejecución. El manifiesto (`procedencia.json`, registro local) contiene las huellas de esta ejecución; validar.py (`validar.py`, registro local) comprueba archivos, código de la fixture, resultados y aritmética Lighthouse/SWDM del corte vigente, sin conectarse a una base.
 
 [← Volver al Sprint 4](../../README.md)
+
+[← Volver al README principal](../../../../../../README.md)

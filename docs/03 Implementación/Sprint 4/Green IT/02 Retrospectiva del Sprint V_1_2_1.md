@@ -6,7 +6,7 @@
 
 **Sprint:** 4.
 
-**Versión del documento:** V_1_2_0.
+**Versión del documento:** V_1_2_1.
 
 **Fecha de actualización:** 13/11/2026, America/Lima (UTC−05:00).
 
@@ -65,7 +65,7 @@ Las pruebas funcionales y Lighthouse se ejecutarán en momentos separados para r
 
 ## 6. Evidencias para seguimiento
 
-La [auditoría consolidada](06%20Auditor%C3%ADa%20consolidada%20de%20m%C3%A9tricas%20V_1_0_0.md) reúne condiciones y mediciones; el [registro de implementación](evidencias/fase3-6e36e35/README.md) conserva los experimentos, y la [ampliación de imagen y cálculo nativo](evidencias/raster-native/README.md) contiene las regresiones finales. La [integración aislada](evidencias/integracion-aislada/README.md) completa la evidencia funcional de persistencia y rutas.
+La [auditoría consolidada](06%20Auditor%C3%ADa%20consolidada%20de%20m%C3%A9tricas%20V_1_0_1.md) reúne condiciones y mediciones; el [registro de implementación](evidencias/fase3-6e36e35/README.md) conserva los experimentos, y la [ampliación de imagen y cálculo nativo](evidencias/raster-native/README.md) contiene las regresiones finales. La [integración aislada](evidencias/integracion-aislada/README.md) completa la evidencia funcional de persistencia y rutas.
 
 ## Control de versiones del documento
 
@@ -74,5 +74,8 @@ La [auditoría consolidada](06%20Auditor%C3%ADa%20consolidada%20de%20m%C3%A9tric
 | V_1_0_0 | 12/11/2026 | Diagnóstico inicial de rendimiento y optimización. |
 | V_1_1_0 | 12/11/2026 | Primera implementación y documentación de las mejoras. |
 | V_1_2_0 | 13/11/2026 | Ore Campos, Josef Pablo; Cueva Ricse, Alex. Consolidación de resultados finales, trazabilidad de las ocho áreas, validaciones funcionales y revisión de coherencia documental. |
+| V_1_2_1 | 19/11/2026 | Rojas Camayo, Valentino Jhan Pierre. Ajuste de enlaces por reorganización de la carpeta Sprint 4 y enlace de vuelta al README principal. |
 
 [← Volver al índice del Sprint 4](README.md)
+
+[← Volver al README principal](../../../../README.md)

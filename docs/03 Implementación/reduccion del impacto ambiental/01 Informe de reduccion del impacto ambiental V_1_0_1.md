@@ -4,7 +4,7 @@
 
 **Líder del proyecto:** Ore Campos, Josef Pablo.
 
-**Versión del documento:** V_1_0_0.
+**Versión del documento:** V_1_0_1.
 
 **Versión semántica de entrega:** v1.0.0.
 
@@ -401,7 +401,7 @@ El signo negativo de Acceso expresa un incremento. Las diferencias pequeñas de 
 
 Para el mismo recorte de imagen a 640 px, AVIF ocupa 9515 bytes, WebP 21010 y JPEG 31480. Elegir AVIF en lugar de servir siempre ese JPEG evita 21965 bytes de contenido por descarga. Bajo los mismos parámetros y 10000 descargas anuales, la diferencia equivale a **0,03255213 kg CO₂e estimados**. Esta comparación excluye cabeceras HTTP y utiliza como referencia el JPEG de la misma imagen, no el sitio anterior sin fotografía.
 
-Los resultados históricos de [bd95dc9 frente a 1d52506](../Sprint%204/evidencias/metricas-bd95dc9/README.md) y del [incremento anterior a la imagen](../Sprint%204/evidencias/fase3-6e36e35/README.md) permanecen disponibles. Cada serie tiene su propia base y entorno; sus ahorros no se trasladan a la versión final.
+Los resultados históricos de [bd95dc9 frente a 1d52506](../Sprint%204/Green%20IT/evidencias/metricas-bd95dc9/README.md) y del [incremento anterior a la imagen](../Sprint%204/Green%20IT/evidencias/fase3-6e36e35/README.md) permanecen disponibles. Cada serie tiene su propia base y entorno; sus ahorros no se trasladan a la versión final.
 
 #### 1.5.4 Verificación matemática
 
@@ -411,9 +411,9 @@ El [consolidador](https://github.com/JosefOreC/ALPHA_PROJECT/blob/6e36e355e0d39c
 
 ### 1.6 Evidencias de validación
 
-Los reportes Lighthouse consolidados (`auditoria-consolidada.html`, registro local) enlazan doce originales: tres cargas por pantalla antes y después. La serie final cumple todos los límites en sus seis cargas posteriores. Los resultados individuales están en el [documento de auditoría](../Sprint%204/06%20Auditor%C3%ADa%20consolidada%20de%20m%C3%A9tricas%20V_1_0_0.md).
+Los reportes Lighthouse consolidados (`auditoria-consolidada.html`, registro local) enlazan doce originales: tres cargas por pantalla antes y después. La serie final cumple todos los límites en sus seis cargas posteriores. Los resultados individuales están en el [documento de auditoría](../Sprint%204/Green%20IT/06%20Auditor%C3%ADa%20consolidada%20de%20m%C3%A9tricas%20V_1_0_1.md).
 
-La validación comprende 475 pruebas frontend, 447 backend del control ordinario, siete integraciones PostGIS independientes, 12 Node, 56 de navegador y seis regresiones finales de acceso e imagen. Los [recibos](../Sprint%204/01%20Revisi%C3%B3n%20del%20Sprint%20V_1_2_0.md) distinguen ejecuciones, subpruebas y omisiones. La revisión manual completa de accesibilidad se registra por separado.
+La validación comprende 475 pruebas frontend, 447 backend del control ordinario, siete integraciones PostGIS independientes, 12 Node, 56 de navegador y seis regresiones finales de acceso e imagen. Los [recibos](../Sprint%204/Green%20IT/01%20Revisi%C3%B3n%20del%20Sprint%20V_1_2_1.md) distinguen ejecuciones, subpruebas y omisiones. La revisión manual completa de accesibilidad se registra por separado.
 
 ## 2. Conclusiones
 
@@ -425,11 +425,11 @@ La evaluación debe considerar la equivalencia SQL/PostGIS y el alcance auxiliar
 
 - Sustainable Web Design, [Estimating Digital Emissions — SWDM v4](https://sustainablewebdesign.org/estimating-digital-emissions/).
 - [Guía de estilo documental del proyecto](../Gu%C3%ADas%20t%C3%A9cnicas/Gu%C3%ADa%20de%20estilo%20documental.md).
-- [Estándares y guía de desarrollo verde](02%20Estandares%20Ingenier%C3%ADa%20de%20software%20V_1_0_1.md).
+- [Estándares y guía de desarrollo verde](02%20Estandares%20Ingenier%C3%ADa%20de%20software%20V_1_0_2.md).
 
 ## Validación automatizada posterior
 
-La validación LHCI posterior registró un incumplimiento de TBT en Acceso (167 ms frente al límite de 85 ms) y tres cargas conformes en Pedidos. La serie histórica raster-sesion conserva sus seis cargas conformes; el nuevo resultado se presenta por separado y deja pendiente comprobar la estabilidad del gate de Acceso. Véase el [registro de automatización](../Sprint%204/07%20Automatizacion%20CI%20y%20gestion%20de%20versiones%20V_1_0_0.md).
+La validación LHCI posterior registró un incumplimiento de TBT en Acceso (167 ms frente al límite de 85 ms) y tres cargas conformes en Pedidos. La serie histórica raster-sesion conserva sus seis cargas conformes; el nuevo resultado se presenta por separado y deja pendiente comprobar la estabilidad del gate de Acceso. Véase el [registro de automatización](../Sprint%204/Green%20IT/07%20Automatizacion%20CI%20y%20gestion%20de%20versiones%20V_1_0_1.md).
 
 ## Control de versiones del documento
 
@@ -437,5 +437,6 @@ La validación LHCI posterior registró un incumplimiento de TBT en Acceso (167 
 |---|---|---|
 | V_1_0_0 | 12/11/2026 | Rojas Camayo, Valentino Jhan Pierre. Estructura de referencia del informe. |
 | V_1_0_0 | 13/11/2026 | Ore Campos, Josef Pablo; Cueva Ricse, Alex. Revisión técnica y documental de diagnóstico, código comparativo, resultados y cálculo SWDM. |
+| V_1_0_1 | 19/11/2026 | Rojas Camayo, Valentino Jhan Pierre. Ajuste de enlaces por reorganización de la carpeta Sprint 4. |
 
 [← Volver al índice correspondiente](README.md)

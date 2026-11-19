@@ -73,3 +73,5 @@ El primer intento de ejecutar Markdown sin red no encontró el paquete en la cac
 El software sigue trazado a `7ea33a1`; el estado de trabajo de cada JSON distingue los documentos nuevos. Estos controles no constituyen una revisión por par ni aceptación del cliente.
 
 [← Volver al índice correspondiente](../README.md)
+
+[← Volver al README principal](../../../../../README.md)

@@ -2,7 +2,7 @@
 
 **Proyecto:** EcoLogística Lima – Optimizador de Rutas Sostenibles para DistriRápido S.A.C.
 
-**Versión del documento:** V_1_0_0.
+**Versión del documento:** V_1_0_1.
 
 **Versión de entrega:** v1.0.0.
 
@@ -26,9 +26,9 @@ Se respetan los créditos de Tovar Sánchez, Carlos Alberto y Rojas Camayo, Vale
 
 ## 2. Workflow de auditoría
 
-Main conserva su workflow de auditoría estática y lighthouserc.json. Su configuración se describe en el [documento CI/CD integrado](../reduccion%20del%20impacto%20ambiental/03%20Automatizacion%20CI-CD%20y%20gestion%20de%20versiones%20V_1_0_0.md). El diseño de banco HTTPS con dos escenarios y umbrales estrictos descrito a continuación es una configuración local distinta, no incluida en esta publicación de Markdown.
+Main conserva su workflow de auditoría estática y lighthouserc.json. Su configuración se describe en el [documento CI/CD integrado](../../reduccion%20del%20impacto%20ambiental/03%20Automatizacion%20CI-CD%20y%20gestion%20de%20versiones%20V_1_0_1.md). El diseño de banco HTTPS con dos escenarios y umbrales estrictos descrito a continuación es una configuración local distinta, no incluida en esta publicación de Markdown.
 
-La propuesta local de `green-audit.yml`, distinta del [workflow existente en main](../../../.github/workflows/green-audit.yml), configura GitHub Actions para pull requests a main, cambios en main/refactor/mern y ejecución manual. La matriz separa Acceso y Pedidos. Cada trabajo instala dependencias fijadas, compila, inicia un banco HTTPS con datos ficticios y ejecuta Lighthouse CI (LHCI) tres veces.
+La propuesta local de `green-audit.yml`, distinta del [workflow existente en main](../../../../.github/workflows/green-audit.yml), configura GitHub Actions para pull requests a main, cambios en main/refactor/mern y ejecución manual. La matriz separa Acceso y Pedidos. Cada trabajo instala dependencias fijadas, compila, inicia un banco HTTPS con datos ficticios y ejecuta Lighthouse CI (LHCI) tres veces.
 
 La configuración LHCI (`lighthouserc.cjs`, registro local) aplica agregación pesimista: usa el resultado menos favorable de las réplicas. Los seis umbrales se expresan como errores; el workflow conserva el código de fallo y publica reportes como artefactos del trabajo, incluso ante aserciones fallidas. Los informes no se envían a almacenamiento público temporal.
 
@@ -88,12 +88,15 @@ Este bloque muestra la secuencia mkdir, git add, git commit y git push requerida
 
 - Google Chrome, [configuración de Lighthouse CI](https://googlechrome.github.io/lighthouse-ci/docs/configuration.html).
 - GitHub, [sintaxis de workflows](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions).
-- [Guía de estilo del proyecto](../Gu%C3%ADas%20t%C3%A9cnicas/Gu%C3%ADa%20de%20estilo%20documental.md).
+- [Guía de estilo del proyecto](../../Gu%C3%ADas%20t%C3%A9cnicas/Gu%C3%ADa%20de%20estilo%20documental.md).
 
 ## Control de versiones del documento
 
 | Versión | Fecha | Autoría / cambio |
 |---|---|---|
 | V_1_0_0 | 13/11/2026 | Ore Campos, Josef Pablo; Cueva Ricse, Alex. Revisión técnica y documental de automatización, rutas y procedimiento Git. |
+| V_1_0_1 | 19/11/2026 | Rojas Camayo, Valentino Jhan Pierre. Ajuste de enlaces por reorganización de la carpeta Sprint 4 y enlace de vuelta al README principal. |
 
 [← Volver al índice del Sprint 4](README.md)
+
+[← Volver al README principal](../../../../README.md)

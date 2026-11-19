@@ -45,3 +45,5 @@ El registro de fuentes (`fuentes.json`, registro local) identifica el hash de ma
 La configuración local de CI no acredita por sí sola una ejecución remota. La publicación de estos documentos no acredita un despliegue ni una calificación obtenida. La secuencia de publicación se documenta en el informe CI/Git.
 
 [← Volver al Sprint 4](../../README.md)
+
+[← Volver al README principal](../../../../../../README.md)

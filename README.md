@@ -4,6 +4,10 @@
 
 Sistema web de optimización de rutas de última milla que integra metaheurísticas (VRPTW / Green VRP), visualización cartográfica, indicadores de sostenibilidad y reoptimización dinámica para la operación de entregas en Lima Este.
 
+[![Documentación](https://github.com/JosefOreC/ALPHA_PROJECT/actions/workflows/documentacion.yml/badge.svg?branch=main)](https://github.com/JosefOreC/ALPHA_PROJECT/actions/workflows/documentacion.yml)
+[![Green IT](https://github.com/JosefOreC/ALPHA_PROJECT/actions/workflows/green-audit.yml/badge.svg?branch=main)](https://github.com/JosefOreC/ALPHA_PROJECT/actions/workflows/green-audit.yml)
+[![SonarCloud](https://github.com/JosefOreC/ALPHA_PROJECT/actions/workflows/sonarcloud.yml/badge.svg?branch=main)](https://github.com/JosefOreC/ALPHA_PROJECT/actions/workflows/sonarcloud.yml)
+
 ---
 ## Equipo del Proyecto
 | Campo | Información |
@@ -333,8 +337,15 @@ Evidencias de Jira: [evidencias-jira/](docs/02%20Planificaci%C3%B3n/evidencias-j
 | [Sprint 1](docs/03%20Implementaci%C3%B3n/Sprint%201/README.md) | Informe, impedimentos, revisión por criterios y retrospectiva, con una sola edición vigente por documento. |
 | [Sprint 2](docs/03%20Implementaci%C3%B3n/Sprint%202/README.md) | Informe, impedimentos, revisión por criterios, retrospectiva y auditoría de coherencia, con una sola edición vigente por documento. |
 | [Sprint 3](docs/03%20Implementaci%C3%B3n/Sprint%2003/README.md) | Revisión, retrospectiva, calidad de código (SonarQube), seguridad OWASP Top 10 2025 y accesibilidad WCAG. |
+| [Sprint 4](docs/03%20Implementaci%C3%B3n/Sprint%204/README.md) | Revisión, retrospectiva, pruebas E2E con Playwright, usabilidad SUS y documentación Green IT de la Inspección 04. |
 | [Reducción del impacto ambiental](docs/03%20Implementaci%C3%B3n/reduccion%20del%20impacto%20ambiental/README.md) | Estándares de ingeniería de software (ISO/IEC 25010, Green Software Foundation y W3C WSG), guía de desarrollo verde, informe de reducción del impacto ambiental (en redacción) y automatización CI/CD con Lighthouse CI y versión `v1.0.0`. |
 | [Guías técnicas](docs/03%20Implementaci%C3%B3n/Gu%C3%ADas%20t%C3%A9cnicas/README.md) | Las seis guías y sus evidencias, sin copias activas en development. |
+
+### Sprint 4 — Cierre, calidad y despliegue
+
+| Documento | Descripción |
+|---|---|
+| [03. Análisis Playwright](docs/03%20Implementaci%C3%B3n/Sprint%204/03%20Analisis%20PlayWrigth%20V_1_0_0.md) | Pruebas E2E, rendimiento y disponibilidad. |
 
 ### Guías técnicas de implementación
 
