@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react'
 import type { Administration } from '../application/administration'
-import type { Integration, UserPage } from '../domain/admin'
+import type { AdminUser, Integration, UserPage } from '../domain/admin'
 import { AppShell, PlusIcon } from '../shared/ui'
 import type { ModuleId } from '../shared/ui'
 import { IntegrationsPanel } from './admin/IntegrationsPanel'
 import { ParametersPanel } from './admin/ParametersPanel'
 import { UsersPanel } from './admin/UsersPanel'
 import { UserDialog } from './admin/UserDialog'
+import { PasswordResetDialog } from './admin/PasswordResetDialog'
 import { useParameters } from './admin/useParameters'
 import { can } from '../domain/accessControl'
 import { useActor } from './session/SessionState'
@@ -26,6 +27,7 @@ export function AdminView({ service, onNavigate }: { service: Administration; de
   const [usersError, setUsersError] = useState('')
   const [usersReload, setUsersReload] = useState(0)
   const [creating, setCreating] = useState(false)
+  const [passwordUser, setPasswordUser] = useState<AdminUser | null>(null)
   const [notice, setNotice] = useState('')
   const [integrations, setIntegrations] = useState<Integration[] | null>(null)
   const [integrationsError, setIntegrationsError] = useState('')
@@ -110,10 +112,12 @@ export function AdminView({ service, onNavigate }: { service: Administration; de
 
       <div id="admin-panel" role="tabpanel" aria-labelledby={`admin-tab-${tab}`} className="eco-tabpanel">
         {notice ? <p role="status" className="eco-notice">{notice}</p> : null}
-        {tab === 'users' ? <UsersPanel page={users} error={usersError} onRetry={() => setUsersReload((value) => value + 1)} /> : null}
+        {tab === 'users' ? <UsersPanel page={users} error={usersError} onResetPassword={can(role, 'users.update') ? setPasswordUser : undefined} onRetry={() => setUsersReload((value) => value + 1)} /> : null}
         {tab === 'params' ? <fieldset className="eco-permission-fields" disabled={!canEditParameters}><ParametersPanel state={parameters} /></fieldset> : null}
         {tab === 'integrations' ? <IntegrationsPanel items={integrations} error={integrationsError} onRetry={() => setIntegrationsReload((value) => value + 1)} /> : null}
       </div>
+      {passwordUser ? <PasswordResetDialog user={passwordUser} onClose={() => setPasswordUser(null)}
+        onSaved={() => setNotice('Contraseña cambiada. La cuenta puede volver a iniciar sesión.')} /> : null}
       {creating ? <UserDialog onClose={() => setCreating(false)} onCreate={async data => { await service.createUser(data); setUsersReload(value => value + 1); setNotice('Usuario creado. Ya puede iniciar sesión con sus credenciales.') }} /> : null}
     </AppShell>
   )

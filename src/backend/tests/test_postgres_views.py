@@ -247,3 +247,31 @@ def test_generate_preview_approve_and_reload_routes_with_real_postgis(database_c
     assert assigned.status_code==200, assigned.text
     assert assigned.json()['stops'][0]['order_id']==order_id
     assert client.post('/api/routes/approve',headers={'X-CSRF-Token':logged.json()['csrf_token']},json=approval).status_code==403
+
+
+def test_admin_password_reset_revokes_sessions_and_keeps_role(database_client):
+    client, conn, csrf, _ = database_client
+    email = f'{uuid4()}@integration.invalid'
+    old_password = 'Initial-password-2026'
+    new_password = 'Changed-password-2026'
+    headers = {'X-CSRF-Token': csrf}
+    created = client.post('/api/admin/users', headers=headers, json={
+        'name': 'Password change fixture', 'email': email, 'password': old_password, 'role': 'driver',
+    })
+    assert created.status_code == 201
+    identifier = created.json()['id']
+    path = f'/api/admin/users/{identifier}/password'
+    with TestClient(client.app, base_url='https://testserver') as driver:
+        login = driver.post('/api/session', json={'email': email, 'password': old_password})
+        assert login.status_code == 200
+        reject = driver.put(path, headers={'X-CSRF-Token': login.json()['csrf_token']}, json={'password': new_password})
+        assert reject.status_code == 403
+        assert client.put(path, json={'password': new_password}).status_code == 403
+        assert client.put(path, headers=headers, json={'password': new_password}).status_code == 204
+        assert driver.get('/api/session').status_code == 401
+        assert driver.post('/api/session', json={'email': email, 'password': old_password}).status_code == 401
+        login = driver.post('/api/session', json={'email': email, 'password': new_password})
+        assert login.status_code == 200
+        assert login.json()['role'] == 'driver'
+    change = conn.execute("SELECT detalle FROM auditoria WHERE accion='CAMBIAR_CONTRASENA' AND entidad_id=%s", (identifier,)).fetchone()
+    assert change['detalle'] == {}

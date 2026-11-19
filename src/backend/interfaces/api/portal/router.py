@@ -85,6 +85,16 @@ def users(portal=Depends(get_portal)):
 def create_user(payload:CreateUser,identity=Depends(require_permission('users.create')),portal=Depends(get_portal)):
     return portal.create_user(payload.model_dump(),identity.subject_id)
 
+class ResetPassword(BaseModel):
+    password: str = Field(min_length=12, max_length=256)
+
+
+@router.put('/admin/users/{user_id}/password',status_code=204,dependencies=[Depends(protect_mutation)])
+def reset_password(user_id: UUID,payload: ResetPassword,identity=Depends(require_permission('users.update')),portal=Depends(get_portal)):
+    if not portal.reset_user_password(user_id, payload.password, identity.subject_id):
+        raise HTTPException(404, 'La cuenta no existe.')
+
+
 @router.get('/admin/parameters',dependencies=[Depends(require_permission('settings.read'))])
 def parameters(portal=Depends(get_portal)):
     return portal.parameters()

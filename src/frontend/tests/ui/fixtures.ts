@@ -67,8 +67,8 @@ export async function fillOrder(page: Page, customer = 'Registro ficticio') {
   await page.getByLabel('Destinatario *', { exact: true }).fill(customer)
   await page.getByLabel('Dirección de entrega *', { exact: true }).fill('Dirección ficticia 456')
   await page.getByLabel('Distrito *', { exact: true }).selectOption('Ate')
-  await page.getByLabel('Inicio de ventana · Lima *').fill('2026-10-02T10:00')
-  await page.getByLabel('Fin de ventana · Lima *').fill('2026-10-02T12:00')
+  await page.getByLabel('Entrega desde (hora de Lima) *').fill('2026-10-02T10:00')
+  await page.getByLabel('Entrega hasta (hora de Lima) *').fill('2026-10-02T12:00')
   await page.getByLabel('Peso del paquete (kg) *').fill('2.5')
   await page.getByLabel('Indicaciones adicionales').fill('Entrega ficticia para pruebas.')
 }

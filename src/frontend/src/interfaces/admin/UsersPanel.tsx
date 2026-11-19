@@ -17,9 +17,10 @@ type UsersPanelProps = {
   page: UserPage | null
   error: string
   onRetry: () => void
+  onResetPassword?: (user: AdminUser) => void
 }
 
-export function UsersPanel({ page, error, onRetry }: UsersPanelProps) {
+export function UsersPanel({ page, error, onRetry, onResetPassword }: UsersPanelProps) {
   const [query, setQuery] = useState('')
   const [role, setRole] = useState<Role | ''>('')
   const [status, setStatus] = useState<AdminUser['status'] | ''>('')
@@ -98,7 +99,11 @@ export function UsersPanel({ page, error, onRetry }: UsersPanelProps) {
                 </span>
                 <span><span className="eco-tag">{ROLE_LABELS[user.role]}</span></span>
                 <UnitStatus status={user.status === 'active' ? 'ready' : 'off'} label={user.status === 'active' ? 'Activo' : 'Inactivo'} />
-                <span className="eco-code eco-muted">{user.lastAccess}</span>
+                <span className="eco-stack">
+                  <span className="eco-code eco-muted">{user.lastAccess}</span>
+                  {onResetPassword ? <button type="button" className="eco-btn eco-btn--ghost"
+                    aria-label={`Cambiar contraseña de ${user.name}`} onClick={() => onResetPassword(user)}>Cambiar contraseña</button> : null}
+                </span>
 
               </ListRow>
             ))}

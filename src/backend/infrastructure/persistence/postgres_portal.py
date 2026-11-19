@@ -59,6 +59,19 @@ class PostgresPortal:
             raise ValueError('Ya existe una cuenta con ese correo.') from None
         return user_dto(row)
 
+    def reset_user_password(self, identifier, password, actor):
+        digest = hash_password(password)
+        with connection() as conn:
+            user = conn.execute(
+                'UPDATE usuarios SET password_hash=%s WHERE usuario_id=%s RETURNING usuario_id',
+                (digest, identifier),
+            ).fetchone()
+            if not user:
+                return False
+            conn.execute('DELETE FROM sesiones WHERE usuario_id=%s', (identifier,))
+            audit(conn,actor,'CAMBIAR_CONTRASENA','usuarios',identifier,{})
+        return True
+
     def driver_accounts(self):
         return [{'id':str(row['usuario_id']),'name':row['nombre']} for row in rows("""SELECT u.usuario_id,u.nombre FROM usuarios u LEFT JOIN conductores c USING(usuario_id)
             WHERE u.rol IN ('CONDUCTOR','driver','ROL-03') AND u.estado='ACTIVO' AND c.conductor_id IS NULL ORDER BY nombre""")]

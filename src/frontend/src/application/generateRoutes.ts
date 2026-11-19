@@ -35,7 +35,7 @@ export function createGenerateRoutes(deps: { optimizer: RouteOptimizer; planning
       if (scope.depotAvailable === false) throw new RoutePlanningError('Configura un almacén de origen antes de generar rutas.')
       if (scope.availableVehicles <= 0) throw new NoVehiclesAvailableError()
       if (scope.pendingOrders <= 0 && scope.unlocatedOrders) throw new RoutePlanningError('Completa las coordenadas de destino de los pedidos pendientes en el módulo Pedidos antes de generar rutas.')
-      if (scope.pendingOrders <= 0) throw new RoutePlanningError('No hay pedidos pendientes para planificar.')
+      if (scope.pendingOrders <= 0) throw new RoutePlanningError('No hay pedidos pendientes para planificar hoy (hora de Lima). Revisa la fecha de entrega, el estado y que los pedidos sigan sin asignar.')
       let timer: ReturnType<typeof setTimeout> | undefined
       const limit = new Promise<never>((_, reject) => {
         timer = setTimeout(() => reject(new RoutePlanningError(`El cálculo superó el tiempo máximo de ${Math.round(timeoutMs / 1000)} s. Prueba con otra configuración.`)), timeoutMs)

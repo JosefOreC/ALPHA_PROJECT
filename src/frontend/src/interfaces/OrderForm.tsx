@@ -71,10 +71,10 @@ export function OrderForm({ service, order, onSaved, onBack }: {
         <div className="eco-field"><label htmlFor="latitude">Latitud de entrega</label><input className="eco-input" id="latitude" name="latitude" type="number" min="-90" max="90" step="any" required={!!fields.longitude.trim()} value={fields.latitude} onChange={event => change('latitude', event.target.value)} /></div>
         <div className="eco-field"><label htmlFor="longitude">Longitud de entrega</label><input className="eco-input" id="longitude" name="longitude" type="number" min="-180" max="180" step="any" required={!!fields.latitude.trim()} value={fields.longitude} onChange={event => change('longitude', event.target.value)} /></div>
       </div>
-      <p className="eco-field__hint">Las coordenadas se completan al elegir el destino. También puedes ajustarlas manualmente para incluir el pedido en la planificación de rutas.</p>
+      <p className="eco-field__hint">Para generar una ruta, marca el destino en el mapa o escribe ambas coordenadas. Para planificar hoy, elige hoy como fecha de inicio en hora de Lima.</p>
       <div className="eco-form-grid">
-        <div className="eco-field"><label htmlFor="window-start">Inicio de ventana · Lima *</label><input className="eco-input" id="window-start" name="window_start" type="datetime-local" step="any" required defaultValue={fields.window_start} /></div>
-        <div className="eco-field"><label htmlFor="window-end">Fin de ventana · Lima *</label><input className="eco-input" id="window-end" name="window_end" type="datetime-local" step="any" required defaultValue={fields.window_end} /></div>
+        <div className="eco-field"><label htmlFor="window-start">Entrega desde (hora de Lima) *</label><input className="eco-input" id="window-start" name="window_start" type="datetime-local" step="any" required defaultValue={fields.window_start} /></div>
+        <div className="eco-field"><label htmlFor="window-end">Entrega hasta (hora de Lima) *</label><input className="eco-input" id="window-end" name="window_end" type="datetime-local" step="any" required defaultValue={fields.window_end} /></div>
       </div>
       <div className="eco-field">
         <label htmlFor="weight">Peso del paquete (kg) *</label>
