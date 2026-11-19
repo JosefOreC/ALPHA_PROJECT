@@ -63,3 +63,19 @@ def test_login_sets_httponly_secure_samesite_cookie(monkeypatch):
     assert response.status_code == 200
     cookie = response.headers["set-cookie"].lower()
     assert "eco_session=" in cookie and "httponly" in cookie and "secure" in cookie and "samesite=lax" in cookie
+
+def test_map_worker_can_fetch_only_the_configured_cartography_provider(tmp_path):
+    assets = tmp_path / "assets"
+    assets.mkdir()
+    (tmp_path / "index.html").write_text("<html></html>", encoding="utf-8")
+    filename = "maplibre-gl-worker-CEzvAyZY.js"
+    (assets / filename).write_text("self.onmessage = () => {}", encoding="utf-8")
+    app = TestClient(create_app(persistent=False, frontend_dist=tmp_path))
+
+    response = app.get(f"/assets/{filename}")
+    assert response.status_code == 200
+    assert response.headers["Content-Security-Policy"] == (
+        STRICT_CSP + "; connect-src 'self' https://tiles.openfreemap.org"
+    )
+    assert app.get("/health").headers["Content-Security-Policy"] == STRICT_CSP
+    assert security_headers(f"/other/{filename}", "https")["Content-Security-Policy"] == STRICT_CSP
