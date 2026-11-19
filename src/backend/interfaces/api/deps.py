@@ -27,6 +27,7 @@ from infrastructure.persistence.postgres_fleet import PostgresVehicles, Postgres
 from infrastructure.persistence.postgres_dashboard import PostgresDashboard, PostgresDistrictCatalog
 from infrastructure.persistence.database import DatabaseError, DatabaseUnavailable
 from infrastructure.config import load_environment
+from domain.road_network import RoadServiceUnavailable
 from infrastructure import dependencies as repositories
 from application.use_cases.get_dashboard_summary import GetDashboardSummary
 from application.use_cases.list_districts import ListDistricts
@@ -106,6 +107,9 @@ def create_app(repository=None, authenticate=get_current_identity, protect_mutat
     @app.exception_handler(ValueError)
     async def domain_error(request, error):
         return JSONResponse(status_code=422,content={'detail':str(error)})
+    @app.exception_handler(RoadServiceUnavailable)
+    async def road_error(request, error):
+        return JSONResponse(status_code=503,content={'detail':str(error)})
     app.include_router(session_router)
     app.include_router(portal_router)
     app.include_router(create_orders_router(DriverOrders(repository, SystemClock()), authenticate))

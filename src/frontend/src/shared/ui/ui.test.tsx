@@ -71,7 +71,7 @@ describe('módulos por rol', () => {
 
   it('AppShell muestra la meta de CO₂ del mes con miles separados por espacio', () => {
     render(
-      <AppShell role="planner" current="pedidos" user={{ name: 'Beto P.', initials: 'BP' }} title="Pedidos y rutas" co2={{ valueKg: 1284, goalKg: 1500 }}>
+      <AppShell role="planner" current="pedidos" user={{ name: 'Beto P.', initials: 'BP' }} title="Gestión de pedidos" co2={{ valueKg: 1284, goalKg: 1500 }}>
         <p>x</p>
       </AppShell>,
     )

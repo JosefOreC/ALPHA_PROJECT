@@ -43,6 +43,19 @@ class ManagementApiTests(unittest.TestCase):
         self.assertEqual(self.client.put(path, json={**self.body, "expected_version": 3}).status_code, 409)
         self.assertEqual(self.client.delete(path).status_code, 405)
 
+    def test_coordinates_are_validated_and_preserved_in_create_read_and_update(self):
+        for coordinates in ({'latitude':-12.04}, {'longitude':-76.95},
+                            {'latitude':91.0,'longitude':-76.95}, {'latitude':-12.04,'longitude':181.0},
+                            {'latitude':True,'longitude':-76.95}):
+            self.assertEqual(self.client.post('/api/pedidos',json={**self.body,**coordinates}).status_code,422)
+        self.body.update(latitude=-12.04,longitude=-76.95)
+        order = self.create()
+        path = '/api/pedidos/'+order['id']
+        self.assertEqual(self.client.get(path).json()['latitude'],-12.04)
+        result = self.client.put(path,json={**self.body,'longitude':-76.94,'expected_version':1})
+        self.assertEqual(result.status_code,200)
+        self.assertEqual(result.json()['longitude'],-76.94)
+
     def test_mass_assignment_and_invalid_payloads(self):
         for field, value in (("id", "fake"), ("driver_id", "d1"), ("role", "ADMIN"),
                              ("status", "ENTREGADO"), ("confirmed_at", "2026-10-01"), ("version", 99)):

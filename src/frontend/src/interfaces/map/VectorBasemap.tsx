@@ -3,6 +3,8 @@ import { setWorkerUrl } from 'maplibre-gl'
 import type { StyleSpecification } from 'maplibre-gl'
 import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url'
 import 'maplibre-gl/dist/maplibre-gl.css'
+import { tileLayer } from 'leaflet'
+import type { TileLayer } from 'leaflet'
 import { useEffect, useRef } from 'react'
 import { useMap } from 'react-leaflet'
 
@@ -21,8 +23,35 @@ export default function VectorBasemap({ onError }: Props) {
     let active = true
     let loaded = false
     let layer: ReturnType<typeof maplibreGL> | undefined
+    let raster: TileLayer | undefined
+    let watchdog: ReturnType<typeof setTimeout> | undefined
     const container = map.getContainer()
+    const credit = '<a href="https://openfreemap.org/">OpenFreeMap</a> · <a href="https://openmaptiles.org/">© OpenMapTiles</a> · <a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>'
     const fail = (message: string) => { if (active) report.current(message) }
+    const fallback = () => {
+      if (!active || raster) return
+      clearTimeout(watchdog)
+      if (layer && map.hasLayer(layer)) map.removeLayer(layer)
+      map.attributionControl?.removeAttribution?.(credit)
+      container.dataset.basemap = 'raster-osm'
+      delete container.dataset.basemapReady
+      raster = tileLayer(import.meta.env.VITE_RASTER_TILE_URL || 'https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom:19,
+        attribution:import.meta.env.VITE_RASTER_TILE_ATTRIBUTION || '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      })
+      let tilesLoaded = 0
+      const finish = () => {
+        if (!active) return
+        clearTimeout(watchdog)
+        if (tilesLoaded) container.dataset.basemapReady = 'true'
+        else fail('No se pudo descargar la cartografía. Revisa tu conexión.')
+      }
+      // Una tesela fallida no debe retirar las rutas ni cancelar las otras descargas.
+      raster.on('tileload', () => { tilesLoaded++; if (active) container.dataset.basemapReady = 'true' })
+      raster.once('load', finish)
+      watchdog = setTimeout(finish,12000)
+      raster.addTo(map)
+    }
     const start = async () => {
       const response = await fetch(`${import.meta.env.BASE_URL}maps/lima-pastel.json`, { signal: controller.signal })
       if (!response.ok) throw new Error('No se pudo cargar el estilo del mapa.')
@@ -38,7 +67,7 @@ export default function VectorBasemap({ onError }: Props) {
       // The adapter queues resize callbacks that can outlive a removed Leaflet map.
       // Resize synchronously using public APIs; camera movement keeps its normal handler.
       vectorLayer.getEvents = () => ({ ...events, resize: event => {
-        if (!active) return
+        if (!active || raster) return
         const size = vectorLayer.getSize()
         Object.assign(vectorLayer.getContainer().style, { width: `${size.x}px`, height: `${size.y}px` })
         vectorLayer.getMaplibreMap().resize()
@@ -46,14 +75,19 @@ export default function VectorBasemap({ onError }: Props) {
       } })
       layer.addTo(map)
       const base = layer.getMaplibreMap()
-      const credit = '<a href="https://openfreemap.org/">OpenFreeMap</a> · <a href="https://openmaptiles.org/">© OpenMapTiles</a> · <a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>'
       map.attributionControl?.addAttribution(credit)
-      base.on('load', () => { loaded = true; if (active) container.dataset.basemapReady = 'true' })
-      base.on('error', event => {
-        if (!loaded && 'sourceId' in event && event.sourceId === 'openmaptiles') fail('No se pudo descargar la cartografía. Revisa tu conexión.')
+      base.on('load', () => {
+        if (!active || raster) return
+        loaded = true
+        clearTimeout(watchdog)
+        container.dataset.basemapReady = 'true'
       })
-      base.on('webglcontextlost', () => fail(DRAW_ERROR))
+      base.on('error', event => {
+        if (!loaded && 'sourceId' in event && event.sourceId === 'openmaptiles') fallback()
+      })
+      base.on('webglcontextlost', () => { if (!raster) fail(DRAW_ERROR) })
       container.dataset.basemap = 'vector-pastel'
+      watchdog = setTimeout(() => { if (!loaded) fallback() },8000)
     }
     void start().catch(reason => {
       if (controller.signal.aborted) return
@@ -62,8 +96,10 @@ export default function VectorBasemap({ onError }: Props) {
     })
     return () => {
       active = false
+      clearTimeout(watchdog)
       controller.abort()
       if (layer && map.hasLayer(layer)) map.removeLayer(layer)
+      if (raster && map.hasLayer(raster)) map.removeLayer(raster)
       delete container.dataset.basemap
       delete container.dataset.basemapReady
     }

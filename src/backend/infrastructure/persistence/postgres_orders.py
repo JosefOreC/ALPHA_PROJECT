@@ -13,14 +13,14 @@ from domain.exceptions.order_conflict import OrderConflict
 from domain.value_objects import OrderStatus
 
 COLUMNS = ("pedido_id", "conductor_id", "cliente_nombre", "direccion_entrega", "distrito",
-           "ventana_inicio", "ventana_fin", "peso_kg", "instrucciones", "estado", "confirmed_at", "version")
+           "ventana_inicio", "ventana_fin", "peso_kg", "instrucciones", "estado", "confirmed_at", "version", "latitud", "longitud")
 SELECT_COLUMNS = ", ".join(COLUMNS)
 
 
 def values(order: Order) -> tuple:
     return (order.id, order.driver_id, order.customer, order.address, order.district,
             order.window_start, order.window_end, Decimal(str(order.weight_kg)), order.instructions,
-            order.status.value, order.confirmed_at, order.version)
+            order.status.value, order.confirmed_at, order.version, order.latitude, order.longitude)
 
 
 def from_row(row: tuple) -> Order:
@@ -31,6 +31,8 @@ def from_row(row: tuple) -> Order:
         window_start=data["ventana_inicio"].isoformat(), window_end=data["ventana_fin"].isoformat(),
         weight_kg=float(data["peso_kg"]), instructions=data["instrucciones"],
         status=OrderStatus(data["estado"]), confirmed_at=data["confirmed_at"], version=data["version"],
+        latitude=float(data['latitud']) if data['latitud'] is not None else None,
+        longitude=float(data['longitud']) if data['longitud'] is not None else None,
     )
 
 

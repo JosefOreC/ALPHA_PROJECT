@@ -14,7 +14,8 @@ RUN pip install --no-cache-dir -r requirements/requirements.txt -r requirements/
     && useradd --system --uid 10001 app
 COPY src/backend src/backend
 COPY src/shared src/shared
-COPY scripts/initialize_database.py scripts/migrate.py scripts/create_admin.py scripts/start_render.sh scripts/
+COPY scripts/initialize_database.py scripts/migrate.py scripts/create_admin.py scripts/start_render.sh scripts/ensure_course_demo.py scripts/
+COPY scripts/test_db scripts/test_db
 COPY --from=frontend /app/src/frontend/dist src/frontend/dist
 USER app
 CMD ["sh", "scripts/start_render.sh"]

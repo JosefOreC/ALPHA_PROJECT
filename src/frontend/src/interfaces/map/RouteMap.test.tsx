@@ -63,9 +63,30 @@ describe('marcado de los pines', () => {
     expect(html).toContain('&lt;b&gt;&amp;')
     expect(depotHtml('A&B')).toContain('A&amp;B')
   })
+
+  it('un pedido usa el color de su ruta y conserva el número original de entrega', () => {
+    const html = pinHtml('EN_CAMINO',false,false,{color:2,stop:7})
+    expect(html).toContain('pin--assigned r2')
+    expect(html).toContain('text-anchor="middle">7</text>')
+    expect(pinHtml('PENDIENTE',false,false)).toContain('pin--unassigned')
+  })
 })
 
 describe('RouteMap', () => {
+  it('seleccionar una placa identifica sus paradas sin notificar un pedido distinto', async () => {
+    const onSelect = vi.fn()
+    const onSelectElement = vi.fn()
+    const {container} = render(<RouteMap source={new DemoMapData()} onSelect={onSelect} onSelectElement={onSelectElement} />)
+    const user = userEvent.setup()
+    await user.click(await screen.findByRole('button',{name:'Ruta BCD-456'},SLOW))
+    expect(onSelect).not.toHaveBeenCalled()
+    expect(onSelectElement).toHaveBeenCalledWith({kind:'route',id:'r2'})
+    await waitFor(() => expect(container.querySelectorAll('svg.pin.r2:not(.is-dim)')).toHaveLength(2),SLOW)
+    expect(container.querySelectorAll('svg.pin.is-dim')).toHaveLength(data.orders.length - 2)
+    expect(within(screen.getByRole('list',{name:'Paradas de BCD-456'})).getAllByRole('button')).toHaveLength(2)
+    await user.click(screen.getByRole('button',{name:'Todas las rutas'}))
+    expect(container.querySelectorAll('svg.pin.is-dim')).toHaveLength(0)
+  })
   it('dibuja el mapa con las capas conmutables y los controles de zoom', { timeout: 30_000 }, async () => {
     const user = userEvent.setup()
     const { container } = render(<RouteMap source={new DemoMapData()} selectedId="PED-0026" />)

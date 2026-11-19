@@ -23,12 +23,18 @@ export function createGenerateRoutes(deps: { optimizer: RouteOptimizer; planning
   return {
     scope: (): Promise<PlanningScope> => deps.planning.scope(),
     limitSeconds: async () => Math.round((await limitMs()) / 1000),
+    async approve(settings: RouteSettings, proposal: RouteProposal) {
+      if (!deps.optimizer.approve || !proposal.fingerprint) throw new RoutePlanningError('Esta propuesta no permite guardar rutas. Vuelve a generarla con el servidor conectado.')
+      return deps.optimizer.approve(settings, proposal.fingerprint)
+    },
 
     /** Calcula la propuesta. Sin vehículos disponibles no ejecuta el motor (criterio Gherkin de US-005). */
     async generate(settings: RouteSettings, onProgress?: (progress: PlanningProgress) => void): Promise<RouteProposal> {
       const scope = await deps.planning.scope()
       const timeoutMs = await limitMs()
+      if (scope.depotAvailable === false) throw new RoutePlanningError('Configura un almacén de origen antes de generar rutas.')
       if (scope.availableVehicles <= 0) throw new NoVehiclesAvailableError()
+      if (scope.pendingOrders <= 0 && scope.unlocatedOrders) throw new RoutePlanningError('Completa las coordenadas de destino de los pedidos pendientes en el módulo Pedidos antes de generar rutas.')
       if (scope.pendingOrders <= 0) throw new RoutePlanningError('No hay pedidos pendientes para planificar.')
       let timer: ReturnType<typeof setTimeout> | undefined
       const limit = new Promise<never>((_, reject) => {

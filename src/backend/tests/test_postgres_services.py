@@ -215,16 +215,49 @@ def test_parameters_preserve_legacy_consumption_and_remove_disabled_factors(db, 
 def test_map_preserves_geography_scopes_queries_and_vehicle_states(db, driver_id):
     r = route()
     db.responses = {'SELECT r.*': [r], 'SELECT nombre,latitud': [{'nombre': 'Central', 'latitud': -12, 'longitud': -77}],
-                    'SELECT p.*': [order(ruta_id=r['ruta_id']), order()],
+                    'SELECT p.*': [order(ruta_id=r['ruta_id'],orden_entrega=3), order()],
                     'SELECT DISTINCT': [dict(vehiculo_id=uuid4(), placa='TST-001', ruta_id=r['ruta_id'] if i == 0 else None,
                                              latitud=-12, longitud=-77, estado=state) for i, state in enumerate(('EN_RUTA','DISPONIBLE','MANTENIMIENTO'))]}
     result = portal.PostgresPortal().map(driver_id)
     assert result['routes'][0]['path'][0] == {'lat': -12, 'lng': -77}
+    assert result['routes'][0]['driver']==r['nombre_completo']
+    assert result['orders'][0]['stop_number']==3
+    assert result['orders'][1]['stop_number'] is None
     assert [v['status'] for v in result['vehicles']] == ['En ruta', 'Disponible', 'Detenido']
     if driver_id:
         assert any('p.conductor_id=%s' in sql and args[-1] == driver_id for sql, args in db.calls)
     db.responses = {}
     assert portal.PostgresPortal().map(driver_id)['depot'] is None
+
+
+def test_route_map_only_exposes_active_orders_with_origin_and_destination(db):
+    active = route(estado='EN_CURSO')
+    completed = route(estado='COMPLETADA',placa='TST-002')
+    pending = order()
+    transit = order('EN_CAMINO',ruta_id=active['ruta_id'])
+    db.responses = {'SELECT r.*':[active,completed],
+        'SELECT nombre,latitud':[{'nombre':'Central','latitud':-12,'longitud':-77}],
+        'SELECT p.*':[pending,transit,order('ENTREGADO',ruta_id=active['ruta_id']),order('CANCELADO'),order(ruta_id=completed['ruta_id'])],
+        'SELECT DISTINCT':[{'vehiculo_id':uuid4(),'placa':'TST-001','ruta_id':active['ruta_id'],'latitud':-12,'longitud':-77,'estado':'EN_RUTA'}]}
+    result = portal.PostgresPortal().route_map()
+    assert {row['id'] for row in result['orders']}=={str(pending['pedido_id']),str(transit['pedido_id'])}
+    assert [row['id'] for row in result['routes']]==[str(active['ruta_id'])]
+    assert len(result['vehicles'])==1
+    assert any("p.estado IN ('PENDIENTE','EN_CAMINO')" in statement for statement,_ in db.calls)
+    # Sin un almacén, los pendientes sin asignar no tienen un origen válido.
+    db.responses['SELECT nombre,latitud'] = []
+    assert str(pending['pedido_id']) not in {row['id'] for row in portal.PostgresPortal().route_map()['orders']}
+
+
+def test_planning_scope_counts_only_located_pending_orders_and_requires_origin(db):
+    db.responses = {'SELECT count(*)':[{'n':2,'districts':1,'unlocated':3}],
+                    'SELECT almacen_id':[{'almacen_id':uuid4()}],'SELECT v.*':[{'placa':'TST-001'}]}
+    result = portal.PostgresPortal().scope()
+    assert result['pendingOrders']==2 and result['unlocatedOrders']==3 and result['depotAvailable'] is True
+    assert any('latitud IS NOT NULL AND longitud IS NOT NULL' in statement for statement,_ in db.calls)
+    db.responses['SELECT almacen_id'] = []
+    result = portal.PostgresPortal().scope()
+    assert result['pendingOrders']==0 and result['depotAvailable'] is False
 
 
 @pytest.mark.parametrize('baseline', [0, 20])
@@ -273,7 +306,8 @@ def test_insights_filters_district_and_handles_missing_metrics(db):
 def test_records_incidents_scope_and_integrations(db):
     service = portal.PostgresPortal()
     db.responses = {'SELECT * FROM integraciones': [{'integracion_id': value, 'nombre': value, 'descripcion':'Integración'} for value in ('db','map')],
-                    'SELECT count(*)': [{'n': 3, 'districts': 2}], 'SELECT estado': [{'estado':'DISPONIBLE'}, {'estado':'MANTENIMIENTO'}]}
+                    'SELECT count(*)': [{'n': 3, 'districts': 2}], 'SELECT estado': [{'estado':'DISPONIBLE'}, {'estado':'MANTENIMIENTO'}],
+                    'SELECT v.*': [{'placa':'TST-001'}]}
     assert [item['status'] for item in service.integrations()] == ['connected','pending']
     assert service.scope()['availableVehicles'] == 1
     for module in ('auditoria','incidencias'):
@@ -307,7 +341,7 @@ def test_proposal_rejects_oversized_or_unavailable_scope_and_passes_profiles(db,
         assert len(orders) == len(vehicles) == 1
         assert depot == (-12,-77) and profiles['DIESEL']['consumption'] is None
         assert settings['goal'] == 'co2'
-        return {'routes': []}
+        return {'routes': [{'plate':'TST-001','driver':'Ana','sequence':[{'id':str(orders[0]['pedido_id'])}], 'path':[{'lat':-12,'lng':-77}]}]}
     monkeypatch.setattr(portal,'propose',optimizer)
     assert service.proposal({'goal':'co2'})['elapsedSeconds'] >= 0
 

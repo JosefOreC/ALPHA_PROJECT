@@ -16,11 +16,14 @@ export interface MapOrder {
   /** Ruta a la que pertenece, o null si aún no tiene vehículo. */
   route_id: string | null
   co2_kg: number | null
+  /** Orden real de entrega dentro de la ruta; no se recalcula al filtrar. */
+  stop_number?: number | null
 }
 
 export interface MapRoute {
   id: string
   plate: string
+  driver?: string
   /** Color de la ruta: 1 a 4 (`--route-1…4`). */
   color: 1 | 2 | 3 | 4
   /** Recorrido completo, del almacén a la última parada. */

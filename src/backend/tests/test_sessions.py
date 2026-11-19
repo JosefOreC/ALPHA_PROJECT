@@ -40,7 +40,7 @@ def setup():
     app = create_app(persistent=False)
     app.dependency_overrides[get_sessions] = lambda: sessions
     app.dependency_overrides[get_portal] = lambda: portal
-    return TestClient(app, base_url="https://testserver"), sessions, portal
+    return TestClient(app), sessions, portal
 
 
 def login(client):
@@ -115,8 +115,11 @@ def test_driver_route_scope_and_map_do_not_expose_global_planning():
     login(client)
     sessions.role = 'driver'
     assert client.get('/api/map').status_code == 403
+    assert client.get('/api/routes/map').status_code == 403
     assert client.get('/api/routes/scope').status_code == 403
     sessions.driver_id = '00000000-0000-0000-0000-000000000002'
     portal.map = lambda driver_id: {'driver_id':driver_id}
+    portal.route_map = lambda driver_id: {'driver_id':driver_id}
     assert client.get('/api/map').json() == {'driver_id':sessions.driver_id}
+    assert client.get('/api/routes/map').json() == {'driver_id':sessions.driver_id}
     assert client.get('/api/routes/scope').status_code == 403

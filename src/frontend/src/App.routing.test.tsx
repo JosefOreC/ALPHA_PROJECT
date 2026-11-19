@@ -19,7 +19,7 @@ function Page({ label, ...props }: Props & { label: string }) {
 vi.mock('./features/dashboard', () => ({ HttpDashboardGateway: class {}, DashboardPage: (props: Props) => <Page label="Dashboard" {...props} /> }))
 vi.mock('./interfaces/FleetView', () => ({ FleetView: (props: Props) => <Page label="Flota" {...props} /> }))
 vi.mock('./interfaces/OrderManagementView', () => ({ OrderManagementView: (props: Props) => <Page label="Pedidos" {...props} /> }))
-vi.mock('./interfaces/RoutePlanningView', () => ({ RoutePlanningView: (props: Props) => <Page label="Rutas" {...props} /> }))
+vi.mock('./interfaces/RouteManagementView', () => ({ RouteManagementView: (props: Props) => <Page label="Rutas" {...props} /> }))
 vi.mock('./interfaces/SustainabilityView', () => ({ SustainabilityView: (props: Props) => <Page label="Sostenibilidad" {...props} /> }))
 vi.mock('./interfaces/AdminView', () => ({ AdminView: (props: Props) => <Page label="Administración" {...props} /> }))
 vi.mock('./interfaces/DriverRouteView', () => ({ DriverRouteView: (props: Props) => <Page label="Mi ruta" {...props} /> }))

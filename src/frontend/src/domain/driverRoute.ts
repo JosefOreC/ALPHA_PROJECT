@@ -29,6 +29,7 @@ export interface DriverRoute {
   stops: RouteStop[]
   remaining_stops: number
   return_time: string
+  return_to_depot?: boolean
   depot: string
   change: RouteChange | null
 }

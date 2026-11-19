@@ -23,7 +23,7 @@ describe('AdminView · usuarios y roles', () => {
     expect(await screen.findByRole('heading', { name: 'Administración' })).toBeInTheDocument()
     const nav = screen.getByRole('complementary', { name: 'Navegación principal' })
     expect(within(nav).getByText('Administrador')).toBeInTheDocument()
-    for (const name of [/Dashboard del día/, /Pedidos y rutas/, /Rutas del día/, /Flota/, /Sostenibilidad/, /Administración/]) {
+    for (const name of [/Dashboard del día/, /Pedidos/, /Rutas/, /Flota/, /Sostenibilidad/, /Administración/]) {
       expect(within(nav).getByRole('link', { name })).toBeInTheDocument()
     }
     expect(within(nav).getByRole('link', { name: /Administración/ })).toHaveAttribute('aria-current', 'page')

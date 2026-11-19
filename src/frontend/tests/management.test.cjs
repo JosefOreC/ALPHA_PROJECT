@@ -53,6 +53,12 @@ test('demo filtra, pagina y no permite mutar DTO para alterar almacenamiento', a
 test('adaptador HTTP rechaza respuestas inválidas en tiempo de ejecución', () => {
   for (const value of [null, [], {}, { ...read(), status: 'INVENTADO' }, { ...read(), version: '1' }, { ...read(), weight_kg: NaN }, { ...read(), assigned: 'false' }, { ...read(), confirmed_at: 'foo' }, { ...read(), window_start: 'fecha inválida' }]) assert.throws(() => decodeOrder(value))
   assert.deepEqual(decodeOrder(read()), read())
+  const located = { ...read(),latitude:-12.04,longitude:-76.95 }
+  assert.deepEqual(decodeOrder(located),located)
+  for (const coordinates of [{ latitude:-12.04 }, { latitude:91,longitude:-76.95 }, { latitude:NaN,longitude:-76.95 }]) {
+    assert.throws(() => decodeOrder({ ...read(),...coordinates }))
+    assert.throws(() => validateOrder({ ...data(),...coordinates }))
+  }
 })
 test('HTTP envía cookies, JSON y token CSRF sin enviar rol ni conductor', async () => {
   let captured

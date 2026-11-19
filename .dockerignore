@@ -11,6 +11,9 @@
 !scripts/migrate.py
 !scripts/create_admin.py
 !scripts/start_render.sh
+!scripts/ensure_course_demo.py
+!scripts/test_db/
+!scripts/test_db/*.py
 **/node_modules
 **/dist
 **/playwright-report

@@ -32,6 +32,7 @@ export function authorizePlanning(service: GenerateRoutes, role: Role): Generate
     async scope() { requirePermission(role, 'routes.read'); return service.scope() },
     async limitSeconds() { requirePermission(role, 'routes.read'); return service.limitSeconds() },
     async generate(settings, onProgress) { requirePermission(role, 'routes.generate'); return service.generate(settings, onProgress) },
+    async approve(settings, proposal) { requirePermission(role, 'routes.generate'); return service.approve(settings, proposal) },
   }
 }
 export function authorizeSustainability(service: SustainabilityService, role: Role): SustainabilityService {

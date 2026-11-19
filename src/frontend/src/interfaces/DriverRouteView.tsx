@@ -131,7 +131,7 @@ export function DriverRouteView({ service, mapSource, onNavigate, onOpenOrder }:
                     <span className="eco-stop__meta">{stopMeta(stop)}</span>
                   </li>
                 ))}
-                {route.remaining_stops > 0 ? (
+                {route.remaining_stops > 0 && route.return_to_depot !== false ? (
                   <li className="eco-stop">
                     <span className="eco-stop__dot">…</span>
                     <span className="eco-stop__title eco-muted">{route.remaining_stops} paradas más</span>

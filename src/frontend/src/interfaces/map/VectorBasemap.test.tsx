@@ -1,9 +1,10 @@
 import { act, render, waitFor } from '@testing-library/react'
-import { beforeEach, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 import type { Mock } from 'vitest'
 import VectorBasemap from './VectorBasemap'
 
-const mocks = vi.hoisted(() => ({ useMap: vi.fn(), maplibreGL: vi.fn(), setWorkerUrl: vi.fn() }))
+const mocks = vi.hoisted(() => ({ useMap: vi.fn(), maplibreGL: vi.fn(), setWorkerUrl: vi.fn(),tileLayer:vi.fn() }))
+vi.mock('leaflet',() => ({tileLayer:mocks.tileLayer}))
 vi.mock('react-leaflet', () => ({ useMap: mocks.useMap }))
 vi.mock('@maplibre/maplibre-gl-leaflet', () => ({ maplibreGL: mocks.maplibreGL }))
 vi.mock('maplibre-gl', () => ({ setWorkerUrl: mocks.setWorkerUrl }))
@@ -14,6 +15,9 @@ let canvasContext: Mock<() => RenderingContext | null>
 let layer: { getEvents?: () => Record<string, (value?: unknown) => void>; getSize: ReturnType<typeof vi.fn>; getContainer: ReturnType<typeof vi.fn>; getMaplibreMap: ReturnType<typeof vi.fn>; addTo: ReturnType<typeof vi.fn> }
 let map: { getContainer: () => HTMLDivElement; attributionControl?: { addAttribution: ReturnType<typeof vi.fn> }; hasLayer: ReturnType<typeof vi.fn>; removeLayer: ReturnType<typeof vi.fn> }
 let base: { on: ReturnType<typeof vi.fn>; resize: ReturnType<typeof vi.fn> }
+let rasterEvents: Record<string, () => void>
+let raster: {once:ReturnType<typeof vi.fn>;on:ReturnType<typeof vi.fn>;addTo:ReturnType<typeof vi.fn>}
+afterEach(() => vi.useRealTimers())
 beforeEach(() => {
   vi.restoreAllMocks()
   events = {}; container = document.createElement('div')
@@ -22,6 +26,9 @@ beforeEach(() => {
   layer = { getEvents: () => ({ move }), getSize: vi.fn(() => ({ x: 640, y: 480 })), getContainer: vi.fn(() => container), getMaplibreMap: vi.fn(() => base), addTo: vi.fn() }
   map = { getContainer: () => container, attributionControl: { addAttribution: vi.fn() }, hasLayer: vi.fn(() => true), removeLayer: vi.fn() }
   mocks.useMap.mockReturnValue(map); mocks.maplibreGL.mockReturnValue(layer)
+  rasterEvents = {}
+  raster = {once:vi.fn((name,handler) => {rasterEvents[name]=handler}),on:vi.fn((name,handler) => {rasterEvents[name]=handler}),addTo:vi.fn()}
+  mocks.tileLayer.mockReturnValue(raster)
   canvasContext = vi.fn(() => ({ getExtension: vi.fn(() => ({ loseContext: vi.fn() })) }) as unknown as WebGL2RenderingContext)
   vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockImplementation(canvasContext)
   vi.stubGlobal('fetch', vi.fn(async () => Response.json({ version: 8, sources: {}, layers: [] })))
@@ -48,7 +55,7 @@ it('monta la cartografía, registra créditos, ajusta tamaño y limpia al desmon
   expect(base.resize).toHaveBeenCalledOnce()
 })
 
-it('solo informa errores de la fuente inicial y usa el callback actualizado', async () => {
+it('usa otro mapa base ante un fallo vectorial y conserva una carga parcial', async () => {
   const original = vi.fn(); const updated = vi.fn()
   const view = render(<VectorBasemap onError={original} />)
   await waitFor(() => expect(events.error).toBeDefined())
@@ -56,13 +63,39 @@ it('solo informa errores de la fuente inicial y usa el callback actualizado', as
   act(() => { events.error({}); events.error({ sourceId: 'another' }) })
   expect(updated).not.toHaveBeenCalled()
   act(() => events.error({ sourceId: 'openmaptiles' }))
-  expect(updated).toHaveBeenCalledWith(expect.stringContaining('descargar'))
+  expect(container.dataset.basemap).toBe('raster-osm')
+  expect(raster.addTo).toHaveBeenCalledWith(map)
+  expect(updated).not.toHaveBeenCalled()
+  act(() => { rasterEvents.tileload(); rasterEvents.load() })
+  expect(container.dataset.basemapReady).toBe('true')
+  expect(updated).not.toHaveBeenCalled()
   act(() => events.webglcontextlost())
-  expect(updated).toHaveBeenCalledWith(expect.stringContaining('navegador'))
+  expect(updated).not.toHaveBeenCalled()
   expect(original).not.toHaveBeenCalled()
   view.unmount()
   events.webglcontextlost()
-  expect(updated).toHaveBeenCalledTimes(2)
+  expect(updated).not.toHaveBeenCalled()
+})
+
+it('usa el callback actualizado si el mapa alternativo no puede cargar ninguna tesela',async () => {
+  const original = vi.fn(); const updated = vi.fn()
+  const view = render(<VectorBasemap onError={original} />)
+  await waitFor(() => expect(events.error).toBeDefined())
+  view.rerender(<VectorBasemap onError={updated} />)
+  act(() => events.error({sourceId:'openmaptiles'}))
+  act(() => rasterEvents.load())
+  expect(updated).toHaveBeenCalledWith(expect.stringContaining('descargar'))
+  expect(original).not.toHaveBeenCalled()
+})
+
+it('sustituye un mapa que no termina de cargar y limpia ambas capas al desmontar',async () => {
+  vi.useFakeTimers()
+  const view = render(<VectorBasemap onError={vi.fn()} />)
+  await act(async () => { await vi.advanceTimersByTimeAsync(8000) })
+  expect(container.dataset.basemap).toBe('raster-osm')
+  expect(mocks.tileLayer).toHaveBeenCalledWith('https://tile.openstreetmap.org/{z}/{x}/{y}.png',expect.objectContaining({attribution:expect.stringContaining('OpenStreetMap')}))
+  view.unmount()
+  expect(map.removeLayer).toHaveBeenCalledWith(raster)
 })
 
 it.each(['http', 'network', 'unknown', 'webgl'])('explica un fallo de cartografía: %s', async scenario => {

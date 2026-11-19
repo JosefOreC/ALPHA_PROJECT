@@ -62,9 +62,14 @@ class Parameters(BaseModel):
 
 
 class RouteSettings(BaseModel):
-    goal: Literal['co2','balanced','time']
+    goal: Literal['co2','balanced','time','distance']
+    returnToDepot: bool = False
     respectWindows: bool
     prioritizeLowEmission: bool
+
+class ApproveProposal(BaseModel):
+    settings: RouteSettings
+    fingerprint: str = Field(pattern=r'^[a-f0-9]{64}$')
 
 class Incident(BaseModel):
     order_id: UUID
@@ -125,9 +130,21 @@ def scope(identity=Depends(require_permission('routes.read')),portal=Depends(get
         raise HTTPException(403,'Tu perfil solo puede consultar su ruta asignada.')
     return portal.scope()
 
+@router.get('/routes/map')
+def route_map(identity=Depends(require_permission('routes.read')),portal=Depends(get_portal)):
+    if not can(identity.role,'map.read'):
+        raise HTTPException(403,'Tu perfil no tiene permiso para consultar el mapa de rutas.')
+    if scope_for(identity.role,'routes.read')=='own' and not identity.driver_id:
+        raise HTTPException(403,'Se requiere una cuenta de conductor vinculada.')
+    return portal.route_map(identity.driver_id if scope_for(identity.role,'routes.read')=='own' else None)
+
 @router.post('/routes/proposal',dependencies=[Depends(require_permission('routes.generate')),Depends(protect_mutation)])
 def proposal(payload:RouteSettings,portal=Depends(get_portal)):
     return portal.proposal(payload.model_dump())
+
+@router.post('/routes/approve',status_code=201,dependencies=[Depends(protect_mutation)])
+def approve_proposal(payload:ApproveProposal,identity=Depends(require_permission('routes.generate')),portal=Depends(get_portal)):
+    return portal.approve_proposal(payload.settings.model_dump(),payload.fingerprint,identity.subject_id)
 
 @router.get('/audit',dependencies=[Depends(require_permission('audit.read'))])
 def audit(portal=Depends(get_portal)):
