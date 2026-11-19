@@ -30,7 +30,7 @@ El [Blueprint de Render](../../../render.yaml) provisiona un servicio web Docker
 
 ### Verificación local del paquete de despliegue
 
-El 19/11/2026 se construyó la imagen Docker y se verificó el primer arranque contra una base PostgreSQL/PostGIS 17 inicialmente vacía. La aplicación respondió en `/health`, sirvió el frontend e inició sesión con el administrador creado durante el arranque. Se verificó la cookie segura y se repitió el arranque con la misma base y sin reenviar las credenciales de creación del administrador. Las 43 pruebas de scripts de proyecto también aprobaron. Estos resultados corresponden al contenedor local. La URL HTTPS pública y la ejecución de GitHub Actions quedan pendientes del aprovisionamiento de la cuenta.
+El 19/11/2026 se construyó la imagen Docker y se verificó el primer arranque contra una base PostgreSQL/PostGIS 17 inicialmente vacía. La aplicación respondió en `/health`, sirvió el frontend e inició sesión con el administrador creado durante el arranque. Se verificó la cookie segura y se repitió el arranque con la misma base y sin reenviar las credenciales de creación del administrador. Las 43 pruebas de scripts de proyecto también aprobaron. Estos resultados corresponden al contenedor local. La comprobación de la URL pública se detalla en el apartado siguiente. La ejecución en GitHub Actions sigue pendiente.
 
 ## Estado de evidencia
 
@@ -42,9 +42,13 @@ El 19/11/2026 se ejecutaron los nueve casos en un entorno local Windows, con el 
 | Firefox | 3/3 | 6,0 ms | 82 ms | 175 ms | 8,5 ms | 68,2 ms |
 | WebKit | 3/3 | 6,0 ms | 70 ms | 70 ms | 9,6 ms | 73,1 ms |
 
-Cada fila representa una observación por navegador y endpoint. Las seis latencias API observadas estuvieron por debajo de 500 ms en loopback. La disponibilidad de producción y su ventana de observación quedan pendientes hasta contar con un entorno desplegado. [Recibo de la ejecución](evidencias/inspeccion05/ejecucion-local.json) · [Captura del reporte de Playwright](evidencias/inspeccion05/reporte-playwright.png).
+Cada fila representa una observación por navegador y endpoint. Las seis latencias API observadas estuvieron por debajo de 500 ms en loopback. [Recibo de la ejecución](evidencias/inspeccion05/ejecucion-local.json) · [Captura del reporte de Playwright](evidencias/inspeccion05/reporte-playwright.png).
 
 La corrida adicional del 19/11/2026 también aprobó los nueve casos. El nuevo escenario induce un HTTP 503 durante el inicio de sesión en cada navegador. Comprueba que la interfaz muestra el error y limpia la contraseña, y que el siguiente intento autentica contra FastAPI y accede a Pedidos. [Recibo de la prueba de recuperación HTTP 503](evidencias/inspeccion05/verificacion-http503.json).
+
+### Disponibilidad observada en Render
+
+El 19/11/2026, entre las 15:43:15 y las 15:43:37 (hora de Lima), la [URL pública](https://ecologistica-lima-qolz.onrender.com/) entregó el frontend como HTML con HTTP 200. Las cinco consultas consecutivas a `/health` regresaron HTTP 200 y estado `ok` (**5/5**), con tiempos totales de **243,7 a 645,7 ms**. Dos de las cinco superaron 500 ms. Se trata de una ventana breve posterior al despliegue manual, sin autenticación ni medición de endpoints operativos en Render. [Recibo de disponibilidad](evidencias/inspeccion05/disponibilidad-render.json).
 
 ## Control de versiones
 

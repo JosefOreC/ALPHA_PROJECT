@@ -1,0 +1,43 @@
+{
+  "url": "https://ecologistica-lima-qolz.onrender.com",
+  "trigger": "Verificación externa posterior al despliegue manual",
+  "home": {
+    "time_lima": "2026-11-19T15:43:15.435311-05:00",
+    "http": 200,
+    "elapsed_ms": 733.2,
+    "content_type": "text/html"
+  },
+  "delay_between_health_requests_seconds": 5,
+  "health": [
+    {
+      "time_lima": "2026-11-19T15:43:15.987253-05:00",
+      "http": 200,
+      "elapsed_ms": 551.9,
+      "content_type": "application/json"
+    },
+    {
+      "time_lima": "2026-11-19T15:43:21.633319-05:00",
+      "http": 200,
+      "elapsed_ms": 645.7,
+      "content_type": "application/json"
+    },
+    {
+      "time_lima": "2026-11-19T15:43:26.914796-05:00",
+      "http": 200,
+      "elapsed_ms": 280.5,
+      "content_type": "application/json"
+    },
+    {
+      "time_lima": "2026-11-19T15:43:32.159282-05:00",
+      "http": 200,
+      "elapsed_ms": 243.7,
+      "content_type": "application/json"
+    },
+    {
+      "time_lima": "2026-11-19T15:43:37.421656-05:00",
+      "http": 200,
+      "elapsed_ms": 262.0,
+      "content_type": "application/json"
+    }
+  ]
+}
