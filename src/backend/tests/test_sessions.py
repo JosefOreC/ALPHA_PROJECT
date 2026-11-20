@@ -40,7 +40,7 @@ def setup():
     app = create_app(persistent=False)
     app.dependency_overrides[get_sessions] = lambda: sessions
     app.dependency_overrides[get_portal] = lambda: portal
-    return TestClient(app), sessions, portal
+    return TestClient(app, base_url='https://testserver'), sessions, portal
 
 
 def login(client):
@@ -126,7 +126,6 @@ def test_driver_route_scope_and_map_do_not_expose_global_planning():
 
 def test_only_admin_can_patch_account_credentials():
     client, sessions, portal = setup()
-    client.base_url = 'https://testserver'
     calls = []
     portal.update_credentials = lambda *args, **kwargs: calls.append((args, kwargs)) or True
     path = '/api/admin/users/00000000-0000-0000-0000-000000000002'
