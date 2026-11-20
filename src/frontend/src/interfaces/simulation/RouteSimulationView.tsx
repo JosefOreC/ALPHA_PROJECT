@@ -123,7 +123,7 @@ export function RouteSimulationView({ calculate, onNavigate }: { calculate: Calc
       </fieldset>
       <div className="eco-toolbar"><button className="eco-btn" type="submit" disabled={busy || !scenario.vehicles.length || !scenario.orders.length}>{busy ? 'Calculando escenario…' : 'Calcular rutas de prueba'}</button>
         {busy ? <button type="button" className="eco-btn eco-btn--secondary" onClick={() => { controller.current?.abort(); setBusy(false) }}>Cancelar cálculo</button> : null}
-        <span className="eco-muted" role="status">{busy ? 'Consultando la red vial y optimizando las paradas…' : `${scenario.vehicles.length} móviles ? ${scenario.orders.length} pedidos`}</span></div>
+        <span className="eco-muted" role="status">{busy ? 'Consultando la red vial y optimizando las paradas…' : `${scenario.vehicles.length} móviles · ${scenario.orders.length} pedidos`}</span></div>
     </form>
     {error ? <Banner tone="error" title="No se pudo resolver el escenario">{error} Los puntos se conservan; revisa capacidad, horarios o acceso vial y vuelve a calcular.</Banner> : null}
     {result ? <section className="eco-stack eco-result-enter" aria-label="Resultado de la simulación" aria-live="polite">
