@@ -150,7 +150,8 @@ def road_proposal(orders,fleet,depot,factors,config,settings,start,router=None):
     mode = 'shortest' if settings['goal'] in ('co2','distance') else 'fastest' if settings['goal']=='time' else 'balanced'
     weight = config.get('co2Weight',70)
     router = router or ValhallaRouter(min(float(config.get('maxSeconds',45)),45))
-    network = router.matrix([depot]+[position(order) for order in orders],mode,weight)
+    origins = {vehicle['placa']: vehicle.get('origin', depot) for vehicle in fleet}
+    network = router.matrix(list(dict.fromkeys([depot, *origins.values(), *map(position, orders)])),mode,weight)
     result = propose(orders,fleet,depot,factors,config,settings,start,network)
     by_id = {str(order.get('pedido_id','')):order for order in orders}
     compliant = 0
@@ -161,7 +162,7 @@ def road_proposal(orders,fleet,depot,factors,config,settings,start,router=None):
             a,b = leg['origin'],leg['destination']
             network.costs[(a['lat'],a['lng']),(b['lat'],b['lng'])] = (leg['km'],leg['minutes'])
         sequence = [by_id[stop['id']] for stop in route['sequence']]
-        trip = simulate(sequence,depot,start,settings['respectWindows'],network,settings.get('returnToDepot',True))
+        trip = simulate(sequence,origins[route['plate']],start,settings['respectWindows'],network,settings.get('returnToDepot',True))
         if trip is None:
             raise ValueError('El trazado vial no cumple las ventanas de entrega. Revisa los horarios y vuelve a generar.')
         for stop,order,arrival in zip(route['sequence'],sequence,trip['arrivals']):

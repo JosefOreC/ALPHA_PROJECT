@@ -98,7 +98,7 @@ def run(args):
                 if not (ROOT / 'src/frontend/dist/index.html').is_file():
                     raise ValueError('Compila primero el frontend con npm run build.')
                 log = (output / 'api.log').open('w', encoding='utf-8')
-                command = [sys.executable, '-m', 'uvicorn', 'interfaces.api.main:app', '--app-dir', 'src/backend',
+                command = [sys.executable, '-m', 'uvicorn', 'tests.e2e_server:create_test_app', '--factory', '--app-dir', 'src/backend',
                            '--host', '127.0.0.1', '--port', str(PORT)]
                 server = subprocess.Popen(command, cwd=ROOT, env=env, stdout=log, stderr=subprocess.STDOUT,
                                           creationflags=subprocess.CREATE_NO_WINDOW if os.name == 'nt' else 0)

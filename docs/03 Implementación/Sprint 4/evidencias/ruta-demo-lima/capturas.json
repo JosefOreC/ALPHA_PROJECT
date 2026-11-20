@@ -1,0 +1,20 @@
+[
+  {
+    "name": "escritorio",
+    "basemapReady": true,
+    "routePaths": 2,
+    "viewport": {
+      "width": 1440,
+      "height": 1050
+    }
+  },
+  {
+    "name": "movil",
+    "basemapReady": true,
+    "routePaths": 2,
+    "viewport": {
+      "width": 390,
+      "height": 844
+    }
+  }
+]

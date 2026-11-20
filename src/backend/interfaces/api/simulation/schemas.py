@@ -5,8 +5,8 @@ from pydantic import BaseModel, ConfigDict, Field, model_validator
 class Point(BaseModel):
     model_config = ConfigDict(extra='forbid', allow_inf_nan=False)
     id: str = Field(min_length=1, max_length=30, pattern=r'^[\w -]+$')
-    x: float = Field(ge=-100, le=100)
-    y: float = Field(ge=-100, le=100)
+    lat: float = Field(ge=-12.490395, le=-11.559600)
+    lng: float = Field(ge=-77.341834, le=-76.508166)
 
 
 class Mobile(Point):
@@ -37,7 +37,6 @@ class Scenario(BaseModel):
     model_config = ConfigDict(extra='forbid', allow_inf_nan=False)
     vehicles: list[Mobile] = Field(min_length=1, max_length=15)
     orders: list[Delivery] = Field(min_length=1, max_length=50)
-    speedKmh: float = Field(default=25, ge=5, le=100)
     settings: Settings = Field(default_factory=Settings)
 
     @model_validator(mode='after')

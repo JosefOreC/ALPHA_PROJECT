@@ -53,7 +53,7 @@ Los resultados de Lighthouse actuales están publicados con sus valores completo
 
 El administrador dispone de todos los permisos conocidos; el resto de los roles conserva sus restricciones. El flujo de pedidos ofrece confirmación administrativa de entregas en camino y el de incidencias permite seleccionar pedidos asignados. Administración incorpora el almacén de origen, consumos por combustible y una tabla de responsabilidades y accesos calculada desde la política de permisos.
 
-El laboratorio `/?vista=ruta-demo` permite definir móviles y pedidos ficticios con posiciones X/Y, capacidades y ventanas. El cálculo usa el motor de asignación de la operación sobre costos sintéticos euclidianos; no consulta ni modifica PostgreSQL. Los recorridos del laboratorio no representan calles reales. [Organización del frontend y uso](../../../src/frontend/README.md#organización-del-código-y-nuevos-flujos) · [API y migración](../../../src/backend/README.md#flujos-administrativos-y-simulación).
+La versión original del laboratorio utilizó un plano X/Y. Por solicitud posterior, la versión vigente permite colocar móviles y pedidos punto a punto sobre Lima y usa el proveedor vial de la operación para dibujar rutas por calles. Los escenarios continúan separados de PostgreSQL. [Cambio vigente y evidencias](evidencias/ruta-demo-lima/README.md). [Organización del frontend y uso](../../../src/frontend/README.md#organización-del-código-y-nuevos-flujos) · [API y migración](../../../src/backend/README.md#flujos-administrativos-y-simulación).
 
 Validación local del 20/11/2026:
 
@@ -139,3 +139,7 @@ La equivalencia PostgreSQL/PostGIS del criterio MongoDB y la sustitución auxili
 ## Dashboard de objetivos del proyecto
 
 [Diseño, significado de los indicadores, capturas y validación](evidencias/dashboard-objetivos/README.md). Actualización solicitada después de la aceptación de las tres historias; conserva sus actas y las exclusiones de SUS y Render.
+
+## Ruta demo sobre el mapa de Lima
+
+[Selección punto a punto, cálculo vial, límites y capturas](evidencias/ruta-demo-lima/README.md). Sustituye el plano X/Y del laboratorio; las actas y evidencias anteriores conservan el alcance de su fecha.

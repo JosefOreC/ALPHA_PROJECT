@@ -47,7 +47,7 @@ El administrador tiene todos los permisos conocidos, incluida la generación y a
 
 En **Administración → Almacén**, configura el origen. En **Parámetros del algoritmo**, registra los factores y consumos utilizados por la organización. **Roles y accesos** muestra las responsabilidades, módulos y acciones según la política compartida.
 
-**Ruta demo** (`/?vista=ruta-demo`) acepta hasta 15 móviles y 50 pedidos sintéticos, con posiciones X/Y en kilómetros, capacidad, peso y ventanas desde las 08:00. Usa el mismo motor de asignación e inserción/2-opt, sobre una matriz euclidiana sintética; muestra recorridos y secuencias sin leer ni escribir la base de datos. No representa calles ni tráfico real. Los errores de factibilidad conservan las entradas para corregirlas.
+**Ruta demo** (`/?vista=ruta-demo`) permite colocar hasta 15 móviles y 50 pedidos ficticios punto a punto sobre el mapa de Lima. «Colocar móvil» fija un origen y «Colocar pedido» un destino; se pueden arrastrar, seleccionar desde la lista y ajustar capacidad, peso y ventanas desde las 08:00. El mismo motor y proveedor vial de la operación calculan los recorridos por calles y los dibujan en ese mapa, con colores por móvil y números de parada. «Cancelar cálculo» conserva el escenario; los errores no se sustituyen por líneas rectas. No se leen ni escriben entidades operativas. [Alcance, pruebas y capturas reales](../../docs/03%20Implementaci%C3%B3n/Sprint%204/evidencias/ruta-demo-lima/README.md).
 
 `PLAYWRIGHT_PORT` permite ejecutar la suite de interfaz en un puerto libre. El valor predeterminado es 5178. En Windows se usa Edge por defecto; el contenedor de CI utiliza Chromium. La suite integrada conserva Chromium, Firefox y WebKit.
 

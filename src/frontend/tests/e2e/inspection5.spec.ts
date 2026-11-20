@@ -200,7 +200,8 @@ test('administrador: permisos completos, tabla de roles y simulación por interf
   await page.getByRole('link', { name: 'Rutas', exact: true }).click()
   await expect(page.getByRole('tab', { name: 'Generar rutas', exact: true })).toBeVisible()
   await page.getByRole('link', { name: 'Ruta demo', exact: true }).click()
-  await page.getByLabel('Movil-1 capacity').fill('80')
+  await page.getByRole('button', { name: 'Cargar ejemplo en Lima' }).click()
+  await page.getByLabel('Capacidad de Movil-1').fill('80')
   const calculation = page.waitForResponse(response => response.url().endsWith('/api/routes/simulate') && response.request().method() === 'POST')
   await page.getByRole('button', { name: 'Calcular rutas de prueba' }).click()
   const response = await calculation
