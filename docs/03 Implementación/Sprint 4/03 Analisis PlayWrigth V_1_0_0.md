@@ -189,6 +189,7 @@ El equipo repitió el sondeo con una cuenta de Planificación tras desplegar la 
 | Pedidos antes de la optimización | 790,3–952,6 ms | 818,1 ms | 0/5 |
 | Pedidos con la versión optimizada, primera serie | 300,8–693,4 ms | 383,6 ms | 4/5 |
 | Pedidos con la versión optimizada, segunda serie | 296,0–883,7 ms | 312,9 ms | 3/5 |
+| Pedidos con el diagnóstico activo | 295,2–421,0 ms | 378,9 ms | 5/5 |
 | Salud, primera consulta de la nueva serie | 667,3–667,3 ms | 667,3 ms | 0/1 |
 | Salud, seguimiento de la nueva serie | 222,6–271,7 ms | 250,4 ms | 5/5 |
 
@@ -204,7 +205,19 @@ La API añade la cabecera `Server-Timing` a las respuestas correctas de Salud y 
 
 Desde la raíz del repositorio, ejecutar `python scripts/measure_render_latency.py --diagnostico --salida latencia-render-diagnostico.csv` con una cuenta de Planificación. El CSV separa el tiempo total, la espera hasta recibir las cabeceras y la duración que informó la API. La diferencia entre los dos últimos valores incluye la conexión, el tránsito y las esperas fuera de la aplicación. El campo de tiempo de API queda vacío si el servidor todavía no devuelve la cabecera. En la entrega se publican los tiempos de respuesta sin marcas horarias.
 
-El [despliegue del diagnóstico](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/44787470623) publicó la instrumentación del [PR #56](https://github.com/JosefOreC/ALPHA_PROJECT/pull/56). El medidor recibió el tiempo de la API en las seis respuestas HTTP 200 del sondeo público de salud. La primera consulta tardó **691,0 ms** en total y **1,4 ms** dentro de la API. En las otras cinco, el tiempo total estuvo entre **241,7 y 255,0 ms** y el tiempo en la API entre **0,9 y 5,0 ms**. La demora observada en la primera consulta se concentró fuera del tramo medido por la aplicación. Falta la nueva serie autenticada para determinar el origen de los picos de Pedidos.
+El [despliegue del diagnóstico](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/44787470623) publicó la instrumentación del [PR #56](https://github.com/JosefOreC/ALPHA_PROJECT/pull/56). El medidor recibió el tiempo de la API en las seis respuestas HTTP 200 del sondeo público de salud. La primera consulta tardó **691,0 ms** en total y **1,4 ms** dentro de la API. En las otras cinco, el tiempo total estuvo entre **241,7 y 255,0 ms** y el tiempo en la API entre **0,9 y 5,0 ms**. La demora observada en la primera consulta se concentró fuera del tramo medido por la aplicación. El equipo ejecutó después el mismo diagnóstico con una cuenta de Planificación.
+
+### Resultado autenticado del diagnóstico
+
+Las once consultas devolvieron HTTP 200. Las cinco de Pedidos y las cinco de seguimiento de salud cumplieron el umbral de **menos de 500 ms**.
+
+| Consulta | Tiempo total del cliente | Tiempo en la API | Espera fuera de la API hasta recibir cabeceras | Bajo 500 ms |
+|---|---:|---:|---:|---:|
+| Salud, primera consulta | 625,0 ms | 1,2 ms | 623,2 ms | 0/1 |
+| Salud, seguimiento | 216,1–233,5 ms | 0,9–1,8 ms | 214,1–232,2 ms | 5/5 |
+| Pedidos | 295,2–421,0 ms | 49,0–143,5 ms | 221,5–300,1 ms | 5/5 |
+
+La demora de la primera consulta de salud se concentró fuera del tramo medido por la API. En Pedidos, la serie más reciente acredita el umbral en las cinco muestras observadas. Las series anteriores se conservan como evidencia de variación. Esas consultas no registraban tiempo de la API, por lo que su causa sigue sin determinarse. [CSV del diagnóstico](evidencias/inspeccion05/latencia-render-diagnostico.csv).
 
 ## Corte técnico de main del 20/11/2026
 
