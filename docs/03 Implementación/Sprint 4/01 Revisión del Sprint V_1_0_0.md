@@ -26,6 +26,15 @@ El banco técnico ejecutó el acceso, el registro de pedidos y la confirmación 
 
 En la evaluación de uso se recogieron cinco cuestionarios de los perfiles de Conductor, Operador y Supervisión. El promedio SUS fue 72,5. Las observaciones sobre el acceso y la lectura de rutas se incorporan al informe para orientar la siguiente revisión. El cuestionario aporta retroalimentación de uso y el acta de la reunión queda como evidencia independiente. [Informe de usabilidad](04%20Usabilidad%20V_1_0_0.md).
 
+### Guion para la sesión de cierre
+
+| Paso | Criterio de aceptación que se mostrará | Evidencia que se conservará |
+|---|---|---|
+| Registrar un pedido desde Operación | El pedido aparece en el listado y se puede consultar con la dirección, la ventana y el peso ingresados. | Captura del pedido y nota sobre el rol usado. |
+| Generar o consultar la ruta desde Planificación | La propuesta aprobada conserva el conductor y el vehículo. El mapa distingue los recorridos al seleccionar dos conductores. | Captura de la asignación y del mapa, con el commit que se demostró. |
+| Confirmar la entrega desde la cuenta de Conductor | El pedido figura como entregado al volver a consultarlo y la vista actualiza el tramo confirmado. | Captura del cambio de estado y del avance en el mapa. |
+| Revisar el incremento con los participantes | El responsable de producto registra la decisión sobre cada historia y acuerda el tratamiento de las observaciones. | Acta con fecha, rol de los asistentes, decisiones y enlace a la grabación o a las capturas. |
+
 ## Pendientes
 
 | Entrega de cierre | Situación y siguiente verificación |

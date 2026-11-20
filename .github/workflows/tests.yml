@@ -53,8 +53,6 @@ jobs:
           python scripts/migrate.py
       - name: Unitarias e integración backend
         run: python -m pytest src/backend/tests -q --junitxml=reports/tests/backend-inspection5.xml
-      - name: Unitarias frontend
-        run: npm run test:coverage --prefix src/frontend
       - run: npm run build --prefix src/frontend
       - name: Instalar tres navegadores
         working-directory: src/frontend
@@ -67,6 +65,8 @@ jobs:
           trap 'kill "$api_pid" 2>/dev/null || true' EXIT
           curl --fail --retry 20 --retry-all-errors --retry-delay 1 http://127.0.0.1:8000/health
           npx playwright test --config playwright.e2e.config.ts
+      - name: Unitarias frontend
+        run: npm run test:coverage --prefix src/frontend
       - name: Subir evidencias
         if: always()
         uses: actions/upload-artifact@v4
@@ -76,4 +76,5 @@ jobs:
             reports/tests/backend-inspection5.xml
             src/frontend/playwright-report/
             src/frontend/test-results/
+            src/frontend/coverage/coverage-summary.json
             ${{ runner.temp }}/inspection5-api.log

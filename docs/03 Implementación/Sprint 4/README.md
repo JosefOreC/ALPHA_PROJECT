@@ -35,7 +35,7 @@ Este sprint reúne la optimización de consultas, paginación, recursos visuales
 
 ## Estado de la Inspección 5
 
-Corte de verificación del 20/11/2026. Los requisitos proceden de la consigna de Inspección 5. Para ordenar el cierre se tomó del material de clase *TP_2 19 Documentos de control y cierre proyecto* la separación entre evidencia técnica, acciones correctivas y aceptación del incremento.
+Corte de verificación del 20/11/2026. Los requisitos proceden de la consigna de Inspección 5. Para ordenar el cierre se tomó del material de clase *TP_2 19 Documentos de control y cierre proyecto* el registro de desviaciones y acciones correctivas (p. 17) y el respaldo documental de la transición operativa (p. 24).
 
 | Criterio | Peso | Evidencia disponible | Condición pendiente para acreditar el nivel superior |
 |---|---:|---|---|
@@ -46,6 +46,8 @@ Corte de verificación del 20/11/2026. Los requisitos proceden de la consigna de
 | Arquitectura y trazabilidad | 4 | Frontend y backend separados, documentos en Markdown, enlaces de ida y vuelta, y matrices de estándares y emisiones. [Arquitectura y estándares](04%20Est%C3%A1ndares%20arquitectura%20y%20gu%C3%ADa%20de%20desarrollo%20verde%20V_1_2_0.md) · [Validación de enlaces](../../../scripts/check_docs.py). | Confirmar el estado de los badges de la entrega junto con las ejecuciones de GitHub Actions. |
 
 La primera ejecución remota de CI aprobó el control documental, el análisis de código y el empaquetado. Tests detectó cuatro fallos del arnés de sesión porque el cliente de prueba usaba HTTP y la aplicación emite cookies seguras. El cliente de pruebas se ajustó a HTTPS, de acuerdo con el entorno de entrega. [CI del corte 376ec5b](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/44678766588) · [Primera ejecución de Tests](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/44678766589).
+
+En el corte siguiente, CI volvió a aprobar y Tests verificó **415 pruebas de backend** y **460 pruebas de frontend**. El control de cobertura de ramas detuvo el flujo en **86,52 %**, frente al **90 %** exigido. Se adelantó Playwright en la secuencia para conservar sus reportes aun si la cobertura impide que Tests apruebe. El umbral se conserva. [CI posterior al ajuste HTTPS](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/44679148650) · [Resultado de Tests y cobertura](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/44679148756).
 
 ## Resultados al cierre
 
