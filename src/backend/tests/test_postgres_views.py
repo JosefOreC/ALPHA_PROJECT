@@ -242,6 +242,22 @@ def test_generate_preview_approve_and_reload_routes_with_real_postgis(database_c
     assert next(row for row in route_map.json()['orders'] if row['id']==order_id)['status']=='EN_CAMINO'
     assert client.get('/api/routes/scope').json()['pendingOrders']==0
     assert client.post('/api/routes/proposal',headers=headers,json=settings).status_code==422
+
+    extra = client.post('/api/pedidos',headers=headers,json={**payload,'customer':'Second stop',
+        'latitude':-12.041,'longitude':-76.949})
+    assert extra.status_code == 201, extra.text
+    extra_id = extra.json()['id']
+    option = client.get('/api/routes/assignment-options')
+    assert option.status_code == 200 and route_id in {item['id'] for item in option.json()}
+    append = f'/api/routes/{route_id}/orders'
+    assert client.post(append,json={'order_id':extra_id}).status_code == 403
+    added = client.post(append,headers=headers,json={'order_id':extra_id})
+    assert added.status_code == 204, added.text
+    assert client.post(append,headers=headers,json={'order_id':extra_id}).status_code == 422
+    stops = conn.execute('SELECT pedido_id FROM ruta_pedido WHERE ruta_id=%s ORDER BY orden_entrega',(route_id,)).fetchall()
+    assert [str(row['pedido_id']) for row in stops] == [order_id, extra_id]
+    assert client.get(f'/api/pedidos/{extra_id}').json()['assigned'] is True
+
     # El conductor consulta la ruta desde su propia sesión y los datos guardados.
     assert client.delete('/api/session',headers=headers).status_code==204
     logged = client.post('/api/session',json={'email':email,'password':'Routing-test-password'})
@@ -249,6 +265,7 @@ def test_generate_preview_approve_and_reload_routes_with_real_postgis(database_c
     assigned = client.get('/api/conductor/ruta')
     assert assigned.status_code==200, assigned.text
     assert assigned.json()['stops'][0]['order_id']==order_id
+    assert assigned.json()['stops'][1]['order_id']==extra_id
     driver_headers = {'X-CSRF-Token': logged.json()['csrf_token']}
     assert client.post(dispatch, headers=driver_headers).status_code == 403
     delivered = client.post(f'/api/conductor/pedidos/{order_id}/confirmacion', headers=driver_headers)

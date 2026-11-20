@@ -6,8 +6,8 @@ from uuid import uuid4
 from zoneinfo import ZoneInfo
 from psycopg import sql
 from domain.access_control import canonical_role
-from domain.emissions import FUEL_UNITS, REFERENCE_CONSUMPTION
-from infrastructure.road_routing import road_proposal as propose
+from domain.emissions import FUEL_UNITS, REFERENCE_CONSUMPTION, emission_rate, fuel_used
+from infrastructure.road_routing import road_extension, road_proposal as propose
 from infrastructure.persistence.database import connection, rows
 from infrastructure.security import hash_password
 from infrastructure.persistence.postgres_dashboard import DISTRICTS, PostgresDashboard
@@ -335,6 +335,78 @@ class PostgresPortal:
                        'co2_kg':None} for order in orders]}
         result['elapsedSeconds'] = round(time.monotonic()-started,2)
         return result, fleet, depot
+
+
+    def active_route_choices(self):
+        return [{'id': str(row['ruta_id']), 'driver': row['nombre_completo'], 'plate': row['placa']}
+                for row in self.route_rows() if row['estado'] in ('GENERADA', 'EN_CURSO')]
+
+    def append_order(self, route_id, order_id, actor):
+        with connection() as conn, conn.transaction():
+            conn.execute('LOCK TABLE pedidos,vehiculos,conductores,usuarios,almacenes,parametros_algoritmo,factores_emision,rutas IN SHARE ROW EXCLUSIVE MODE')
+            query = lambda statement, params=(): conn.execute(statement, params).fetchall()
+            start = now()
+            route = conn.execute(
+                """SELECT r.*, v.tipo_combustible, v.capacidad_kg, a.latitud, a.longitud
+                   FROM rutas r JOIN vehiculos v USING(vehiculo_id) JOIN almacenes a USING(almacen_id)
+                   JOIN conductores c ON c.conductor_id=r.conductor_id AND c.vehiculo_id=r.vehiculo_id
+                   JOIN usuarios u USING(usuario_id)
+                   WHERE r.ruta_id=%s AND r.fecha_operacion=%s AND r.estado IN ('GENERADA','EN_CURSO')
+                     AND c.estado='ACTIVO' AND u.estado='ACTIVO' AND v.estado IN ('DISPONIBLE','EN_RUTA')""",
+                (route_id, start.date()),
+            ).fetchone()
+            if not route:
+                raise ValueError('Selecciona una ruta activa de hoy con conductor y vehículo disponibles.')
+            order = conn.execute(
+                """SELECT * FROM pedidos WHERE pedido_id=%s AND estado='PENDIENTE'
+                   AND conductor_id IS NULL AND latitud IS NOT NULL AND longitud IS NOT NULL
+                   AND (ventana_inicio AT TIME ZONE 'America/Lima')::date=%s""",
+                (order_id, start.date()),
+            ).fetchone()
+            if not order:
+                raise ValueError('El pedido debe estar pendiente, sin asignar y tener coordenadas y fecha de entrega de hoy.')
+            previous = query("""SELECT p.*,rp.orden_entrega FROM ruta_pedido rp JOIN pedidos p USING(pedido_id)
+                                  WHERE rp.ruta_id=%s ORDER BY rp.orden_entrega""",(route_id,))
+            sequence = [item for item in previous if item['estado'] != 'CANCELADO'] + [order]
+            if len(sequence) > 150:
+                raise ValueError('La ruta admite hasta 150 paradas.')
+            config = self.parameters(query)
+            load = sum(float(item['peso_kg']) for item in sequence if item['estado'] != 'ENTREGADO')
+            if load > float(route['capacidad_kg']) * config['maxLoadPercent'] / 100:
+                raise ValueError('El pedido supera la capacidad disponible del vehículo.')
+            factors = {row['combustible']: {'factor': float(row['factor_kg_co2']),
+                        'consumption': float(row['consumo_por_km']) if row['consumo_por_km'] is not None else None}
+                       for row in query('SELECT combustible,factor_kg_co2,consumo_por_km FROM factores_emision')}
+            fuel = route['tipo_combustible']
+            rate, diesel = emission_rate(fuel,factors), emission_rate('DIESEL',factors)
+            if rate is None or diesel is None:
+                raise ValueError('Configura el consumo y el factor del vehículo y del diésel antes de agregar pedidos.')
+            depot = (float(route['latitud']), float(route['longitud']))
+            actual, trip = road_extension(sequence,depot,route['ruteo'] or {},config,start)
+            km = trip['km']
+            energy = fuel_used(fuel,km,factors)
+            geometry = json.dumps({'type':'LineString','coordinates':[[p['lng'],p['lat']] for p in actual['path']]})
+            conn.execute(
+                """UPDATE rutas SET distancia_total_km=%s,tiempo_estimado_min=%s,combustible_estimado_l=%s,
+                       energia_estimada=%s,unidad_energia=%s,co2_estimado_kg=%s,co2_base_kg=%s,
+                       geometria=ST_SetSRID(ST_GeomFromGeoJSON(%s),4326),ruteo=%s::jsonb,version=version+1
+                   WHERE ruta_id=%s""",
+                (round(km,2),round(trip['minutes']),energy['amount'] if energy['unit']=='L' else None,
+                 energy['amount'],energy['unit'],round(km*rate,2),round(km*diesel,2),geometry,
+                 json.dumps(actual['routing']),route_id),
+            )
+            conn.execute('DELETE FROM tramos WHERE ruta_id=%s',(route_id,))
+            for index, leg in enumerate(actual['legs'],1):
+                origin,destination = leg['origin'],leg['destination']
+                conn.execute("""INSERT INTO tramos(tramo_id,ruta_id,orden_tramo,latitud_origen,longitud_origen,
+                    latitud_destino,longitud_destino,distancia_km,tiempo_estimado_min,co2_estimado_kg)
+                    VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""",(uuid4(),route_id,index,origin['lat'],
+                    origin['lng'],destination['lat'],destination['lng'],round(leg['km'],2),
+                    round(leg['minutes']),round(leg['km']*rate,2)))
+            next_stop = max((item['orden_entrega'] for item in previous),default=0)+1
+            conn.execute('INSERT INTO ruta_pedido(ruta_id,pedido_id,orden_entrega) VALUES (%s,%s,%s)',(route_id,order_id,next_stop))
+            conn.execute('UPDATE pedidos SET conductor_id=%s,version=version+1 WHERE pedido_id=%s',(route['conductor_id'],order_id))
+            audit(conn,actor,'AGREGAR_PEDIDO_RUTA','pedidos',order_id,{'ruta_id':str(route_id)})
 
     def start_delivery(self, order_id, actor):
         with connection() as conn:

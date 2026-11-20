@@ -9,6 +9,9 @@ import type { ModuleId } from '../shared/ui'
 import { OrderForm } from './OrderForm'
 import { CancelDialog } from './orders/CancelDialog'
 import { OrderDetail } from './orders/OrderDetail'
+import { AddToRoute } from './orders/AddToRoute'
+import { useActor } from './session/SessionState'
+import { can } from '../domain/accessControl'
 import { requestJson } from '../infrastructure/httpClient'
 import { tripOf } from './orders/tripState'
 
@@ -33,6 +36,7 @@ async function loadAll(service: Management): Promise<ManagedOrder[]> {
 const message = (reason: unknown, fallback: string) => (reason instanceof Error ? reason.message : fallback)
 
 export function OrderManagementView({ service, onNavigate }: { service: Management; onNavigate?: (id: ModuleId, href: string) => void }) {
+  const canExtendRoutes = can(useActor('admin'), 'routes.generate')
   const [screen, setScreen] = useState<Screen>('board')
   const [orders, setOrders] = useState<ManagedOrder[]>([])
   const [permissions, setPermissions] = useState<OrderPermissions>({ can_write: false })
@@ -306,6 +310,14 @@ export function OrderManagementView({ service, onNavigate }: { service: Manageme
                     onEdit={() => { setNotice(''); setSelectedId(selected.id); setScreen('edit') }}
                     onCancel={() => openCancel(selected)}
                     onDispatch={() => void dispatch(selected)}
+                    assignment={canExtendRoutes && selected.status === 'PENDIENTE' && !selected.assigned
+                      && selected.latitude != null && selected.longitude != null ? (
+                      <AddToRoute key={selected.id} orderId={selected.id} onAssigned={() => {
+                        setSelectedId(selected.id)
+                        setNotice('Pedido agregado a la ruta del conductor.')
+                        refresh()
+                      }} />
+                    ) : undefined}
                     onRefresh={() => void reconsult(selected)}
                   />
                 ) : null}

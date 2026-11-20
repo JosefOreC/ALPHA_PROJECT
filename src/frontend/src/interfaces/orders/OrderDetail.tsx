@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import { canEdit, formatKg, formatLima, formatWindow, statusLabels } from '../../domain/managedOrder'
 import type { ManagedOrder } from '../../domain/managedOrder'
 import { TripStatus } from '../../shared/ui'
@@ -10,10 +11,11 @@ type OrderDetailProps = {
   onEdit: () => void
   onCancel: () => void
   onDispatch?: () => void
+  assignment?: ReactNode
   onRefresh: () => void
 }
 
-export function OrderDetail({ order, canWrite, busy, onEdit, onCancel, onDispatch, onRefresh }: OrderDetailProps) {
+export function OrderDetail({ order, canWrite, busy, onEdit, onCancel, onDispatch, assignment, onRefresh }: OrderDetailProps) {
   const editable = canEdit(order)
   return (
     <article className="eco-sheet" aria-label="Detalle del pedido seleccionado">
@@ -66,6 +68,7 @@ export function OrderDetail({ order, canWrite, busy, onEdit, onCancel, onDispatc
         </button>
         {!editable ? <span className="eco-muted">Este pedido ya no se puede modificar.</span> : null}
       </div>
+      {assignment}
     </article>
   )
 }

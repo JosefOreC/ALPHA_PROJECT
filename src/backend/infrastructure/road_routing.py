@@ -167,3 +167,29 @@ def road_proposal(orders,fleet,depot,factors,config,settings,start,router=None):
     result['co2SavedPercent'] = round((base-result['co2Kg'])/base*100,1)+0.0 if base else None
     result['windowCompliance'] = round(compliant/len(orders)*100,1)
     return result
+
+def road_extension(sequence, depot, routing, config, start):
+    """Keep the existing stop order and recalculate the planned road path for an added stop."""
+    returning = routing.get('returnToDepot',True)
+    mode = routing.get('mode','shortest')
+    if mode not in ('shortest','fastest','balanced'):
+        mode = 'shortest'
+    points = [depot]+[position(order) for order in sequence]+([depot] if returning else [])
+    router = ValhallaRouter(min(float(config.get('maxSeconds',45)),45))
+    actual = router.route(points,mode,config.get('co2Weight',70))
+    network = RoadNetwork({
+        ((leg['origin']['lat'],leg['origin']['lng']),(leg['destination']['lat'],leg['destination']['lng'])):
+        (leg['km'],leg['minutes']) for leg in actual['legs']
+    })
+    planned = simulate(sequence,depot,start,False,network,returning)
+    first_open = next(index for index,order in enumerate(sequence) if order['estado'] != 'ENTREGADO')
+    remaining = sequence[first_open:]
+    after = position(sequence[first_open-1]) if first_open else depot
+    window_check = simulate(remaining,after,start,False,network,False)
+    if planned is None or window_check is None or any(
+        arrival > order['ventana_fin'] for order,arrival in zip(remaining,window_check['arrivals'])
+        if order['estado'] != 'ENTREGADO'
+    ):
+        raise ValueError('La ampliación no cumple las ventanas de las paradas pendientes.')
+    actual['routing'].update(returnToDepot=returning,baseline='Mismo recorrido vial con diésel')
+    return actual, planned

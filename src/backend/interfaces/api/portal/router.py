@@ -176,6 +176,20 @@ def proposal(payload:RouteSettings,portal=Depends(get_portal)):
 def approve_proposal(payload:ApproveProposal,identity=Depends(require_permission('routes.generate')),portal=Depends(get_portal)):
     return portal.approve_proposal(payload.settings.model_dump(),payload.fingerprint,identity.subject_id)
 
+class AppendRouteOrder(BaseModel):
+    order_id: UUID
+
+
+@router.get('/routes/assignment-options',dependencies=[Depends(require_permission('routes.generate'))])
+def route_assignment_options(portal=Depends(get_portal)):
+    return portal.active_route_choices()
+
+
+@router.post('/routes/{route_id}/orders',status_code=204,dependencies=[Depends(protect_mutation)])
+def append_route_order(route_id: UUID,payload: AppendRouteOrder,identity=Depends(require_permission('routes.generate')),portal=Depends(get_portal)):
+    portal.append_order(route_id,payload.order_id,identity.subject_id)
+
+
 @router.post('/pedidos/{order_id}/despacho',status_code=204,dependencies=[Depends(protect_mutation)])
 def dispatch_order(order_id: UUID,identity=Depends(require_permission('orders.update')),portal=Depends(get_portal)):
     portal.start_delivery(order_id, identity.subject_id)
