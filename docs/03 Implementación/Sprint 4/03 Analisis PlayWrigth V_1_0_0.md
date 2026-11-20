@@ -14,7 +14,7 @@ La [configuración e2e](../../../src/frontend/playwright.e2e.config.ts) ejecuta 
 
 ## Rendimiento y disponibilidad
 
-Cada ejecución registra TTFB de navegación, FCP y LCP cuando el motor expone las entradas, además de la latencia HTTP para salud y listado de pedidos. El valor nulo indica ausencia de una entrada de rendimiento en la captura. Para la medición final se reportarán muestras, mediana y máximo por navegador y se contrastará el tiempo de respuesta de API con el objetivo de 500 ms. La [auditoría histórica](06%20Auditor%C3%ADa%20consolidada%20de%20m%C3%A9tricas%20V_1_0_0.md) conserva sus condiciones y resultados Lighthouse.
+Cada ejecución registra TTFB de navegación, FCP y LCP cuando el motor expone las entradas, además de la latencia HTTP para salud y listado de pedidos. El valor nulo indica ausencia de una entrada de rendimiento en la captura. La evidencia consigna las muestras por navegador y compara las latencias observadas con el objetivo de 500 ms. La [auditoría histórica](06%20Auditor%C3%ADa%20consolidada%20de%20m%C3%A9tricas%20V_1_0_0.md) conserva sus condiciones y resultados Lighthouse.
 
 El workflow de despliegue comprueba la app sobre HTTPS y registra observaciones de disponibilidad. El porcentaje observado corresponde a respuestas correctas divididas por comprobaciones programadas. Una ventana de comprobación posterior al despliegue representa únicamente ese intervalo.
 
@@ -42,7 +42,7 @@ Las cuentas nuevas usan la contraseña guardada en Render. Cambiar la variable d
 
 ### Verificación local del paquete de despliegue
 
-El 19/11/2026 se construyó la imagen Docker y se verificó el primer arranque contra una base PostgreSQL/PostGIS 17 inicialmente vacía. La aplicación respondió en `/health`, sirvió el frontend e inició sesión con el administrador creado durante el arranque. Se verificó la cookie segura y se repitió el arranque con la misma base y sin reenviar las credenciales de creación del administrador. Las 43 pruebas de scripts de proyecto también aprobaron. Estos resultados corresponden al contenedor local. La comprobación de la URL pública se detalla en el apartado siguiente. La ejecución en GitHub Actions sigue pendiente.
+El 19/11/2026 se construyó la imagen Docker y se verificó el primer arranque contra una base PostgreSQL/PostGIS 17 inicialmente vacía. La aplicación respondió en `/health`, sirvió el frontend e inició sesión con el administrador creado durante el arranque. Se verificó la cookie segura y se repitió el arranque con la misma base y sin reenviar las credenciales de creación del administrador. Las 43 pruebas de scripts de proyecto también aprobaron. Estos resultados corresponden al contenedor local. La comprobación de la URL pública se detalla en el apartado siguiente. La ejecución de la rama de entrega se registra en el índice del sprint.
 
 ## Estado de evidencia
 
@@ -62,10 +62,37 @@ La corrida adicional del 19/11/2026 también aprobó los nueve casos. El nuevo e
 
 El 19/11/2026, entre las 15:43:15 y las 15:43:37 (hora de Lima), la [URL pública](https://ecologistica-lima-qolz.onrender.com/) entregó el frontend como HTML con HTTP 200. Las cinco consultas consecutivas a `/health` regresaron HTTP 200 y estado `ok` (**5/5**), con tiempos totales de **243,7 a 645,7 ms**. Dos de las cinco superaron 500 ms. Se trata de una ventana breve posterior al despliegue manual, sin autenticación ni medición de endpoints operativos en Render. [Recibo de disponibilidad](evidencias/inspeccion05/disponibilidad-render.json).
 
+### Comprobación pública del 20/11/2026
+
+Se abrieron tres contextos nuevos por motor en Playwright, sin sesión iniciada, con viewport de 1280 × 900 y los tres motores en paralelo desde Windows. Entre las **00:03:27 y 00:03:43**, hora de Lima, la portada mostró el encabezado de acceso en **9/9** cargas con HTTP 200. Después de cada carga se consultó `/health`. Las **9/9** respuestas devolvieron HTTP 200 y `status: ok`. La versión visible del frontend no expone el commit desplegado. [Portada en Render](https://ecologistica-lima-qolz.onrender.com/) · [Endpoint de salud](https://ecologistica-lima-qolz.onrender.com/health).
+
+Los valores de la tabla son **mediana / máximo**, en milisegundos. El TTFB equivale a `responseStart` de la navegación. FCP y LCP se recogieron en la página de acceso. La latencia de salud se midió desde el cliente Playwright.
+
+| Motor | TTFB | FCP | LCP | GET /health |
+|---|---:|---:|---:|---:|
+| Chromium 153.0.8010.12 | 233,4 / 7429,5 | 1296 / 7840 | 1296 / 7840 | 222,552 / 257,617 |
+| Firefox 155.0 | 258 / 699 | 1058 / 1956 | 1058 / 1956 | 244,504 / 248,818 |
+| WebKit 26.6 | 180 / 357 | 786 / 1167 | 786 / 1167 | 232,978 / 283,874 |
+
+| Motor | Muestra | TTFB (ms) | FCP (ms) | LCP (ms) | GET /health (ms) |
+|---|---:|---:|---:|---:|---:|
+| chromium | 1 | 7429,5 | 7840 | 7840 | 207,38 |
+| chromium | 2 | 214,9 | 672 | 672 | 222,552 |
+| chromium | 3 | 233,4 | 1296 | 1296 | 257,617 |
+| firefox | 1 | 699 | 1956 | 1956 | 248,818 |
+| firefox | 2 | 258 | 1058 | 1058 | 244,504 |
+| firefox | 3 | 214 | 551 | 551 | 220,619 |
+| webkit | 1 | 357 | 1167 | 1167 | 283,874 |
+| webkit | 2 | 180 | 786 | 786 | 232,978 |
+| webkit | 3 | 175 | 729 | 729 | 220,554 |
+
+Las nueve comprobaciones de salud de esta serie quedaron por debajo de 500 ms. En un sondeo HTTP previo, entre las 23:59:25 y las 23:59:38 del 19/11/2026, las cinco consultas de salud devolvieron HTTP 200 y una tardó **650,545 ms**. La primera navegación de Chromium de la serie Playwright presentó un TTFB de **7429,5 ms**. La causa de esa demora quedó sin determinar. Estas ventanas describen el acceso público y la disponibilidad observada. La latencia del listado de pedidos en Render sigue por comprobar con una sesión de prueba autorizada.
+
 ## Control de versiones
 
 | Versión | Fecha | Cambio |
 |---|---|---|
 | V_1_0_0 | 19/11/2026 | Primera edición para la Inspección 5. |
+| V_1_0_1 | 20/11/2026 | Medición de acceso público y salud en tres motores de navegador. |
 
-[← Volver al README principal](../../../README.md)
+[← Volver al README principal](../../../README.md) · [Volver al Sprint 4](README.md)

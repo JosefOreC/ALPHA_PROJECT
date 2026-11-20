@@ -8,7 +8,7 @@
 
 **Actualización:** 13/11/2026, America/Lima (UTC−05:00).
 
-**Alcance de publicación:** actualización de documentación Markdown. Las implementaciones y las mediciones descritas corresponden al incremento local auditado; sus archivos productivos y nuevos artefactos no se incorporan con esta publicación.
+Este índice reúne la auditoría técnica y las evidencias de la Inspección 5. Los resultados históricos se conservan con su entorno y su versión.
 
 ## Objetivo y alcance
 
@@ -32,6 +32,18 @@ Este sprint reúne la optimización de consultas, paginación, recursos visuales
 - [Retrospectiva del sprint](02%20Retrospectiva%20del%20Sprint%20V_1_0_0.md)
 - [Playwright, rendimiento y disponibilidad](03%20Analisis%20PlayWrigth%20V_1_0_0.md)
 - [Usabilidad SUS](04%20Usabilidad%20V_1_0_0.md)
+
+## Estado de la Inspección 5
+
+Corte de verificación del 20/11/2026. Los requisitos proceden de la consigna de Inspección 5. Para ordenar el cierre se tomó del material de clase *TP_2 19 Documentos de control y cierre proyecto* la separación entre evidencia técnica, acciones correctivas y aceptación del incremento.
+
+| Criterio | Peso | Evidencia disponible | Condición pendiente para acreditar el nivel superior |
+|---|---:|---|---|
+| Gestión ágil | 4 | Review y retrospectiva con la estructura solicitada. Las tres historias identificadas en el backlog enlazan a cambios y pruebas. La retrospectiva deja responsables propuestos y criterios medibles. [Review](01%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md) · [Retrospectiva](02%20Retrospectiva%20del%20Sprint%20V_1_0_0.md). | Conciliar los tickets y estados de Jira y adjuntar el acta y la evidencia multimedia de la demostración ante stakeholders. |
+| Calidad con Playwright | 5 | Nueve casos integrados aprobados en tres motores, recuperación HTTP 503, tiempos locales y comprobaciones de la URL pública. [Informe y captura](03%20Analisis%20PlayWrigth%20V_1_0_0.md). | Vincular la ejecución integrada al corte final. Comprobar el umbral de 500 ms en tráfico real de la API operativa, con sesiones de prueba autorizadas. |
+| Usabilidad | 3 | Cinco cuestionarios completos, matriz y subtotales reproducibles, **72,5/100 (C+)**. El informe documenta el ingreso y el seguimiento de rutas y vincula los cambios verificables. [Informe SUS](04%20Usabilidad%20V_1_0_0.md). | Registrar tareas, versión y dispositivo en una siguiente aplicación para medir el efecto de los cambios. |
+| Automatización CI/CD | 4 | CI y Tests configurados para validar la rama de entrega. Tests conserva los reportes como artefactos. Deploy production se activa desde `main` tras superar Tests. La URL de Render respondió en las observaciones registradas. [CI](../../../.github/workflows/ci.yml) · [Tests](../../../.github/workflows/tests.yml) · [Deploy](../../../.github/workflows/deploy-production.yml). | Adjuntar las ejecuciones remotas y comprobar un despliegue automático desde el entorno de producción con sus variables y su secreto configurados. |
+| Arquitectura y trazabilidad | 4 | Frontend y backend separados, documentos en Markdown, enlaces de ida y vuelta, y matrices de estándares y emisiones. [Arquitectura y estándares](04%20Est%C3%A1ndares%20arquitectura%20y%20gu%C3%ADa%20de%20desarrollo%20verde%20V_1_2_0.md) · [Validación de enlaces](../../../scripts/check_docs.py). | Confirmar el estado de los badges de la entrega junto con las ejecuciones de GitHub Actions. |
 
 ## Resultados al cierre
 

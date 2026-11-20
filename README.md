@@ -338,12 +338,14 @@ Evidencias de Jira: [evidencias-jira/](docs/02%20Planificaci%C3%B3n/evidencias-j
 
 ### Inspección 5 del Sprint 4
 
+[Estado de la rúbrica y evidencias](docs/03%20Implementaci%C3%B3n/Sprint%204/README.md#estado-de-la-inspecci%C3%B3n-5). El SUS de la evaluación con cinco participantes fue de **72,5/100**.
+
 - [Revisión del sprint](docs/03%20Implementaci%C3%B3n/Sprint%204/01%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md)
 - [Retrospectiva del sprint](docs/03%20Implementaci%C3%B3n/Sprint%204/02%20Retrospectiva%20del%20Sprint%20V_1_0_0.md)
 - [Playwright, rendimiento y disponibilidad](docs/03%20Implementaci%C3%B3n/Sprint%204/03%20Analisis%20PlayWrigth%20V_1_0_0.md)
 - [Usabilidad SUS](docs/03%20Implementaci%C3%B3n/Sprint%204/04%20Usabilidad%20V_1_0_0.md)
 
-[![CI](https://github.com/JosefOreC/ALPHA_PROJECT/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/JosefOreC/ALPHA_PROJECT/actions/workflows/ci.yml) [![Tests](https://github.com/JosefOreC/ALPHA_PROJECT/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/JosefOreC/ALPHA_PROJECT/actions/workflows/tests.yml) [![Deploy production](https://github.com/JosefOreC/ALPHA_PROJECT/actions/workflows/deploy-production.yml/badge.svg?branch=main)](https://github.com/JosefOreC/ALPHA_PROJECT/actions/workflows/deploy-production.yml)
+[![CI](https://github.com/JosefOreC/ALPHA_PROJECT/actions/workflows/ci.yml/badge.svg?branch=inspection5%2Fsprint4)](https://github.com/JosefOreC/ALPHA_PROJECT/actions/workflows/ci.yml) [![Tests](https://github.com/JosefOreC/ALPHA_PROJECT/actions/workflows/tests.yml/badge.svg?branch=inspection5%2Fsprint4)](https://github.com/JosefOreC/ALPHA_PROJECT/actions/workflows/tests.yml) [![Deploy production](https://github.com/JosefOreC/ALPHA_PROJECT/actions/workflows/deploy-production.yml/badge.svg?branch=main)](https://github.com/JosefOreC/ALPHA_PROJECT/actions/workflows/deploy-production.yml)
 
 ### Guías técnicas de implementación
 
