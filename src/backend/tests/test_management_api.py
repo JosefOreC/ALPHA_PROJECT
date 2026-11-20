@@ -157,6 +157,20 @@ class ManagementApiTests(unittest.TestCase):
         self.assertEqual(first.json()["limit"], 100)
         self.assertEqual(boundary.json(), {"items": [], "limit": 100, "offset": 100000, "has_more": False})
 
+    def test_server_timing_only_on_successful_paginated_reads_and_health(self):
+        self.create()
+        for path in ("/health", "/api/pedidos?limit=1"):
+            with self.subTest(path=path):
+                response = self.client.get(path)
+                self.assertEqual(response.status_code, 200)
+                self.assertRegex(response.headers["Server-Timing"], r"^eco_api;dur=\d+\.\d{3}$")
+        self.assertNotIn("Server-Timing", self.client.get("/").headers)
+        self.assertNotIn("Server-Timing", self.client.post("/api/pedidos", json=self.body).headers)
+        self.assertNotIn("Server-Timing", self.client.get("/api/pedidos?limit=101").headers)
+        unauthenticated = TestClient(create_app(self.repo)).get("/api/pedidos")
+        self.assertEqual(unauthenticated.status_code, 401)
+        self.assertNotIn("Server-Timing", unauthenticated.headers)
+
     def test_driver_and_management_use_same_source(self):
         created = self.create()
         order = self.repo.get(created["id"])

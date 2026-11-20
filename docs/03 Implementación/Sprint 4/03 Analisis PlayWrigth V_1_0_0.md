@@ -144,7 +144,7 @@ Una tercera serie, entre las 08:38:29 y las 08:38:39, devolvió HTTP 200 en las 
 
 ### Medición del listado de pedidos
 
-El [medidor del repositorio](../../../scripts/measure_render_latency.py) toma cinco muestras del listado de doce pedidos con una cuenta autorizada de Planificación. Se ejecuta desde la raíz del repositorio con `python scripts/measure_render_latency.py`. La contraseña se escribe en la terminal y el programa cierra la sesión al terminar. El archivo `latencia-render.csv` registra endpoint, fecha, estado HTTP, tiempo y cumplimiento del umbral. Para repetir la prueba se puede elegir otro nombre con `--salida`.
+El [medidor del repositorio](../../../scripts/measure_render_latency.py) toma cinco muestras del listado de doce pedidos con una cuenta autorizada de Planificación. Se ejecuta desde la raíz del repositorio con `python scripts/measure_render_latency.py`. La contraseña se escribe en la terminal y el programa cierra la sesión al terminar. El archivo local registra endpoint, estado HTTP, duración y cumplimiento del umbral. En la entrega se publican los resultados sin marcas horarias. Para conservar las series anteriores, cada ejecución debe usar un nombre nuevo con `--salida`.
 
 El equipo ejecutó el medidor en Render con una cuenta de Planificación entre las 09:09:03 y las 09:09:28 del 20/11/2026, hora de Lima. Todas las consultas devolvieron HTTP 200.
 
@@ -162,11 +162,47 @@ A las 11:14 del 20/11/2026, hora de Lima, se consultó salud seis veces desde un
 
 ### Reducción de consultas en Pedidos
 
-El listado ahora solicita la página y un pedido adicional en una sola consulta a la base. La interfaz recibe el mismo número máximo de pedidos y el registro adicional permite indicar que hay otra página. Se mantienen los permisos, los filtros y los límites de paginación. Las pruebas verifican el número de consultas, los filtros y los límites. La reducción de consultas se comprobará en Render repitiendo la medición autenticada después del despliegue de esta versión. [Implementación del listado](../../../src/backend/application/use_cases/manage_orders.py) · [Pruebas de paginación](../../../src/backend/tests/test_management_api.py).
+El listado ahora solicita la página y un pedido adicional en una sola consulta a la base. La interfaz recibe el mismo número máximo de pedidos y el registro adicional permite indicar que hay otra página. Se mantienen los permisos, los filtros y los límites de paginación. Las pruebas verifican el número de consultas, los filtros y los límites. La versión del PR #52 ya está activa en Render. La reducción de consultas está comprobada en las pruebas del listado. La comparación de tiempos se recoge en el seguimiento autenticado de este informe. [Implementación del listado](../../../src/backend/application/use_cases/manage_orders.py) · [Pruebas de paginación](../../../src/backend/tests/test_management_api.py).
 
 ### Verificación posterior al despliegue automático
 
-El 20/11/2026, Tests aprobó la [versión desplegada](https://github.com/JosefOreC/ALPHA_PROJECT/commit/13bb8f7) de `main` y activó el despliegue en Render. El flujo comprobó que Render marcó como activa la misma versión, que la portada respondía y que `/health` devolvía `status: ok`. Entre las 11:47:19 y las 11:48:20, hora de Lima, las cinco consultas de salud devolvieron HTTP 200. Desde el runner tardaron entre **74,3 y 93,0 ms**. Esta serie verifica la disponibilidad del servicio durante la ventana programada. La medición autenticada de Pedidos en Render se repetirá cuando se despliegue la mejora de paginación del PR #52. [Tests en main](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/44767971301/attempts/2) · [Deploy production](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/44776606164) · [CSV de disponibilidad](evidencias/inspeccion05/disponibilidad-despliegue-automatico.csv).
+El 20/11/2026, Tests aprobó la [versión desplegada](https://github.com/JosefOreC/ALPHA_PROJECT/commit/13bb8f7) de `main` y activó el despliegue en Render. El flujo comprobó que Render marcó como activa la misma versión, que la portada respondía y que `/health` devolvía `status: ok`. Entre las 11:47:19 y las 11:48:20, hora de Lima, las cinco consultas de salud devolvieron HTTP 200. Desde el runner tardaron entre **74,3 y 93,0 ms**. Esta serie verifica la disponibilidad del servicio durante la ventana programada. La medición autenticada anterior corresponde al listado previo a la mejora de paginación. [Tests en main](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/44767971301/attempts/2) · [Deploy production](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/44776606164) · [CSV de disponibilidad](evidencias/inspeccion05/disponibilidad-despliegue-automatico.csv).
+
+### Despliegue de la mejora de Pedidos
+
+GitHub integró el [PR #52](https://github.com/JosefOreC/ALPHA_PROJECT/pull/52), ejecutó Tests sobre el commit de fusión y desplegó [esa versión](https://github.com/JosefOreC/ALPHA_PROJECT/commit/15b3258). Render comprobó que activó el mismo commit. Entre las 12:04:47 y las 12:05:47, hora de Lima, las cinco consultas de salud devolvieron HTTP 200 y tardaron entre **125,7 y 180,0 ms** desde el runner de GitHub. [Tests en main](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/44778581846) · [Despliegue de la versión optimizada](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/44779614627) · [CSV de la versión optimizada](evidencias/inspeccion05/disponibilidad-version-optimizada.csv).
+
+La comprobación de GitHub Actions corresponde a salud. El sondeo autenticado, registrado más abajo, mide el listado de Pedidos. [Serie autenticada de referencia](evidencias/inspeccion05/latencia-render.csv).
+
+### Sondeo desde el equipo del curso tras el despliegue
+
+Entre las 12:11:41 y las 12:11:50, hora de Lima, el equipo registró seis respuestas HTTP 200 de salud. La primera tardó **621,0 ms**. En las cinco consultas de seguimiento, los tiempos estuvieron entre **211,2 y 257,4 ms**, con una mediana de **217,2 ms**. Las cinco quedaron por debajo del umbral de 500 ms.
+
+Después de las consultas de salud, el inicio de sesión devolvió HTTP 401. El medidor terminó sin consultar Pedidos. Antes de repetir la prueba, se comprobará que una cuenta de Planificación pueda iniciar sesión en la aplicación desplegada. La serie autenticada posterior se presenta a continuación. [CSV del sondeo de salud](evidencias/inspeccion05/latencia-salud-version-optimizada.csv).
+
+### Comparación del listado de Pedidos en Render
+
+El equipo repitió el sondeo con una cuenta de Planificación tras desplegar la mejora del listado. Las once solicitudes registradas devolvieron HTTP 200.
+
+| Consulta | Rango | Mediana | Bajo 500 ms |
+|---|---:|---:|---:|
+| Pedidos antes de la optimización | 790,3–952,6 ms | 818,1 ms | 0/5 |
+| Pedidos con la versión optimizada, primera serie | 300,8–693,4 ms | 383,6 ms | 4/5 |
+| Pedidos con la versión optimizada, segunda serie | 296,0–883,7 ms | 312,9 ms | 3/5 |
+| Salud, primera consulta de la nueva serie | 667,3–667,3 ms | 667,3 ms | 0/1 |
+| Salud, seguimiento de la nueva serie | 222,6–271,7 ms | 250,4 ms | 5/5 |
+
+La mediana observada de Pedidos pasó de **818,1 a 383,6 ms**, una reducción del **53,1 %** entre ambas series. Cuatro consultas cumplieron el objetivo. La tercera tardó **693,4 ms**, por lo que la serie completa aún no acredita el objetivo de latencia. Las dos series incluyen el tiempo de red y corresponden a ventanas distintas. Para investigar el pico, el equipo puede contrastar la tercera consulta con los registros de Render y repetir la medición en condiciones comparables. [CSV anterior](evidencias/inspeccion05/latencia-render.csv) · [CSV de la versión optimizada](evidencias/inspeccion05/latencia-render-optimizada-2.csv).
+
+### Seguimiento de la demora
+
+Un sondeo público posterior abrió una conexión por consulta. Las seis solicitudes de salud devolvieron HTTP 200 y tardaron entre **238,4 y 370,1 ms**. La mediana fue **262,0 ms**. En esta serie no se observó una demora como la de la tercera consulta autenticada de Pedidos. En la segunda serie autenticada las seis consultas de salud devolvieron HTTP 200 y tardaron entre **188,9 y 292,3 ms**. Las cinco consultas de Pedidos también devolvieron HTTP 200. La tercera tardó **688,2 ms** y la cuarta **883,7 ms**. En las dos series de Pedidos con la versión optimizada, **7 de 10** consultas quedaron debajo de 500 ms. Ambas series se conservan para la evaluación. Los tiempos totales desde el cliente dejan sin determinar el origen de las demoras. [CSV de la segunda serie](evidencias/inspeccion05/latencia-render-cierre.csv).
+
+### Cómo separar el tiempo de la API del tiempo total
+
+La API añade la cabecera `Server-Timing` a las respuestas correctas de Salud y del listado de Pedidos. La duración empieza al recibir la consulta en la aplicación e incluye el procesamiento hasta preparar las cabeceras de respuesta. En Pedidos incluye la validación de la sesión y el acceso a la base. [Formato Server Timing, W3C](https://www.w3.org/TR/server-timing/).
+
+Desde la raíz del repositorio, ejecutar `python scripts/measure_render_latency.py --diagnostico --salida latencia-render-diagnostico.csv` con una cuenta de Planificación. El CSV separa el tiempo total, la espera hasta recibir las cabeceras y la duración que informó la API. La diferencia entre los dos últimos valores incluye la conexión, el tránsito y las esperas fuera de la aplicación. El campo de tiempo de API queda vacío si el servidor todavía no devuelve la cabecera. En la entrega se publican los tiempos de respuesta sin marcas horarias.
 
 ## Corte técnico de main del 20/11/2026
 

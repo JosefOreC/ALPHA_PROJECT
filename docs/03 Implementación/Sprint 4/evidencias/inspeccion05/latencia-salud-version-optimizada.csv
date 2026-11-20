@@ -1,0 +1,7 @@
+utc,endpoint,sample,http_status,milliseconds,valid,under_500_ms
+2026-11-20T17:11:41+00:00,salud_primera_consulta,1,200,620.969,True,False
+2026-11-20T17:11:41+00:00,salud_seguimiento,1,200,217.173,True,True
+2026-11-20T17:11:43+00:00,salud_seguimiento,2,200,217.026,True,True
+2026-11-20T17:11:46+00:00,salud_seguimiento,3,200,257.423,True,True
+2026-11-20T17:11:48+00:00,salud_seguimiento,4,200,211.163,True,True
+2026-11-20T17:11:50+00:00,salud_seguimiento,5,200,218.664,True,True
