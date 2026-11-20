@@ -1,6 +1,8 @@
 // Formato de la guía: coma decimal y miles separados por espacio («1 284,5»); independiente del locale del equipo.
+import { groupDigits } from '../../../domain/format'
+
 function group(integer: string) {
-  return integer.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
+  return groupDigits(integer)
 }
 
 function format(n: number, min: number, max: number) {

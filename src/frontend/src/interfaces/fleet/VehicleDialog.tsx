@@ -73,8 +73,8 @@ function VehicleForm({ vehicle, serverError, submitting, onSubmit, onCancel }: V
     }
     await onSubmit({
       placa: placa.trim().toUpperCase(),
-      capacidad_kg: parseFloat(capacidadKg),
-      capacidad_m3: capacidadM3 ? parseFloat(capacidadM3) : null,
+      capacidad_kg: Number.parseFloat(capacidadKg),
+      capacidad_m3: capacidadM3 ? Number.parseFloat(capacidadM3) : null,
       tipo_combustible: combustible,
       estado,
     })

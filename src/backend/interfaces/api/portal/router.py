@@ -4,6 +4,7 @@ from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel, Field, field_validator, model_validator
 from domain.access_control import scope_for, can
+from domain.email import is_email
 from interfaces.api.security.deps import require_permission, protect_mutation
 from interfaces.api.portal.deps import get_portal
 
@@ -11,9 +12,8 @@ router = APIRouter(prefix='/api',tags=['Operación'])
 
 
 def normalize_email(value: str) -> str:
-    import re
     value = value.strip().lower()
-    if not re.fullmatch(r'[^\s@]+@[^\s@]+\.[^\s@]+',value):
+    if not is_email(value):
         raise ValueError('Ingresa un correo válido.')
     return value
 

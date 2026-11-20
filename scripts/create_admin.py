@@ -1,6 +1,5 @@
 """Crea el primer administrador mediante consola, sin registro público."""
 import getpass
-import re
 import os
 import sys
 from pathlib import Path
@@ -13,6 +12,7 @@ load_dotenv(ROOT / '.env', override=True)
 from infrastructure.persistence.database import connection
 from infrastructure.security import hash_password
 from domain.access_control import canonical_role
+from domain.email import is_email
 
 
 def main():
@@ -35,7 +35,7 @@ def main():
         password = os.getenv('ADMIN_INITIAL_PASSWORD','') if from_env else getpass.getpass(f'Contraseña (mínimo {minimum} caracteres): ')
         if len(name)<2:
             raise ValueError('El nombre del administrador requiere al menos 2 caracteres.')
-        if not re.fullmatch(r'[^\s@]+@[^\s@]+\.[^\s@]+', email):
+        if not is_email(email):
             raise ValueError('Configura un correo válido en ADMIN_INITIAL_EMAIL.')
         if not minimum<=len(password)<=256:
             raise ValueError(f'La contraseña inicial requiere entre {minimum} y 256 caracteres.')

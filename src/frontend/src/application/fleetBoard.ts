@@ -83,10 +83,10 @@ export function validateVehicleForm(values: VehicleFormValues): Record<string, s
   const plate = values.placa.trim().toUpperCase().replace('-', '')
   if (!plate) errors.placa = 'La placa es obligatoria.'
   else if (plate.length < 3 || plate.length > 10) errors.placa = 'La placa debe contener entre 3 y 10 caracteres alfanuméricos.'
-  const kg = parseFloat(values.capacidadKg)
+  const kg = Number.parseFloat(values.capacidadKg)
   if (Number.isNaN(kg) || kg <= 0) errors.capacidad_kg = 'La capacidad debe ser un número mayor a 0 kg.'
   if (values.capacidadM3) {
-    const m3 = parseFloat(values.capacidadM3)
+    const m3 = Number.parseFloat(values.capacidadM3)
     if (Number.isNaN(m3) || m3 <= 0) errors.capacidad_m3 = 'El volumen debe ser mayor a 0 m³.'
   }
   return errors

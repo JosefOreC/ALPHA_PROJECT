@@ -101,7 +101,7 @@ body { background: var(--bg); color: var(--ink); font-family: var(--font-sans); 
 .eco-trip--delivered { color: var(--success-ink); }
 .eco-trip--delivered .stop { fill: currentColor; }
 .eco-trip--delivered .seg { stroke-dasharray: none; opacity: 1; }
-.eco-trip--delivered .st3 { r: 5; }
+.eco-trip--delivered .st3 { r: 5px; }
 .eco-trip--delivered .mark { display: inline; }
 .eco-trip--cancelled { color: var(--ink-muted); }
 .eco-trip--cancelled .st1 { fill: currentColor; }

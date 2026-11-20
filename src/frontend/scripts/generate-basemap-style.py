@@ -24,7 +24,7 @@ def guard_shield_filter(value):
 def adapt_style(original, tokens):
     """Return a new style; source geometry and shared tokens remain unchanged."""
     style = copy.deepcopy(original)
-    palette = dict(re.findall(r"--map-base-([\w-]+):\s*([^;]+);", tokens))
+    palette = dict(re.findall(r"--map-base-([\w-]++):\s*+([^;]++);", tokens))
 
     def color(name):
         return palette[name].strip()

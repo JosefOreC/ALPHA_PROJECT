@@ -7,8 +7,8 @@ import threading
 import time
 from collections import OrderedDict
 from urllib.error import HTTPError, URLError
-from urllib.parse import urlencode
-from urllib.request import Request, urlopen
+from urllib.parse import urlencode, urlsplit
+from urllib.request import Request, OpenerDirector, HTTPHandler, HTTPSHandler, HTTPDefaultErrorHandler, HTTPErrorProcessor
 
 from domain.emissions import fuel_used, emission_rate
 from domain.planning import propose, position, simulate, distance
@@ -17,11 +17,22 @@ from domain.road_network import RoadNetwork, RoadServiceUnavailable
 _cache = OrderedDict()
 _lock = threading.Lock()
 _last_request = 0.0
+_http = OpenerDirector()
+for _handler in (HTTPHandler(), HTTPSHandler(), HTTPDefaultErrorHandler(), HTTPErrorProcessor()):
+    _http.add_handler(_handler)
+
+
+def open_http(request, timeout):
+    """Solo HTTP/HTTPS: no instalar manejadores de archivos, FTP ni redirecciones."""
+    return _http.open(request, timeout=timeout)
 
 
 class ValhallaRouter:
     def __init__(self, budget=45):
         self.base = os.getenv('ROAD_ROUTER_URL','https://valhalla1.openstreetmap.de').rstrip('/')
+        target = urlsplit(self.base)
+        if target.scheme not in ('http', 'https') or not target.hostname or target.username or target.password or target.query or target.fragment:
+            raise ValueError('ROAD_ROUTER_URL debe ser un origen HTTP/HTTPS sin credenciales, query ni fragmento.')
         self.deadline = time.monotonic()+budget
 
     def request(self, action, payload):
@@ -43,7 +54,7 @@ class ValhallaRouter:
                 'User-Agent':'EcoLogisticaLima/1.0','Accept':'application/json'})
             try:
                 _last_request = time.monotonic()
-                with urlopen(req,timeout=min(12,remaining)) as response:
+                with open_http(req,timeout=min(12,remaining)) as response:
                     result = json.load(response)
             except HTTPError as error:
                 if error.code in (400,404):

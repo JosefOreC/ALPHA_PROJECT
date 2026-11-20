@@ -1,6 +1,7 @@
 import { orderReference } from '../../domain/order'
 import type { Map as LeafletMap } from 'leaflet'
-import { Suspense, lazy, useEffect, useId, useMemo, useState } from 'react'
+import { Suspense, lazy, useEffect, useId, useMemo, useRef, useState } from 'react'
+import type { KeyboardEvent } from 'react'
 import { mapDriverKey } from '../../domain/mapData'
 import type { MapData, MapRoute, MapSelection } from '../../domain/mapData'
 import { confirmedMap, filterMapDrivers, filterMapOrders, MAP_PROFILES, prepareMap, selectionVisible } from '../../domain/mapPresentation'
@@ -47,6 +48,10 @@ function MapInstance({ source, selectedId, query = '', onQueryChange, orderStatu
   initialLayers, showLayerControls = true, showFilters = showLayerControls, compact = false, card = true, strip = false }: Props) {
   const allowed = MAP_PROFILES[profile]
   const layersPanelId = useId()
+  const layersToggle = useRef<HTMLButtonElement>(null)
+  const closeLayers = (event: KeyboardEvent<HTMLButtonElement>) => {
+    if (event.key === 'Escape') { setLayersOpen(false); layersToggle.current?.focus() }
+  }
   const [layersOpen, setLayersOpen] = useState(false)
   const [layers, setLayers] = useState<MapLayers>(() => Object.fromEntries(Object.entries(allowed).map(([key, value]) =>
     [key, value && (initialLayers?.[key as keyof MapLayers] ?? true)])) as MapLayers)
@@ -209,15 +214,13 @@ function MapInstance({ source, selectedId, query = '', onQueryChange, orderStatu
         <LeafletCanvas data={context} selection={selection} layers={layers} compact={compact} card={card} compareDrivers={driverKeys.length > 1}
           onSelect={select} onDismiss={dismiss} onReady={setMap} onBasemapError={setBasemapError} />
       </Suspense> : <span className="eco-map__note" role="status">Cargando mapa…</span>}
-      {showLayerControls ? <div className="eco-map__layers" onKeyDown={event => {
-        if (event.key === 'Escape') { setLayersOpen(false); event.currentTarget.querySelector('button')?.focus() }
-      }}>
-        <button className="eco-map__layers-toggle" type="button" aria-expanded={layersOpen} aria-controls={layersPanelId}
+      {showLayerControls ? <div className="eco-map__layers">
+        <button ref={layersToggle} onKeyDown={closeLayers} className="eco-map__layers-toggle" type="button" aria-expanded={layersOpen} aria-controls={layersPanelId}
           onClick={() => setLayersOpen(value => !value)}><SlidersIcon />Capas</button>
         {layersOpen ? <div id={layersPanelId} className="eco-map__layer-options" role="group" aria-label="Capas del mapa">
           {(Object.keys(LABELS) as (keyof MapLayers)[]).filter(key => allowed[key]).map(key => {
             const Icon = LAYER_ICONS[key]
-            return <button key={key} type="button" aria-pressed={layers[key]} onClick={() => toggle(key)}><Icon />{LABELS[key]}<i aria-hidden="true" /></button>
+            return <button key={key} type="button" onKeyDown={closeLayers} aria-pressed={layers[key]} onClick={() => toggle(key)}><Icon />{LABELS[key]}<i aria-hidden="true" /></button>
           })}
         </div> : null}
       </div> : null}

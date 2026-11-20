@@ -391,14 +391,31 @@
     }
     return o;
   }
+  function splitInterpolation(raw) {
+    const parts = [];
+    let cursor = 0;
+    let search = 0;
+    while (search < raw.length) {
+      const open = raw.indexOf("{{", search);
+      if (open < 0) break;
+      const close = raw.indexOf("}}", open + 2);
+      if (close < 0) break;
+      search = close + 2;
+      if (close === open + 2) continue;
+      parts.push(raw.slice(cursor, open), raw.slice(open + 2, close));
+      cursor = close + 2;
+    }
+    parts.push(raw.slice(cursor));
+    return parts;
+  }
   function compileAttr(raw) {
-    const whole = raw.match(/^\s*\{\{([\s\S]+?)\}\}\s*$/);
-    if (whole) {
+    const whole = splitInterpolation(raw.trim());
+    if (whole.length === 3 && whole[0] === "" && whole[2] === "") {
       const path = whole[1];
       return (vals) => resolve(vals, path);
     }
     if (raw.includes("{{")) {
-      const parts = raw.split(/\{\{([\s\S]+?)\}\}/g);
+      const parts = splitInterpolation(raw);
       return (vals) => parts.map((s, i) => i & 1 ? resolve(vals, s) ?? "" : s).join("");
     }
     return () => raw;
@@ -565,7 +582,7 @@
       if (!txt.trim() && !txt.includes(" ")) return null;
       return () => txt;
     }
-    const parts = txt.split(/\{\{([\s\S]+?)\}\}/g);
+    const parts = splitInterpolation(txt);
     return (vals, ctx, key) => h(
       getReact().Fragment,
       { key },
@@ -604,7 +621,7 @@
   function walkFor(el, host) {
     const listGet = compileAttr(el.getAttribute("list") || "");
     const asName = el.getAttribute("as") || "item";
-    const hintN = parseInt(el.getAttribute("hint-placeholder-count") || "0", 10);
+    const hintN = Number.parseInt(el.getAttribute("hint-placeholder-count") || "0", 10);
     const kids = walkChildren(el, host);
     const listSrc = el.getAttribute("list") || "";
     return (vals, ctx, key) => {
@@ -768,7 +785,7 @@
     }
     const s = clone.innerHTML;
     let h2 = 5381;
-    for (let i = 0; i < s.length; i++) h2 = (h2 << 5) + h2 + s.charCodeAt(i) | 0;
+    for (let i = 0; i < s.length; i++) h2 = Math.imul(h2, 33) + s.charCodeAt(i);
     return s.length + "." + (h2 >>> 0).toString(36);
   }
   var NEVER_CONTENT_KEYED = new Set(
@@ -1426,12 +1443,13 @@
   function stripComments(css) {
     let out = "";
     let quote = "";
-    for (let i = 0; i < css.length; i++) {
+    let i = 0;
+    while (i < css.length) {
       const c = css[i];
       if (quote) {
         if (c === "\\") {
           out += c + (css[i + 1] ?? "");
-          i++;
+          i += 2;
           continue;
         }
         if (c === quote) quote = "";
@@ -1451,6 +1469,7 @@
           i = end - 1;
         }
       }
+      i++;
     }
     return out;
   }
@@ -1460,7 +1479,8 @@
     let start = 0;
     let depth = 0;
     let quote = "";
-    for (let i = 0; i < css.length; i++) {
+    let i = 0;
+    while (i < css.length) {
       const c = css[i];
       if (quote) {
         if (c === "\\") i++;
@@ -1475,6 +1495,7 @@
         const end = scanUnquotedUrl(css, i);
         if (end !== -1) i = end - 1;
       }
+      i++;
     }
     decls.push(css.slice(start));
     return decls.map((d) => d.trim()).filter(Boolean).map((d) => /!\s*important$/i.test(d) ? d : d + " !important").join(";");

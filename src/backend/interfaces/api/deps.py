@@ -56,10 +56,10 @@ def create_app(repository=None, authenticate=get_current_identity, protect_mutat
     if protect_mutation is not default_protection:
         app.dependency_overrides[default_protection] = protect_mutation
     origins = os.getenv("CORS_ALLOW_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173").split(",")
+    app.add_middleware(SecurityHeadersMiddleware)
     app.add_middleware(CORSMiddleware, allow_origins=[origin.strip() for origin in origins if origin.strip() and origin.strip() != "*"],
                        allow_credentials=True, allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE"],
                        allow_headers=["Content-Type", "Accept", "X-CSRF-Token", "Authorization"])
-    app.add_middleware(SecurityHeadersMiddleware)
     @app.exception_handler(RequestValidationError)
     async def invalid_payload(request: Request, error: RequestValidationError):
         return JSONResponse(status_code=422, content={"detail": [

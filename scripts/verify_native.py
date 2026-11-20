@@ -6,6 +6,7 @@ No cambia .env ni inicia/detiene servicios del sistema.
 """
 import argparse
 from datetime import datetime
+from http.client import HTTPConnection, HTTPException
 import json
 import os
 from pathlib import Path
@@ -16,7 +17,6 @@ import sys
 import tempfile
 import time
 from urllib.parse import quote, urlsplit, urlunsplit
-from urllib.request import urlopen
 from uuid import uuid4
 from zoneinfo import ZoneInfo
 
@@ -104,12 +104,17 @@ def run(args):
                 for _ in range(50):
                     if server.poll() is not None:
                         raise RuntimeError('La API de pruebas no pudo iniciar; revisa el log de esta ejecución.')
+                    health = HTTPConnection('127.0.0.1', args.port, timeout=1)
                     try:
-                        with urlopen(env['E2E_BASE_URL'] + '/health', timeout=1) as response:
-                            if response.status == 200:
-                                break
-                    except OSError:
+                        health.request('GET', '/health')
+                        response = health.getresponse()
+                        response.read()
+                        if response.status == 200:
+                            break
+                    except (OSError, HTTPException):
                         time.sleep(.2)
+                    finally:
+                        health.close()
                 else:
                     raise RuntimeError('La API de pruebas no respondió dentro del plazo.')
                 command = ['node', 'node_modules/@playwright/test/cli.js', 'test', '--config', 'playwright.e2e.config.ts']

@@ -9,6 +9,13 @@ BASE = {'co2Weight':70,'maxSeconds':45,'maxLoadPercent':95,'windowSlackMinutes':
 
 def test_payload_without_consumption_keeps_previous_contract():
     assert Parameters(**BASE).fuelConsumption is None
+    assert Parameters(**BASE, fuelConsumption=None).fuelConsumption is None
+
+
+@pytest.mark.parametrize('factors', [{}, {fuel: -1 for fuel in FUELS}, {fuel: float('inf') for fuel in FUELS}])
+def test_emission_factors_require_all_fuels_and_finite_nonnegative_values(factors):
+    with pytest.raises(ValidationError):
+        Parameters(**(BASE | {'emissionFactors': factors}))
 
 
 def test_consumption_per_fuel_is_accepted():

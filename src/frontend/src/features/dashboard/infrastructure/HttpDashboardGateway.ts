@@ -22,24 +22,28 @@ export class HttpDashboardGateway implements DashboardGateway {
   }
 
   async getSummary(params: SummaryParams, signal?: AbortSignal): Promise<DashboardSummary> {
+    if (params.date && !/^\d{4}-\d{2}-\d{2}$/.test(params.date)) throw new Error('La fecha del dashboard no es válida.')
+    if (params.districtId && !/^\d{6}$/.test(params.districtId)) throw new Error('El distrito del dashboard no es válido.')
     const query = new URLSearchParams()
     if (params.date) query.set('date', params.date)
     if (params.districtId) query.set('district', params.districtId)
     const qs = query.toString()
     const dto = await this.getJson<DashboardSummaryDto>(
-      `/api/v1/dashboard${qs ? `?${qs}` : ''}`,
+      'summary',
       signal,
+      qs,
     )
     return toDashboardSummary(dto)
   }
 
   async listDistricts(signal?: AbortSignal): Promise<District[]> {
-    const dtos = await this.getJson<DistrictDto[]>('/api/v1/dashboard/districts', signal)
+    const dtos = await this.getJson<DistrictDto[]>('districts', signal)
     return dtos.map(toDistrict)
   }
 
-  private async getJson<T>(path: string, signal?: AbortSignal): Promise<T> {
-    const response = await this.fetchImpl(`${this.baseUrl}${path}`, { signal, credentials: 'include' })
+  private async getJson<T>(resource: 'summary' | 'districts', signal?: AbortSignal, query = ''): Promise<T> {
+    const path = resource === 'summary' ? '/api/v1/dashboard' : '/api/v1/dashboard/districts'
+    const response = await this.fetchImpl(`${this.baseUrl}${path}${query ? '?' + query : ''}`, { signal, credentials: 'include' })
     if (!response.ok) {
       throw new Error(`Dashboard request failed with status ${response.status}`)
     }

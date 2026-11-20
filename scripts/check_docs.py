@@ -49,8 +49,19 @@ def anchors(text):
     text = prose(text)
     result = set(re.findall(r'\b(?:id|name)=["\']([^"\']+)["\']', text))
     used = set()
-    headings = re.findall(r'^\s{0,3}#{1,6}\s+(.+?)(?:\s+#+)?$', text, re.M)
-    headings += re.findall(r'^([^\n]+)\n(?:=+|-+)\s*$', text, re.M)
+    headings = []
+    source_lines = text.splitlines()
+    for line in source_lines:
+        match = re.fullmatch(r' {0,3}#{1,6}[ \t]++(.*)', line)
+        if match:
+            heading = match[1].rstrip()
+            without_hashes = heading.rstrip('#')
+            if without_hashes and without_hashes[-1].isspace():
+                heading = without_hashes.rstrip()
+            headings.append(heading)
+    for line, underline in zip(source_lines, source_lines[1:]):
+        if line and underline and underline[0] in '=-' and set(underline.rstrip()) in ({'='}, {'-'}):
+            headings.append(line)
     for heading in headings:
         heading = re.sub(r'!?\[([^\]]*)\]\([^)]*\)', r'\1', heading)
         heading = html.unescape(re.sub(r'<[^>]+>', '', heading)).lower()
@@ -71,7 +82,7 @@ def links(text):
     # Preserve backticked link labels; remove only standalone inline code spans.
     text = re.sub(r'(`+)(.*?)\1', lambda m: ' ' * len(m[0]), text)
     refs = {}
-    definition = re.compile(r'^\s{0,3}\[([^\]]+)\]:\s*(<[^>]+>|\S+)', re.M)
+    definition = re.compile(r'^ {0,3}\[([^\]\n]++)\]:[ \t]*+(<[^>\n]++>|\S++)', re.M)
     for m in definition.finditer(text):
         refs[m[1].casefold()] = m[2].strip('<>')
         yield text.count('\n', 0, m.start()) + 1, m[2].strip('<>')
@@ -153,7 +164,10 @@ def check():
         by_kind = collections.defaultdict(list)
         current = [p for p in files if p.parent == directory and p.name != 'README.md']
         for p in current:
-            kind = re.sub(r'^\d+\s+|\s+V_\d+_\d+_\d+\.md$', '', p.name)
+            parts = p.name.split(maxsplit=1)
+            title = parts[1] if len(parts) == 2 and parts[0].isdigit() else p.name
+            parts = title.rsplit(maxsplit=1)
+            kind = parts[0] if len(parts) == 2 and re.fullmatch(r'V_\d++_\d++_\d++\.md', parts[1]) else title
             by_kind[kind].append(p)
             version = re.search(r'V_\d+_\d+_\d+', p.name)
             if version and not re.search(r'^\|\s*' + version[0] + r'\s*\|', contents[p], re.M):

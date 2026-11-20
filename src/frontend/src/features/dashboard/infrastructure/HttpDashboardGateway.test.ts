@@ -32,6 +32,15 @@ const summaryBody = {
 }
 
 describe('HttpDashboardGateway.getSummary', () => {
+  it.each([
+    { date: '../admin' }, { date: '2026-01-01&admin=true' },
+    { districtId: '//evil.invalid' }, { districtId: '150103&other=1' },
+  ])('rejects untrusted URL parameters before making a request: %j', async params => {
+    const { calls, fetchImpl } = stubFetch(summaryBody)
+    const gateway = new HttpDashboardGateway({ fetchImpl })
+    await expect(gateway.getSummary(params)).rejects.toThrow()
+    expect(calls).toHaveLength(0)
+  })
   it('requests the dashboard endpoint with date and district and returns the mapped summary', async () => {
     const { calls, fetchImpl } = stubFetch(summaryBody)
     const gateway = new HttpDashboardGateway({ baseUrl: 'http://api.test', fetchImpl })
@@ -61,7 +70,7 @@ describe('HttpDashboardGateway.getSummary', () => {
     const { fetchImpl } = stubFetch({ detail: 'Distrito no encontrado' }, 404)
     const gateway = new HttpDashboardGateway({ baseUrl: '', fetchImpl })
 
-    await expect(gateway.getSummary({ districtId: 'zzz' })).rejects.toThrow(/404/)
+    await expect(gateway.getSummary({ districtId: '999999' })).rejects.toThrow(/404/)
   })
 })
 

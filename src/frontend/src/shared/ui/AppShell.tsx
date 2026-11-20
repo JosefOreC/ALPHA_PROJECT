@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { groupDigits } from '../../domain/format'
 import { LogoHojaRuta } from './icons'
 import { MODULE_ICONS } from './moduleIcons'
 import { ROLE_LABELS, modulesForRole } from './roles'
@@ -31,7 +32,7 @@ type AppShellProps = {
 }
 
 function kg(value: number) {
-  return String(Math.round(value)).replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
+  return groupDigits(String(Math.round(value)))
 }
 
 // Barra superior (eco-side + eco-topbar + eco-content). Muestra solo los módulos del rol.
