@@ -15,18 +15,23 @@ jobs:
   test:
     needs: validate
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 20
+    container:
+      image: mcr.microsoft.com/playwright:v1.61.1-noble
+      options: --ipc=host
+    defaults:
+      run:
+        shell: bash
     services:
       postgis:
         image: postgis/postgis:17-3.5
         env:
           POSTGRES_PASSWORD: inspection-local-db
-        ports: ['5432:5432']
         options: >-
           --health-cmd "pg_isready -U postgres"
           --health-interval 5s --health-timeout 5s --health-retries 12
     env:
-      DATABASE_URL: postgresql://postgres:inspection-local-db@127.0.0.1:5432/inspection5_test
+      DATABASE_URL: postgresql://postgres:inspection-local-db@postgis:5432/inspection5_test
       ECOLOGISTICA_VERIFY_DATABASE: '1'
       E2E_BASE_URL: http://127.0.0.1:8000
     steps:
@@ -54,9 +59,6 @@ jobs:
       - name: Unitarias e integración backend
         run: python -m pytest src/backend/tests -q --junitxml=reports/tests/backend-inspection5.xml
       - run: npm run build --prefix src/frontend
-      - name: Instalar tres navegadores
-        working-directory: src/frontend
-        run: npx playwright install --with-deps chromium firefox webkit
       - name: Ejecutar pruebas contra el producto
         working-directory: src/frontend
         run: |
