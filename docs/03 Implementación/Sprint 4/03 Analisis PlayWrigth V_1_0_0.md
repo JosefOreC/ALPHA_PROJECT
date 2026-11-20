@@ -140,6 +140,8 @@ La demora de la primera consulta se concentró en la espera del primer byte. Es 
 
 En un segundo sondeo, entre las 08:23:45 y las 08:23:55, Render devolvió HTTP 200 seis veces. La primera consulta tardó **642,2 ms**. Las cinco siguientes tardaron **216,7**, **217,4**, **259,3**, **538,5** y **206,9 ms**. Cuatro de las cinco quedaron por debajo de 500 ms. La demora de la cuarta muestra también requiere revisar los registros del proveedor.
 
+Una tercera serie, entre las 08:38:29 y las 08:38:39, devolvió HTTP 200 en las seis consultas. La primera tardó **672,5 ms**. Las cinco siguientes registraron **237,1**, **223,7**, **571,8**, **227,5** y **252,2 ms**. Las dos últimas series muestran una consulta de seguimiento sobre el umbral. Para localizar el origen de la demora se deben cotejar las 08:23:53 y las 08:38:34 con los registros del servicio. Las horas se expresan en horario de Lima.
+
 ### Medición del listado de pedidos
 
 El [medidor del repositorio](../../../scripts/measure_render_latency.py) toma cinco muestras del listado de doce pedidos con una cuenta autorizada de Planificación. Se ejecuta desde la raíz del repositorio con `python scripts/measure_render_latency.py`. La contraseña se escribe en la terminal y el programa cierra la sesión al terminar. El archivo `latencia-render.csv` registra endpoint, fecha, estado HTTP, tiempo y cumplimiento del umbral. Para repetir la prueba se puede elegir otro nombre con `--salida`.
