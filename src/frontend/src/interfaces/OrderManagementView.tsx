@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import type { Management } from '../application/manageOrders'
 import { TAB_ORDER, filterOrders, groupByStatus, summarize, tabCounts } from '../application/orderBoard'
 import type { StatusTab } from '../application/orderBoard'
-import { districts, formatWindow, statusLabels } from '../domain/managedOrder'
+import { districts, formatLima, formatWindow, statusLabels } from '../domain/managedOrder'
 import type { ManagedOrder, OrderPermissions } from '../domain/managedOrder'
 import { AppShell, Banner, List, ListGroup, ListRow, PaqueteIcon, Panel, PanelCell, PlusIcon, SearchInput, TripStatus } from '../shared/ui'
 import type { ModuleId } from '../shared/ui'
@@ -291,6 +291,11 @@ export function OrderManagementView({ service, onNavigate }: { service: Manageme
                                 <span className="eco-row__sub">
                                   {order.district}
                                 </span>
+                                {order.status === 'ENTREGADO' && order.confirmed_at ? (
+                                  <time className="eco-row__sub" dateTime={order.confirmed_at}>
+                                    Confirmado el {formatLima(order.confirmed_at)} · Lima
+                                  </time>
+                                ) : null}
                               </span>
                               <span className="eco-code">{formatWindow(order.window_start, order.window_end)}</span>
                             </ListRow>

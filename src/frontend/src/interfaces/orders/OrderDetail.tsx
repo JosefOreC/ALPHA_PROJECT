@@ -40,7 +40,7 @@ export function OrderDetail({ order, canWrite, busy, onEdit, onCancel, onDispatc
         <dd>{formatLima(order.window_start)}</dd>
         <dt>Fin · Lima</dt>
         <dd>{formatLima(order.window_end)}</dd>
-        <dt>Entrega · Lima</dt>
+        <dt>Confirmación de entrega · Lima</dt>
         <dd>{order.confirmed_at ? formatLima(order.confirmed_at) : 'Sin confirmación'}</dd>
         <dt>Versión</dt>
         <dd className="eco-code">{order.version}</dd>
