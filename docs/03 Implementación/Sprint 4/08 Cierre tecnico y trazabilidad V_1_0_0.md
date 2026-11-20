@@ -9,7 +9,7 @@
 | Fecha del corte | 20/11/2026, America/Lima. |
 | Rama de entrega | `main`. |
 | Versión productiva auditada | [versión auditada](https://github.com/JosefOreC/ALPHA_PROJECT/commit/64267bda5cb81c584ce7250e2d599dffa223cfad). |
-| Responsable documental del proyecto | Ore Campos, Josef Pablo, según el registro del proyecto. |
+| Responsable documental del proyecto | Ore Campos, Josef Pablo |
 | Ejecución de esta verificación | Ejecución automatizada de pruebas y conciliación de las historias con sus evidencias. |
 | Alcance solicitado | Trazabilidad de las historias, demostración técnica y verificación del incremento. El informe SUS y las consultas a Render se publican en la Inspección 5. |
 | Revisión de aceptación | Ore Campos, Josef Pablo, líder del proyecto, comunicó su conformidad con las tres historias en una revisión asíncrona. |

@@ -69,8 +69,20 @@ export interface RiskOrder {
   note: string
 }
 
+/** Tiempos de cálculo medidos al aprobar rutas, frente al objetivo de generación. */
+export interface GenerationTime {
+  targetSeconds: number
+  lastSeconds: number
+  maxSeconds: number
+  /** Generaciones aprobadas consideradas (las más recientes). */
+  samples: number
+  withinTarget: number
+}
+
 export interface DashboardInsights {
   co2Avoided: Co2Avoided | null
+  /** Ausente o nulo mientras no exista una generación aprobada con tiempo medido. */
+  generation?: GenerationTime | null
   atRisk: RiskOrder[]
   /** Minutos que se considera «en riesgo» (ventana por vencer). */
   riskMinutes: number

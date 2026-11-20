@@ -6,7 +6,7 @@
 
 Actualización del 20/11/2026. La vista conserva los datos de la API autenticada, sus permisos y el filtro de distrito. Prioriza puntualidad, distancia planificada, intensidad de emisiones y combustible equivalente; el balance presenta pedidos por estado y comparación de CO₂ con la línea base registrada. Las animaciones de entrada, transición y hover respetan movimiento reducido.
 
-El panel desplegable «Objetivos del proyecto» corresponde a los ocho indicadores de la [visión del producto](../../../../01%20Inicio/03.%20Declaraci%C3%B3n%20de%20la%20visi%C3%B3n%20V_1_0_0.md). El dashboard no atribuye valores a los tiempos de generación/reoptimización, ahorro monetario, disponibilidad histórica o evaluación de calidad cuando no existe una fuente de medición. La meta de puntualidad se obtiene de la API.
+El panel desplegable «Objetivos del proyecto» corresponde a los ocho indicadores de la [visión del producto](../../../../01%20Inicio/03.%20Declaraci%C3%B3n%20de%20la%20visi%C3%B3n%20V_1_0_0.md). El tiempo de generación de rutas se muestra con la medición real que se guarda al aprobar cada propuesta (última, máxima y cuántas de las últimas 20 aprobaciones quedaron dentro de 45 s); mientras no exista una aprobación con tiempo medido, el indicador sigue sin valor. El dashboard no atribuye valores a la reoptimización (el producto aún no la ejecuta), al ahorro monetario, a la disponibilidad histórica ni a la evaluación de calidad cuando no existe una fuente de medición. La meta de puntualidad se obtiene de la API.
 
 ## Métricas y significado
 

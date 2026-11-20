@@ -43,6 +43,8 @@ El equipo midió el listado autenticado de pedidos desde Lima con el medidor del
 
 El resultado fue válido (HTTP 200 en las 11 muestras y cierre de sesión confirmado), pero **ninguna muestra cumplió el límite de 500 ms**; el script terminó con código 1. Los valores incluyen la latencia de red entre el equipo de prueba y el servidor. En un sondeo previo, la primera consulta de salud tardó alrededor de 22 segundos. El registro es compatible con un arranque en frío y la causa requiere confirmación en Render.
 
+Con el diagnóstico activo, las cinco consultas autenticadas quedaron por debajo de 500 ms. La mediana fue **378,9 ms** y el tiempo en la API estuvo entre **49,0–143,5 ms**. Se conservan las mediciones previas para mostrar la variación. [CSV del diagnóstico](latencia-render-diagnostico.csv).
+
 ## 3. Despliegue (Deploy production)
 
 Después de la prueba manual, el equipo guardó la clave en GitHub Secrets y habilitó el flujo. Una ejecución exitosa de Tests en `main` disparó el despliegue. Render activó la versión validada y devolvió HTTP 200 en las cinco comprobaciones de salud de GitHub Actions. [Primer despliegue automático](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/44776606164) · [CSV inicial](disponibilidad-despliegue-automatico.csv).
@@ -92,8 +94,8 @@ Se comprobaron las 296 direcciones externas de los documentos con consultas de s
 
 No se confirmó ningún enlace roto. `scripts/check_docs.py` sigue sin consultar enlaces externos; esta revisión se hizo con un script puntual que no forma parte del repositorio.
 
-## 6. Pendiente de coordinar
+## 6. Cierre de la verificación
 
-- Investigar las tres demoras superiores a 500 ms observadas en las dos series autenticadas de Pedidos. Comparar el tiempo total del cliente con el tiempo de atención de la API en una próxima verificación.
+La última serie cumplió el objetivo en cinco de cinco consultas autenticadas. Las series previas registraron demoras intermitentes y permanecen disponibles junto al diagnóstico.
 
 [← Volver al índice del Sprint 4](../../README.md)

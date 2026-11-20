@@ -1,0 +1,12 @@
+endpoint,sample,http_status,milliseconds,valid,under_500_ms,api_ms,until_headers_ms
+salud_primera_consulta,1,200,625.010,True,False,1.170,624.345
+salud_seguimiento,1,200,216.094,True,True,1.807,215.883
+salud_seguimiento,2,200,232.742,True,True,1.112,232.570
+salud_seguimiento,3,200,233.491,True,True,1.141,233.336
+salud_seguimiento,4,200,233.095,True,True,0.866,232.500
+salud_seguimiento,5,200,217.833,True,True,1.421,217.256
+pedidos,1,200,421.015,True,True,120.469,420.534
+pedidos,2,200,295.160,True,True,48.985,294.982
+pedidos,3,200,405.612,True,True,143.534,404.618
+pedidos,4,200,378.870,True,True,127.164,378.236
+pedidos,5,200,307.664,True,True,85.789,307.289

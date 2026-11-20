@@ -220,6 +220,11 @@ def test_generate_preview_approve_and_reload_routes_with_real_postgis(database_c
     saved = client.post('/api/routes/approve',headers=headers,json=approval)
     assert saved.status_code==201, saved.text
     route_id = saved.json()['routeIds'][0]
+    # El tiempo de cálculo queda guardado con la ruta y el panel lo informa contra el objetivo de 45 s.
+    measured = conn.execute("SELECT ruteo->>'generationSeconds' AS seconds FROM rutas WHERE ruta_id=%s",(route_id,)).fetchone()['seconds']
+    assert measured is not None and 0 <= float(measured) <= 45
+    generation = client.get('/api/dashboard/insights').json()['generation']
+    assert generation['targetSeconds']==45 and generation['samples']>=1 and generation['lastSeconds']>=0
     assert client.get('/api/routes/scope').json()['pendingOrders']==0
     assert client.get('/api/routes/scope').json()['availableVehicles']==0
     map_data = client.get('/api/map').json()
