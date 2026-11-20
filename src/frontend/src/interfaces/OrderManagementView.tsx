@@ -37,7 +37,8 @@ async function loadAll(service: Management): Promise<ManagedOrder[]> {
 const message = (reason: unknown, fallback: string) => (reason instanceof Error ? reason.message : fallback)
 
 export function OrderManagementView({ service, onNavigate }: { service: Management; onNavigate?: (id: ModuleId, href: string) => void }) {
-  const canExtendRoutes = can(useActor('admin'), 'routes.generate')
+  const role = useActor('admin')
+  const canExtendRoutes = can(role, 'routes.generate')
   const [screen, setScreen] = useState<Screen>('board')
   const [orders, setOrders] = useState<ManagedOrder[]>([])
   const [permissions, setPermissions] = useState<OrderPermissions>({ can_write: false })
@@ -127,6 +128,19 @@ export function OrderManagementView({ service, onNavigate }: { service: Manageme
     setScreen('board')
     setNotice('Pedido guardado correctamente.')
     refresh()
+  }
+
+  async function confirmDelivery(order: ManagedOrder) {
+    if (busy) return
+    setBusy(true)
+    setError('')
+    try {
+      await requestJson(`/api/conductor/pedidos/${encodeURIComponent(order.id)}/confirmacion`, { method: 'POST' })
+      setNotice('Entrega confirmada. El historial y el mapa se actualizarán.')
+      refresh()
+    } catch (reason) {
+      setError(message(reason, 'No se pudo confirmar la entrega.'))
+    } finally { setBusy(false) }
   }
 
   async function dispatch(order: ManagedOrder) {
@@ -316,6 +330,7 @@ export function OrderManagementView({ service, onNavigate }: { service: Manageme
                     onEdit={() => { setNotice(''); setSelectedId(selected.id); setScreen('edit') }}
                     onCancel={() => openCancel(selected)}
                     onDispatch={() => void dispatch(selected)}
+                    onConfirm={can(role, 'deliveries.update') && role === 'admin' ? () => void confirmDelivery(selected) : undefined}
                     assignment={canExtendRoutes && selected.status === 'PENDIENTE' && !selected.assigned
                       && selected.latitude != null && selected.longitude != null ? (
                       <AddToRoute key={selected.id} orderId={selected.id} onAssigned={() => {

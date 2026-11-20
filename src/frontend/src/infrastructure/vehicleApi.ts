@@ -1,5 +1,5 @@
-import type { CreateVehicleInput, UpdateVehicleInput, Vehicle, VehicleListResponse } from '../types/vehicle'
-import { requestJson } from '../infrastructure/httpClient'
+import type { CreateVehicleInput, UpdateVehicleInput, Vehicle, VehicleListResponse } from '../domain/vehicle'
+import { requestJson } from './httpClient'
 class VehicleApiService {
   async getVehicles(status?: string, onlyAvailable?: boolean) {
     const query = new URLSearchParams()

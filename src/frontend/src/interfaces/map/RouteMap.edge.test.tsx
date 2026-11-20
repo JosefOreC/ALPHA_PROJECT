@@ -103,7 +103,7 @@ it('agrupa por conductor, conserva el filtro al alternar capas y avisa cuando no
   expect(otherDriver).toHaveAttribute('aria-pressed', 'false')
   fireEvent.click(screen.getByRole('checkbox', { name: 'Solo tramo confirmado' }))
   expect(await screen.findByText('Sin tramos confirmados para los filtros elegidos')).toBeVisible()
-  fireEvent.click(choices.getByRole('button', { name: 'Todas las rutas' }))
+  fireEvent.click(choices.getByRole('button', { name: /Todas las rutas/ }))
   expect(sameDriver).toHaveAttribute('aria-pressed', 'false')
 })
 

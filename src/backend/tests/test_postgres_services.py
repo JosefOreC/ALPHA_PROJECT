@@ -207,8 +207,9 @@ def test_parameters_preserve_legacy_consumption_and_remove_disabled_factors(db, 
     assert any('DELETE FROM factores' in sql and args == ('GNV',) for sql, args in db.calls)
     assert any('INSERT INTO auditoria' in sql for sql, _ in db.calls)
     db.responses = {}
-    with pytest.raises(ValueError, match='parámetros'):
-        service.parameters()
+    defaults = service.parameters()
+    assert defaults['maxSeconds'] == 45
+    assert all(value is None for value in defaults['emissionFactors'].values())
 
 
 @pytest.mark.parametrize('driver_id', [None, 'driver-1'])
@@ -413,3 +414,29 @@ def test_update_credentials_changes_both_fields_before_revoking_sessions(db, mon
             identifier, actor, email='duplicate@example.invalid', password='test-password',
         )
     assert len(db.calls) == 1
+
+
+@pytest.mark.parametrize('existing', [False, True])
+def test_admin_configures_depot_and_audits_without_deleting_routes(db, existing):
+    service = portal.PostgresPortal()
+    assert service.depot() is None
+    identifier = uuid4()
+    stored = dict(almacen_id=identifier,nombre='Central',direccion='Calle 1',latitud=-12,longitud=-77)
+    db.responses = {'SELECT almacen_id,nombre': [stored], 'SELECT almacen_id FROM': [{'almacen_id': identifier}] if existing else []}
+    assert service.depot()['latitude'] == -12
+    saved = service.save_depot(dict(name='Central',address='Calle 1',latitude=-12,longitude=-77), 'actor')
+    assert saved['id'] == str(identifier)
+    assert any('INSERT INTO almacenes' in statement for statement, _ in db.calls)
+    assert any('CONFIGURAR_ALMACEN' in args for statement, args in db.calls if 'INSERT INTO auditoria' in statement)
+    assert not any('DELETE' in statement for statement, _ in db.calls)
+
+
+def test_admin_reports_incident_for_an_assigned_order(db):
+    identifier = uuid4()
+    db.responses = {'SELECT conductor_id': [{'conductor_id': identifier}]}
+    value = portal.PostgresPortal().create_incident(dict(order_id=uuid4(),type='Entrega',description='Supervisión de entrega'), Identity('admin-1','Admin','admin'))
+    assert value['status'] == 'ABIERTA'
+    insert = next(args for statement, args in db.calls if 'INSERT INTO incidencias' in statement)
+    assert insert[2] == identifier
+    db.responses = {'SELECT pedido_id,cliente_nombre': [{'pedido_id':identifier,'cliente_nombre':'Cliente'}]}
+    assert portal.PostgresPortal().incident_order_choices() == [{'id':str(identifier),'customer':'Cliente'}]

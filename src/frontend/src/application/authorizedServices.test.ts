@@ -1,10 +1,10 @@
 import { describe, expect, it, vi } from 'vitest'
 import { authorizeDriver, authorizeManagement, authorizePlanning, authorizeSustainability } from './authorizedServices'
 import { createManagement } from './manageOrders'
-import { DemoManagement } from '../infrastructure/demoManagement'
+import { DemoManagement } from '../infrastructure/demo/demoManagement'
 import { createDriverOrders } from './driverOrders'
 import { createDriverRoute } from './driverRoute'
-import { DemoOrders } from '../infrastructure/demoOrders'
+import { DemoOrders } from '../infrastructure/demo/demoOrders'
 import type { GenerateRoutes } from './generateRoutes'
 import type { SustainabilityService } from './getSustainabilityReport'
 import type { SessionUser } from '../domain/session'
@@ -19,15 +19,15 @@ describe('Autorización antes de invocar adaptadores', () => {
     await expect(secured.cancel(page.items[0])).rejects.toThrow('permiso')
     expect(cancel).not.toHaveBeenCalled()
   })
-  it('impide generar y exportar a un administrador según la matriz', async () => {
+  it('permite generar y exportar al administrador', async () => {
     const generate = vi.fn()
     const exportCsv = vi.fn()
     const planning = authorizePlanning({ generate } as unknown as GenerateRoutes, 'admin')
-    await expect(planning.generate({} as never, vi.fn())).rejects.toThrow('permiso')
+    await planning.generate({} as never, vi.fn())
     const reports = authorizeSustainability({ exportCsv } as unknown as SustainabilityService, 'admin')
-    expect(() => reports.exportCsv({} as never)).toThrow('permiso')
-    expect(generate).not.toHaveBeenCalled()
-    expect(exportCsv).not.toHaveBeenCalled()
+    reports.exportCsv({} as never)
+    expect(generate).toHaveBeenCalledOnce()
+    expect(exportCsv).toHaveBeenCalledOnce()
   })
   it('rechaza pedidos fuera de la ruta demo y conductores sin asignación', async () => {
     const source = new DemoOrders()

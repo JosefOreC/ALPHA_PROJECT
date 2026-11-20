@@ -12,11 +12,12 @@ type OrderDetailProps = {
   onEdit: () => void
   onCancel: () => void
   onDispatch?: () => void
+  onConfirm?: () => void
   assignment?: ReactNode
   onRefresh: () => void
 }
 
-export function OrderDetail({ order, canWrite, busy, onEdit, onCancel, onDispatch, assignment, onRefresh }: OrderDetailProps) {
+export function OrderDetail({ order, canWrite, busy, onEdit, onCancel, onDispatch, onConfirm, assignment, onRefresh }: OrderDetailProps) {
   const editable = canEdit(order)
   return (
     <article className="eco-sheet" aria-label="Detalle del pedido seleccionado">
@@ -51,6 +52,7 @@ export function OrderDetail({ order, canWrite, busy, onEdit, onCancel, onDispatc
         {order.instructions || 'Sin indicaciones adicionales.'}
       </div>
       <div className="eco-sheet__actions">
+        {order.status === 'EN_CAMINO' && onConfirm ? <button className="eco-btn" type="button" disabled={busy} onClick={onConfirm}>Confirmar entrega</button> : null}
         {canWrite && order.assigned && order.status === 'PENDIENTE' && onDispatch ? (
           <button className="eco-btn" type="button" disabled={busy} onClick={onDispatch}>Marcar en camino</button>
         ) : null}

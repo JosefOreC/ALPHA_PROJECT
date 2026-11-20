@@ -171,7 +171,7 @@ function MapInstance({ source, selectedId, query = '', onQueryChange, orderStatu
       </div>
       {context?.orders.some(item => item.route_id === null) ? <p className="eco-map-routes__unassigned">{context.orders.filter(item => item.route_id === null).length} pedidos sin ruta · puntos grises</p> : null}
       <div className="eco-map-routes__choices" role="group" aria-label="Rutas por conductor">
-        <button type="button" className="eco-map-route-choice" aria-label="Todas las rutas" aria-pressed={driverKeys.length === 0} onClick={() => {
+        <button type="button" className="eco-map-route-choice" aria-pressed={driverKeys.length === 0} onClick={() => {
           resetSelection()
           setOrderFilter('')
           setDriverKeys([])

@@ -2,7 +2,7 @@
 import { createRoot } from 'react-dom/client'
 import { createGetSustainabilityReport } from '../../src/application/getSustainabilityReport'
 import { BrowserFileSaver } from '../../src/infrastructure/browserFileSaver'
-import { DemoSustainabilityReport } from '../../src/infrastructure/demoSustainability'
+import { DemoSustainabilityReport } from '../../src/infrastructure/demo/demoSustainability'
 import { SustainabilityView } from '../../src/interfaces/SustainabilityView'
 import '../../src/shared/ui/tokens.css'
 import '../../src/shared/ui/eco.css'

@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test'
 import type { Locator, Page } from '@playwright/test'
 import { mockApi, mockSession, stubTiles } from './fixtures'
-import { DemoOrders } from '../../src/infrastructure/demoOrders'
+import { DemoOrders } from '../../src/infrastructure/demo/demoOrders'
 
 async function fitsPage(page: Page) {
   const size = await page.evaluate(() => ({ width: innerWidth, viewport: document.documentElement.clientWidth, content: document.documentElement.scrollWidth }))

@@ -1,8 +1,8 @@
 import { afterEach, expect, it, vi } from 'vitest'
 import { formatLima, validTimestamp, validateOrder } from '../domain/managedOrder'
 import { createManagement } from './manageOrders'
-import { DemoManagement } from '../infrastructure/demoManagement'
-import { DEMO_ACCOUNTS, readDemoSession, saveDemoSession } from '../infrastructure/demoSession'
+import { DemoManagement } from '../infrastructure/demo/demoManagement'
+import { DEMO_ACCOUNTS, readDemoSession, saveDemoSession } from '../infrastructure/demo/demoSession'
 import { authorizeAdministration, authorizeDriver, authorizeManagement, authorizePlanning, authorizeSustainability } from './authorizedServices'
 import type { SessionUser } from '../domain/session'
 

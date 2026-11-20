@@ -82,6 +82,23 @@ class Incident(BaseModel):
     description: str = Field(min_length=5,max_length=2000)
 
 
+class Depot(BaseModel):
+    name: str = Field(min_length=2, max_length=150)
+    address: str = Field(min_length=3, max_length=500)
+    latitude: float = Field(ge=-90, le=90, allow_inf_nan=False)
+    longitude: float = Field(ge=-180, le=180, allow_inf_nan=False)
+
+
+@router.get('/admin/depot', dependencies=[Depends(require_permission('settings.read'))])
+def depot(portal=Depends(get_portal)):
+    return portal.depot()
+
+
+@router.put('/admin/depot', dependencies=[Depends(protect_mutation)])
+def save_depot(payload: Depot, identity=Depends(require_permission('settings.update')), portal=Depends(get_portal)):
+    return portal.save_depot(payload.model_dump(), identity.subject_id)
+
+
 @router.get('/admin/users',dependencies=[Depends(require_permission('users.read'))])
 def users(portal=Depends(get_portal)):
     return portal.users()
@@ -233,6 +250,13 @@ def incidents(identity=Depends(require_permission('orders.read')),portal=Depends
     if identity.role in ('driver','CONDUCTOR','ROL-03') and identity.driver_id:
         return portal.records('incidencias',identity.driver_id)
     raise HTTPException(403,'No tienes permiso para consultar incidencias.')
+
+
+@router.get('/incidents/order-options')
+def incident_order_choices(identity=Depends(require_permission('incidents.create')), portal=Depends(get_portal)):
+    if scope_for(identity.role, 'incidents.create') != 'all':
+        raise HTTPException(403, 'Consulta los pedidos de tu ruta asignada.')
+    return portal.incident_order_choices()
 
 @router.post('/incidents',status_code=201,dependencies=[Depends(protect_mutation)])
 def create_incident(payload:Incident,identity=Depends(require_permission('incidents.create')),portal=Depends(get_portal)):

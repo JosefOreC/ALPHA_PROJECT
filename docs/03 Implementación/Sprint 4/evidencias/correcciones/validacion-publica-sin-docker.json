@@ -1,0 +1,63 @@
+{
+  "url": "https://ecologistica-lima-qolz.onrender.com",
+  "authentication_used": false,
+  "checks": [
+    {
+      "time_lima": "2026-11-20T02:04:54.096716-05:00",
+      "path": "/",
+      "http": null,
+      "elapsed_ms": 15233.13,
+      "content_type_or_error": "TimeoutError"
+    },
+    {
+      "time_lima": "2026-11-20T02:05:01.400564-05:00",
+      "path": "/health",
+      "http": 200,
+      "elapsed_ms": 7303.84,
+      "content_type_or_error": "application/json"
+    },
+    {
+      "time_lima": "2026-11-20T02:05:01.711516-05:00",
+      "path": "/health",
+      "http": 200,
+      "elapsed_ms": 310.95,
+      "content_type_or_error": "application/json"
+    },
+    {
+      "time_lima": "2026-11-20T02:05:02.018651-05:00",
+      "path": "/health",
+      "http": 200,
+      "elapsed_ms": 307.12,
+      "content_type_or_error": "application/json"
+    },
+    {
+      "time_lima": "2026-11-20T02:05:02.319741-05:00",
+      "path": "/health",
+      "http": 200,
+      "elapsed_ms": 301.08,
+      "content_type_or_error": "application/json"
+    },
+    {
+      "time_lima": "2026-11-20T02:05:03.010513-05:00",
+      "path": "/health",
+      "http": 200,
+      "elapsed_ms": 690.77,
+      "content_type_or_error": "application/json"
+    },
+    {
+      "time_lima": "2026-11-20T02:05:03.309710-05:00",
+      "path": "/api/session",
+      "http": 401,
+      "elapsed_ms": 299.2,
+      "content_type_or_error": "application/json"
+    },
+    {
+      "time_lima": "2026-11-20T02:05:03.596436-05:00",
+      "path": "/api/pedidos",
+      "http": 401,
+      "elapsed_ms": 286.71,
+      "content_type_or_error": "application/json"
+    }
+  ],
+  "scope": "Public access and health only. 401 endpoints are not authenticated operational performance."
+}

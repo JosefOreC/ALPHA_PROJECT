@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 import { createGenerateRoutes } from '../application/generateRoutes'
 import type { RouteOptimizer } from '../domain/ports/routeOptimizer'
-import { DemoPlanningSource, DemoRouteOptimizer, UnavailableRouteOptimizer } from '../infrastructure/demoRoutePlanning'
+import { DemoPlanningSource, DemoRouteOptimizer, UnavailableRouteOptimizer } from '../infrastructure/demo/demoRoutePlanning'
 import { DEFAULT_ROUTE_SETTINGS } from '../domain/routePlan'
 import { RoutePlanningView } from './RoutePlanningView'
 

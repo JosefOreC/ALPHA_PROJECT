@@ -56,9 +56,19 @@ test('acceso, permisos, validación y persistencia de pedidos', async ({ page, b
     weight_kg: 2.5,
   }
   expect((await page.request.post('/api/pedidos', { headers, data: { ...order, weight_kg: 0 } })).status()).toBe(422)
-  const created = await page.request.post('/api/pedidos', { headers, data: order })
+  await page.getByRole('button', { name: 'Registrar pedido', exact: true }).click()
+  await page.getByLabel('Destinatario *', { exact: true }).fill(customer)
+  await page.getByLabel('Dirección de entrega *', { exact: true }).fill(order.address)
+  await page.getByLabel('Distrito *', { exact: true }).selectOption(order.district)
+  await page.getByLabel('Entrega desde (hora de Lima) *').fill(date + 'T08:00')
+  await page.getByLabel('Entrega hasta (hora de Lima) *').fill(date + 'T18:00')
+  await page.getByLabel('Peso del paquete (kg) *').fill('2.5')
+  const creation = page.waitForResponse(result => result.url().endsWith('/api/pedidos') && result.request().method() === 'POST')
+  await page.getByRole('button', { name: 'Registrar pedido', exact: true }).click()
+  const created = await creation
   expect(created.status()).toBe(201)
   const saved = await created.json()
+  await expect(page.getByText('Pedido guardado correctamente.')).toBeVisible()
   expect(saved.id).toEqual(expect.any(String))
 
   const persisted = await page.request.get('/api/pedidos/' + encodeURIComponent(saved.id))
@@ -86,6 +96,7 @@ test('acceso, permisos, validación y persistencia de pedidos', async ({ page, b
     body: JSON.stringify({ orderListMs }),
     contentType: 'application/json',
   })
+  expect.soft(orderListMs, 'GET /api/pedidos debe responder en menos de 500 ms').toBeLessThan(500)
   await page.getByRole('button', { name: 'Cerrar sesión' }).click()
   await expect(submit).toBeVisible()
   expect((await page.request.get('/api/session')).status()).toBe(401)
@@ -159,5 +170,31 @@ test('disponibilidad, recuperación ante error de red y tiempos de acceso', asyn
     body: JSON.stringify({ browser: testInfo.project.name, healthMs, ...navigation }, null, 2),
     contentType: 'application/json',
   })
+  expect.soft(healthMs, 'GET /health debe responder en menos de 500 ms').toBeLessThan(500)
   await testInfo.attach('acceso-operativo', { body: await page.screenshot(), contentType: 'image/png' })
+})
+
+test('administrador: permisos completos, tabla de roles y simulación por interfaz', async ({ page, baseURL }, testInfo) => {
+  const password = process.env.E2E_PASSWORD
+  if (!password || !baseURL || !['127.0.0.1', 'localhost'].includes(new URL(baseURL).hostname)) {
+    throw new Error('Se requiere una instancia local aislada y E2E_PASSWORD.')
+  }
+  await page.goto('/?vista=admin')
+  await page.getByLabel('Correo electrónico').fill('admin@example.invalid')
+  await page.getByLabel('Contraseña', { exact: true }).fill(password)
+  await page.getByRole('button', { name: 'Ingresar', exact: true }).click()
+  await page.getByRole('tab', { name: 'Roles y accesos', exact: true }).click()
+  await expect(page.getByRole('table', { name: /Responsabilidades/ })).toBeVisible()
+  await expect(page.getByRole('row', { name: /ROL-01/ })).toContainText('Generar y aprobar rutas')
+  await page.getByRole('link', { name: 'Rutas', exact: true }).click()
+  await expect(page.getByRole('tab', { name: 'Generar rutas', exact: true })).toBeVisible()
+  await page.getByRole('link', { name: 'Ruta demo', exact: true }).click()
+  await page.getByLabel('Movil-1 capacity').fill('80')
+  const calculation = page.waitForResponse(response => response.url().endsWith('/api/routes/simulate') && response.request().method() === 'POST')
+  await page.getByRole('button', { name: 'Calcular rutas de prueba' }).click()
+  const response = await calculation
+  expect(response.status()).toBe(200)
+  expect((await response.json()).simulation).toBe(true)
+  await expect(page.getByRole('region', { name: 'Resultado de la simulación' })).toBeVisible()
+  await testInfo.attach('laboratorio-rutas', { body: await page.screenshot({ fullPage: true }), contentType: 'image/png' })
 })

@@ -2,7 +2,7 @@ import { render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { beforeAll, describe, expect, it, vi } from 'vitest'
 import { doneSegment, orderMatches, pendingSegment, vehiclePosition } from '../../domain/mapData'
-import { DemoMapData, UnavailableMapData } from '../../infrastructure/demoMapData'
+import { DemoMapData, UnavailableMapData } from '../../infrastructure/demo/demoMapData'
 import { depotHtml, pinHtml, vehicleHtml } from './markers'
 import { RouteMap } from './RouteMap'
 

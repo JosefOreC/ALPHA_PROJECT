@@ -1,0 +1,102 @@
+{
+  "n": 5,
+  "promedio_sus": 72.5,
+  "alcanza_68": true,
+  "participantes": [
+    {
+      "id": "P01",
+      "perfil": "Conductor",
+      "respuestas": [
+        3,
+        4,
+        2,
+        3,
+        4,
+        4,
+        5,
+        2,
+        3,
+        4
+      ],
+      "impares": 12,
+      "pares": 8,
+      "sus": 50.0
+    },
+    {
+      "id": "P02",
+      "perfil": "Supervisión",
+      "respuestas": [
+        4,
+        1,
+        5,
+        1,
+        5,
+        1,
+        5,
+        1,
+        5,
+        3
+      ],
+      "impares": 19,
+      "pares": 18,
+      "sus": 92.5
+    },
+    {
+      "id": "P03",
+      "perfil": "Conductor",
+      "respuestas": [
+        2,
+        2,
+        3,
+        2,
+        2,
+        1,
+        2,
+        1,
+        2,
+        2
+      ],
+      "impares": 6,
+      "pares": 17,
+      "sus": 57.5
+    },
+    {
+      "id": "P04",
+      "perfil": "Operador",
+      "respuestas": [
+        4,
+        1,
+        1,
+        2,
+        5,
+        1,
+        4,
+        1,
+        5,
+        2
+      ],
+      "impares": 14,
+      "pares": 18,
+      "sus": 80.0
+    },
+    {
+      "id": "P05",
+      "perfil": "Supervisión",
+      "respuestas": [
+        4,
+        1,
+        2,
+        1,
+        4,
+        1,
+        5,
+        1,
+        4,
+        2
+      ],
+      "impares": 14,
+      "pares": 19,
+      "sus": 82.5
+    }
+  ]
+}

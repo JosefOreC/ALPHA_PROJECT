@@ -4,7 +4,7 @@ import type { ModuleId } from '../shared/ui'
 import { useSession } from './session/SessionState'
 import { can } from '../domain/accessControl'
 import { requestJson } from '../infrastructure/httpClient'
-import type { VehicleListResponse } from '../types/vehicle'
+import type { VehicleListResponse } from '../domain/vehicle'
 
 type Driver = { conductor_id: string; nombre_completo: string; dni: string; licencia: string; vehiculo_id: string; estado: string }
 type Account = { id: string; name: string }

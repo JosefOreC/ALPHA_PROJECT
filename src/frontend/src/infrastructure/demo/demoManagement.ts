@@ -1,5 +1,5 @@
-import { canEdit, ManagementError, validateOrder } from '../domain/managedOrder'
-import type { ManagedOrder, ManagementPort, OrderData, OrderFilters } from '../domain/managedOrder'
+import { canEdit, ManagementError, validateOrder } from '../../domain/managedOrder'
+import type { ManagedOrder, ManagementPort, OrderData, OrderFilters } from '../../domain/managedOrder'
 
 type Row = [id: string, customer: string, address: string, district: string, from: string, to: string, kg: number,
   status: ManagedOrder['status'], plate: string, driver: string, note: string, co2: number, instructions: string, atRisk?: true]

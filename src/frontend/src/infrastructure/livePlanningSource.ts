@@ -1,6 +1,6 @@
 import type { ManagedOrder, OrderFilters, OrderPage } from '../domain/managedOrder'
 import type { PlanningSource } from '../domain/ports/planningSource'
-import type { Vehicle } from '../types/vehicle'
+import type { Vehicle } from '../domain/vehicle'
 
 const PAGE_SIZE = 100
 const MAX_PAGES = 20

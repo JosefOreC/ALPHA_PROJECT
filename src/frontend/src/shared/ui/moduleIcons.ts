@@ -5,6 +5,7 @@ export const MODULE_ICONS: Record<ModuleId, typeof FlotaIcon> = {
   dashboard: TableroIcon,
   pedidos: PaqueteIcon,
   rutas: RutaIcon,
+  'ruta-demo': RutaIcon,
   flota: FlotaIcon,
   sostenibilidad: HojaCo2Icon,
   admin: SlidersIcon,

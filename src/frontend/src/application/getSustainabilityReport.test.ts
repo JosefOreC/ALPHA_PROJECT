@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from 'vitest'
 import type { FileSaver } from '../domain/ports/fileSaver'
 import { PERIODS, avoidedPercent, intensityLevel } from '../domain/sustainability'
 import type { SustainabilityReport } from '../domain/sustainability'
-import { DemoSustainabilityReport, UnavailableSustainabilityReport } from '../infrastructure/demoSustainability'
+import { DemoSustainabilityReport, UnavailableSustainabilityReport } from '../infrastructure/demo/demoSustainability'
 import { buildReportCsv, createGetSustainabilityReport, reportFilename } from './getSustainabilityReport'
 
 const demo = new DemoSustainabilityReport()

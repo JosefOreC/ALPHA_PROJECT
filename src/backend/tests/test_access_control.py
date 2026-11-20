@@ -67,7 +67,7 @@ def test_driver_can_only_confirm_own_orders_and_requires_a_linked_profile():
     repo = MemoryOrderRepository([own, other, unassigned])
     for role in ROLES:
         client = client_for(role, repo)
-        assert client.post("/api/conductor/pedidos/own/confirmacion").status_code == (200 if role == "driver" else 403)
+        assert client.post("/api/conductor/pedidos/own/confirmacion").status_code == (200 if role in {"admin", "driver"} else 403)
     client = client_for("driver", repo)
     for order_id in ["other", "free", "missing"]:
         assert client.get("/api/conductor/pedidos/" + order_id).status_code == 404

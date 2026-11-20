@@ -3,7 +3,7 @@ const { test, afterEach } = require('node:test')
 const assert = require('node:assert/strict')
 const { validateOrder, validTimestamp } = require('../src/domain/managedOrder.ts')
 const { createManagement } = require('../src/application/manageOrders.ts')
-const { DemoManagement } = require('../src/infrastructure/demoManagement.ts')
+const { DemoManagement } = require('../src/infrastructure/demo/demoManagement.ts')
 const { HttpManagement, decodeOrder } = require('../src/infrastructure/httpManagement.ts')
 const originalFetch = global.fetch
 afterEach(() => { global.fetch = originalFetch })

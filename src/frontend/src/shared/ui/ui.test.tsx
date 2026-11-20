@@ -41,10 +41,10 @@ describe('módulos por rol', () => {
   const ids = (role: Role) => modulesForRole(role).map((m) => m.id)
 
   it('cada rol ve solo sus módulos', () => {
-    expect(ids('planner')).toEqual(['dashboard', 'pedidos', 'rutas', 'flota', 'conductores', 'sostenibilidad', 'admin', 'incidencias'])
+    expect(ids('planner')).toEqual(['dashboard', 'pedidos', 'rutas', 'ruta-demo', 'flota', 'conductores', 'sostenibilidad', 'admin', 'incidencias'])
     expect(ids('logistics')).toEqual(['dashboard', 'pedidos', 'rutas', 'flota', 'conductores', 'sostenibilidad', 'incidencias'])
     expect(ids('driver')).toEqual(['mi-ruta', 'pedido-actual', 'incidencias', 'pedidos', 'flota', 'conductores'])
-    expect(ids('admin')).toEqual(['dashboard', 'pedidos', 'rutas', 'flota', 'conductores', 'sostenibilidad', 'admin', 'auditoria', 'incidencias'])
+    expect(ids('admin')).toEqual(['dashboard', 'pedidos', 'rutas', 'ruta-demo', 'flota', 'conductores', 'sostenibilidad', 'admin', 'auditoria', 'incidencias'])
     expect(ids('auditor')).toEqual(['pedidos', 'flota', 'conductores', 'sostenibilidad', 'admin', 'auditoria', 'incidencias'])
   })
 

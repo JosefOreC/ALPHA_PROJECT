@@ -20,7 +20,7 @@ test('Pedidos y Rutas funcionan como módulos separados',async ({page}) => {
   await expect(page.getByRole('tab',{name:'Seguimiento de rutas'})).toHaveAttribute('aria-selected','true')
   await expect(page.getByRole('button',{name:'Registrar pedido',exact:true})).toHaveCount(0)
   const states = page.getByRole('combobox',{name:'Estado de los pedidos en el mapa'})
-  await expect(states.locator('option')).toHaveText(['Todos los estados','Pendientes','En camino'])
+  await expect(states.locator('option')).toHaveText(['Todos los estados','Pendientes','En camino','Entregados'])
   expect(mapCalls).toBeGreaterThan(0)
   await page.getByRole('tab',{name:'Generar rutas',exact:true}).click()
   await expect(page.getByRole('button',{name:'Generar rutas',exact:true})).toBeVisible()

@@ -35,6 +35,10 @@ La escala abarca de **1, totalmente en desacuerdo**, a **5, totalmente de acuerd
 
 Se comprobó que cada fila tenía las diez respuestas y que todos los valores eran enteros entre 1 y 5. Para repetir el cálculo se pueden copiar los valores de la matriz a un CSV de trabajo con encabezado `id,perfil,q1,q2,q3,q4,q5,q6,q7,q8,q9,q10` y procesarlo con el [calculador del repositorio](../../../scripts/score_sus.py).
 
+## Reproducción del cálculo
+
+La [matriz CSV](evidencias/inspeccion05/respuestas-sus.csv) transcribe las cinco filas publicadas en este informe; no sustituye la exportación original del formulario. El [resultado del calculador](evidencias/inspeccion05/sus-calculado.json) conserva puntajes individuales y promedio. Se reproduce con `python scripts/score_sus.py` pasando la ruta al CSV. Los cinco puntajes y el promedio 72,5 fueron comprobados nuevamente durante la corrección funcional.
+
 ## Cálculo y resultados
 
 A cada respuesta impar se le resta 1. Para cada respuesta par se calcula `5 − respuesta`. Se suman los diez aportes y se multiplica la suma por **2,5**. El resultado se expresa en puntos de 0 a 100. [Método de Brooke (1996)](https://hci-studies.org/methods-and-measures/downloads/SUS_Brooke1996.pdf).

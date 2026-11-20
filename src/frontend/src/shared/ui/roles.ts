@@ -10,6 +10,7 @@ export type ModuleId =
   | 'dashboard'
   | 'pedidos'
   | 'rutas'
+  | 'ruta-demo'
   | 'flota'
   | 'sostenibilidad'
   | 'admin'
@@ -31,6 +32,7 @@ const MODULES: Record<ModuleId, AppModule> = {
   dashboard: { id: 'dashboard', label: 'Dashboard del día', href: '/' },
   pedidos: { id: 'pedidos', label: 'Pedidos', href: '/?vista=pedidos' },
   rutas: { id: 'rutas', label: 'Rutas', href: '/?vista=rutas' },
+  'ruta-demo': { id: 'ruta-demo', label: 'Ruta demo', href: '/?vista=ruta-demo' },
   flota: { id: 'flota', label: 'Flota', href: '/?vista=flota' },
   sostenibilidad: { id: 'sostenibilidad', label: 'Sostenibilidad', href: '/?vista=sostenibilidad' },
   admin: { id: 'admin', label: 'Administración', href: '/?vista=admin' },
@@ -42,15 +44,15 @@ const MODULES: Record<ModuleId, AppModule> = {
 }
 
 const ROLE_MODULES: Record<Role, ModuleId[]> = {
-  admin: ['dashboard', 'pedidos', 'rutas', 'flota', 'conductores', 'sostenibilidad', 'admin', 'auditoria', 'incidencias'],
-  planner: ['dashboard', 'pedidos', 'rutas', 'flota', 'conductores', 'sostenibilidad', 'admin', 'incidencias'],
+  admin: ['dashboard', 'pedidos', 'rutas', 'ruta-demo', 'flota', 'conductores', 'sostenibilidad', 'admin', 'auditoria', 'incidencias'],
+  planner: ['dashboard', 'pedidos', 'rutas', 'ruta-demo', 'flota', 'conductores', 'sostenibilidad', 'admin', 'incidencias'],
   driver: ['mi-ruta', 'pedido-actual', 'incidencias', 'pedidos', 'flota', 'conductores'],
   logistics: ['dashboard', 'pedidos', 'rutas', 'flota', 'conductores', 'sostenibilidad', 'incidencias'],
   auditor: ['pedidos', 'flota', 'conductores', 'sostenibilidad', 'admin', 'auditoria', 'incidencias'],
 }
 
 const MODULE_PERMISSIONS: Record<ModuleId, Permission[]> = {
-  dashboard: ['dashboard.read'], pedidos: ['orders.read'], rutas: ['routes.read'],
+  'ruta-demo': ['routes.generate'], dashboard: ['dashboard.read'], pedidos: ['orders.read'], rutas: ['routes.read'],
   flota: ['fleet.read'], sostenibilidad: ['reports.read'], admin: ['settings.read'],
   'mi-ruta': ['routes.read'], 'pedido-actual': ['deliveries.read'],
   incidencias: ['incidents.read', 'incidents.create'], conductores: ['drivers.read'], auditoria: ['audit.read'],

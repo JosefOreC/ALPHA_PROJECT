@@ -45,6 +45,7 @@ export function AppShell({ role, current, user, title, section = 'Operación', c
   const percent = co2 && co2.goalKg > 0 ? Math.min(100, Math.round((co2.valueKg / co2.goalKg) * 100)) : 0
   return (
     <div className={'eco-root eco-shell' + (role === 'driver' ? ' eco-shell--driver' : '')} data-theme={theme}>
+      <a className="eco-skip-link" href="#main-content">Ir al contenido</a>
       <aside className="eco-side" aria-label="Navegación principal">
         <a className="eco-side__brand" href="/">
           <LogoHojaRuta />
@@ -107,7 +108,7 @@ export function AppShell({ role, current, user, title, section = 'Operación', c
           </nav>
           {actions ? <div className="eco-topbar__end">{actions}</div> : null}
         </header>
-        <main className="eco-content">{session?.error ? <p role="alert">{session.error}</p> : null}{children}</main>
+        <main id="main-content" tabIndex={-1} className="eco-content">{session?.error ? <p role="alert">{session.error}</p> : null}{children}</main>
       </div>
     </div>
   )

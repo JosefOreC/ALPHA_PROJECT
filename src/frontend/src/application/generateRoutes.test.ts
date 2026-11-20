@@ -3,9 +3,9 @@ import type { PlanningSource } from '../domain/ports/planningSource'
 import type { RouteOptimizer } from '../domain/ports/routeOptimizer'
 import { DEFAULT_ROUTE_SETTINGS, NO_VEHICLES_MESSAGE, NoVehiclesAvailableError, PLANNING_STEPS } from '../domain/routePlan'
 import type { PlanningScope } from '../domain/routePlan'
-import { DemoPlanningSource, DemoRouteOptimizer, UnavailableRouteOptimizer } from '../infrastructure/demoRoutePlanning'
+import { DemoPlanningSource, DemoRouteOptimizer, UnavailableRouteOptimizer } from '../infrastructure/demo/demoRoutePlanning'
 import { createLivePlanningSource } from '../infrastructure/livePlanningSource'
-import type { Vehicle } from '../types/vehicle'
+import type { Vehicle } from '../domain/vehicle'
 import { createGenerateRoutes } from './generateRoutes'
 
 const scope = (over: Partial<PlanningScope> = {}): PlanningScope => ({ pendingOrders: 10, districts: 2, availableVehicles: 3, totalVehicles: 4, vehiclesInService: 1, ...over })

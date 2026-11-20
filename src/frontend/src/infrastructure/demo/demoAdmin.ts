@@ -1,7 +1,7 @@
-import type { AlgorithmParameters } from '../domain/algorithmSettings'
-import type { Integration, UserPage } from '../domain/admin'
-import type { IntegrationCatalog, UserDirectory } from '../domain/ports/adminDirectory'
-import type { AlgorithmSettings } from '../domain/ports/algorithmSettings'
+import type { AlgorithmParameters } from '../../domain/algorithmSettings'
+import type { Integration, UserPage } from '../../domain/admin'
+import type { IntegrationCatalog, UserDirectory } from '../../domain/ports/adminDirectory'
+import type { AlgorithmSettings } from '../../domain/ports/algorithmSettings'
 
 // Valores de arranque de Admin.dc.html. Solo diésel y gasolina tienen un valor de referencia en el diseño;
 // el resto queda sin definir (null) hasta que el proyecto confirme la fuente oficial: no se inventan.

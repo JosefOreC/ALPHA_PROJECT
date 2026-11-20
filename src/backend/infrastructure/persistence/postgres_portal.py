@@ -37,6 +37,26 @@ def audit(conn, actor, action, entity, identifier, detail):
 
 
 class PostgresPortal:
+    def depot(self):
+        result = rows('SELECT almacen_id,nombre,direccion,latitud,longitud FROM almacenes ORDER BY nombre LIMIT 1')
+        if not result:
+            return None
+        item = result[0]
+        return {'id': str(item['almacen_id']), 'name': item['nombre'], 'address': item['direccion'],
+                'latitude': float(item['latitud']), 'longitude': float(item['longitud'])}
+
+    def save_depot(self, data, actor):
+        with connection() as conn:
+            conn.execute('SELECT pg_advisory_xact_lock(73120)')
+            old = conn.execute('SELECT almacen_id FROM almacenes ORDER BY nombre LIMIT 1 FOR UPDATE').fetchone()
+            identifier = old['almacen_id'] if old else uuid4()
+            conn.execute('''INSERT INTO almacenes(almacen_id,nombre,direccion,latitud,longitud) VALUES (%s,%s,%s,%s,%s)
+                ON CONFLICT(almacen_id) DO UPDATE SET nombre=EXCLUDED.nombre,direccion=EXCLUDED.direccion,
+                latitud=EXCLUDED.latitud,longitud=EXCLUDED.longitud''',
+                (identifier,data['name'],data['address'],data['latitude'],data['longitude']))
+            audit(conn, actor, 'CONFIGURAR_ALMACEN', 'almacenes', identifier, {})
+        return self.depot()
+
     def users(self):
         items = [user_dto(row) for row in rows('SELECT * FROM usuarios ORDER BY nombre')]
         counts = {role:sum(item['role']==role for item in items) for role in ('admin','planner','driver','logistics','auditor')}
@@ -93,9 +113,8 @@ class PostgresPortal:
 
     def parameters(self, query=rows):
         result = query('SELECT * FROM parametros_algoritmo ORDER BY actualizado_en DESC LIMIT 1')
-        if not result:
-            raise ValueError('No hay parámetros configurados en la base de datos.')
-        row = result[0]
+        row = result[0] if result else {'peso_co2':70,'tiempo_maximo_seg':45,'carga_maxima_pct':95,
+                                      'holgura_ventana_min':0,'reoptimizar_automaticamente':False}
         stored = query('SELECT * FROM factores_emision')
         factors = {fuel:None for fuel in FUELS}
         factors.update({item['combustible']:float(item['factor_kg_co2']) for item in stored})
@@ -315,12 +334,16 @@ class PostgresPortal:
         identifier = uuid4()
         with connection() as conn:
             order = conn.execute('SELECT conductor_id FROM pedidos WHERE pedido_id=%s FOR UPDATE',(payload['order_id'],)).fetchone()
-            if not order or str(order['conductor_id'])!=identity.driver_id:
+            if not order or not order['conductor_id'] or (canonical_role(identity.role) != 'admin' and str(order['conductor_id'])!=identity.driver_id):
                 return None
             conn.execute("INSERT INTO incidencias(incidencia_id,pedido_id,conductor_id,tipo,descripcion,estado,reportada_en) VALUES (%s,%s,%s,%s,%s,'ABIERTA',CURRENT_TIMESTAMP)",
-                         (identifier,payload['order_id'],identity.driver_id,payload['type'],payload['description']))
+                         (identifier,payload['order_id'],order['conductor_id'],payload['type'],payload['description']))
             audit(conn,identity.subject_id,'REPORTAR_INCIDENCIA','incidencias',identifier,{})
         return {'id':str(identifier),'status':'ABIERTA'}
+
+    def incident_order_choices(self):
+        return [{'id': str(row['pedido_id']), 'customer': row['cliente_nombre']} for row in rows(
+            "SELECT pedido_id,cliente_nombre FROM pedidos WHERE conductor_id IS NOT NULL AND estado<>'CANCELADO' ORDER BY cliente_nombre")]
 
     def scope(self):
         pending = rows("""SELECT count(*) FILTER (WHERE latitud IS NOT NULL AND longitud IS NOT NULL) AS n,

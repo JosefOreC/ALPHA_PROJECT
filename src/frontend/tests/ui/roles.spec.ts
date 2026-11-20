@@ -32,7 +32,12 @@ test('una sesión ausente o de evaluador no monta módulos ni consulta pedidos',
   expect(calls).toBe(0)
 })
 
-test('el planificador consulta parámetros y el administrador no obtiene controles de ejecución', async ({ page }) => {
+test('el planificador consulta parámetros y el administrador puede ejecutar rutas', async ({ page }) => {
+  await page.route('**/api/admin/parameters', route => route.fulfill({ json: {
+    co2Weight: 70, maxSeconds: 45, maxLoadPercent: 95, windowSlackMinutes: 0, autoReoptimize: false,
+    emissionFactors: { DIESEL: null, GASOLINA: null, GLP: null, GNV: null, ELECTRICO: null, HIBRIDO: null },
+  } }))
+  await page.route('**/api/routes/map', route => route.fulfill({ json: { depot: null, orders: [], routes: [], vehicles: [] } }))
   await session(page, 'planner')
   await page.goto('/?vista=admin')
   await expect(page.getByRole('tab', { name: /Parámetros del algoritmo/ })).toBeVisible()
@@ -42,7 +47,7 @@ test('el planificador consulta parámetros y el administrador no obtiene control
   await session(page, 'admin')
   await page.goto('/?vista=rutas')
   await expect(page.getByRole('heading', { name: 'Gestión de rutas' })).toBeVisible()
-  await expect(page.getByRole('button', { name: /Generar/ })).toHaveCount(0)
+  await expect(page.getByRole('tab', { name: 'Generar rutas', exact: true })).toBeVisible()
 })
 
 for (const role of ['logistics', 'driver']) {

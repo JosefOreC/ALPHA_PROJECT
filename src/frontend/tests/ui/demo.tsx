@@ -1,7 +1,7 @@
 // Entrada exclusiva de pruebas en Vite; el build del producto solo usa index.html.
 import { createRoot } from 'react-dom/client'
 import { createManagement } from '../../src/application/manageOrders'
-import { DemoManagement } from '../../src/infrastructure/demoManagement'
+import { DemoManagement } from '../../src/infrastructure/demo/demoManagement'
 import { ManagementError } from '../../src/domain/managedOrder'
 import { OrderManagementView } from '../../src/interfaces/OrderManagementView'
 import '../../src/shared/ui/tokens.css'

@@ -118,7 +118,7 @@ OrdersPort del frontend del conductor.
 | CRUD, nuevo | src/frontend/src/domain/managedOrder.ts | DTO, puerto, reglas y hora Lima |
 | CRUD, nuevo | src/frontend/src/application/manageOrders.ts | Casos de uso inyectados |
 | CRUD, nuevo | src/frontend/src/infrastructure/httpManagement.ts | HTTP, validación JSON, permisos y errores |
-| CRUD, nuevo | src/frontend/src/infrastructure/demoManagement.ts | Demostración ficticia en memoria |
+| CRUD, nuevo | src/frontend/src/infrastructure/demo/demoManagement.ts | Demostración ficticia en memoria |
 | CRUD, nuevo | src/frontend/src/interfaces/OrderManagementView.tsx | Listado, filtros, detalle y diálogo |
 | CRUD, nuevo | src/frontend/src/interfaces/OrderForm.tsx | Formulario reutilizado de registro/edición |
 | CRUD, nuevo | src/frontend/src/interfaces/orderManagement.css | Estilos bajo .management y enlace de navegación |
@@ -486,7 +486,7 @@ Distribución de commits de la publicación inicial autorizada:
    - src/frontend/src/domain/managedOrder.ts
    - src/frontend/src/application/manageOrders.ts
    - src/frontend/src/infrastructure/httpManagement.ts
-   - src/frontend/src/infrastructure/demoManagement.ts
+   - src/frontend/src/infrastructure/demo/demoManagement.ts
    - src/frontend/src/interfaces/OrderManagementView.tsx
    - src/frontend/src/interfaces/OrderForm.tsx
    - src/frontend/src/interfaces/orderManagement.css

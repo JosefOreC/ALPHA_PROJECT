@@ -1,7 +1,7 @@
 name: Tests
 on:
   push:
-    branches: [main, develop, inspection5/sprint4]
+    branches: ['**']
   pull_request:
     branches: [main, develop]
   workflow_dispatch:
@@ -67,6 +67,14 @@ jobs:
             --volume "$GITHUB_WORKSPACE:/workspace" --workdir /workspace/src/frontend \
             mcr.microsoft.com/playwright:v1.61.1-noble \
             node node_modules/@playwright/test/cli.js test --config playwright.e2e.config.ts
+      - name: Regresión de interfaz en escritorio y móvil
+        working-directory: src/frontend
+        run: |
+          docker run --rm --network host --ipc host \
+            --user "$(id -u):$(id -g)" --env HOME=/tmp --env CI=true --env PLAYWRIGHT_CHANNEL=chromium \
+            --volume "$GITHUB_WORKSPACE:/workspace" --workdir /workspace/src/frontend \
+            mcr.microsoft.com/playwright:v1.61.1-noble \
+            node node_modules/@playwright/test/cli.js test --config playwright.config.ts
       - name: Unitarias frontend
         run: npm run test:coverage --prefix src/frontend
       - name: Subir evidencias
@@ -78,5 +86,6 @@ jobs:
             reports/tests/backend-inspection5.xml
             src/frontend/playwright-report/
             src/frontend/test-results/
+            src/frontend/.test-deps/playwright-results/
             src/frontend/coverage/coverage-summary.json
             ${{ runner.temp }}/inspection5-api.log

@@ -93,10 +93,11 @@ def propose(orders, fleet, depot, factors, config, settings, start, roads):
     routes = {row['placa']:[] for row in vehicles}
     loads = {row['placa']:0.0 for row in vehicles}
     current = {row['placa']:0.0 for row in vehicles}
+    origins = {row['placa']:row.get('origin', depot) for row in vehicles}
     pending = []
 
     def evaluate(plate, sequence):
-        trip = simulate(sequence,depot,start,respect,roads,returning)
+        trip = simulate(sequence,origins[plate],start,respect,roads,returning)
         return None if trip is None else cost(trip,rates[plate])
 
     # Primero las ventanas que cierran antes: son las que menos posiciones factibles tienen.
@@ -131,8 +132,9 @@ def propose(orders, fleet, depot, factors, config, settings, start, roads):
         if not routes[plate]:
             continue
         sequence = two_opt(routes[plate],lambda candidate: evaluate(plate,candidate))
-        trip = simulate(sequence,depot,start,respect,roads,returning)
-        baseline = simulate(sorted(sequence,key=lambda row: row['ventana_inicio']),depot,start,False,roads,returning)
+        origin = origins[plate]
+        trip = simulate(sequence,origin,start,respect,roads,returning)
+        baseline = simulate(sorted(sequence,key=lambda row: row['ventana_inicio']),origin,start,False,roads,returning)
         if baseline is None:
             raise ValueError('No existe un camino vial para comparar la secuencia de referencia. Revisa los destinos.')
         route_baseline_km = baseline['km']
@@ -143,7 +145,7 @@ def propose(orders, fleet, depot, factors, config, settings, start, roads):
             compliant += on_time
             stops.append({'id':str(order.get('pedido_id','')),'customer':order.get('cliente_nombre'),'district':order['distrito'],
                           'eta':arrival.astimezone(start.tzinfo).strftime('%H:%M'),'onTime':on_time})
-        path = [depot] + [position(order) for order in sequence] + ([depot] if returning else [])
+        path = [origin] + [position(order) for order in sequence] + ([origin] if returning else [])
         planned.append({'plate':plate,'driver':vehicle['nombre_completo'],
             'waypoints':[{'lat':point[0],'lng':point[1]} for point in path],
             'baselineCo2Kg':round(route_baseline_km*baseline_rate,2) if baseline_rate is not None else None,

@@ -11,14 +11,18 @@ import { AccountCredentialsDialog } from './admin/AccountCredentialsDialog'
 import { useParameters } from './admin/useParameters'
 import { can } from '../domain/accessControl'
 import { useActor } from './session/SessionState'
+import { RolesPanel } from './admin/RolesPanel'
+import { DepotPanel } from './admin/DepotPanel'
+import type { DepotSettings } from '../domain/depot'
+import { TabList } from '../shared/ui/TabList'
 
-type Tab = 'users' | 'params' | 'integrations'
+type Tab = 'users' | 'params' | 'integrations' | 'roles' | 'depot'
 
 const SESSION_USER = { name: 'Sistemas', initials: 'SD' }
 
 const message = (reason: unknown, fallback: string) => (reason instanceof Error ? reason.message : fallback)
 
-export function AdminView({ service, onNavigate }: { service: Administration; demo?: boolean; onNavigate?: (id: ModuleId, href: string) => void }) {
+export function AdminView({ service, depotService, onNavigate }: { service: Administration; depotService?: DepotSettings; demo?: boolean; onNavigate?: (id: ModuleId, href: string) => void }) {
   const role = useActor('admin')
   const usersAllowed = can(role, 'users.read')
   const canEditParameters = can(role, 'settings.update')
@@ -68,6 +72,8 @@ export function AdminView({ service, onNavigate }: { service: Administration; de
 
   const tabs: { id: Tab; label: string; count: number | string }[] = [
     ...(usersAllowed ? [{ id: 'users' as const, label: 'Usuarios y roles', count: users ? users.total : '' }] : []),
+    ...(usersAllowed ? [{ id: 'roles' as const, label: 'Roles y accesos', count: '' }] : []),
+    ...(canEditParameters && depotService ? [{ id: 'depot' as const, label: 'Almacén', count: '' }] : []),
     { id: 'params', label: 'Parámetros del algoritmo', count: '' },
     ...(usersAllowed ? [{ id: 'integrations' as const, label: 'Integraciones', count: integrations ? integrations.length : '' }] : []),
   ]
@@ -102,15 +108,17 @@ export function AdminView({ service, onNavigate }: { service: Administration; de
         <p className="eco-sub">Usuarios, roles y configuración de la plataforma</p>
       </div>
 
-      <div className="eco-tabs" role="tablist" aria-label="Secciones de administración">
+      <TabList label="Secciones de administración">
         {tabs.map((item) => (
-          <button key={item.id} className="eco-tab" type="button" role="tab" id={`admin-tab-${item.id}`} aria-selected={tab === item.id} aria-controls="admin-panel" onClick={() => setTab(item.id)}>
+          <button key={item.id} className="eco-tab" type="button" role="tab" tabIndex={tab === item.id ? 0 : -1} id={`admin-tab-${item.id}`} aria-selected={tab === item.id} aria-controls="admin-panel" onClick={() => setTab(item.id)}>
             {item.label} {item.count !== '' ? <span className="eco-code">{item.count}</span> : null}
           </button>
         ))}
-      </div>
+      </TabList>
 
       <div id="admin-panel" role="tabpanel" aria-labelledby={`admin-tab-${tab}`} className="eco-tabpanel">
+        {tab === 'roles' ? <RolesPanel /> : null}
+        {tab === 'depot' && depotService ? <DepotPanel service={depotService} /> : null}
         {notice ? <p role="status" className="eco-notice">{notice}</p> : null}
         {tab === 'users' ? <UsersPanel page={users} error={usersError} onEditAccount={can(role, 'users.update') ? setEditingAccount : undefined} onRetry={() => setUsersReload((value) => value + 1)} /> : null}
         {tab === 'params' ? <fieldset className="eco-permission-fields" disabled={!canEditParameters}><ParametersPanel state={parameters} /></fieldset> : null}

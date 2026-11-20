@@ -7,6 +7,7 @@ import type { ModuleId } from '../shared/ui'
 import { RoutePlanningView } from './RoutePlanningView'
 import { RouteMap } from './map/RouteMap'
 import { useActor } from './session/SessionState'
+import { TabList } from '../shared/ui/TabList'
 
 type Props = { service: GenerateRoutes; mapSource?: MapDataSource; onNavigate?: (id: ModuleId, href: string) => void }
 
@@ -15,12 +16,12 @@ export function RouteManagementView({ service, mapSource, onNavigate }: Props) {
   const [tab, setTab] = useState<'active' | 'planning'>('active')
   const id = useId()
   const planning = tab === 'planning' && can(role, 'routes.generate')
-  const navigation = <div className="eco-tabs" role="tablist" aria-label="Gestión de rutas">
+  const navigation = <TabList label="Gestión de rutas">
     <button id={`${id}-active`} className="eco-tab" role="tab" type="button" aria-selected={!planning}
-      aria-controls={`${id}-panel`} onClick={() => setTab('active')}>Seguimiento de rutas</button>
+      tabIndex={!planning ? 0 : -1} aria-controls={`${id}-panel`} onClick={() => setTab('active')}>Seguimiento de rutas</button>
     {can(role, 'routes.generate') ? <button id={`${id}-planning`} className="eco-tab" role="tab" type="button" aria-selected={planning}
-      aria-controls={`${id}-panel`} onClick={() => setTab('planning')}>Generar rutas</button> : null}
-  </div>
+      tabIndex={planning ? 0 : -1} aria-controls={`${id}-panel`} onClick={() => setTab('planning')}>Generar rutas</button> : null}
+  </TabList>
 
   return <AppShell role={role} current="rutas" title="Gestión de rutas" user={{ name:'Operaciones',initials:'OP' }} onNavigate={onNavigate}>
     <div>

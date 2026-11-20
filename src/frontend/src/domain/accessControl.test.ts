@@ -7,10 +7,10 @@ import { canOpenModule } from '../shared/ui/roles'
 describe('Política de acceso del documento 08', () => {
   it('separa administración, ejecución y exportación según la matriz', () => {
     expect(can('admin', 'users.update')).toBe(true)
-    expect(can('admin', 'routes.generate')).toBe(false)
+    expect(can('admin', 'routes.generate')).toBe(true)
     expect(can('planner', 'routes.generate')).toBe(true)
     expect(can('planner', 'users.read')).toBe(false)
-    expect(can('admin', 'reports.export')).toBe(false)
+    expect(can('admin', 'reports.export')).toBe(true)
     expect(can('auditor', 'reports.export')).toBe(true)
     expect(can('auditor', 'audit.export')).toBe(false)
     expect(can('logistics', 'fleet.update')).toBe(false)

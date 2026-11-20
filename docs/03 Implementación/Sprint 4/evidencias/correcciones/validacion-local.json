@@ -1,0 +1,60 @@
+{
+  "date_lima": "2026-11-20",
+  "branch": "feature/sprint4/correcciones",
+  "base_commit": "745852544559ce516f33a650f65174bfab23a387",
+  "uncommitted_worktree": true,
+  "backend": {
+    "passed": 426,
+    "skipped": 9,
+    "subtests_passed": 36,
+    "command": ".venv/Scripts/python.exe -m pytest src/backend/tests -q -p no:cacheprovider --junitxml=reports/tests/correcciones-backend.xml"
+  },
+  "frontend": {
+    "vitest_passed": 497,
+    "node_passed": 11,
+    "command": "npm run test:coverage",
+    "coverage": {
+      "lines": 97.01,
+      "statements": 95.34,
+      "functions": 95.06,
+      "branches": 90.2
+    }
+  },
+  "browser": {
+    "engine": "Microsoft Edge (Chromium)",
+    "initial_run": {
+      "passed": 58,
+      "failed": 2,
+      "skipped": 5
+    },
+    "after_fixes": {
+      "previous_failures_rerun_passed": 2,
+      "failed": 0
+    },
+    "visual_confirmation": {
+      "simulation_desktop_and_mobile_passed": 2,
+      "viewport_mobile": 390
+    },
+    "scope": "UI with intercepted HTTP; backend simulation additionally validated through FastAPI TestClient with actual algorithm",
+    "final_focused_regression": {
+      "passed": 5,
+      "skipped_by_viewport": 1,
+      "failed": 0
+    }
+  },
+  "documentation": {
+    "reachable_markdown": 101,
+    "local_links_checked": 805,
+    "errors": 0,
+    "external_urls_checked": false
+  },
+  "limitations": [
+    "Nine database integration cases skipped: no isolated PostgreSQL configured; Docker unavailable.",
+    "No remote Actions, deployment, public API performance or stakeholder acceptance verified in this session.",
+    "SUS CSV transcribes the existing report, not an original survey export."
+  ],
+  "artifacts": {
+    "laboratorio-escritorio.png": "37873b27358c7d36291f518dd3ad83ac1c852e3ce1a6ba809fe8fe92479947f7",
+    "laboratorio-movil-390.png": "6709ac908e733de02cd75bdddac4090838ce31a5e1b68ac02fa79c95e6da902a"
+  }
+}

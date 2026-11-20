@@ -1,5 +1,5 @@
-import type { SustainabilityReportSource } from '../domain/ports/sustainabilityReportSource'
-import type { DistrictEmissions, ReportPeriod, SeriesPoint, SustainabilityReport, VehicleEmissions } from '../domain/sustainability'
+import type { SustainabilityReportSource } from '../../domain/ports/sustainabilityReportSource'
+import type { DistrictEmissions, ReportPeriod, SeriesPoint, SustainabilityReport, VehicleEmissions } from '../../domain/sustainability'
 
 // Datos ficticios de Sostenibilidad.dc.html. Las cifras cuadran entre periodos: emitido + evitado = línea base en cada barra.
 const point = (label: string, emittedKg: number, avoidedKg: number, current = false): SeriesPoint => ({ label, emittedKg, avoidedKg, current })

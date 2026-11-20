@@ -50,6 +50,7 @@ export function authorizeDriver(orders: DriverOrdersService, route: DriverRouteS
     return value
   }
   const ownOrder = async (id: string) => {
+    if (user.role === 'admin') return
     if (user.role !== 'driver' || !user.driverId) throw new Error('Tu usuario no tiene una asignación de conductor verificada.')
     // In HTTP mode ownership is checked by the authenticated API, even without a route API.
     if (verifyDemoRoute && !(await ownRoute()).stops.some(stop => stop.order_id === id)) throw new Error('Pedido no encontrado o no asignado a tu usuario.')

@@ -1,7 +1,7 @@
-import type { PlanningSource } from '../domain/ports/planningSource'
-import type { RouteOptimizer } from '../domain/ports/routeOptimizer'
-import { PLANNING_STEPS, RoutePlanningError } from '../domain/routePlan'
-import type { PlanningProgress, PlanningScope, RouteProposal } from '../domain/routePlan'
+import type { PlanningSource } from '../../domain/ports/planningSource'
+import type { RouteOptimizer } from '../../domain/ports/routeOptimizer'
+import { PLANNING_STEPS, RoutePlanningError } from '../../domain/routePlan'
+import type { PlanningProgress, PlanningScope, RouteProposal } from '../../domain/routePlan'
 
 // Datos ficticios de la pantalla de diseño (Rutas.dc.html).
 const DEMO_SCOPE: PlanningScope = { pendingOrders: 39, districts: 4, availableVehicles: 13, totalVehicles: 15, vehiclesInService: 2 }

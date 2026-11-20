@@ -4,7 +4,7 @@ import { describe, expect, it, vi } from 'vitest'
 import { createAdministration } from '../application/administration'
 import type { AlgorithmParameters } from '../domain/algorithmSettings'
 import type { AlgorithmSettings } from '../domain/ports/algorithmSettings'
-import { DEFAULT_PARAMETERS, DemoAlgorithmSettings, DemoIntegrationCatalog, DemoUserDirectory, UnavailableAlgorithmSettings, UnavailableIntegrationCatalog, UnavailableUserDirectory } from '../infrastructure/demoAdmin'
+import { DEFAULT_PARAMETERS, DemoAlgorithmSettings, DemoIntegrationCatalog, DemoUserDirectory, UnavailableAlgorithmSettings, UnavailableIntegrationCatalog, UnavailableUserDirectory } from '../infrastructure/demo/demoAdmin'
 import { AdminView } from './AdminView'
 
 const setup = (settings: AlgorithmSettings = new DemoAlgorithmSettings(), demo = true) => {
@@ -28,7 +28,7 @@ describe('AdminView · usuarios y roles', () => {
     }
     expect(within(nav).getByRole('link', { name: /Administración/ })).toHaveAttribute('aria-current', 'page')
     const tabs = screen.getByRole('tablist', { name: 'Secciones de administración' })
-    expect(within(tabs).getAllByRole('tab').map((tab) => tab.textContent?.trim())).toEqual(['Usuarios y roles 19', 'Parámetros del algoritmo', 'Integraciones 3'])
+    expect(within(tabs).getAllByRole('tab').map((tab) => tab.textContent?.trim())).toEqual(['Usuarios y roles 19', 'Roles y accesos', 'Parámetros del algoritmo', 'Integraciones 3'])
     expect(screen.getByRole('tab', { name: /Usuarios y roles/ })).toHaveAttribute('aria-selected', 'true')
   })
 

@@ -37,3 +37,19 @@ $env:ECOLOGISTICA_VERIFY_DATABASE='1'
 
 
 [← Volver al índice correspondiente](../../README.md)
+
+## Flujos administrativos y simulación
+
+La política de autorización se mantiene en `src/shared/rbac.json` y se regenera para Python con `python scripts/generate-rbac.py`. La migración aditiva `005_admin_permissions.sql` sincroniza las concesiones del administrador en bases existentes. Ejecuta las migraciones habituales antes de desplegar esta versión; no hace falta reiniciar ni cargar datos ficticios.
+
+`POST /api/routes/simulate` requiere sesión, CSRF y permiso de generación de rutas. Sus esquemas están en `interfaces/api/simulation/schemas.py`; el controlador llama al caso de uso puro de `application/use_cases/generate_routes.py`. El motor de dominio recibe costos de una red sintética y el origen individual de cada móvil. No hay dependencias de persistencia en ese caso de uso.
+
+`GET/PUT /api/admin/depot` consulta y configura el almacén inicial. La lectura de parámetros ofrece valores iniciales editables cuando la base aún no contiene configuración, con factores de emisión sin definir. El administrador puede confirmar entregas de otros conductores; los conductores siguen limitados a sus pedidos y las reglas de estado se aplican a ambos.
+
+## Verificación nativa sin Docker
+
+Con PostgreSQL y PostGIS locales disponibles, `python scripts/verify_native.py --phase integration` crea un rol y una base aislados, carga datos sintéticos, aplica las migraciones y ejecuta el backend completo. El archivo de conexión se selecciona con `--env-file` (por defecto `.env.test`); `.env` operativo permanece intacto. Al terminar se eliminan únicamente la base y el rol creados por esa ejecución. Los resultados quedan en `reports/native/`.
+
+Para `--phase e2e` o `--phase all`, compila antes el frontend e instala los navegadores de la versión fijada en `package-lock.json`, usando `PLAYWRIGHT_BROWSERS_PATH` con la ruta absoluta a `.test-deps/playwright-browsers`. Se validó con Node 24.15.0 y Playwright 1.61.1. En Windows, Firefox necesita que el ejecutor permita sus procesos; la validación no modifica las preferencias de seguridad del navegador.
+
+`ECOLOGISTICA_ENV_FILE` permite seleccionar la configuración del proceso de API sin modificar `.env`. El verificador la usa exclusivamente con credenciales temporales sintéticas.

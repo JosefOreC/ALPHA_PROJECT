@@ -4,7 +4,7 @@ import { beforeAll, describe, expect, it } from 'vitest'
 import { createManagement } from '../application/manageOrders'
 import { formatDecimal } from '../domain/format'
 import { formatKg, formatWindow } from '../domain/managedOrder'
-import { DemoManagement } from '../infrastructure/demoManagement'
+import { DemoManagement } from '../infrastructure/demo/demoManagement'
 import { OrderManagementView } from './OrderManagementView'
 
 // jsdom no implementa <dialog>.showModal(); basta con reflejar el atributo open.

@@ -4,7 +4,7 @@ import { beforeAll, describe, expect, it, vi } from 'vitest'
 import { createDriverOrders } from '../application/driverOrders'
 import { createDriverRoute } from '../application/driverRoute'
 import { currentStop, routeProgress, stopNumber } from '../domain/driverRoute'
-import { DemoOrders, UnavailableDriverRoute } from '../infrastructure/demoOrders'
+import { DemoOrders, UnavailableDriverRoute } from '../infrastructure/demo/demoOrders'
 import { DriverOrderView } from './DriverOrderView'
 import { DriverRouteView } from './DriverRouteView'
 

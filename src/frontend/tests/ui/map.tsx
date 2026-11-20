@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { createRoot } from 'react-dom/client'
-import { DemoMapData } from '../../src/infrastructure/demoMapData'
+import { DemoMapData } from '../../src/infrastructure/demo/demoMapData'
 import type { MapProfile } from '../../src/domain/mapPresentation'
 import { RouteMap } from '../../src/interfaces/map/RouteMap'
 import { filterMapOrders } from '../../src/domain/mapPresentation'

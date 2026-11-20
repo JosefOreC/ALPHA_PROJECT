@@ -2,8 +2,8 @@
 import { useState } from 'react'
 import { createDriverOrders } from '../../src/application/driverOrders'
 import { createDriverRoute } from '../../src/application/driverRoute'
-import { DemoMapData } from '../../src/infrastructure/demoMapData'
-import { DemoOrders } from '../../src/infrastructure/demoOrders'
+import { DemoMapData } from '../../src/infrastructure/demo/demoMapData'
+import { DemoOrders } from '../../src/infrastructure/demo/demoOrders'
 import { DriverOrderView } from '../../src/interfaces/DriverOrderView'
 import { DriverRouteView } from '../../src/interfaces/DriverRouteView'
 

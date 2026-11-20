@@ -1,0 +1,150 @@
+{
+  "run": "d49503419980",
+  "docker_used": false,
+  "database": "alpha_verify_d49503419980",
+  "phase": "all",
+  "commands": [
+    {
+      "check": "backend",
+      "exit_code": 0
+    },
+    {
+      "check": "e2e_chromium_firefox_webkit",
+      "exit_code": 0
+    }
+  ],
+  "postgresql": "18.3",
+  "postgis": "3.6.2",
+  "isolated_database_removed": true,
+  "temporary_role_removed": true,
+  "date_lima": "2026-11-20",
+  "backend": {
+    "passed": 436,
+    "skipped": 0,
+    "subtests_passed": 36
+  },
+  "node": "24.15.0",
+  "playwright": "1.61.1",
+  "e2e": {
+    "stats": {
+      "startTime": "2026-11-20T07:06:29.480Z",
+      "duration": 22248.571,
+      "expected": 12,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "browser": "chromium",
+        "case": "acceso, permisos, validación y persistencia de pedidos",
+        "status": "passed",
+        "duration_ms": 2269,
+        "metrics": {
+          "orderListMs": 330.7325999999998
+        }
+      },
+      {
+        "browser": "chromium",
+        "case": "consulta la ruta asignada y confirma una entrega como conductor",
+        "status": "passed",
+        "duration_ms": 1063,
+        "metrics": {}
+      },
+      {
+        "browser": "chromium",
+        "case": "disponibilidad, recuperación ante error de red y tiempos de acceso",
+        "status": "passed",
+        "duration_ms": 483,
+        "metrics": {
+          "browser": "chromium",
+          "healthMs": 2.9391999999998006,
+          "ttfbMs": 2.199999988079071,
+          "fcpMs": 36,
+          "lcpMs": 36
+        }
+      },
+      {
+        "browser": "chromium",
+        "case": "administrador: permisos completos, tabla de roles y simulación por interfaz",
+        "status": "passed",
+        "duration_ms": 1550,
+        "metrics": {}
+      },
+      {
+        "browser": "firefox",
+        "case": "acceso, permisos, validación y persistencia de pedidos",
+        "status": "passed",
+        "duration_ms": 3726,
+        "metrics": {
+          "orderListMs": 117.09829999999965
+        }
+      },
+      {
+        "browser": "firefox",
+        "case": "consulta la ruta asignada y confirma una entrega como conductor",
+        "status": "passed",
+        "duration_ms": 872,
+        "metrics": {}
+      },
+      {
+        "browser": "firefox",
+        "case": "disponibilidad, recuperación ante error de red y tiempos de acceso",
+        "status": "passed",
+        "duration_ms": 753,
+        "metrics": {
+          "browser": "firefox",
+          "healthMs": 4.21730000000025,
+          "ttfbMs": 15,
+          "fcpMs": 162,
+          "lcpMs": 162
+        }
+      },
+      {
+        "browser": "firefox",
+        "case": "administrador: permisos completos, tabla de roles y simulación por interfaz",
+        "status": "passed",
+        "duration_ms": 1743,
+        "metrics": {}
+      },
+      {
+        "browser": "webkit",
+        "case": "acceso, permisos, validación y persistencia de pedidos",
+        "status": "passed",
+        "duration_ms": 3249,
+        "metrics": {
+          "orderListMs": 109.9060999999997
+        }
+      },
+      {
+        "browser": "webkit",
+        "case": "consulta la ruta asignada y confirma una entrega como conductor",
+        "status": "passed",
+        "duration_ms": 1171,
+        "metrics": {}
+      },
+      {
+        "browser": "webkit",
+        "case": "disponibilidad, recuperación ante error de red y tiempos de acceso",
+        "status": "passed",
+        "duration_ms": 615,
+        "metrics": {
+          "browser": "webkit",
+          "healthMs": 3.2716999999993277,
+          "ttfbMs": 1,
+          "fcpMs": 66,
+          "lcpMs": 66
+        }
+      },
+      {
+        "browser": "webkit",
+        "case": "administrador: permisos completos, tabla de roles y simulación por interfaz",
+        "status": "passed",
+        "duration_ms": 2038,
+        "metrics": {}
+      }
+    ],
+    "intercepted_requests": "Only deliberate HTTP 503 and network-failure scenarios; remaining operations use real FastAPI and PostgreSQL/PostGIS."
+  },
+  "firefox_execution": "Windows sandbox blocked page creation; the successful run used normal host permissions without changing browser security settings."
+}

@@ -1,6 +1,6 @@
-import type { GeoPoint, MapData, MapOrder, MapRoute } from '../domain/mapData'
-import type { MapDataSource } from '../domain/ports/mapDataSource'
-import { ROAD_FIXTURES } from './limaRoadFixtures'
+import type { GeoPoint, MapData, MapOrder, MapRoute } from '../../domain/mapData'
+import type { MapDataSource } from '../../domain/ports/mapDataSource'
+import { ROAD_FIXTURES } from '../limaRoadFixtures'
 
 const p = (lat: number, lng: number): GeoPoint => ({ lat, lng })
 

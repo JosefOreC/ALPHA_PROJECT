@@ -131,6 +131,13 @@ export function ParametersPanel({ state }: { state: ParametersState }) {
                   </span>
                   {error ? <span className="eco-field__hint eco-row__full" id={`${id}-error`}>{error}</span> : null}
                   {empty && !error ? <span className="eco-sr">sin definir</span> : null}
+                  <div className="eco-field eco-row__full">
+                    <label htmlFor={`consumption-${fuel}`}>Consumo de {EMISSION_FUEL_LABELS[fuel]} ({EMISSION_FACTOR_UNITS[fuel].replace('kg/', '')}/km)</label>
+                    <input id={`consumption-${fuel}`} className="eco-input" type="number" min="0.0001" max="10" step="any"
+                      value={text.consumption?.[fuel] ?? ''} aria-invalid={Boolean(errors[`consumption:${fuel}`])}
+                      onChange={event => state.edit(current => ({ ...current, consumption: { ...Object.fromEntries(EMISSION_FUELS.map(value => [value, ''])), ...current.consumption, [fuel]: event.target.value } as Record<typeof fuel, string> }))} />
+                    {errors[`consumption:${fuel}`] ? <span className="eco-field__hint">{errors[`consumption:${fuel}`]}</span> : null}
+                  </div>
                 </div>
               )
             })}

@@ -1,4 +1,4 @@
-import type { SessionUser } from '../domain/session'
+import type { SessionUser } from '../../domain/session'
 
 export const DEMO_ACCOUNTS: SessionUser[] = [
   { subjectId: 'demo-admin', name: 'Sistemas · Demo', role: 'admin', driverId: null, plate: null },

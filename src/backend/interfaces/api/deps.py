@@ -22,6 +22,7 @@ from interfaces.api.security.deps import get_current_identity, protect_mutation 
 from interfaces.api.security.headers import SecurityHeadersMiddleware
 from interfaces.api.static_assets import PrecompressedStaticFiles
 from interfaces.api.portal.router import router as portal_router
+from interfaces.api.simulation.router import router as simulation_router
 from infrastructure.persistence.postgres_orders import postgres_repository
 from infrastructure.persistence.postgres_fleet import PostgresVehicles, PostgresDrivers
 from infrastructure.persistence.postgres_dashboard import PostgresDashboard, PostgresDistrictCatalog
@@ -112,6 +113,7 @@ def create_app(repository=None, authenticate=get_current_identity, protect_mutat
         return JSONResponse(status_code=503,content={'detail':str(error)})
     app.include_router(session_router)
     app.include_router(portal_router)
+    app.include_router(simulation_router)
     app.include_router(create_orders_router(DriverOrders(repository, SystemClock()), authenticate))
     app.include_router(create_management_router(ManageOrders(repository, UuidOrderIds()), authenticate, protect_mutation))
     app.include_router(vehicles_router, prefix="/api/v1")

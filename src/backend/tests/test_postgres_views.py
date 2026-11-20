@@ -169,8 +169,8 @@ def test_generate_preview_approve_and_reload_routes_with_real_postgis(database_c
         'co2Weight':70,'maxSeconds':45,'maxLoadPercent':95,'windowSlackMinutes':10,
         'autoReoptimize':False,'emissionFactors':factors,'fuelConsumption':{'DIESEL':0.09}}).status_code==200
     settings = {'goal':'co2','respectWindows':True,'prioritizeLowEmission':True}
-    assert client.post('/api/routes/proposal',headers=headers,json=settings).status_code==403
-    conn.execute("UPDATE usuarios SET rol='OPERADOR' WHERE usuario_id=%s",(actor,))
+    # El administrador está autorizado; aún faltan pedidos elegibles (validación de negocio).
+    assert client.post('/api/routes/proposal',headers=headers,json=settings).status_code==422
     payload = {'customer':'Routing customer','address':'Routing address','district':'Ate',
         'window_start':start.isoformat(),'window_end':(start+timedelta(hours=8)).isoformat(),'weight_kg':25.0}
     created = client.post('/api/pedidos',headers=headers,json=payload)
