@@ -117,7 +117,13 @@ Las nueve comprobaciones de salud de esta serie quedaron por debajo de 500 ms. E
 [← Volver al README principal](../../../README.md) · [Volver al Sprint 4](README.md)
 
 
-## Corte final de main del 20/11/2026
+## Verificación de la versión integrada
+
+El commit `c891e50` de `main`, incorporado a la rama de entrega, aprobó la compilación y la suite integrada en GitHub Actions. La ejecución conserva el artefacto `inspection5-test-evidence`. El workflow de despliegue automático asociado registró el estado `skipped`. [Ejecución Tests](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/44727968413) · [Evidencia de pruebas](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/44727968413/artifacts/14625770760) · [Deploy production](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/44728838200).
+
+El 20/11/2026, cerca de las 07:42 (hora de Lima), el endpoint público de salud devolvió HTTP 200 y `status: ok` en cuatro consultas. La primera tardó 22 842 ms. Las tres consultas posteriores registraron 269,9 ms, 225,2 ms y 557,8 ms. La serie comprueba la respuesta de la instancia pública durante ese intervalo. Quedan por verificar el commit servido y los tiempos de los endpoints autenticados. [Endpoint de salud](https://ecologistica-lima-qolz.onrender.com/health).
+
+## Corte técnico de main del 20/11/2026
 
 La suite del commit `64267bd` aprobó 12/12 E2E integrados en tres motores, con persistencia real. El backend integrado registra 534 pruebas y 36 subpruebas sin omisiones. Los reportes remotos, contadores de cobertura y métricas están conservados en el [paquete de cierre](evidencias/cierre-20261120/README.md); el [registro técnico](08%20Cierre%20tecnico%20y%20trazabilidad%20V_1_0_0.md) relaciona los criterios y sus límites.
 

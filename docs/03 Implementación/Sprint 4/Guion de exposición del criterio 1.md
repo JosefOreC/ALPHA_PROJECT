@@ -21,19 +21,19 @@ Duración total prevista: 8 min 40 s. Cada expositor conserva margen antes del l
 
 Alex: problema → datos → imagen → carga → continuidad
 
--  Mantener React, FastAPI y PostgreSQL/PostGIS.
--  Consultar lo necesario y usar índices.
--  Pedir 12 registros; buscar en el servidor.
--  Imagen adaptativa, espacio reservado y SVG integrado.
--  Cargar el mapa cuando se necesita; cálculo auxiliar nativo.
+- Mantener React, FastAPI y PostgreSQL/PostGIS.
+- Consultar lo necesario y usar índices.
+- Pedir 12 registros; buscar en el servidor.
+- Imagen adaptativa, espacio reservado y SVG integrado.
+- Cargar el mapa cuando se necesita; cálculo auxiliar nativo.
 
 Josef: reutilizar → comprimir → medir → estimar → interpretar
 
--  Caché y React Query en Registros, separados por usuario.
--  Brotli/Gzip: menos datos en tránsito.
--  Serie controlada conforme; otro ensayo detectó TBT de 167 ms.
--  SWDM v4: transferencia → energía → CO₂e.
--  Proyección de 10000 visitas; la imagen también tiene un coste.
+- Caché y React Query en Registros, separados por usuario.
+- Brotli/Gzip: menos datos en tránsito.
+- Serie controlada conforme; otro ensayo detectó TBT de 167 ms.
+- SWDM v4: transferencia → energía → CO₂e.
+- Proyección de 10000 visitas; la imagen también tiene un coste.
 
 ## Cómo presentar sin leer
 
