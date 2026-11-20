@@ -16,7 +16,7 @@ La tabla concilia los criterios del backlog con el incremento y sus pruebas. El 
 | US-004 · Confirmar entrega de un pedido | Consulta de una ruta asignada y persistencia de la entrega confirmada. La vista diferencia el tramo confirmado y las paradas restantes. | [Vistas del conductor](https://github.com/JosefOreC/ALPHA_PROJECT/commit/7811be1d261f5d2344cbc3c41fff2fd7ef093d6f) · [Avance en el mapa](https://github.com/JosefOreC/ALPHA_PROJECT/commit/8949cba) · [Pruebas E2E](evidencias/inspeccion05/ejecucion-local.json). |
 | US-005 · Generar rutas optimizadas del día | Generación y aprobación de una propuesta, consulta de la asignación y seguimiento de uno o varios conductores por nombre y placa. | [Implementación del planificador](https://github.com/JosefOreC/ALPHA_PROJECT/commit/37a4cb91e193ad636eebbbf408ea0c9f201a8ffe) · [Asignación en Render](https://github.com/JosefOreC/ALPHA_PROJECT/commit/ba838ff) · [Comparación de recorridos](https://github.com/JosefOreC/ALPHA_PROJECT/commit/4f3964b) · [Escenarios de mapa](../../../src/frontend/tests/ui/map.spec.ts). |
 
-La captura versionada del backlog confirma US-003 → ELODRSPDSC-17, US-004 → ELODRSPDSC-18 y US-005 → ELODRSPDSC-22. La matriz del [cierre técnico](08%20Cierre%20tecnico%20y%20trazabilidad%20V_1_0_0.md#conciliación-de-historias) enlaza las tres historias con commits, pruebas y multimedia. El estado actual del tablero y la aceptación formal no se deducen de capturas históricas. [Registro de trazabilidad de pedidos](../Gu%C3%ADas%20t%C3%A9cnicas/CRUD%20de%20pedidos.md).
+La captura versionada del backlog confirma US-003 → ELODRSPDSC-17, US-004 → ELODRSPDSC-18 y US-005 → ELODRSPDSC-22. La matriz del [cierre técnico](08%20Cierre%20tecnico%20y%20trazabilidad%20V_1_0_0.md#conciliación-de-historias) enlaza las tres historias con commits, pruebas y multimedia. El estado vigente de los tres tickets se comprobó el 20/11/2026 en la vista Lista de Jira, no a partir de capturas históricas; la captura y los enlaces están en el [cierre en Jira](evidencias/inspeccion05/resumen-pruebas-sprint4.md#4-cierre-en-jira). [Registro de trazabilidad de pedidos](../Gu%C3%ADas%20t%C3%A9cnicas/CRUD%20de%20pedidos.md).
 
 La optimización transversal conserva sus series de transferencia y CO₂e antes y después, sus condiciones de medición y la matriz de estándares. [Informe ambiental](03%20Informe%20de%20reducci%C3%B3n%20del%20impacto%20ambiental%20V_1_2_0.md) · [Estándares y arquitectura](04%20Est%C3%A1ndares%20arquitectura%20y%20gu%C3%ADa%20de%20desarrollo%20verde%20V_1_2_0.md).
 
@@ -57,5 +57,6 @@ El líder confirmó por escrito la aceptación de las tres historias. Los videos
 | V_1_0_0 | 19/11/2026 | Primera edición para la Inspección 5. |
 | V_1_0_1 | 20/11/2026 | Conciliación de historias, pruebas y observaciones del cuestionario. |
 | V_1_0_2 | 20/11/2026 | Tickets confirmados en captura, paquete técnico y demostración multimedia; SUS y Render fuera de alcance. |
+| V_1_0_3 | 20/11/2026 | El estado de los tres tickets se comprueba en la vista Lista de Jira y se enlaza su evidencia. |
 
 [← Volver al README principal](../../../README.md) · [Volver al Sprint 4](README.md)

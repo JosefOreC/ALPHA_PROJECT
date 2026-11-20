@@ -66,7 +66,33 @@ Observaciones:
 - La Lista anida las historias dentro de su épica; con las épicas plegadas solo se ven las actividades sin épica y puede parecer que faltan tickets.
 - Cada historia tiene un comentario con los enlaces a sus commits y pruebas, agregado por el equipo. Los enlaces también figuran en la [matriz de trazabilidad](../../08%20Cierre%20tecnico%20y%20trazabilidad%20V_1_0_0.md#conciliación-de-historias).
 
-## 5. Pendiente de coordinar
+## 5. Serie repetida de `/health` y revisión de enlaces externos
+
+### Serie repetida de `/health`
+
+El 20/11/2026 se hicieron 60 consultas a `GET /health` del servicio de Render, una cada 3 s, sin credenciales, desde un equipo en Lima. Archivo: [salud-render-serie-60.csv](salud-render-serie-60.csv).
+
+| Medida | Resultado |
+|---|---|
+| Respuestas HTTP 200 | 60 de 60 |
+| Tiempo total | mínimo 222 ms, mediana 270 ms, percentil 95 de 464 ms, máximo 1 365 ms |
+| Consultas por debajo de 500 ms | 58 de 60 |
+| Consultas por encima de 1 000 ms | 1 (la segunda, 1 365 ms; la primera tardó 617 ms) |
+
+No se reprodujo el pico de unos 6 s de las pruebas locales ni la demora de unos 22 s de un arranque en frío: el servicio estaba activo. Los valores incluyen la red entre el equipo de prueba y Render, se midieron desde un solo equipo y en una sola franja horaria, y no separan el tiempo de atención de la API. Por eso la serie no explica la causa del pico anterior; solo muestra que no apareció en 60 consultas seguidas.
+
+### Enlaces externos
+
+Se comprobaron las 296 direcciones externas de los documentos con consultas de solo lectura. 272 respondieron correctamente. Las 24 restantes no son enlaces rotos:
+
+- 19 enlaces a commits de GitHub respondieron 503 por el límite de consultas anónimas; con `git` se comprobó que los 19 commits existen.
+- 3 enlaces a artefactos de Actions respondieron 404 sin sesión; la API de GitHub confirma que existen y no han expirado.
+- 1 página de ajustes de secretos del repositorio responde 404 sin permisos de administrador.
+- 1 página de ISO rechaza consultas automáticas (403).
+
+No se confirmó ningún enlace roto. `scripts/check_docs.py` sigue sin consultar enlaces externos; esta revisión se hizo con un script puntual que no forma parte del repositorio.
+
+## 6. Pendiente de coordinar
 
 - Investigar las tres demoras superiores a 500 ms observadas en las dos series autenticadas de Pedidos. Comparar el tiempo total del cliente con el tiempo de atención de la API en una próxima verificación.
 
