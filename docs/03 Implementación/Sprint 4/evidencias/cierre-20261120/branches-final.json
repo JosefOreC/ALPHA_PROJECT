@@ -1,0 +1,28 @@
+{
+  "branches": [
+    {
+      "name": "main",
+      "isMain": true,
+      "type": "LONG",
+      "status": {
+        "qualityGateStatus": "OK",
+        "bugs": 0,
+        "vulnerabilities": 0,
+        "codeSmells": 0
+      },
+      "analysisDate": "2026-11-20T10:02:26+0000",
+      "commit": {
+        "sha": "64267bda5cb81c584ce7250e2d599dffa223cfad",
+        "author": {
+          "name": "JosefOreC",
+          "login": "JosefOreC-I2NHD@github",
+          "avatar": "cc1f4261960307ce8d96c155dc4684ab"
+        },
+        "date": "2026-11-20T10:00:46+0000",
+        "message": "fix(security): remove static CI credentials and constrain native validation"
+      },
+      "branchId": "bea7f111-f6ff-44cc-8116-faf8b4342940",
+      "branchUuidV1": "AaGNz1eW8JWW6OUFv_Te"
+    }
+  ]
+}

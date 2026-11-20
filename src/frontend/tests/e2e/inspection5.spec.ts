@@ -69,6 +69,7 @@ test('acceso, permisos, validación y persistencia de pedidos', async ({ page, b
   expect(created.status()).toBe(201)
   const saved = await created.json()
   await expect(page.getByText('Pedido guardado correctamente.')).toBeVisible()
+  await testInfo.attach('pedido-registrado', { body: await page.screenshot({ fullPage: true }), contentType: 'image/png' })
   expect(saved.id).toEqual(expect.any(String))
 
   const persisted = await page.request.get('/api/pedidos/' + encodeURIComponent(saved.id))
@@ -102,17 +103,19 @@ test('acceso, permisos, validación y persistencia de pedidos', async ({ page, b
   expect((await page.request.get('/api/session')).status()).toBe(401)
 })
 
-test('consulta la ruta asignada y confirma una entrega como conductor', async ({ request, baseURL }, testInfo) => {
+test('consulta la ruta asignada y confirma una entrega como conductor', async ({ page, baseURL }, testInfo) => {
   const password = process.env.E2E_PASSWORD
   if (!password || !baseURL || !['127.0.0.1', 'localhost'].includes(new URL(baseURL).hostname)) {
     throw new Error('La prueba de escritura requiere una instancia local aislada y E2E_PASSWORD.')
   }
   const driver = ['04', '05', '06'][testInfo.project.name === 'chromium' ? 0 : testInfo.project.name === 'firefox' ? 1 : 2]
-  const login = await request.post('/api/session', {
-    data: { email: `conductor${driver}@example.invalid`, password },
-  })
-  expect(login.status()).toBe(200)
-  const identity = await login.json()
+  await page.goto('/?vista=mi-ruta')
+  await page.getByLabel('Correo electrónico').fill(`conductor${driver}@example.invalid`)
+  await page.getByLabel('Contraseña', { exact: true }).fill(password)
+  await page.getByRole('button', { name: 'Ingresar', exact: true }).click()
+  await expect(page.getByRole('list', { name: 'Paradas de hoy' })).toBeVisible()
+  const request = page.request
+  const identity = await (await request.get('/api/session')).json()
   expect(identity.role).toBe('driver')
   expect((await request.get('/api/routes/scope')).status()).toBe(403)
   const assigned = await request.get('/api/conductor/ruta')
@@ -121,14 +124,21 @@ test('consulta la ruta asignada y confirma una entrega como conductor', async ({
   const stop = route.stops.find((item: { kind: string }) => item.kind === 'now')
   expect(stop).toBeDefined()
   const order = `/api/conductor/pedidos/${stop.order_id}`
-  const confirmed = await request.post(`${order}/confirmacion`, {
-    headers: { 'X-CSRF-Token': identity.csrf_token },
-  })
+  await testInfo.attach('ruta-asignada', { body: await page.screenshot({ fullPage: true }), contentType: 'image/png' })
+  await page.goto('/?vista=conductor&pedido=' + encodeURIComponent(stop.order_id))
+  await page.getByRole('button', { name: 'Confirmar entrega', exact: true }).click()
+  const confirmation = page.getByRole('dialog', { name: '¿Ya entregaste el pedido?' })
+  await expect(confirmation).toBeVisible()
+  const confirmationResponse = page.waitForResponse(response => response.url().endsWith(order + '/confirmacion') && response.request().method() === 'POST')
+  await confirmation.getByRole('button', { name: 'Sí, confirmar entrega', exact: true }).click()
+  const confirmed = await confirmationResponse
   expect(confirmed.ok()).toBeTruthy()
   expect((await confirmed.json()).status).toBe('ENTREGADO')
   const persisted = await request.get(order)
   expect(persisted.ok()).toBeTruthy()
   expect((await persisted.json()).status).toBe('ENTREGADO')
+  await expect(page.getByText('Entrega confirmada', { exact: true })).toBeVisible()
+  await testInfo.attach('entrega-confirmada', { body: await page.screenshot({ fullPage: true }), contentType: 'image/png' })
 })
 
 test('disponibilidad, recuperación ante error de red y tiempos de acceso', async ({ page }, testInfo) => {
@@ -186,6 +196,7 @@ test('administrador: permisos completos, tabla de roles y simulación por interf
   await page.getByRole('tab', { name: 'Roles y accesos', exact: true }).click()
   await expect(page.getByRole('table', { name: /Responsabilidades/ })).toBeVisible()
   await expect(page.getByRole('row', { name: /ROL-01/ })).toContainText('Generar y aprobar rutas')
+  await testInfo.attach('roles-y-accesos', { body: await page.screenshot({ fullPage: true }), contentType: 'image/png' })
   await page.getByRole('link', { name: 'Rutas', exact: true }).click()
   await expect(page.getByRole('tab', { name: 'Generar rutas', exact: true })).toBeVisible()
   await page.getByRole('link', { name: 'Ruta demo', exact: true }).click()

@@ -1,0 +1,41 @@
+[
+  {
+    "url": "http://localhost:43695/",
+    "fetchTime": "2026-11-20T10:01:16.769Z",
+    "performance": 0.85,
+    "metrics": {
+      "server-response-time": 5,
+      "first-contentful-paint": 1400.24665,
+      "largest-contentful-paint": 2736.60715,
+      "total-blocking-time": 262.5,
+      "cumulative-layout-shift": 0.1406613329711263,
+      "total-byte-weight": 175617
+    }
+  },
+  {
+    "url": "http://localhost:43695/",
+    "fetchTime": "2026-11-20T10:01:27.784Z",
+    "performance": 0.91,
+    "metrics": {
+      "server-response-time": 2,
+      "first-contentful-paint": 1401.15905,
+      "largest-contentful-paint": 2559.7401,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0.1406613329711263,
+      "total-byte-weight": 169308
+    }
+  },
+  {
+    "url": "http://localhost:43695/",
+    "fetchTime": "2026-11-20T10:01:37.890Z",
+    "performance": 0.92,
+    "metrics": {
+      "server-response-time": 1,
+      "first-contentful-paint": 1405.0454499999998,
+      "largest-contentful-paint": 2467.996449999999,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0.1388901061718913,
+      "total-byte-weight": 175617
+    }
+  }
+]

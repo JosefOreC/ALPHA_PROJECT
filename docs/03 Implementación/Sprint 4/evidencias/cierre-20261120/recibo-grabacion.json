@@ -1,0 +1,20 @@
+{
+  "run": "aa7b6bb1bfb1",
+  "docker_used": false,
+  "database": "alpha_verify_aa7b6bb1bfb1",
+  "phase": "all",
+  "commands": [
+    {
+      "check": "backend",
+      "exit_code": 0
+    },
+    {
+      "check": "e2e_chromium_firefox_webkit",
+      "exit_code": 1
+    }
+  ],
+  "postgresql": "18.3",
+  "postgis": "3.6.2",
+  "isolated_database_removed": true,
+  "temporary_role_removed": true
+}

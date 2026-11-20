@@ -345,7 +345,7 @@ Evidencias de Jira: [evidencias-jira/](docs/02%20Planificaci%C3%B3n/evidencias-j
 - [Playwright, rendimiento y disponibilidad](docs/03%20Implementaci%C3%B3n/Sprint%204/03%20Analisis%20PlayWrigth%20V_1_0_0.md)
 - [Usabilidad SUS](docs/03%20Implementaci%C3%B3n/Sprint%204/04%20Usabilidad%20V_1_0_0.md)
 
-[![CI](https://github.com/JosefOreC/ALPHA_PROJECT/actions/workflows/ci.yml/badge.svg?branch=feature%2Fsprint4%2Fcorrecciones)](https://github.com/JosefOreC/ALPHA_PROJECT/actions/workflows/ci.yml) [![Tests](https://github.com/JosefOreC/ALPHA_PROJECT/actions/workflows/tests.yml/badge.svg?branch=feature%2Fsprint4%2Fcorrecciones)](https://github.com/JosefOreC/ALPHA_PROJECT/actions/workflows/tests.yml)
+[![CI](https://github.com/JosefOreC/ALPHA_PROJECT/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/JosefOreC/ALPHA_PROJECT/actions/workflows/ci.yml) [![Tests](https://github.com/JosefOreC/ALPHA_PROJECT/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/JosefOreC/ALPHA_PROJECT/actions/workflows/tests.yml)
 
 [![Deploy production](https://github.com/JosefOreC/ALPHA_PROJECT/actions/workflows/deploy-production.yml/badge.svg?branch=main)](https://github.com/JosefOreC/ALPHA_PROJECT/actions/workflows/deploy-production.yml)
 
@@ -390,3 +390,7 @@ Evidencias de Jira: [evidencias-jira/](docs/02%20Planificaci%C3%B3n/evidencias-j
 ---
 
 > Versión del proyecto: **V_1_0_0** · Fecha: 04/09/2026
+
+## Cierre técnico del 20/11/2026
+
+[Entrega en main y trazabilidad de historias](docs/03%20Implementaci%C3%B3n/Sprint%204/08%20Cierre%20tecnico%20y%20trazabilidad%20V_1_0_0.md) · [Videos y evidencias](docs/03%20Implementaci%C3%B3n/Sprint%204/evidencias/cierre-20261120/README.md). SUS y Render quedan fuera del alcance solicitado para este cierre.

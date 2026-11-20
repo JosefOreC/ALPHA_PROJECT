@@ -100,3 +100,23 @@ Las nueve comprobaciones de salud de esta serie quedaron por debajo de 500 ms. E
 | V_1_0_1 | 20/11/2026 | Medición de acceso público y salud en tres motores de navegador. |
 
 [← Volver al README principal](../../../README.md) · [Volver al Sprint 4](README.md)
+
+
+## Corte final de main del 20/11/2026
+
+La suite del commit `64267bd` aprobó 12/12 E2E integrados en tres motores, con persistencia real. El backend integrado registra 534 pruebas y 36 subpruebas sin omisiones. Los reportes remotos, contadores de cobertura y métricas están conservados en el [paquete de cierre](evidencias/cierre-20261120/README.md); el [registro técnico](08%20Cierre%20tecnico%20y%20trazabilidad%20V_1_0_0.md) relaciona los criterios y sus límites.
+
+El arnés posterior convierte la confirmación del conductor en un recorrido por interfaz, comprueba el diálogo y la persistencia, y adjunta capturas del pedido, ruta, entrega y roles. La variable `E2E_RECORD_DEMO=1` habilita video; permanece apagada en la medición ordinaria. Se publican tres videos de Chromium como evidencia técnica, sin atribuir asistencia de stakeholders. La primera corrida grabada aprobó 11/12: `/health` tardó 6202,893 ms en Chromium. Se conserva el fallo y se repite sin video con el mismo umbral, sin usar la repetición para borrar el resultado inicial.
+
+La integración del motor vial usa un proveedor de prueba explícito; la API de simulación usa el motor de asignación y costos euclidianos. Ninguna de estas pruebas acredita exactitud de calles reales ni latencia de producción. Render y una nueva evaluación SUS quedan fuera del cierre solicitado.
+
+
+La [repetici?n sin grabaci?n](evidencias/cierre-20261120/medicion-sin-video.json) aprob? **12/12**, sin omisiones ni reintentos, en Chromium, Firefox y WebKit. El [recibo de limpieza](evidencias/cierre-20261120/recibo-medicion.json) confirma la eliminaci?n de los recursos temporales.
+
+| Motor | TTFB (ms) | FCP (ms) | LCP (ms) | GET /health (ms) | GET /api/pedidos (ms) |
+|---|---:|---:|---:|---:|---:|
+| chromium | 3.30 | 36.00 | 36.00 | 4.60 | 217.71 |
+| firefox | 13.00 | 177.00 | 177.00 | 6.22 | 127.26 |
+| webkit | 2.00 | 85.00 | 85.00 | 5.44 | 113.24 |
+
+Estas son muestras puntuales locales; la serie grabada fallida y las cargas remotas de Lighthouse se mantienen separadas.

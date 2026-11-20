@@ -8,6 +8,8 @@
 
 **Actualización:** 20/11/2026, America/Lima (UTC−05:00).
 
+**Corte vigente:** [Cierre técnico y trazabilidad](08%20Cierre%20tecnico%20y%20trazabilidad%20V_1_0_0.md) y [evidencias verificables](evidencias/cierre-20261120/README.md). SUS y Render están excluidos de este cierre por indicación del usuario.
+
 Este índice reúne la auditoría técnica y las evidencias de la Inspección 5. Los resultados históricos se conservan con su entorno y su versión.
 
 ## Objetivo y alcance
@@ -35,23 +37,17 @@ Este sprint reúne la optimización de consultas, paginación, recursos visuales
 
 ## Estado de la Inspección 5
 
-Corte de verificación del 20/11/2026. Los requisitos proceden de la consigna de Inspección 5. Para ordenar el cierre se tomó del material de clase *TP_2 19 Documentos de control y cierre proyecto* el registro de desviaciones y acciones correctivas (p. 17) y el respaldo documental de la transición operativa (p. 24).
+Corte del 20/11/2026 sobre `main`, commit productivo auditado `64267bd`. El [cierre técnico](08%20Cierre%20tecnico%20y%20trazabilidad%20V_1_0_0.md) identifica los archivos de prueba posteriores y conserva los reportes del mismo corte remoto.
 
-| Criterio | Peso | Evidencia disponible | Condición pendiente para acreditar el nivel superior |
+| Criterio | Peso | Evidencia actual | Alcance del cierre |
 |---|---:|---|---|
-| Gestión ágil | 4 | Review y retrospectiva con la estructura solicitada. Las tres historias identificadas en el backlog enlazan a cambios y pruebas. La retrospectiva deja responsables propuestos y criterios medibles. [Review](01%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md) · [Retrospectiva](02%20Retrospectiva%20del%20Sprint%20V_1_0_0.md). | Conciliar los tickets y estados de Jira y adjuntar el acta y la evidencia multimedia de la demostración ante stakeholders. |
-| Calidad con Playwright | 5 | Nueve casos integrados aprobados en tres motores, recuperación HTTP 503, tiempos locales y comprobaciones de la URL pública. [Informe y captura](03%20Analisis%20PlayWrigth%20V_1_0_0.md). | Vincular la ejecución integrada al corte final. Comprobar el umbral de 500 ms en tráfico real de la API operativa, con sesiones de prueba autorizadas. |
-| Usabilidad | 3 | Cinco cuestionarios completos, matriz y subtotales reproducibles, **72,5/100 (C+)**. El informe documenta el ingreso y el seguimiento de rutas y vincula los cambios verificables. [Informe SUS](04%20Usabilidad%20V_1_0_0.md). | Registrar tareas, versión y dispositivo en una siguiente aplicación para medir el efecto de los cambios. |
-| Automatización CI/CD | 4 | CI y Tests configurados para validar la rama de entrega. Tests conserva los reportes como artefactos. Deploy production se activa desde `main` tras superar Tests. La URL de Render respondió en las observaciones registradas. [CI](../../../.github/workflows/ci.yml) · [Tests](../../../.github/workflows/tests.yml) · [Deploy](../../../.github/workflows/deploy-production.yml). | Adjuntar las ejecuciones remotas y comprobar un despliegue automático desde el entorno de producción con sus variables y su secreto configurados. |
-| Arquitectura y trazabilidad | 4 | Frontend y backend separados, documentos en Markdown, enlaces de ida y vuelta, y matrices de estándares y emisiones. [Arquitectura y estándares](04%20Est%C3%A1ndares%20arquitectura%20y%20gu%C3%ADa%20de%20desarrollo%20verde%20V_1_2_0.md) · [Validación de enlaces](../../../scripts/check_docs.py). | Confirmar el estado de los badges de la entrega junto con las ejecuciones de GitHub Actions. |
+| Gestión ágil | 4 | Review con 3/3 tickets confirmados en captura, commits y pruebas; tres videos; retrospectiva SMART con responsables y fechas. | Cerrada la preparación técnica y documental. La aceptación de stakeholders y el estado vivo de Jira requieren evidencia externa. |
+| Calidad con Playwright | 5 | 12/12 E2E remotos en tres navegadores; persistencia real, recuperación 503, métricas y reportes conservados. La demostración posterior confirma entregas por interfaz. | Validado en entornos aislados. Se conserva un fallo de latencia de la corrida grabada junto a la repetición sin video; no se extrapola a producción. |
+| Usabilidad | 3 | Informe histórico: cinco cuestionarios, 72,5/100 (C+). | Fuera del trabajo actual por indicación del usuario; no se modifica ni se declara una nueva sesión. |
+| Automatización CI/CD | 4 | CI, Tests, documentación, Lighthouse y SonarCloud aprobados en main con reportes y artefactos. Credenciales de PostGIS efímeras. | CI acreditada. Render excluido y despliegue deshabilitado; no se afirma cumplimiento de despliegue continuo operativo. |
+| Arquitectura y trazabilidad | 4 | Capas separadas, enlaces bidireccionales, badges de main, matriz de historias y hashes de evidencias. | Validación documental reproducible con `scripts/check_docs.py`. |
 
-La primera ejecución remota de CI aprobó el control documental, el análisis de código y el empaquetado. Tests detectó cuatro fallos del arnés de sesión porque el cliente de prueba usaba HTTP y la aplicación emite cookies seguras. El cliente de pruebas se ajustó a HTTPS, de acuerdo con el entorno de entrega. [CI del corte 376ec5b](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/44678766588) · [Primera ejecución de Tests](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/44678766589).
-
-En el corte siguiente, CI volvió a aprobar y Tests verificó **415 pruebas de backend** y **460 pruebas de frontend**. El control de cobertura de ramas detuvo el flujo en **86,52 %**, frente al **90 %** exigido. Se adelantó Playwright en la secuencia para conservar sus reportes aun si la cobertura impide que Tests apruebe. El umbral se conserva. [CI posterior al ajuste HTTPS](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/44679148650) · [Resultado de Tests y cobertura](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/44679148756).
-
-El corte `628cdf3` aprobó CI. El enlace a Tests permite seguir la etapa Playwright y consultar sus artefactos cuando GitHub termine de procesarlos. El informe 03 conserva la ejecución integrada previa y la medición en tres navegadores sobre la URL pública. [CI del corte técnico](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/44679607159) · [Tests y artefactos del corte técnico](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/44679607104).
-
-La consulta autenticada a GitHub del 20/11/2026 confirmó que el flujo Deploy production se encuentra en la rama de entrega y que `main` todavía carece de ese archivo. El listado del repositorio muestra los dos entornos de Render vinculados a la rama de inspección y el entorno `production` aún queda por crear. La aceptación del despliegue automático requiere incorporar el flujo a `main` mediante la revisión del equipo y configurar ese entorno con `RENDER_API_KEY`, `RENDER_SERVICE_ID` y `PRODUCTION_URL`. La instancia de Render sigue siendo la referencia de disponibilidad pública. [Configuración del despliegue](../../../.github/workflows/deploy-production.yml) · [Comprobación operativa](03%20Analisis%20PlayWrigth%20V_1_0_0.md#comprobación-pública-del-20112026).
+Los resultados de Lighthouse actuales están publicados con sus valores completos. La aprobación del workflow no implica cumplimiento de cada límite estricto de la serie histórica de Green IT. Véanse [las métricas](evidencias/cierre-20261120/lighthouse-remoto.json) y la acción A-05 de la retrospectiva.
 
 ## Corrección funcional de la rama feature/sprint4/correcciones
 
@@ -101,9 +97,9 @@ El JUnit remoto registra **472 resultados aprobados**: 436 pruebas y 36 subprueb
 
 La primera ejecución detectó una fuga de configuración en una prueba de entorno; se corrigió restaurando `DATABASE_URL` y seleccionando explícitamente `ECOLOGISTICA_ENV_FILE` en CI. Las ejecuciones enlazadas corresponden al corte corregido.
 
-Docker se usó únicamente en los runners remotos, conforme a la autorización. Por indicación posterior del usuario, la conexión con Render, la credencial de despliegue y la fusión a `main` permanecen en espera. No se ha acreditado ni ejecutado un nuevo despliegue productivo desde esta rama.
+Docker se usó únicamente en los runners remotos, conforme a la autorización. En ese corte quedaron en espera la conexión con Render y la fusión. La integración a `main` se completó después en `5d272e9`; Render sigue excluido del alcance vigente. No se ha acreditado ni ejecutado un nuevo despliegue productivo desde esta rama.
 
-## Resultados al cierre
+## Resultados del cierre histórico de Green IT
 
 Las ocho áreas cuentan con implementación o equivalencia tecnológica documentada y comparación de código. Las seis cargas finales de Acceso/Pedidos cumplen los límites: score mínimo 100, FCP máximo 905,462 ms, LCP máximo 1379,5796 ms, TBT máximo 81,5 ms, CLS 0 y transferencia máxima 103528 bytes.
 
@@ -132,3 +128,8 @@ La validación LHCI posterior registró un incumplimiento de TBT en Acceso (167 
 La equivalencia PostgreSQL/PostGIS del criterio MongoDB y la sustitución auxiliar de Leaflet por APIs nativas se presentan con su alcance exacto en el documento 05. La calificación y la aceptación formal corresponden al proceso de evaluación. Las mediciones locales requieren nueva verificación en el despliegue de destino.
 
 [← Volver al índice de implementación](../README.md)
+
+## Paquete de cierre vigente
+
+- [08. Cierre técnico y trazabilidad](08%20Cierre%20tecnico%20y%20trazabilidad%20V_1_0_0.md).
+- [Videos, capturas, reportes y hashes](evidencias/cierre-20261120/README.md).

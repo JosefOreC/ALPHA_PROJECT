@@ -1,0 +1,3499 @@
+{
+  "exported_at_utc": "2026-11-20T10:04:35.149375+00:00",
+  "project_key": "JosefOreC_ALPHA_PROJECT",
+  "scope": {
+    "branch": "main"
+  },
+  "workflow_commit": "64267bda5cb81c584ce7250e2d599dffa223cfad",
+  "analysis_task": {
+    "id": "AaH4ahq1zXy6t8MuCOz_",
+    "type": "REPORT",
+    "componentId": "AaGNz1eW8JWW6OUFv_Te",
+    "componentKey": "JosefOreC_ALPHA_PROJECT",
+    "componentName": "EcoLogistica Lima - ALPHA_PROJECT",
+    "componentQualifier": "TRK",
+    "analysisId": "17c7d70b-1294-42cf-8fa3-b5824d013c57",
+    "status": "SUCCESS",
+    "submittedAt": "2026-11-20T10:04:25+0000",
+    "submitterLogin": "JosefOreC-I2NHD@github",
+    "startedAt": "2026-11-20T10:04:25+0000",
+    "executedAt": "2026-11-20T10:04:28+0000",
+    "executionTimeMs": 3119,
+    "logs": false,
+    "hasScannerContext": true,
+    "organization": "joseforec",
+    "branch": "main",
+    "branchType": "LONG",
+    "warningCount": 1,
+    "warnings": []
+  },
+  "snapshot": {
+    "organization": "joseforec",
+    "visibility": "public",
+    "is_main_branch": true,
+    "analysis": {
+      "key": "17c7d70b-1294-42cf-8fa3-b5824d013c57",
+      "date": "2026-11-20T10:02:26+0000",
+      "events": [
+        {
+          "key": "AaH4aiM0BJTxYLfcHSDg",
+          "category": "VERSION",
+          "name": "not provided"
+        },
+        {
+          "key": "AaH4aiMrBJTxYLfcHSDf",
+          "category": "QUALITY_GATE",
+          "name": "Green (was Red)",
+          "description": ""
+        }
+      ],
+      "projectVersion": "not provided",
+      "manualNewCodePeriodBaseline": false,
+      "revision": "64267bda5cb81c584ce7250e2d599dffa223cfad"
+    }
+  },
+  "dashboard": "https://sonarcloud.io/dashboard?id=JosefOreC_ALPHA_PROJECT&branch=main",
+  "notice": "Consulta del estado actual, no snapshot atómico. Confirmar el commit del análisis en SonarCloud. No certifica cumplimiento OWASP.",
+  "measures": {
+    "component": {
+      "id": "AaGNz1eW8JWW6OUFv_Te",
+      "key": "JosefOreC_ALPHA_PROJECT",
+      "name": "EcoLogistica Lima - ALPHA_PROJECT",
+      "qualifier": "TRK",
+      "measures": [
+        {
+          "metric": "coverage",
+          "value": "93.4",
+          "bestValue": false
+        },
+        {
+          "metric": "bugs",
+          "value": "0",
+          "bestValue": true
+        },
+        {
+          "metric": "duplicated_lines_density",
+          "value": "0.0",
+          "bestValue": true
+        },
+        {
+          "metric": "code_smells",
+          "value": "0",
+          "bestValue": true
+        },
+        {
+          "metric": "ncloc",
+          "value": "23778"
+        },
+        {
+          "metric": "vulnerabilities",
+          "value": "0",
+          "bestValue": true
+        },
+        {
+          "metric": "security_hotspots",
+          "value": "0",
+          "bestValue": true
+        }
+      ]
+    }
+  },
+  "quality_gate": {
+    "projectStatus": {
+      "status": "OK",
+      "conditions": [
+        {
+          "status": "OK",
+          "metricKey": "new_reliability_rating",
+          "comparator": "GT",
+          "periodIndex": 1,
+          "errorThreshold": "1",
+          "actualValue": "1"
+        },
+        {
+          "status": "OK",
+          "metricKey": "new_security_rating",
+          "comparator": "GT",
+          "periodIndex": 1,
+          "errorThreshold": "1",
+          "actualValue": "1"
+        },
+        {
+          "status": "OK",
+          "metricKey": "new_maintainability_rating",
+          "comparator": "GT",
+          "periodIndex": 1,
+          "errorThreshold": "1",
+          "actualValue": "1"
+        },
+        {
+          "status": "OK",
+          "metricKey": "new_coverage",
+          "comparator": "LT",
+          "periodIndex": 1,
+          "errorThreshold": "80",
+          "actualValue": "87.8"
+        },
+        {
+          "status": "OK",
+          "metricKey": "new_duplicated_lines_density",
+          "comparator": "GT",
+          "periodIndex": 1,
+          "errorThreshold": "3",
+          "actualValue": "0.0"
+        },
+        {
+          "status": "OK",
+          "metricKey": "new_security_hotspots_reviewed",
+          "comparator": "LT",
+          "periodIndex": 1,
+          "errorThreshold": "100",
+          "actualValue": "100.0"
+        }
+      ],
+      "periods": [
+        {
+          "index": 1,
+          "mode": "previous_version",
+          "date": "2026-10-30T17:15:45+0000"
+        }
+      ],
+      "ignoredConditions": false
+    }
+  },
+  "issues": [
+    {
+      "key": "AaH4CUxGUgvRZIAy3TjF",
+      "rule": "pythonsecurity:S8703",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:scripts/verify_native.py",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "9b6f88aa9a527df7869287ba40cbf6e7",
+      "textRange": {
+        "startLine": 107,
+        "endLine": 107,
+        "startOffset": 29,
+        "endOffset": 78
+      },
+      "flows": [
+        {
+          "locations": [
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:scripts/verify_native.py",
+              "textRange": {
+                "startLine": 107,
+                "endLine": 107,
+                "startOffset": 29,
+                "endOffset": 78
+              },
+              "msg": "Sink: this invocation is not safe; a malicious value can be used as argument"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:scripts/verify_native.py",
+              "textRange": {
+                "startLine": 107,
+                "endLine": 107,
+                "startOffset": 57,
+                "endOffset": 66
+              },
+              "msg": "A malicious value was previously assigned to the field ‘port’"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:scripts/verify_native.py",
+              "textRange": {
+                "startLine": 36,
+                "endLine": 36,
+                "startOffset": 8,
+                "endOffset": 12
+              },
+              "msg": "This instruction can propagate malicious content"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:scripts/verify_native.py",
+              "textRange": {
+                "startLine": 36,
+                "endLine": 36,
+                "startOffset": 4,
+                "endOffset": 7
+              },
+              "msg": "This instruction can propagate malicious content"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:scripts/verify_native.py",
+              "textRange": {
+                "startLine": 154,
+                "endLine": 154,
+                "startOffset": 25,
+                "endOffset": 49
+              },
+              "msg": "This instruction can propagate malicious content"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:scripts/verify_native.py",
+              "textRange": {
+                "startLine": 154,
+                "endLine": 154,
+                "startOffset": 29,
+                "endOffset": 48
+              },
+              "msg": "Source: a user can craft an HTTP request with malicious content"
+            }
+          ]
+        }
+      ],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Server-Side Request Forgery via faulty LLM-supplied CLI arguments in verify_native.run()",
+      "effort": "30min",
+      "debt": "30min",
+      "assignee": "JosefOreC-I2NHD@github",
+      "author": "71660137@continental.edu.pe",
+      "tags": [
+        "cwe"
+      ],
+      "creationDate": "2026-11-20T08:13:59+0000",
+      "updateDate": "2026-11-20T10:02:26+0000",
+      "closeDate": "2026-11-20T10:02:26+0000",
+      "type": "VULNERABILITY",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "COMPLETE",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "SECURITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [
+        "taint"
+      ],
+      "lastChangeAnalysisUuid": "17c7d70b-1294-42cf-8fa3-b5824d013c57",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaH4CUxGUgvRZIAy3TjG",
+      "rule": "pythonsecurity:S8705",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:scripts/verify_native.py",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "ee2639ee9372507bf7cce1f7e33df14c",
+      "textRange": {
+        "startLine": 102,
+        "endLine": 103,
+        "startOffset": 25,
+        "endOffset": 110
+      },
+      "flows": [
+        {
+          "locations": [
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:scripts/verify_native.py",
+              "textRange": {
+                "startLine": 102,
+                "endLine": 103,
+                "startOffset": 25,
+                "endOffset": 110
+              },
+              "msg": "Sink: this invocation is not safe; a malicious value can be used as argument"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:scripts/verify_native.py",
+              "textRange": {
+                "startLine": 100,
+                "endLine": 101,
+                "startOffset": 16,
+                "endOffset": 75
+              },
+              "msg": "A malicious value can be assigned to variable ‘command’"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:scripts/verify_native.py",
+              "textRange": {
+                "startLine": 101,
+                "endLine": 101,
+                "startOffset": 60,
+                "endOffset": 74
+              },
+              "msg": "This instruction can propagate malicious content"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:scripts/verify_native.py",
+              "textRange": {
+                "startLine": 101,
+                "endLine": 101,
+                "startOffset": 64,
+                "endOffset": 73
+              },
+              "msg": "A malicious value was previously assigned to the field ‘port’"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:scripts/verify_native.py",
+              "textRange": {
+                "startLine": 36,
+                "endLine": 36,
+                "startOffset": 8,
+                "endOffset": 12
+              },
+              "msg": "This instruction can propagate malicious content"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:scripts/verify_native.py",
+              "textRange": {
+                "startLine": 36,
+                "endLine": 36,
+                "startOffset": 4,
+                "endOffset": 7
+              },
+              "msg": "This instruction can propagate malicious content"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:scripts/verify_native.py",
+              "textRange": {
+                "startLine": 154,
+                "endLine": 154,
+                "startOffset": 25,
+                "endOffset": 49
+              },
+              "msg": "This instruction can propagate malicious content"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:scripts/verify_native.py",
+              "textRange": {
+                "startLine": 154,
+                "endLine": 154,
+                "startOffset": 29,
+                "endOffset": 48
+              },
+              "msg": "Source: a user can craft an HTTP request with malicious content"
+            }
+          ]
+        }
+      ],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Command Argument Injection via faulty LLM-supplied CLI arguments in verify_native.run()",
+      "effort": "30min",
+      "debt": "30min",
+      "assignee": "JosefOreC-I2NHD@github",
+      "author": "71660137@continental.edu.pe",
+      "tags": [
+        "cwe"
+      ],
+      "creationDate": "2026-11-20T07:12:35+0000",
+      "updateDate": "2026-11-20T10:02:26+0000",
+      "closeDate": "2026-11-20T10:02:26+0000",
+      "type": "VULNERABILITY",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "COMPLETE",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "SECURITY",
+          "severity": "HIGH"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [
+        "taint"
+      ],
+      "lastChangeAnalysisUuid": "17c7d70b-1294-42cf-8fa3-b5824d013c57",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaH4CUvxUgvRZIAy3TjC",
+      "rule": "typescript:S6852",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/shared/ui/TabList.tsx",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "cd51c6fba780aefbcad9f6a1ecb7400a",
+      "textRange": {
+        "startLine": 16,
+        "endLine": 16,
+        "startOffset": 9,
+        "endOffset": 90
+      },
+      "flows": [],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Elements with the 'tablist' interactive role must be focusable.",
+      "effort": "5min",
+      "debt": "5min",
+      "assignee": "JosefOreC-I2NHD@github",
+      "author": "71660137@continental.edu.pe",
+      "tags": [
+        "accessibility",
+        "react"
+      ],
+      "creationDate": "2026-11-20T07:12:35+0000",
+      "updateDate": "2026-11-20T10:02:26+0000",
+      "closeDate": "2026-11-20T10:02:26+0000",
+      "type": "CODE_SMELL",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        },
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "17c7d70b-1294-42cf-8fa3-b5824d013c57",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaH4CUwXUgvRZIAy3TjD",
+      "rule": "secrets:S6698",
+      "severity": "BLOCKER",
+      "component": "JosefOreC_ALPHA_PROJECT:.github/workflows/tests.yml",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "035b9fb3bde6e507c255f23025e6e862",
+      "textRange": {
+        "startLine": 29,
+        "endLine": 29,
+        "startOffset": 42,
+        "endOffset": 61
+      },
+      "flows": [],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Make sure this PostgreSQL password gets changed and removed from the code.",
+      "effort": "30min",
+      "debt": "30min",
+      "author": "72917514@continental.edu.pe",
+      "tags": [
+        "cwe",
+        "secret"
+      ],
+      "creationDate": "2026-11-20T05:29:48+0000",
+      "updateDate": "2026-11-20T10:02:26+0000",
+      "closeDate": "2026-11-20T10:02:26+0000",
+      "type": "VULNERABILITY",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "TRUSTWORTHY",
+      "cleanCodeAttributeCategory": "RESPONSIBLE",
+      "impacts": [
+        {
+          "softwareQuality": "SECURITY",
+          "severity": "BLOCKER"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "17c7d70b-1294-42cf-8fa3-b5824d013c57",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaH4CUtvUgvRZIAy3TjA",
+      "rule": "typescript:S7773",
+      "severity": "MINOR",
+      "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/interfaces/OrderForm.tsx",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "6938c1a3c09d9ef61eb0745bafe4e2fc",
+      "textRange": {
+        "startLine": 28,
+        "endLine": 28,
+        "startOffset": 65,
+        "endOffset": 68
+      },
+      "flows": [],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Prefer `Number.NaN` over `NaN`.",
+      "effort": "2min",
+      "debt": "2min",
+      "author": "alexrobertpro@users.noreply.github.com",
+      "tags": [
+        "convention",
+        "editable-source",
+        "es2015"
+      ],
+      "creationDate": "2026-11-19T21:49:03+0000",
+      "updateDate": "2026-11-20T10:02:26+0000",
+      "closeDate": "2026-11-20T10:02:26+0000",
+      "type": "CODE_SMELL",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        },
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "17c7d70b-1294-42cf-8fa3-b5824d013c57",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaH4CUtvUgvRZIAy3TjB",
+      "rule": "typescript:S7773",
+      "severity": "MINOR",
+      "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/interfaces/OrderForm.tsx",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "f8bc79a679280568d9a917f98efda6fb",
+      "textRange": {
+        "startLine": 29,
+        "endLine": 29,
+        "startOffset": 67,
+        "endOffset": 70
+      },
+      "flows": [],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Prefer `Number.NaN` over `NaN`.",
+      "effort": "2min",
+      "debt": "2min",
+      "author": "alexrobertpro@users.noreply.github.com",
+      "tags": [
+        "convention",
+        "editable-source",
+        "es2015"
+      ],
+      "creationDate": "2026-11-19T21:49:03+0000",
+      "updateDate": "2026-11-20T10:02:26+0000",
+      "closeDate": "2026-11-20T10:02:26+0000",
+      "type": "CODE_SMELL",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        },
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "17c7d70b-1294-42cf-8fa3-b5824d013c57",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaH4CUw-UgvRZIAy3TjE",
+      "rule": "githubactions:S6505",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:.github/workflows/ci.yml",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "df9bcd1561595a60cb39dad4ffcd4b0a",
+      "textRange": {
+        "startLine": 33,
+        "endLine": 33,
+        "startOffset": 13,
+        "endOffset": 21
+      },
+      "flows": [],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "\"npm exec\" can install packages on-demand and run their lifecycle scripts.",
+      "effort": "30min",
+      "debt": "30min",
+      "author": "alexrobertpro@users.noreply.github.com",
+      "tags": [
+        "cwe",
+        "former-hotspot"
+      ],
+      "creationDate": "2026-11-19T17:57:48+0000",
+      "updateDate": "2026-11-20T10:02:26+0000",
+      "closeDate": "2026-11-20T10:02:26+0000",
+      "type": "VULNERABILITY",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "TRUSTWORTHY",
+      "cleanCodeAttributeCategory": "RESPONSIBLE",
+      "impacts": [
+        {
+          "softwareQuality": "SECURITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "17c7d70b-1294-42cf-8fa3-b5824d013c57",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaHWYxy8vIGog5k8a5eU",
+      "rule": "githubactions:S6505",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:.github/workflows/green-audit.yml",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "bebf0da9e21e0628cf306e5049aecfcf",
+      "textRange": {
+        "startLine": 53,
+        "endLine": 53,
+        "startOffset": 13,
+        "endOffset": 50
+      },
+      "flows": [],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "\"npx\" can install packages on-demand and run their lifecycle scripts.",
+      "effort": "30min",
+      "debt": "30min",
+      "author": "72733304@continental.edu.pe",
+      "tags": [
+        "cwe",
+        "former-hotspot"
+      ],
+      "creationDate": "2026-11-13T13:45:28+0000",
+      "updateDate": "2026-11-13T19:47:33+0000",
+      "closeDate": "2026-11-13T19:47:33+0000",
+      "type": "VULNERABILITY",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "TRUSTWORTHY",
+      "cleanCodeAttributeCategory": "RESPONSIBLE",
+      "impacts": [
+        {
+          "softwareQuality": "SECURITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "3a0905a9-9741-4d1d-b9c9-68750565cd3d",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaGN8WUfHwZRnh-VsbWJ",
+      "rule": "githubactions:S8541",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:.github/workflows/sonarcloud.yml",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "613c1cc4679b08891abe88b9308cf75f",
+      "textRange": {
+        "startLine": 38,
+        "endLine": 38,
+        "startOffset": 10,
+        "endOffset": 31
+      },
+      "flows": [],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Omitting \"--only-binary :all:\" can lead to the execution of setup scripts. Make sure it is safe here.",
+      "effort": "1h",
+      "debt": "1h",
+      "assignee": "JosefOreC-I2NHD@github",
+      "author": "71660137@continental.edu.pe",
+      "tags": [
+        "cwe"
+      ],
+      "creationDate": "2026-10-30T17:42:58+0000",
+      "updateDate": "2026-10-30T19:31:32+0000",
+      "closeDate": "2026-10-30T19:31:32+0000",
+      "type": "VULNERABILITY",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "TRUSTWORTHY",
+      "cleanCodeAttributeCategory": "RESPONSIBLE",
+      "impacts": [
+        {
+          "softwareQuality": "SECURITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "58a6a4c0-922e-4a84-828b-3d040e456697",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaGN8WUfHwZRnh-VsbWK",
+      "rule": "githubactions:S8544",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:.github/workflows/sonarcloud.yml",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "613c1cc4679b08891abe88b9308cf75f",
+      "textRange": {
+        "startLine": 38,
+        "endLine": 38,
+        "startOffset": 10,
+        "endOffset": 63
+      },
+      "flows": [],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Using dependencies without locking resolved versions is security-sensitive.",
+      "effort": "1h",
+      "debt": "1h",
+      "assignee": "JosefOreC-I2NHD@github",
+      "author": "71660137@continental.edu.pe",
+      "tags": [],
+      "creationDate": "2026-10-30T17:42:58+0000",
+      "updateDate": "2026-10-30T19:31:32+0000",
+      "closeDate": "2026-10-30T19:31:32+0000",
+      "type": "VULNERABILITY",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "COMPLETE",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "SECURITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "58a6a4c0-922e-4a84-828b-3d040e456697",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaGN8WUfHwZRnh-VsbWL",
+      "rule": "githubactions:S6505",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:.github/workflows/sonarcloud.yml",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "a75d6e32149e222476033819084cda55",
+      "textRange": {
+        "startLine": 39,
+        "endLine": 39,
+        "startOffset": 10,
+        "endOffset": 16
+      },
+      "flows": [],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Omitting \"--ignore-scripts\" allows lifecycle scripts to run during package installation.",
+      "effort": "30min",
+      "debt": "30min",
+      "assignee": "JosefOreC-I2NHD@github",
+      "author": "71660137@continental.edu.pe",
+      "tags": [
+        "cwe",
+        "former-hotspot"
+      ],
+      "creationDate": "2026-10-30T17:42:58+0000",
+      "updateDate": "2026-10-30T19:31:32+0000",
+      "closeDate": "2026-10-30T19:31:32+0000",
+      "type": "VULNERABILITY",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "TRUSTWORTHY",
+      "cleanCodeAttributeCategory": "RESPONSIBLE",
+      "impacts": [
+        {
+          "softwareQuality": "SECURITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "58a6a4c0-922e-4a84-828b-3d040e456697",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaGN8WUfHwZRnh-VsbWM",
+      "rule": "githubactions:S8541",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:.github/workflows/sonarcloud.yml",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "613c1cc4679b08891abe88b9308cf75f",
+      "textRange": {
+        "startLine": 116,
+        "endLine": 116,
+        "startOffset": 10,
+        "endOffset": 31
+      },
+      "flows": [],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Omitting \"--only-binary :all:\" can lead to the execution of setup scripts. Make sure it is safe here.",
+      "effort": "1h",
+      "debt": "1h",
+      "assignee": "JosefOreC-I2NHD@github",
+      "author": "71660137@continental.edu.pe",
+      "tags": [
+        "cwe"
+      ],
+      "creationDate": "2026-10-30T17:42:58+0000",
+      "updateDate": "2026-10-30T19:31:32+0000",
+      "closeDate": "2026-10-30T19:31:32+0000",
+      "type": "VULNERABILITY",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "TRUSTWORTHY",
+      "cleanCodeAttributeCategory": "RESPONSIBLE",
+      "impacts": [
+        {
+          "softwareQuality": "SECURITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "58a6a4c0-922e-4a84-828b-3d040e456697",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaGN8WUfHwZRnh-VsbWN",
+      "rule": "githubactions:S8544",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:.github/workflows/sonarcloud.yml",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "613c1cc4679b08891abe88b9308cf75f",
+      "textRange": {
+        "startLine": 116,
+        "endLine": 116,
+        "startOffset": 10,
+        "endOffset": 63
+      },
+      "flows": [],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Using dependencies without locking resolved versions is security-sensitive.",
+      "effort": "1h",
+      "debt": "1h",
+      "assignee": "JosefOreC-I2NHD@github",
+      "author": "71660137@continental.edu.pe",
+      "tags": [],
+      "creationDate": "2026-10-30T17:42:58+0000",
+      "updateDate": "2026-10-30T19:31:32+0000",
+      "closeDate": "2026-10-30T19:31:32+0000",
+      "type": "VULNERABILITY",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "COMPLETE",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "SECURITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "58a6a4c0-922e-4a84-828b-3d040e456697",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaGN8WUfHwZRnh-VsbWO",
+      "rule": "githubactions:S6505",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:.github/workflows/sonarcloud.yml",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "a75d6e32149e222476033819084cda55",
+      "textRange": {
+        "startLine": 118,
+        "endLine": 118,
+        "startOffset": 10,
+        "endOffset": 16
+      },
+      "flows": [],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Omitting \"--ignore-scripts\" allows lifecycle scripts to run during package installation.",
+      "effort": "30min",
+      "debt": "30min",
+      "assignee": "JosefOreC-I2NHD@github",
+      "author": "71660137@continental.edu.pe",
+      "tags": [
+        "cwe",
+        "former-hotspot"
+      ],
+      "creationDate": "2026-10-30T17:42:58+0000",
+      "updateDate": "2026-10-30T19:31:32+0000",
+      "closeDate": "2026-10-30T19:31:32+0000",
+      "type": "VULNERABILITY",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "TRUSTWORTHY",
+      "cleanCodeAttributeCategory": "RESPONSIBLE",
+      "impacts": [
+        {
+          "softwareQuality": "SECURITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "58a6a4c0-922e-4a84-828b-3d040e456697",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaGN8WTDHwZRnh-VsbWH",
+      "rule": "pythonsecurity:S8707",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:scripts/check_python_coverage.py",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "d68eaafda6a23f113b2ff0de4a529f0b",
+      "textRange": {
+        "startLine": 26,
+        "endLine": 26,
+        "startOffset": 43,
+        "endOffset": 82
+      },
+      "flows": [
+        {
+          "locations": [
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:scripts/check_python_coverage.py",
+              "textRange": {
+                "startLine": 26,
+                "endLine": 26,
+                "startOffset": 43,
+                "endOffset": 82
+              },
+              "msg": "Sink: this invocation is not safe; a malicious value can be injected into the caller"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:scripts/check_python_coverage.py",
+              "textRange": {
+                "startLine": 26,
+                "endLine": 26,
+                "startOffset": 43,
+                "endOffset": 54
+              },
+              "msg": "A malicious value was previously assigned to the field ‘report’"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:scripts/check_python_coverage.py",
+              "textRange": {
+                "startLine": 24,
+                "endLine": 24,
+                "startOffset": 4,
+                "endOffset": 34
+              },
+              "msg": "A malicious value can be assigned to variable ‘args’"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:scripts/check_python_coverage.py",
+              "textRange": {
+                "startLine": 24,
+                "endLine": 24,
+                "startOffset": 11,
+                "endOffset": 34
+              },
+              "msg": "Source: a user can craft an HTTP request with malicious content"
+            }
+          ]
+        }
+      ],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Path Traversal via faulty LLM-supplied CLI arguments in check_python_coverage.main()",
+      "effort": "30min",
+      "debt": "30min",
+      "assignee": "JosefOreC-I2NHD@github",
+      "author": "71660137@continental.edu.pe",
+      "tags": [
+        "cwe"
+      ],
+      "creationDate": "2026-10-30T17:42:58+0000",
+      "updateDate": "2026-10-30T19:31:32+0000",
+      "closeDate": "2026-10-30T19:31:32+0000",
+      "type": "VULNERABILITY",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "COMPLETE",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "SECURITY",
+          "severity": "HIGH"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [
+        "taint",
+        "advanced"
+      ],
+      "lastChangeAnalysisUuid": "58a6a4c0-922e-4a84-828b-3d040e456697",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaGN8WUXHwZRnh-VsbWI",
+      "rule": "pythonsecurity:S2083",
+      "severity": "BLOCKER",
+      "component": "JosefOreC_ALPHA_PROJECT:scripts/export_sonar_report.py",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "feec746e989b5b443b3521786f07f799",
+      "textRange": {
+        "startLine": 92,
+        "endLine": 92,
+        "startOffset": 4,
+        "endOffset": 117
+      },
+      "flows": [
+        {
+          "locations": [
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:scripts/export_sonar_report.py",
+              "textRange": {
+                "startLine": 92,
+                "endLine": 92,
+                "startOffset": 4,
+                "endOffset": 117
+              },
+              "msg": "Sink: this invocation is not safe; a malicious value can be used as argument"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:scripts/export_sonar_report.py",
+              "textRange": {
+                "startLine": 92,
+                "endLine": 92,
+                "startOffset": 52,
+                "endOffset": 98
+              },
+              "msg": "This invocation can propagate malicious content to its return value"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:scripts/export_sonar_report.py",
+              "textRange": {
+                "startLine": 90,
+                "endLine": 90,
+                "startOffset": 17,
+                "endOffset": 21
+              },
+              "msg": "This instruction can propagate malicious content"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:scripts/export_sonar_report.py",
+              "textRange": {
+                "startLine": 90,
+                "endLine": 90,
+                "startOffset": 4,
+                "endOffset": 16
+              },
+              "msg": "This instruction can propagate malicious content"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:scripts/export_sonar_report.py",
+              "textRange": {
+                "startLine": 120,
+                "endLine": 120,
+                "startOffset": 8,
+                "endOffset": 49
+              },
+              "msg": "This instruction can propagate malicious content"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:scripts/export_sonar_report.py",
+              "textRange": {
+                "startLine": 117,
+                "endLine": 119,
+                "startOffset": 8,
+                "endOffset": 48
+              },
+              "msg": "A malicious value can be assigned to variable ‘data’"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:scripts/export_sonar_report.py",
+              "textRange": {
+                "startLine": 117,
+                "endLine": 119,
+                "startOffset": 15,
+                "endOffset": 48
+              },
+              "msg": "This invocation can propagate malicious content to its return value"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:scripts/export_sonar_report.py",
+              "textRange": {
+                "startLine": 86,
+                "endLine": 86,
+                "startOffset": 34,
+                "endOffset": 54
+              },
+              "msg": "A malicious value can be assigned to this data structure"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:scripts/export_sonar_report.py",
+              "textRange": {
+                "startLine": 65,
+                "endLine": 65,
+                "startOffset": 4,
+                "endOffset": 67
+              },
+              "msg": "A malicious value can be assigned to variable ‘gate’"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:scripts/export_sonar_report.py",
+              "textRange": {
+                "startLine": 65,
+                "endLine": 65,
+                "startOffset": 11,
+                "endOffset": 67
+              },
+              "msg": "This invocation can propagate malicious content to its return value"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:scripts/export_sonar_report.py",
+              "textRange": {
+                "startLine": 30,
+                "endLine": 30,
+                "startOffset": 19,
+                "endOffset": 38
+              },
+              "msg": "Source: a user can craft an HTTP request with malicious content"
+            }
+          ]
+        }
+      ],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Path Traversal via file content in export_sonar_report.write_report()",
+      "effort": "30min",
+      "debt": "30min",
+      "assignee": "JosefOreC-I2NHD@github",
+      "author": "71660137@continental.edu.pe",
+      "tags": [
+        "cwe"
+      ],
+      "creationDate": "2026-10-30T17:42:58+0000",
+      "updateDate": "2026-10-30T19:31:32+0000",
+      "closeDate": "2026-10-30T19:31:32+0000",
+      "type": "VULNERABILITY",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "COMPLETE",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "SECURITY",
+          "severity": "BLOCKER"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [
+        "taint"
+      ],
+      "lastChangeAnalysisUuid": "58a6a4c0-922e-4a84-828b-3d040e456697",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaGN1K4Rui_0ctHiza71",
+      "rule": "python:S8786",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:scripts/check_docs.py",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "4dd03fc2ad349e70a66820b332dbd733",
+      "textRange": {
+        "startLine": 52,
+        "endLine": 52,
+        "startOffset": 28,
+        "endOffset": 61
+      },
+      "flows": [],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Simplify this regular expression to reduce its runtime, as it has super-linear performance due to backtracking.",
+      "effort": "20min",
+      "debt": "20min",
+      "author": "75188251@continental.edu.pe",
+      "tags": [
+        "performance",
+        "regex"
+      ],
+      "creationDate": "2026-10-30T04:40:54+0000",
+      "updateDate": "2026-11-20T08:16:48+0000",
+      "closeDate": "2026-11-20T08:16:48+0000",
+      "type": "CODE_SMELL",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "EFFICIENT",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "0e8de5fe-d9c5-4594-bbf4-ff2d4e70709f",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaGN1K4Rui_0ctHiza72",
+      "rule": "python:S8786",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:scripts/check_docs.py",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "d0030b1ebe11f3ce298e8d4fb023482c",
+      "textRange": {
+        "startLine": 83,
+        "endLine": 83,
+        "startOffset": 20,
+        "endOffset": 31
+      },
+      "flows": [],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Simplify this regular expression to reduce its runtime, as it has super-linear performance due to backtracking.",
+      "effort": "20min",
+      "debt": "20min",
+      "author": "75188251@continental.edu.pe",
+      "tags": [
+        "performance",
+        "regex"
+      ],
+      "creationDate": "2026-10-30T04:40:54+0000",
+      "updateDate": "2026-11-20T10:02:26+0000",
+      "closeDate": "2026-11-20T10:02:26+0000",
+      "type": "CODE_SMELL",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "EFFICIENT",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "17c7d70b-1294-42cf-8fa3-b5824d013c57",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaGN1K4Rui_0ctHiza73",
+      "rule": "python:S5850",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:scripts/check_docs.py",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "ac0d1c78a60e92d2fbfc45d60f9b29ae",
+      "textRange": {
+        "startLine": 156,
+        "endLine": 156,
+        "startOffset": 28,
+        "endOffset": 57
+      },
+      "flows": [],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Group parts of the regex together to make the intended operator precedence explicit.",
+      "effort": "10min",
+      "debt": "10min",
+      "author": "75188251@continental.edu.pe",
+      "tags": [
+        "regex"
+      ],
+      "creationDate": "2026-10-30T04:40:54+0000",
+      "updateDate": "2026-11-20T08:16:48+0000",
+      "closeDate": "2026-11-20T08:16:48+0000",
+      "type": "BUG",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "0e8de5fe-d9c5-4594-bbf4-ff2d4e70709f",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaGN1K4Rui_0ctHiza74",
+      "rule": "python:S8786",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:scripts/check_docs.py",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "ac0d1c78a60e92d2fbfc45d60f9b29ae",
+      "textRange": {
+        "startLine": 156,
+        "endLine": 156,
+        "startOffset": 28,
+        "endOffset": 57
+      },
+      "flows": [],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Simplify this regular expression to reduce its runtime, as it has super-linear performance due to backtracking.",
+      "effort": "20min",
+      "debt": "20min",
+      "author": "75188251@continental.edu.pe",
+      "tags": [
+        "performance",
+        "regex"
+      ],
+      "creationDate": "2026-10-30T04:40:54+0000",
+      "updateDate": "2026-11-20T08:16:48+0000",
+      "closeDate": "2026-11-20T08:16:48+0000",
+      "type": "CODE_SMELL",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "EFFICIENT",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "0e8de5fe-d9c5-4594-bbf4-ff2d4e70709f",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaGN1K4xui_0ctHiza75",
+      "rule": "python:S8786",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:scripts/create_admin.py",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "dc012e445c313eeaaca32a3805c3ca0e",
+      "textRange": {
+        "startLine": 38,
+        "endLine": 38,
+        "startOffset": 30,
+        "endOffset": 54
+      },
+      "flows": [],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Simplify this regular expression to reduce its runtime, as it has super-linear performance due to backtracking.",
+      "effort": "20min",
+      "debt": "20min",
+      "assignee": "JosefOreC-I2NHD@github",
+      "author": "71660137@continental.edu.pe",
+      "tags": [
+        "performance",
+        "regex"
+      ],
+      "creationDate": "2026-10-09T18:05:40+0000",
+      "updateDate": "2026-11-20T08:16:48+0000",
+      "closeDate": "2026-11-20T08:16:48+0000",
+      "type": "CODE_SMELL",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "EFFICIENT",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "0e8de5fe-d9c5-4594-bbf4-ff2d4e70709f",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaGN1K1Uui_0ctHiza7o",
+      "rule": "python:S8786",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:src/backend/interfaces/api/portal/router.py",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "cc0475965083967736c66538491a80b8",
+      "textRange": {
+        "startLine": 31,
+        "endLine": 31,
+        "startOffset": 30,
+        "endOffset": 54
+      },
+      "flows": [],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Simplify this regular expression to reduce its runtime, as it has super-linear performance due to backtracking.",
+      "effort": "20min",
+      "debt": "20min",
+      "assignee": "JosefOreC-I2NHD@github",
+      "author": "71660137@continental.edu.pe",
+      "tags": [
+        "performance",
+        "regex"
+      ],
+      "creationDate": "2026-10-09T18:05:40+0000",
+      "updateDate": "2026-11-20T08:16:48+0000",
+      "closeDate": "2026-11-20T08:16:48+0000",
+      "type": "CODE_SMELL",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "EFFICIENT",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "0e8de5fe-d9c5-4594-bbf4-ff2d4e70709f",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaHLPYzuzpc8PbUOJ4XV",
+      "rule": "python:S8414",
+      "severity": "BLOCKER",
+      "component": "JosefOreC_ALPHA_PROJECT:src/backend/interfaces/api/deps.py",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "fe8046dda81f5e33ccc625cdc7103b3c",
+      "textRange": {
+        "startLine": 43,
+        "endLine": 43,
+        "startOffset": 4,
+        "endOffset": 22
+      },
+      "flows": [],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Add CORSMiddleware last in the middleware chain.",
+      "effort": "5min",
+      "debt": "5min",
+      "assignee": "JosefOreC-I2NHD@github",
+      "author": "71660137@continental.edu.pe",
+      "tags": [
+        "configuration",
+        "cors",
+        "fastapi",
+        "middleware"
+      ],
+      "creationDate": "2026-10-09T09:36:23+0000",
+      "updateDate": "2026-11-20T08:16:48+0000",
+      "closeDate": "2026-11-20T08:16:48+0000",
+      "type": "CODE_SMELL",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "LOGICAL",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "BLOCKER"
+        },
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "BLOCKER"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "0e8de5fe-d9c5-4594-bbf4-ff2d4e70709f",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaHLPY2izpc8PbUOJ4XX",
+      "rule": "tssecurity:S8476",
+      "severity": "MINOR",
+      "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/features/dashboard/infrastructure/HttpDashboardGateway.ts",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "ccf5aa138f36ee0cb9ac09da1035f6ed",
+      "textRange": {
+        "startLine": 21,
+        "endLine": 21,
+        "startOffset": 56,
+        "endOffset": 61
+      },
+      "flows": [
+        {
+          "locations": [
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/features/dashboard/infrastructure/HttpDashboardGateway.ts",
+              "textRange": {
+                "startLine": 21,
+                "endLine": 21,
+                "startOffset": 56,
+                "endOffset": 61
+              },
+              "msg": "Sink: this invocation is not safe; a malicious value can be used as argument"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/features/dashboard/infrastructure/HttpDashboardGateway.ts",
+              "textRange": {
+                "startLine": 42,
+                "endLine": 42,
+                "startOffset": 32,
+                "endOffset": 41
+              },
+              "msg": "Function call: Control is passed to this function, which is on the path to a security sink"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/features/dashboard/infrastructure/HttpDashboardGateway.ts",
+              "textRange": {
+                "startLine": 42,
+                "endLine": 42,
+                "startOffset": 42,
+                "endOffset": 66
+              },
+              "msg": "This concatenation can propagate malicious content to the newly created string"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/features/dashboard/infrastructure/HttpDashboardGateway.ts",
+              "textRange": {
+                "startLine": 42,
+                "endLine": 42,
+                "startOffset": 60,
+                "endOffset": 64
+              },
+              "msg": "A malicious value was previously assigned to field ‘path’"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/features/dashboard/infrastructure/HttpDashboardGateway.ts",
+              "textRange": {
+                "startLine": 41,
+                "endLine": 41,
+                "startOffset": 27,
+                "endOffset": 39
+              },
+              "msg": "A malicious value can be assigned to field ‘path’"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/features/dashboard/infrastructure/HttpDashboardGateway.ts",
+              "textRange": {
+                "startLine": 29,
+                "endLine": 29,
+                "startOffset": 27,
+                "endOffset": 34
+              },
+              "msg": "Function call: Control is passed to this function, which is on the path to a security sink"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/features/dashboard/infrastructure/HttpDashboardGateway.ts",
+              "textRange": {
+                "startLine": 30,
+                "endLine": 30,
+                "startOffset": 6,
+                "endOffset": 46
+              },
+              "msg": "This concatenation can propagate malicious content to the newly created string"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/features/dashboard/infrastructure/HttpDashboardGateway.ts",
+              "textRange": {
+                "startLine": 30,
+                "endLine": 30,
+                "startOffset": 31,
+                "endOffset": 39
+              },
+              "msg": "This concatenation can propagate malicious content to the newly created string"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/features/dashboard/infrastructure/HttpDashboardGateway.ts",
+              "textRange": {
+                "startLine": 30,
+                "endLine": 30,
+                "startOffset": 35,
+                "endOffset": 37
+              },
+              "msg": "A malicious value was previously assigned to field ‘qs’"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/features/dashboard/infrastructure/HttpDashboardGateway.ts",
+              "textRange": {
+                "startLine": 28,
+                "endLine": 28,
+                "startOffset": 10,
+                "endOffset": 12
+              },
+              "msg": "A malicious value can be assigned to field ‘qs’"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/features/dashboard/infrastructure/HttpDashboardGateway.ts",
+              "textRange": {
+                "startLine": 27,
+                "endLine": 27,
+                "startOffset": 56,
+                "endOffset": 66
+              },
+              "msg": "A malicious value was previously assigned to field ‘districtId’"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/features/dashboard/application/useDashboard.ts",
+              "textRange": {
+                "startLine": 51,
+                "endLine": 51,
+                "startOffset": 14,
+                "endOffset": 24
+              },
+              "msg": "Function call: Control is passed to this function, which is on the path to a security sink"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/features/dashboard/application/useDashboard.ts",
+              "textRange": {
+                "startLine": 51,
+                "endLine": 51,
+                "startOffset": 27,
+                "endOffset": 37
+              },
+              "msg": "A malicious value can be assigned to field ‘districtId’"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/features/dashboard/application/useDashboard.ts",
+              "textRange": {
+                "startLine": 51,
+                "endLine": 51,
+                "startOffset": 27,
+                "endOffset": 37
+              },
+              "msg": "A malicious value was previously assigned to field ‘districtId’"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/features/dashboard/application/useDashboard.ts",
+              "textRange": {
+                "startLine": 23,
+                "endLine": 23,
+                "startOffset": 9,
+                "endOffset": 19
+              },
+              "msg": "A malicious value can be assigned to field ‘districtId’"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/features/dashboard/application/useDashboard.ts",
+              "textRange": {
+                "startLine": 23,
+                "endLine": 23,
+                "startOffset": 9,
+                "endOffset": 19
+              },
+              "msg": "A malicious value was previously assigned to field"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/features/dashboard/ui/DashboardPage.tsx",
+              "textRange": {
+                "startLine": 46,
+                "endLine": 46,
+                "startOffset": 20,
+                "endOffset": 32
+              },
+              "msg": "Function call: Control is passed to this function, which is on the path to a security sink"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/features/dashboard/application/useDashboard.ts",
+              "textRange": {
+                "startLine": 83,
+                "endLine": 83,
+                "startOffset": 18,
+                "endOffset": 20
+              },
+              "msg": "A malicious value was previously assigned to field ‘id’"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/features/dashboard/application/useDashboard.ts",
+              "textRange": {
+                "startLine": 81,
+                "endLine": 81,
+                "startOffset": 38,
+                "endOffset": 48
+              },
+              "msg": "A malicious value can be assigned to field ‘id’"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/features/dashboard/ui/DistrictFilter.tsx",
+              "textRange": {
+                "startLine": 21,
+                "endLine": 21,
+                "startOffset": 89,
+                "endOffset": 97
+              },
+              "msg": "Function call: Control is passed to this function, which is on the path to a security sink"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/features/dashboard/ui/DistrictFilter.tsx",
+              "textRange": {
+                "startLine": 21,
+                "endLine": 21,
+                "startOffset": 107,
+                "endOffset": 112
+              },
+              "msg": "A malicious value was previously assigned to field ‘value’"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/main.tsx",
+              "textRange": {
+                "startLine": 7,
+                "endLine": 7,
+                "startOffset": 45,
+                "endOffset": 51
+              },
+              "msg": "Enters the application through a browser UI event"
+            }
+          ]
+        }
+      ],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Client-Side Request Forgery via unsanitized user input",
+      "effort": "20min",
+      "debt": "20min",
+      "assignee": "JosefOreC-I2NHD@github",
+      "author": "71660137@continental.edu.pe",
+      "tags": [
+        "cwe"
+      ],
+      "creationDate": "2026-10-09T09:36:23+0000",
+      "updateDate": "2026-11-20T08:16:48+0000",
+      "closeDate": "2026-11-20T08:16:48+0000",
+      "type": "VULNERABILITY",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "TRUSTWORTHY",
+      "cleanCodeAttributeCategory": "RESPONSIBLE",
+      "impacts": [
+        {
+          "softwareQuality": "SECURITY",
+          "severity": "HIGH"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "0e8de5fe-d9c5-4594-bbf4-ff2d4e70709f",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaGN1K4Iui_0ctHiza7z",
+      "rule": "pythonsecurity:S8707",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:src/frontend/scripts/generate-basemap-style.py",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "1216288678297185a3d56593682d9d22",
+      "textRange": {
+        "startLine": 16,
+        "endLine": 16,
+        "startOffset": 19,
+        "endOffset": 64
+      },
+      "flows": [
+        {
+          "locations": [
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/scripts/generate-basemap-style.py",
+              "textRange": {
+                "startLine": 16,
+                "endLine": 16,
+                "startOffset": 19,
+                "endOffset": 64
+              },
+              "msg": "Sink: this invocation is not safe; a malicious value can be injected into the caller"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/scripts/generate-basemap-style.py",
+              "textRange": {
+                "startLine": 16,
+                "endLine": 16,
+                "startOffset": 19,
+                "endOffset": 36
+              },
+              "msg": "This invocation can propagate malicious content to its return value"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/scripts/generate-basemap-style.py",
+              "textRange": {
+                "startLine": 16,
+                "endLine": 16,
+                "startOffset": 24,
+                "endOffset": 35
+              },
+              "msg": "A malicious value was previously assigned to this data structure"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/scripts/generate-basemap-style.py",
+              "textRange": {
+                "startLine": 16,
+                "endLine": 16,
+                "startOffset": 24,
+                "endOffset": 32
+              },
+              "msg": "Source: a user can craft an HTTP request with malicious content"
+            }
+          ]
+        }
+      ],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Path Traversal via command-line argument",
+      "effort": "30min",
+      "debt": "30min",
+      "assignee": "JosefOreC-I2NHD@github",
+      "author": "71660137@continental.edu.pe",
+      "tags": [
+        "cwe"
+      ],
+      "creationDate": "2026-10-09T08:53:59+0000",
+      "updateDate": "2026-10-30T19:31:32+0000",
+      "closeDate": "2026-10-30T19:31:32+0000",
+      "type": "VULNERABILITY",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "COMPLETE",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "SECURITY",
+          "severity": "HIGH"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [
+        "taint"
+      ],
+      "lastChangeAnalysisUuid": "58a6a4c0-922e-4a84-828b-3d040e456697",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaGN1K4Iui_0ctHiza7y",
+      "rule": "python:S8786",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:src/frontend/scripts/generate-basemap-style.py",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "8904da0c3934d1aebe3d0328e79bb9f4",
+      "textRange": {
+        "startLine": 27,
+        "endLine": 27,
+        "startOffset": 32,
+        "endOffset": 63
+      },
+      "flows": [],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Simplify this regular expression to reduce its runtime, as it has super-linear performance due to backtracking.",
+      "effort": "20min",
+      "debt": "20min",
+      "assignee": "JosefOreC-I2NHD@github",
+      "author": "71660137@continental.edu.pe",
+      "tags": [
+        "performance",
+        "regex"
+      ],
+      "creationDate": "2026-10-09T08:53:59+0000",
+      "updateDate": "2026-11-20T08:16:48+0000",
+      "closeDate": "2026-11-20T08:16:48+0000",
+      "type": "CODE_SMELL",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "EFFICIENT",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "0e8de5fe-d9c5-4594-bbf4-ff2d4e70709f",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaGN1K3rui_0ctHiza7r",
+      "rule": "typescript:S6848",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/interfaces/map/RouteMap.tsx",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "00222cd1efa9c7af6f21956e4cb7e1f2",
+      "textRange": {
+        "startLine": 139,
+        "endLine": 141,
+        "startOffset": 27,
+        "endOffset": 9
+      },
+      "flows": [],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Avoid non-native interactive elements. If using native HTML is not possible, add an appropriate role and support for tabbing, mouse, keyboard, and touch inputs to an interactive content element.",
+      "effort": "5min",
+      "debt": "5min",
+      "assignee": "JosefOreC-I2NHD@github",
+      "author": "71660137@continental.edu.pe",
+      "tags": [
+        "accessibility",
+        "react"
+      ],
+      "creationDate": "2026-10-09T08:53:59+0000",
+      "updateDate": "2026-11-20T08:16:48+0000",
+      "closeDate": "2026-11-20T08:16:48+0000",
+      "type": "CODE_SMELL",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        },
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "0e8de5fe-d9c5-4594-bbf4-ff2d4e70709f",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaGN1K31ui_0ctHiza7u",
+      "rule": "typescript:S8786",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/features/dashboard/ui/format.ts",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "c1949cf571cc23c4772dc8eddb1b6601",
+      "textRange": {
+        "startLine": 3,
+        "endLine": 3,
+        "startOffset": 25,
+        "endOffset": 48
+      },
+      "flows": [],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Simplify this regular expression to reduce its runtime, as it has super-linear performance due to backtracking.",
+      "effort": "20min",
+      "debt": "20min",
+      "author": "60982244@continental.edu.pe",
+      "tags": [
+        "performance",
+        "regex"
+      ],
+      "creationDate": "2026-10-07T01:22:41+0000",
+      "updateDate": "2026-11-20T08:16:48+0000",
+      "closeDate": "2026-11-20T08:16:48+0000",
+      "type": "CODE_SMELL",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "EFFICIENT",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "0e8de5fe-d9c5-4594-bbf4-ff2d4e70709f",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaGN1K4Cui_0ctHiza7w",
+      "rule": "typescript:S7773",
+      "severity": "MINOR",
+      "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/application/fleetBoard.ts",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "666fca0fe0a3946a469752b1bc876510",
+      "textRange": {
+        "startLine": 86,
+        "endLine": 86,
+        "startOffset": 13,
+        "endOffset": 23
+      },
+      "flows": [],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Prefer `Number.parseFloat` over `parseFloat`.",
+      "effort": "2min",
+      "debt": "2min",
+      "author": "60982244@continental.edu.pe",
+      "tags": [
+        "convention",
+        "editable-source",
+        "es2015"
+      ],
+      "creationDate": "2026-10-07T00:53:19+0000",
+      "updateDate": "2026-11-20T08:16:48+0000",
+      "closeDate": "2026-11-20T08:16:48+0000",
+      "type": "CODE_SMELL",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        },
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "0e8de5fe-d9c5-4594-bbf4-ff2d4e70709f",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaGN1K4Cui_0ctHiza7x",
+      "rule": "typescript:S7773",
+      "severity": "MINOR",
+      "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/application/fleetBoard.ts",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "ff84ba2ee0313b6792c3577a0207187c",
+      "textRange": {
+        "startLine": 89,
+        "endLine": 89,
+        "startOffset": 15,
+        "endOffset": 25
+      },
+      "flows": [],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Prefer `Number.parseFloat` over `parseFloat`.",
+      "effort": "2min",
+      "debt": "2min",
+      "author": "60982244@continental.edu.pe",
+      "tags": [
+        "convention",
+        "editable-source",
+        "es2015"
+      ],
+      "creationDate": "2026-10-07T00:53:19+0000",
+      "updateDate": "2026-11-20T08:16:48+0000",
+      "closeDate": "2026-11-20T08:16:48+0000",
+      "type": "CODE_SMELL",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        },
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "0e8de5fe-d9c5-4594-bbf4-ff2d4e70709f",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaGN1K3tui_0ctHiza7s",
+      "rule": "typescript:S7773",
+      "severity": "MINOR",
+      "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/interfaces/fleet/VehicleDialog.tsx",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "07802d23ce7e7600b78685d285080e85",
+      "textRange": {
+        "startLine": 76,
+        "endLine": 76,
+        "startOffset": 20,
+        "endOffset": 30
+      },
+      "flows": [],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Prefer `Number.parseFloat` over `parseFloat`.",
+      "effort": "2min",
+      "debt": "2min",
+      "author": "60982244@continental.edu.pe",
+      "tags": [
+        "convention",
+        "editable-source",
+        "es2015"
+      ],
+      "creationDate": "2026-10-07T00:53:19+0000",
+      "updateDate": "2026-11-20T08:16:48+0000",
+      "closeDate": "2026-11-20T08:16:48+0000",
+      "type": "CODE_SMELL",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        },
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "0e8de5fe-d9c5-4594-bbf4-ff2d4e70709f",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaGN1K3tui_0ctHiza7t",
+      "rule": "typescript:S7773",
+      "severity": "MINOR",
+      "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/interfaces/fleet/VehicleDialog.tsx",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "a4b7fae9e27f06fa0f3f7cee5c75d362",
+      "textRange": {
+        "startLine": 77,
+        "endLine": 77,
+        "startOffset": 34,
+        "endOffset": 44
+      },
+      "flows": [],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Prefer `Number.parseFloat` over `parseFloat`.",
+      "effort": "2min",
+      "debt": "2min",
+      "author": "60982244@continental.edu.pe",
+      "tags": [
+        "convention",
+        "editable-source",
+        "es2015"
+      ],
+      "creationDate": "2026-10-07T00:53:19+0000",
+      "updateDate": "2026-11-20T08:16:48+0000",
+      "closeDate": "2026-11-20T08:16:48+0000",
+      "type": "CODE_SMELL",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        },
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "0e8de5fe-d9c5-4594-bbf4-ff2d4e70709f",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaGN1K3_ui_0ctHiza7v",
+      "rule": "typescript:S8786",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/domain/format.ts",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "17deb9579d3a522ce2ffc1e4e3c4f4b2",
+      "textRange": {
+        "startLine": 4,
+        "endLine": 4,
+        "startOffset": 34,
+        "endOffset": 57
+      },
+      "flows": [],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Simplify this regular expression to reduce its runtime, as it has super-linear performance due to backtracking.",
+      "effort": "20min",
+      "debt": "20min",
+      "author": "60982244@continental.edu.pe",
+      "tags": [
+        "performance",
+        "regex"
+      ],
+      "creationDate": "2026-10-07T00:47:37+0000",
+      "updateDate": "2026-11-20T08:16:48+0000",
+      "closeDate": "2026-11-20T08:16:48+0000",
+      "type": "CODE_SMELL",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "EFFICIENT",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "0e8de5fe-d9c5-4594-bbf4-ff2d4e70709f",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaGN1K4Oui_0ctHiza70",
+      "rule": "css:S9424",
+      "severity": "BLOCKER",
+      "component": "JosefOreC_ALPHA_PROJECT:ecologistica-ui/design-system/eco.css",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "4a19d2dc72c9aedacf37942690a0366d",
+      "textRange": {
+        "startLine": 99,
+        "endLine": 99,
+        "startOffset": 31,
+        "endOffset": 32
+      },
+      "flows": [],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Unknown value \"5\" for property \"r\"",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "60982244@continental.edu.pe",
+      "tags": [],
+      "creationDate": "2026-10-07T00:37:36+0000",
+      "updateDate": "2026-11-20T08:16:48+0000",
+      "closeDate": "2026-11-20T08:16:48+0000",
+      "type": "BUG",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "LOGICAL",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "BLOCKER"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "0e8de5fe-d9c5-4594-bbf4-ff2d4e70709f",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaGN1K3Jui_0ctHiza7p",
+      "rule": "typescript:S8786",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/shared/ui/AppShell.tsx",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "43fc8fce13625ee61e82ff353d3b1ad1",
+      "textRange": {
+        "startLine": 34,
+        "endLine": 34,
+        "startOffset": 43,
+        "endOffset": 66
+      },
+      "flows": [],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Simplify this regular expression to reduce its runtime, as it has super-linear performance due to backtracking.",
+      "effort": "20min",
+      "debt": "20min",
+      "author": "60982244@continental.edu.pe",
+      "tags": [
+        "performance",
+        "regex"
+      ],
+      "creationDate": "2026-10-07T00:37:36+0000",
+      "updateDate": "2026-11-20T08:16:48+0000",
+      "closeDate": "2026-11-20T08:16:48+0000",
+      "type": "CODE_SMELL",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "EFFICIENT",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "0e8de5fe-d9c5-4594-bbf4-ff2d4e70709f",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaGN1K3kui_0ctHiza7q",
+      "rule": "css:S9424",
+      "severity": "BLOCKER",
+      "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/shared/ui/eco.css",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "4a19d2dc72c9aedacf37942690a0366d",
+      "textRange": {
+        "startLine": 104,
+        "endLine": 104,
+        "startOffset": 31,
+        "endOffset": 32
+      },
+      "flows": [],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Unknown value \"5\" for property \"r\"",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "60982244@continental.edu.pe",
+      "tags": [],
+      "creationDate": "2026-10-07T00:37:36+0000",
+      "updateDate": "2026-11-20T08:16:48+0000",
+      "closeDate": "2026-11-20T08:16:48+0000",
+      "type": "BUG",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "LOGICAL",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "BLOCKER"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "0e8de5fe-d9c5-4594-bbf4-ff2d4e70709f",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaGN1K4zui_0ctHiza77",
+      "rule": "Web:S5254",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:docs/04 Diseño/Dashboard del dia.dc.html",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "166248a6129a1e4370d20adc2d4c23f3",
+      "textRange": {
+        "startLine": 2,
+        "endLine": 2,
+        "startOffset": 0,
+        "endOffset": 6
+      },
+      "flows": [],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Add \"lang\" and/or \"xml:lang\" attributes to the \"<html>\" or \"<body>\" element",
+      "effort": "2min",
+      "debt": "2min",
+      "author": "72733304@continental.edu.pe",
+      "tags": [
+        "accessibility",
+        "wcag2-a"
+      ],
+      "creationDate": "2026-10-02T05:02:09+0000",
+      "updateDate": "2026-11-20T08:16:48+0000",
+      "closeDate": "2026-11-20T08:16:48+0000",
+      "type": "BUG",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "COMPLETE",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "0e8de5fe-d9c5-4594-bbf4-ff2d4e70709f",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaGN1K4zui_0ctHiza76",
+      "rule": "Web:PageWithoutTitleCheck",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:docs/04 Diseño/Dashboard del dia.dc.html",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "babd0daf38a8ba8a6c33c4d1d354eb56",
+      "textRange": {
+        "startLine": 3,
+        "endLine": 3,
+        "startOffset": 0,
+        "endOffset": 6
+      },
+      "flows": [],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Add a <title> tag to this page.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "72733304@continental.edu.pe",
+      "tags": [
+        "user-experience"
+      ],
+      "creationDate": "2026-10-02T05:02:09+0000",
+      "updateDate": "2026-11-20T08:16:48+0000",
+      "closeDate": "2026-11-20T08:16:48+0000",
+      "type": "BUG",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "0e8de5fe-d9c5-4594-bbf4-ff2d4e70709f",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaGN1K5Vui_0ctHiza8J",
+      "rule": "jssecurity:S8476",
+      "severity": "MINOR",
+      "component": "JosefOreC_ALPHA_PROJECT:docs/04 Diseño/support.js",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "0e72b337beb2314d7ca95a164855aee5",
+      "textRange": {
+        "startLine": 159,
+        "endLine": 159,
+        "startOffset": 6,
+        "endOffset": 11
+      },
+      "flows": [
+        {
+          "locations": [
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:docs/04 Diseño/support.js",
+              "textRange": {
+                "startLine": 159,
+                "endLine": 159,
+                "startOffset": 6,
+                "endOffset": 11
+              },
+              "msg": "Sink: this invocation is not safe; a malicious value can be used as argument"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:docs/04 Diseño/support.js",
+              "textRange": {
+                "startLine": 159,
+                "endLine": 159,
+                "startOffset": 21,
+                "endOffset": 25
+              },
+              "msg": "Source: a user can craft an HTTP request with malicious content"
+            }
+          ]
+        }
+      ],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Client-Side Request Forgery via unsanitized user input",
+      "effort": "20min",
+      "debt": "20min",
+      "author": "72733304@continental.edu.pe",
+      "tags": [
+        "cwe"
+      ],
+      "creationDate": "2026-10-02T05:02:09+0000",
+      "updateDate": "2026-10-30T19:31:32+0000",
+      "closeDate": "2026-10-30T19:31:32+0000",
+      "type": "VULNERABILITY",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "TRUSTWORTHY",
+      "cleanCodeAttributeCategory": "RESPONSIBLE",
+      "impacts": [
+        {
+          "softwareQuality": "SECURITY",
+          "severity": "HIGH"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "58a6a4c0-922e-4a84-828b-3d040e456697",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaGN1K5Vui_0ctHiza78",
+      "rule": "javascript:S8786",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:docs/04 Diseño/support.js",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "80ffeb07bdae7cc7f1f9cdd684c2f6f9",
+      "textRange": {
+        "startLine": 401,
+        "endLine": 401,
+        "startOffset": 30,
+        "endOffset": 51
+      },
+      "flows": [],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Simplify this regular expression to reduce its runtime, as it has super-linear performance due to backtracking.",
+      "effort": "20min",
+      "debt": "20min",
+      "author": "72733304@continental.edu.pe",
+      "tags": [
+        "performance",
+        "regex"
+      ],
+      "creationDate": "2026-10-02T05:02:09+0000",
+      "updateDate": "2026-11-20T08:16:48+0000",
+      "closeDate": "2026-11-20T08:16:48+0000",
+      "type": "CODE_SMELL",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "EFFICIENT",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "0e8de5fe-d9c5-4594-bbf4-ff2d4e70709f",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaGN1K5Vui_0ctHiza79",
+      "rule": "javascript:S8786",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:docs/04 Diseño/support.js",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "b7a662e38c72d4500462f7dc0678485e",
+      "textRange": {
+        "startLine": 568,
+        "endLine": 568,
+        "startOffset": 28,
+        "endOffset": 49
+      },
+      "flows": [],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Simplify this regular expression to reduce its runtime, as it has super-linear performance due to backtracking.",
+      "effort": "20min",
+      "debt": "20min",
+      "author": "72733304@continental.edu.pe",
+      "tags": [
+        "performance",
+        "regex"
+      ],
+      "creationDate": "2026-10-02T05:02:09+0000",
+      "updateDate": "2026-11-20T08:16:48+0000",
+      "closeDate": "2026-11-20T08:16:48+0000",
+      "type": "CODE_SMELL",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "EFFICIENT",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "0e8de5fe-d9c5-4594-bbf4-ff2d4e70709f",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaGN1K5Vui_0ctHiza7-",
+      "rule": "javascript:S7773",
+      "severity": "MINOR",
+      "component": "JosefOreC_ALPHA_PROJECT:docs/04 Diseño/support.js",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "225f24d33bd2d87516def74ee5baa549",
+      "textRange": {
+        "startLine": 607,
+        "endLine": 607,
+        "startOffset": 18,
+        "endOffset": 26
+      },
+      "flows": [],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Prefer `Number.parseInt` over `parseInt`.",
+      "effort": "2min",
+      "debt": "2min",
+      "author": "72733304@continental.edu.pe",
+      "tags": [
+        "convention",
+        "editable-source",
+        "es2015"
+      ],
+      "creationDate": "2026-10-02T05:02:09+0000",
+      "updateDate": "2026-11-20T08:16:48+0000",
+      "closeDate": "2026-11-20T08:16:48+0000",
+      "type": "CODE_SMELL",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        },
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "0e8de5fe-d9c5-4594-bbf4-ff2d4e70709f",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaGN1K5Vui_0ctHiza7_",
+      "rule": "javascript:S7767",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:docs/04 Diseño/support.js",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "da3023a35e62ea1567f719519126c032",
+      "textRange": {
+        "startLine": 771,
+        "endLine": 771,
+        "startOffset": 44,
+        "endOffset": 80
+      },
+      "flows": [],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Use `Math.trunc` instead of `| 0`.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "72733304@continental.edu.pe",
+      "tags": [
+        "confusing",
+        "es2015"
+      ],
+      "creationDate": "2026-10-02T05:02:09+0000",
+      "updateDate": "2026-11-20T08:16:48+0000",
+      "closeDate": "2026-11-20T08:16:48+0000",
+      "type": "CODE_SMELL",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "HIGH"
+        },
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "HIGH"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "0e8de5fe-d9c5-4594-bbf4-ff2d4e70709f",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaGN1K5Vui_0ctHiza8A",
+      "rule": "javascript:S1523",
+      "severity": "CRITICAL",
+      "component": "JosefOreC_ALPHA_PROJECT:docs/04 Diseño/support.js",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "3f76ce0ea71b7df7abaa20eef3fa40b8",
+      "textRange": {
+        "startLine": 844,
+        "endLine": 844,
+        "startOffset": 19,
+        "endOffset": 27
+      },
+      "flows": [],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Make sure that this dynamic injection or execution of code is safe.",
+      "effort": "30min",
+      "debt": "30min",
+      "author": "72733304@continental.edu.pe",
+      "tags": [
+        "cwe",
+        "former-hotspot"
+      ],
+      "creationDate": "2026-10-02T05:02:09+0000",
+      "updateDate": "2026-10-30T19:31:32+0000",
+      "closeDate": "2026-10-30T19:31:32+0000",
+      "type": "VULNERABILITY",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "TRUSTWORTHY",
+      "cleanCodeAttributeCategory": "RESPONSIBLE",
+      "impacts": [
+        {
+          "softwareQuality": "SECURITY",
+          "severity": "HIGH"
+        },
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "58a6a4c0-922e-4a84-828b-3d040e456697",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaGN1K5Vui_0ctHiza8B",
+      "rule": "javascript:S1523",
+      "severity": "CRITICAL",
+      "component": "JosefOreC_ALPHA_PROJECT:docs/04 Diseño/support.js",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "36b72f16b200255300a44eb627387d2b",
+      "textRange": {
+        "startLine": 850,
+        "endLine": 850,
+        "startOffset": 11,
+        "endOffset": 13
+      },
+      "flows": [],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Make sure that this dynamic injection or execution of code is safe.",
+      "effort": "30min",
+      "debt": "30min",
+      "author": "72733304@continental.edu.pe",
+      "tags": [
+        "cwe",
+        "former-hotspot"
+      ],
+      "creationDate": "2026-10-02T05:02:09+0000",
+      "updateDate": "2026-10-30T19:31:32+0000",
+      "closeDate": "2026-10-30T19:31:32+0000",
+      "type": "VULNERABILITY",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "TRUSTWORTHY",
+      "cleanCodeAttributeCategory": "RESPONSIBLE",
+      "impacts": [
+        {
+          "softwareQuality": "SECURITY",
+          "severity": "HIGH"
+        },
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "58a6a4c0-922e-4a84-828b-3d040e456697",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaGN1K5Vui_0ctHiza8C",
+      "rule": "javascript:S1523",
+      "severity": "CRITICAL",
+      "component": "JosefOreC_ALPHA_PROJECT:docs/04 Diseño/support.js",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "d7c697c3294fcf4be0b7594c25801061",
+      "textRange": {
+        "startLine": 1218,
+        "endLine": 1218,
+        "startOffset": 12,
+        "endOffset": 20
+      },
+      "flows": [],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Make sure that this dynamic injection or execution of code is safe.",
+      "effort": "30min",
+      "debt": "30min",
+      "author": "72733304@continental.edu.pe",
+      "tags": [
+        "cwe",
+        "former-hotspot"
+      ],
+      "creationDate": "2026-10-02T05:02:09+0000",
+      "updateDate": "2026-10-30T19:31:32+0000",
+      "closeDate": "2026-10-30T19:31:32+0000",
+      "type": "VULNERABILITY",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "TRUSTWORTHY",
+      "cleanCodeAttributeCategory": "RESPONSIBLE",
+      "impacts": [
+        {
+          "softwareQuality": "SECURITY",
+          "severity": "HIGH"
+        },
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "58a6a4c0-922e-4a84-828b-3d040e456697",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaGN1K5Vui_0ctHiza8D",
+      "rule": "javascript:S2819",
+      "severity": "CRITICAL",
+      "component": "JosefOreC_ALPHA_PROJECT:docs/04 Diseño/support.js",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "b739e548958d4971b78f406e675d1515",
+      "textRange": {
+        "startLine": 1387,
+        "endLine": 1387,
+        "startOffset": 8,
+        "endOffset": 33
+      },
+      "flows": [],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Specify a target origin for this message.",
+      "effort": "10min",
+      "debt": "10min",
+      "author": "72733304@continental.edu.pe",
+      "tags": [
+        "cwe",
+        "html5",
+        "type-dependent"
+      ],
+      "creationDate": "2026-10-02T05:02:09+0000",
+      "updateDate": "2026-10-30T19:31:32+0000",
+      "closeDate": "2026-10-30T19:31:32+0000",
+      "type": "VULNERABILITY",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "COMPLETE",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "SECURITY",
+          "severity": "HIGH"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "58a6a4c0-922e-4a84-828b-3d040e456697",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaGN1K5Vui_0ctHiza8E",
+      "rule": "javascript:S2819",
+      "severity": "CRITICAL",
+      "component": "JosefOreC_ALPHA_PROJECT:docs/04 Diseño/support.js",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "f43ad8f73ec8509af060669753e0f771",
+      "textRange": {
+        "startLine": 1407,
+        "endLine": 1407,
+        "startOffset": 4,
+        "endOffset": 27
+      },
+      "flows": [],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Verify the origin of the received message.",
+      "effort": "10min",
+      "debt": "10min",
+      "author": "72733304@continental.edu.pe",
+      "tags": [
+        "cwe",
+        "html5",
+        "type-dependent"
+      ],
+      "creationDate": "2026-10-02T05:02:09+0000",
+      "updateDate": "2026-10-30T19:31:32+0000",
+      "closeDate": "2026-10-30T19:31:32+0000",
+      "type": "VULNERABILITY",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "COMPLETE",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "SECURITY",
+          "severity": "HIGH"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "58a6a4c0-922e-4a84-828b-3d040e456697",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaGN1K5Vui_0ctHiza8F",
+      "rule": "javascript:S2310",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:docs/04 Diseño/support.js",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "53920b220076a8094c15de5c9ab92950",
+      "textRange": {
+        "startLine": 1444,
+        "endLine": 1444,
+        "startOffset": 8,
+        "endOffset": 9
+      },
+      "flows": [
+        {
+          "locations": [
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:docs/04 Diseño/support.js",
+              "textRange": {
+                "startLine": 1429,
+                "endLine": 1429,
+                "startOffset": 36,
+                "endOffset": 37
+              },
+              "msg": "Counter variable update"
+            }
+          ]
+        }
+      ],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Remove this assignment of \"i\".",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "72733304@continental.edu.pe",
+      "tags": [],
+      "creationDate": "2026-10-02T05:02:09+0000",
+      "updateDate": "2026-11-20T08:16:48+0000",
+      "closeDate": "2026-11-20T08:16:48+0000",
+      "type": "CODE_SMELL",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "0e8de5fe-d9c5-4594-bbf4-ff2d4e70709f",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaGN1K5Vui_0ctHiza8G",
+      "rule": "javascript:S2310",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:docs/04 Diseño/support.js",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "c9c83b4a91bbaa4b9ba2e623fa187216",
+      "textRange": {
+        "startLine": 1451,
+        "endLine": 1451,
+        "startOffset": 10,
+        "endOffset": 11
+      },
+      "flows": [
+        {
+          "locations": [
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:docs/04 Diseño/support.js",
+              "textRange": {
+                "startLine": 1429,
+                "endLine": 1429,
+                "startOffset": 36,
+                "endOffset": 37
+              },
+              "msg": "Counter variable update"
+            }
+          ]
+        }
+      ],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Remove this assignment of \"i\".",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "72733304@continental.edu.pe",
+      "tags": [],
+      "creationDate": "2026-10-02T05:02:09+0000",
+      "updateDate": "2026-11-20T08:16:48+0000",
+      "closeDate": "2026-11-20T08:16:48+0000",
+      "type": "CODE_SMELL",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "0e8de5fe-d9c5-4594-bbf4-ff2d4e70709f",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaGN1K5Vui_0ctHiza8H",
+      "rule": "javascript:S2310",
+      "severity": "MAJOR",
+      "component": "JosefOreC_ALPHA_PROJECT:docs/04 Diseño/support.js",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "7ff7651069a4bb393ca996379c21d58a",
+      "textRange": {
+        "startLine": 1476,
+        "endLine": 1476,
+        "startOffset": 24,
+        "endOffset": 25
+      },
+      "flows": [
+        {
+          "locations": [
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:docs/04 Diseño/support.js",
+              "textRange": {
+                "startLine": 1463,
+                "endLine": 1463,
+                "startOffset": 36,
+                "endOffset": 37
+              },
+              "msg": "Counter variable update"
+            }
+          ]
+        }
+      ],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Remove this assignment of \"i\".",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "72733304@continental.edu.pe",
+      "tags": [],
+      "creationDate": "2026-10-02T05:02:09+0000",
+      "updateDate": "2026-11-20T08:16:48+0000",
+      "closeDate": "2026-11-20T08:16:48+0000",
+      "type": "CODE_SMELL",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "0e8de5fe-d9c5-4594-bbf4-ff2d4e70709f",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaGN1K5Vui_0ctHiza8I",
+      "rule": "javascript:S2819",
+      "severity": "CRITICAL",
+      "component": "JosefOreC_ALPHA_PROJECT:docs/04 Diseño/support.js",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "81ed49014c3d2c2b2830f26b08fbcb3a",
+      "textRange": {
+        "startLine": 1858,
+        "endLine": 1858,
+        "startOffset": 8,
+        "endOffset": 33
+      },
+      "flows": [],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Specify a target origin for this message.",
+      "effort": "10min",
+      "debt": "10min",
+      "author": "72733304@continental.edu.pe",
+      "tags": [
+        "cwe",
+        "html5",
+        "type-dependent"
+      ],
+      "creationDate": "2026-10-02T05:02:09+0000",
+      "updateDate": "2026-10-30T19:31:32+0000",
+      "closeDate": "2026-10-30T19:31:32+0000",
+      "type": "VULNERABILITY",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "COMPLETE",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "SECURITY",
+          "severity": "HIGH"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "58a6a4c0-922e-4a84-828b-3d040e456697",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    },
+    {
+      "key": "AaHLPY0izpc8PbUOJ4XW",
+      "rule": "tssecurity:S8476",
+      "severity": "MINOR",
+      "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/infrastructure/httpOrders.ts",
+      "project": "JosefOreC_ALPHA_PROJECT",
+      "hash": "ca44a7f5ab049c9f71e6099e5a723b1d",
+      "textRange": {
+        "startLine": 7,
+        "endLine": 7,
+        "startOffset": 27,
+        "endOffset": 32
+      },
+      "flows": [
+        {
+          "locations": [
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/infrastructure/httpOrders.ts",
+              "textRange": {
+                "startLine": 7,
+                "endLine": 7,
+                "startOffset": 27,
+                "endOffset": 32
+              },
+              "msg": "Sink: this invocation is not safe; a malicious value can be used as argument"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/infrastructure/httpOrders.ts",
+              "textRange": {
+                "startLine": 7,
+                "endLine": 7,
+                "startOffset": 33,
+                "endOffset": 99
+              },
+              "msg": "This concatenation can propagate malicious content to the newly created string"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/infrastructure/httpOrders.ts",
+              "textRange": {
+                "startLine": 7,
+                "endLine": 7,
+                "startOffset": 93,
+                "endOffset": 97
+              },
+              "msg": "A malicious value was previously assigned to field ‘path’"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/infrastructure/httpOrders.ts",
+              "textRange": {
+                "startLine": 5,
+                "endLine": 5,
+                "startOffset": 24,
+                "endOffset": 36
+              },
+              "msg": "A malicious value can be assigned to field ‘path’"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/infrastructure/httpOrders.ts",
+              "textRange": {
+                "startLine": 19,
+                "endLine": 19,
+                "startOffset": 33,
+                "endOffset": 40
+              },
+              "msg": "Function call: Control is passed to this function, which is on the path to a security sink"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/infrastructure/httpOrders.ts",
+              "textRange": {
+                "startLine": 19,
+                "endLine": 19,
+                "startOffset": 60,
+                "endOffset": 62
+              },
+              "msg": "A malicious value was previously assigned to field ‘id’"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/infrastructure/httpOrders.ts",
+              "textRange": {
+                "startLine": 19,
+                "endLine": 19,
+                "startOffset": 7,
+                "endOffset": 17
+              },
+              "msg": "A malicious value can be assigned to field ‘id’"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/application/driverOrders.ts",
+              "textRange": {
+                "startLine": 5,
+                "endLine": 5,
+                "startOffset": 31,
+                "endOffset": 35
+              },
+              "msg": "Function call: Control is passed to this function, which is on the path to a security sink"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/application/driverOrders.ts",
+              "textRange": {
+                "startLine": 5,
+                "endLine": 5,
+                "startOffset": 36,
+                "endOffset": 38
+              },
+              "msg": "A malicious value was previously assigned to field ‘id’"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/application/driverOrders.ts",
+              "textRange": {
+                "startLine": 5,
+                "endLine": 5,
+                "startOffset": 11,
+                "endOffset": 21
+              },
+              "msg": "A malicious value can be assigned to field ‘id’"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/application/authorizedServices.ts",
+              "textRange": {
+                "startLine": 59,
+                "endLine": 59,
+                "startOffset": 65,
+                "endOffset": 69
+              },
+              "msg": "Function call: Control is passed to this function, which is on the path to a security sink"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/application/authorizedServices.ts",
+              "textRange": {
+                "startLine": 59,
+                "endLine": 59,
+                "startOffset": 70,
+                "endOffset": 72
+              },
+              "msg": "A malicious value was previously assigned to field ‘id’"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/application/authorizedServices.ts",
+              "textRange": {
+                "startLine": 59,
+                "endLine": 59,
+                "startOffset": 17,
+                "endOffset": 27
+              },
+              "msg": "A malicious value can be assigned to field ‘id’"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/interfaces/DriverOrderView.tsx",
+              "textRange": {
+                "startLine": 37,
+                "endLine": 37,
+                "startOffset": 34,
+                "endOffset": 38
+              },
+              "msg": "Function call: Control is passed to this function, which is on the path to a security sink"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/interfaces/DriverOrderView.tsx",
+              "textRange": {
+                "startLine": 37,
+                "endLine": 37,
+                "startOffset": 39,
+                "endOffset": 46
+              },
+              "msg": "A malicious value was previously assigned to field ‘orderId’"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/interfaces/DriverOrderView.tsx",
+              "textRange": {
+                "startLine": 43,
+                "endLine": 43,
+                "startOffset": 4,
+                "endOffset": 13
+              },
+              "msg": "Function call: Control is passed to this function, which is on the path to a security sink"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/interfaces/DriverOrderView.tsx",
+              "textRange": {
+                "startLine": 24,
+                "endLine": 24,
+                "startOffset": 57,
+                "endOffset": 64
+              },
+              "msg": "A malicious value can be assigned to field ‘orderId’"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/interfaces/DriverOrderView.tsx",
+              "textRange": {
+                "startLine": 24,
+                "endLine": 24,
+                "startOffset": 57,
+                "endOffset": 64
+              },
+              "msg": "A malicious value was previously assigned to field ‘orderId’"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/App.tsx",
+              "textRange": {
+                "startLine": 195,
+                "endLine": 195,
+                "startOffset": 18,
+                "endOffset": 34
+              },
+              "msg": "A malicious value can be assigned to field ‘orderId’"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/App.tsx",
+              "textRange": {
+                "startLine": 195,
+                "endLine": 195,
+                "startOffset": 19,
+                "endOffset": 33
+              },
+              "msg": "A malicious value was previously assigned to field ‘currentOrderId’"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/App.tsx",
+              "textRange": {
+                "startLine": 107,
+                "endLine": 107,
+                "startOffset": 9,
+                "endOffset": 23
+              },
+              "msg": "A malicious value can be assigned to field ‘currentOrderId’"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/App.tsx",
+              "textRange": {
+                "startLine": 107,
+                "endLine": 107,
+                "startOffset": 9,
+                "endOffset": 23
+              },
+              "msg": "A malicious value was previously assigned to field"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/App.tsx",
+              "textRange": {
+                "startLine": 107,
+                "endLine": 107,
+                "startOffset": 71,
+                "endOffset": 78
+              },
+              "msg": "A malicious value was previously assigned to field ‘orderId’"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/App.tsx",
+              "textRange": {
+                "startLine": 80,
+                "endLine": 80,
+                "startOffset": 32,
+                "endOffset": 64
+              },
+              "msg": "A malicious value can be assigned to field ‘orderId’"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/App.tsx",
+              "textRange": {
+                "startLine": 80,
+                "endLine": 80,
+                "startOffset": 41,
+                "endOffset": 47
+              },
+              "msg": "A malicious value was previously assigned to field ‘pedido’"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/App.tsx",
+              "textRange": {
+                "startLine": 58,
+                "endLine": 58,
+                "startOffset": 8,
+                "endOffset": 14
+              },
+              "msg": "A malicious value can be assigned to field ‘pedido’"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/App.tsx",
+              "textRange": {
+                "startLine": 56,
+                "endLine": 56,
+                "startOffset": 53,
+                "endOffset": 59
+              },
+              "msg": "A malicious value was previously assigned to field ‘search’"
+            },
+            {
+              "component": "JosefOreC_ALPHA_PROJECT:src/frontend/src/App.tsx",
+              "textRange": {
+                "startLine": 56,
+                "endLine": 56,
+                "startOffset": 44,
+                "endOffset": 52
+              },
+              "msg": "Source: a user can craft an HTTP request with malicious content"
+            }
+          ]
+        }
+      ],
+      "resolution": "FIXED",
+      "status": "CLOSED",
+      "message": "Client-Side Request Forgery via unsanitized user input",
+      "effort": "20min",
+      "debt": "20min",
+      "author": "60982244@continental.edu.pe",
+      "tags": [
+        "cwe"
+      ],
+      "creationDate": "2026-10-01T05:41:12+0000",
+      "updateDate": "2026-11-20T08:16:48+0000",
+      "closeDate": "2026-11-20T08:16:48+0000",
+      "type": "VULNERABILITY",
+      "organization": "joseforec",
+      "cleanCodeAttribute": "TRUSTWORTHY",
+      "cleanCodeAttributeCategory": "RESPONSIBLE",
+      "impacts": [
+        {
+          "softwareQuality": "SECURITY",
+          "severity": "HIGH"
+        }
+      ],
+      "issueStatus": "FIXED",
+      "projectName": "EcoLogistica Lima - ALPHA_PROJECT",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "0e8de5fe-d9c5-4594-bbf4-ff2d4e70709f",
+      "lastChangeSource": "ANALYSIS",
+      "producer": "SCANNER"
+    }
+  ],
+  "hotspots": [],
+  "hotspots_export_status": "exportados"
+}

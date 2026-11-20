@@ -97,3 +97,12 @@ Este bloque muestra la secuencia mkdir, git add, git commit y git push requerida
 | V_1_0_0 | 13/11/2026 | Ore Campos, Josef Pablo; Cueva Ricse, Alex. Revisión técnica y documental de automatización, rutas y procedimiento Git. |
 
 [← Volver al índice del Sprint 4](README.md)
+
+
+## Corte vigente en main, 20/11/2026
+
+La publicación y ejecución remotas ya se verificaron sobre `64267bd`: CI, Tests, documentación, Lighthouse y SonarCloud terminaron con éxito. Las afirmaciones anteriores sobre publicación pendiente describen el corte histórico del 13/11. Los [recibos de Actions](evidencias/cierre-20261120/github-actions.json) y el [cierre técnico](08%20Cierre%20tecnico%20y%20trazabilidad%20V_1_0_0.md) identifican los run IDs y los artefactos conservados. El README principal muestra badges de `main`.
+
+El job Tests genera una contraseña aleatoria para el PostGIS efímero del runner, la enmascara y elimina el contenedor al finalizar. El comando TypeScript ejecuta el binario instalado por lockfile, sin instalación implícita mediante `npm exec`. Docker sigue reservado al runner remoto. Render permanece deshabilitado y excluido de este cierre.
+
+El workflow Lighthouse aprobó sus condiciones vigentes; sus tres cargas arrojan score 0,85 / 0,91 / 0,92 y no acreditan los límites más estrictos de la serie histórica descritos arriba. Se conserva la [serie medida](evidencias/cierre-20261120/lighthouse-remoto.json) y su seguimiento en la retrospectiva.

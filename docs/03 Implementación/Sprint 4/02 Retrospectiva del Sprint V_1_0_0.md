@@ -36,12 +36,17 @@ Registrar el commit, el navegador y el entorno junto con cada ejecución. Conser
 
 ### Acciones a realizar
 
-| Acción de seguimiento | Responsable propuesto | Plazo | Criterio de cierre |
-|---|---|---|---|
-| Conciliar las historias y registrar la aceptación | Josef Pablo Ore Campos, líder del proyecto | Antes de la siguiente revisión | Las tres historias de la Review enlazan a ticket y commit. El acta registra la decisión de aceptación sobre cada una. |
-| Repetir el ingreso y la primera tarea del conductor | Responsable de UX y equipo frontend | En la próxima sesión de usabilidad | Al menos cinco sesiones registradas con perfil, dispositivo y versión. Al menos cuatro completan su primera tarea sin ayuda y al primer intento. |
-| Validar la identificación de recorridos | Responsable de QA y responsable de pruebas operativas | Antes de volver a presentar el flujo de rutas | En la regresión, el mapa muestra las dos rutas seleccionadas. En la sesión, el operador identifica ambos tramos confirmados sin ayuda. |
-| Resolver las desviaciones de rendimiento y cerrar el pipeline | Responsables de QA, frontend y despliegue | Antes de la entrega final | Ejecutar tres cargas de Acceso con TBT ≤ 85 ms o registrar la desviación con traza. Adjuntar los enlaces a CI, Tests y Deploy y su versión probada. |
+Las responsabilidades siguientes son propuestas de seguimiento documental para el líder y el equipo; no se atribuye un acuerdo de reunión inexistente. Fechas en America/Lima. Los resultados técnicos se respaldan en el [cierre](08%20Cierre%20tecnico%20y%20trazabilidad%20V_1_0_0.md).
+
+| ID y acción SMART | Responsable de seguimiento | Fecha objetivo | Métrica de cierre | Estado al 20/11/2026 |
+|---|---|---|---|---|
+| A-01 Conciliar las tres historias con tickets, commits y pruebas | Josef Pablo Ore Campos, líder documental | 20/11/2026 | 3/3 historias con correspondencia visible en el backlog y pruebas identificadas. | Completada documentalmente: ELODRSPDSC-17, 18 y 22. Estado Jira actual sin consultar. |
+| A-02 Grabar los tres recorridos y conservar capturas, entorno y huellas | Equipo de QA; paquete técnico preparado con Codex | 20/11/2026 | Tres videos reproducibles: pedido, entrega y administración/laboratorio; hashes y recibos. | Completada como demostración técnica, sin atribuir asistentes. |
+| A-03 Cerrar las vulnerabilidades y mantener los umbrales de cobertura | Equipo backend/frontend; revisión del líder | 20/11/2026 | Sonar: cero incidencias abiertas y gate OK; líneas y ramas de ambos lenguajes ≥ 90 %. | Completada en `64267bd`, con recibos remotos. |
+| A-04 Registrar decisión humana por historia y conciliar el estado vivo de Jira | Josef Pablo Ore Campos; responsable de producto que participe | 23/11/2026, propuesta | Tres decisiones explícitas, fecha, asistentes por rol, versión demostrada y enlace a registro; comparar los tres tickets vivos con la matriz. | Requiere sesión o acta real y acceso a Jira. Material técnico listo. |
+| A-05 Investigar los valores de Lighthouse que exceden la serie estricta histórica | Equipo frontend y QA; seguimiento del líder | 24/11/2026, propuesta | Tres nuevas cargas comparables con FCP ≤ 1000 ms, LCP ≤ 1400 ms, TBT ≤ 85 ms y CLS ≤ 0,02, o desviación documentada con trazas y decisión. | Desviación documentada con las tres cargas del runner; no se declara corregida por el job verde. |
+
+SUS y Render no generan tareas de ejecución en este cierre por indicación del usuario. Se conserva su documentación histórica.
 
 ## Control de versiones
 
@@ -49,5 +54,6 @@ Registrar el commit, el navegador y el entorno junto con cada ejecución. Conser
 |---|---|---|
 | V_1_0_0 | 19/11/2026 | Primera edición para la Inspección 5. |
 | V_1_0_1 | 20/11/2026 | Incorporación de hallazgos SUS y condiciones medibles de seguimiento. |
+| V_1_0_2 | 20/11/2026 | Acciones SMART con fechas, responsables de seguimiento, resultados y evidencia; se excluyen SUS y Render del trabajo solicitado. |
 
 [← Volver al README principal](../../../README.md) · [Volver al Sprint 4](README.md)
