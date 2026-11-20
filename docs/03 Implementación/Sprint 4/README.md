@@ -135,3 +135,7 @@ La equivalencia PostgreSQL/PostGIS del criterio MongoDB y la sustitución auxili
 - [Videos, capturas, reportes y hashes](evidencias/cierre-20261120/README.md).
 
 - [09. Acta de revisión y aceptación](09%20Acta%20de%20revision%20y%20aceptacion%20V_1_0_0.md): conformidad expresa del Líder del Proyecto para las tres historias.
+
+## Dashboard de objetivos del proyecto
+
+[Diseño, significado de los indicadores, capturas y validación](evidencias/dashboard-objetivos/README.md). Actualización solicitada después de la aceptación de las tres historias; conserva sus actas y las exclusiones de SUS y Render.

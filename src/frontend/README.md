@@ -50,3 +50,14 @@ En **Administración → Almacén**, configura el origen. En **Parámetros del a
 **Ruta demo** (`/?vista=ruta-demo`) acepta hasta 15 móviles y 50 pedidos sintéticos, con posiciones X/Y en kilómetros, capacidad, peso y ventanas desde las 08:00. Usa el mismo motor de asignación e inserción/2-opt, sobre una matriz euclidiana sintética; muestra recorridos y secuencias sin leer ni escribir la base de datos. No representa calles ni tráfico real. Los errores de factibilidad conservan las entradas para corregirlas.
 
 `PLAYWRIGHT_PORT` permite ejecutar la suite de interfaz en un puerto libre. El valor predeterminado es 5178. En Windows se usa Edge por defecto; el contenedor de CI utiliza Chromium. La suite integrada conserva Chromium, Firefox y WebKit.
+
+
+## Dashboard de objetivos
+
+La vista `/?vista=dashboard` prioriza entregas a tiempo, distancia planificada, intensidad de CO₂ y equivalente diésel. El balance de pedidos y emisiones, el mapa y los pedidos en riesgo mantienen el contexto operativo. El filtro actualiza resumen e insights; «Actualizar» recarga ambas fuentes. Se conserva el último resumen con aviso si falla la actualización.
+
+El panel «Objetivos del proyecto» permite consultar las metas y la disponibilidad de sus mediciones. No se generan porcentajes de disponibilidad, tiempos del algoritmo ni ahorros monetarios sin datos. Los resultados negativos de ahorro se muestran como incrementos. Las estimaciones de rutas y el equivalente diésel están identificados con sus unidades y significado.
+
+Los componentes están en `src/features/dashboard/ui/`; los estilos forman parte del sistema compartido `src/shared/ui/eco.css`. La vista se adapta a móvil y respeta `prefers-reduced-motion`. [Fórmulas, alcance y capturas](../../docs/03%20Implementaci%C3%B3n/Sprint%204/evidencias/dashboard-objetivos/README.md).
+
+Para revisar la interfaz aislada, iniciar Vite y abrir `/tests/ui/dashboard.html`. Es una entrada exclusiva de pruebas con datos ficticios y no se incluye en el build productivo. Las pruebas integradas del producto usan FastAPI y PostGIS; `scripts/verify_native.py` permite ejecutarlas sin Docker local.

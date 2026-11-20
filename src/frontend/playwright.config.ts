@@ -19,8 +19,8 @@ export default defineConfig({
     trace: 'retain-on-failure',
   },
   projects: [
-    { name: 'escritorio', testMatch: ['simulation.spec.ts', 'components.spec.ts', 'map.spec.ts', 'sostenibilidad.spec.ts', 'roles.spec.ts', 'login.spec.ts', 'accesibilidad.spec.ts'], use: { viewport: { width: 1280, height: 900 } } },
-    { name: 'movil-390', testMatch: ['simulation.spec.ts', 'mobile.spec.ts', 'driver.spec.ts', 'login.spec.ts', 'accesibilidad.spec.ts'], use: { viewport: { width: 390, height: 844 } } },
+    { name: 'escritorio', testMatch: ['dashboard.spec.ts', 'simulation.spec.ts', 'components.spec.ts', 'map.spec.ts', 'sostenibilidad.spec.ts', 'roles.spec.ts', 'login.spec.ts', 'accesibilidad.spec.ts'], use: { viewport: { width: 1280, height: 900 } } },
+    { name: 'movil-390', testMatch: ['dashboard.spec.ts', 'simulation.spec.ts', 'mobile.spec.ts', 'driver.spec.ts', 'login.spec.ts', 'accesibilidad.spec.ts'], use: { viewport: { width: 390, height: 844 } } },
   ],
   webServer: {
     command: `node node_modules/vite/bin/vite.js --host 127.0.0.1 --port ${port} --strictPort`,

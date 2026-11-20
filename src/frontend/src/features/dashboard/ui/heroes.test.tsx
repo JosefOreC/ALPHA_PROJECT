@@ -87,7 +87,7 @@ describe('Co2Hero', () => {
 
     expect(screen.getByText('CO₂ evitado hoy')).toBeInTheDocument()
     expect(screen.getByText('−19 %')).toBeInTheDocument()
-    expect(screen.getByText('de emisiones frente a rutas sin optimizar')).toBeInTheDocument()
+    expect(screen.getByText('de emisiones frente a la línea base registrada')).toBeInTheDocument()
     expect(screen.getByText('22 kg')).toBeInTheDocument()
     expect(screen.getByText('9 L')).toBeInTheDocument()
     expect(screen.getByText('−212 km')).toBeInTheDocument()

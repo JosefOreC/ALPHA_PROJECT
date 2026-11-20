@@ -1,0 +1,138 @@
+{
+  "stats": {
+    "startTime": "2026-11-20T10:56:23.759Z",
+    "duration": 39163.461,
+    "expected": 15,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "cases": [
+    {
+      "title": "acceso, permisos, validación y persistencia de pedidos",
+      "browser": "chromium",
+      "status": "passed",
+      "metrics": {
+        "rendimiento-api-pedidos": {
+          "orderListMs": 208.5550000000003
+        }
+      }
+    },
+    {
+      "title": "consulta la ruta asignada y confirma una entrega como conductor",
+      "browser": "chromium",
+      "status": "passed",
+      "metrics": {}
+    },
+    {
+      "title": "disponibilidad, recuperación ante error de red y tiempos de acceso",
+      "browser": "chromium",
+      "status": "passed",
+      "metrics": {
+        "rendimiento-acceso": {
+          "browser": "chromium",
+          "healthMs": 4.071600000000217,
+          "ttfbMs": 3,
+          "fcpMs": 32,
+          "lcpMs": 32
+        }
+      }
+    },
+    {
+      "title": "administrador: permisos completos, tabla de roles y simulación por interfaz",
+      "browser": "chromium",
+      "status": "passed",
+      "metrics": {}
+    },
+    {
+      "title": "dashboard: indicadores reales, filtro por distrito y actualización",
+      "browser": "chromium",
+      "status": "passed",
+      "metrics": {}
+    },
+    {
+      "title": "acceso, permisos, validación y persistencia de pedidos",
+      "browser": "firefox",
+      "status": "passed",
+      "metrics": {
+        "rendimiento-api-pedidos": {
+          "orderListMs": 121.16480000000001
+        }
+      }
+    },
+    {
+      "title": "consulta la ruta asignada y confirma una entrega como conductor",
+      "browser": "firefox",
+      "status": "passed",
+      "metrics": {}
+    },
+    {
+      "title": "disponibilidad, recuperación ante error de red y tiempos de acceso",
+      "browser": "firefox",
+      "status": "passed",
+      "metrics": {
+        "rendimiento-acceso": {
+          "browser": "firefox",
+          "healthMs": 5.7708999999995285,
+          "ttfbMs": 14,
+          "fcpMs": 189,
+          "lcpMs": 189
+        }
+      }
+    },
+    {
+      "title": "administrador: permisos completos, tabla de roles y simulación por interfaz",
+      "browser": "firefox",
+      "status": "passed",
+      "metrics": {}
+    },
+    {
+      "title": "dashboard: indicadores reales, filtro por distrito y actualización",
+      "browser": "firefox",
+      "status": "passed",
+      "metrics": {}
+    },
+    {
+      "title": "acceso, permisos, validación y persistencia de pedidos",
+      "browser": "webkit",
+      "status": "passed",
+      "metrics": {
+        "rendimiento-api-pedidos": {
+          "orderListMs": 214.64120000000003
+        }
+      }
+    },
+    {
+      "title": "consulta la ruta asignada y confirma una entrega como conductor",
+      "browser": "webkit",
+      "status": "passed",
+      "metrics": {}
+    },
+    {
+      "title": "disponibilidad, recuperación ante error de red y tiempos de acceso",
+      "browser": "webkit",
+      "status": "passed",
+      "metrics": {
+        "rendimiento-acceso": {
+          "browser": "webkit",
+          "healthMs": 4.738000000000284,
+          "ttfbMs": 2,
+          "fcpMs": 63,
+          "lcpMs": 63
+        }
+      }
+    },
+    {
+      "title": "administrador: permisos completos, tabla de roles y simulación por interfaz",
+      "browser": "webkit",
+      "status": "passed",
+      "metrics": {}
+    },
+    {
+      "title": "dashboard: indicadores reales, filtro por distrito y actualización",
+      "browser": "webkit",
+      "status": "passed",
+      "metrics": {}
+    }
+  ]
+}

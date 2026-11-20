@@ -1083,3 +1083,94 @@ dialog.eco-dialog--sheet { width: 100%; max-width: 480px; margin: auto auto 0; b
   .eco-simulation-canvas { padding: 8px; }
   .eco-simulation-canvas svg { min-height: 230px; }
 }
+
+/* Dashboard: indicadores de objetivos, lectura operativa y movimiento reducido. */
+.eco-dashboard { display: grid; gap: 24px; min-width: 0; --dash-green: #17604b; }
+.eco-dashboard .eco-pagehead { margin: 0; padding-bottom: 0; }
+.eco-dashboard .eco-pagehead .eco-h1 { font-size: clamp(1.7rem, 2.6vw, 2.4rem); letter-spacing: -.045em; }
+.eco-dash-intro { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 18px; }
+.eco-dash-intro__copy { max-width: 600px; }
+.eco-dash-eyebrow { color: var(--dash-green); font-size: .75rem; font-weight: 750; letter-spacing: .13em; text-transform: uppercase; margin: 0 0 8px; }
+.eco-dash-intro h2 { font-size: clamp(1.4rem, 2.2vw, 2rem); font-weight: 550; line-height: 1.22; letter-spacing: -.035em; margin: 0 0 10px; }
+.eco-dash-intro__copy > p:last-child { color: var(--ink-muted); font-size: .9375rem; line-height: 1.6; margin: 0; }
+.eco-dashboard .eco-filterbar { margin: 0; border: 0; background: transparent; padding: 0; flex-wrap: wrap; gap: 12px; }
+.eco-dashboard .eco-filterbar .eco-tag { display: none; }
+.eco-dashboard .eco-filterbar .eco-select { background-color: var(--surface); min-width: 190px; border-radius: 12px; }
+.eco-dash-toolbar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.eco-dash-toolbar .eco-btn { min-height: 44px; border-radius: 12px; }
+.eco-dash-metrics { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.eco-dash-metric { min-width: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 20px; box-shadow: 0 4px 16px #163e2c04; }
+.eco-dash-metric__top { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; color: var(--ink-muted); font-size: .75rem; line-height: 1.4; }
+.eco-dash-metric__icon { display: inline-grid; flex: 0 0 36px; height: 36px; place-items: center; border-radius: 12px; color: #17604b; background: #edf6f0; }
+.eco-dash-metric--blue .eco-dash-metric__icon { color: #345a7e; background: #edf3fa; }
+.eco-dash-metric--attention .eco-dash-metric__icon { color: #86520d; background: #fff2dd; }
+.eco-dash-metric h2 { font-size: .875rem; font-weight: 550; color: var(--ink-muted); margin: 0 0 10px; }
+.eco-dash-metric__number { display: flex; align-items: baseline; gap: 7px; flex-wrap: wrap; min-height: 45px; color: var(--ink); }
+.eco-dash-metric__number strong { font-size: clamp(1.7rem, 2.5vw, 2.4rem); font-weight: 650; line-height: 1.15; letter-spacing: -.045em; font-variant-numeric: tabular-nums; }
+.eco-dash-metric__number > span { font-size: .8125rem; color: var(--ink-muted); }
+.eco-dash-metric > p { font-size: .8125rem; line-height: 1.55; color: var(--ink-muted); margin: 10px 0 0; }
+.eco-dash-skeleton { display: block; height: 32px; width: 100px; background: var(--surface-sunken); border-radius: 8px; }
+.eco-dashboard .eco-hero-row { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 20px; }
+.eco-dashboard .eco-hero { border-radius: 20px; min-width: 0; box-shadow: none; }
+.eco-dashboard .eco-hero:not(.eco-hero--orders) { background: linear-gradient(125deg, #0b4937, #123f35); color: #f4fbf6; border: 1px solid #0b4937; }
+.eco-dashboard .eco-hero:not(.eco-hero--orders) :is(.eco-hero__label, .eco-hero__unit, .eco-hero__facts li, .eco-bars__days) { color: #c4ddce; }
+.eco-dashboard .eco-hero:not(.eco-hero--orders) :is(.eco-hero__value, .eco-hero__facts strong) { color: #f4fbf6; }
+.eco-dashboard .eco-hero:not(.eco-hero--orders) .eco-lime { color: #d9f5c7; }
+.eco-dashboard .eco-hero:not(.eco-hero--orders) .eco-bars__bar--today { background: #c6edcf; }
+.eco-dashboard .eco-hero:not(.eco-hero--orders).eco-hero--increase { background: #713b1d; border-color: #713b1d; }
+.eco-dashboard .eco-bars__bar--negative { background: #ffc889; }
+.eco-dashboard .eco-hero__inner { padding: clamp(20px, 2.4vw, 30px); }
+.eco-dashboard .eco-hero--orders { background: var(--surface); color: var(--ink); border: 1px solid var(--border); }
+.eco-dashboard .eco-hero--orders .eco-hero__label { color: var(--ink-muted); }
+.eco-dashboard .eco-hero__value { font-size: clamp(2.6rem, 4vw, 4rem); letter-spacing: -.055em; font-variant-numeric: tabular-nums; }
+.eco-dashboard .eco-hero__facts { flex-wrap: wrap; gap: 18px; }
+.eco-dashboard .eco-status-row { gap: 10px; }
+.eco-dashboard .eco-columns { margin: 0; gap: 20px; }
+.eco-dashboard .eco-columns__main { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 20px; flex-basis: 470px; }
+.eco-dashboard .eco-columns__aside { flex-basis: 310px; }
+.eco-dashboard .eco-section-head h2 { font-size: 1.125rem; letter-spacing: -.025em; }
+.eco-dashboard .eco-columns__main .eco-map { border-radius: 14px; }
+.eco-dash-section-intro { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.eco-dash-section-intro h2 { font-size: 1.125rem; margin: 0; letter-spacing: -.025em; }
+.eco-dash-section-intro p { margin: 0; color: var(--ink-muted); font-size: .875rem; }
+.eco-dash-objectives { padding: 20px 24px; border: 1px solid var(--border); border-radius: 18px; background: var(--surface); }
+.eco-dash-objectives summary { cursor: pointer; font-size: .9375rem; font-weight: 650; min-height: 28px; }
+.eco-dash-objectives__hint { display: inline-block; margin-left: 16px; font-size: .8125rem; font-weight: 400; color: var(--ink-muted); }
+.eco-dash-objectives > p { font-size: .875rem; line-height: 1.6; }
+.eco-dash-objectives__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 20px; }
+.eco-dash-objectives__grid article { border-top: 2px solid #d9e9df; padding: 14px 0; min-width: 0; }
+.eco-dash-objectives__grid h3 { font-size: .875rem; margin: 0 0 10px; }
+.eco-dash-objectives__grid p { font-size: .875rem; line-height: 1.5; margin: 0 0 8px; color: var(--ink-muted); }
+.eco-dash-objectives__grid article > span { display: inline-block; font-size: .75rem; font-weight: 650; color: var(--dash-green); background: #edf6f0; border-radius: 6px; padding: 4px 7px; }
+@media (prefers-reduced-motion: no-preference) {
+  .eco-dash-metric { animation: eco-enter 320ms ease-out both; transition: transform 180ms ease, box-shadow 180ms ease; }
+  .eco-dash-metric:nth-child(2) { animation-delay: 45ms; }
+  .eco-dash-metric:nth-child(3) { animation-delay: 90ms; }
+  .eco-dash-metric:nth-child(4) { animation-delay: 135ms; }
+  .eco-dash-metric:hover { transform: translateY(-3px); box-shadow: 0 10px 26px #163e2c09; }
+  .eco-dashboard .eco-bars__bar { transition: height 350ms ease; }
+  .eco-dashboard .eco-segbar > div { transition: flex-grow 350ms ease; }
+}
+@media (max-width: 1100px) {
+  .eco-dash-metrics, .eco-dash-objectives__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .eco-dashboard .eco-hero-row { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 600px) {
+  .eco-dashboard { gap: 20px; }
+  .eco-dash-metrics { gap: 10px; }
+  .eco-dash-metric { padding: 15px; border-radius: 14px; }
+  .eco-dash-metric__top { margin-bottom: 14px; gap: 7px; font-size: .75rem; }
+  .eco-dash-metric__icon { flex-basis: 30px; height: 30px; border-radius: 9px; }
+  .eco-dash-metric__number strong { font-size: 1.7rem; }
+  .eco-dash-toolbar { width: 100%; }
+  .eco-dashboard .eco-filterbar { flex: 1 1 100%; }
+  .eco-dashboard .eco-filterbar .eco-field { width: 100%; }
+  .eco-dashboard .eco-filterbar .eco-select { min-width: 0; flex: 1; width: 100%; }
+  .eco-dash-objectives { padding: 18px; }
+  .eco-dash-objectives__hint { display: block; margin: 8px 0 0; }
+  .eco-dash-objectives__grid { grid-template-columns: minmax(0, 1fr); }
+  .eco-dashboard .eco-columns__main { padding: 14px; }
+  .eco-dashboard .eco-columns__aside .eco-row { grid-template-columns: 58px minmax(0, 1fr); gap: 8px 12px; padding-block: 14px; }
+  .eco-dashboard .eco-columns__aside .eco-row > :last-child { grid-column: 2; justify-self: start; }
+  .eco-dashboard .eco-columns__aside :is(.eco-row__title, .eco-row__sub) { white-space: normal; overflow: visible; overflow-wrap: anywhere; }
+}

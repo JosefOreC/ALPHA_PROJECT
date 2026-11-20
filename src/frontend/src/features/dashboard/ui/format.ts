@@ -22,6 +22,7 @@ export const formatDecimal = (n: number) => (n === 0 ? '0' : format(n, 1, 1))
 
 /** Hasta un decimal, sin ceros sobrantes: 22 → «22», 0,5 → «0,5». */
 export const formatCompact = (n: number) => format(n, 0, 1)
+export const formatIntensity = (n: number) => format(n, 0, 3)
 
 export const formatPercentOf = (part: number, total: number) => (total ? `${format((part / total) * 100, 1, 1)} %` : '0 %')
 

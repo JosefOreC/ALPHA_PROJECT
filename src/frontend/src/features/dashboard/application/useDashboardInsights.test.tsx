@@ -51,6 +51,20 @@ describe('useDashboardInsights', () => {
     expect(result.current).toEqual({ status: 'error', insights: null })
   })
 
+  it('clears the previous district while the new comparison is pending', async () => {
+    let resolve!: (value: DashboardInsights) => void
+    const gateway: DashboardInsightsGateway = { getInsights: vi.fn()
+      .mockResolvedValueOnce(insights({ suggestion: 'all districts' }))
+      .mockImplementationOnce(() => new Promise<DashboardInsights>(done => { resolve = done })) }
+    const { result, rerender } = renderHook(({ district }) => useDashboardInsights(gateway, district), { initialProps: { district: '' } })
+    await act(async () => {})
+    expect(result.current.insights?.suggestion).toBe('all districts')
+    rerender({ district: '150103' })
+    expect(result.current).toEqual({ status: 'loading', insights: null })
+    await act(async () => { resolve(insights({ suggestion: 'Ate' })) })
+    expect(result.current.insights?.suggestion).toBe('Ate')
+  })
+
   describe('polling', () => {
     beforeEach(() => vi.useFakeTimers())
     afterEach(() => vi.useRealTimers())

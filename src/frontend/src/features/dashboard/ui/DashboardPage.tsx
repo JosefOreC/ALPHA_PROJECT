@@ -13,11 +13,11 @@ import { OrdersHero } from './OrdersHero'
 import { RiskList } from './RiskList'
 import { StatusBanner } from './StatusBanner'
 import type { CardState } from './shared'
+import { OperationalMetrics } from './OperationalMetrics'
+import { ProjectIndicators } from './ProjectIndicators'
 
 const todayIso = () => {
-  const d = new Date()
-  const pad = (n: number) => String(n).padStart(2, '0')
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`
+  return new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Lima', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date())
 }
 
 const SESSION_USER = { name: 'Logística', initials: 'RL' }
@@ -44,7 +44,8 @@ interface Props {
 export function DashboardPage({ gateway, insights, renderMap, onNavigate, refreshMs }: Props) {
   const theme = 'light'
   const dashboard = useDashboard(gateway, { refreshMs })
-  const extra = useDashboardInsights(insights, dashboard.districtId, { refreshMs })
+  const [refreshKey, setRefreshKey] = useState(0)
+  const extra = useDashboardInsights(insights, dashboard.districtId, { refreshMs, refreshKey })
   const [selectedId, setSelectedId] = useState<string | undefined>()
   const { status, summary, lastUpdatedAt } = dashboard
 
@@ -80,15 +81,27 @@ export function DashboardPage({ gateway, insights, renderMap, onNavigate, refres
 
   return (
     <AppShell role="logistics" current="dashboard" user={SESSION_USER} title="Dashboard del día" theme={theme} actions={actions} onNavigate={onNavigate}>
+      <div className="eco-dashboard">
       <DashboardHeader
         day={day}
         operatingHours={summary?.operatingHours}
         inProgress={summary?.inProgress}
         lastUpdated={lastUpdated}
         isLoading={isLoading || dashboard.isRefreshing}
+        refreshSeconds={Math.round((refreshMs ?? 60_000) / 1000)}
       />
 
-      <DistrictFilter districts={dashboard.districts} value={dashboard.districtId} onChange={dashboard.selectDistrict} />
+      <section className="eco-dash-intro" aria-label="Resumen de la jornada">
+        <div className="eco-dash-intro__copy">
+          <p className="eco-dash-eyebrow">Operación e impacto</p>
+          <h2>Más entregas a tiempo.<br />Menos impacto en cada ruta.</h2>
+          <p>El avance de tu jornada y la eficiencia de tus rutas, en un solo lugar.</p>
+        </div>
+        <div className="eco-dash-toolbar">
+          <DistrictFilter districts={dashboard.districts} value={dashboard.districtId} onChange={id => { setSelectedId(undefined); dashboard.selectDistrict(id) }} />
+          <button className="eco-btn eco-btn--secondary" type="button" disabled={isLoading || dashboard.isRefreshing} onClick={() => { dashboard.retry(); setRefreshKey(key => key + 1) }}>Actualizar</button>
+        </div>
+      </section>
       <span role="status" aria-live="polite" className="eco-sr">
         {dashboard.liveMessage}
       </span>
@@ -97,6 +110,9 @@ export function DashboardPage({ gateway, insights, renderMap, onNavigate, refres
       {status === 'error' ? <StatusBanner kind="error" onRetry={dashboard.retry} /> : null}
       {status === 'stale' && lastUpdated ? <StatusBanner kind="stale" lastUpdated={lastUpdated} onRetry={dashboard.retry} /> : null}
 
+      <OperationalMetrics summary={summary} insights={extra.insights} state={cardState} />
+
+      <div className="eco-dash-section-intro"><h2>Balance de la jornada</h2><p>Entregas, recursos y emisiones estimadas</p></div>
       <div aria-busy={isLoading} className="eco-hero-row">
         {isLoading ? (
           <span role="status" className="eco-sr">
@@ -120,10 +136,13 @@ export function DashboardPage({ gateway, insights, renderMap, onNavigate, refres
               <h2 id="dash-map-title">Rutas en vivo</h2>
               <span className="eco-muted eco-toolbar__end">Solo lectura · lo opera el Planificador</span>
             </div>
+            {dashboard.districtId ? <p className="eco-muted">El mapa mantiene la vista general; los indicadores y pedidos en riesgo corresponden al distrito seleccionado.</p> : null}
             {renderMap({ selectedId, onSelect: setSelectedId })}
           </section>
         ) : null}
         <RiskList status={extra.status} insights={extra.insights} selectedId={selectedId} onSelect={setSelectedId} />
+      </div>
+      <ProjectIndicators summary={summary} insights={extra.insights} />
       </div>
     </AppShell>
   )

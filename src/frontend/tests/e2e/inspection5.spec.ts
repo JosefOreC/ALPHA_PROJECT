@@ -209,3 +209,31 @@ test('administrador: permisos completos, tabla de roles y simulación por interf
   await expect(page.getByRole('region', { name: 'Resultado de la simulación' })).toBeVisible()
   await testInfo.attach('laboratorio-rutas', { body: await page.screenshot({ fullPage: true }), contentType: 'image/png' })
 })
+
+test('dashboard: indicadores reales, filtro por distrito y actualización', async ({ page, baseURL }, testInfo) => {
+  const password = process.env.E2E_PASSWORD
+  if (!password || !baseURL || !['127.0.0.1', 'localhost'].includes(new URL(baseURL).hostname)) {
+    throw new Error('Se requiere una instancia local aislada y E2E_PASSWORD.')
+  }
+  await page.goto('/?vista=dashboard')
+  await page.getByLabel('Correo electrónico').fill('admin@example.invalid')
+  await page.getByLabel('Contraseña', { exact: true }).fill(password)
+  await page.getByRole('button', { name: 'Ingresar', exact: true }).click()
+  await expect(page.getByRole('heading', { name: 'Dashboard del día', exact: true })).toBeVisible()
+  await expect(page.getByRole('button', { name: 'Actualizar', exact: true })).toBeEnabled()
+  const distance = page.getByRole('article', { name: 'Distancia de la flota', exact: true }).locator('strong')
+  const response = await page.request.get('/api/v1/dashboard')
+  expect(response.ok()).toBeTruthy()
+  const initial = await response.json()
+  const numberFrom = (text: string) => Number(text.replaceAll(' ', '').replace(',', '.'))
+  expect(numberFrom(await distance.innerText())).toBeCloseTo(initial.fleet_distance_km, 0)
+  const filtered = page.waitForResponse(result => result.url().includes('/api/v1/dashboard?district=150103'))
+  await page.getByLabel('Distrito', { exact: true }).selectOption('150103')
+  const subset = await (await filtered).json()
+  await expect.poll(async () => numberFrom(await distance.innerText())).toBeCloseTo(subset.fleet_distance_km, 0)
+  await page.getByRole('button', { name: 'Actualizar', exact: true }).click()
+  await expect(page.getByRole('button', { name: 'Actualizar', exact: true })).toBeEnabled()
+  await page.getByText('Objetivos del proyecto', { exact: true }).click()
+  await expect(page.getByText('Sin costos operativos registrados')).toBeVisible()
+  await testInfo.attach('dashboard-indicadores', { body: await page.screenshot({ fullPage: true }), contentType: 'image/png' })
+})

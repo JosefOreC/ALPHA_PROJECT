@@ -19,7 +19,7 @@ const TITLE_ID = 'dash-co2-title'
 // El héroe de CO₂: lo más importante del tablero, sobre el bosque con el patrón Rutas.
 export function Co2Hero({ state, avoided, fleetDistanceKm, co2Kg, unavailable }: Props) {
   return (
-    <section className="eco-hero" aria-labelledby={TITLE_ID}>
+    <section className={`eco-hero${avoided && avoided.avoidedPercent < 0 ? ' eco-hero--increase' : ''}`} aria-labelledby={TITLE_ID}>
       <svg className="eco-hero__pattern" viewBox="0 0 820 300" preserveAspectRatio="xMaxYMid slice" aria-hidden="true">
         <path className="contour" d="M0 250C140 210 230 275 360 235S600 170 820 200" />
         <path className="contour" d="M0 200C130 160 250 230 370 185S610 120 820 150" />
@@ -34,7 +34,7 @@ export function Co2Hero({ state, avoided, fleetDistanceKm, co2Kg, unavailable }:
         <div>
           <p className="eco-hero__label" id={TITLE_ID}>
             <HojaCo2Icon />
-            CO₂ evitado hoy
+            {avoided && avoided.avoidedPercent < 0 ? 'CO₂ adicional hoy' : 'CO₂ evitado hoy'}
           </p>
           {state === 'loading' ? <SkeletonGroup lines={[[64, '45%']]} /> : null}
           {state !== 'loading' && !avoided ? (
@@ -47,8 +47,8 @@ export function Co2Hero({ state, avoided, fleetDistanceKm, co2Kg, unavailable }:
           ) : null}
           {state !== 'loading' && avoided ? (
             <div className="eco-hero__big">
-              <span className="eco-hero__value">−{formatCompact(avoided.avoidedPercent)} %</span>
-              <span className="eco-hero__unit">de emisiones frente a rutas sin optimizar</span>
+              <span className="eco-hero__value">{avoided.avoidedPercent < 0 ? '+' : '−'}{formatCompact(Math.abs(avoided.avoidedPercent))} %</span>
+              <span className="eco-hero__unit">de emisiones frente a la línea base registrada</span>
             </div>
           ) : null}
         </div>
@@ -58,7 +58,7 @@ export function Co2Hero({ state, avoided, fleetDistanceKm, co2Kg, unavailable }:
             <ul className="eco-hero__facts">
               {avoided ? (
                 <>
-                  <li><strong>{formatCompact(avoided.avoidedKg)} kg</strong>evitados hoy</li>
+                  <li><strong>{formatCompact(Math.abs(avoided.avoidedKg))} kg</strong>{avoided.avoidedKg < 0 ? 'adicionales hoy' : 'evitados hoy'}</li>
                   {avoided.fuelSavedLiters !== null ? <li><strong>{formatCompact(avoided.fuelSavedLiters)} L</strong>equivalente diésel</li> : null}
                   {avoided.kmSaved !== null ? <li><strong>−{formatInt(avoided.kmSaved)} km</strong>recorridos</li> : null}
                 </>
@@ -79,13 +79,13 @@ export function Co2Hero({ state, avoided, fleetDistanceKm, co2Kg, unavailable }:
 }
 
 function WeeklyBars({ days }: { days: Co2Avoided['weekly'] }) {
-  const max = Math.max(1, ...days.map((day) => day.avoidedKg))
+  const max = Math.max(1, ...days.map((day) => Math.abs(day.avoidedKg)))
   const label = days.map((day) => (day.today ? `y hoy ${formatCompact(day.avoidedKg)}` : formatCompact(day.avoidedKg))).join(', ')
   return (
     <div className="eco-hero__chart-slim">
       <div className="eco-bars eco-bars--slim" role="img" aria-label={`Kg evitados por día: ${label}`}>
         {days.map((day, i) => (
-          <div key={i} className={`eco-bars__bar${day.today ? ' eco-bars__bar--today' : ''}`} style={{ height: `${Math.round((day.avoidedKg / max) * 100)}%` }} />
+          <div key={i} title={`${day.label}: ${formatCompact(day.avoidedKg)} kg de CO₂ evitados`} className={`eco-bars__bar${day.today ? ' eco-bars__bar--today' : ''}${day.avoidedKg < 0 ? ' eco-bars__bar--negative' : ''}`} style={{ height: `${Math.round((Math.abs(day.avoidedKg) / max) * 100)}%` }} />
         ))}
       </div>
       <div className="eco-bars__days" aria-hidden="true">

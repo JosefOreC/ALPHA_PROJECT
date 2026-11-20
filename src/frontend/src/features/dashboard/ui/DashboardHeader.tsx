@@ -10,9 +10,10 @@ interface Props {
   /** HH:mm of the last successful update, or null when there is none. */
   lastUpdated: string | null
   isLoading: boolean
+  refreshSeconds?: number
 }
 
-export function DashboardHeader({ day, operatingHours, inProgress, lastUpdated, isLoading }: Props) {
+export function DashboardHeader({ day, operatingHours, inProgress, lastUpdated, isLoading, refreshSeconds = 60 }: Props) {
   const { weekday, date } = formatDay(day)
 
   return (
@@ -49,7 +50,7 @@ export function DashboardHeader({ day, operatingHours, inProgress, lastUpdated, 
           </span>
         )}
         <br />
-        <span>Se actualiza cada 60 s</span>
+        <span>Se actualiza cada {refreshSeconds} s</span>
       </p>
     </header>
   )

@@ -115,6 +115,7 @@ function ComplianceLine({ compliance }: { compliance: WindowCompliance }) {
       </span>
       <div
         role="meter"
+        aria-label="Cumplimiento de ventanas"
         aria-valuemin={0}
         aria-valuemax={100}
         aria-valuenow={Number(value.toFixed(1))}

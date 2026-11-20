@@ -8,7 +8,7 @@ export type InsightsStatus = 'unavailable' | 'loading' | 'ready' | 'error'
 export function useDashboardInsights(
   gateway: DashboardInsightsGateway | undefined,
   districtId: string,
-  { refreshMs = 60_000 }: { refreshMs?: number } = {},
+  { refreshMs = 60_000, refreshKey = 0 }: { refreshMs?: number; refreshKey?: number } = {},
 ) {
   const [state, setState] = useState<{ status: InsightsStatus; insights: DashboardInsights | null }>({
     status: 'loading',
@@ -17,6 +17,7 @@ export function useDashboardInsights(
 
   useEffect(() => {
     if (!gateway) return
+    setState({ status: 'loading', insights: null })
     let controller: AbortController | null = null
     const load = () => {
       controller?.abort()
@@ -37,7 +38,7 @@ export function useDashboardInsights(
       clearInterval(timer)
       controller?.abort()
     }
-  }, [gateway, districtId, refreshMs])
+  }, [gateway, districtId, refreshMs, refreshKey])
 
   return gateway ? state : { status: 'unavailable' as const, insights: null }
 }
