@@ -36,6 +36,18 @@ def audit(conn, actor, action, entity, identifier, detail):
                  (uuid4(),actor,action,entity,identifier,json.dumps(detail)))
 
 
+GENERATION_TARGET_SECONDS = 45
+
+
+def generation_summary(samples):
+    """Resume los tiempos medidos al aprobar rutas; sin muestras no se inventa ningún valor."""
+    values = [float(row['segundos']) for row in samples if row['segundos'] is not None]
+    if not values:
+        return None
+    return {'targetSeconds':GENERATION_TARGET_SECONDS,'lastSeconds':round(values[0],2),'maxSeconds':round(max(values),2),
+            'samples':len(values),'withinTarget':sum(value<=GENERATION_TARGET_SECONDS for value in values)}
+
+
 class PostgresPortal:
     def depot(self):
         result = rows('SELECT almacen_id,nombre,direccion,latitud,longitud FROM almacenes ORDER BY nombre LIMIT 1')
@@ -308,6 +320,8 @@ class PostgresPortal:
         if district:
             risks = [row for row in risks if row['distrito']==DISTRICTS.get(district,district)]
         factor = rows("SELECT factor_kg_co2 FROM factores_emision WHERE combustible='DIESEL'")
+        generation = generation_summary(rows('''SELECT generada_en,MAX((ruteo->>'generationSeconds')::float) AS segundos FROM rutas
+            WHERE ruteo->>'generationSeconds' IS NOT NULL GROUP BY generada_en ORDER BY generada_en DESC LIMIT 20'''))
         weekly = []
         for offset in range(6,-1,-1):
             date = day-timedelta(days=offset)
@@ -318,7 +332,7 @@ class PostgresPortal:
                 'atRisk':[{'id':str(row['pedido_id']),'customer':row['cliente_nombre'],'district':row['distrito'],
                     'window':row['ventana_inicio'].astimezone(LIMA).strftime('%H:%M')+'–'+row['ventana_fin'].astimezone(LIMA).strftime('%H:%M'),
                     'status':'pending' if row['estado']=='PENDIENTE' else 'inTransit','note':'Sin conductor' if row['conductor_id'] is None else 'Ventana por vencer'} for row in risks],
-                'riskMinutes':30,'suggestion':None}
+                'riskMinutes':30,'suggestion':None,'generation':generation}
 
     def records(self, module, driver_id=None):
         if module=='auditoria':
@@ -513,7 +527,7 @@ class PostgresPortal:
                 for index, stop in enumerate(route['sequence'],1):
                     conn.execute('INSERT INTO ruta_pedido(ruta_id,pedido_id,orden_entrega) VALUES (%s,%s,%s)',(identifier,stop['id'],index))
                     conn.execute('UPDATE pedidos SET conductor_id=%s,version=version+1 WHERE pedido_id=%s',(vehicle['conductor_id'],stop['id']))
-                conn.execute('UPDATE rutas SET ruteo=%s::jsonb WHERE ruta_id=%s',(json.dumps(route['routing']),identifier))
+                conn.execute('UPDATE rutas SET ruteo=%s::jsonb WHERE ruta_id=%s',(json.dumps({**(route['routing'] or {}),'generationSeconds':result['elapsedSeconds']}),identifier))
                 for index,leg in enumerate(route['legs'],1):
                     origin,target,km = leg['origin'],leg['destination'],leg['km']
                     conn.execute('''INSERT INTO tramos(tramo_id,ruta_id,orden_tramo,latitud_origen,longitud_origen,latitud_destino,

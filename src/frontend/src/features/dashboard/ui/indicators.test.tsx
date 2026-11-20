@@ -30,6 +30,14 @@ describe('Indicadores alineados con los objetivos', () => {
     expect(screen.getByText('Sin comparación disponible')).toBeInTheDocument()
   })
 
+  it('muestra el tiempo medido de generación solo cuando existen aprobaciones registradas', async () => {
+    const insights = await new DemoDashboardInsights().getInsights()
+    render(<ProjectIndicators summary={null} insights={{ ...insights, generation: { targetSeconds: 45, lastSeconds: 2.14, maxSeconds: 38.4, samples: 5, withinTarget: 5 } }} />)
+    expect(screen.getByText(/Última 2,1 s · máximo 38,4 s · 5 de 5 dentro del objetivo/)).toBeInTheDocument()
+    // La reoptimización no se ejecuta todavía en el producto, por lo que sigue sin medición.
+    expect(screen.getAllByText('Sin medición de tiempo disponible')).toHaveLength(1)
+  })
+
   it('presenta carga y error sin reutilizar cifras como valores actuales', () => {
     const view = render(<OperationalMetrics state="loading" summary={null} insights={null} />)
     expect(screen.getAllByLabelText('Cargando valor')).toHaveLength(4)
