@@ -5,8 +5,10 @@ import { formatCompact } from './format'
 export function ProjectIndicators({ summary, insights }: { summary: DashboardSummary | null; insights: DashboardInsights | null }) {
   const compliance = summary?.windowCompliance
   const avoided = insights?.co2Avoided
+  const generation = insights?.generation
   const indicators = [
-    ['Generación de rutas', '≤ 45 segundos', 'Sin medición de tiempo disponible'],
+    ['Generación de rutas', '≤ 45 segundos', generation == null ? 'Sin medición de tiempo disponible'
+      : `Última ${formatCompact(generation.lastSeconds)} s · máximo ${formatCompact(generation.maxSeconds)} s · ${generation.withinTarget} de ${generation.samples} dentro del objetivo`],
     ['Reoptimización', '< 30 segundos', 'Sin medición de tiempo disponible'],
     ['Puntualidad de entregas', compliance?.target == null ? 'Seguimiento diario' : `Meta ${formatCompact(compliance.target)} %`,
       compliance?.percentage == null ? 'Sin entregas evaluadas' : `${formatCompact(compliance.percentage)} % dentro de ventana`],

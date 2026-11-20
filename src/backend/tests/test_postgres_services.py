@@ -326,14 +326,17 @@ def test_sustainability_report_aggregates_routes_without_duplicating_emissions(d
 
 def test_insights_filters_district_and_handles_missing_metrics(db):
     db.responses = {'SELECT r.distancia': [route(), route(fraction=None)], 'SELECT * FROM pedidos': [order(), order('EN_CAMINO', conductor_id='driver-1')],
-                    'SELECT factor_kg_co2': [{'factor_kg_co2': 2}]}
+                    'SELECT factor_kg_co2': [{'factor_kg_co2': 2}],
+                    "ruteo->>'generationSeconds'": [{'generada_en': TODAY, 'segundos': 2.14}, {'generada_en': TODAY, 'segundos': 50.0}, {'generada_en': TODAY, 'segundos': None}]}
     result = portal.PostgresPortal().insights(TODAY.date(), '150103')
+    assert result['generation'] == {'targetSeconds': 45, 'lastSeconds': 2.14, 'maxSeconds': 50.0, 'samples': 2, 'withinTarget': 1}
     assert result['co2Avoided']['avoidedKg'] == 10
     assert result['co2Avoided']['avoidedPercent'] == 50
     assert [r['note'] for r in result['atRisk']] == ['Sin conductor', 'Ventana por vencer']
     assert len(result['co2Avoided']['weekly']) == 7
     db.responses = {}
     result = portal.PostgresPortal().insights(TODAY.date())
+    assert result['generation'] is None
     assert result['co2Avoided']['avoidedPercent'] == 0 and result['co2Avoided']['fuelSavedLiters'] is None
     with pytest.raises(ValueError, match='Distrito'):
         portal.PostgresPortal().insights(TODAY.date(), 'invalid')
