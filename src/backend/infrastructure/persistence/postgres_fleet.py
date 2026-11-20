@@ -64,6 +64,15 @@ def driver(row):
                   conductor_id=str(row['conductor_id']), creado_en=row['creado_en'], usuario_id=str(row['usuario_id']))
 
 
+def duplicated_driver_field(error):
+    """Indica qué dato único de `conductores` se repitió, según la restricción que violó la base de datos."""
+    name = (error.diag.constraint_name or '').lower()
+    for field in ('dni', 'licencia', 'vehiculo', 'usuario'):
+        if field in name:
+            return field
+    return 'datos'
+
+
 class PostgresDrivers(DriverRepository):
     def find_all(self):
         return [driver(row) for row in rows('SELECT * FROM conductores ORDER BY nombre_completo')]
@@ -90,8 +99,8 @@ class PostgresDrivers(DriverRepository):
                     if not user or canonical_role(user['rol']) != 'driver':
                         raise ValueError('Selecciona una cuenta activa de conductor creada por el administrador.')
                     conn.execute('INSERT INTO conductores(nombre_completo,dni,licencia,vehiculo_id,estado,conductor_id,usuario_id,creado_en) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)', values+(item.usuario_id,item.creado_en))
-        except psycopg.errors.UniqueViolation:
-            raise DriverAlreadyExistsError() from None
+        except psycopg.errors.UniqueViolation as error:
+            raise DriverAlreadyExistsError(duplicated_driver_field(error)) from None
         return item
 
     def save(self, item):
