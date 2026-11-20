@@ -24,7 +24,7 @@ La optimización transversal conserva sus series de transferencia y CO₂e antes
 
 El banco técnico ejecutó el acceso, el registro de pedidos y la confirmación de entregas sobre FastAPI y PostGIS. El código de prueba comprueba la lectura posterior del pedido. La captura del reporte deja el resultado por navegador. La prueba adicional de mapa recorre la aprobación de la propuesta y la selección de conductores con una API interceptada. [Captura del reporte](evidencias/inspeccion05/reporte-playwright.png) · [Alcance y resultados](03%20Analisis%20PlayWrigth%20V_1_0_0.md).
 
-La evaluación de uso reunió cinco cuestionarios y obtuvo un promedio SUS de 72,5. El informe conserva los perfiles declarados, las observaciones sobre el acceso y la lectura de rutas. Los roles asignados a las cuentas institucionales figuran en el análisis de pruebas. [Informe de usabilidad](04%20Usabilidad%20V_1_0_0.md) · [Cuentas utilizadas](03%20Analisis%20PlayWrigth%20V_1_0_0.md#cuentas-utilizadas-por-el-equipo).
+La evaluación de uso reunió cinco cuestionarios y obtuvo un promedio SUS actualizado de 83,0. El informe conserva los perfiles declarados, las observaciones sobre el acceso y la lectura de rutas. Los roles asignados a las cuentas institucionales figuran en el análisis de pruebas. [Informe de usabilidad](04%20Usabilidad%20V_1_0_0.md) · [Cuentas utilizadas](03%20Analisis%20PlayWrigth%20V_1_0_0.md#cuentas-utilizadas-por-el-equipo).
 
 ### Guion para la sesión de cierre
 
