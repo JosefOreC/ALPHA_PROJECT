@@ -178,7 +178,7 @@ La comprobación corresponde a salud. Para evaluar el objetivo de **menos de 500
 
 Entre las 12:11:41 y las 12:11:50, hora de Lima, el equipo registró seis respuestas HTTP 200 de salud. La primera tardó **621,0 ms**. En las cinco consultas de seguimiento, los tiempos estuvieron entre **211,2 y 257,4 ms**, con una mediana de **217,2 ms**. Las cinco quedaron por debajo del umbral de 500 ms.
 
-El archivo termina después de las consultas de salud y contiene cero muestras de Pedidos. Sigue pendiente la comparación con la serie autenticada anterior. [CSV del sondeo de salud](evidencias/inspeccion05/latencia-salud-version-optimizada.csv).
+Después de las consultas de salud, el inicio de sesión devolvió HTTP 401. El medidor terminó sin consultar Pedidos. Antes de repetir la prueba, se comprobará que una cuenta de Planificación pueda iniciar sesión en la aplicación desplegada. Sigue pendiente la comparación con la serie autenticada anterior. [CSV del sondeo de salud](evidencias/inspeccion05/latencia-salud-version-optimizada.csv).
 
 ## Corte técnico de main del 20/11/2026
 
