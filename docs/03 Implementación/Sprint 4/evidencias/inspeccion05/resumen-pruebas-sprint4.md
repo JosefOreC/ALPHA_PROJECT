@@ -68,6 +68,6 @@ Observaciones:
 
 ## 5. Pendiente de coordinar
 
-- Revisar en los registros de Render la consulta de Pedidos de las 12:18:56, hora de Lima, que tardó 693,4 ms. Repetir la medición autenticada para comprobar si las cinco consultas quedan debajo de 500 ms.
+- Revisar en los registros de Render la tercera consulta de Pedidos, que tardó 693,4 ms. Repetir la medición autenticada para comprobar si las cinco consultas quedan debajo de 500 ms.
 
 [← Volver al índice del Sprint 4](../../README.md)

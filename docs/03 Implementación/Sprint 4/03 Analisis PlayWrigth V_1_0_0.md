@@ -182,7 +182,7 @@ Después de las consultas de salud, el inicio de sesión devolvió HTTP 401. El 
 
 ### Comparación del listado de Pedidos en Render
 
-El equipo repitió el sondeo con una cuenta de Planificación el 20/11/2026, entre las **12:18:41 y las 12:19:02**, hora de Lima. Las once solicitudes registradas devolvieron HTTP 200.
+El equipo repitió el sondeo con una cuenta de Planificación tras desplegar la mejora del listado. Las once solicitudes registradas devolvieron HTTP 200.
 
 | Consulta | Rango | Mediana | Bajo 500 ms |
 |---|---:|---:|---:|
@@ -191,7 +191,7 @@ El equipo repitió el sondeo con una cuenta de Planificación el 20/11/2026, ent
 | Salud, primera consulta de la nueva serie | 667,3–667,3 ms | 667,3 ms | 0/1 |
 | Salud, seguimiento de la nueva serie | 222,6–271,7 ms | 250,4 ms | 5/5 |
 
-La mediana observada de Pedidos pasó de **818,1 a 383,6 ms**, una reducción del **53,1 %** entre ambas series. Cuatro consultas cumplieron el objetivo. La tercera tardó **693,4 ms** a las **12:18:56**, por lo que la serie completa aún no acredita el objetivo de latencia. Las dos series incluyen el tiempo de red y corresponden a ventanas distintas. Para investigar el pico se debe cotejar esa hora con los registros de Render y repetir la medición en condiciones comparables. [CSV anterior](evidencias/inspeccion05/latencia-render.csv) · [CSV de la versión optimizada](evidencias/inspeccion05/latencia-render-optimizada-2.csv).
+La mediana observada de Pedidos pasó de **818,1 a 383,6 ms**, una reducción del **53,1 %** entre ambas series. Cuatro consultas cumplieron el objetivo. La tercera tardó **693,4 ms**, por lo que la serie completa aún no acredita el objetivo de latencia. Las dos series incluyen el tiempo de red y corresponden a ventanas distintas. Para investigar el pico, el equipo puede contrastar la tercera consulta con los registros de Render y repetir la medición en condiciones comparables. [CSV anterior](evidencias/inspeccion05/latencia-render.csv) · [CSV de la versión optimizada](evidencias/inspeccion05/latencia-render-optimizada-2.csv).
 
 ## Corte técnico de main del 20/11/2026
 
