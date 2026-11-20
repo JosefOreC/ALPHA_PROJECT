@@ -22,7 +22,7 @@ La auditoría reúne mediciones locales del 13/11/2026 para las pantallas de Acc
 
 ## 1. Objetivo y versiones comparadas
 
-Esta auditoría comprueba los límites de rendimiento de Acceso y Pedidos y consolida las condiciones, resultados y evidencias del Sprint 4. La base vigente es `6e36e355e0d39c83c5700a83eb0987b6fd849a10`; la implementación medida corresponde al incremento local identificado por las huellas de sus fuentes y recursos.
+Esta auditoría comprueba los límites de rendimiento de Acceso y Pedidos y consolida las condiciones, resultados y evidencias del Sprint 4. La comparación parte de la [referencia de la auditoría](https://github.com/JosefOreC/ALPHA_PROJECT/commit/6e36e355e0d39c83c5700a83eb0987b6fd849a10). La implementación medida corresponde al incremento local identificado por las huellas de sus fuentes y recursos.
 
 El HEAD registrado identifica la base del repositorio. Los cambios medidos todavía no están incluidos en un nuevo commit; por ello el manifiesto conserva también el estado de trabajo y hashes de archivos, incluidos los recursos nuevos. Esta distinción permite reproducir el estado analizado sin atribuirlo a un commit que no lo contiene.
 

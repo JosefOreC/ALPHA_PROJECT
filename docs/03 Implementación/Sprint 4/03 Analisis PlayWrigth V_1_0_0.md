@@ -138,6 +138,14 @@ El 20/11/2026 se hicieron seis consultas consecutivas a `/health` desde las 08:0
 
 La demora de la primera consulta se concentró en la espera del primer byte. Es compatible con la reactivación de la instancia, pero se necesitan los registros del proveedor en esa hora para confirmarlo. Las cinco consultas posteriores quedaron por debajo de 500 ms. Este sondeo mide el endpoint público durante un intervalo breve. La latencia del listado de pedidos en Render requiere una prueba con sesión autorizada. [Endpoint de salud](https://ecologistica-lima-qolz.onrender.com/health).
 
+En un segundo sondeo, entre las 08:23:45 y las 08:23:55, Render devolvió HTTP 200 seis veces. La primera consulta tardó **642,2 ms**. Las cinco siguientes tardaron **216,7**, **217,4**, **259,3**, **538,5** y **206,9 ms**. Cuatro de las cinco quedaron por debajo de 500 ms. La demora de la cuarta muestra también requiere revisar los registros del proveedor.
+
+### Medición del listado de pedidos
+
+El [medidor del repositorio](../../../scripts/measure_render_latency.py) toma cinco muestras del listado de doce pedidos con una cuenta autorizada de Planificación. Se ejecuta desde la raíz del repositorio con `python scripts/measure_render_latency.py`. La contraseña se escribe en la terminal y el programa cierra la sesión al terminar. El archivo `latencia-render.csv` registra endpoint, fecha, estado HTTP, tiempo y cumplimiento del umbral. Para repetir la prueba se puede elegir otro nombre con `--salida`.
+
+El medidor se verificó en un entorno local con una sesión de prueba. La medición autenticada en Render queda pendiente de ejecución con una cuenta del equipo.
+
 ## Corte técnico de main del 20/11/2026
 
 La suite del commit `64267bd` aprobó 12/12 E2E integrados en tres motores, con persistencia real. El backend integrado registra 534 pruebas y 36 subpruebas sin omisiones. Los reportes remotos, contadores de cobertura y métricas están conservados en el [paquete de cierre](evidencias/cierre-20261120/README.md); el [registro técnico](08%20Cierre%20tecnico%20y%20trazabilidad%20V_1_0_0.md) relaciona los criterios y sus límites.

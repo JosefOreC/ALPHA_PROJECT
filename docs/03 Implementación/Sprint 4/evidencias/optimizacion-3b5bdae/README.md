@@ -10,7 +10,7 @@
 
 **Rama:** `refactor/mern`.
 
-**Antes:** `3b5bdae3930856101e8f8d7955813bc9ddaa9619`. **Implementación:** `9f953d6acc79d569d3896ab1e2a161d8321b3720`.
+**Antes:** [versión anterior a la optimización](https://github.com/JosefOreC/ALPHA_PROJECT/commit/3b5bdae3930856101e8f8d7955813bc9ddaa9619). **Implementación:** [versión optimizada](https://github.com/JosefOreC/ALPHA_PROJECT/commit/9f953d6acc79d569d3896ab1e2a161d8321b3720).
 
 ## Procedencia y resultados
 
