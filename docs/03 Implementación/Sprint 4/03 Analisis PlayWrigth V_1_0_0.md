@@ -174,6 +174,12 @@ GitHub integró el [PR #52](https://github.com/JosefOreC/ALPHA_PROJECT/pull/52),
 
 La comprobación corresponde a salud. Para evaluar el objetivo de **menos de 500 ms** en el listado, se debe repetir la prueba con una cuenta de Planificación, cinco consultas y las mismas condiciones del sondeo anterior cuando sea posible. [Serie autenticada de referencia](evidencias/inspeccion05/latencia-render.csv).
 
+### Sondeo desde el equipo del curso tras el despliegue
+
+Entre las 12:11:41 y las 12:11:50, hora de Lima, el equipo registró seis respuestas HTTP 200 de salud. La primera tardó **621,0 ms**. En las cinco consultas de seguimiento, los tiempos estuvieron entre **211,2 y 257,4 ms**, con una mediana de **217,2 ms**. Las cinco quedaron por debajo del umbral de 500 ms.
+
+El archivo termina después de las consultas de salud y contiene cero muestras de Pedidos. Sigue pendiente la comparación con la serie autenticada anterior. [CSV del sondeo de salud](evidencias/inspeccion05/latencia-salud-version-optimizada.csv).
+
 ## Corte técnico de main del 20/11/2026
 
 La suite del commit `64267bd` aprobó 12/12 E2E integrados en tres motores, con persistencia real. El backend integrado registra 534 pruebas y 36 subpruebas sin omisiones. Los reportes remotos, contadores de cobertura y métricas están conservados en el [paquete de cierre](evidencias/cierre-20261120/README.md); el [registro técnico](08%20Cierre%20tecnico%20y%20trazabilidad%20V_1_0_0.md) relaciona los criterios y sus límites.

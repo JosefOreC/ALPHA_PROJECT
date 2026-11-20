@@ -68,6 +68,6 @@ Observaciones:
 
 ## 5. Pendiente de coordinar
 
-- Repetir la prueba autenticada de Pedidos con la versión optimizada activa y guardar el CSV para comparar el resultado con la serie anterior.
+- Completar la medición de Pedidos con sesión iniciada. El [CSV del sondeo de salud](latencia-salud-version-optimizada.csv) registra seis respuestas HTTP 200 y cinco muestras de seguimiento dentro del umbral. La serie de Pedidos requiere un archivo con sus cinco consultas.
 
 [← Volver al índice del Sprint 4](../../README.md)
