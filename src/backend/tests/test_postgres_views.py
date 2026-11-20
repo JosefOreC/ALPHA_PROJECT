@@ -328,3 +328,27 @@ def test_admin_changes_email_without_replacing_account(database_client):
         assert login.status_code == 200
         assert login.json()['subject_id'] == identifier
         assert login.json()['role'] == 'driver'
+
+def test_admin_updates_both_credentials_together(database_client):
+    client, _, csrf, _ = database_client
+    old_email, new_email = (f'{uuid4()}@integration.invalid' for _ in range(2))
+    old_password, new_password = 'Initial-password-2026', 'Updated-password-2026'
+    headers = {'X-CSRF-Token': csrf}
+    created = client.post('/api/admin/users', headers=headers, json={
+        'name': 'Account change fixture', 'email': old_email, 'password': old_password, 'role': 'driver',
+    })
+    assert created.status_code == 201
+    identifier = created.json()['id']
+    with TestClient(client.app, base_url='https://testserver') as driver:
+        assert driver.post('/api/session', json={'email': old_email, 'password': old_password}).status_code == 200
+        updated = client.patch(f'/api/admin/users/{identifier}', headers=headers, json={
+            'email': new_email, 'password': new_password,
+        })
+        assert updated.status_code == 204
+        assert driver.get('/api/session').status_code == 401
+        assert driver.post('/api/session', json={'email': old_email, 'password': new_password}).status_code == 401
+        assert driver.post('/api/session', json={'email': new_email, 'password': old_password}).status_code == 401
+        logged = driver.post('/api/session', json={'email': new_email, 'password': new_password})
+        assert logged.status_code == 200
+        assert logged.json()['subject_id'] == identifier
+        assert logged.json()['role'] == 'driver'

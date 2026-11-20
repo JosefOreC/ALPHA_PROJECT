@@ -2,7 +2,7 @@ from datetime import date
 from typing import Literal
 from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 from domain.access_control import scope_for, can
 from interfaces.api.security.deps import require_permission, protect_mutation
 from interfaces.api.portal.deps import get_portal
@@ -112,6 +112,33 @@ class ResetPassword(BaseModel):
 @router.put('/admin/users/{user_id}/password',status_code=204,dependencies=[Depends(protect_mutation)])
 def reset_password(user_id: UUID,payload: ResetPassword,identity=Depends(require_permission('users.update')),portal=Depends(get_portal)):
     if not portal.reset_user_password(user_id, payload.password, identity.subject_id):
+        raise HTTPException(404, 'La cuenta no existe.')
+
+
+class UpdateAccountCredentials(BaseModel):
+    email: str | None = Field(default=None, min_length=5, max_length=255)
+    password: str | None = Field(default=None, min_length=12, max_length=256)
+
+    @field_validator('email')
+    @classmethod
+    def valid_email(cls, value):
+        return normalize_email(value) if value is not None else None
+
+    @model_validator(mode='after')
+    def require_changes(self):
+        if self.email is None and self.password is None:
+            raise ValueError('Modifica el correo o ingresa una contraseña nueva.')
+        return self
+
+
+@router.patch('/admin/users/{user_id}', status_code=204, dependencies=[Depends(protect_mutation)])
+def update_account_credentials(
+    user_id: UUID,
+    payload: UpdateAccountCredentials,
+    identity=Depends(require_permission('users.update')),
+    portal=Depends(get_portal),
+):
+    if not portal.update_credentials(user_id, identity.subject_id, email=payload.email, password=payload.password):
         raise HTTPException(404, 'La cuenta no existe.')
 
 

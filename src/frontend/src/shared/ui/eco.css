@@ -979,6 +979,7 @@ dialog.eco-dialog--sheet { width: 100%; max-width: 480px; margin: auto auto 0; b
 
 .eco-driver-actions { display: flex; align-items: center; gap: 8px; }
 .eco-driver-actions .eco-btn { white-space: nowrap; }
+.eco-driver-actions .eco-btn:first-child { min-width: 100px; }
 .eco-account-actions { display: flex; flex-wrap: wrap; gap: 4px; }
 .eco-account-access > span:first-child { display: none; }
 

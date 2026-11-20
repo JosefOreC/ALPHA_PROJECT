@@ -17,11 +17,11 @@ type UsersPanelProps = {
   page: UserPage | null
   error: string
   onRetry: () => void
-  onEditAccount?: (user: AdminUser, field: 'email' | 'password') => void
+  onEditAccount?: (user: AdminUser) => void
 }
 
 export function UsersPanel({ page, error, onRetry, onEditAccount }: UsersPanelProps) {
-  const columns = onEditAccount ? `${COLUMNS} 250px` : COLUMNS
+  const columns = onEditAccount ? `${COLUMNS} 105px` : COLUMNS
   const [query, setQuery] = useState('')
   const [role, setRole] = useState<Role | ''>('')
   const [status, setStatus] = useState<AdminUser['status'] | ''>('')
@@ -103,8 +103,7 @@ export function UsersPanel({ page, error, onRetry, onEditAccount }: UsersPanelPr
                 <UnitStatus status={user.status === 'active' ? 'ready' : 'off'} label={user.status === 'active' ? 'Activo' : 'Inactivo'} />
                 <span className="eco-account-access eco-muted"><span>Último acceso </span><span className="eco-code">{user.lastAccess}</span></span>
                 {onEditAccount ? <span className="eco-account-actions">
-                  <button type="button" className="eco-btn eco-btn--ghost" aria-label={`Cambiar correo de ${user.name}`} onClick={() => onEditAccount(user, 'email')}>Cambiar correo</button>
-                  <button type="button" className="eco-btn eco-btn--ghost" aria-label={`Cambiar contraseña de ${user.name}`} onClick={() => onEditAccount(user, 'password')}>Cambiar contraseña</button>
+                  <button type="button" className="eco-btn eco-btn--secondary" aria-label={`Editar cuenta de ${user.name}`} onClick={() => onEditAccount(user)}>Editar</button>
                 </span> : null}
               </ListRow>
             ))}

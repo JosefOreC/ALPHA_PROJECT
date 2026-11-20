@@ -381,3 +381,26 @@ def test_database_session_resolution_and_revocation(db, linked):
     assert db.calls[-1][1] == (security.token_hash('opaque'),)
     db.responses = {}
     assert service.resolve('revoked') is None
+
+def test_update_credentials_changes_both_fields_before_revoking_sessions(db, monkeypatch):
+    identifier = uuid4()
+    actor = uuid4()
+    db.responses = {'UPDATE usuarios': [{'usuario_id': identifier}]}
+    monkeypatch.setattr(portal, 'hash_password', lambda _: 'test-hash')
+    assert portal.PostgresPortal().update_credentials(
+        identifier, actor, email='new@example.invalid', password='test-password',
+    )
+    update, revoke, email_audit, password_audit = db.calls
+    assert 'UPDATE usuarios' in update[0]
+    assert update[1] == ('new@example.invalid', 'test-hash', identifier)
+    assert 'DELETE FROM sesiones' in revoke[0] and revoke[1] == (identifier,)
+    assert 'CAMBIAR_CORREO' in email_audit[1]
+    assert 'CAMBIAR_CONTRASENA' in password_audit[1]
+
+    db.calls.clear()
+    db.responses = {'UPDATE usuarios': psycopg.errors.UniqueViolation()}
+    with pytest.raises(ValueError, match='Ya existe una cuenta'):
+        portal.PostgresPortal().update_credentials(
+            identifier, actor, email='duplicate@example.invalid', password='test-password',
+        )
+    assert len(db.calls) == 1

@@ -60,32 +60,31 @@ class PostgresPortal:
         return user_dto(row)
 
     def update_user_email(self, identifier, email, actor):
+        return self.update_credentials(identifier, actor, email=email)
+
+    def reset_user_password(self, identifier, password, actor):
+        return self.update_credentials(identifier, actor, password=password)
+
+    def update_credentials(self, identifier, actor, *, email=None, password=None):
         import psycopg
+        digest = hash_password(password) if password is not None else None
         try:
             with connection() as conn:
                 user = conn.execute(
-                    'UPDATE usuarios SET email=%s WHERE usuario_id=%s RETURNING usuario_id',
-                    (email, identifier),
+                    '''UPDATE usuarios
+                       SET email=COALESCE(%s, email), password_hash=COALESCE(%s, password_hash)
+                       WHERE usuario_id=%s RETURNING usuario_id''',
+                    (email, digest, identifier),
                 ).fetchone()
                 if not user:
                     return False
                 conn.execute('DELETE FROM sesiones WHERE usuario_id=%s', (identifier,))
-                audit(conn,actor,'CAMBIAR_CORREO','usuarios',identifier,{})
+                if email is not None:
+                    audit(conn, actor, 'CAMBIAR_CORREO', 'usuarios', identifier, {})
+                if password is not None:
+                    audit(conn, actor, 'CAMBIAR_CONTRASENA', 'usuarios', identifier, {})
         except psycopg.errors.UniqueViolation:
             raise ValueError('Ya existe una cuenta con ese correo.') from None
-        return True
-
-    def reset_user_password(self, identifier, password, actor):
-        digest = hash_password(password)
-        with connection() as conn:
-            user = conn.execute(
-                'UPDATE usuarios SET password_hash=%s WHERE usuario_id=%s RETURNING usuario_id',
-                (digest, identifier),
-            ).fetchone()
-            if not user:
-                return False
-            conn.execute('DELETE FROM sesiones WHERE usuario_id=%s', (identifier,))
-            audit(conn,actor,'CAMBIAR_CONTRASENA','usuarios',identifier,{})
         return True
 
     def driver_accounts(self):

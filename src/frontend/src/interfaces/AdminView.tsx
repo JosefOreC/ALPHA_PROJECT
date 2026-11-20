@@ -27,7 +27,7 @@ export function AdminView({ service, onNavigate }: { service: Administration; de
   const [usersError, setUsersError] = useState('')
   const [usersReload, setUsersReload] = useState(0)
   const [creating, setCreating] = useState(false)
-  const [editingAccount, setEditingAccount] = useState<{ user: AdminUser; field: 'email' | 'password' } | null>(null)
+  const [editingAccount, setEditingAccount] = useState<AdminUser | null>(null)
   const [notice, setNotice] = useState('')
   const [integrations, setIntegrations] = useState<Integration[] | null>(null)
   const [integrationsError, setIntegrationsError] = useState('')
@@ -112,11 +112,11 @@ export function AdminView({ service, onNavigate }: { service: Administration; de
 
       <div id="admin-panel" role="tabpanel" aria-labelledby={`admin-tab-${tab}`} className="eco-tabpanel">
         {notice ? <p role="status" className="eco-notice">{notice}</p> : null}
-        {tab === 'users' ? <UsersPanel page={users} error={usersError} onEditAccount={can(role, 'users.update') ? (user, field) => setEditingAccount({ user, field }) : undefined} onRetry={() => setUsersReload((value) => value + 1)} /> : null}
+        {tab === 'users' ? <UsersPanel page={users} error={usersError} onEditAccount={can(role, 'users.update') ? setEditingAccount : undefined} onRetry={() => setUsersReload((value) => value + 1)} /> : null}
         {tab === 'params' ? <fieldset className="eco-permission-fields" disabled={!canEditParameters}><ParametersPanel state={parameters} /></fieldset> : null}
         {tab === 'integrations' ? <IntegrationsPanel items={integrations} error={integrationsError} onRetry={() => setIntegrationsReload((value) => value + 1)} /> : null}
       </div>
-      {editingAccount ? <AccountCredentialsDialog user={editingAccount.user} field={editingAccount.field} onClose={() => setEditingAccount(null)}
+      {editingAccount ? <AccountCredentialsDialog user={editingAccount} onClose={() => setEditingAccount(null)}
         onSaved={() => { setUsersReload(value => value + 1); setNotice('Cambios guardados. La cuenta puede volver a iniciar sesión.') }} /> : null}
       {creating ? <UserDialog onClose={() => setCreating(false)} onCreate={async data => { await service.createUser(data); setUsersReload(value => value + 1); setNotice('Usuario creado. Ya puede iniciar sesión con sus credenciales.') }} /> : null}
     </AppShell>

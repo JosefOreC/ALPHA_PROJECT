@@ -56,6 +56,36 @@ describe('AdminView · usuarios y roles', () => {
     expect(screen.getByText('Mostrando 7 de 19 usuarios.')).toBeInTheDocument()
   })
 
+  it('edita los campos de la cuenta en una sola operación', async () => {
+    HTMLDialogElement.prototype.showModal = function () { this.setAttribute('open', '') }
+    HTMLDialogElement.prototype.close = function () { this.removeAttribute('open'); this.dispatchEvent(new Event('close')) }
+    const patch = vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response(null, { status: 204 }))
+    try {
+      setup()
+      const user = userEvent.setup()
+      await user.click((await screen.findAllByRole('button', { name: /^Editar cuenta de/ }))[0])
+      const dialog = within(screen.getByRole('dialog', { name: 'Editar cuenta' }))
+      const email = dialog.getByLabelText('Correo electrónico')
+      expect(email).toHaveValue('sistemas@distrirapido.pe')
+      await user.clear(email)
+      await user.type(email, 'nuevo@example.invalid')
+      await user.type(dialog.getByLabelText('Nueva contraseña'), 'clave-de-prueba-2026')
+      await user.click(dialog.getByRole('button', { name: 'Guardar cambios' }))
+      expect(dialog.getByRole('alert')).toHaveTextContent('Las contraseñas no coinciden.')
+      expect(patch).not.toHaveBeenCalled()
+      await user.type(dialog.getByLabelText('Repite la contraseña'), 'clave-de-prueba-2026')
+      await user.click(dialog.getByRole('button', { name: 'Guardar cambios' }))
+      await screen.findByText(/Cambios guardados/)
+      expect(patch).toHaveBeenCalledTimes(1)
+      expect(patch).toHaveBeenCalledWith(expect.stringMatching(/\/api\/admin\/users\/[^/]+$/), expect.objectContaining({
+        method: 'PATCH',
+        body: JSON.stringify({ email: 'nuevo@example.invalid', password: 'clave-de-prueba-2026' }),
+      }))
+    } finally {
+      patch.mockRestore()
+    }
+  })
+
   it('busca por nombre o correo (sin tildes) y filtra por rol y estado', async () => {
     const user = userEvent.setup()
     setup()
