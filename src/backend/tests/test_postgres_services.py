@@ -2,6 +2,7 @@
 from contextlib import contextmanager
 from datetime import datetime, timedelta, timezone
 from decimal import Decimal
+from types import SimpleNamespace
 from uuid import uuid4
 
 import psycopg
@@ -149,6 +150,31 @@ def test_driver_repository_checks_linked_account_and_vehicle(db):
     db.responses = {'UPDATE': psycopg.errors.UniqueViolation()}
     with pytest.raises(DriverAlreadyExistsError):
         repo.update(item)
+
+
+@pytest.mark.parametrize('constraint, field, fragment', [
+    ('conductores_dni_key', 'dni', 'DNI'),
+    ('conductores_licencia_key', 'licencia', 'licencia'),
+    ('conductores_vehiculo_id_key', 'vehiculo', 'vehículo'),
+    ('conductores_usuario_id_key', 'usuario', 'cuenta de acceso'),
+    (None, 'datos', 'mismo DNI, licencia'),
+    ('otra_restriccion', 'datos', 'mismo DNI, licencia'),
+])
+def test_duplicate_driver_error_names_the_repeated_field(db, constraint, field, fragment):
+    class Duplicate(psycopg.errors.UniqueViolation):
+        diag = SimpleNamespace(constraint_name=constraint)
+
+    item = Driver('Ana Pérez', '12345678', 'LIC-123', str(uuid4()), usuario_id=str(uuid4()))
+    db.responses = {'SELECT usuario_id': [{'usuario_id': item.usuario_id, 'rol': 'CONDUCTOR'}], 'INSERT INTO conductores': Duplicate()}
+    with pytest.raises(DriverAlreadyExistsError) as raised:
+        fleet.PostgresDrivers().save(item)
+    assert raised.value.field == field
+    assert fragment in str(raised.value)
+
+
+def test_duplicate_driver_error_defaults_to_dni_and_ignores_unknown_fields():
+    assert DriverAlreadyExistsError().field == 'dni'
+    assert DriverAlreadyExistsError('inventado').field == 'datos'
 
 
 def test_dashboard_aggregates_statuses_windows_and_fractional_emissions(db):
