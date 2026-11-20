@@ -25,8 +25,8 @@ export function OrderForm({ service, order, onSaved, onBack }: {
   const inFlight = useRef(false)
   const errorBox = useRef<HTMLParagraphElement>(null)
   const change = (key: keyof typeof fields, value: string) => setFields(current => ({ ...current, [key]: value }))
-  const lat = fields.latitude.trim() ? Number(fields.latitude) : NaN
-  const lng = fields.longitude.trim() ? Number(fields.longitude) : NaN
+  const lat = fields.latitude.trim() ? Number(fields.latitude) : Number.NaN
+  const lng = fields.longitude.trim() ? Number(fields.longitude) : Number.NaN
   const destination = Number.isFinite(lat) && Number.isFinite(lng) && Math.abs(lat)<=90 && Math.abs(lng)<=180 ? {lat,lng} : null
   async function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault()

@@ -16,17 +16,7 @@ jobs:
     needs: validate
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    services:
-      postgis:
-        image: postgis/postgis:17-3.5
-        env:
-          POSTGRES_PASSWORD: inspection-local-db
-        ports: ['5432:5432']
-        options: >-
-          --health-cmd "pg_isready -U postgres"
-          --health-interval 5s --health-timeout 5s --health-retries 12
     env:
-      DATABASE_URL: postgresql://postgres:inspection-local-db@127.0.0.1:5432/inspection5_test
       ECOLOGISTICA_VERIFY_DATABASE: '1'
       E2E_BASE_URL: http://127.0.0.1:8000
     steps:
@@ -41,6 +31,24 @@ jobs:
           cache-dependency-path: src/frontend/package-lock.json
       - run: 'python -m pip install --only-binary=:all: --require-hashes -r scripts/requirements-ci.lock'
       - run: npm ci --ignore-scripts --prefix src/frontend
+      - name: Iniciar PostgreSQL con credenciales temporales
+        run: |
+          DB_PASSWORD="$(openssl rand -hex 32)"
+          echo "::add-mask::$DB_PASSWORD"
+          printf 'DATABASE_URL=postgresql://postgres:%s@127.0.0.1:5432/inspection5_test\n' "$DB_PASSWORD" >> "$GITHUB_ENV"
+          docker run --detach --name inspection5-postgis \
+            --publish 127.0.0.1:5432:5432 --env POSTGRES_PASSWORD="$DB_PASSWORD" \
+            --health-cmd 'pg_isready -U postgres' \
+            --health-interval 5s --health-timeout 5s --health-retries 12 \
+            postgis/postgis:17-3.5
+          for attempt in $(seq 1 60); do
+            if [ "$(docker inspect --format '{{.State.Health.Status}}' inspection5-postgis)" = healthy ]; then
+              exit 0
+            fi
+            sleep 2
+          done
+          echo 'PostgreSQL no pudo iniciar dentro del plazo.' >&2
+          exit 1
       - name: Preparar base aislada
         run: |
           E2E_PASSWORD="$(openssl rand -hex 24)"
@@ -78,6 +86,9 @@ jobs:
             node node_modules/@playwright/test/cli.js test --config playwright.config.ts
       - name: Unitarias frontend
         run: npm run test:coverage --prefix src/frontend
+      - name: Eliminar PostgreSQL temporal
+        if: always()
+        run: docker rm --force inspection5-postgis
       - name: Subir evidencias
         if: always()
         uses: actions/upload-artifact@v4

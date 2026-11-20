@@ -76,11 +76,31 @@ def anchors(text):
     return result
 
 
+def mask_inline_code(text):
+    """Match equal backtick runs in linear time, preserving unclosed spans."""
+    runs = list(re.finditer(r'`+', text))
+    following, closing = {}, {}
+    for index in range(len(runs) - 1, -1, -1):
+        length = runs[index].end() - runs[index].start()
+        if length in following:
+            closing[index] = following[length]
+        following[length] = index
+    parts, cursor = [], 0
+    for index, match in enumerate(runs):
+        if match.start() < cursor or index not in closing:
+            continue
+        end = runs[closing[index]].end()
+        parts.extend((text[cursor:match.start()], ' ' * (end - match.start())))
+        cursor = end
+    parts.append(text[cursor:])
+    return ''.join(parts)
+
+
 def links(text):
     """Inline/reference links, images, HTML href/src and autolinks; ignore code."""
     text = prose(text)
     # Preserve backticked link labels; remove only standalone inline code spans.
-    text = re.sub(r'(`+)(.*?)\1', lambda m: ' ' * len(m[0]), text)
+    text = mask_inline_code(text)
     refs = {}
     definition = re.compile(r'^ {0,3}\[([^\]\n]++)\]:[ \t]*+(<[^>\n]++>|\S++)', re.M)
     for m in definition.finditer(text):

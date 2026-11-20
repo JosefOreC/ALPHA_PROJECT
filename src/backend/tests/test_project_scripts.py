@@ -63,6 +63,18 @@ def test_documentation_parser_handles_fences_references_and_duplicate_anchors():
     assert 'missing' not in found and 'README.md' in found and 'https://example.invalid' in found
 
 
+def test_inline_code_requires_matching_delimiters_and_preserves_link_labels():
+    docs = load('check_docs')
+    value = '`[hidden](absent)` [visible](README.md) ``[hidden ` too](absent)`` [ref](README.md)'
+    assert [url for _, url in docs.links(value)] == ['README.md', 'README.md']
+    assert docs.mask_inline_code('`unfinished') == '`unfinished'
+    assert docs.mask_inline_code('`one` and ``two``') == ' ' * 5 + ' and ' + ' ' * 7
+    assert list(docs.links('[`label`](README.md)')) == [(1, 'README.md')]
+    # Many unmatched delimiter lengths previously caused repeated backtracking.
+    adversarial = ' '.join('`' * index for index in range(1, 300))
+    assert docs.mask_inline_code(adversarial) == adversarial
+
+
 def test_documentation_checks_current_repository():
     result = load('check_docs').check()
     assert result['markdown_files'] > 0 and result['errors'] == []

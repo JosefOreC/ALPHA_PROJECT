@@ -13,5 +13,5 @@ export function TabList({ label, children }: { label: string; children: ReactNod
     tabs[next].focus()
     tabs[next].click()
   }
-  return <div className="eco-tabs" role="tablist" aria-label={label} onKeyDown={navigate}>{children}</div>
+  return <div className="eco-tabs" role="tablist" tabIndex={-1} aria-label={label} onKeyDown={navigate}>{children}</div>
 }

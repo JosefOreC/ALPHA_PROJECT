@@ -30,6 +30,6 @@ jobs:
       - run: python scripts/check_docs.py
       - run: npm ci --ignore-scripts --prefix src/frontend
       - run: npm run lint --prefix src/frontend
-      - run: npm exec --prefix src/frontend -- tsc -p src/frontend/tsconfig.ui.json
+      - run: node src/frontend/node_modules/typescript/bin/tsc -p src/frontend/tsconfig.ui.json
       - name: Compilar frontend y empaquetar la imagen de despliegue
         run: docker build --tag ecologistica-ci:validation .

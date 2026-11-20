@@ -58,7 +58,7 @@ def test_native_validation_isolates_credentials_and_always_removes_resources(
         health.request.side_effect = [OSError('not ready'), None]
     monkeypatch.setattr(module.time, 'sleep', lambda seconds: None)
     monkeypatch.setattr(module, 'HTTPConnection', MagicMock(return_value=health))
-    args = SimpleNamespace(env_file=tmp_path / 'unused', port=8019, phase=phase)
+    args = SimpleNamespace(env_file=tmp_path / 'unused', phase=phase)
     expected_error = ValueError if fault == 'missing-dist' else RuntimeError
     context = pytest.raises(expected_error) if fault in ('missing-dist', 'early-exit', 'health-timeout') else nullcontext()
     with context:
@@ -84,7 +84,7 @@ def test_native_validation_rejects_nonlocal_database_before_connecting(tmp_path,
     connect = MagicMock(side_effect=AssertionError('Must not connect'))
     monkeypatch.setattr(module.psycopg, 'connect', connect)
     with pytest.raises(ValueError, match='local'):
-        module.run(SimpleNamespace(env_file=tmp_path / 'unused', port=8019, phase='all'))
+        module.run(SimpleNamespace(env_file=tmp_path / 'unused', phase='all'))
     connect.assert_not_called()
 
 

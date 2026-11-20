@@ -26,6 +26,7 @@ from psycopg import sql
 from psycopg.conninfo import conninfo_to_dict
 
 ROOT = Path(__file__).resolve().parents[1]
+PORT = 8019
 sys.path.insert(0, str(ROOT / 'src/backend'))
 sys.path.insert(0, str(ROOT / 'scripts'))
 from test_db.config import Settings
@@ -40,7 +41,7 @@ def run(args):
     if parsed.scheme not in ('postgres', 'postgresql') or parsed.hostname not in ('localhost', '127.0.0.1', '::1'):
         raise ValueError('Selecciona exclusivamente una conexión PostgreSQL local.')
     with socket.socket() as probe:
-        probe.bind(('127.0.0.1', args.port))
+        probe.bind(('127.0.0.1', PORT))
     parent = conninfo_to_dict(source)
     parent.update(dbname='postgres', connect_timeout='5')
     tag = uuid4().hex[:12]
@@ -83,7 +84,7 @@ def run(args):
             ]) + '\n', encoding='utf-8')
             env = {**os.environ, 'ECOLOGISTICA_ENV_FILE': str(config), 'ECOLOGISTICA_TEST_ENV_FILE': str(config),
                    'ECOLOGISTICA_VERIFY_DATABASE': '1', 'DATABASE_URL': dsn, 'SESSION_COOKIE_SECURE': 'false',
-                   'E2E_PASSWORD': account_password, 'E2E_BASE_URL': f'http://127.0.0.1:{args.port}',
+                   'E2E_PASSWORD': account_password, 'E2E_BASE_URL': f'http://127.0.0.1:{PORT}',
                    'FRONTEND_DIST': str(ROOT / 'src/frontend/dist'),
                    'PLAYWRIGHT_BROWSERS_PATH': str(ROOT / '.test-deps/playwright-browsers')}
             if args.phase in ('integration', 'all'):
@@ -98,13 +99,13 @@ def run(args):
                     raise ValueError('Compila primero el frontend con npm run build.')
                 log = (output / 'api.log').open('w', encoding='utf-8')
                 command = [sys.executable, '-m', 'uvicorn', 'interfaces.api.main:app', '--app-dir', 'src/backend',
-                           '--host', '127.0.0.1', '--port', str(args.port)]
+                           '--host', '127.0.0.1', '--port', str(PORT)]
                 server = subprocess.Popen(command, cwd=ROOT, env=env, stdout=log, stderr=subprocess.STDOUT,
                                           creationflags=subprocess.CREATE_NO_WINDOW if os.name == 'nt' else 0)
                 for _ in range(50):
                     if server.poll() is not None:
                         raise RuntimeError('La API de pruebas no pudo iniciar; revisa el log de esta ejecución.')
-                    health = HTTPConnection('127.0.0.1', args.port, timeout=1)
+                    health = HTTPConnection('127.0.0.1', PORT, timeout=1)
                     try:
                         health.request('GET', '/health')
                         response = health.getresponse()
@@ -149,7 +150,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--env-file', type=Path, default=ROOT / '.env.test')
     parser.add_argument('--phase', choices=['integration', 'e2e', 'all'], default='all')
-    parser.add_argument('--port', type=int, default=8019)
     try:
         raise SystemExit(run(parser.parse_args()))
     except (psycopg.Error, ValueError, RuntimeError) as error:
