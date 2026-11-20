@@ -35,6 +35,7 @@ Este sprint reúne la optimización de consultas, paginación, recursos visuales
 - [Playwright, rendimiento y disponibilidad](03%20Analisis%20PlayWrigth%20V_1_0_0.md)
 - [Usabilidad SUS](04%20Usabilidad%20V_1_0_0.md)
 - [Guion de exposición del criterio 1](Guion%20de%20exposici%C3%B3n%20del%20criterio%201.md)
+- [Resumen de pruebas y evidencias de la Inspección 5](evidencias/inspeccion05/resumen-pruebas-sprint4.md)
 
 ## Estado de la Inspección 5
 

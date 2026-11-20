@@ -60,6 +60,7 @@ Revisión hecha el 20/11/2026 desde la vista Lista del proyecto, con las épicas
 Los tres estados coinciden con el acta de aceptación, que registra las tres historias como aceptadas. Captura: `jira-lista-estados-17-18-22.png` (se ocultaron las fotos de perfil).
 
 Observaciones:
+
 - La Lista anida las historias dentro de su épica; con las épicas plegadas solo se ven las actividades sin épica y puede parecer que faltan tickets.
 - Durante la revisión se crearon por error tres historias duplicadas (ELODRSPDSC-37, -38 y -39) y se eliminaron; los documentos del Sprint 4 siguen citando las claves 17, 18 y 22.
 - No se comprobó en esta revisión que los comentarios de las tres historias contengan los enlaces a commits y pruebas. Esos enlaces están reunidos en la matriz del documento `08 Cierre tecnico y trazabilidad`.
@@ -69,3 +70,5 @@ Observaciones:
 - Agregar en los comentarios de ELODRSPDSC-17, -18 y -22 los enlaces a commits y pruebas, si aún no están.
 - Guardar la clave de Render en GitHub Secrets y ejecutar Deploy production, con el enlace de la ejecución y su reporte.
 - Decidir si se repite la medición de latencia desde otra red o tras calentar el servicio, dado que no se alcanzó el límite de 500 ms.
+
+[← Volver al índice del Sprint 4](../../README.md)
