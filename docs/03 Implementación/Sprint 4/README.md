@@ -46,7 +46,7 @@ La siguiente tabla reúne la evidencia de la Inspección 5 en `inspection5/sprin
 | Gestión ágil | 4 | Review con 3/3 tickets confirmados en captura, commits y pruebas; tres videos; retrospectiva SMART con responsables y fechas. | Aceptación documental cerrada: 3/3 historias aceptadas por el Líder del Proyecto en revisión asíncrona. [Acta](09%20Acta%20de%20revision%20y%20aceptacion%20V_1_0_0.md). Los tres tickets figuran como «Listo» en la captura del 20/11. [Cierre en Jira](evidencias/inspeccion05/resumen-pruebas-sprint4.md#4-cierre-en-jira). |
 | Calidad con Playwright | 5 | 12/12 E2E remotos en tres navegadores; persistencia real, recuperación 503, métricas y reportes conservados. La demostración posterior confirma entregas por interfaz. | Las cinco consultas autenticadas de Pedidos respondieron HTTP 200 y tardaron entre 790 y 953 ms. El objetivo de 500 ms queda pendiente. [Medición autenticada](evidencias/inspeccion05/latencia-render.csv). [Serie de medición](03%20Analisis%20PlayWrigth%20V_1_0_0.md#seguimiento-de-latencia-en-render). |
 | Usabilidad | 3 | Cinco cuestionarios completos, matriz reproducible y promedio actualizado de 83,0/100 (A). | Se documentaron las seis cuentas de prueba. Para medir el efecto de las mejoras queda pendiente otra sesión SUS. |
-| Automatización CI/CD | 4 | CI, Tests, documentación, Lighthouse y SonarCloud aprobados en main con reportes y artefactos. Credenciales de PostGIS efímeras. | CI y Tests aprobaron en la rama de entrega. Deploy production figura omitido. Para acreditarlo se requiere el secreto de Render, habilitar el flujo y guardar el recibo del despliegue automático. |
+| Automatización CI/CD | 4 | CI, Tests, documentación, Lighthouse y SonarCloud aprobados en main con reportes y artefactos. Credenciales de PostGIS efímeras. | Tests aprobó en `main` y activó el despliegue automático en Render. Las cinco consultas de salud devolvieron HTTP 200. [Deploy production](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/44776606164) · [CSV de disponibilidad](evidencias/inspeccion05/disponibilidad-despliegue-automatico.csv). |
 | Arquitectura y trazabilidad | 4 | Capas separadas, enlaces bidireccionales, badges de main, matriz de historias y hashes de evidencias. | Validación documental reproducible con `scripts/check_docs.py`. |
 
 Los resultados de Lighthouse actuales están publicados con sus valores completos. La aprobación del workflow no implica cumplimiento de cada límite estricto de la serie histórica de Green IT. Véanse [las métricas](evidencias/cierre-20261120/lighthouse-remoto.json) y la acción A-05 de la retrospectiva.
@@ -89,7 +89,7 @@ Son muestras locales; no acreditan latencia de producción. [Recibo integrado](e
 
 La comprobación pública posterior registró un timeout inicial de la página, cinco respuestas correctas de salud entre 301,08 y 7303,84 ms y respuestas 401 en sesión y pedidos sin autenticación. Tres de las cinco muestras de salud fueron menores a 500 ms; la serie pública completa no cumple ese umbral. [Comprobación pública](evidencias/correcciones/validacion-publica-sin-docker.json).
 
-El uso de Docker quedó autorizado únicamente en CI/CD remoto. Se creó el entorno `production` de GitHub y se configuraron `RENDER_SERVICE_ID` y `PRODUCTION_URL` con el servicio existente. El secreto `RENDER_API_KEY` y la acreditación del despliegue automático permanecen pendientes. La evidencia de aceptación del sprint y una nueva evaluación con usuarios siguen requiriendo una sesión real. Los resultados técnicos y el cuestionario histórico no sustituyen esa aceptación.
+El uso de Docker quedó autorizado únicamente en CI/CD remoto. Se creó el entorno `production` de GitHub y se configuraron `RENDER_SERVICE_ID` y `PRODUCTION_URL` con el servicio existente. En ese corte faltaban el secreto de Render, la evidencia de despliegue y la aceptación del sprint. El acta y el registro del despliegue figuran en la tabla de la Inspección 5.
 
 ## Verificación remota del corte 2ae9658
 
@@ -99,7 +99,7 @@ El JUnit remoto registra **472 resultados aprobados**: 436 pruebas y 36 subprueb
 
 La primera ejecución detectó una fuga de configuración en una prueba de entorno; se corrigió restaurando `DATABASE_URL` y seleccionando explícitamente `ECOLOGISTICA_ENV_FILE` en CI. Las ejecuciones enlazadas corresponden al corte corregido.
 
-Docker se usó únicamente en los runners remotos, conforme a la autorización. En ese corte quedaron en espera la conexión con Render y la fusión. La integración a `main` se completó después. La [verificación en Render](evidencias/inspeccion05/resumen-pruebas-sprint4.md) recoge las pruebas manuales y la latencia observada. El despliegue automático sigue pendiente.
+Docker se usó únicamente en los runners remotos, conforme a la autorización. En ese corte quedaron en espera la conexión con Render y la fusión. La integración a `main` se completó después. La [verificación en Render](evidencias/inspeccion05/resumen-pruebas-sprint4.md) recoge las pruebas manuales y la latencia observada. GitHub Actions acreditó después el despliegue automático de la [versión vigente en Render](https://github.com/JosefOreC/ALPHA_PROJECT/commit/13bb8f7).
 
 ## Resultados del cierre histórico de Green IT
 

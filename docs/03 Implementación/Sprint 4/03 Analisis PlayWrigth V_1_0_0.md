@@ -164,6 +164,10 @@ A las 11:14 del 20/11/2026, hora de Lima, se consultó salud seis veces desde un
 
 El listado ahora solicita la página y un pedido adicional en una sola consulta a la base. La interfaz recibe el mismo número máximo de pedidos y el registro adicional permite indicar que hay otra página. Se mantienen los permisos, los filtros y los límites de paginación. Las pruebas verifican el número de consultas, los filtros y los límites. La reducción de consultas se comprobará en Render repitiendo la medición autenticada después del despliegue de esta versión. [Implementación del listado](../../../src/backend/application/use_cases/manage_orders.py) · [Pruebas de paginación](../../../src/backend/tests/test_management_api.py).
 
+### Verificación posterior al despliegue automático
+
+El 20/11/2026, Tests aprobó la [versión desplegada](https://github.com/JosefOreC/ALPHA_PROJECT/commit/13bb8f7) de `main` y activó el despliegue en Render. El flujo comprobó que Render marcó como activa la misma versión, que la portada respondía y que `/health` devolvía `status: ok`. Entre las 11:47:19 y las 11:48:20, hora de Lima, las cinco consultas de salud devolvieron HTTP 200. Desde el runner tardaron entre **74,3 y 93,0 ms**. Esta serie verifica la disponibilidad del servicio durante la ventana programada. La medición autenticada de Pedidos en Render se repetirá cuando se despliegue la mejora de paginación del PR #52. [Tests en main](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/44767971301/attempts/2) · [Deploy production](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/44776606164) · [CSV de disponibilidad](evidencias/inspeccion05/disponibilidad-despliegue-automatico.csv).
+
 ## Corte técnico de main del 20/11/2026
 
 La suite del commit `64267bd` aprobó 12/12 E2E integrados en tres motores, con persistencia real. El backend integrado registra 534 pruebas y 36 subpruebas sin omisiones. Los reportes remotos, contadores de cobertura y métricas están conservados en el [paquete de cierre](evidencias/cierre-20261120/README.md); el [registro técnico](08%20Cierre%20tecnico%20y%20trazabilidad%20V_1_0_0.md) relaciona los criterios y sus límites.

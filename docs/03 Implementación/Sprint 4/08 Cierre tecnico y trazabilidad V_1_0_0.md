@@ -71,7 +71,7 @@ La grabación queda en `src/frontend/test-results/` y el reporte navegable en `s
 | Integración a main | Ejecutada: [merge 5d272e9](https://github.com/JosefOreC/ALPHA_PROJECT/commit/5d272e9). |
 | Correcciones funcionales y de seguridad | Verificación técnica aprobada según pruebas y SonarCloud enlazados. |
 | Nueva evaluación SUS | Excluida por indicación expresa del usuario; se conserva intacta la medición histórica. |
-| Render y despliegue productivo | El análisis Playwright registra las comprobaciones públicas. El despliegue automático queda por acreditar. |
+| Render y despliegue productivo | El flujo automático de `main` aprobó y obtuvo cinco respuestas correctas en Render. [Deploy production](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/44776606164) · [CSV de disponibilidad](evidencias/inspeccion05/disponibilidad-despliegue-automatico.csv). |
 | Aceptación de las historias | US-003, US-004 y US-005 aceptadas expresamente por Ore Campos, Josef Pablo, Líder del Proyecto, en revisión asíncrona del commit `8e11664`. [Acta](09%20Acta%20de%20revision%20y%20aceptacion%20V_1_0_0.md). |
 | Estado actual de Jira | El equipo verificó los tickets 17, 18 y 22 en la vista Lista de Jira. Los tres figuran como «Listo». [Captura y enlaces](evidencias/inspeccion05/resumen-pruebas-sprint4.md#4-cierre-en-jira). |
 
