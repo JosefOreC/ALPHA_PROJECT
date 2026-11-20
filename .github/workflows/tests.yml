@@ -49,6 +49,7 @@ jobs:
           config="$RUNNER_TEMP/inspection5.env"
           printf 'DB_ENV=test\nDATABASE_URL=%s\nDB_CREATE_IF_MISSING=true\nSEED_DATE=%s\nSEED_DAYS=1\nSEED_ORDERS_PER_DAY=60\nSEED_PASSWORD=%s\n' "$DATABASE_URL" "$(TZ=America/Lima date +%F)" "$E2E_PASSWORD" > "$config"
           echo "ECOLOGISTICA_TEST_ENV_FILE=$config" >> "$GITHUB_ENV"
+          echo "ECOLOGISTICA_ENV_FILE=$config" >> "$GITHUB_ENV"
           python scripts/create_test_db.py --env-file "$config"
           python scripts/migrate.py
       - name: Unitarias e integración backend

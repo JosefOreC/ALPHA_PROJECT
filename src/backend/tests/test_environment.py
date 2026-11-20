@@ -6,6 +6,8 @@ def test_explicit_environment_file_keeps_validation_separate_from_operational_co
     (tmp_path / '.env').write_text('DATABASE_URL=postgresql://localhost/operational\n', encoding='utf-8')
     isolated = tmp_path / 'validation.env'
     isolated.write_text('DATABASE_URL=postgresql://localhost/isolated_test\n', encoding='utf-8')
+    # Registrar el valor previo para que monkeypatch restaure también las mutaciones de dotenv.
+    monkeypatch.setenv('DATABASE_URL', 'postgresql://localhost/before_test')
     monkeypatch.setenv('ECOLOGISTICA_ENV_FILE', str(isolated))
     config.load_environment()
     import os
