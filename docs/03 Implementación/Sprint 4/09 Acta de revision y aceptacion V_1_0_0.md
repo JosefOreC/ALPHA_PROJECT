@@ -7,7 +7,6 @@
 | Campo | Registro |
 |---|---|
 | Proyecto | EcoLogística Lima. |
-| Fecha | 20/11/2026, America/Lima. No se consigna una hora no aportada. |
 | Modalidad | Revisión asíncrona en la conversación de trabajo, después de la publicación del paquete técnico. |
 | Responsable que declara la aceptación | Ore Campos, Josef Pablo. |
 | Rol declarado | Líder del Proyecto. |
