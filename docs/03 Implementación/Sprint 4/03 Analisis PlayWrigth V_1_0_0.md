@@ -193,6 +193,10 @@ El equipo repitió el sondeo con una cuenta de Planificación tras desplegar la 
 
 La mediana observada de Pedidos pasó de **818,1 a 383,6 ms**, una reducción del **53,1 %** entre ambas series. Cuatro consultas cumplieron el objetivo. La tercera tardó **693,4 ms**, por lo que la serie completa aún no acredita el objetivo de latencia. Las dos series incluyen el tiempo de red y corresponden a ventanas distintas. Para investigar el pico, el equipo puede contrastar la tercera consulta con los registros de Render y repetir la medición en condiciones comparables. [CSV anterior](evidencias/inspeccion05/latencia-render.csv) · [CSV de la versión optimizada](evidencias/inspeccion05/latencia-render-optimizada-2.csv).
 
+### Seguimiento de la demora
+
+Un sondeo público posterior abrió una conexión por consulta. Las seis solicitudes de salud devolvieron HTTP 200 y tardaron entre **238,4 y 370,1 ms**. La mediana fue **262,0 ms**. En esta serie no se observó una demora como la de la tercera consulta autenticada de Pedidos. La diferencia entre ambos endpoints requiere otra medición autenticada para comprobar si el pico persiste. La causa del pico sigue sin determinarse.
+
 ## Corte técnico de main del 20/11/2026
 
 La suite del commit `64267bd` aprobó 12/12 E2E integrados en tres motores, con persistencia real. El backend integrado registra 534 pruebas y 36 subpruebas sin omisiones. Los reportes remotos, contadores de cobertura y métricas están conservados en el [paquete de cierre](evidencias/cierre-20261120/README.md); el [registro técnico](08%20Cierre%20tecnico%20y%20trazabilidad%20V_1_0_0.md) relaciona los criterios y sus límites.
