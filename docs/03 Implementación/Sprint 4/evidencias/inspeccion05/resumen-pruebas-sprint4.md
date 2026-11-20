@@ -2,7 +2,7 @@
 
 **Fecha de ejecución:** 20/11/2026 (hora de Lima) · **Entorno:** servicio de Render del curso, `https://ecologistica-lima-qolz.onrender.com` · **Rama:** `inspection5/sprint4`
 
-Este resumen cubre lo que se ejecutó en esta sesión. Los puntos que dependen de Jira, de Render y de la configuración de GitHub no se pudieron ejecutar desde este equipo y se listan en la sección 5 para coordinarlos.
+Este resumen cubre las pruebas ejecutadas el 20/11/2026 y la revisión de Jira hecha por el equipo. El despliegue en Render y la configuración de secretos de GitHub no se pudieron ejecutar desde este equipo; se listan en la sección 5 para coordinarlos.
 
 ## 1. Pruebas en la app (pedidos, ruta, conductor)
 
@@ -49,10 +49,23 @@ No se ejecutó. El flujo `.github/workflows/deploy-production.yml` exige el secr
 
 ## 4. Jira
 
-No se revisaron los tickets ELODRSPDSC-17, ELODRSPDSC-18 y ELODRSPDSC-22 ni se tomó la captura del tablero: esta sesión no tiene acceso a Jira.
+Revisión hecha el 20/11/2026 desde la vista Lista del proyecto, con las épicas desplegadas. No hay un sprint activo, por lo que no existe un tablero con esas historias; la Lista muestra las mismas actividades con su estado.
+
+| Clave | Historia | Épica | Estado en Jira |
+|---|---|---|---|
+| ELODRSPDSC-17 | US-003 · Registrar pedido de entrega | EP-02 | Listo |
+| ELODRSPDSC-18 | US-004 · Confirmar entrega de un pedido | EP-02 | Listo |
+| ELODRSPDSC-22 | US-005 · Generar rutas optimizadas del día | EP-03 | Listo |
+
+Los tres estados coinciden con el acta de aceptación, que registra las tres historias como aceptadas. Captura: `jira-lista-estados-17-18-22.png` (se ocultaron las fotos de perfil).
+
+Observaciones:
+- La Lista anida las historias dentro de su épica; con las épicas plegadas solo se ven las actividades sin épica y puede parecer que faltan tickets.
+- Durante la revisión se crearon por error tres historias duplicadas (ELODRSPDSC-37, -38 y -39) y se eliminaron; los documentos del Sprint 4 siguen citando las claves 17, 18 y 22.
+- No se comprobó en esta revisión que los comentarios de las tres historias contengan los enlaces a commits y pruebas. Esos enlaces están reunidos en la matriz del documento `08 Cierre tecnico y trazabilidad`.
 
 ## 5. Pendiente de coordinar
 
-- Captura del tablero de Jira con las tres claves y sus estados, y enlace de cambios y pruebas en cada ticket.
+- Agregar en los comentarios de ELODRSPDSC-17, -18 y -22 los enlaces a commits y pruebas, si aún no están.
 - Guardar la clave de Render en GitHub Secrets y ejecutar Deploy production, con el enlace de la ejecución y su reporte.
 - Decidir si se repite la medición de latencia desde otra red o tras calentar el servicio, dado que no se alcanzó el límite de 500 ms.
