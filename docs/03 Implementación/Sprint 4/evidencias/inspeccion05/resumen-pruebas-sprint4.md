@@ -45,7 +45,9 @@ El resultado fue válido (HTTP 200 en las 11 muestras y cierre de sesión confir
 
 ## 3. Despliegue (Deploy production)
 
-Después de la prueba manual, el equipo guardó la clave en GitHub Secrets y habilitó el flujo. Una ejecución exitosa de Tests en `main` disparó el despliegue. Render activó la versión validada y devolvió HTTP 200 en las cinco comprobaciones de salud de GitHub Actions. [Deploy production](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/44776606164) · [CSV de disponibilidad](disponibilidad-despliegue-automatico.csv).
+Después de la prueba manual, el equipo guardó la clave en GitHub Secrets y habilitó el flujo. Una ejecución exitosa de Tests en `main` disparó el despliegue. Render activó la versión validada y devolvió HTTP 200 en las cinco comprobaciones de salud de GitHub Actions. [Primer despliegue automático](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/44776606164) · [CSV inicial](disponibilidad-despliegue-automatico.csv).
+
+Tras fusionar el PR #52 se desplegó la mejora de Pedidos y las cinco consultas de salud volvieron a devolver HTTP 200. [Despliegue de la versión optimizada](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/44779614627) · [CSV de la versión optimizada](disponibilidad-version-optimizada.csv).
 
 ## 4. Cierre en Jira
 
@@ -66,6 +68,6 @@ Observaciones:
 
 ## 5. Pendiente de coordinar
 
-- Revisar los registros de Render durante la ventana de medición y repetir la prueba de Pedidos con el servicio activo, registrando también el entorno y la versión desplegada.
+- Repetir la prueba autenticada de Pedidos con la versión optimizada activa y guardar el CSV para comparar el resultado con la serie anterior.
 
 [← Volver al índice del Sprint 4](../../README.md)
