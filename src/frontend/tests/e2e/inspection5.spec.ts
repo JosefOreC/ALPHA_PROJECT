@@ -59,11 +59,28 @@ test('acceso, permisos, validación y persistencia de pedidos', async ({ page, b
   const created = await page.request.post('/api/pedidos', { headers, data: order })
   expect(created.status()).toBe(201)
   const saved = await created.json()
+  expect(saved.id).toEqual(expect.any(String))
+
+  const persisted = await page.request.get('/api/pedidos/' + encodeURIComponent(saved.id))
+  expect(persisted.status()).toBe(200)
+  expect(await persisted.json()).toMatchObject({
+    id: saved.id, customer, address: order.address, district: order.district,
+    weight_kg: order.weight_kg, status: 'PENDIENTE',
+  })
+
   const listStart = nodePerformance.now()
-  const found = await page.request.get('/api/pedidos', { params: { q: customer, limit: 12 } })
+  const listed = await page.request.get('/api/pedidos', {
+    params: { district: order.district, status: 'PENDIENTE', limit: 12 },
+  })
   const orderListMs = nodePerformance.now() - listStart
-  expect(found.ok()).toBeTruthy()
-  expect((await found.json()).items).toEqual(expect.arrayContaining([expect.objectContaining({ id: saved.id })]))
+  expect(listed.status()).toBe(200)
+  const firstPage = await listed.json()
+  expect(firstPage).toMatchObject({ limit: 12, offset: 0, has_more: expect.any(Boolean) })
+  expect(firstPage.items.length).toBeGreaterThan(0)
+  expect(firstPage.items.length).toBeLessThanOrEqual(12)
+  for (const item of firstPage.items) {
+    expect(item).toMatchObject({ district: order.district, status: 'PENDIENTE' })
+  }
 
   await testInfo.attach('rendimiento-api-pedidos', {
     body: JSON.stringify({ orderListMs }),
