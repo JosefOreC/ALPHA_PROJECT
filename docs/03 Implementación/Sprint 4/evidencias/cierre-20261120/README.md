@@ -44,3 +44,7 @@ La [repetici?n sin grabaci?n](medicion-sin-video.json) aprob? **12/12**, sin omi
 | webkit | 2.00 | 85.00 | 85.00 | 5.44 | 113.24 |
 
 Estas son muestras puntuales locales; la serie grabada fallida y las cargas remotas de Lighthouse se mantienen separadas.
+
+## Aceptación recibida después de publicar el paquete
+
+El Líder del Proyecto, Ore Campos, Josef Pablo, comunicó aceptación conjunta de US-003, US-004 y US-005. [Acta](../../09%20Acta%20de%20revision%20y%20aceptacion%20V_1_0_0.md) · [Transcripción y decisiones](aceptacion-declarada.json). La revisión fue asíncrona en esta conversación; los videos conservan su naturaleza de demostración automatizada.

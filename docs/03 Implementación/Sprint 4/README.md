@@ -41,7 +41,7 @@ Corte del 20/11/2026 sobre `main`, commit productivo auditado `64267bd`. El [cie
 
 | Criterio | Peso | Evidencia actual | Alcance del cierre |
 |---|---:|---|---|
-| Gestión ágil | 4 | Review con 3/3 tickets confirmados en captura, commits y pruebas; tres videos; retrospectiva SMART con responsables y fechas. | Cerrada la preparación técnica y documental. La aceptación de stakeholders y el estado vivo de Jira requieren evidencia externa. |
+| Gestión ágil | 4 | Review con 3/3 tickets confirmados en captura, commits y pruebas; tres videos; retrospectiva SMART con responsables y fechas. | Aceptación documental cerrada: 3/3 historias aceptadas por el Líder del Proyecto en revisión asíncrona. [Acta](09%20Acta%20de%20revision%20y%20aceptacion%20V_1_0_0.md). El estado vivo de Jira permanece sin consultar. |
 | Calidad con Playwright | 5 | 12/12 E2E remotos en tres navegadores; persistencia real, recuperación 503, métricas y reportes conservados. La demostración posterior confirma entregas por interfaz. | Validado en entornos aislados. Se conserva un fallo de latencia de la corrida grabada junto a la repetición sin video; no se extrapola a producción. |
 | Usabilidad | 3 | Informe histórico: cinco cuestionarios, 72,5/100 (C+). | Fuera del trabajo actual por indicación del usuario; no se modifica ni se declara una nueva sesión. |
 | Automatización CI/CD | 4 | CI, Tests, documentación, Lighthouse y SonarCloud aprobados en main con reportes y artefactos. Credenciales de PostGIS efímeras. | CI acreditada. Render excluido y despliegue deshabilitado; no se afirma cumplimiento de despliegue continuo operativo. |
@@ -133,3 +133,5 @@ La equivalencia PostgreSQL/PostGIS del criterio MongoDB y la sustitución auxili
 
 - [08. Cierre técnico y trazabilidad](08%20Cierre%20tecnico%20y%20trazabilidad%20V_1_0_0.md).
 - [Videos, capturas, reportes y hashes](evidencias/cierre-20261120/README.md).
+
+- [09. Acta de revisión y aceptación](09%20Acta%20de%20revision%20y%20aceptacion%20V_1_0_0.md): conformidad expresa del Líder del Proyecto para las tres historias.

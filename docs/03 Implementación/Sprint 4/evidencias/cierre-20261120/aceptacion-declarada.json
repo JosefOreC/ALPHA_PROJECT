@@ -1,0 +1,42 @@
+{
+  "date": "2026-11-20",
+  "timezone": "America/Lima",
+  "channel": "Revision asincrona en la conversacion de trabajo",
+  "reviewer_as_declared": {
+    "name": "Ore Campos, Josef Pablo",
+    "role": "Lider del Proyecto"
+  },
+  "reviewed_commit": "8e11664",
+  "question_scope": [
+    "US-003: registrar pedido",
+    "US-004: confirmar entrega",
+    "US-005: generar rutas"
+  ],
+  "user_reply_verbatim": "Líder del Proyecto:** Ore Campos, Josef Pablo. ACEPTADA",
+  "decisions": [
+    {
+      "story": "US-003",
+      "jira_historical_key": "ELODRSPDSC-17",
+      "decision": "ACEPTADA"
+    },
+    {
+      "story": "US-004",
+      "jira_historical_key": "ELODRSPDSC-18",
+      "decision": "ACEPTADA"
+    },
+    {
+      "story": "US-005",
+      "jira_historical_key": "ELODRSPDSC-22",
+      "decision": "ACEPTADA"
+    }
+  ],
+  "observations_communicated": "No se comunicaron observaciones adicionales en la respuesta de aceptacion.",
+  "scope_exclusions": [
+    "Nueva evaluacion SUS",
+    "Render"
+  ],
+  "limitations": [
+    "Declaracion del usuario; no firma digital ni verificacion externa de identidad.",
+    "No acredita una reunion presencial, asistentes adicionales ni cambios en Jira."
+  ]
+}

@@ -43,8 +43,10 @@ El [registro de cierre](08%20Cierre%20tecnico%20y%20trazabilidad%20V_1_0_0.md) r
 |---|---|
 | Trazabilidad de las tres historias | Conciliada con la captura del backlog: tickets 17, 18 y 22, criterios, commits y pruebas. |
 | Multimedia del incremento | Videos del registro de pedidos, entrega del conductor, roles y laboratorio X/Y; capturas de cada etapa. Demostración técnica automatizada. |
-| Aceptación de stakeholders | No aportada. Requiere decisión real por historia y registro de asistentes; el paquete técnico está preparado para esa revisión. |
+| Aceptación de las historias | **3/3 aceptadas** por Ore Campos, Josef Pablo, Líder del Proyecto, en revisión asíncrona del commit `8e11664`. [Acta](09%20Acta%20de%20revision%20y%20aceptacion%20V_1_0_0.md). |
 | SUS y Render | Excluidos de este cierre por indicación del usuario. |
+
+La conformidad recibida después de publicar el paquete se conserva en el acta y en su transcripción; los videos documentan la demostración técnica disponible para revisión. No se atribuye una reunión presencial ni se modifican estados de Jira.
 
 ## Control de versiones
 

@@ -12,7 +12,7 @@
 | Responsable documental del proyecto | Ore Campos, Josef Pablo, según el registro del proyecto. |
 | Ejecución de esta verificación | Automatización de pruebas y conciliación documental realizada con Codex. |
 | Alcance solicitado | Cierre técnico, trazabilidad, multimedia y actualización de evidencias. SUS y Render excluidos por indicación del usuario. |
-| Participantes de una reunión de aceptación | No se aportó registro de reunión. No se atribuye asistencia a los integrantes del equipo. |
+| Revisión de aceptación | Asíncrona en esta conversación: Ore Campos, Josef Pablo, Líder del Proyecto, comunica aceptación de las tres historias. No se atribuye una reunión ni asistentes adicionales. |
 
 Los informes remotos corresponden al commit auditado. La grabación local incorpora mejoras del arnés E2E posteriores a ese commit: confirmación desde la interfaz y capturas por etapa. Sus dos archivos fuente quedan identificados por SHA-256 en [el recibo de demostración](evidencias/cierre-20261120/demostracion-tecnica.json). Al publicarse este cierre, esos archivos forman parte de la revisión documental y de pruebas posterior.
 
@@ -72,16 +72,16 @@ La grabación queda en `src/frontend/test-results/` y el reporte navegable en `s
 | Correcciones funcionales y de seguridad | Verificación técnica aprobada según pruebas y SonarCloud enlazados. |
 | Nueva evaluación SUS | Excluida por indicación expresa del usuario; se conserva intacta la medición histórica. |
 | Render y despliegue productivo | Fuera de alcance por indicación expresa; permanece deshabilitado. |
-| Aceptación del producto por stakeholders | No comunicada. El usuario pidió completar el trabajo, pero no aportó decisiones de aceptación por historia ni registro de reunión. |
+| Aceptación de las historias | US-003, US-004 y US-005 aceptadas expresamente por Ore Campos, Josef Pablo, Líder del Proyecto, en revisión asíncrona del commit `8e11664`. [Acta](09%20Acta%20de%20revision%20y%20aceptacion%20V_1_0_0.md). |
 | Estado actual de Jira | No consultado en vivo. La correspondencia está confirmada por capturas versionadas; Atlassian requiere conexión para leer el tablero actual. |
 
-Para formalizar una sesión, el responsable de producto debe aportar fecha/hora, asistentes por rol, commit demostrado, decisión por historia —aceptada, observada o rechazada— y observaciones con responsable y plazo. Se adjuntarán las referencias a la reunión y las decisiones sin sustituirlas por resultados automáticos. Este registro está completo respecto de lo observado y no contiene firmas ni asistencias atribuidas.
+La aceptación se recibió después de publicar el paquete y quedó registrada en el [acta de revisión asíncrona](09%20Acta%20de%20revision%20y%20aceptacion%20V_1_0_0.md). No se comunicaron observaciones adicionales. Se conserva la decisión del usuario sin atribuir una reunión, firmas ni asistencia de terceros; Jira mantiene su estado externo sin consultar.
 
 ## Control de versiones
 
 | Versión | Fecha | Cambio |
 |---|---|---|
-| V_1_0_0 | 20/11/2026 | Conciliación de tres historias, recibos CI/Sonar, demostración automatizada y límites de aceptación humana. |
+| V_1_0_0 | 20/11/2026 | Conciliación de tres historias, recibos CI/Sonar, demostración automatizada y límites de la verificación; aceptación conjunta posterior documentada en el acta. |
 
 [Volver al Sprint 4](README.md)
 
