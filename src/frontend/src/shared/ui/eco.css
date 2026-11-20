@@ -990,10 +990,49 @@ dialog.eco-dialog--sheet { width: 100%; max-width: 480px; margin: auto auto 0; b
   .eco-account-actions .eco-btn { min-height: 44px; }
 }
 
+/* Espacio del conductor: ruta, entrega y consultas. */
+.eco-driver-screen { display: flex; flex-direction: column; min-height: 100dvh; }
+.eco-driver-screen > .eco-phone-root { flex: 1; display: flex; min-height: 0; }
+.eco-driver-screen .eco-phone { min-height: 0; }
+.eco-driver-screen .eco-session-user { min-width: 0; flex-wrap: wrap; overflow-wrap: anywhere; }
+.eco-driver-screen .eco-session-bar { padding-inline: clamp(12px, 2.5vw, 44px); }
+.eco-phone.eco-driver-route, .eco-phone.eco-driver-order { max-width: 1800px; }
+.eco-driver-route__map, .eco-driver-incidents > * { min-width: 0; }
+.eco-driver-incidents { display: grid; gap: 24px; }
+.eco-driver-order__incident-label { display: none; }
+.eco-driver-incidents .eco-record-form { max-width: none; }
+.eco-shell--driver { --container-max: 1800px; }
+
 @media (min-width: 900px) {
-  .eco-phone.eco-driver-route { max-width: 1280px; min-height: min(880px, 100vh); margin: 20px auto; border-radius: 20px; overflow: clip; }
-  .eco-driver-route .eco-phone__body { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(270px, 1fr); align-content: start; padding: 24px; gap: 24px; }
+  .eco-phone-root { padding: clamp(16px, 2vw, 32px) clamp(16px, 2.5vw, 48px); }
+  .eco-phone:is(.eco-driver-route, .eco-driver-order) { overflow: clip; }
+  .eco-phone:is(.eco-driver-route, .eco-driver-order) > .eco-phone__bar { padding-inline: clamp(20px, 3vw, 48px); }
+  .eco-phone:is(.eco-driver-route, .eco-driver-order) > .eco-tabbar { position: static; display: flex; padding: 8px clamp(20px, 3vw, 48px); gap: 8px; }
+  .eco-phone > .eco-tabbar a { flex-direction: row; gap: 8px; padding: 8px 14px; font-size: 14px; border-radius: 9px; }
+  .eco-phone > .eco-tabbar a[aria-current="page"] { background: var(--eco-bg); }
+  .eco-driver-route .eco-phone__progress { padding-inline: clamp(20px, 3vw, 48px); }
+  .eco-driver-route .eco-phone__body { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(260px, 1fr); align-content: start; padding: clamp(20px, 3vw, 48px); gap: clamp(18px, 2vw, 32px); }
   .eco-driver-route .eco-phone__body > :not(.eco-driver-route__map, .eco-stops) { grid-column: 1 / -1; }
-  .eco-driver-route .eco-map--strip { aspect-ratio: auto; min-height: clamp(380px, 50vh, 620px); }
-  .eco-driver-route .eco-tabbar { position: static; }
+  .eco-driver-route .eco-map--strip { aspect-ratio: auto; min-height: clamp(340px, 55dvh, 660px); }
+
+  .eco-phone.eco-driver-order { display: grid; grid-template-columns: minmax(0, 3fr) minmax(260px, 2fr); grid-template-rows: auto auto auto 1fr auto; background: var(--surface); }
+  .eco-driver-order > :is(.eco-phone__bar, .eco-tabbar) { grid-column: 1 / -1; }
+  .eco-driver-order > .eco-phone__hero { grid-area: 2 / 2; align-self: start; min-width: 0; margin: clamp(20px, 3vw, 48px); margin-left: 0; padding: clamp(20px, 3vw, 40px); border-radius: var(--radius-lg); background: var(--forest); }
+  .eco-driver-order > .eco-phone__sheet { grid-area: 2 / 1; min-width: 0; padding: clamp(20px, 3vw, 48px); border-radius: 0; }
+  .eco-driver-order:not(:has(.eco-phone__hero)) > :is(.eco-phone__sheet, .eco-phone__footer) { grid-column: 1 / -1; }
+  .eco-driver-order .eco-phone__h1 { font-size: clamp(26px, 2vw, 36px); line-height: 1.25; }
+  .eco-driver-order .eco-phone__meta { flex-wrap: wrap; }
+  .eco-driver-order .eco-phone__meta .eco-hero__meter { min-width: 50px; }
+  .eco-driver-order > .eco-phone__footer { grid-area: 3 / 1; position: static; flex-wrap: wrap; gap: 10px; padding: 0 clamp(20px, 3vw, 48px) 24px; border-top: 0; }
+  .eco-driver-order .eco-driver-order__incident { width: auto; padding-inline: 14px; gap: 8px; }
+  .eco-driver-order__incident-label { display: inline; }
+  .eco-driver-order .eco-phone__footer .eco-btn--block { flex: none; width: auto; min-width: 180px; }
+  .eco-driver-order > .eco-tabbar { grid-row: 5; }
+  .eco-driver-order > dialog.eco-dialog--sheet { width: min(100% - 40px, 480px); margin: auto; border-radius: var(--radius-lg); }
+  .eco-driver-incidents { grid-template-columns: minmax(275px, 2fr) minmax(0, 3fr); align-items: start; }
+}
+
+@media (max-width: 600px) {
+  .eco-driver-order .eco-phone__line { flex-wrap: wrap; }
+  .eco-driver-screen .eco-session-bar { gap: 6px; }
 }

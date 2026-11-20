@@ -14,6 +14,7 @@ function cell(value: unknown) {
 export function RecordsView({ module, onNavigate }: { module: 'auditoria' | 'incidencias'; onNavigate?: (id: ModuleId, href: string) => void }) {
   const user = useSession()!.user!
   const title = module === 'auditoria' ? 'Auditoría' : 'Incidencias'
+  const driverIncidents = module === 'incidencias' && user.role === 'driver'
   const [items, setItems] = useState<Record<string, unknown>[] | null>(null)
   const [error, setError] = useState('')
   const [reload, setReload] = useState(0)
@@ -28,13 +29,11 @@ export function RecordsView({ module, onNavigate }: { module: 'auditoria' | 'inc
     const path = module === 'auditoria' ? '/api/audit' : '/api/incidents'
     requestJson<Record<string, unknown>[]>(path, { signal: controller.signal })
       .then(value => { if (!controller.signal.aborted) { setItems(value); setError('') } }).catch(reason => { if (!controller.signal.aborted) setError(reason instanceof Error ? reason.message : 'No se pudo cargar el listado.') })
-    if (user.role === 'driver' && module === 'incidencias') requestJson<DriverRoute>('/api/conductor/ruta', { signal: controller.signal }).then(setRoute).catch(() => undefined)
+    if (driverIncidents) requestJson<DriverRoute>('/api/conductor/ruta', { signal: controller.signal }).then(setRoute).catch(() => undefined)
     return () => controller.abort()
-  }, [module, reload, user.role])
+  }, [module, reload, driverIncidents])
   const columns = items?.length ? Object.keys(items[0]).filter(key => key !== 'id') : []
-  return <AppShell role={user.role} current={module} user={{ name: user.name, initials: user.name[0] }} title={title} onNavigate={onNavigate} actions={<button className="eco-btn eco-btn--secondary" type="button" onClick={() => setReload(value => value + 1)}>Actualizar</button>}>
-    <div><h1 className="eco-h1">{title}</h1><p className="eco-sub">{module === 'auditoria' ? 'Historial de acciones y cambios en la plataforma' : 'Seguimiento de los eventos reportados durante las entregas'}</p></div>
-    {user.role === 'driver' && module === 'incidencias' ? <form className="eco-record-form eco-stack" onSubmit={async event => {
+  const incidentForm = driverIncidents ? <form className="eco-record-form eco-stack" onSubmit={async event => {
       event.preventDefault(); if (busy) return; setBusy(true); setError(''); setNotice('')
       try { await requestJson('/api/incidents', { method: 'POST', body: { order_id: orderId, type, description } }); setDescription(''); setNotice('Incidencia reportada.'); setReload(value => value + 1) }
       catch (reason) { setError(reason instanceof Error ? reason.message : 'No se pudo reportar la incidencia.') }
@@ -45,8 +44,21 @@ export function RecordsView({ module, onNavigate }: { module: 'auditoria' | 'inc
       <div className="eco-field"><label htmlFor="incident-type">Tipo</label><select id="incident-type" className="eco-select" value={type} onChange={event => setType(event.target.value)} disabled={busy}>{['Entrega', 'Tráfico', 'Vehículo', 'Dirección', 'Otro'].map(value => <option key={value}>{value}</option>)}</select></div>
       <div className="eco-field"><label htmlFor="incident-description">Descripción</label><textarea id="incident-description" className="eco-input" required minLength={5} maxLength={2000} value={description} onChange={event => setDescription(event.target.value)} disabled={busy} /></div>
       <button className="eco-btn" type="submit" disabled={busy}>{busy ? 'Enviando…' : 'Reportar incidencia'}</button>
-    </form> : null}
+    </form> : null
+  const recordList = <>
     {notice ? <p role="status" className="eco-notice">{notice}</p> : null}
     {error ? <Banner tone="error">{error}</Banner> : !items ? <p role="status">Cargando registros…</p> : !items.length ? <Banner title="Sin registros">Todavía no hay registros en esta sección.</Banner> : <div className="eco-data-scroll"><table className="eco-data-table"><caption className="eco-sr">{title} · últimos 200 registros</caption><thead><tr>{columns.map(key => <th key={key} scope="col">{labels[key] ?? key}</th>)}</tr></thead><tbody>{items.map((item, index) => <tr key={String(item.id ?? index)}>{columns.map(key => <td key={key}>{cell(item[key])}</td>)}</tr>)}</tbody></table></div>}
+  </>
+  return <AppShell role={user.role} current={module} user={{ name: user.name, initials: user.name[0] }} title={title} onNavigate={onNavigate} actions={<button className="eco-btn eco-btn--secondary" type="button" onClick={() => setReload(value => value + 1)}>Actualizar</button>}>
+    <div><h1 className="eco-h1">{title}</h1><p className="eco-sub">{module === 'auditoria' ? 'Historial de acciones y cambios en la plataforma' : 'Seguimiento de los eventos reportados durante las entregas'}</p></div>
+    {driverIncidents ? (
+      <div className="eco-driver-incidents">
+        {incidentForm}
+        <section className="eco-stack" aria-labelledby="incident-history">
+          <h2 className="eco-h2" id="incident-history">Historial de incidencias</h2>
+          {recordList}
+        </section>
+      </div>
+    ) : recordList}
   </AppShell>
 }

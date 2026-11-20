@@ -44,7 +44,7 @@ export function AppShell({ role, current, user, title, section = 'Operación', c
   const modules = modulesForRole(role)
   const percent = co2 && co2.goalKg > 0 ? Math.min(100, Math.round((co2.valueKg / co2.goalKg) * 100)) : 0
   return (
-    <div className="eco-root eco-shell" data-theme={theme}>
+    <div className={'eco-root eco-shell' + (role === 'driver' ? ' eco-shell--driver' : '')} data-theme={theme}>
       <aside className="eco-side" aria-label="Navegación principal">
         <a className="eco-side__brand" href="/">
           <LogoHojaRuta />

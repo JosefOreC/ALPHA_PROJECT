@@ -147,9 +147,33 @@ function AuthorizedApp() {
     </AppShell>
   </>;
 
+  if (activeView === 'mi-ruta' || activeView === 'conductor') {
+    return (
+      <div className="eco-driver-screen">
+        <SessionToolbar onNavigate={navigateModule} />
+        {activeView === 'mi-ruta' ? (
+          <DriverRouteView
+            service={secured.driver.route}
+            mapSource={mapSource}
+            onNavigate={navigateModule}
+            onOpenOrder={(orderId) => navigateTo('conductor', orderId)}
+          />
+        ) : (
+          <DriverOrderView
+            key={currentOrderId}
+            service={secured.driver.orders}
+            routeService={secured.driver.route}
+            orderId={currentOrderId}
+            onNavigate={navigateModule}
+            onOpenOrder={(orderId) => navigateTo('conductor', orderId)}
+          />
+        )}
+      </div>
+    )
+  }
+
   return (
     <>
-      {activeView === 'mi-ruta' || activeView === 'conductor' ? <SessionToolbar onNavigate={navigateModule} /> : null}
       {/* Vista 0: Dashboard del Día */}
       {activeView === 'dashboard' && (
         <DashboardPage
@@ -177,28 +201,6 @@ function AuthorizedApp() {
       {/* Vista 5: Administración */}
       {activeView === 'admin' && <AdminView service={secured.administration} onNavigate={navigateModule} />}
 
-      {/* Vista 6: Mi ruta del conductor */}
-      {activeView === 'mi-ruta' && (
-        <DriverRouteView
-          service={secured.driver.route}
-          mapSource={mapSource}
-          onNavigate={navigateModule}
-          onOpenOrder={(orderId) => navigateTo('conductor', orderId)}
-        />
-      )}
-
-      {/* Vista 7: Pedido actual del conductor */}
-      {activeView === 'conductor' && (
-        <DriverOrderView
-          key={currentOrderId}
-          service={secured.driver.orders}
-          routeService={secured.driver.route}
-          orderId={currentOrderId}
-
-          onNavigate={navigateModule}
-          onOpenOrder={(orderId) => navigateTo('conductor', orderId)}
-        />
-      )}
       {activeView === 'conductores' ? <DriversView onNavigate={navigateModule} /> : null}
       {activeView === 'auditoria' || activeView === 'incidencias' ? <RecordsView key={activeView} module={activeView} onNavigate={navigateModule} /> : null}
     </>

@@ -21,7 +21,7 @@ function stopMeta(stop: RouteStop) {
   return `${stop.order_id} · ${stop.address}`
 }
 
-// «Mi ruta» del conductor: paradas del día, avance y aviso de reoptimización. Solo móvil.
+// «Mi ruta» del conductor: paradas del día, avance y aviso de reoptimización.
 export function DriverRouteView({ service, mapSource, onNavigate, onOpenOrder }: DriverRouteViewProps) {
   const [route, setRoute] = useState<DriverRoute | null>(null)
   const [error, setError] = useState('')

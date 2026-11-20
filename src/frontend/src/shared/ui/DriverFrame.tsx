@@ -11,7 +11,7 @@ type DriverBarProps = {
   initials: string
 }
 
-// Cabecera bosque de las vistas móviles del conductor.
+// Cabecera de las vistas del conductor.
 export function DriverBar({ children, plate, initials }: DriverBarProps) {
   return (
     <header className="eco-phone__bar">
@@ -23,7 +23,7 @@ export function DriverBar({ children, plate, initials }: DriverBarProps) {
   )
 }
 
-// Barra inferior: Mi ruta, Pedido actual e Incidencias. Incidencias aún no tiene pantalla.
+// Barra inferior: Mi ruta, Pedido actual e Incidencias.
 export function DriverTabBar({ current, onNavigate }: { current: ModuleId; onNavigate?: (id: ModuleId, href: string) => void }) {
   return (
     <nav className="eco-tabbar" aria-label="Secciones del conductor">

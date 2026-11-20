@@ -20,7 +20,7 @@ type DriverOrderViewProps = {
   onOpenOrder?: (orderId: string) => void
 }
 
-// «Pedido actual» del conductor: datos de la entrega y confirmación. Solo móvil, objetivos táctiles de 48 px.
+// «Pedido actual» del conductor: datos de la entrega y confirmación. Controles táctiles de 48 px.
 export function DriverOrderView({ service, routeService, orderId, onNavigate, onOpenOrder }: DriverOrderViewProps) {
   const [order, setOrder] = useState<Order | null>(null)
   const [route, setRoute] = useState<DriverRoute | null>(null)
@@ -89,7 +89,7 @@ export function DriverOrderView({ service, routeService, orderId, onNavigate, on
 
   return (
     <div className="eco-root eco-phone-root eco-phone-root--forest">
-      <div className="eco-phone eco-phone--forest">
+      <div className="eco-phone eco-phone--forest eco-driver-order">
         <DriverBar plate={route?.plate} initials={route?.initials ?? ''}>
           <a
             className="eco-phone__back"
@@ -197,8 +197,9 @@ export function DriverOrderView({ service, routeService, orderId, onNavigate, on
         </main>
 
         <div className="eco-phone__footer">
-          <button className="eco-btn eco-btn--secondary eco-btn--icon" type="button" aria-label="Reportar incidencia" onClick={() => onNavigate?.('incidencias', '/?vista=incidencias')}>
+          <button className="eco-btn eco-btn--secondary eco-btn--icon eco-driver-order__incident" type="button" aria-label="Reportar incidencia" onClick={() => onNavigate?.('incidencias', '/?vista=incidencias')}>
             <IncidenciaIcon size="md" />
+            <span className="eco-driver-order__incident-label">Reportar incidencia</span>
           </button>
           {delivered ? (
             next && next.order_id !== order?.id ? (
