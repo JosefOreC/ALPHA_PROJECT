@@ -67,6 +67,8 @@ def main():
     parser.add_argument("--solo-salud", action="store_true", help="Ejecuta solo las consultas públicas.")
     parser.add_argument("--salida", type=Path, default=Path("latencia-render.csv"))
     args = parser.parse_args()
+    if args.salida.exists():
+        parser.error(f"Ya existe {args.salida}. Elige otro nombre con --salida.")
 
     account = None
     if not args.solo_salud:

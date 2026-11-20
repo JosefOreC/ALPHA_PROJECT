@@ -47,7 +47,7 @@ El resultado fue válido (HTTP 200 en las 11 muestras y cierre de sesión confir
 
 Después de la prueba manual, el equipo guardó la clave en GitHub Secrets y habilitó el flujo. Una ejecución exitosa de Tests en `main` disparó el despliegue. Render activó la versión validada y devolvió HTTP 200 en las cinco comprobaciones de salud de GitHub Actions. [Primer despliegue automático](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/44776606164) · [CSV inicial](disponibilidad-despliegue-automatico.csv).
 
-Tras fusionar el PR #52 se desplegó la mejora de Pedidos y las cinco consultas de salud volvieron a devolver HTTP 200. El sondeo autenticado posterior registró una mediana de 383,6 ms y cuatro de cinco respuestas dentro del umbral. [CSV autenticado de la versión optimizada](latencia-render-optimizada-2.csv). [Despliegue de la versión optimizada](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/44779614627) · [CSV de la versión optimizada](disponibilidad-version-optimizada.csv).
+Tras fusionar el PR #52 se desplegó la mejora de Pedidos y las cinco consultas de salud volvieron a devolver HTTP 200. El primer sondeo autenticado posterior registró una mediana de 383,6 ms y cuatro de cinco respuestas dentro del umbral. El segundo registró una mediana de 312,9 ms y tres de cinco respuestas dentro del umbral. [CSV de la segunda serie](latencia-render-cierre.csv). [CSV autenticado de la versión optimizada](latencia-render-optimizada-2.csv). [Despliegue de la versión optimizada](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/44779614627) · [CSV de la versión optimizada](disponibilidad-version-optimizada.csv).
 
 ## 4. Cierre en Jira
 
@@ -68,6 +68,6 @@ Observaciones:
 
 ## 5. Pendiente de coordinar
 
-- Revisar en los registros de Render la tercera consulta de Pedidos, que tardó 693,4 ms. Repetir la medición autenticada para comprobar si las cinco consultas quedan debajo de 500 ms.
+- Investigar las tres demoras superiores a 500 ms observadas en las dos series autenticadas de Pedidos. Comparar el tiempo total del cliente con el tiempo de atención de la API en una próxima verificación.
 
 [← Volver al índice del Sprint 4](../../README.md)

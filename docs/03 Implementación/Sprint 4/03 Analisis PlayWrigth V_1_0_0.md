@@ -144,7 +144,7 @@ Una tercera serie, entre las 08:38:29 y las 08:38:39, devolvió HTTP 200 en las 
 
 ### Medición del listado de pedidos
 
-El [medidor del repositorio](../../../scripts/measure_render_latency.py) toma cinco muestras del listado de doce pedidos con una cuenta autorizada de Planificación. Se ejecuta desde la raíz del repositorio con `python scripts/measure_render_latency.py`. La contraseña se escribe en la terminal y el programa cierra la sesión al terminar. El archivo `latencia-render.csv` registra endpoint, fecha, estado HTTP, tiempo y cumplimiento del umbral. Para repetir la prueba se puede elegir otro nombre con `--salida`.
+El [medidor del repositorio](../../../scripts/measure_render_latency.py) toma cinco muestras del listado de doce pedidos con una cuenta autorizada de Planificación. Se ejecuta desde la raíz del repositorio con `python scripts/measure_render_latency.py`. La contraseña se escribe en la terminal y el programa cierra la sesión al terminar. El archivo local registra endpoint, estado HTTP, duración y cumplimiento del umbral. En la entrega se publican los resultados sin marcas horarias. Para conservar las series anteriores, cada ejecución debe usar un nombre nuevo con `--salida`.
 
 El equipo ejecutó el medidor en Render con una cuenta de Planificación entre las 09:09:03 y las 09:09:28 del 20/11/2026, hora de Lima. Todas las consultas devolvieron HTTP 200.
 
@@ -187,7 +187,8 @@ El equipo repitió el sondeo con una cuenta de Planificación tras desplegar la 
 | Consulta | Rango | Mediana | Bajo 500 ms |
 |---|---:|---:|---:|
 | Pedidos antes de la optimización | 790,3–952,6 ms | 818,1 ms | 0/5 |
-| Pedidos con la versión optimizada | 300,8–693,4 ms | 383,6 ms | 4/5 |
+| Pedidos con la versión optimizada, primera serie | 300,8–693,4 ms | 383,6 ms | 4/5 |
+| Pedidos con la versión optimizada, segunda serie | 296,0–883,7 ms | 312,9 ms | 3/5 |
 | Salud, primera consulta de la nueva serie | 667,3–667,3 ms | 667,3 ms | 0/1 |
 | Salud, seguimiento de la nueva serie | 222,6–271,7 ms | 250,4 ms | 5/5 |
 
@@ -195,7 +196,7 @@ La mediana observada de Pedidos pasó de **818,1 a 383,6 ms**, una reducción de
 
 ### Seguimiento de la demora
 
-Un sondeo público posterior abrió una conexión por consulta. Las seis solicitudes de salud devolvieron HTTP 200 y tardaron entre **238,4 y 370,1 ms**. La mediana fue **262,0 ms**. En esta serie no se observó una demora como la de la tercera consulta autenticada de Pedidos. La diferencia entre ambos endpoints requiere otra medición autenticada para comprobar si el pico persiste. La causa del pico sigue sin determinarse.
+Un sondeo público posterior abrió una conexión por consulta. Las seis solicitudes de salud devolvieron HTTP 200 y tardaron entre **238,4 y 370,1 ms**. La mediana fue **262,0 ms**. En esta serie no se observó una demora como la de la tercera consulta autenticada de Pedidos. En la segunda serie autenticada las seis consultas de salud devolvieron HTTP 200 y tardaron entre **188,9 y 292,3 ms**. Las cinco consultas de Pedidos también devolvieron HTTP 200. La tercera tardó **688,2 ms** y la cuarta **883,7 ms**. En las dos series de Pedidos con la versión optimizada, **7 de 10** consultas quedaron debajo de 500 ms. Ambas series se conservan para la evaluación. Los tiempos totales desde el cliente dejan sin determinar el origen de las demoras. [CSV de la segunda serie](evidencias/inspeccion05/latencia-render-cierre.csv).
 
 ## Corte técnico de main del 20/11/2026
 

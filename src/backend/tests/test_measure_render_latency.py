@@ -116,3 +116,20 @@ def test_cli_exits_after_showing_help(monkeypatch):
     with pytest.raises(SystemExit) as error:
         runpy.run_path(probe.__file__, run_name="__main__")
     assert error.value.code == 0
+
+
+def test_existing_report_is_preserved_without_prompting_for_credentials(tmp_path, monkeypatch, capsys):
+    probe = load("measure_render_latency")
+    report = tmp_path / "latencia.csv"
+    report.write_text("informe anterior", encoding="utf-8")
+    prompt = MagicMock()
+    monkeypatch.setattr("builtins.input", prompt)
+    monkeypatch.setattr(sys, "argv", ["measure_render_latency", "--salida", str(report)])
+
+    with pytest.raises(SystemExit) as error:
+        probe.main()
+
+    assert error.value.code == 2
+    assert "Elige otro nombre con --salida" in capsys.readouterr().err
+    assert report.read_text(encoding="utf-8") == "informe anterior"
+    prompt.assert_not_called()
