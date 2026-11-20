@@ -121,7 +121,7 @@ Las nueve comprobaciones de salud de esta serie quedaron por debajo de 500 ms. E
 
 El commit `c891e50` de `main`, incorporado a la rama de entrega, aprobó la compilación y la suite integrada en GitHub Actions. La ejecución conserva el artefacto `inspection5-test-evidence`. El workflow de despliegue automático asociado registró el estado `skipped`. [Ejecución Tests](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/44727968413) · [Evidencia de pruebas](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/44727968413/artifacts/14625770760) · [Deploy production](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/44728838200).
 
-El 20/11/2026, cerca de las 07:42 (hora de Lima), el endpoint público de salud devolvió HTTP 200 y `status: ok` en cuatro consultas. La primera tardó 22 842 ms. Las tres consultas posteriores registraron 269,9 ms, 225,2 ms y 557,8 ms. La serie comprueba la respuesta de la instancia pública durante ese intervalo. Quedan por verificar el commit servido y los tiempos de los endpoints autenticados. [Endpoint de salud](https://ecologistica-lima-qolz.onrender.com/health).
+El 20/11/2026, cerca de las 07:42 (hora de Lima), el endpoint público de salud devolvió HTTP 200 y `status: ok` en cuatro consultas. La primera tardó 22 842 ms. Las tres consultas posteriores registraron 269,9 ms, 225,2 ms y 557,8 ms. La serie comprueba la respuesta de la instancia pública durante ese intervalo. La versión desplegada se debe contrastar con el registro de Render. [Endpoint de salud](https://ecologistica-lima-qolz.onrender.com/health).
 
 ### Seguimiento de latencia en Render
 
@@ -146,7 +146,15 @@ Una tercera serie, entre las 08:38:29 y las 08:38:39, devolvió HTTP 200 en las 
 
 El [medidor del repositorio](../../../scripts/measure_render_latency.py) toma cinco muestras del listado de doce pedidos con una cuenta autorizada de Planificación. Se ejecuta desde la raíz del repositorio con `python scripts/measure_render_latency.py`. La contraseña se escribe en la terminal y el programa cierra la sesión al terminar. El archivo `latencia-render.csv` registra endpoint, fecha, estado HTTP, tiempo y cumplimiento del umbral. Para repetir la prueba se puede elegir otro nombre con `--salida`.
 
-El medidor se verificó en un entorno local con una sesión de prueba. La medición autenticada en Render queda pendiente de ejecución con una cuenta del equipo.
+El equipo ejecutó el medidor en Render con una cuenta de Planificación entre las 09:09:03 y las 09:09:28 del 20/11/2026, hora de Lima. Todas las consultas devolvieron HTTP 200.
+
+| Consulta | Muestras | Mediana | Rango | Bajo 500 ms |
+|---|---:|---:|---:|---:|
+| Primera consulta de salud | 1 | 824,1 ms | 824,1 ms | 0/1 |
+| Seguimiento de salud | 5 | 634,2 ms | 561,2–670,7 ms | 0/5 |
+| Listado autenticado de pedidos | 5 | 818,1 ms | 790,3–952,6 ms | 0/5 |
+
+La serie acredita la disponibilidad durante esa ventana y deja pendiente el objetivo de latencia. Los tiempos incluyen el recorrido de red. Para determinar dónde se produce la demora, se requiere contrastar el CSV con los registros de Render. [Muestras del equipo](evidencias/inspeccion05/latencia-render.csv).
 
 ## Corte técnico de main del 20/11/2026
 

@@ -73,9 +73,9 @@ La grabación queda en `src/frontend/test-results/` y el reporte navegable en `s
 | Nueva evaluación SUS | Excluida por indicación expresa del usuario; se conserva intacta la medición histórica. |
 | Render y despliegue productivo | El análisis Playwright registra las comprobaciones públicas. El despliegue automático queda por acreditar. |
 | Aceptación de las historias | US-003, US-004 y US-005 aceptadas expresamente por Ore Campos, Josef Pablo, Líder del Proyecto, en revisión asíncrona del commit `8e11664`. [Acta](09%20Acta%20de%20revision%20y%20aceptacion%20V_1_0_0.md). |
-| Estado actual de Jira | No consultado en vivo. La correspondencia está confirmada por capturas versionadas; Atlassian requiere conexión para leer el tablero actual. |
+| Estado actual de Jira | El equipo verificó los tickets 17, 18 y 22 en la vista Lista de Jira. Los tres figuran como «Listo». [Captura y enlaces](evidencias/inspeccion05/resumen-pruebas-sprint4.md#4-cierre-en-jira). |
 
-La aceptación se recibió después de publicar el paquete y quedó registrada en el [acta de revisión asíncrona](09%20Acta%20de%20revision%20y%20aceptacion%20V_1_0_0.md). No se comunicaron observaciones adicionales. Se conserva la decisión del usuario sin atribuir una reunión, firmas ni asistencia de terceros; Jira mantiene su estado externo sin consultar.
+La aceptación se recibió después de publicar el paquete y quedó registrada en el [acta de revisión asíncrona](09%20Acta%20de%20revision%20y%20aceptacion%20V_1_0_0.md). No se comunicaron observaciones adicionales. El acta registra el acuerdo del líder. La captura posterior de Jira documenta el estado de los tres tickets.
 
 ## Control de versiones
 

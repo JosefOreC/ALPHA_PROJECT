@@ -1,10 +1,18 @@
-class DriverAlreadyExistsError(Exception):
-    """Se lanza cuando el DNI ya está registrado."""
+DUPLICATE_DRIVER_MESSAGES = {
+    "dni": "El DNI ingresado ya corresponde a un conductor registrado en el sistema",
+    "licencia": "La licencia ingresada ya corresponde a otro conductor registrado en el sistema",
+    "vehiculo": "El vehículo seleccionado ya está asignado a otro conductor",
+    "usuario": "La cuenta de acceso seleccionada ya está vinculada a otro conductor",
+    "datos": "Ya existe un conductor con el mismo DNI, licencia, vehículo o cuenta de acceso",
+}
 
-    def __init__(self):
-        super().__init__(
-            "El DNI ingresado ya corresponde a un conductor registrado en el sistema"
-        )
+
+class DriverAlreadyExistsError(Exception):
+    """Se lanza cuando un dato único del conductor (DNI, licencia, vehículo o cuenta) ya está en uso."""
+
+    def __init__(self, field: str = "dni"):
+        self.field = field if field in DUPLICATE_DRIVER_MESSAGES else "datos"
+        super().__init__(DUPLICATE_DRIVER_MESSAGES[self.field])
 
 
 class DriverNotFoundError(Exception):

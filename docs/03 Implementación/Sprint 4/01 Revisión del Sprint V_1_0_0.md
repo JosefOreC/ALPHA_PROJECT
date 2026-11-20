@@ -26,6 +26,8 @@ El banco técnico ejecutó el acceso, el registro de pedidos y la confirmación 
 
 La evaluación de uso reunió cinco cuestionarios y obtuvo un promedio SUS actualizado de 83,0. El informe conserva los perfiles declarados, las observaciones sobre el acceso y la lectura de rutas. Los roles asignados a las cuentas institucionales figuran en el análisis de pruebas. [Informe de usabilidad](04%20Usabilidad%20V_1_0_0.md) · [Cuentas utilizadas](03%20Analisis%20PlayWrigth%20V_1_0_0.md#cuentas-utilizadas-por-el-equipo).
 
+La comprobación manual en Render asignó dos pedidos al mismo conductor y siguió uno de ellos hasta su entrega. El estado «Entregado» quedó visible desde Planificación y el avance del conductor pasó a 1 de 2. [Recorrido y capturas](evidencias/inspeccion05/resumen-pruebas-sprint4.md).
+
 ### Guion para la sesión de cierre
 
 | Paso | Criterio de aceptación que se mostrará | Evidencia que se conservará |
@@ -46,7 +48,7 @@ El [registro de cierre](08%20Cierre%20tecnico%20y%20trazabilidad%20V_1_0_0.md) r
 | Aceptación de las historias | **3/3 aceptadas** por Ore Campos, Josef Pablo, Líder del Proyecto, en revisión asíncrona del commit `8e11664`. [Acta](09%20Acta%20de%20revision%20y%20aceptacion%20V_1_0_0.md). |
 | SUS y Render | El registro de cuentas y el sondeo público corresponden a la actualización de la rama de entrega. [Verificación de la versión integrada](03%20Analisis%20PlayWrigth%20V_1_0_0.md#verificación-de-la-versión-integrada). |
 
-El líder confirmó por escrito la aceptación de las tres historias. Los videos muestran los recorridos ejecutados por las pruebas automatizadas. La revisión del estado de los tickets requiere acceso a Jira.
+El líder confirmó por escrito la aceptación de las tres historias. Los videos muestran los recorridos de las pruebas automatizadas. El equipo comprobó que los tickets 17, 18 y 22 aparecen como «Listo» en la vista Lista de Jira. [Captura y enlaces de las historias](evidencias/inspeccion05/resumen-pruebas-sprint4.md#4-cierre-en-jira).
 
 ## Control de versiones
 

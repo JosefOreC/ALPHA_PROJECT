@@ -31,7 +31,7 @@ No se comunicaron observaciones adicionales en la respuesta de aceptación. Se c
 
 ## Alcance y seguimiento
 
-La decisión formaliza la aceptación de las tres historias en la versión revisada. La comprobación del estado actual de los tickets en Jira sigue pendiente.
+La decisión formaliza la aceptación de las tres historias en la versión revisada. El equipo comprobó posteriormente que los tres tickets figuran como «Listo». [Captura de Jira](evidencias/inspeccion05/resumen-pruebas-sprint4.md#4-cierre-en-jira).
 
 Los videos son una demostración técnica automatizada del producto. Esta acta documenta la conformidad posterior recibida por conversación; no atribuye una reunión presencial, asistentes adicionales ni una grabación de esa conversación. La identificación y el rol son los declarados por el usuario. No se presenta como firma digital ni certificación de identidad.
 

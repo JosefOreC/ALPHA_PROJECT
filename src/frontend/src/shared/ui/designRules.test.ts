@@ -53,8 +53,11 @@ describe('sistema de diseño', () => {
   it('no hay fuentes sueltas: la identidad es Geist por las variables del sistema', () => {
     expect(offenders(/font-family|fontFamily/)).toEqual([])
     const html = readFileSync(join(FRONTEND, 'index.html'), 'utf8')
-    expect(html).toContain('family=Geist:')
-    expect(html).toContain('family=Geist+Mono:')
+    // La CSP de producción solo admite fuentes propias (font-src 'self'): Geist se empaqueta con @fontsource.
+    expect(html).not.toMatch(/fonts\.(googleapis|gstatic)\.com/)
+    const entry = readFileSync(join(SRC, 'main.tsx'), 'utf8')
+    expect(entry).toContain("@fontsource/geist/400.css")
+    expect(entry).toContain("@fontsource/geist-mono/400.css")
     expect(html).not.toMatch(/Inter|Plus\+Jakarta|JetBrains/)
     const tokens = readFileSync(join(SRC, 'shared/ui/tokens.css'), 'utf8')
     expect(tokens).toMatch(/--font-sans: Geist/)

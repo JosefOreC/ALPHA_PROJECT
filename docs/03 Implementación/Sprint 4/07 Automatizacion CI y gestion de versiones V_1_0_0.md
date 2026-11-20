@@ -53,7 +53,7 @@ En la verificación local posterior, las tres cargas de Pedidos y dos de Acceso 
 2. Revisar los enlaces desde el README y los índices de la documentación. Los nombres V_1_0_0 identifican los documentos solicitados en la consigna.
 3. Publicar la rama y revisar en Actions las ejecuciones asociadas al commit de entrega. Abrir el artefacto de Tests para consultar el reporte de navegador.
 4. Para acreditar el despliegue automático, el responsable del repositorio guarda la clave de Render como `RENDER_API_KEY` en los secretos del entorno `production`. La URL y el identificador del servicio ya figuran entre las variables del repositorio.
-5. Con el servicio del curso confirmado, se habilita `PRODUCTION_DEPLOY_ENABLED` y se ejecuta Tests a partir de una actualización autorizada de `main`. GitHub solicita a Render la versión que aprobó Tests y conserva el enlace a esa versión junto con cinco comprobaciones de salud. [Configuración de producción](03%20Analisis%20PlayWrigth%20V_1_0_0.md#transición-a-operaciones) · [Creación de la clave en Render](https://render.com/docs/api#setup).
+5. Con el servicio del curso confirmado, se habilita `PRODUCTION_DEPLOY_ENABLED` y se ejecuta Tests sobre la versión vigente de `main`. Se puede repetir la ejecución de ese commit o esperar el siguiente cambio autorizado en la rama. GitHub solicita a Render la versión que aprobó Tests y conserva cinco comprobaciones de salud. Para cerrar la revisión se compara la versión activa con la versión aprobada y se adjunta el enlace de la ejecución con su artefacto. [Configuración de producción](03%20Analisis%20PlayWrigth%20V_1_0_0.md#transición-a-operaciones) · [Creación de la clave en Render](https://render.com/docs/api#setup).
 
 ## Control de versiones del documento
 
