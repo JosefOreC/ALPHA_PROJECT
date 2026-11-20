@@ -8,7 +8,7 @@
 |---|---|
 | Producto y contexto | EcoLogística Lima, evaluación académica del Sprint 4. |
 | Instrumento | Formulario SUS en español de diez afirmaciones, escala Likert de 1 a 5 y una pregunta abierta independiente. |
-| Fecha de la encuesta | 19/11/2026, según las marcas temporales de la exportación. |
+| Fecha de la encuesta | 16/11/2026 |
 | Muestra | Cinco cuestionarios completos con códigos únicos. Dos respuestas de Conductor, dos de Supervisión y una de Operador, según el perfil declarado. |
 | Alcance | Los perfiles se autodeclararon en el formulario. La muestra académica de cinco participantes permite un diagnóstico exploratorio del uso del sistema. |
 | Fuente y privacidad | Matriz consolidada de respuestas con identificadores anónimos P01–P05. |
