@@ -6,7 +6,7 @@
 
 **Revisión técnica y documental:** Ore Campos, Josef Pablo; Cueva Ricse, Alex.
 
-**Actualización:** 13/11/2026, America/Lima (UTC−05:00).
+**Actualización:** 20/11/2026, America/Lima (UTC−05:00).
 
 Este índice reúne la auditoría técnica y las evidencias de la Inspección 5. Los resultados históricos se conservan con su entorno y su versión.
 
@@ -73,7 +73,7 @@ Validación local del 20/11/2026:
 
 CI y Tests ahora se activan en todas las ramas. Tests ejecuta la suite integrada en Chromium, Firefox y WebKit, añade la regresión visual/funcional de escritorio y móvil y conserva sus artefactos. El escenario de pedidos ahora registra desde el formulario, y el escenario administrativo recorre roles, permisos y simulación con el producto real. Los benchmarks de salud y listado exigen menos de 500 ms en ese entorno. El despliegue sigue reservado a `main` después de Tests.
 
-La ejecución remota del nuevo código, el despliegue automático, la medición de la API operativa pública, el acta y la demostración con stakeholders siguen pendientes de acreditación. El cuestionario SUS mantiene su resultado histórico; la matriz cuenta ahora con [CSV reproducible](evidencias/inspeccion05/respuestas-sus.csv) y [cálculo verificado](evidencias/inspeccion05/sus-calculado.json). Estos archivos transcriben el informe existente y no sustituyen la exportación original del formulario.
+Al finalizar este primer corte local quedaron pendientes la ejecución remota, el despliegue automático, la medición de la API operativa pública, el acta y la demostración con stakeholders. La verificación remota posterior se registra más abajo. El cuestionario SUS mantiene su resultado histórico; la matriz cuenta ahora con [CSV reproducible](evidencias/inspeccion05/respuestas-sus.csv) y [cálculo verificado](evidencias/inspeccion05/sus-calculado.json). Estos archivos transcriben el informe existente y no sustituyen la exportación original del formulario.
 
 ## Validación nativa posterior, sin Docker local
 
@@ -92,6 +92,16 @@ Son muestras locales; no acreditan latencia de producción. [Recibo integrado](e
 La comprobación pública posterior registró un timeout inicial de la página, cinco respuestas correctas de salud entre 301,08 y 7303,84 ms y respuestas 401 en sesión y pedidos sin autenticación. Tres de las cinco muestras de salud fueron menores a 500 ms; la serie pública completa no cumple ese umbral. [Comprobación pública](evidencias/correcciones/validacion-publica-sin-docker.json).
 
 El uso de Docker quedó autorizado únicamente en CI/CD remoto. Se creó el entorno `production` de GitHub y se configuraron `RENDER_SERVICE_ID` y `PRODUCTION_URL` con el servicio existente. El secreto `RENDER_API_KEY` y la acreditación del despliegue automático permanecen pendientes. La evidencia de aceptación del sprint y una nueva evaluación con usuarios siguen requiriendo una sesión real. Los resultados técnicos y el cuestionario histórico no sustituyen esa aceptación.
+
+## Verificación remota del corte 2ae9658
+
+El commit funcional `2ae965828db443d8eaf6a0b2e10f84e625cdc801` aprobó [CI](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/44693873079) y [Tests](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/44693873193) en GitHub Actions. El job incluyó compilación de la imagen, backend con PostGIS real, pruebas E2E en tres navegadores, regresión de interfaz de escritorio/móvil y cobertura de frontend. El [recibo remoto](evidencias/correcciones/validacion-remota.json) se obtuvo de los artefactos descargados de esa ejecución.
+
+El JUnit remoto registra **472 resultados aprobados**: 436 pruebas y 36 subpruebas, sin fallos, errores ni omisiones. Playwright registra **12 casos integrados aprobados**, sin omisiones ni reintentos. La cobertura remota fue 90,20 % de ramas, 97,01 % de líneas, 95,06 % de funciones y 95,34 % de sentencias.
+
+La primera ejecución detectó una fuga de configuración en una prueba de entorno; se corrigió restaurando `DATABASE_URL` y seleccionando explícitamente `ECOLOGISTICA_ENV_FILE` en CI. Las ejecuciones enlazadas corresponden al corte corregido.
+
+Docker se usó únicamente en los runners remotos, conforme a la autorización. Por indicación posterior del usuario, la conexión con Render, la credencial de despliegue y la fusión a `main` permanecen en espera. No se ha acreditado ni ejecutado un nuevo despliegue productivo desde esta rama.
 
 ## Resultados al cierre
 

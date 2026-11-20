@@ -1,0 +1,42 @@
+{
+  "commit": "2ae965828db443d8eaf6a0b2e10f84e625cdc801",
+  "branch": "feature/sprint4/correcciones",
+  "ci": {
+    "run_id": 44693873079,
+    "conclusion": "success",
+    "url": "https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/44693873079"
+  },
+  "tests": {
+    "run_id": 44693873193,
+    "conclusion": "success",
+    "url": "https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/44693873193"
+  },
+  "artifact": {
+    "id": 14609772967,
+    "name": "inspection5-test-evidence",
+    "size_bytes": 4442448
+  },
+  "docker_local_used": false,
+  "docker_remote_authorized": true,
+  "render_deployment": "On hold at user request; no merge to main.",
+  "backend_junit": {
+    "tests": 472,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "e2e_stats": {
+    "startTime": "2026-11-20T07:19:58.750Z",
+    "duration": 42185.367999999995,
+    "expected": 12,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "frontend_coverage": {
+    "statements": 95.34,
+    "branches": 90.2,
+    "functions": 95.06,
+    "lines": 97.01
+  }
+}
