@@ -333,6 +333,7 @@ Evidencias de Jira: [evidencias-jira/](docs/02%20Planificaci%C3%B3n/evidencias-j
 | [Sprint 1](docs/03%20Implementaci%C3%B3n/Sprint%201/README.md) | Informe, impedimentos, revisión por criterios y retrospectiva, con una sola edición vigente por documento. |
 | [Sprint 2](docs/03%20Implementaci%C3%B3n/Sprint%202/README.md) | Informe, impedimentos, revisión por criterios, retrospectiva y auditoría de coherencia, con una sola edición vigente por documento. |
 | [Sprint 3](docs/03%20Implementaci%C3%B3n/Sprint%2003/README.md) | Revisión, retrospectiva, calidad de código (SonarQube), seguridad OWASP Top 10 2025 y accesibilidad WCAG. |
+| [Reducción del impacto ambiental](docs/03%20Implementaci%C3%B3n/reduccion%20del%20impacto%20ambiental/README.md) | Estándares de ingeniería de software (ISO/IEC 25010, Green Software Foundation y W3C WSG), guía de desarrollo verde, informe de reducción del impacto ambiental (en redacción) y automatización CI/CD con Lighthouse CI y versión `v1.0.0`. |
 | [Guías técnicas](docs/03%20Implementaci%C3%B3n/Gu%C3%ADas%20t%C3%A9cnicas/README.md) | Las seis guías y sus evidencias, sin copias activas en development. |
 
 ### Guías técnicas de implementación
@@ -346,6 +347,7 @@ Evidencias de Jira: [evidencias-jira/](docs/02%20Planificaci%C3%B3n/evidencias-j
 | [Mapa visual de Lima](docs/03%20Implementaci%C3%B3n/Gu%C3%ADas%20t%C3%A9cnicas/Mapa%20visual%20de%20Lima.md) | Capas, navegación restringida y evidencias cartográficas. |
 | [CRUD de pedidos](docs/03%20Implementaci%C3%B3n/Gu%C3%ADas%20t%C3%A9cnicas/CRUD%20de%20pedidos.md) | Alcance, decisiones, API, pruebas y evidencia del módulo de pedidos. |
 | [Confirmación de pedidos](docs/03%20Implementaci%C3%B3n/Gu%C3%ADas%20t%C3%A9cnicas/Confirmacion%20de%20pedidos.md) | Consulta y confirmación de entrega del conductor. |
+| [Guía de estilo documental](docs/03%20Implementaci%C3%B3n/Gu%C3%ADas%20t%C3%A9cnicas/Gu%C3%ADa%20de%20estilo%20documental.md) | Estructura, redacción formal, sintaxis Markdown y validación automática de la documentación. |
 | [Roadmap](development/roadmap.md) | Incrementos, dependencias y alcance final. |
 | [Backlog](development/backlog.md) | Historias, enablers y tareas técnicas trazables. |
 | [Criterios de calidad](development/calidad.md) | Definition of Ready, Definition of Done y gates de PMV. |
@@ -363,6 +365,10 @@ Evidencias de Jira: [evidencias-jira/](docs/02%20Planificaci%C3%B3n/evidencias-j
 |----------|-------------|
 | [.gitignore](.gitignore) | Exclusiones para React/Node, Python/FastAPI, entornos virtuales, secretos, pruebas y temporales. |
 | [.env.example](.env.example) | Plantilla de variables de entorno sin credenciales reales. |
+| [.github/workflows/green-audit.yml](.github/workflows/green-audit.yml) | Auditoría automatizada Lighthouse CI (rendimiento, accesibilidad, buenas prácticas y SEO). |
+| [lighthouserc.json](lighthouserc.json) | Configuración de Lighthouse CI: URL auditada, ejecuciones y umbrales. |
+| [CHANGELOG.md](CHANGELOG.md) | Registro de cambios por versión semántica (actual: `v1.0.0`). |
+| [VERSION](VERSION) | Versión semántica vigente del proyecto. |
 | [src/frontend/README.md](src/frontend/README.md) | Guía del frontend. |
 | [src/backend/README.md](src/backend/README.md) | Guía del backend. |
 

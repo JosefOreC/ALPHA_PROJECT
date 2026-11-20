@@ -1,0 +1,16 @@
+// Validación de sintaxis Markdown (ver docs/03 Implementación/Guías técnicas/Guía de estilo documental.md).
+{
+  "config": {
+    "default": true,
+    // Párrafos y tablas en español superan los 80 caracteres; no afecta la visualización.
+    "MD013": false,
+    // Alineación de barras en el texto fuente; el número de columnas se valida con MD056.
+    "MD060": false,
+    "MD024": { "siblings_only": true }
+  },
+  "globs": [
+    "docs/03 Implementación/reduccion del impacto ambiental/**/*.md",
+    "docs/03 Implementación/Guías técnicas/Guía de estilo documental.md",
+    "docs/03 Implementación/Guías técnicas/README.md"
+  ]
+}

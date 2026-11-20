@@ -2,7 +2,7 @@
 
 La lectura estática actual encuentra API común en `src/backend/interfaces/api/deps.py`, sesiones PostgreSQL en `src/backend/infrastructure/security.py`, adaptadores SQL y endpoints de portal. Las afirmaciones anteriores de ausencia de autenticación, PostgreSQL o API HTTP corresponden al diagnóstico fechado, no al estado actual. No se ejecutaron suites, base de datos ni despliegue en esta edición. Permanecen pendientes seguridad completa, migraciones/recuperación, motor VRPTW, despacho, GPS/ETA operativos, factores ambientales y aceptación.
 
-Estado detallado: [impedimentos vigentes](../docs/03%20Implementaci%C3%B3n/Sprint%202/02%20Registro%20de%20Impedimentos%20V_1_5_0.md) y [revisión por criterios](../docs/03%20Implementaci%C3%B3n/Sprint%202/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_4_0.md).
+Estado detallado: [impedimentos vigentes](../docs/03%20Implementaci%C3%B3n/Sprint%202/02%20Registro%20de%20Impedimentos%20V_1_6_0.md) y [revisión por criterios](../docs/03%20Implementaci%C3%B3n/Sprint%202/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_4_0.md).
 
 ---
 
@@ -47,6 +47,8 @@ El planning histórico de Jira incluía US-004 y sumaba 21 SP. Aquí su cierre i
 
 ## Sprint 3 — mapa, indicadores, sostenibilidad y tráfico
 
+**Estado al 30/10/2026:** cerrado con aceptación de US-010, US-011, EN-02 y EN-05 (20 SP) y observaciones no bloqueantes. El resto del PMV-3 (US-006 a US-009 y EN-04) no se declara terminado y queda para la planificación del Sprint 4.
+
 **Duración propuesta:** semanas relativas 8–11, 4 semanas, con review intermedia al final de semana 9. **PMV-3.**
 
 **Objetivo:** supervisar las mismas rutas y entregas en mapa/dashboard y consultar resultados ambientales trazables.
@@ -71,7 +73,7 @@ El planning histórico de Jira incluía US-004 y sumaba 21 SP. Aquí su cierre i
 |---|---|---|
 | EN-01 avanzado, RN-003–005 y T-06/07 | Primer bloque | Capacidad/ventanas obligatorias, CO₂ secundario, zonas/restricciones y ≤45 s P95. |
 | EN-04 y T-07 | Tras contratos de evento | Reoptimización <30 s, avance preservado, aviso y caso sin alternativa. |
-| EN-03, EN-05, EN-06 y T-08 | Durante el sprint | Accesibilidad/reintentos, carga, failover, monitoreo, recuperación y análisis de seguridad. |
+| EN-03, EN-06 y T-08; observaciones de EN-05 | Durante el sprint | Accesibilidad/reintentos, carga, failover, monitoreo, recuperación y análisis de seguridad. |
 | T-10 y regresión integral | Último bloque | Manuales, API, instalación desde checkout limpio, evidencia y aceptación final. |
 
 **Demo:** flujo integral e incidencia con cambio de ruta; reproducción de carga y recuperación. **Cierre:** checklist de release, versión/tag sobre commit aceptado y acta con limitaciones pendientes. No etiquetar una versión final si quedan gates comprometidos sin resolver o sin excepción de alcance registrada.

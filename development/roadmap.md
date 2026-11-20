@@ -1,6 +1,6 @@
 # Hoja de ruta de todo el desarrollo
 
-Estado: propuesta de ejecución al **08/10/2026**. Consultar [estado actual](estado-actual.md) antes de marcar un hito como terminado.
+Estado: propuesta de ejecución al **08/10/2026**; actualización documental al **30/10/2026**. Consultar [estado actual](estado-actual.md) antes de marcar un hito como terminado. El Sprint 3 cerró US-010, US-011, EN-02 y EN-05; el resto del PMV-3 se replanifica al Sprint 4.
 
 ## Resultado buscado
 
@@ -101,7 +101,7 @@ RF-008/RF-009 tentativos, facturación, fotos, firmas y nuevas integraciones per
 
 La capacidad se decide por sprint usando disponibilidad real y trabajo restante; los puntos originales no son horas ni estimaciones automáticas de tareas. El presupuesto académico modela 700 horas en 14 semanas; no debe confundirse con la inversión referencial del cliente. Cada review registra consumo, costos de APIs/hosting y cambios de alcance.
 
-El siguiente paso es el bloque de coordinación en [task.md](task.md), seguido de la recuperación de PMV-1 y PMV-2. Tener ramas con `spr2` o UI con `spr3` no prueba que esos sprints estén aceptados.
+El estado de ejecución y las brechas abiertas se mantienen en [estado-actual.md](estado-actual.md); el trabajo inmediato, en [task.md](task.md). Al 30/10/2026 el Sprint 3 se cerró con aceptación y observaciones no bloqueantes y el resto del PMV-3 se replanifica al Sprint 4; la aceptación final del producto sigue pendiente.
 
 
 [← Volver al índice correspondiente](README.md)

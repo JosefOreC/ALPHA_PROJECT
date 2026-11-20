@@ -4,7 +4,7 @@
 
 **Versión del documento:** V_2_2_0
 
-**Actualización documental:** 29/10/2026. No es fecha de reunión ni de aceptación.
+**Actualización documental:** 30/10/2026. No es fecha de reunión ni de aceptación.
 
 **Estado:** compromisos preventivos acordados por el equipo; asistieron los cinco integrantes.
 
@@ -57,7 +57,7 @@ Usar las [guías técnicas](../Gu%C3%ADas%20t%C3%A9cnicas/README.md) para arranq
 | V_1_1_0 | 09/10/2026 | Tovar Sánchez, Carlos Alberto. Se unifica con la retrospectiva de la rama `feature/josef/spr2/auth` (mapa visual, autorización por roles y base de pruebas): una sola tabla de responsables, aprendizajes integrados y acciones sin duplicados. |
 | V_1_2_0 | 09/10/2026 | Tovar Sánchez, Carlos Alberto. Se actualizan los enlaces y se registra que los documentos del Sprint 1 ya fueron corregidos. |
 | V_1_3_0 | 29/10/2026 | Tovar Sánchez, Carlos Alberto. Corrige afirmaciones que `main` ya contradecía (autenticación, persistencia y API única integradas; ramas de Josef en `main` sin Pull Request), actualiza las cifras de pruebas del 29/10, los procesos y tres acciones, y agrega el aprendizaje sobre contrastar los documentos con `main`. |
-| V_1_0_0 | 09/10/2026 | Aprendizajes iniciales sobre mapa, roles y preparación de datos. |
+| V_1_0_0 | 09/10/2026 | Retrospectiva de la rama `feature/josef/spr2/auth`. Aprendizajes iniciales sobre mapa, roles y preparación de datos. |
 | V_2_0_0 | 09/10/2026 | Incorpora diagnóstico del login y entorno, persistencia, administración, distribución visual y filtros; revisa aprendizajes y acciones siguientes. |
 | V_2_1_0 | 29/10/2026 | Rojas Camayo, Valentino Jhan Pierre (PR #25). Actualización documental; pendiente de revisión del equipo. Compromisos preventivos propuestos con problema, responsable pendiente, frecuencia y comprobación; fuentes históricas conservadas. |
 | V_2_2_0 | 30/10/2026 | Tovar Sánchez, Carlos Alberto. Documento único vigente: se unifican las dos retrospectivas anteriores y se retira la carpeta Histórico. |
