@@ -201,3 +201,25 @@ def test_route_chunks_preserve_continuity_without_duplicate_junctions(monkeypatc
 def test_road_proposal_requires_orders():
     with pytest.raises(ValueError, match='pedidos pendientes'):
         road.road_proposal([], FLEET, (-12., -77.), DIESEL, CONFIG, SETTINGS, START)
+
+
+def test_road_proposal_rechecks_windows_after_actual_geometry(monkeypatch):
+    monkeypatch.setattr(road, 'simulate', lambda *a, **kw: None)
+    with pytest.raises(ValueError, match='ventanas'):
+        road.road_proposal([order('A', -76.99)], FLEET, (-12., -77.), DIESEL,
+                           CONFIG, SETTINGS, START, TestRoadRouter())
+
+
+def test_route_rejects_gap_between_provider_chunks(monkeypatch):
+    router = road.ValhallaRouter()
+    points = [(-12., -77. + index * .001) for index in range(22)]
+    def request(action, payload):
+        locations = payload['locations']
+        coordinates = [[p['lon'], p['lat']] for p in locations]
+        if len(locations) < 20:
+            coordinates[0][0] += .001
+        return {'routes': [{'geometry': {'coordinates': coordinates},
+                            'legs': [{'distance': 100, 'duration': 60}] * (len(locations) - 1)}]}
+    monkeypatch.setattr(router, 'request', request)
+    with pytest.raises(RoadServiceUnavailable, match='continuo'):
+        router.route(points, 'shortest')
