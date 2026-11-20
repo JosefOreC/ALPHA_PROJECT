@@ -198,6 +198,12 @@ La mediana observada de Pedidos pasó de **818,1 a 383,6 ms**, una reducción de
 
 Un sondeo público posterior abrió una conexión por consulta. Las seis solicitudes de salud devolvieron HTTP 200 y tardaron entre **238,4 y 370,1 ms**. La mediana fue **262,0 ms**. En esta serie no se observó una demora como la de la tercera consulta autenticada de Pedidos. En la segunda serie autenticada las seis consultas de salud devolvieron HTTP 200 y tardaron entre **188,9 y 292,3 ms**. Las cinco consultas de Pedidos también devolvieron HTTP 200. La tercera tardó **688,2 ms** y la cuarta **883,7 ms**. En las dos series de Pedidos con la versión optimizada, **7 de 10** consultas quedaron debajo de 500 ms. Ambas series se conservan para la evaluación. Los tiempos totales desde el cliente dejan sin determinar el origen de las demoras. [CSV de la segunda serie](evidencias/inspeccion05/latencia-render-cierre.csv).
 
+### Cómo separar el tiempo de la API del tiempo total
+
+La API añade la cabecera `Server-Timing` a las respuestas correctas de Salud y del listado de Pedidos. La duración empieza al recibir la consulta en la aplicación e incluye el procesamiento hasta preparar las cabeceras de respuesta. En Pedidos incluye la validación de la sesión y el acceso a la base. [Formato Server Timing, W3C](https://www.w3.org/TR/server-timing/).
+
+Desde la raíz del repositorio, ejecutar `python scripts/measure_render_latency.py --diagnostico --salida latencia-render-diagnostico.csv` con una cuenta de Planificación. El CSV separa el tiempo total, la espera hasta recibir las cabeceras y la duración que informó la API. La diferencia entre los dos últimos valores incluye la conexión, el tránsito y las esperas fuera de la aplicación. El campo de tiempo de API queda vacío si el servidor todavía no devuelve la cabecera. En la entrega se publican los tiempos de respuesta sin marcas horarias.
+
 ## Corte técnico de main del 20/11/2026
 
 La suite del commit `64267bd` aprobó 12/12 E2E integrados en tres motores, con persistencia real. El backend integrado registra 534 pruebas y 36 subpruebas sin omisiones. Los reportes remotos, contadores de cobertura y métricas están conservados en el [paquete de cierre](evidencias/cierre-20261120/README.md); el [registro técnico](08%20Cierre%20tecnico%20y%20trazabilidad%20V_1_0_0.md) relaciona los criterios y sus límites.

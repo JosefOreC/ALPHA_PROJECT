@@ -15,17 +15,19 @@ import pytest
 from tests.test_project_scripts import load
 
 
-@pytest.mark.parametrize("content,expected", [
-    (b'{"status":"ok"}', {"status": "ok"}),
-    (b"<!DOCTYPE html>", None),
-    (b"", None),
+@pytest.mark.parametrize("content,expected,server_timing,api_ms", [
+    (b'{"status":"ok"}', {"status": "ok"}, "edge;dur=2, eco_api;dur=32.125, cache", "32.125"),
+    (b"<!DOCTYPE html>", None, "eco_api;dur=invalid", ""),
+    (b"", None, "", ""),
 ])
-def test_requests_use_origin_and_parse_only_json(content, expected):
+def test_requests_use_origin_and_parse_only_json(content, expected, server_timing, api_ms):
     probe = load("measure_render_latency")
     client = MagicMock()
-    client.open.return_value = nullcontext(SimpleNamespace(status=200, read=lambda: content))
-    code, elapsed, payload = probe.request_json(client, "/api/session", method="POST",
-                                                data={"email": "qa@example.invalid"}, csrf="test")
+    client.open.return_value = nullcontext(SimpleNamespace(
+        status=200, read=lambda: content, headers={"Server-Timing": server_timing},
+    ))
+    code, elapsed, payload, timings = probe.request_json(client, "/api/session", method="POST",
+                                                         data={"email": "qa@example.invalid"}, csrf="test")
     sent = client.open.call_args.args[0]
     assert sent.full_url == probe.ORIGIN + "/api/session"
     assert sent.get_method() == "POST"
@@ -33,6 +35,7 @@ def test_requests_use_origin_and_parse_only_json(content, expected):
     assert sent.get_header("X-csrf-token") == "test"
     assert json.loads(sent.data) == {"email": "qa@example.invalid"}
     assert code == 200 and elapsed >= 0 and payload == expected
+    assert timings[0] == api_ms and float(timings[1]) >= 0
     assert probe.NoRedirect().redirect_request(sent, None, 302, "", {}, "/other") is None
 
 
@@ -45,9 +48,10 @@ def test_request_failure_keeps_status_without_response_body(failure, code):
     client = MagicMock()
     client.open.side_effect = failure
 
-    status, elapsed, response = probe.request_json(client, "/health")
+    status, elapsed, response, timings = probe.request_json(client, "/health")
 
     assert status == code and elapsed >= 0 and response is None
+    assert timings == ("", "")
     assert client.open.call_args.args[0].data is None
 
 
@@ -73,6 +77,8 @@ def test_report_validates_latency_and_closes_authenticated_session(
     args = ["measure_render_latency", "--salida", str(output)]
     if mode == "public":
         args.append("--solo-salud")
+    if mode == "private":
+        args.append("--diagnostico")
     monkeypatch.setattr(sys, "argv", args)
     monkeypatch.setattr("builtins.input", lambda _: "qa@example.invalid")
     monkeypatch.setattr(probe, "getpass", lambda _: "" if mode == "missing" else "test password")
@@ -82,15 +88,15 @@ def test_report_validates_latency_and_closes_authenticated_session(
     def request(client, path, *, method="GET", data=None, csrf=None):
         calls.append((method, path))
         if path == "/health":
-            return health
+            return (*health, ("3.500", "180.000"))
         if method == "POST":
             assert data == {"email": "qa@example.invalid", "password": "test password"}
-            return login
+            return (*login, ("", "180.000"))
         if method == "DELETE":
             assert csrf == "token"
-            return logout, 200, None
+            return logout, 200, None, ("", "180.000")
         assert path == probe.ORDERS_PATH
-        return order
+        return (*order, ("62.000", "190.000"))
 
     monkeypatch.setattr(probe, "request_json", request)
     if mode == "missing":
@@ -108,6 +114,10 @@ def test_report_validates_latency_and_closes_authenticated_session(
     assert calls.count(("DELETE", "/api/session")) == (1 if logout else 0)
     if logout:
         assert rows[-1]["endpoint"] == "pedidos"
+        assert rows[-1]["api_ms"] == "62.000"
+        assert rows[-1]["until_headers_ms"] == "190.000"
+    if mode == "public":
+        assert "api_ms" not in rows[0]
 
 
 def test_cli_exits_after_showing_help(monkeypatch):

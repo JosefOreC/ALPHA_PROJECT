@@ -1,6 +1,7 @@
 """Composición común de API y autorización; proveedor de identidad inyectable."""
 import os
 from pathlib import Path
+from time import perf_counter
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
@@ -60,6 +61,18 @@ def create_app(repository=None, authenticate=get_current_identity, protect_mutat
     app.add_middleware(CORSMiddleware, allow_origins=[origin.strip() for origin in origins if origin.strip() and origin.strip() != "*"],
                        allow_credentials=True, allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE"],
                        allow_headers=["Content-Type", "Accept", "X-CSRF-Token", "Authorization"])
+
+    @app.middleware("http")
+    async def measure_read_response(request: Request, call_next):
+        if request.method != "GET" or request.url.path not in {"/health", "/api/pedidos"}:
+            return await call_next(request)
+        start = perf_counter()
+        response = await call_next(request)
+        if response.status_code == 200:
+            duration_ms = (perf_counter() - start) * 1000
+            response.headers.append("Server-Timing", f"eco_api;dur={duration_ms:.3f}")
+        return response
+
     @app.exception_handler(RequestValidationError)
     async def invalid_payload(request: Request, error: RequestValidationError):
         return JSONResponse(status_code=422, content={"detail": [
