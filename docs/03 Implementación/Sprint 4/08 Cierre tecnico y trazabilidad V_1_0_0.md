@@ -10,9 +10,9 @@
 | Rama de entrega | `main`. |
 | Versión productiva auditada | `64267bda5cb81c584ce7250e2d599dffa223cfad`. |
 | Responsable documental del proyecto | Ore Campos, Josef Pablo, según el registro del proyecto. |
-| Ejecución de esta verificación | Automatización de pruebas y conciliación documental realizada con Codex. |
-| Alcance solicitado | Cierre técnico, trazabilidad, multimedia y actualización de evidencias. SUS y Render excluidos por indicación del usuario. |
-| Revisión de aceptación | Asíncrona en esta conversación: Ore Campos, Josef Pablo, Líder del Proyecto, comunica aceptación de las tres historias. No se atribuye una reunión ni asistentes adicionales. |
+| Ejecución de esta verificación | Ejecución automatizada de pruebas y conciliación de las historias con sus evidencias. |
+| Alcance solicitado | Trazabilidad de las historias, demostración técnica y verificación del incremento. El informe SUS y las consultas a Render se publican en la Inspección 5. |
+| Revisión de aceptación | Ore Campos, Josef Pablo, líder del proyecto, comunicó su conformidad con las tres historias en una revisión asíncrona. |
 
 Los informes remotos corresponden al commit auditado. La grabación local incorpora mejoras del arnés E2E posteriores a ese commit: confirmación desde la interfaz y capturas por etapa. Sus dos archivos fuente quedan identificados por SHA-256 en [el recibo de demostración](evidencias/cierre-20261120/demostracion-tecnica.json). Al publicarse este cierre, esos archivos forman parte de la revisión documental y de pruebas posterior.
 
@@ -71,7 +71,7 @@ La grabación queda en `src/frontend/test-results/` y el reporte navegable en `s
 | Integración a main | Ejecutada: [merge 5d272e9](https://github.com/JosefOreC/ALPHA_PROJECT/commit/5d272e9). |
 | Correcciones funcionales y de seguridad | Verificación técnica aprobada según pruebas y SonarCloud enlazados. |
 | Nueva evaluación SUS | Excluida por indicación expresa del usuario; se conserva intacta la medición histórica. |
-| Render y despliegue productivo | Fuera de alcance por indicación expresa; permanece deshabilitado. |
+| Render y despliegue productivo | El análisis Playwright registra las comprobaciones públicas. El despliegue automático queda por acreditar. |
 | Aceptación de las historias | US-003, US-004 y US-005 aceptadas expresamente por Ore Campos, Josef Pablo, Líder del Proyecto, en revisión asíncrona del commit `8e11664`. [Acta](09%20Acta%20de%20revision%20y%20aceptacion%20V_1_0_0.md). |
 | Estado actual de Jira | No consultado en vivo. La correspondencia está confirmada por capturas versionadas; Atlassian requiere conexión para leer el tablero actual. |
 

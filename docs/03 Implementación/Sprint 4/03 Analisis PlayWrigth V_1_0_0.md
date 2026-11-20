@@ -10,7 +10,7 @@ La [configuración e2e](../../../src/frontend/playwright.e2e.config.ts) ejecuta 
 |---|---|---|
 | Acceso y pedidos | 401 para credenciales incorrectas, recuperación tras HTTP 503, sesión de operador, 403 para administración, 422 para pedido inválido, creación, lectura persistida y cierre de sesión. | Reporte por navegador. |
 | Ruta y entrega | Lectura de ruta asignada para un conductor de prueba y confirmación persistida de una parada asignada. | Reporte por navegador. |
-| Resiliencia y disponibilidad | Respuesta de salud, 404 y recuperación del acceso tras un fallo de transporte simulado. | Captura y resultado por navegador. |
+| Resiliencia y disponibilidad | Respuesta de salud, 404 y recuperación del acceso tras un fallo de transporte provocado durante la prueba. | Captura y resultado por navegador. |
 
 ## Rendimiento y disponibilidad
 
@@ -43,7 +43,7 @@ El equipo utilizó seis cuentas institucionales durante las pruebas manuales del
 
 Las cuentas comparten el dominio institucional `continental.edu.pe`. El inventario registra los accesos utilizados por el equipo. El [informe SUS](04%20Usabilidad%20V_1_0_0.md#aplicación-con-el-equipo-del-curso) conserva los perfiles declarados en el formulario y los resultados de los cinco cuestionarios.
 
-### Datos sintéticos para reproducir la demostración
+### Preparación del entorno de demostración
 
 Con `COURSE_DEMO_DATA=true`, establecer `COURSE_DEMO_PASSWORD` en Render con una contraseña nueva de 12 a 256 caracteres y desplegar el último commit. La carga agrega cuentas separadas de las cuentas operativas y tres pedidos ficticios para la fecha de Lima. Cada reinicio durante el mismo día conserva las asignaciones y entregas ya registradas.
 
@@ -122,6 +122,21 @@ Las nueve comprobaciones de salud de esta serie quedaron por debajo de 500 ms. E
 El commit `c891e50` de `main`, incorporado a la rama de entrega, aprobó la compilación y la suite integrada en GitHub Actions. La ejecución conserva el artefacto `inspection5-test-evidence`. El workflow de despliegue automático asociado registró el estado `skipped`. [Ejecución Tests](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/44727968413) · [Evidencia de pruebas](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/44727968413/artifacts/14625770760) · [Deploy production](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/44728838200).
 
 El 20/11/2026, cerca de las 07:42 (hora de Lima), el endpoint público de salud devolvió HTTP 200 y `status: ok` en cuatro consultas. La primera tardó 22 842 ms. Las tres consultas posteriores registraron 269,9 ms, 225,2 ms y 557,8 ms. La serie comprueba la respuesta de la instancia pública durante ese intervalo. Quedan por verificar el commit servido y los tiempos de los endpoints autenticados. [Endpoint de salud](https://ecologistica-lima-qolz.onrender.com/health).
+
+### Seguimiento de latencia en Render
+
+El 20/11/2026 se hicieron seis consultas consecutivas a `/health` desde las 08:08:10 hasta las 08:08:44, hora de Lima. Las seis devolvieron HTTP 200 y `status: ok`. Los tiempos se midieron desde el cliente, incluida la conexión.
+
+| Consulta | Tiempo total | Observación |
+|---|---:|---|
+| Primera | 22 428,9 ms | El primer byte llegó a los 22 428,7 ms. La negociación TLS terminó a los 162,8 ms. |
+| Segunda | 279,6 ms | Dentro del umbral de 500 ms. |
+| Tercera | 226,5 ms | Dentro del umbral. |
+| Cuarta | 250,7 ms | Dentro del umbral. |
+| Quinta | 278,6 ms | Dentro del umbral. |
+| Sexta | 232,5 ms | Dentro del umbral. |
+
+La demora de la primera consulta se concentró en la espera del primer byte. Es compatible con la reactivación de la instancia, pero se necesitan los registros del proveedor en esa hora para confirmarlo. Las cinco consultas posteriores quedaron por debajo de 500 ms. Este sondeo mide el endpoint público durante un intervalo breve. La latencia del listado de pedidos en Render requiere una prueba con sesión autorizada. [Endpoint de salud](https://ecologistica-lima-qolz.onrender.com/health).
 
 ## Corte técnico de main del 20/11/2026
 

@@ -21,7 +21,7 @@ Los recibos conservan HEAD, árbol de trabajo y fechas de ejecución reales. Se 
 
 ## 2. Doce reportes originales de la comparación controlada
 
-Lighthouse 13.6.0, Chromium headless 145.0.7632.6, móvil simulado 412 × 823, RTT 150 ms, throughput 1638,4 Kbps y CPU ×4. Ambos estados usan HTTPS/HTTP/2, el mismo banco FastAPI y 150 pedidos ficticios en memoria. La configuración completa está en cada JSON; la identidad ficticia no se usa fuera del ejecutor local.
+Lighthouse 13.6.0, Chromium headless 145.0.7632.6, perfil móvil de 412 × 823, RTT 150 ms, throughput 1638,4 Kbps y CPU ×4. Ambos estados usan HTTPS/HTTP/2, el mismo banco FastAPI y 150 pedidos ficticios en memoria. La configuración completa está en cada JSON; la identidad ficticia no se usa fuera del ejecutor local.
 
 | Estado | Página | Corrida 1 | Corrida 2 | Corrida 3 |
 |---|---|---|---|---|
@@ -46,7 +46,7 @@ Resúmenes de fase: [antes](https://github.com/JosefOreC/ALPHA_PROJECT/blob/6e36
 | Documentación | [JSON](https://github.com/JosefOreC/ALPHA_PROJECT/blob/6e36e355e0d39c83c5700a83eb0987b6fd849a10/docs/03%20Implementaci%C3%B3n/Sprint%204/evidencias/metricas-bd95dc9/documentacion.json) | [TXT](https://github.com/JosefOreC/ALPHA_PROJECT/blob/6e36e355e0d39c83c5700a83eb0987b6fd849a10/docs/03%20Implementaci%C3%B3n/Sprint%204/evidencias/metricas-bd95dc9/documentacion.txt) | Enlaces, navegación y versiones comprobados. |
 | Markdown | [JSON](https://github.com/JosefOreC/ALPHA_PROJECT/blob/6e36e355e0d39c83c5700a83eb0987b6fd849a10/docs/03%20Implementaci%C3%B3n/Sprint%204/evidencias/metricas-bd95dc9/markdown.json) | [TXT](https://github.com/JosefOreC/ALPHA_PROJECT/blob/6e36e355e0d39c83c5700a83eb0987b6fd849a10/docs/03%20Implementaci%C3%B3n/Sprint%204/evidencias/metricas-bd95dc9/markdown.txt) | Lint de los documentos actuales. |
 
-Las omisiones de backend son integración PostgreSQL/PostGIS explícita, no fallos disimulados. Las pruebas reales de vistas de la entrega anterior siguen en su carpeta histórica. Playwright completó sus casos; para terminar el ejecutor en Windows se detuvo únicamente su Vite PID 24048, puerto 5178, iniciado a las 01:29:32 Lima. La salida final y el código 0 se preservan.
+Los casos omitidos del backend requieren una conexión de pruebas a PostgreSQL/PostGIS. Las pruebas reales de vistas de la entrega anterior siguen en su carpeta histórica. Playwright completó sus casos; para terminar el ejecutor en Windows se detuvo únicamente su Vite PID 24048, puerto 5178, iniciado a las 01:29:32 Lima. La salida final y el código 0 se preservan.
 
 ## 4. Diagnóstico Edge y experimentos
 

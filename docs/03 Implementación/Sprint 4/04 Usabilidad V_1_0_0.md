@@ -35,7 +35,7 @@ La escala abarca de **1, totalmente en desacuerdo**, a **5, totalmente de acuerd
 
 En las pruebas manuales se usaron seis cuentas institucionales con roles asignados por el equipo. El formulario recogió cinco respuestas. Se mantuvieron los perfiles declarados y los identificadores P01–P05 de la matriz. Las diferencias entre el perfil declarado y el rol de acceso limitan la interpretación al conjunto de respuestas. [Cuentas utilizadas por el equipo](03%20Analisis%20PlayWrigth%20V_1_0_0.md#cuentas-utilizadas-por-el-equipo).
 
-Se comprobó que cada fila tenía las diez respuestas y que todos los valores eran enteros entre 1 y 5. Para repetir el cálculo se pueden copiar los valores de la matriz a un CSV de trabajo con encabezado `id,perfil,q1,q2,q3,q4,q5,q6,q7,q8,q9,q10` y procesarlo con el [calculador del repositorio](../../../scripts/score_sus.py).
+Cada fila contiene diez respuestas enteras, de 1 a 5. Una corrección del puntaje requiere actualizar la fila a partir de una nueva exportación y repetir el cálculo. El puntaje individual avanza en intervalos de 2,5 puntos.
 
 ## Reproducción del cálculo
 
@@ -55,7 +55,7 @@ A cada respuesta impar se le resta 1. Para cada respuesta par se calcula `5 − 
 
 En P01, los ítems impares aportaron `(3−1) + (2−1) + (4−1) + (5−1) + (3−1) = 12`. Los pares aportaron `(5−4) + (5−3) + (5−4) + (5−2) + (5−4) = 8`. Su resultado fue `(12 + 8) × 2,5 = 50,0`. Los subtotales de las otras filas permiten comprobar el mismo procedimiento.
 
-**Promedio global** = (50,0 + 92,5 + 57,5 + 80,0 + 82,5) ÷ 5 = **72,5 puntos**. La mediana fue **80,0** y los puntajes se situaron entre **50,0 y 92,5**. El promedio supera en **4,5 puntos** la referencia de 68 y corresponde al **grado C+** en la escala curva de Sauro y Lewis. [Tabla 1 en Lewis y Sauro (2018)](https://uxpajournal.org/wp-content/uploads/sites/7/pdf/JUS_Lewis_May2018.pdf#page=4).
+**Promedio global** = (50,0 + 92,5 + 57,5 + 80,0 + 82,5) ÷ 5 = **72,5 puntos**. La mediana fue **80,0** y los puntajes se situaron entre **50,0 y 92,5**. El promedio supera en **4,5 puntos** la referencia de 68 y corresponde al **grado C+** en la escala curva de Sauro y Lewis. [Escala curva de Sauro y Lewis, explicada por Sauro (2018)](https://measuringu.com/sus-items/).
 
 ## Interpretación y seguimiento
 

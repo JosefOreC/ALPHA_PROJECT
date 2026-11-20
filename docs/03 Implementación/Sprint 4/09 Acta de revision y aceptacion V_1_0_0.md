@@ -31,7 +31,7 @@ No se comunicaron observaciones adicionales en la respuesta de aceptación. Se c
 
 ## Alcance y seguimiento
 
-SUS y Render quedan excluidos por indicación del usuario. No se ejecutó un despliegue ni se modificaron los resultados de la encuesta. La decisión cierra la aceptación documental de las tres historias; el estado actual de los tickets de Jira no se consultó ni modificó.
+La decisión formaliza la aceptación de las tres historias en la versión revisada. La comprobación del estado actual de los tickets en Jira sigue pendiente.
 
 Los videos son una demostración técnica automatizada del producto. Esta acta documenta la conformidad posterior recibida por conversación; no atribuye una reunión presencial, asistentes adicionales ni una grabación de esa conversación. La identificación y el rol son los declarados por el usuario. No se presenta como firma digital ni certificación de identidad.
 

@@ -36,7 +36,7 @@ El ahorro energético y de CO₂e es una estimación SWDM v4 a partir de bytes, 
 
 ## Informes originales Lighthouse
 
-Se probaron login y pedidos con build de producción, FastAPI real y 150 pedidos ficticios en memoria. Lighthouse 13.6.0, Edge 157, perfil móvil y throttling simulado. Se bloquearon por igual fuentes externas y la inyección de recursos kaspersky-labs.com; no se desactivó el antivirus. Los logs del servidor vacíos significan que no emitió mensajes durante la captura.
+Se probaron login y pedidos con build de producción, FastAPI real y 150 pedidos ficticios en memoria. Lighthouse 13.6.0, Edge 157, perfil móvil y limitación de red aplicada por Lighthouse. Se bloquearon por igual fuentes externas y la inyección de recursos kaspersky-labs.com; no se desactivó el antivirus. Los logs del servidor vacíos significan que no emitió mensajes durante la captura.
 
 | Estado | Página | Ejecución 1 | Ejecución 2 | Ejecución 3 |
 |---|---|---|---|---|

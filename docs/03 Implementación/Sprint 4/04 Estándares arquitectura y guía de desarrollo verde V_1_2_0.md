@@ -28,6 +28,8 @@ La rúbrica se aplica mediante equivalencias tecnológicas explícitas. Las proy
 
 ## 2. Matriz de las ocho áreas
 
+Cada fila relaciona una decisión técnica con su implementación y la prueba que la respalda. La matriz de la sección 9 vincula esas decisiones con las características de calidad y los principios de desarrollo verde aplicados.
+
 | Área | Implementación del proyecto | Verificación |
 |---|---|---|
 | 1. Consultas magras e índices | Proyecciones SQL, parámetros enlazados, índices B-tree/GiST y reducción de consultas repetidas | Historial SQL, planes aislados y pruebas de persistencia. |

@@ -46,7 +46,7 @@ El [registro de cierre](08%20Cierre%20tecnico%20y%20trazabilidad%20V_1_0_0.md) r
 | Aceptación de las historias | **3/3 aceptadas** por Ore Campos, Josef Pablo, Líder del Proyecto, en revisión asíncrona del commit `8e11664`. [Acta](09%20Acta%20de%20revision%20y%20aceptacion%20V_1_0_0.md). |
 | SUS y Render | El registro de cuentas y el sondeo público corresponden a la actualización de la rama de entrega. [Verificación de la versión integrada](03%20Analisis%20PlayWrigth%20V_1_0_0.md#verificación-de-la-versión-integrada). |
 
-La conformidad recibida después de publicar el paquete se conserva en el acta y en su transcripción; los videos documentan la demostración técnica disponible para revisión. No se atribuye una reunión presencial ni se modifican estados de Jira.
+El líder confirmó por escrito la aceptación de las tres historias. Los videos muestran los recorridos ejecutados por las pruebas automatizadas. La revisión del estado de los tickets requiere acceso a Jira.
 
 ## Control de versiones
 

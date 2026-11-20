@@ -20,6 +20,8 @@
 
 **Alcance de publicación:** actualización de documentación Markdown. Las implementaciones y las mediciones descritas corresponden al incremento local auditado; sus archivos productivos y nuevos artefactos no se incorporan con esta publicación.
 
+[README principal](../../../README.md) · [Índice del Sprint 4](README.md)
+
 ## 1. Objetivo y alcance
 
 Se evaluó el efecto de las optimizaciones sobre la transferencia de datos y estimamos su consumo energético y emisiones digitales mediante SWDM v4. El análisis corresponde a Acceso y Pedidos; las emisiones de operación de vehículos pertenecen a otro ámbito y no forman parte de este cálculo.

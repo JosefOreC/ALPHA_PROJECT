@@ -18,7 +18,7 @@
 
 **Base de comparación vigente:** `6e36e35`.
 
-**Alcance de publicación:** actualización de documentación Markdown. Las implementaciones y las mediciones descritas corresponden al incremento local auditado; sus archivos productivos y nuevos artefactos no se incorporan con esta publicación.
+La auditoría reúne mediciones locales del 13/11/2026 para las pantallas de Acceso y Pedidos. Las pruebas de disponibilidad pública y los tiempos de API se consultan por separado en el [informe Playwright](03%20Analisis%20PlayWrigth%20V_1_0_0.md).
 
 ## 1. Objetivo y versiones comparadas
 
@@ -35,7 +35,7 @@ El HEAD registrado identifica la base del repositorio. Los cambios medidos todav
 | Navegador | Chromium headless 153.0.8010.12 |
 | Servidor | Hypercorn 0.18.0; HTTPS/HTTP/2 local |
 | Aplicación | Build de producción; API FastAPI real con sesión y 150 pedidos ficticios en memoria |
-| Pantalla simulada | Móvil, 412 × 823 |
+| Perfil de pantalla | Móvil, 412 × 823 |
 | Red / CPU | RTT 150 ms; 1638,4 Kbps; CPU ×4 |
 | Caché | Restablecida por Lighthouse en cada carga |
 | Réplicas | Tres cargas por pantalla y estado: doce reportes para el antes/después |

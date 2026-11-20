@@ -41,12 +41,12 @@ Las responsabilidades siguientes son propuestas de seguimiento documental para e
 | ID y acción SMART | Responsable de seguimiento | Fecha objetivo | Métrica de cierre | Estado al 20/11/2026 |
 |---|---|---|---|---|
 | A-01 Conciliar las tres historias con tickets, commits y pruebas | Josef Pablo Ore Campos, líder documental | 20/11/2026 | 3/3 historias con correspondencia visible en el backlog y pruebas identificadas. | Completada documentalmente: ELODRSPDSC-17, 18 y 22. Estado Jira actual sin consultar. |
-| A-02 Grabar los tres recorridos y conservar capturas, entorno y huellas | Equipo de QA; paquete técnico preparado con Codex | 20/11/2026 | Tres videos reproducibles: pedido, entrega y administración/laboratorio; hashes y recibos. | Completada como demostración técnica, sin atribuir asistentes. |
+| A-02 Grabar los tres recorridos y conservar capturas, entorno y huellas | Equipo de QA | 20/11/2026 | Tres videos reproducibles: pedido, entrega y administración/laboratorio; hashes y recibos. | Completada con los videos y los recibos de ejecución. |
 | A-03 Cerrar las vulnerabilidades y mantener los umbrales de cobertura | Equipo backend/frontend; revisión del líder | 20/11/2026 | Sonar: cero incidencias abiertas y gate OK; líneas y ramas de ambos lenguajes ≥ 90 %. | Completada en `64267bd`, con recibos remotos. |
 | A-04 Registrar decisión humana para las tres historias | Josef Pablo Ore Campos, Líder del Proyecto | 20/11/2026 | Tres decisiones explícitas, responsable y rol, fecha, versión revisada y acta enlazada. | Completada: 3/3 ACEPTADAS en revisión asíncrona. [Acta](09%20Acta%20de%20revision%20y%20aceptacion%20V_1_0_0.md). El estado vivo de Jira permanece sin consultar. |
 | A-05 Investigar los valores de Lighthouse que exceden la serie estricta histórica | Equipo frontend y QA; seguimiento del líder | 24/11/2026, propuesta | Tres nuevas cargas comparables con FCP ≤ 1000 ms, LCP ≤ 1400 ms, TBT ≤ 85 ms y CLS ≤ 0,02, o desviación documentada con trazas y decisión. | Desviación documentada con las tres cargas del runner; no se declara corregida por el job verde. |
 
-SUS y Render no generan tareas de ejecución en este cierre por indicación del usuario. Se conserva su documentación histórica.
+El informe SUS y el seguimiento de Render se actualizan en sus documentos de Inspección 5. [Usabilidad](04%20Usabilidad%20V_1_0_0.md) · [Pruebas y disponibilidad](03%20Analisis%20PlayWrigth%20V_1_0_0.md).
 
 ## Control de versiones
 
