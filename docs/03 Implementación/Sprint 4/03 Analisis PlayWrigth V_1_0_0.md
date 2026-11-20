@@ -62,6 +62,10 @@ La corrida adicional del 19/11/2026 también aprobó los nueve casos. El nuevo e
 
 El 19/11/2026, entre las 15:43:15 y las 15:43:37 (hora de Lima), la [URL pública](https://ecologistica-lima-qolz.onrender.com/) entregó el frontend como HTML con HTTP 200. Las cinco consultas consecutivas a `/health` regresaron HTTP 200 y estado `ok` (**5/5**), con tiempos totales de **243,7 a 645,7 ms**. Dos de las cinco superaron 500 ms. Se trata de una ventana breve posterior al despliegue manual, sin autenticación ni medición de endpoints operativos en Render. [Recibo de disponibilidad](evidencias/inspeccion05/disponibilidad-render.json).
 
+### Ejecución remota del corte técnico
+
+El workflow ejecuta Playwright con FastAPI y PostgreSQL/PostGIS en el runner, antes del control de cobertura de ramas. El reporte navegable se descarga desde la sección de artefactos una vez que GitHub lo publica. La captura histórica y los resultados públicos de la sección siguiente sirven como registros independientes. [Ejecución del corte 628cdf3](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/44679607104).
+
 ### Comprobación pública del 20/11/2026
 
 Se abrieron tres contextos nuevos por motor en Playwright, sin sesión iniciada, con viewport de 1280 × 900 y los tres motores en paralelo desde Windows. Entre las **00:03:27 y 00:03:43**, hora de Lima, la portada mostró el encabezado de acceso en **9/9** cargas con HTTP 200. Después de cada carga se consultó `/health`. Las **9/9** respuestas devolvieron HTTP 200 y `status: ok`. La versión visible del frontend no expone el commit desplegado. [Portada en Render](https://ecologistica-lima-qolz.onrender.com/) · [Endpoint de salud](https://ecologistica-lima-qolz.onrender.com/health).
