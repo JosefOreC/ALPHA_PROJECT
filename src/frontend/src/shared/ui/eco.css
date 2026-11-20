@@ -679,6 +679,10 @@ dialog.eco-dialog--sheet { width: 100%; max-width: 480px; margin: auto auto 0; b
 .eco-map__key--done { width: 18px; height: 4px; border-radius: 2px; background: #8794a4; }
 .eco-map-routes { min-width: 0; }
 .eco-map-routes__heading { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; margin-bottom: 8px; font-size: 13px; }
+.eco-map--confirmed .route:not(.route--done) { display: none; }
+.eco-map--confirmed .route--done { stroke: var(--route-color); }
+.eco-map-routes__progress { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; cursor: pointer; }
+.eco-map-route-choice > strong { overflow: hidden; text-overflow: ellipsis; }
 .eco-map-routes__heading span { font-size: 12px; color: var(--ink-muted); }
 .eco-map-routes__unassigned { font-size: 12px; color: var(--ink-muted); margin: 0 0 8px; }
 .eco-map-routes__choices { display: flex; gap: 8px; max-width: 100%; overflow-x: auto; padding: 3px; scrollbar-width: thin; }

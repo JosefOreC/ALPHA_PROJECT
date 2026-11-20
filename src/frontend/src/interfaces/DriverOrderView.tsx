@@ -5,7 +5,7 @@ import { currentStop, routeProgress, stopNumber } from '../domain/driverRoute'
 import type { DriverRoute } from '../domain/driverRoute'
 import { formatDecimal } from '../domain/format'
 import { formatClock, formatKg, formatWindow, statusLabels } from '../domain/managedOrder'
-import { canConfirm } from '../domain/order'
+import { canConfirm, orderReference } from '../domain/order'
 import type { Order } from '../domain/order'
 import { Banner, DriverBar, DriverTabBar, EntregaIcon, HojaCo2Icon, IncidenciaIcon, TripStatus } from '../shared/ui'
 import type { ModuleId } from '../shared/ui'
@@ -164,8 +164,7 @@ export function DriverOrderView({ service, routeService, orderId, onNavigate, on
 
               <div className="eco-phone__line">
                 <span className="eco-code eco-muted">
-                  {order.id}
-                  {stop ? ` · parada ${stop}` : ''}
+                  {[orderReference(order.id), stop ? `parada ${stop}` : null].filter(Boolean).join(' · ')}
                 </span>
                 <TripStatus status={tripOf[order.status]} label={statusLabels[order.status]} />
               </div>

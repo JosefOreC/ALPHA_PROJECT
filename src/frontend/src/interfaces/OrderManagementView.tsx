@@ -1,3 +1,4 @@
+import { orderReference } from '../domain/order'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import type { Management } from '../application/manageOrders'
 import { TAB_ORDER, filterOrders, groupByStatus, summarize, tabCounts } from '../application/orderBoard'
@@ -285,7 +286,7 @@ export function OrderManagementView({ service, onNavigate }: { service: Manageme
                         >
                           {group.orders.map(order => (
                             <ListRow key={order.id} columns={ROW_COLUMNS} twoLines selected={order.id === selected?.id} onSelect={() => setSelectedId(order.id)}>
-                              <span className="eco-code" title={order.id}>{order.id}</span>
+                              <span className="eco-code" title={orderReference(order.id) ?? undefined}>{orderReference(order.id) ?? '—'}</span>
                               <span className="eco-row__cell">
                                 <span className="eco-row__title">{order.customer}</span>
                                 <span className="eco-row__sub">

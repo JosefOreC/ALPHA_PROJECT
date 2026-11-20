@@ -1,3 +1,4 @@
+import { orderReference } from '../domain/order'
 import { useEffect, useState } from 'react'
 import type { DriverRouteService } from '../application/driverRoute'
 import { currentStop, routeProgress } from '../domain/driverRoute'
@@ -15,10 +16,10 @@ type DriverRouteViewProps = {
 }
 
 function stopMeta(stop: RouteStop) {
-  if (stop.kind === 'done') return `${stop.order_id} · entregado`
-  if (stop.kind === 'now') return `${stop.order_id} · ${stop.address} · ahora`
-  if (stop.kind === 'new') return `${stop.order_id} · nueva parada`
-  return `${stop.order_id} · ${stop.address}`
+  const detail = {
+    done: 'entregado', now: `${stop.address} · ahora`, new: 'nueva parada', next: stop.address,
+  }[stop.kind]
+  return [orderReference(stop.order_id), detail].filter(Boolean).join(' · ')
 }
 
 // «Mi ruta» del conductor: paradas del día, avance y aviso de reoptimización.

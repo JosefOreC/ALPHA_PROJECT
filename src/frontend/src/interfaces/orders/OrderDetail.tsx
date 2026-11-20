@@ -1,3 +1,4 @@
+import { orderReference } from '../../domain/order'
 import type { ReactNode } from 'react'
 import { canEdit, formatKg, formatLima, formatWindow, statusLabels } from '../../domain/managedOrder'
 import type { ManagedOrder } from '../../domain/managedOrder'
@@ -22,7 +23,7 @@ export function OrderDetail({ order, canWrite, busy, onEdit, onCancel, onDispatc
       <div className="eco-sheet__head">
         <div>
           <span className="eco-code eco-muted">
-            {order.id} · {order.district}
+            {[orderReference(order.id), order.district].filter(Boolean).join(' · ')}
           </span>
           <h2 className="eco-sheet__title">{order.customer}</h2>
           <p className="eco-sheet__sub">{order.address}</p>

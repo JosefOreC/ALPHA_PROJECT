@@ -1,5 +1,5 @@
 import type { GeoPoint, MapData, MapSelection, MapVehicle } from './mapData'
-import { orderMatches, vehiclePosition } from './mapData'
+import { doneSegment, mapDriverKey, orderMatches, vehiclePosition } from './mapData'
 import type { OrderStatus } from './order'
 
 // Ventana de navegación urbana, no frontera administrativa ni cobertura logística.
@@ -81,4 +81,26 @@ export function selectionVisible(selection: MapSelection | null, data: MapData, 
   if (selection.kind === 'order') return layers.pins && data.orders.some(order => order.id === selection.id)
   if (selection.kind === 'route') return layers.routes && data.routes.some(route => route.id === selection.id)
   return layers.vehicles && (data.vehicles ?? []).some(vehicle => vehicle.id === selection.id)
+}
+
+export function filterMapDrivers<T extends MapData>(data: T, driverKeys: readonly string[]): T {
+  if (!driverKeys.length) return data
+  const routes = data.routes.filter(route => driverKeys.includes(mapDriverKey(route)))
+  const routeIds = new Set(routes.map(route => route.id))
+  return {
+    ...data, routes,
+    orders: data.orders.filter(order => order.route_id !== null && routeIds.has(order.route_id)),
+    vehicles: data.vehicles?.filter(vehicle => vehicle.route_id !== null && routeIds.has(vehicle.route_id)),
+  }
+}
+
+export function confirmedMap<T extends MapData>(data: T): T {
+  const routes = data.routes.filter(route => route.done_until > 0)
+    .map(route => ({ ...route, path: doneSegment(route) }))
+  const routeIds = new Set(routes.map(route => route.id))
+  return {
+    ...data, routes,
+    orders: data.orders.filter(order => order.status === 'ENTREGADO' && order.route_id !== null && routeIds.has(order.route_id)),
+    vehicles: [],
+  }
 }

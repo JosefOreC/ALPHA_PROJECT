@@ -25,13 +25,13 @@ export function RouteManagementView({ service, mapSource, onNavigate }: Props) {
   return <AppShell role={role} current="rutas" title="Gestión de rutas" user={{ name:'Operaciones',initials:'OP' }} onNavigate={onNavigate}>
     <div>
       <h1 className="eco-h1">Gestión de rutas</h1>
-      <p className="eco-sub">Pedidos pendientes de envío y en camino con origen y destino definidos · horas de Lima</p>
+      <p className="eco-sub">Rutas del día y avance de sus entregas · horas de Lima</p>
     </div>
     {navigation}
     <section className="eco-stack" role="tabpanel" id={`${id}-panel`} aria-labelledby={`${id}-${planning ? 'planning' : 'active'}`}>
       {planning ? <RoutePlanningView service={service} mapSource={mapSource} onNavigate={onNavigate} embedded /> : <>
         <p className="eco-muted">El almacén es el origen de los pedidos por planificar. Las rutas asignadas conservan su origen y su conductor durante el reparto.</p>
-        {mapSource && can(role, 'map.read') ? <RouteMap source={mapSource} profile="operations" orderStatuses={['ALL','PENDIENTE','EN_CAMINO']} />
+        {mapSource && can(role, 'map.read') ? <RouteMap source={mapSource} profile="operations" orderStatuses={['ALL','PENDIENTE','EN_CAMINO','ENTREGADO']} />
           : <p className="eco-muted">La consulta del mapa no está disponible para esta sesión.</p>}
       </>}
     </section>

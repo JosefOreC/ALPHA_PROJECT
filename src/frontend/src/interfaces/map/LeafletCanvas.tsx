@@ -1,3 +1,4 @@
+import { orderReference } from '../../domain/order'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import { Fragment, useEffect } from 'react'
@@ -17,7 +18,7 @@ import { RouteDirections } from './RouteDirections'
 
 type Props = {
   data: MapData; selection: MapSelection | null; layers: MapLayers
-  compact: boolean; card: boolean; onSelect: (selection: MapSelection) => void
+  compact: boolean; card: boolean; compareDrivers: boolean; onSelect: (selection: MapSelection) => void
   onDismiss: () => void
   onReady: (map: L.Map) => void; onBasemapError: (message: string) => void
 }
@@ -80,11 +81,12 @@ function MapLifecycle({ data, layers, onReady }: Pick<Props, 'data' | 'layers' |
   return null
 }
 
-export default function LeafletCanvas({ data, selection, layers, compact, card, onSelect, onDismiss, onReady, onBasemapError }: Props) {
+export default function LeafletCanvas({ data, selection, layers, compact, card, compareDrivers, onSelect, onDismiss, onReady, onBasemapError }: Props) {
   const order = selection?.kind === 'order' ? data.orders.find(item => item.id === selection.id) : undefined
   const vehicle = selection?.kind === 'vehicle' ? data.vehicles?.find(item => item.id === selection.id) : undefined
   const route = selection?.kind === 'route' ? data.routes.find(item => item.id === selection.id) : undefined
   const focus = order?.route_id ?? vehicle?.route_id ?? route?.id ?? null
+  const dimOthers = focus !== null && !compareDrivers
   const popupPosition = order?.position ?? vehicle?.position ?? route?.path[0]
   const plate = data.routes.find(item => item.id === order?.route_id)?.plate
   return (
@@ -106,7 +108,7 @@ export default function LeafletCanvas({ data, selection, layers, compact, card, 
       <Pane name="map-selection" style={{ zIndex: 610 }} />
 
       {layers.routes ? data.routes.map(item => {
-        const dim = focus !== null && item.id !== focus ? ' is-dim' : ''
+        const dim = dimOthers && item.id !== focus ? ' is-dim' : ''
         const active = route?.id === item.id ? ' is-sel' : ''
         const focused = focus === item.id ? ' is-focus' : ''
         const pending = 'route r' + item.color + dim + active + focused
@@ -121,7 +123,7 @@ export default function LeafletCanvas({ data, selection, layers, compact, card, 
           <Polyline pane="map-route-hit" positions={item.path.map(toTuple)} className="route-hit" bubblingMouseEvents={false}
             eventHandlers={{ click: () => onSelect({ kind: 'route', id: item.id }) }}>
           </Polyline>
-          <RouteDirections route={item} dimmed={!!dim} showLabel={!compact && (!focus || focus === item.id)} />
+          <RouteDirections route={item} dimmed={!!dim} showLabel={!compact && (!dimOthers || focus === item.id)} />
         </Fragment>
       }) : null}
 
@@ -131,11 +133,12 @@ export default function LeafletCanvas({ data, selection, layers, compact, card, 
 
       {layers.pins ? data.orders.map(item => {
         const owner = data.routes.find(route => route.id === item.route_id)
-        const dimmed = focus !== null && item.route_id !== focus
+        const ref = orderReference(item.id)
+        const dimmed = dimOthers && item.route_id !== focus
         return <Marker key={item.id + '-' + (order?.id === item.id) + '-' + dimmed}
         pane={order?.id === item.id ? 'map-selection' : 'map-orders'} position={toTuple(item.position)}
         icon={L.divIcon({ className: 'eco-map__marker', html: pinHtml(item.status, order?.id === item.id, dimmed, owner ? {color: owner.color, stop: item.stop_number} : undefined), iconSize: [36, 44], iconAnchor: [18, 38] })}
-        title={item.id + ' · ' + item.customer + ' · ' + statusLabels[item.status]} alt={item.id + ', ' + item.customer + ', ' + statusLabels[item.status]}
+        title={(ref ? ref + ' · ' : '') + item.customer + ' · ' + statusLabels[item.status]} alt={(ref ? ref + ', ' : '') + item.customer + ', ' + statusLabels[item.status]}
         keyboard eventHandlers={{ click: () => onSelect({ kind: 'order', id: item.id }) }}>
           <MapTooltip direction="top" offset={[0,-32]} className="eco-map__stop-label">
             <strong>{item.stop_number ? `Parada ${item.stop_number} · ` : ''}{item.customer}</strong>
@@ -154,7 +157,7 @@ export default function LeafletCanvas({ data, selection, layers, compact, card, 
         )) : null}
       {layers.vehicles ? data.vehicles?.map(item => <Marker key={item.id + '-' + (vehicle?.id === item.id)}
         pane={vehicle?.id === item.id ? 'map-selection' : 'map-vehicles'} position={toTuple(item.position)}
-        icon={L.divIcon({ className: 'eco-map__marker', html: vehicleHtml(item, focus !== null && item.route_id !== focus, vehicle?.id === item.id), iconSize: [44, 44], iconAnchor: [22, 22] })}
+        icon={L.divIcon({ className: 'eco-map__marker', html: vehicleHtml(item, dimOthers && item.route_id !== focus, vehicle?.id === item.id), iconSize: [44, 44], iconAnchor: [22, 22] })}
         title={'Camión ' + item.plate + ' · ' + item.status} alt={'Camión ' + item.plate + ', ' + item.status} keyboard
         eventHandlers={{ click: () => onSelect({ kind: 'vehicle', id: item.id }) }} />) : null}
 
@@ -163,7 +166,7 @@ export default function LeafletCanvas({ data, selection, layers, compact, card, 
         <div className="eco-map__card" role="status">
           <button type="button" className="eco-map__card-close" aria-label="Cerrar tarjeta" title="Cerrar tarjeta" onClick={onDismiss}><CloseIcon /></button>
           {order ? <>
-            <span className="eco-code">{order.id} · {order.district}</span><strong>{order.customer}</strong>
+            <span className="eco-code">{[orderReference(order.id), order.district].filter(Boolean).join(' · ')}</span><strong>{order.customer}</strong>
             {order.stop_number ? <span className="eco-map__stop-number">Parada {order.stop_number}</span> : null}
             <div className="eco-map__pop-row"><span>{statusLabels[order.status]}</span><span className="eco-code">{order.window}</span></div>
             <div className="eco-map__pop-row"><span>{plate ? 'Vehículo ' + plate : 'Sin ruta asignada'}</span>

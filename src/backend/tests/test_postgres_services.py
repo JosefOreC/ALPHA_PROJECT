@@ -230,21 +230,30 @@ def test_map_preserves_geography_scopes_queries_and_vehicle_states(db, driver_id
     assert portal.PostgresPortal().map(driver_id)['depot'] is None
 
 
-def test_route_map_only_exposes_active_orders_with_origin_and_destination(db):
-    active = route(estado='EN_CURSO')
-    completed = route(estado='COMPLETADA',placa='TST-002')
+def test_route_map_includes_confirmed_routes_and_preserves_driver_identity(db):
+    first_driver, second_driver = uuid4(), uuid4()
+    active = route(estado='EN_CURSO', conductor_id=first_driver)
+    completed = route(estado='COMPLETADA', placa='TST-002', conductor_id=second_driver)
     pending = order()
-    transit = order('EN_CAMINO',ruta_id=active['ruta_id'])
-    db.responses = {'SELECT r.*':[active,completed],
-        'SELECT nombre,latitud':[{'nombre':'Central','latitud':-12,'longitud':-77}],
-        'SELECT p.*':[pending,transit,order('ENTREGADO',ruta_id=active['ruta_id']),order('CANCELADO'),order(ruta_id=completed['ruta_id'])],
-        'SELECT DISTINCT':[{'vehiculo_id':uuid4(),'placa':'TST-001','ruta_id':active['ruta_id'],'latitud':-12,'longitud':-77,'estado':'EN_RUTA'}]}
+    transit = order('EN_CAMINO', ruta_id=active['ruta_id'], orden_entrega=1)
+    delivered = order('ENTREGADO', ruta_id=completed['ruta_id'], orden_entrega=1,
+                      latitud=Decimal('-12.1'), longitud=Decimal('-77.1'))
+    db.responses = {
+        'FROM rutas r JOIN vehiculos': [active, completed],
+        'SELECT nombre,latitud': [{'nombre': 'Central', 'latitud': -12, 'longitud': -77}],
+        'FROM pedidos p LEFT JOIN ruta_pedido': [pending, transit, delivered, order('CANCELADO')],
+        'SELECT DISTINCT': [{'vehiculo_id': uuid4(), 'placa': 'TST-001', 'ruta_id': active['ruta_id'],
+                             'latitud': -12, 'longitud': -77, 'estado': 'EN_RUTA'}],
+    }
     result = portal.PostgresPortal().route_map()
-    assert {row['id'] for row in result['orders']}=={str(pending['pedido_id']),str(transit['pedido_id'])}
-    assert [row['id'] for row in result['routes']]==[str(active['ruta_id'])]
-    assert len(result['vehicles'])==1
-    assert any("p.estado IN ('PENDIENTE','EN_CAMINO')" in statement for statement,_ in db.calls)
-    # Sin un almacén, los pendientes sin asignar no tienen un origen válido.
+    assert {row['id'] for row in result['orders']} == {
+        str(pending['pedido_id']), str(transit['pedido_id']), str(delivered['pedido_id']),
+    }
+    assert [row['id'] for row in result['routes']] == [str(active['ruta_id']), str(completed['ruta_id'])]
+    assert [row['driver_id'] for row in result['routes']] == [str(first_driver), str(second_driver)]
+    assert [row['done_until'] for row in result['routes']] == [0, 1]
+    assert len(result['vehicles']) == 1
+
     db.responses['SELECT nombre,latitud'] = []
     assert str(pending['pedido_id']) not in {row['id'] for row in portal.PostgresPortal().route_map()['orders']}
 

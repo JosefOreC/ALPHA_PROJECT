@@ -49,6 +49,18 @@ describe('DriverRouteView', () => {
   const setup = (props: Partial<Parameters<typeof DriverRouteView>[0]> = {}) =>
     render(<DriverRouteView service={createDriverRoute(new DemoOrders())} mapSource={idleMap} {...props} />)
 
+  it('oculta los UUID de los pedidos y conserva el estado de entrega', async () => {
+    const demo = new DemoOrders()
+    const route = await demo.route()
+    const uuid = 'cecc3dbc-f35e-47b2-90b7-3d9e380ab2d9'
+    route.stops[0] = { ...route.stops[0], order_id: uuid }
+    setup({ service: createDriverRoute({ route: async () => route }) })
+    const stops = await screen.findByRole('list', { name: 'Paradas de hoy' })
+    expect(stops).toHaveTextContent('Bodega Mi Barrio')
+    expect(stops).toHaveTextContent('entregado')
+    expect(stops).not.toHaveTextContent(uuid)
+  })
+
   it('termina en la última entrega cuando no se solicita regresar al almacén', async () => {
     const route = { ...await new DemoOrders().route(), return_to_depot: false }
     setup({ service: createDriverRoute({ route: async () => route }) })

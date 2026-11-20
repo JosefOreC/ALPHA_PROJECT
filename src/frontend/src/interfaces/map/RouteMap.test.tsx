@@ -73,19 +73,27 @@ describe('marcado de los pines', () => {
 })
 
 describe('RouteMap', () => {
-  it('seleccionar una placa identifica sus paradas sin notificar un pedido distinto', async () => {
+  it('filtra por varios conductores y distingue sus tramos confirmados', async () => {
     const onSelect = vi.fn()
-    const onSelectElement = vi.fn()
-    const {container} = render(<RouteMap source={new DemoMapData()} onSelect={onSelect} onSelectElement={onSelectElement} />)
+    const { container } = render(<RouteMap source={new DemoMapData()} onSelect={onSelect} />)
     const user = userEvent.setup()
-    await user.click(await screen.findByRole('button',{name:'Ruta BCD-456'},SLOW))
+    const choices = within(await screen.findByRole('group', { name: 'Rutas por conductor' }, SLOW))
+    const secondDriver = choices.getByRole('button', { name: /BCD-456/ })
+    await user.click(secondDriver)
+    expect(secondDriver).toHaveAttribute('aria-pressed', 'true')
     expect(onSelect).not.toHaveBeenCalled()
-    expect(onSelectElement).toHaveBeenCalledWith({kind:'route',id:'r2'})
-    await waitFor(() => expect(container.querySelectorAll('svg.pin.r2:not(.is-dim)')).toHaveLength(2),SLOW)
-    expect(container.querySelectorAll('svg.pin.is-dim')).toHaveLength(data.orders.length - 2)
-    expect(within(screen.getByRole('list',{name:'Paradas de BCD-456'})).getAllByRole('button')).toHaveLength(2)
-    await user.click(screen.getByRole('button',{name:'Todas las rutas'}))
+    await waitFor(() => expect(container.querySelectorAll('svg.pin')).toHaveLength(2), SLOW)
+    expect(within(screen.getByRole('list', { name: 'Paradas de BCD-456' })).getAllByRole('button')).toHaveLength(2)
+
+    await user.click(choices.getByRole('button', { name: /ABC-123/ }))
+    expect(container.querySelectorAll('svg.pin')).toHaveLength(5)
     expect(container.querySelectorAll('svg.pin.is-dim')).toHaveLength(0)
+    await user.click(screen.getByRole('checkbox', { name: 'Solo tramo confirmado' }))
+    expect(container.querySelector('.eco-map')).toHaveClass('eco-map--confirmed')
+    expect(container.querySelectorAll('svg.pin--delivered')).toHaveLength(2)
+    expect(container.querySelectorAll('svg.pin--transit')).toHaveLength(0)
+    await user.click(screen.getByRole('button', { name: 'Limpiar filtros del mapa' }))
+    expect(container.querySelectorAll('svg.pin')).toHaveLength(data.orders.length)
   })
   it('dibuja el mapa con las capas conmutables y los controles de zoom', { timeout: 30_000 }, async () => {
     const user = userEvent.setup()

@@ -1,3 +1,4 @@
+import { orderReference } from '../../domain/order'
 import { useId } from 'react'
 import type { MapOrder } from '../../domain/mapData'
 import type { MapOrderStatus } from '../../domain/mapPresentation'
@@ -37,7 +38,7 @@ export function MapFilters({ query, status, orderId, orders, visibleOrders, tota
         <select id={`${id}-order`} className="eco-select" aria-label="Filtrar por pedido en el mapa" value={orderId}
           onChange={event => onOrder(event.target.value)} disabled={loading}>
           <option value="">Todos los pedidos</option>
-          {orders.map(order => <option key={order.id} value={order.id}>{order.customer} · {order.id}</option>)}
+          {orders.map(order => <option key={order.id} value={order.id}>{[order.customer, orderReference(order.id) ?? order.district].filter(Boolean).join(' · ')}</option>)}
         </select>
       </div>
     </div>

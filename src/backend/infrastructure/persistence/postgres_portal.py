@@ -173,15 +173,26 @@ class PostgresPortal:
             if order['ruta_id'] is not None:
                 by_route.setdefault(order['ruta_id'], []).append(order)
         if active_only:
-            active_ids = {row['ruta_id'] for row in orders if row['estado'] in ('PENDIENTE','EN_CAMINO','ENTREGADO')}
-            route_rows = [row for row in route_rows if row['ruta_id'] in active_ids]
+            assigned_orders = {
+                row['ruta_id'] for row in orders if row['estado'] in ('PENDIENTE', 'EN_CAMINO', 'ENTREGADO')
+            }
+            delivered_routes = {row['ruta_id'] for row in orders if row['estado'] == 'ENTREGADO'}
+            route_rows = [
+                row for row in route_rows
+                if row['ruta_id'] in assigned_orders
+                and (row['estado'] != 'COMPLETADA' or row['ruta_id'] in delivered_routes)
+            ]
             route_ids = [row['ruta_id'] for row in route_rows]
-            orders = [row for row in orders if row['estado'] in ('PENDIENTE','EN_CAMINO')
-                      and (row['ruta_id'] in route_ids or (row['ruta_id'] is None and depots))]
+            orders = [
+                row for row in orders
+                if (row['ruta_id'] in route_ids and row['estado'] in ('PENDIENTE', 'EN_CAMINO', 'ENTREGADO'))
+                or (row['ruta_id'] is None and depots and row['estado'] in ('PENDIENTE', 'EN_CAMINO'))
+            ]
         routes = []
         for index,row in enumerate(route_rows):
             path = [{'lat':point[1],'lng':point[0]} for point in row['geo']['coordinates']]
             routes.append({'id':str(row['ruta_id']),'plate':row['placa'],'driver':row['nombre_completo'],
+                           'driver_id':str(row['conductor_id']) if row.get('conductor_id') else None,
                            'color':index%4+1,'path':path,
                            'done_until':self.confirmed_path_index(path,by_route.get(row['ruta_id'],[]))})
         vehicles = rows(sql.SQL('''SELECT DISTINCT ON (p.vehiculo_id) p.*,v.placa,v.estado FROM posiciones_vehiculos p JOIN vehiculos v USING(vehiculo_id)

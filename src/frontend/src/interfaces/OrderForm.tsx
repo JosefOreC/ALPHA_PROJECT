@@ -1,3 +1,4 @@
+import { orderReference } from '../domain/order'
 import { useRef, useState } from 'react'
 import type { Management } from '../application/manageOrders'
 import { districts } from '../domain/managedOrder'
@@ -48,7 +49,7 @@ export function OrderForm({ service, order, onSaved, onBack }: {
   return <form className="eco-sheet eco-form" onSubmit={event => void submit(event)} aria-busy={saving}>
     <h2 className="eco-form__title">{order ? 'Editar pedido' : 'Registrar pedido'}</h2>
     <p className="eco-sub">Los campos con * son obligatorios. Las horas corresponden a Lima.</p>
-    {order && <p className="eco-muted eco-flush">Referencia: <strong className="eco-code">{order.id}</strong> · Versión {order.version}</p>}
+    {order && <p className="eco-muted eco-flush">Referencia: <strong className="eco-code">{orderReference(order.id) ?? order.customer}</strong> · Versión {order.version}</p>}
     {error && <div ref={errorBox} tabIndex={-1}><Banner tone="error" title="No se pudo guardar.">{error} Los datos ingresados permanecen en el formulario.</Banner></div>}
     <fieldset disabled={saving}>
       <div className="eco-field">

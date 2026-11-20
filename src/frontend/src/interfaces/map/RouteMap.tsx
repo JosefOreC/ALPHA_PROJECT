@@ -1,7 +1,9 @@
+import { orderReference } from '../../domain/order'
 import type { Map as LeafletMap } from 'leaflet'
 import { Suspense, lazy, useEffect, useId, useMemo, useState } from 'react'
-import type { MapData, MapSelection } from '../../domain/mapData'
-import { filterMapOrders, MAP_PROFILES, prepareMap, selectionVisible } from '../../domain/mapPresentation'
+import { mapDriverKey } from '../../domain/mapData'
+import type { MapData, MapRoute, MapSelection } from '../../domain/mapData'
+import { confirmedMap, filterMapDrivers, filterMapOrders, MAP_PROFILES, prepareMap, selectionVisible } from '../../domain/mapPresentation'
 import type { MapLayers, MapOrderStatus, MapProfile } from '../../domain/mapPresentation'
 import type { MapDataSource } from '../../domain/ports/mapDataSource'
 import { statusLabels } from '../../domain/managedOrder'
@@ -58,6 +60,8 @@ function MapInstance({ source, selectedId, query = '', onQueryChange, orderStatu
   const [mapQuery, setMapQuery] = useState('')
   const [mapStatus, setMapStatus] = useState<MapOrderStatus>('ALL')
   const [orderFilter, setOrderFilter] = useState('')
+  const [driverKeys, setDriverKeys] = useState<string[]>([])
+  const [confirmedOnly, setConfirmedOnly] = useState(false)
   const search = onQueryChange ? query : mapQuery
   const status = orderStatus ?? mapStatus
   const filterScope = JSON.stringify([status, query, search, district])
@@ -81,14 +85,29 @@ function MapInstance({ source, selectedId, query = '', onQueryChange, orderStatu
   }, [source, attempt])
 
   const prepared = useMemo(() => data ? prepareMap(data, profile === 'driver' ? (scopePlate ?? '') : scopePlate) : null, [data, profile, scopePlate])
-  const options = useMemo(() => prepared ? filterMapOrders(prepared.data, { status, queries: [query, search], district }) : null,
-    [prepared, status, query, search, district])
+  const drivers = useMemo(() => {
+    const groups = new Map<string, MapRoute[]>()
+    for (const route of prepared?.data.routes ?? []) {
+      const key = mapDriverKey(route)
+      const group = groups.get(key)
+      if (group) group.push(route)
+      else groups.set(key, [route])
+    }
+    return groups
+  }, [prepared])
+  const options = useMemo(() => {
+    if (!prepared) return null
+    const byDriver = filterMapDrivers(prepared.data, driverKeys)
+    const byProgress = confirmedOnly ? confirmedMap(byDriver) : byDriver
+    return filterMapOrders(byProgress, { status, queries: [query, search], district })
+  }, [prepared, driverKeys, confirmedOnly, status, query, search, district])
   // Si otro filtro excluye el pedido elegido, vuelve al conjunto que sí coincide.
   const activeOrderFilter = options?.orders.some(order => order.id === orderFilter) ? orderFilter : ''
   const context = useMemo(() => options ? filterMapOrders(options, { orderId: activeOrderFilter }) : null, [options, activeOrderFilter])
-  const filtered = status !== 'ALL' || !!query.trim() || !!search.trim() || !!activeOrderFilter || !!district
+  const filtered = status !== 'ALL' || !!query.trim() || !!search.trim() || !!activeOrderFilter || !!district || driverKeys.length > 0 || confirmedOnly
   const clearFilters = () => {
-    setMapQuery(''); setMapStatus('ALL'); setOrderFilter('')
+    setMapQuery(''); setMapStatus('ALL'); setOrderFilter(''); setDriverKeys([]); setConfirmedOnly(false)
+    resetSelection()
     onQueryChange?.(''); onOrderStatusChange?.('ALL'); onClearFilters?.()
   }
   const candidate = (localSelection?.externalId === selectedId ? localSelection?.value : null) ?? (selectedId && selectedId !== dismissedOrder ? { kind: 'order' as const, id: selectedId } : null)
@@ -97,14 +116,18 @@ function MapInstance({ source, selectedId, query = '', onQueryChange, orderStatu
     ? context?.orders.find(item => item.id === selection.id)?.route_id
     : selection?.kind === 'vehicle' ? context?.vehicles?.find(item => item.id === selection.id)?.route_id : null
   const focusedRoute = context?.routes.find(item => item.id === focusedId)
+    ?? (driverKeys.length > 0 && context?.routes.length === 1 ? context.routes[0] : undefined)
   const select = (value: MapSelection) => {
     setLocalSelection({ value, externalId: value.kind === 'order' && onSelect ? value.id : selectedId }); setDismissedOrder(undefined)
     if (value.kind === 'order') onSelect?.(value.id)
     onSelectElement?.(value)
   }
-  const dismiss = () => {
+  const resetSelection = () => {
     setLocalSelection(null)
     setDismissedOrder(selectedId)
+  }
+  const dismiss = () => {
+    resetSelection()
     setLayersOpen(false)
     map?.getContainer().focus({ preventScroll: true })
   }
@@ -132,26 +155,44 @@ function MapInstance({ source, selectedId, query = '', onQueryChange, orderStatu
       onStatus={value => { setOrderFilter(''); if (onOrderStatusChange) onOrderStatusChange(value); else setMapStatus(value) }}
       onOrder={value => { setOrderFilter(value); if (value) select({ kind: 'order', id: value }) }} onClear={clearFilters} /> : null}
     {prepared?.omitted ? <p className="eco-muted" role="status">{prepared.omitted} elementos omitidos por coordenadas o geometrías fuera del área de Lima.</p> : null}
-    {!compact && context && layers.routes && context.routes.length ? <div className="eco-map-routes">
-      <div className="eco-map-routes__heading"><strong>Rutas por vehículo</strong><span>El color une el recorrido y sus paradas · los números indican el orden de entrega</span></div>
-      {context.orders.some(item => item.route_id === null) ? <p className="eco-map-routes__unassigned">{context.orders.filter(item => item.route_id === null).length} pedidos sin ruta · puntos grises</p> : null}
-      <div className="eco-map-routes__choices" role="group" aria-label="Rutas por vehículo">
-        <button type="button" className="eco-map-route-choice" aria-label="Todas las rutas" aria-pressed={!focusedRoute} onClick={() => {
-          dismiss()
-          if (map) void import('./viewport').then(({ fitVisible }) => fitVisible(map, context, layers))
-        }}><RutaIcon /><strong>Todas las rutas</strong><span>{context.routes.length} vehículos</span></button>
-        {context.routes.map(item => <button key={item.id} type="button" className="eco-map-route-choice" aria-label={'Ruta ' + item.plate}
-          aria-pressed={focusedRoute?.id === item.id} onClick={() => {
-            select({ kind: 'route', id: item.id })
-            if (map) void import('./viewport').then(({ fitVisible }) => fitVisible(map, {
-              ...context, routes: [item], orders: context.orders.filter(order => order.route_id === item.id),
-              vehicles: context.vehicles?.filter(vehicle => vehicle.route_id === item.id),
-            }, layers))
-          }}>
-          <i className="eco-map-route-choice__line" style={{ backgroundColor: `var(--map-route-${item.color})` }} aria-hidden="true" />
-          <strong>{item.plate}</strong><span title={item.driver}>{item.driver ?? 'Vehículo asignado'}</span>
-          <small>{context.orders.filter(order => order.route_id === item.id).length} pedidos visibles</small>
-        </button>)}
+    {!compact && allowed.routes && drivers.size > 0 ? <div className="eco-map-routes">
+      <div className="eco-map-routes__heading">
+        <strong>Rutas por conductor</strong>
+        <span>Selecciona uno o varios conductores para comparar sus rutas.</span>
+        <label className="eco-map-routes__progress">
+          <input type="checkbox" checked={confirmedOnly} onChange={event => {
+            resetSelection()
+            setOrderFilter('')
+            setConfirmedOnly(event.target.checked)
+            setLayers(current => ({ ...current, routes: true }))
+          }} />
+          Solo tramo confirmado
+        </label>
+      </div>
+      {context?.orders.some(item => item.route_id === null) ? <p className="eco-map-routes__unassigned">{context.orders.filter(item => item.route_id === null).length} pedidos sin ruta · puntos grises</p> : null}
+      <div className="eco-map-routes__choices" role="group" aria-label="Rutas por conductor">
+        <button type="button" className="eco-map-route-choice" aria-label="Todas las rutas" aria-pressed={driverKeys.length === 0} onClick={() => {
+          resetSelection()
+          setOrderFilter('')
+          setDriverKeys([])
+          setLayers(current => current.routes ? current : { ...current, routes: true })
+        }}><RutaIcon /><strong>Todas las rutas</strong><span>{drivers.size} {drivers.size === 1 ? 'conductor' : 'conductores'}</span></button>
+        {Array.from(drivers, ([key, routes]) => {
+          const { driver, color } = routes[0]
+          const plates = routes.map(route => route.plate).join(', ')
+          const label = driver ? `${driver} · ${plates}` : plates
+          return <button key={key} type="button" className="eco-map-route-choice" aria-label={label}
+            aria-pressed={driverKeys.includes(key)} onClick={() => {
+              resetSelection()
+              setOrderFilter('')
+              setDriverKeys(current => current.includes(key) ? current.filter(value => value !== key) : [...current, key])
+              setLayers(current => current.routes ? current : { ...current, routes: true })
+            }}>
+            <i className="eco-map-route-choice__line" style={{ backgroundColor: `var(--map-route-${color})` }} aria-hidden="true" />
+            <strong title={driver}>{driver ?? plates}</strong>
+            {driver ? <span title={plates}>{plates}</span> : null}
+          </button>
+        })}
       </div>
     </div> : null}
     {basemapError && !fail ? <Banner tone="warning" title="No se pudo cargar el mapa base."
@@ -163,9 +204,9 @@ function MapInstance({ source, selectedId, query = '', onQueryChange, orderStatu
         {error} Puedes seguir usando la lista de {profile === 'vehicles' ? 'camiones' : profile === 'routes' ? 'rutas' : 'pedidos'}.
       </Banner>
       {context ? <MapFallback data={context} allowed={allowed} select={select} selection={selection} /> : null}
-    </> : <div className={'eco-map' + (compact ? ' eco-map--compact' : '') + (strip ? ' eco-map--strip' : '')} role="group" aria-label="Mapa de rutas de Lima Este">
+    </> : <div className={'eco-map' + (compact ? ' eco-map--compact' : '') + (strip ? ' eco-map--strip' : '') + (confirmedOnly ? ' eco-map--confirmed' : '')} role="group" aria-label="Mapa de rutas de Lima Este">
       {context ? <Suspense fallback={<span className="eco-map__note" role="status">Cargando mapa…</span>}>
-        <LeafletCanvas data={context} selection={selection} layers={layers} compact={compact} card={card}
+        <LeafletCanvas data={context} selection={selection} layers={layers} compact={compact} card={card} compareDrivers={driverKeys.length > 1}
           onSelect={select} onDismiss={dismiss} onReady={setMap} onBasemapError={setBasemapError} />
       </Suspense> : <span className="eco-map__note" role="status">Cargando mapa…</span>}
       {showLayerControls ? <div className="eco-map__layers" onKeyDown={event => {
@@ -188,13 +229,15 @@ function MapInstance({ source, selectedId, query = '', onQueryChange, orderStatu
         <button type="button" aria-label="Ver Lima" title="Ver Lima" disabled={!map} onClick={() => { if (map && context) void import('./viewport').then(({ fitVisible }) => fitVisible(map, context, layers)) }}><RecenterIcon /></button>
       </div>
       {context && !count ? <span className="eco-map__empty" role="status">
-        {!layers.routes && !layers.pins && !layers.vehicles ? 'Capas ocultas · activa una capa' : filtered ? 'Sin pedidos que coincidan con los filtros' : 'Sin elementos en esta vista'}
+        {!layers.routes && !layers.pins && !layers.vehicles ? 'Capas ocultas · activa una capa' : confirmedOnly ? 'Sin tramos confirmados para los filtros elegidos' : filtered ? 'Sin pedidos que coincidan con los filtros' : 'Sin elementos en esta vista'}
       </span> : null}
       {!compact ? <details className="eco-map__legend" aria-label="Leyenda">
         <summary><SlidersIcon />Leyenda</summary>
         <div className="eco-map__legend-items">
-          {layers.routes ? <><span><i className="eco-map__key eco-map__key--route" />Línea de color: tramo por recorrer · flechas: dirección</span>
-            <span><i className="eco-map__key eco-map__key--done" />Gris: tramo recorrido</span></> : null}
+          {layers.routes ? confirmedOnly
+            ? <span><i className="eco-map__key eco-map__key--route" />Color del conductor: tramo confirmado por entregas</span>
+            : <><span><i className="eco-map__key eco-map__key--route" />Línea de color: tramo por recorrer · flechas: dirección</span>
+              <span><i className="eco-map__key eco-map__key--done" />Gris: tramo recorrido</span></> : null}
           {layers.vehicles ? <span><CamionetaIcon />Camión · placa y estado</span> : null}
           {layers.pins ? <>
             <span><i className="eco-map__key eco-map__key--pending" />Pendiente · rombo</span>
@@ -234,7 +277,7 @@ function MapFallback({ data, allowed, select, selection, all = false }: { data: 
   ]
   return <ul className="eco-fallback" aria-label={allowed.pins ? 'Pedidos' : allowed.vehicles ? 'Camiones' : 'Rutas'}>
     {entries.map(item => <li key={item.kind + ':' + item.id} className="eco-fallback__row" aria-current={selection?.kind === item.kind && selection.id === item.id ? 'true' : undefined}>
-      <button type="button" className="eco-fallback__pick" onClick={() => select({ kind: item.kind, id: item.id })}><span className="eco-code">{item.id}</span><span>{item.title}</span></button>
+      <button type="button" className="eco-fallback__pick" onClick={() => select({ kind: item.kind, id: item.id })}>{item.kind === 'order' && orderReference(item.id) ? <span className="eco-code">{orderReference(item.id)}</span> : null}<span>{item.title}</span></button>
       <span className="eco-muted">{item.detail}</span>
     </li>)}
   </ul>
