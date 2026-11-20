@@ -1,11 +1,14 @@
 """Cabeceras de seguridad HTTP comunes a todas las respuestas de la API (OWASP A02)."""
 import os
+import re
 
 from starlette.middleware.base import BaseHTTPMiddleware
 
 # La documentación interactiva de FastAPI carga recursos externos; no se le aplica la CSP estricta.
 DOCS_PATHS = ("/docs", "/redoc", "/openapi.json")
 STRICT_CSP = "default-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'"
+MAP_WORKER_PATH = re.compile(r"/assets/maplibre-gl-worker-[A-Za-z0-9_-]+\.js")
+MAP_WORKER_CSP = STRICT_CSP + "; connect-src 'self' https://tiles.openfreemap.org"
 HSTS_VALUE = "max-age=31536000; includeSubDomains"
 
 
@@ -21,7 +24,9 @@ def security_headers(path: str, scheme: str) -> dict:
         "Cross-Origin-Opener-Policy": "same-origin",
         "Permissions-Policy": "geolocation=(), camera=(), microphone=()",
     }
-    if not path.startswith(DOCS_PATHS):
+    if MAP_WORKER_PATH.fullmatch(path):
+        headers["Content-Security-Policy"] = MAP_WORKER_CSP
+    elif not path.startswith(DOCS_PATHS):
         headers["Content-Security-Policy"] = STRICT_CSP
     # HSTS solo tiene efecto sobre HTTPS; se envía si la conexión es segura o se habilita detrás de un proxy TLS.
     if scheme == "https" or hsts_enabled():

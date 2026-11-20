@@ -25,11 +25,12 @@ class DriverOrders:
         self.clock = clock
 
     def view(self, order_id: str, principal: Principal) -> Order:
-        if canonical_role(principal.role) != "driver" or not principal.driver_id or not can(principal.role, "deliveries.read"):
+        administrator = canonical_role(principal.role) == "admin"
+        if not administrator and (canonical_role(principal.role) != "driver" or not principal.driver_id or not can(principal.role, "deliveries.read")):
             raise Forbidden("Esta acción requiere el rol conductor.")
         order = self.repository.get(order_id)
         # No divulgar pedidos ajenos.
-        if order is None or order.driver_id != principal.driver_id:
+        if order is None or (not administrator and order.driver_id != principal.driver_id):
             raise OrderNotFound("Pedido no encontrado o no asignado a este conductor.")
         return order
 

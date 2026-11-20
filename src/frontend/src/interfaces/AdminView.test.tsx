@@ -4,7 +4,7 @@ import { describe, expect, it, vi } from 'vitest'
 import { createAdministration } from '../application/administration'
 import type { AlgorithmParameters } from '../domain/algorithmSettings'
 import type { AlgorithmSettings } from '../domain/ports/algorithmSettings'
-import { DEFAULT_PARAMETERS, DemoAlgorithmSettings, DemoIntegrationCatalog, DemoUserDirectory, UnavailableAlgorithmSettings, UnavailableIntegrationCatalog, UnavailableUserDirectory } from '../infrastructure/demoAdmin'
+import { DEFAULT_PARAMETERS, DemoAlgorithmSettings, DemoIntegrationCatalog, DemoUserDirectory, UnavailableAlgorithmSettings, UnavailableIntegrationCatalog, UnavailableUserDirectory } from '../infrastructure/demo/demoAdmin'
 import { AdminView } from './AdminView'
 
 const setup = (settings: AlgorithmSettings = new DemoAlgorithmSettings(), demo = true) => {
@@ -23,12 +23,12 @@ describe('AdminView · usuarios y roles', () => {
     expect(await screen.findByRole('heading', { name: 'Administración' })).toBeInTheDocument()
     const nav = screen.getByRole('complementary', { name: 'Navegación principal' })
     expect(within(nav).getByText('Administrador')).toBeInTheDocument()
-    for (const name of [/Dashboard del día/, /Pedidos y rutas/, /Rutas del día/, /Flota/, /Sostenibilidad/, /Administración/]) {
+    for (const name of [/Dashboard del día/, /Pedidos/, /Rutas/, /Flota/, /Sostenibilidad/, /Administración/]) {
       expect(within(nav).getByRole('link', { name })).toBeInTheDocument()
     }
     expect(within(nav).getByRole('link', { name: /Administración/ })).toHaveAttribute('aria-current', 'page')
     const tabs = screen.getByRole('tablist', { name: 'Secciones de administración' })
-    expect(within(tabs).getAllByRole('tab').map((tab) => tab.textContent?.trim())).toEqual(['Usuarios y roles 19', 'Parámetros del algoritmo', 'Integraciones 3'])
+    expect(within(tabs).getAllByRole('tab').map((tab) => tab.textContent?.trim())).toEqual(['Usuarios y roles 19', 'Roles y accesos', 'Parámetros del algoritmo', 'Integraciones 3'])
     expect(screen.getByRole('tab', { name: /Usuarios y roles/ })).toHaveAttribute('aria-selected', 'true')
   })
 
@@ -54,6 +54,36 @@ describe('AdminView · usuarios y roles', () => {
     expect(within(rows[7]).getByText('Inactivo')).toBeInTheDocument()
     expect(within(rows[5]).getByText('Activo')).toBeInTheDocument()
     expect(screen.getByText('Mostrando 7 de 19 usuarios.')).toBeInTheDocument()
+  })
+
+  it('edita los campos de la cuenta en una sola operación', async () => {
+    HTMLDialogElement.prototype.showModal = function () { this.setAttribute('open', '') }
+    HTMLDialogElement.prototype.close = function () { this.removeAttribute('open'); this.dispatchEvent(new Event('close')) }
+    const patch = vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response(null, { status: 204 }))
+    try {
+      setup()
+      const user = userEvent.setup()
+      await user.click((await screen.findAllByRole('button', { name: /^Editar cuenta de/ }))[0])
+      const dialog = within(screen.getByRole('dialog', { name: 'Editar cuenta' }))
+      const email = dialog.getByLabelText('Correo electrónico')
+      expect(email).toHaveValue('sistemas@distrirapido.pe')
+      await user.clear(email)
+      await user.type(email, 'nuevo@example.invalid')
+      await user.type(dialog.getByLabelText('Nueva contraseña'), 'clave-de-prueba-2026')
+      await user.click(dialog.getByRole('button', { name: 'Guardar cambios' }))
+      expect(dialog.getByRole('alert')).toHaveTextContent('Las contraseñas no coinciden.')
+      expect(patch).not.toHaveBeenCalled()
+      await user.type(dialog.getByLabelText('Repite la contraseña'), 'clave-de-prueba-2026')
+      await user.click(dialog.getByRole('button', { name: 'Guardar cambios' }))
+      await screen.findByText(/Cambios guardados/)
+      expect(patch).toHaveBeenCalledTimes(1)
+      expect(patch).toHaveBeenCalledWith(expect.stringMatching(/\/api\/admin\/users\/[^/]+$/), expect.objectContaining({
+        method: 'PATCH',
+        body: JSON.stringify({ email: 'nuevo@example.invalid', password: 'clave-de-prueba-2026' }),
+      }))
+    } finally {
+      patch.mockRestore()
+    }
   })
 
   it('busca por nombre o correo (sin tildes) y filtra por rol y estado', async () => {

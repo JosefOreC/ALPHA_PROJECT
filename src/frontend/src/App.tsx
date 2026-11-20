@@ -1,51 +1,30 @@
+import { services } from './bootstrap/services';
 import { useState, useEffect, useMemo } from 'react';
 import { authorizeAdministration, authorizeDriver, authorizeManagement, authorizePlanning, authorizeSustainability } from './application/authorizedServices';
 import { can } from './domain/accessControl';
-import { HttpSession } from './infrastructure/httpSession';
 import { SessionProvider } from './interfaces/session/SessionContext';
 import { useSession } from './interfaces/session/SessionState';
 import { SessionGate, SessionToolbar } from './interfaces/session/SessionToolbar';
 import { AppShell } from './shared/ui';
 import { canOpenModule, homeModule } from './shared/ui/roles';
 
-import { createDriverOrders } from './application/driverOrders';
-import { createDriverRoute } from './application/driverRoute';
-import { HttpOrders } from './infrastructure/httpOrders';
 import { DriverOrderView } from './interfaces/DriverOrderView';
 import { DriverRouteView } from './interfaces/DriverRouteView';
 
-import { createManagement } from './application/manageOrders';
-import { HttpManagement } from './infrastructure/httpManagement';
 import { OrderManagementView } from './interfaces/OrderManagementView';
 import { FleetView } from './interfaces/FleetView';
-import { RoutePlanningView } from './interfaces/RoutePlanningView';
+import { RouteManagementView } from './interfaces/RouteManagementView';
 import { SustainabilityView } from './interfaces/SustainabilityView';
 import { AdminView } from './interfaces/AdminView';
-import { createAdministration } from './application/administration';
-import { createGetSustainabilityReport } from './application/getSustainabilityReport';
-import { BrowserFileSaver } from './infrastructure/browserFileSaver';
-import { createGenerateRoutes } from './application/generateRoutes';
 
-import { DashboardPage, HttpDashboardGateway } from './features/dashboard';
-import { HttpAlgorithmSettings, HttpDashboardInsights, HttpDriverRoute, HttpIntegrationCatalog, HttpMapData, HttpPlanningSource, HttpRouteOptimizer, HttpSustainabilityReport, HttpUserDirectory } from './infrastructure/httpPortal';
-import { apiBaseUrl, getCsrfToken } from './infrastructure/httpClient';
+import { DashboardPage } from './features/dashboard';
 import { RecordsView } from './interfaces/RecordsView';
 import { DriversView } from './interfaces/DriversView';
+import { RouteSimulationView } from './interfaces/simulation/RouteSimulationView';
 import { RouteMap } from './interfaces/map/RouteMap';
 import type { ModuleId } from './shared/ui';
 
-const dashboardGateway = new HttpDashboardGateway({ baseUrl: apiBaseUrl });
-const sessionSource = new HttpSession(apiBaseUrl);
-const insightsGateway = new HttpDashboardInsights();
-const driverService = createDriverOrders(new HttpOrders(apiBaseUrl));
-const driverRouteService = createDriverRoute(new HttpDriverRoute());
 const DEFAULT_ORDER = '';
-const managementService = createManagement(new HttpManagement(apiBaseUrl, getCsrfToken));
-const mapSource = new HttpMapData();
-const algorithmSettings = new HttpAlgorithmSettings();
-const administration = createAdministration({ settings: algorithmSettings, users: new HttpUserDirectory(), integrations: new HttpIntegrationCatalog() });
-const routeService = createGenerateRoutes({ optimizer: new HttpRouteOptimizer(), planning: new HttpPlanningSource(), settings: algorithmSettings });
-const sustainabilityService = createGetSustainabilityReport({ source: new HttpSustainabilityReport(), saver: new BrowserFileSaver() });
 
 type ActiveView = Exclude<ModuleId, 'pedido-actual'> | 'conductor';
 
@@ -64,6 +43,7 @@ function getViewFromUrl(): { view: ActiveView; orderId: string } {
   if (vista === 'pedidos') {
     return { view: 'pedidos', orderId: pedido || DEFAULT_ORDER };
   }
+  if (vista === 'ruta-demo') return { view: 'ruta-demo', orderId: DEFAULT_ORDER };
   if (vista === 'rutas') {
     return { view: 'rutas', orderId: pedido || DEFAULT_ORDER };
   }
@@ -83,7 +63,7 @@ function getViewFromUrl(): { view: ActiveView; orderId: string } {
 }
 
 export function App() {
-  return <SessionProvider source={sessionSource}><SessionApp /></SessionProvider>;
+  return <SessionProvider source={services.session}><SessionApp /></SessionProvider>;
 }
 
 function SessionApp() {
@@ -95,11 +75,11 @@ function SessionApp() {
 function AuthorizedApp() {
   const user = useSession()!.user!;
   const secured = useMemo(() => ({
-    management: authorizeManagement(managementService, user.role),
-    administration: authorizeAdministration(administration, user.role),
-    planning: authorizePlanning(routeService, user.role),
-    sustainability: authorizeSustainability(sustainabilityService, user.role),
-    driver: authorizeDriver(driverService, driverRouteService, user, false),
+    management: authorizeManagement(services.management, user.role),
+    administration: authorizeAdministration(services.administration, user.role),
+    planning: authorizePlanning(services.planning, user.role),
+    sustainability: authorizeSustainability(services.sustainability, user.role),
+    driver: authorizeDriver(services.driverOrders, services.driverRoute, user, false),
   }), [user]);
   const initial = getViewFromUrl();
   if (!window.location.search) initial.view = homeModule(user.role).id === 'pedido-actual' ? 'conductor' : homeModule(user.role).id as ActiveView;
@@ -131,7 +111,7 @@ function AuthorizedApp() {
 
   // La barra superior de cada vista migrada al design system navega por módulo; lo que aún no existe recarga por URL.
   const navigateModule = (id: ModuleId, _href: string) => {
-    if (id === 'dashboard' || id === 'flota' || id === 'pedidos' || id === 'rutas' || id === 'sostenibilidad' || id === 'admin' || id === 'mi-ruta') navigateTo(id);
+    if (id === 'ruta-demo' || id === 'dashboard' || id === 'flota' || id === 'pedidos' || id === 'rutas' || id === 'sostenibilidad' || id === 'admin' || id === 'mi-ruta') navigateTo(id);
     else if (id === 'pedido-actual') navigateTo('conductor');
     else if (id === 'auditoria' || id === 'conductores' || id === 'incidencias') {
       navigateTo(id);
@@ -146,15 +126,39 @@ function AuthorizedApp() {
     </AppShell>
   </>;
 
+  if (activeView === 'mi-ruta' || activeView === 'conductor') {
+    return (
+      <div className="eco-driver-screen">
+        <SessionToolbar onNavigate={navigateModule} />
+        {activeView === 'mi-ruta' ? (
+          <DriverRouteView
+            service={secured.driver.route}
+            mapSource={services.map}
+            onNavigate={navigateModule}
+            onOpenOrder={(orderId) => navigateTo('conductor', orderId)}
+          />
+        ) : (
+          <DriverOrderView
+            key={currentOrderId}
+            service={secured.driver.orders}
+            routeService={secured.driver.route}
+            orderId={currentOrderId}
+            onNavigate={navigateModule}
+            onOpenOrder={(orderId) => navigateTo('conductor', orderId)}
+          />
+        )}
+      </div>
+    )
+  }
+
   return (
     <>
-      {activeView === 'mi-ruta' || activeView === 'conductor' ? <SessionToolbar onNavigate={navigateModule} /> : null}
       {/* Vista 0: Dashboard del Día */}
       {activeView === 'dashboard' && (
         <DashboardPage
-          gateway={dashboardGateway}
-          insights={insightsGateway}
-          renderMap={({ selectedId, onSelect }) => <RouteMap source={mapSource} profile="dashboard" selectedId={selectedId} onSelect={onSelect} compact />}
+          gateway={services.dashboard}
+          insights={services.insights}
+          renderMap={({ selectedId, onSelect }) => <RouteMap source={services.map} profile="dashboard" selectedId={selectedId} onSelect={onSelect} compact />}
           onNavigate={navigateModule}
         />
       )}
@@ -164,42 +168,21 @@ function AuthorizedApp() {
 
       {/* Vista 2: Gestión de Pedidos */}
       {activeView === 'pedidos' && (
-        <OrderManagementView service={secured.management} mapSource={mapSource} onNavigate={navigateModule} />
+        <OrderManagementView service={secured.management} onNavigate={navigateModule} />
       )}
 
       {/* Vista 3: Generar rutas del día (US-005) */}
-      {activeView === 'rutas' && <RoutePlanningView service={secured.planning} renderMap={can(user.role, 'map.read') ? <RouteMap source={mapSource} profile="operations" /> : undefined} onNavigate={navigateModule} />}
+      {activeView === 'rutas' && <RouteManagementView service={secured.planning} mapSource={can(user.role, 'map.read') ? services.routeMap : undefined} onNavigate={navigateModule} />}
 
       {/* Vista 4: Reporte de sostenibilidad (US-010 / US-011) */}
       {activeView === 'sostenibilidad' && <SustainabilityView service={secured.sustainability} onNavigate={navigateModule} />}
 
       {/* Vista 5: Administración */}
-      {activeView === 'admin' && <AdminView service={secured.administration} onNavigate={navigateModule} />}
+      {activeView === 'ruta-demo' && <RouteSimulationView calculate={services.simulate} onNavigate={navigateModule} />}
+      {activeView === 'admin' && <AdminView depotService={services.depot} service={secured.administration} onNavigate={navigateModule} />}
 
-      {/* Vista 6: Mi ruta del conductor */}
-      {activeView === 'mi-ruta' && (
-        <DriverRouteView
-          service={secured.driver.route}
-          mapSource={mapSource}
-          onNavigate={navigateModule}
-          onOpenOrder={(orderId) => navigateTo('conductor', orderId)}
-        />
-      )}
-
-      {/* Vista 7: Pedido actual del conductor */}
-      {activeView === 'conductor' && (
-        <DriverOrderView
-          key={currentOrderId}
-          service={secured.driver.orders}
-          routeService={secured.driver.route}
-          orderId={currentOrderId}
-
-          onNavigate={navigateModule}
-          onOpenOrder={(orderId) => navigateTo('conductor', orderId)}
-        />
-      )}
       {activeView === 'conductores' ? <DriversView onNavigate={navigateModule} /> : null}
-      {activeView === 'auditoria' || activeView === 'incidencias' ? <RecordsView key={activeView} module={activeView} onNavigate={navigateModule} /> : null}
+      {activeView === 'auditoria' || activeView === 'incidencias' ? <RecordsView exportRecords={services.exportAudit} key={activeView} module={activeView} onNavigate={navigateModule} /> : null}
     </>
   );
 }

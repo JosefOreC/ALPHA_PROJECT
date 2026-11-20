@@ -67,7 +67,7 @@ it.each([new Error('No autorizado'), 'offline'])('muestra errores de registro y 
   await user.click(screen.getByRole('button', { name: 'Registrar conductor' }))
   request.mockRejectedValueOnce(reason)
   fireEvent.submit(screen.getByRole('button', { name: 'Guardar conductor' }).closest('form')!)
-  expect(await screen.findByRole('alert')).toHaveTextContent(reason instanceof Error ? reason.message : 'No se pudo registrar')
+  expect(await screen.findByRole('alert')).toHaveTextContent(reason instanceof Error ? reason.message : 'No se pudieron guardar los datos del conductor.')
   await user.click(screen.getByRole('button', { name: 'Cerrar formulario' }))
   expect(screen.queryByLabelText('DNI')).toBeNull()
 })
@@ -77,6 +77,8 @@ it.each(['ACTIVO', 'INACTIVO'])('cambia el estado %s mediante PATCH y recarga el
   const user = userEvent.setup()
   mount(<DriversView />)
   const action = await screen.findByRole('button', { name: estado === 'ACTIVO' ? 'Desactivar' : 'Activar' })
+  const buttons = within(action.closest('td')!).getAllByRole('button')
+  expect(buttons).toEqual([action, screen.getByRole('button', { name: 'Editar conductor Ana Pérez' })])
   await user.click(action)
   expect(request).toHaveBeenCalledWith(`/api/v1/drivers/d1/${estado === 'ACTIVO' ? 'deactivate' : 'activate'}`, { method: 'PATCH' })
 })
@@ -100,6 +102,23 @@ it.each([new Error('Sin conexión'), 'offline'])('permite reintentar una carga f
   driversApi([])
   await user.click(screen.getByRole('button', { name: 'Reintentar' }))
   expect(await screen.findByText('Todavía no hay conductores registrados.')).toBeVisible()
+})
+
+
+it('edita los datos de un conductor sin reasociar su cuenta y conserva su vehículo disponible', async () => {
+  driversApi()
+  vi.spyOn(window, 'scrollTo').mockImplementation(() => undefined)
+  mount(<DriversView />)
+  fireEvent.click(await screen.findByRole('button', { name: 'Editar conductor Ana Pérez' }))
+  expect(screen.getByRole('heading', { name: 'Editar conductor' })).toBeVisible()
+  expect(screen.queryByLabelText('Cuenta de acceso')).toBeNull()
+  expect(screen.getByLabelText('Vehículo asignado')).toHaveValue('v1')
+  fireEvent.change(screen.getByLabelText('Licencia'), { target: { value: 'LIC-2' } })
+  fireEvent.submit(screen.getByRole('button', { name: 'Guardar cambios' }).closest('form')!)
+  expect(await screen.findByText('Cambios del conductor guardados.')).toBeVisible()
+  expect(request).toHaveBeenCalledWith('/api/v1/drivers/d1', { method: 'PUT', body: {
+    nombre_completo: 'Ana Pérez', dni: '12345678', licencia: 'LIC-2', vehiculo_id: 'v1',
+  } })
 })
 
 it('ignora la respuesta de conductores después de desmontar la pantalla', async () => {

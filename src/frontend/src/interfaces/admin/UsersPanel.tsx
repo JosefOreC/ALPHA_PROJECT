@@ -4,7 +4,7 @@ import type { AdminUser, UserPage } from '../../domain/admin'
 import { Banner, List, ListRow, Panel, PanelCell, ROLE_LABELS, SearchInput, UnitStatus } from '../../shared/ui'
 import type { Role } from '../../shared/ui'
 
-const COLUMNS = 'minmax(0, 1fr) 150px 110px 160px'
+const COLUMNS = 'minmax(140px, 1fr) 120px 85px 115px'
 const initials = (name: string) => name.split(/\s+/).filter(Boolean).slice(0, 2).map((part) => part[0]).join('').toUpperCase()
 const fold = (value: string) => value.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
 
@@ -17,9 +17,11 @@ type UsersPanelProps = {
   page: UserPage | null
   error: string
   onRetry: () => void
+  onEditAccount?: (user: AdminUser) => void
 }
 
-export function UsersPanel({ page, error, onRetry }: UsersPanelProps) {
+export function UsersPanel({ page, error, onRetry, onEditAccount }: UsersPanelProps) {
+  const columns = onEditAccount ? `${COLUMNS} 105px` : COLUMNS
   const [query, setQuery] = useState('')
   const [role, setRole] = useState<Role | ''>('')
   const [status, setStatus] = useState<AdminUser['status'] | ''>('')
@@ -79,16 +81,17 @@ export function UsersPanel({ page, error, onRetry }: UsersPanelProps) {
       ) : null}
 
       {visible.length > 0 ? (
-        <div className="eco-list-scroll">
+        <div className="eco-list-scroll eco-accounts-list">
           <List label="Usuarios">
-            <ListRow head columns={COLUMNS}>
+            <ListRow head columns={columns}>
               <span>Usuario</span>
               <span>Rol</span>
               <span>Estado</span>
               <span>Último acceso</span>
+              {onEditAccount ? <span>Acciones</span> : null}
             </ListRow>
             {visible.map((user) => (
-              <ListRow key={user.id} columns={COLUMNS}>
+              <ListRow key={user.id} columns={columns}>
                 <span className="eco-user">
                   <span className="eco-avatar eco-avatar--quiet" aria-hidden="true">{initials(user.name)}</span>
                   <span className="eco-row__cell">
@@ -98,8 +101,10 @@ export function UsersPanel({ page, error, onRetry }: UsersPanelProps) {
                 </span>
                 <span><span className="eco-tag">{ROLE_LABELS[user.role]}</span></span>
                 <UnitStatus status={user.status === 'active' ? 'ready' : 'off'} label={user.status === 'active' ? 'Activo' : 'Inactivo'} />
-                <span className="eco-code eco-muted">{user.lastAccess}</span>
-
+                <span className="eco-account-access eco-muted"><span>Último acceso </span><span className="eco-code">{user.lastAccess}</span></span>
+                {onEditAccount ? <span className="eco-account-actions">
+                  <button type="button" className="eco-btn eco-btn--secondary" aria-label={`Editar cuenta de ${user.name}`} onClick={() => onEditAccount(user)}>Editar</button>
+                </span> : null}
               </ListRow>
             ))}
           </List>

@@ -1,0 +1,53 @@
+# Revisión del sprint
+
+**Nombre del Proyecto:** EcoLogística Lima – Optimizador de Rutas Sostenibles para DistriRápido S.A.C.
+
+**Líder del Proyecto:** Ore Campos, Josef Pablo.
+
+[README principal](../../../README.md) · [Índice del Sprint 4](README.md)
+
+## Historias de Usuario completadas en este Sprint
+
+La tabla concilia los criterios del backlog con el incremento y sus pruebas. El estado corresponde a verificación técnica. El registro del tablero Jira y el acta son los documentos de referencia para la aceptación formal. [Backlog versionado](../../02%20Planificaci%C3%B3n/01%20Transformando%20a%20%C3%A1gil%20V_1_0_0.md) · [Artefactos Jira](../../02%20Planificaci%C3%B3n/02%20Artefactos%20Jira%20V_1_1_0.md).
+
+| Historia | Incremento comprobado | Cambios y evidencia |
+|---|---|---|
+| US-003 · Registrar pedido de entrega | Registro y consulta posterior del pedido, con validación de datos y autorización por rol. | [Gestión de pedidos](https://github.com/JosefOreC/ALPHA_PROJECT/commit/9f953d6acc79d569d3896ab1e2a161d8321b3720) · [Pruebas E2E](evidencias/inspeccion05/ejecucion-local.json). |
+| US-004 · Confirmar entrega de un pedido | Consulta de una ruta asignada y persistencia de la entrega confirmada. La vista diferencia el tramo confirmado y las paradas restantes. | [Vistas del conductor](https://github.com/JosefOreC/ALPHA_PROJECT/commit/7811be1d261f5d2344cbc3c41fff2fd7ef093d6f) · [Avance en el mapa](https://github.com/JosefOreC/ALPHA_PROJECT/commit/8949cba) · [Pruebas E2E](evidencias/inspeccion05/ejecucion-local.json). |
+| US-005 · Generar rutas optimizadas del día | Generación y aprobación de una propuesta, consulta de la asignación y seguimiento de uno o varios conductores por nombre y placa. | [Implementación del planificador](https://github.com/JosefOreC/ALPHA_PROJECT/commit/37a4cb91e193ad636eebbbf408ea0c9f201a8ffe) · [Asignación en Render](https://github.com/JosefOreC/ALPHA_PROJECT/commit/ba838ff) · [Comparación de recorridos](https://github.com/JosefOreC/ALPHA_PROJECT/commit/4f3964b) · [Escenarios de mapa](../../../src/frontend/tests/ui/map.spec.ts). |
+
+La guía de pedidos consigna los tickets ELODRSPDSC-17 y ELODRSPDSC-18 para RF-002. La correspondencia individual con US-003 y US-004, el vínculo de US-005 y los estados de cierre deberán comprobarse en el tablero. [Registro de trazabilidad de pedidos](../Gu%C3%ADas%20t%C3%A9cnicas/CRUD%20de%20pedidos.md).
+
+La optimización transversal conserva sus series de transferencia y CO₂e antes y después, sus condiciones de medición y la matriz de estándares. [Informe ambiental](03%20Informe%20de%20reducci%C3%B3n%20del%20impacto%20ambiental%20V_1_2_0.md) · [Estándares y arquitectura](04%20Est%C3%A1ndares%20arquitectura%20y%20gu%C3%ADa%20de%20desarrollo%20verde%20V_1_2_0.md).
+
+## Demostración del trabajo completado
+
+El banco técnico ejecutó el acceso, el registro de pedidos y la confirmación de entregas sobre FastAPI y PostGIS. El código de prueba comprueba la lectura posterior del pedido. La captura del reporte deja el resultado por navegador. La prueba adicional de mapa recorre la aprobación de la propuesta y la selección de conductores con una API interceptada. [Captura del reporte](evidencias/inspeccion05/reporte-playwright.png) · [Alcance y resultados](03%20Analisis%20PlayWrigth%20V_1_0_0.md).
+
+En la evaluación de uso se recogieron cinco cuestionarios de los perfiles de Conductor, Operador y Supervisión. El promedio SUS fue 72,5. Las observaciones sobre el acceso y la lectura de rutas se incorporan al informe para orientar la siguiente revisión. El cuestionario aporta retroalimentación de uso y el acta de la reunión queda como evidencia independiente. [Informe de usabilidad](04%20Usabilidad%20V_1_0_0.md).
+
+### Guion para la sesión de cierre
+
+| Paso | Criterio de aceptación que se mostrará | Evidencia que se conservará |
+|---|---|---|
+| Registrar un pedido desde Operación | El pedido aparece en el listado y se puede consultar con la dirección, la ventana y el peso ingresados. | Captura del pedido y nota sobre el rol usado. |
+| Generar o consultar la ruta desde Planificación | La propuesta aprobada conserva el conductor y el vehículo. El mapa distingue los recorridos al seleccionar dos conductores. | Captura de la asignación y del mapa, con el commit que se demostró. |
+| Confirmar la entrega desde la cuenta de Conductor | El pedido figura como entregado al volver a consultarlo y la vista actualiza el tramo confirmado. | Captura del cambio de estado y del avance en el mapa. |
+| Revisar el incremento con los participantes | El responsable de producto registra la decisión sobre cada historia y acuerda el tratamiento de las observaciones. | Acta con fecha, rol de los asistentes, decisiones y enlace a la grabación o a las capturas. |
+
+## Pendientes
+
+| Entrega de cierre | Situación y siguiente verificación |
+|---|---|
+| Aceptación del incremento | Contrastar las tres historias del backlog con los tickets de Jira y registrar en el acta la decisión del responsable de producto por historia. |
+| Demostración ante stakeholders | Registrar fecha, asistentes, versión demostrada y observaciones. Adjuntar video o capturas de la sesión, con evidencia de los flujos que se revisaron. |
+| Paquete de entrega | Conservar los resultados por navegador, las observaciones de la URL pública y las ejecuciones del pipeline en el mismo corte. [Análisis Playwright](03%20Analisis%20PlayWrigth%20V_1_0_0.md) · [Seguimiento de la rúbrica](README.md#estado-de-la-inspección-5). |
+
+## Control de versiones
+
+| Versión | Fecha | Cambio |
+|---|---|---|
+| V_1_0_0 | 19/11/2026 | Primera edición para la Inspección 5. |
+| V_1_0_1 | 20/11/2026 | Conciliación de historias, pruebas y observaciones del cuestionario. |
+
+[← Volver al README principal](../../../README.md) · [Volver al Sprint 4](README.md)

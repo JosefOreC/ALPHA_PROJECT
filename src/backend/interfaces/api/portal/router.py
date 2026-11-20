@@ -2,12 +2,20 @@ from datetime import date
 from typing import Literal
 from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 from domain.access_control import scope_for, can
 from interfaces.api.security.deps import require_permission, protect_mutation
 from interfaces.api.portal.deps import get_portal
 
 router = APIRouter(prefix='/api',tags=['Operación'])
+
+
+def normalize_email(value: str) -> str:
+    import re
+    value = value.strip().lower()
+    if not re.fullmatch(r'[^\s@]+@[^\s@]+\.[^\s@]+',value):
+        raise ValueError('Ingresa un correo válido.')
+    return value
 
 
 class CreateUser(BaseModel):
@@ -27,10 +35,7 @@ class CreateUser(BaseModel):
     @field_validator('email')
     @classmethod
     def valid_email(cls,value):
-        import re
-        if not re.fullmatch(r'[^\s@]+@[^\s@]+\.[^\s@]+',value):
-            raise ValueError('Ingresa un correo válido.')
-        return value
+        return normalize_email(value)
 
 
 class Parameters(BaseModel):
@@ -62,14 +67,36 @@ class Parameters(BaseModel):
 
 
 class RouteSettings(BaseModel):
-    goal: Literal['co2','balanced','time']
+    goal: Literal['co2','balanced','time','distance']
+    returnToDepot: bool = False
     respectWindows: bool
     prioritizeLowEmission: bool
+
+class ApproveProposal(BaseModel):
+    settings: RouteSettings
+    fingerprint: str = Field(pattern=r'^[a-f0-9]{64}$')
 
 class Incident(BaseModel):
     order_id: UUID
     type: str = Field(min_length=2,max_length=50)
     description: str = Field(min_length=5,max_length=2000)
+
+
+class Depot(BaseModel):
+    name: str = Field(min_length=2, max_length=150)
+    address: str = Field(min_length=3, max_length=500)
+    latitude: float = Field(ge=-90, le=90, allow_inf_nan=False)
+    longitude: float = Field(ge=-180, le=180, allow_inf_nan=False)
+
+
+@router.get('/admin/depot', dependencies=[Depends(require_permission('settings.read'))])
+def depot(portal=Depends(get_portal)):
+    return portal.depot()
+
+
+@router.put('/admin/depot', dependencies=[Depends(protect_mutation)])
+def save_depot(payload: Depot, identity=Depends(require_permission('settings.update')), portal=Depends(get_portal)):
+    return portal.save_depot(payload.model_dump(), identity.subject_id)
 
 
 @router.get('/admin/users',dependencies=[Depends(require_permission('users.read'))])
@@ -79,6 +106,58 @@ def users(portal=Depends(get_portal)):
 @router.post('/admin/users',status_code=201,dependencies=[Depends(protect_mutation)])
 def create_user(payload:CreateUser,identity=Depends(require_permission('users.create')),portal=Depends(get_portal)):
     return portal.create_user(payload.model_dump(),identity.subject_id)
+
+class UpdateUserEmail(BaseModel):
+    email: str = Field(min_length=5, max_length=255)
+
+    @field_validator('email')
+    @classmethod
+    def valid_email(cls, value):
+        return normalize_email(value)
+
+
+@router.put('/admin/users/{user_id}/email',status_code=204,dependencies=[Depends(protect_mutation)])
+def update_user_email(user_id: UUID,payload: UpdateUserEmail,identity=Depends(require_permission('users.update')),portal=Depends(get_portal)):
+    if not portal.update_user_email(user_id, payload.email, identity.subject_id):
+        raise HTTPException(404, 'La cuenta no existe.')
+
+
+class ResetPassword(BaseModel):
+    password: str = Field(min_length=12, max_length=256)
+
+
+@router.put('/admin/users/{user_id}/password',status_code=204,dependencies=[Depends(protect_mutation)])
+def reset_password(user_id: UUID,payload: ResetPassword,identity=Depends(require_permission('users.update')),portal=Depends(get_portal)):
+    if not portal.reset_user_password(user_id, payload.password, identity.subject_id):
+        raise HTTPException(404, 'La cuenta no existe.')
+
+
+class UpdateAccountCredentials(BaseModel):
+    email: str | None = Field(default=None, min_length=5, max_length=255)
+    password: str | None = Field(default=None, min_length=12, max_length=256)
+
+    @field_validator('email')
+    @classmethod
+    def valid_email(cls, value):
+        return normalize_email(value) if value is not None else None
+
+    @model_validator(mode='after')
+    def require_changes(self):
+        if self.email is None and self.password is None:
+            raise ValueError('Modifica el correo o ingresa una contraseña nueva.')
+        return self
+
+
+@router.patch('/admin/users/{user_id}', status_code=204, dependencies=[Depends(protect_mutation)])
+def update_account_credentials(
+    user_id: UUID,
+    payload: UpdateAccountCredentials,
+    identity=Depends(require_permission('users.update')),
+    portal=Depends(get_portal),
+):
+    if not portal.update_credentials(user_id, identity.subject_id, email=payload.email, password=payload.password):
+        raise HTTPException(404, 'La cuenta no existe.')
+
 
 @router.get('/admin/parameters',dependencies=[Depends(require_permission('settings.read'))])
 def parameters(portal=Depends(get_portal)):
@@ -125,9 +204,40 @@ def scope(identity=Depends(require_permission('routes.read')),portal=Depends(get
         raise HTTPException(403,'Tu perfil solo puede consultar su ruta asignada.')
     return portal.scope()
 
+@router.get('/routes/map')
+def route_map(identity=Depends(require_permission('routes.read')),portal=Depends(get_portal)):
+    if not can(identity.role,'map.read'):
+        raise HTTPException(403,'Tu perfil no tiene permiso para consultar el mapa de rutas.')
+    if scope_for(identity.role,'routes.read')=='own' and not identity.driver_id:
+        raise HTTPException(403,'Se requiere una cuenta de conductor vinculada.')
+    return portal.route_map(identity.driver_id if scope_for(identity.role,'routes.read')=='own' else None)
+
 @router.post('/routes/proposal',dependencies=[Depends(require_permission('routes.generate')),Depends(protect_mutation)])
 def proposal(payload:RouteSettings,portal=Depends(get_portal)):
     return portal.proposal(payload.model_dump())
+
+@router.post('/routes/approve',status_code=201,dependencies=[Depends(protect_mutation)])
+def approve_proposal(payload:ApproveProposal,identity=Depends(require_permission('routes.generate')),portal=Depends(get_portal)):
+    return portal.approve_proposal(payload.settings.model_dump(),payload.fingerprint,identity.subject_id)
+
+class AppendRouteOrder(BaseModel):
+    order_id: UUID
+
+
+@router.get('/routes/assignment-options',dependencies=[Depends(require_permission('routes.generate'))])
+def route_assignment_options(portal=Depends(get_portal)):
+    return portal.active_route_choices()
+
+
+@router.post('/routes/{route_id}/orders',status_code=204,dependencies=[Depends(protect_mutation)])
+def append_route_order(route_id: UUID,payload: AppendRouteOrder,identity=Depends(require_permission('routes.generate')),portal=Depends(get_portal)):
+    portal.append_order(route_id,payload.order_id,identity.subject_id)
+
+
+@router.post('/pedidos/{order_id}/despacho',status_code=204,dependencies=[Depends(protect_mutation)])
+def dispatch_order(order_id: UUID,identity=Depends(require_permission('orders.update')),portal=Depends(get_portal)):
+    portal.start_delivery(order_id, identity.subject_id)
+
 
 @router.get('/audit',dependencies=[Depends(require_permission('audit.read'))])
 def audit(portal=Depends(get_portal)):
@@ -140,6 +250,13 @@ def incidents(identity=Depends(require_permission('orders.read')),portal=Depends
     if identity.role in ('driver','CONDUCTOR','ROL-03') and identity.driver_id:
         return portal.records('incidencias',identity.driver_id)
     raise HTTPException(403,'No tienes permiso para consultar incidencias.')
+
+
+@router.get('/incidents/order-options')
+def incident_order_choices(identity=Depends(require_permission('incidents.create')), portal=Depends(get_portal)):
+    if scope_for(identity.role, 'incidents.create') != 'all':
+        raise HTTPException(403, 'Consulta los pedidos de tu ruta asignada.')
+    return portal.incident_order_choices()
 
 @router.post('/incidents',status_code=201,dependencies=[Depends(protect_mutation)])
 def create_incident(payload:Incident,identity=Depends(require_permission('incidents.create')),portal=Depends(get_portal)):

@@ -1,10 +1,10 @@
-import { render, screen, within } from '@testing-library/react'
+import { act, fireEvent, render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { beforeAll, describe, expect, it, vi } from 'vitest'
 import { createDriverOrders } from '../application/driverOrders'
 import { createDriverRoute } from '../application/driverRoute'
 import { currentStop, routeProgress, stopNumber } from '../domain/driverRoute'
-import { DemoOrders, UnavailableDriverRoute } from '../infrastructure/demoOrders'
+import { DemoOrders, UnavailableDriverRoute } from '../infrastructure/demo/demoOrders'
 import { DriverOrderView } from './DriverOrderView'
 import { DriverRouteView } from './DriverRouteView'
 
@@ -48,6 +48,25 @@ const idleMap = { load: () => new Promise<never>(() => {}) }
 describe('DriverRouteView', () => {
   const setup = (props: Partial<Parameters<typeof DriverRouteView>[0]> = {}) =>
     render(<DriverRouteView service={createDriverRoute(new DemoOrders())} mapSource={idleMap} {...props} />)
+
+  it('oculta los UUID de los pedidos y conserva el estado de entrega', async () => {
+    const demo = new DemoOrders()
+    const route = await demo.route()
+    const uuid = 'cecc3dbc-f35e-47b2-90b7-3d9e380ab2d9'
+    route.stops[0] = { ...route.stops[0], order_id: uuid }
+    setup({ service: createDriverRoute({ route: async () => route }) })
+    const stops = await screen.findByRole('list', { name: 'Paradas de hoy' })
+    expect(stops).toHaveTextContent('Bodega Mi Barrio')
+    expect(stops).toHaveTextContent('entregado')
+    expect(stops).not.toHaveTextContent(uuid)
+  })
+
+  it('termina en la última entrega cuando no se solicita regresar al almacén', async () => {
+    const route = { ...await new DemoOrders().route(), return_to_depot: false }
+    setup({ service: createDriverRoute({ route: async () => route }) })
+    expect(await screen.findByText('Minimarket Don Lucho →')).toBeInTheDocument()
+    expect(screen.queryByText(/regreso al/)).toBeNull()
+  })
 
   it('muestra avance, CO₂, paradas con su estado y el resto de la ruta', async () => {
     setup()
@@ -165,6 +184,57 @@ describe('DriverOrderView', () => {
     setup({ orderId: 'PED-9999' })
     expect(await screen.findByRole('alert')).toHaveTextContent('Pedido no encontrado.')
     expect(screen.getByRole('button', { name: 'Volver a cargar' })).toBeInTheDocument()
+  })
+
+
+  it('busca la parada actual cuando el enlace no incluye un pedido', async () => {
+    setup({ orderId: '' })
+    expect(await screen.findByRole('heading', { name: 'Minimarket Don Lucho' })).toBeVisible()
+  })
+
+  it('explica que ya no quedan paradas y ofrece reintentar', async () => {
+    const demo = new DemoOrders()
+    const route = await demo.route()
+    route.stops = route.stops.map(stop => ({ ...stop, kind: 'done' }))
+    setup({ orderId: '', routeService: createDriverRoute({ route: async () => route }) })
+    expect(await screen.findByRole('alert')).toHaveTextContent('No tienes entregas pendientes')
+    fireEvent.click(screen.getByRole('button', { name: 'Volver a cargar' }))
+    expect(await screen.findByRole('alert')).toHaveTextContent('No tienes entregas pendientes')
+  })
+
+  it('vuelve a Mi ruta después de consultar la última entrega y permite reportar incidencias', async () => {
+    const demo = new DemoOrders()
+    const order = await demo.view('PED-0021')
+    const onNavigate = vi.fn()
+    setup({
+      orderId: order.id, routeService: undefined, onNavigate,
+      service: { view: async () => ({ ...order, confirmed_at: null, instructions: '' }), confirm: vi.fn() },
+    })
+    expect(await screen.findByText(/pedido entregado/)).toBeVisible()
+    expect(screen.getByText('Sin indicaciones adicionales.')).toBeVisible()
+    fireEvent.click(screen.getByRole('link', { name: 'Volver a mi ruta' }))
+    expect(onNavigate).toHaveBeenCalledWith('mi-ruta', '/?vista=mi-ruta')
+    fireEvent.click(screen.getByRole('button', { name: 'Reportar incidencia' }))
+    expect(onNavigate).toHaveBeenCalledWith('incidencias', '/?vista=incidencias')
+  })
+
+  it.each([new Error('Pedido modificado'), 'offline'])('conserva el pedido ante un error de confirmación: %s', async failure => {
+    const demo = new DemoOrders()
+    let reject!: (reason: unknown) => void
+    const confirm = vi.fn(() => new Promise<Awaited<ReturnType<typeof demo.view>>>((_, fail) => { reject = fail }))
+    setup({ service: { view: demo.view.bind(demo), confirm } })
+    fireEvent.click(await screen.findByRole('button', { name: 'Confirmar entrega' }))
+    const dialog = screen.getByRole('dialog')
+    const submit = within(dialog).getByRole('button', { name: 'Sí, confirmar entrega' })
+    fireEvent.click(submit)
+    expect(submit).toBeDisabled()
+    const cancel = new Event('cancel', { cancelable: true })
+    fireEvent(dialog, cancel)
+    expect(cancel.defaultPrevented).toBe(true)
+    await act(async () => reject(failure))
+    expect(await screen.findByRole('alert')).toHaveTextContent(failure instanceof Error ? failure.message : 'No se pudo confirmar la entrega.')
+    expect(screen.getByRole('button', { name: 'Confirmar entrega' })).toBeEnabled()
+    expect(confirm).toHaveBeenCalledTimes(1)
   })
 
   it('el botón de regreso lleva a Mi ruta', async () => {

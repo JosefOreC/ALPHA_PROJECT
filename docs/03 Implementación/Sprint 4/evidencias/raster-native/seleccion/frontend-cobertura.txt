@@ -1,0 +1,22 @@
+
+> frontend@0.0.0 test:unit
+> vitest run --coverage --maxWorkers=2 --pool=vmThreads
+
+
+ RUN  v5.0.3 C:/Users/ALEX/Documents/ALPHA_PROJECT_TALLER/ALPHA_PROJECT/src/frontend
+      Coverage enabled with v8
+
+
+ Test Files  51 passed (51)
+      Tests  475 passed (475)
+   Start at  11:22:56
+   Duration  98.53s (tests 61%, setup 15%, environment 10%, worker 8%, transform 3%, import 3%)
+
+ % Coverage report from v8
+
+=============================== Coverage summary ===============================
+Statements   : 95.27% ( 2621/2751 )
+Branches     : 90.29% ( 2279/2524 )
+Functions    : 94.19% ( 925/982 )
+Lines        : 97.15% ( 2012/2071 )
+================================================================================

@@ -5,7 +5,9 @@ import type { ManagedOrder } from '../../src/domain/managedOrder'
 
 /** Identidad ficticia verificada únicamente dentro de las pruebas de navegador. */
 export async function mockSession(page: Page, role: string | null) {
-  await page.route('**/api/map', route => route.fulfill({ json: { depot: null, orders: [], routes: [], vehicles: [] } }))
+  for (const path of ['**/api/map','**/api/routes/map']) {
+    await page.route(path, route => route.fulfill({ json: { depot: null, orders: [], routes: [], vehicles: [] } }))
+  }
   await page.route('**/api/session', route => route.fulfill(role ? {
     status: 200, json: { subject_id: 'test-' + role, name: 'Usuario ficticio', role, driver_id: role === 'driver' ? 'd1' : null, plate: role === 'driver' ? 'ABC-123' : null, csrf_token: 'test-csrf' },
   } : { status: 401, json: { detail: 'Sin sesión' } }))
@@ -65,8 +67,8 @@ export async function fillOrder(page: Page, customer = 'Registro ficticio') {
   await page.getByLabel('Destinatario *', { exact: true }).fill(customer)
   await page.getByLabel('Dirección de entrega *', { exact: true }).fill('Dirección ficticia 456')
   await page.getByLabel('Distrito *', { exact: true }).selectOption('Ate')
-  await page.getByLabel('Inicio de ventana · Lima *').fill('2026-10-02T10:00')
-  await page.getByLabel('Fin de ventana · Lima *').fill('2026-10-02T12:00')
+  await page.getByLabel('Entrega desde (hora de Lima) *').fill('2026-10-02T10:00')
+  await page.getByLabel('Entrega hasta (hora de Lima) *').fill('2026-10-02T12:00')
   await page.getByLabel('Peso del paquete (kg) *').fill('2.5')
   await page.getByLabel('Indicaciones adicionales').fill('Entrega ficticia para pruebas.')
 }

@@ -1,0 +1,21 @@
+
+> frontend@0.0.0 test:ui
+> tsc -p tsconfig.ui.json && playwright test login.spec.ts
+
+[WebServer] (node:16116) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 6 tests using 1 worker
+
+(node:19876) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [escritorio] › tests\ui\login.spec.ts:4:1 › la sesion verificada abre Pedidos sin descargar la imagen de acceso (1.6s)
+  ok 2 [escritorio] › tests\ui\login.spec.ts:15:1 › la imagen de acceso selecciona AVIF, WebP y JPEG sin romper el formulario (648ms)
+  ok 3 [escritorio] › tests\ui\login.spec.ts:33:1 › inicio, creación de usuario por administrador y cierre de sesión (1.3s)
+(node:13492) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 4 [movil-390] › tests\ui\login.spec.ts:4:1 › la sesion verificada abre Pedidos sin descargar la imagen de acceso (1.5s)
+  ok 5 [movil-390] › tests\ui\login.spec.ts:15:1 › la imagen de acceso selecciona AVIF, WebP y JPEG sin romper el formulario (587ms)
+  ok 6 [movil-390] › tests\ui\login.spec.ts:33:1 › inicio, creación de usuario por administrador y cierre de sesión (1.2s)
+
+  6 passed (12.6s)

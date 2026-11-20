@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import type { Vehicle } from '../types/vehicle'
+import type { Vehicle } from '../domain/vehicle'
 import { filterVehicles, fleetTabCounts, fuelLabel, groupVehicles, isLowEmission, summarizeFleet, validateVehicleForm } from './fleetBoard'
 
 const vehicle = (placa: string, estado: Vehicle['estado'], tipo_combustible: string, capacidad_kg = 1000): Vehicle => ({

@@ -1,9 +1,11 @@
 """Composición común de API y autorización; proveedor de identidad inyectable."""
 import os
+from pathlib import Path
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import FileResponse, JSONResponse
+from fastapi.staticfiles import StaticFiles
 
 from application.use_cases.confirm_delivery import DriverOrders
 from application.use_cases.manage_orders import ManageOrders
@@ -18,23 +20,37 @@ from interfaces.api.dashboard.router import router as dashboard_router
 from interfaces.api.security.router import router as session_router
 from interfaces.api.security.deps import get_current_identity, protect_mutation as default_protection
 from interfaces.api.security.headers import SecurityHeadersMiddleware
+from interfaces.api.static_assets import PrecompressedStaticFiles
 from interfaces.api.portal.router import router as portal_router
+from interfaces.api.simulation.router import router as simulation_router
 from infrastructure.persistence.postgres_orders import postgres_repository
 from infrastructure.persistence.postgres_fleet import PostgresVehicles, PostgresDrivers
 from infrastructure.persistence.postgres_dashboard import PostgresDashboard, PostgresDistrictCatalog
 from infrastructure.persistence.database import DatabaseError, DatabaseUnavailable
 from infrastructure.config import load_environment
+from domain.road_network import RoadServiceUnavailable
 from infrastructure import dependencies as repositories
 from application.use_cases.get_dashboard_summary import GetDashboardSummary
 from application.use_cases.list_districts import ListDistricts
 from interfaces.api.dashboard.deps import get_dashboard_summary_use_case, get_list_districts_use_case
 from infrastructure.persistence.in_memory_dashboard import SystemClock as DashboardClock
 
-def create_app(repository=None, authenticate=get_current_identity, protect_mutation=default_protection, persistent=None):
+def create_app(repository=None, authenticate=get_current_identity, protect_mutation=default_protection, persistent=None, frontend_dist=None):
     persistent = (repository is None and authenticate is get_current_identity and protect_mutation is default_protection) if persistent is None else persistent
     if persistent:
         load_environment()
     app = FastAPI(title="EcoLogística Lima", version="1.0.0")
+    static_root = frontend_dist or (os.getenv('FRONTEND_DIST') if persistent else None)
+    if static_root:
+        static_root = Path(static_root).resolve()
+        if not (static_root / 'index.html').is_file():
+            raise ValueError('FRONTEND_DIST debe contener el build de producción del frontend.')
+        app.mount('/assets', PrecompressedStaticFiles(directory=static_root / 'assets'), name='assets')
+        if (static_root / 'maps').is_dir():
+            app.mount('/maps', StaticFiles(directory=static_root / 'maps'), name='maps')
+        @app.get('/favicon.svg', include_in_schema=False)
+        def favicon():
+            return FileResponse(static_root / 'favicon.svg')
     if authenticate is not get_current_identity:
         app.dependency_overrides[get_current_identity] = authenticate
     if protect_mutation is not default_protection:
@@ -92,8 +108,12 @@ def create_app(repository=None, authenticate=get_current_identity, protect_mutat
     @app.exception_handler(ValueError)
     async def domain_error(request, error):
         return JSONResponse(status_code=422,content={'detail':str(error)})
+    @app.exception_handler(RoadServiceUnavailable)
+    async def road_error(request, error):
+        return JSONResponse(status_code=503,content={'detail':str(error)})
     app.include_router(session_router)
     app.include_router(portal_router)
+    app.include_router(simulation_router)
     app.include_router(create_orders_router(DriverOrders(repository, SystemClock()), authenticate))
     app.include_router(create_management_router(ManageOrders(repository, UuidOrderIds()), authenticate, protect_mutation))
     app.include_router(vehicles_router, prefix="/api/v1")
@@ -104,5 +124,8 @@ def create_app(repository=None, authenticate=get_current_identity, protect_mutat
         return {"status": "ok", "service": "ALPHA_PROJECT Backend"}
     @app.get("/")
     def root():
+        if static_root:
+            return FileResponse(static_root / 'index.html', headers={'Content-Security-Policy':
+                "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self'; connect-src 'self' https:; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'none'; form-action 'self'"})
         return {"message": "ALPHA_PROJECT API funcionando correctamente"}
     return app

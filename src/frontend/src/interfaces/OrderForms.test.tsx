@@ -10,12 +10,22 @@ beforeAll(() => {
   HTMLDialogElement.prototype.showModal=function() { this.setAttribute('open','') }
   HTMLDialogElement.prototype.close=function() { this.removeAttribute('open'); this.dispatchEvent(new Event('close')) }
 })
+it('conserva y envía las coordenadas al editar un pedido geolocalizado', async () => {
+  const located = { ...order,latitude:-12.04,longitude:-76.95 }
+  const service = { update:vi.fn().mockResolvedValue(located) }
+  render(<OrderForm service={service as never} order={located} onSaved={vi.fn()} onBack={vi.fn()} />)
+  expect(screen.getByLabelText('Latitud de entrega')).toHaveValue(-12.04)
+  fireEvent.change(screen.getByLabelText('Longitud de entrega'),{ target:{ value:'-76.94' } })
+  fireEvent.submit(screen.getByRole('button',{ name:'Guardar cambios' }).closest('form')!)
+  await act(async () => {})
+  expect(service.update).toHaveBeenCalledWith(located,expect.objectContaining({ latitude:-12.04,longitude:-76.94 }))
+})
 it('edita el pedido conservando precisión temporal y evita guardados duplicados', async () => {
   let finish!: (value: ManagedOrder) => void
   const service={ update:vi.fn(() => new Promise<ManagedOrder>(resolve => { finish=resolve })), create:vi.fn() }
   const onSaved=vi.fn(); const onBack=vi.fn()
   render(<OrderForm service={service as never} order={order} onSaved={onSaved} onBack={onBack} />)
-  expect(screen.getByLabelText('Inicio de ventana · Lima *')).toHaveValue('2026-10-30T10:00')
+  expect(screen.getByLabelText('Entrega desde (hora de Lima) *')).toHaveValue('2026-10-30T10:00')
   fireEvent.change(screen.getByLabelText('Indicaciones adicionales'),{ target:{ value:'Entregar en puerta' } })
   const form=screen.getByRole('button',{ name:'Guardar cambios' }).closest('form')!
   fireEvent.submit(form); fireEvent.submit(form)
@@ -29,7 +39,7 @@ it('edita el pedido conservando precisión temporal y evita guardados duplicados
 it.each([new Error('Versión desactualizada'),'offline'])('conserva los campos tras un fallo al guardar: %s', async reason => {
   const service={ update:vi.fn().mockRejectedValue(reason) }
   render(<OrderForm service={service as never} order={{ ...order, window_start:'bad',window_end:'' }} onSaved={vi.fn()} onBack={vi.fn()} />)
-  expect(screen.getByLabelText('Inicio de ventana · Lima *')).toHaveValue('')
+  expect(screen.getByLabelText('Entrega desde (hora de Lima) *')).toHaveValue('')
   fireEvent.submit(screen.getByRole('button',{ name:'Guardar cambios' }).closest('form')!)
   expect(await screen.findByRole('alert')).toHaveTextContent(reason instanceof Error ? reason.message : 'No se pudo guardar')
   expect(screen.getByLabelText('Destinatario *')).toHaveValue('Ana')
@@ -37,8 +47,8 @@ it.each([new Error('Versión desactualizada'),'offline'])('conserva los campos t
 it('mantiene fracciones de segundo al crear ventanas de entrega', async () => {
   const service={ create:vi.fn().mockResolvedValue(order) }
   render(<OrderForm service={service as never} onSaved={vi.fn()} onBack={vi.fn()} />)
-  fireEvent.change(screen.getByLabelText('Inicio de ventana · Lima *'),{ target:{ value:'2026-10-30T10:00:01.123' } })
-  fireEvent.change(screen.getByLabelText('Fin de ventana · Lima *'),{ target:{ value:'2026-10-30T12:00:01.123' } })
+  fireEvent.change(screen.getByLabelText('Entrega desde (hora de Lima) *'),{ target:{ value:'2026-10-30T10:00:01.123' } })
+  fireEvent.change(screen.getByLabelText('Entrega hasta (hora de Lima) *'),{ target:{ value:'2026-10-30T12:00:01.123' } })
   fireEvent.submit(screen.getByRole('button',{ name:'Registrar pedido' }).closest('form')!)
   await screen.findByRole('button',{ name:'Registrar pedido' })
   expect(service.create).toHaveBeenCalledWith(expect.objectContaining({ window_start:'2026-10-30T10:00:01.123-05:00' }))

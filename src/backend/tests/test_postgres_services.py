@@ -207,24 +207,67 @@ def test_parameters_preserve_legacy_consumption_and_remove_disabled_factors(db, 
     assert any('DELETE FROM factores' in sql and args == ('GNV',) for sql, args in db.calls)
     assert any('INSERT INTO auditoria' in sql for sql, _ in db.calls)
     db.responses = {}
-    with pytest.raises(ValueError, match='parámetros'):
-        service.parameters()
+    defaults = service.parameters()
+    assert defaults['maxSeconds'] == 45
+    assert all(value is None for value in defaults['emissionFactors'].values())
 
 
 @pytest.mark.parametrize('driver_id', [None, 'driver-1'])
 def test_map_preserves_geography_scopes_queries_and_vehicle_states(db, driver_id):
     r = route()
     db.responses = {'SELECT r.*': [r], 'SELECT nombre,latitud': [{'nombre': 'Central', 'latitud': -12, 'longitud': -77}],
-                    'SELECT p.*': [order(ruta_id=r['ruta_id']), order()],
+                    'SELECT p.*': [order(ruta_id=r['ruta_id'],orden_entrega=3), order()],
                     'SELECT DISTINCT': [dict(vehiculo_id=uuid4(), placa='TST-001', ruta_id=r['ruta_id'] if i == 0 else None,
                                              latitud=-12, longitud=-77, estado=state) for i, state in enumerate(('EN_RUTA','DISPONIBLE','MANTENIMIENTO'))]}
     result = portal.PostgresPortal().map(driver_id)
     assert result['routes'][0]['path'][0] == {'lat': -12, 'lng': -77}
+    assert result['routes'][0]['driver']==r['nombre_completo']
+    assert result['orders'][0]['stop_number']==3
+    assert result['orders'][1]['stop_number'] is None
     assert [v['status'] for v in result['vehicles']] == ['En ruta', 'Disponible', 'Detenido']
     if driver_id:
         assert any('p.conductor_id=%s' in sql and args[-1] == driver_id for sql, args in db.calls)
     db.responses = {}
     assert portal.PostgresPortal().map(driver_id)['depot'] is None
+
+
+def test_route_map_includes_confirmed_routes_and_preserves_driver_identity(db):
+    first_driver, second_driver = uuid4(), uuid4()
+    active = route(estado='EN_CURSO', conductor_id=first_driver)
+    completed = route(estado='COMPLETADA', placa='TST-002', conductor_id=second_driver)
+    pending = order()
+    transit = order('EN_CAMINO', ruta_id=active['ruta_id'], orden_entrega=1)
+    delivered = order('ENTREGADO', ruta_id=completed['ruta_id'], orden_entrega=1,
+                      latitud=Decimal('-12.1'), longitud=Decimal('-77.1'))
+    db.responses = {
+        'FROM rutas r JOIN vehiculos': [active, completed],
+        'SELECT nombre,latitud': [{'nombre': 'Central', 'latitud': -12, 'longitud': -77}],
+        'FROM pedidos p LEFT JOIN ruta_pedido': [pending, transit, delivered, order('CANCELADO')],
+        'SELECT DISTINCT': [{'vehiculo_id': uuid4(), 'placa': 'TST-001', 'ruta_id': active['ruta_id'],
+                             'latitud': -12, 'longitud': -77, 'estado': 'EN_RUTA'}],
+    }
+    result = portal.PostgresPortal().route_map()
+    assert {row['id'] for row in result['orders']} == {
+        str(pending['pedido_id']), str(transit['pedido_id']), str(delivered['pedido_id']),
+    }
+    assert [row['id'] for row in result['routes']] == [str(active['ruta_id']), str(completed['ruta_id'])]
+    assert [row['driver_id'] for row in result['routes']] == [str(first_driver), str(second_driver)]
+    assert [row['done_until'] for row in result['routes']] == [0, 1]
+    assert len(result['vehicles']) == 1
+
+    db.responses['SELECT nombre,latitud'] = []
+    assert str(pending['pedido_id']) not in {row['id'] for row in portal.PostgresPortal().route_map()['orders']}
+
+
+def test_planning_scope_counts_only_located_pending_orders_and_requires_origin(db):
+    db.responses = {'SELECT count(*)':[{'n':2,'districts':1,'unlocated':3}],
+                    'SELECT almacen_id':[{'almacen_id':uuid4()}],'SELECT v.*':[{'placa':'TST-001'}]}
+    result = portal.PostgresPortal().scope()
+    assert result['pendingOrders']==2 and result['unlocatedOrders']==3 and result['depotAvailable'] is True
+    assert any('latitud IS NOT NULL AND longitud IS NOT NULL' in statement for statement,_ in db.calls)
+    db.responses['SELECT almacen_id'] = []
+    result = portal.PostgresPortal().scope()
+    assert result['pendingOrders']==0 and result['depotAvailable'] is False
 
 
 @pytest.mark.parametrize('baseline', [0, 20])
@@ -273,7 +316,8 @@ def test_insights_filters_district_and_handles_missing_metrics(db):
 def test_records_incidents_scope_and_integrations(db):
     service = portal.PostgresPortal()
     db.responses = {'SELECT * FROM integraciones': [{'integracion_id': value, 'nombre': value, 'descripcion':'Integración'} for value in ('db','map')],
-                    'SELECT count(*)': [{'n': 3, 'districts': 2}], 'SELECT estado': [{'estado':'DISPONIBLE'}, {'estado':'MANTENIMIENTO'}]}
+                    'SELECT count(*)': [{'n': 3, 'districts': 2}], 'SELECT estado': [{'estado':'DISPONIBLE'}, {'estado':'MANTENIMIENTO'}],
+                    'SELECT v.*': [{'placa':'TST-001'}]}
     assert [item['status'] for item in service.integrations()] == ['connected','pending']
     assert service.scope()['availableVehicles'] == 1
     for module in ('auditoria','incidencias'):
@@ -307,7 +351,7 @@ def test_proposal_rejects_oversized_or_unavailable_scope_and_passes_profiles(db,
         assert len(orders) == len(vehicles) == 1
         assert depot == (-12,-77) and profiles['DIESEL']['consumption'] is None
         assert settings['goal'] == 'co2'
-        return {'routes': []}
+        return {'routes': [{'plate':'TST-001','driver':'Ana','sequence':[{'id':str(orders[0]['pedido_id'])}], 'path':[{'lat':-12,'lng':-77}]}]}
     monkeypatch.setattr(portal,'propose',optimizer)
     assert service.proposal({'goal':'co2'})['elapsedSeconds'] >= 0
 
@@ -347,3 +391,52 @@ def test_database_session_resolution_and_revocation(db, linked):
     assert db.calls[-1][1] == (security.token_hash('opaque'),)
     db.responses = {}
     assert service.resolve('revoked') is None
+
+def test_update_credentials_changes_both_fields_before_revoking_sessions(db, monkeypatch):
+    identifier = uuid4()
+    actor = uuid4()
+    db.responses = {'UPDATE usuarios': [{'usuario_id': identifier}]}
+    monkeypatch.setattr(portal, 'hash_password', lambda _: 'test-hash')
+    assert portal.PostgresPortal().update_credentials(
+        identifier, actor, email='new@example.invalid', password='test-password',
+    )
+    update, revoke, email_audit, password_audit = db.calls
+    assert 'UPDATE usuarios' in update[0]
+    assert update[1] == ('new@example.invalid', 'test-hash', identifier)
+    assert 'DELETE FROM sesiones' in revoke[0] and revoke[1] == (identifier,)
+    assert 'CAMBIAR_CORREO' in email_audit[1]
+    assert 'CAMBIAR_CONTRASENA' in password_audit[1]
+
+    db.calls.clear()
+    db.responses = {'UPDATE usuarios': psycopg.errors.UniqueViolation()}
+    with pytest.raises(ValueError, match='Ya existe una cuenta'):
+        portal.PostgresPortal().update_credentials(
+            identifier, actor, email='duplicate@example.invalid', password='test-password',
+        )
+    assert len(db.calls) == 1
+
+
+@pytest.mark.parametrize('existing', [False, True])
+def test_admin_configures_depot_and_audits_without_deleting_routes(db, existing):
+    service = portal.PostgresPortal()
+    assert service.depot() is None
+    identifier = uuid4()
+    stored = dict(almacen_id=identifier,nombre='Central',direccion='Calle 1',latitud=-12,longitud=-77)
+    db.responses = {'SELECT almacen_id,nombre': [stored], 'SELECT almacen_id FROM': [{'almacen_id': identifier}] if existing else []}
+    assert service.depot()['latitude'] == -12
+    saved = service.save_depot(dict(name='Central',address='Calle 1',latitude=-12,longitude=-77), 'actor')
+    assert saved['id'] == str(identifier)
+    assert any('INSERT INTO almacenes' in statement for statement, _ in db.calls)
+    assert any('CONFIGURAR_ALMACEN' in args for statement, args in db.calls if 'INSERT INTO auditoria' in statement)
+    assert not any('DELETE' in statement for statement, _ in db.calls)
+
+
+def test_admin_reports_incident_for_an_assigned_order(db):
+    identifier = uuid4()
+    db.responses = {'SELECT conductor_id': [{'conductor_id': identifier}]}
+    value = portal.PostgresPortal().create_incident(dict(order_id=uuid4(),type='Entrega',description='Supervisión de entrega'), Identity('admin-1','Admin','admin'))
+    assert value['status'] == 'ABIERTA'
+    insert = next(args for statement, args in db.calls if 'INSERT INTO incidencias' in statement)
+    assert insert[2] == identifier
+    db.responses = {'SELECT pedido_id,cliente_nombre': [{'pedido_id':identifier,'cliente_nombre':'Cliente'}]}
+    assert portal.PostgresPortal().incident_order_choices() == [{'id':str(identifier),'customer':'Cliente'}]

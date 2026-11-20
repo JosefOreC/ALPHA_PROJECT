@@ -1,4 +1,5 @@
-import { formatDecimal } from '../../domain/format'
+import { orderReference } from '../../domain/order'
+import type { ReactNode } from 'react'
 import { canEdit, formatKg, formatLima, formatWindow, statusLabels } from '../../domain/managedOrder'
 import type { ManagedOrder } from '../../domain/managedOrder'
 import { TripStatus } from '../../shared/ui'
@@ -10,40 +11,38 @@ type OrderDetailProps = {
   busy: boolean
   onEdit: () => void
   onCancel: () => void
-  onFollow: () => void
+  onDispatch?: () => void
+  onConfirm?: () => void
+  assignment?: ReactNode
   onRefresh: () => void
 }
 
-export function OrderDetail({ order, canWrite, busy, onEdit, onCancel, onFollow, onRefresh }: OrderDetailProps) {
-  const tracking = order.tracking
+export function OrderDetail({ order, canWrite, busy, onEdit, onCancel, onDispatch, onConfirm, assignment, onRefresh }: OrderDetailProps) {
   const editable = canEdit(order)
-  const vehicle = tracking?.plate ? `${tracking.plate}${tracking.driver ? ` · ${tracking.driver}` : ''}` : 'Sin asignar'
   return (
     <article className="eco-sheet" aria-label="Detalle del pedido seleccionado">
       <div className="eco-sheet__head">
         <div>
           <span className="eco-code eco-muted">
-            {order.id} · {order.district}
+            {[orderReference(order.id), order.district].filter(Boolean).join(' · ')}
           </span>
           <h2 className="eco-sheet__title">{order.customer}</h2>
           <p className="eco-sheet__sub">{order.address}</p>
         </div>
-        <TripStatus status={tripOf[order.status]} label={statusLabels[order.status]} meta={tracking?.note ? `· ${tracking.note}` : undefined} />
+        <TripStatus status={tripOf[order.status]} label={statusLabels[order.status]} />
       </div>
       <dl className="eco-props eco-props--wide">
         <dt>Ventana</dt>
         <dd className="eco-code">{formatWindow(order.window_start, order.window_end)}</dd>
         <dt>Peso</dt>
         <dd className="eco-num">{formatKg(order.weight_kg)}</dd>
-        <dt>Vehículo</dt>
-        <dd>{vehicle}</dd>
-        <dt>Huella CO₂</dt>
-        <dd className="eco-eco">{tracking?.co2_kg != null ? `${formatDecimal(tracking.co2_kg, 0, 2)} kg` : '—'}</dd>
+        <dt>Ubicación de entrega</dt>
+        <dd>{order.latitude != null && order.longitude != null ? `${order.latitude}, ${order.longitude}` : 'Coordenadas pendientes'}</dd>
         <dt>Inicio · Lima</dt>
         <dd>{formatLima(order.window_start)}</dd>
         <dt>Fin · Lima</dt>
         <dd>{formatLima(order.window_end)}</dd>
-        <dt>Entrega · Lima</dt>
+        <dt>Confirmación de entrega · Lima</dt>
         <dd>{order.confirmed_at ? formatLima(order.confirmed_at) : 'Sin confirmación'}</dd>
         <dt>Versión</dt>
         <dd className="eco-code">{order.version}</dd>
@@ -53,6 +52,10 @@ export function OrderDetail({ order, canWrite, busy, onEdit, onCancel, onFollow,
         {order.instructions || 'Sin indicaciones adicionales.'}
       </div>
       <div className="eco-sheet__actions">
+        {order.status === 'EN_CAMINO' && onConfirm ? <button className="eco-btn" type="button" disabled={busy} onClick={onConfirm}>Confirmar entrega</button> : null}
+        {canWrite && order.assigned && order.status === 'PENDIENTE' && onDispatch ? (
+          <button className="eco-btn" type="button" disabled={busy} onClick={onDispatch}>Marcar en camino</button>
+        ) : null}
         {canWrite && editable ? (
           <>
             <button className="eco-btn eco-btn--secondary" type="button" onClick={onEdit}>
@@ -63,16 +66,12 @@ export function OrderDetail({ order, canWrite, busy, onEdit, onCancel, onFollow,
             </button>
           </>
         ) : null}
-        {order.status === 'EN_CAMINO' ? (
-          <button className="eco-btn eco-btn--secondary" type="button" onClick={onFollow}>
-            Seguir en el mapa
-          </button>
-        ) : null}
         <button className="eco-btn eco-btn--ghost" type="button" disabled={busy} onClick={onRefresh}>
           Consultar versión actual
         </button>
         {!editable ? <span className="eco-muted">Este pedido ya no se puede modificar.</span> : null}
       </div>
+      {assignment}
     </article>
   )
 }

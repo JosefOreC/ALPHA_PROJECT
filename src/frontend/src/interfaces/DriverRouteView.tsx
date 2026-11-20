@@ -1,3 +1,4 @@
+import { orderReference } from '../domain/order'
 import { useEffect, useState } from 'react'
 import type { DriverRouteService } from '../application/driverRoute'
 import { currentStop, routeProgress } from '../domain/driverRoute'
@@ -15,13 +16,13 @@ type DriverRouteViewProps = {
 }
 
 function stopMeta(stop: RouteStop) {
-  if (stop.kind === 'done') return `${stop.order_id} · entregado`
-  if (stop.kind === 'now') return `${stop.order_id} · ${stop.address} · ahora`
-  if (stop.kind === 'new') return `${stop.order_id} · nueva parada`
-  return `${stop.order_id} · ${stop.address}`
+  const detail = {
+    done: 'entregado', now: `${stop.address} · ahora`, new: 'nueva parada', next: stop.address,
+  }[stop.kind]
+  return [orderReference(stop.order_id), detail].filter(Boolean).join(' · ')
 }
 
-// «Mi ruta» del conductor: paradas del día, avance y aviso de reoptimización. Solo móvil.
+// «Mi ruta» del conductor: paradas del día, avance y aviso de reoptimización.
 export function DriverRouteView({ service, mapSource, onNavigate, onOpenOrder }: DriverRouteViewProps) {
   const [route, setRoute] = useState<DriverRoute | null>(null)
   const [error, setError] = useState('')
@@ -51,7 +52,7 @@ export function DriverRouteView({ service, mapSource, onNavigate, onOpenOrder }:
 
   return (
     <div className="eco-root eco-phone-root">
-      <div className="eco-phone">
+      <div className="eco-phone eco-driver-route">
         <DriverBar plate={route?.plate} initials={route?.initials ?? ''}>
           <span className="eco-phone__title">Mi ruta</span>
         </DriverBar>
@@ -105,7 +106,9 @@ export function DriverRouteView({ service, mapSource, onNavigate, onOpenOrder }:
                 </Banner>
               ) : null}
 
-              <RouteMap source={mapSource} profile="driver" scopePlate={route.plate} selectedId={currentStop(route)?.order_id} compact strip card={false} showLayerControls={false} />
+              <div className="eco-driver-route__map">
+                <RouteMap source={mapSource} profile="driver" scopePlate={route.plate} selectedId={currentStop(route)?.order_id} compact strip card={false} showLayerControls={false} />
+              </div>
 
               <ol className="eco-stops" aria-label="Paradas de hoy">
                 {route.stops.map((stop, index) => (
@@ -131,7 +134,7 @@ export function DriverRouteView({ service, mapSource, onNavigate, onOpenOrder }:
                     <span className="eco-stop__meta">{stopMeta(stop)}</span>
                   </li>
                 ))}
-                {route.remaining_stops > 0 ? (
+                {route.remaining_stops > 0 && route.return_to_depot !== false ? (
                   <li className="eco-stop">
                     <span className="eco-stop__dot">…</span>
                     <span className="eco-stop__title eco-muted">{route.remaining_stops} paradas más</span>

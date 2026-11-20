@@ -36,6 +36,7 @@ export interface AlgorithmParameters {
   /** Reoptimiza sola ante incidencias o tráfico. */
   autoReoptimize: boolean
   emissionFactors: EmissionFactors
+  fuelConsumption?: EmissionFactors
 }
 
 export const PARAMETER_LIMITS = {
@@ -46,7 +47,7 @@ export const PARAMETER_LIMITS = {
   emissionFactor: { max: 100 },
 } as const
 
-export type ParameterField = 'co2Weight' | 'maxSeconds' | 'maxLoadPercent' | 'windowSlackMinutes' | `factor:${EmissionFuel}`
+export type ParameterField = 'co2Weight' | 'maxSeconds' | 'maxLoadPercent' | 'windowSlackMinutes' | `factor:${EmissionFuel}` | `consumption:${EmissionFuel}`
 export type ParameterErrors = Partial<Record<ParameterField, string>>
 
 const isWhole = (value: number, min: number, max: number) => Number.isInteger(value) && value >= min && value <= max
@@ -60,6 +61,10 @@ export function validateParameters(parameters: AlgorithmParameters): ParameterEr
   if (!isWhole(parameters.maxLoadPercent, maxLoadPercent.min, maxLoadPercent.max)) errors.maxLoadPercent = `Indica un entero entre ${maxLoadPercent.min} % y ${maxLoadPercent.max} %.`
   if (!isWhole(parameters.windowSlackMinutes, windowSlackMinutes.min, windowSlackMinutes.max)) errors.windowSlackMinutes = `Indica un entero de ${windowSlackMinutes.min} a ${windowSlackMinutes.max} minutos.`
   for (const fuel of EMISSION_FUELS) {
+    const consumption = parameters.fuelConsumption?.[fuel]
+    if (consumption != null && (!Number.isFinite(consumption) || consumption <= 0 || consumption > 10)) {
+      errors[`consumption:${fuel}`] = 'Indica un consumo mayor que 0 y como máximo 10 unidades por km.'
+    }
     const factor = parameters.emissionFactors[fuel]
     if (factor !== null && (!Number.isFinite(factor) || factor < 0 || factor > PARAMETER_LIMITS.emissionFactor.max)) {
       errors[`factor:${fuel}`] = `El factor debe ser mayor o igual que 0 y no pasar de ${PARAMETER_LIMITS.emissionFactor.max}, o quedar sin definir.`
@@ -83,4 +88,4 @@ export const sameParameters = (a: AlgorithmParameters, b: AlgorithmParameters) =
   a.maxLoadPercent === b.maxLoadPercent &&
   a.windowSlackMinutes === b.windowSlackMinutes &&
   a.autoReoptimize === b.autoReoptimize &&
-  EMISSION_FUELS.every((fuel) => a.emissionFactors[fuel] === b.emissionFactors[fuel])
+  EMISSION_FUELS.every((fuel) => a.emissionFactors[fuel] === b.emissionFactors[fuel] && (a.fuelConsumption?.[fuel] ?? null) === (b.fuelConsumption?.[fuel] ?? null))

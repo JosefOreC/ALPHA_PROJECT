@@ -8,7 +8,7 @@ import type { RouteProposal } from '../domain/routePlan'
 const scope = { pendingOrders:1,districts:1,availableVehicles:1,totalVehicles:1,vehiclesInService:0 }
 const proposal: RouteProposal = { routeCount:1,ordersAssigned:1,totalKm:3,kmSaved:null,co2Kg:2,co2SavedPercent:null,windowCompliance:100,windowTarget:90,elapsedSeconds:1,
   routes:[{ plate:'TST-001',driver:'Ana',zone:'Ate',fuel:'GNV',stops:1,km:3,load:.5,co2Kg:2,sequence:[{ id:'',customer:null,district:'Ate',eta:'10:00',onTime:true }] }] }
-const service=() => ({ scope:vi.fn().mockResolvedValue(scope),limitSeconds:vi.fn().mockResolvedValue(30),generate:vi.fn().mockResolvedValue(proposal) })
+const service=() => ({ scope:vi.fn().mockResolvedValue(scope),limitSeconds:vi.fn().mockResolvedValue(30),generate:vi.fn().mockResolvedValue(proposal),approve:vi.fn().mockResolvedValue({ routeIds:['r1'],ordersAssigned:1 }) })
 afterEach(() => vi.useRealTimers())
 
 it.each([false,true])('supervisa rutas sin permiso de generación, mapa=%s', custom => {
@@ -47,7 +47,7 @@ it('presenta una propuesta sin línea base ni metadatos opcionales de la ruta', 
   const api=service()
   render(<RoutePlanningView service={api} />)
   fireEvent.click(screen.getByRole('button',{ name:'Generar rutas' }))
-  expect(await screen.findByText('Distancia geográfica estimada')).toBeVisible()
+  expect(await screen.findByText('Distancia por la red vial')).toBeVisible()
   expect(screen.getByText('Emisiones estimadas de la propuesta')).toBeVisible()
   fireEvent.click(screen.getByRole('button',{ name:'Ver paradas de TST-001' }))
   expect(screen.getByText('Pedido sin nombre')).toBeVisible()

@@ -40,7 +40,7 @@ def setup():
     app = create_app(persistent=False)
     app.dependency_overrides[get_sessions] = lambda: sessions
     app.dependency_overrides[get_portal] = lambda: portal
-    return TestClient(app, base_url="https://testserver"), sessions, portal
+    return TestClient(app, base_url='https://testserver'), sessions, portal
 
 
 def login(client):
@@ -115,8 +115,32 @@ def test_driver_route_scope_and_map_do_not_expose_global_planning():
     login(client)
     sessions.role = 'driver'
     assert client.get('/api/map').status_code == 403
+    assert client.get('/api/routes/map').status_code == 403
     assert client.get('/api/routes/scope').status_code == 403
     sessions.driver_id = '00000000-0000-0000-0000-000000000002'
     portal.map = lambda driver_id: {'driver_id':driver_id}
+    portal.route_map = lambda driver_id: {'driver_id':driver_id}
     assert client.get('/api/map').json() == {'driver_id':sessions.driver_id}
+    assert client.get('/api/routes/map').json() == {'driver_id':sessions.driver_id}
     assert client.get('/api/routes/scope').status_code == 403
+
+def test_only_admin_can_patch_account_credentials():
+    client, sessions, portal = setup()
+    calls = []
+    portal.update_credentials = lambda *args, **kwargs: calls.append((args, kwargs)) or True
+    path = '/api/admin/users/00000000-0000-0000-0000-000000000002'
+    headers = {'X-CSRF-Token': 'csrf-secret'}
+    payload = {'email': 'NEW@example.invalid', 'password': 'changed-password-2026'}
+    assert client.patch(path, json=payload, headers=headers).status_code == 401
+    login(client)
+    assert client.patch(path, json=payload).status_code == 403
+    sessions.role = 'driver'
+    assert client.patch(path, json=payload, headers=headers).status_code == 403
+    sessions.role = 'admin'
+    assert client.patch(path, json={}, headers=headers).status_code == 422
+    assert client.patch(path, json={**payload, 'password': 'short'}, headers=headers).status_code == 422
+    assert calls == []
+    assert client.patch(path, json=payload, headers=headers).status_code == 204
+    assert calls[0][1] == {'email': 'new@example.invalid', 'password': payload['password']}
+    assert client.patch(path, json={'email': payload['email']}, headers=headers).status_code == 204
+    assert calls[1][1] == {'email': 'new@example.invalid', 'password': None}

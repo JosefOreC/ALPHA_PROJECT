@@ -413,7 +413,7 @@ El [consolidador](https://github.com/JosefOreC/ALPHA_PROJECT/blob/6e36e355e0d39c
 
 Los reportes Lighthouse consolidados (`auditoria-consolidada.html`, registro local) enlazan doce originales: tres cargas por pantalla antes y después. La serie final cumple todos los límites en sus seis cargas posteriores. Los resultados individuales están en el [documento de auditoría](../Sprint%204/06%20Auditor%C3%ADa%20consolidada%20de%20m%C3%A9tricas%20V_1_0_0.md).
 
-La validación comprende 475 pruebas frontend, 447 backend del control ordinario, siete integraciones PostGIS independientes, 12 Node, 56 de navegador y seis regresiones finales de acceso e imagen. Los [recibos](../Sprint%204/01%20Revisi%C3%B3n%20del%20Sprint%20V_1_2_0.md) distinguen ejecuciones, subpruebas y omisiones. La revisión manual completa de accesibilidad se registra por separado.
+La validación comprende 475 pruebas frontend, 447 backend del control ordinario, siete integraciones PostGIS independientes, 12 Node, 56 de navegador y seis regresiones finales de acceso e imagen. Los [recibos](../Sprint%204/Hist%C3%B3rico/01%20Revisi%C3%B3n%20del%20Sprint%20V_1_2_0.md) distinguen ejecuciones, subpruebas y omisiones. La revisión manual completa de accesibilidad se registra por separado.
 
 ## 2. Conclusiones
 

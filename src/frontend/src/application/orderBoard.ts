@@ -11,11 +11,11 @@ export const TAB_ORDER: StatusTab[] = ['ALL', 'PENDIENTE', 'EN_CAMINO', 'ENTREGA
 
 const fold = (value: string) => value.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
 
-/** Busca por pedido, cliente, dirección, distrito y placa; ignora mayúsculas y tildes. */
+/** Busca por los datos del pedido; ignora mayúsculas y tildes. */
 export function matchesQuery(order: ManagedOrder, query: string): boolean {
   const needle = fold(query.trim())
   if (!needle) return true
-  const haystack = [order.id, order.customer, order.address, order.district, order.tracking?.plate ?? ''].join(' ')
+  const haystack = [order.id, order.customer, order.address, order.district].join(' ')
   return fold(haystack).includes(needle)
 }
 
@@ -39,25 +39,17 @@ export function groupByStatus(orders: ManagedOrder[]): { status: OrderStatus; or
 export interface BoardSummary {
   pending: number
   inTransit: number
-  routes: number
   delivered: number
   cancelled: number
-  atRisk: string[]
-  averageCo2Kg: number | null
 }
 
 export function summarize(orders: ManagedOrder[]): BoardSummary {
   const count = (status: OrderStatus) => orders.filter(order => order.status === status).length
   const transit = orders.filter(order => order.status === 'EN_CAMINO')
-  const plates = new Set(transit.map(order => order.tracking?.plate).filter((plate): plate is string => Boolean(plate)))
-  const measured = orders.flatMap(order => (order.status !== 'CANCELADO' && order.tracking?.co2_kg != null ? [order.tracking.co2_kg] : []))
   return {
     pending: count('PENDIENTE'),
     inTransit: transit.length,
-    routes: plates.size,
     delivered: count('ENTREGADO'),
     cancelled: count('CANCELADO'),
-    atRisk: orders.filter(order => order.tracking?.at_risk && order.status === 'EN_CAMINO').map(order => order.id),
-    averageCo2Kg: measured.length ? measured.reduce((sum, value) => sum + value, 0) / measured.length : null,
   }
 }

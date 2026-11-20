@@ -14,3 +14,15 @@ Todos los cambios relevantes del proyecto EcoLogística Lima se registran en est
 [1.0.0]: https://github.com/JosefOreC/ALPHA_PROJECT/releases/tag/v1.0.0
 
 [← Volver al README](README.md)
+
+## Correcciones funcionales del 20/11/2026
+
+- Administrador con todos los permisos conocidos, confirmación de entregas, reporte de incidencias y exportación de auditoría; se conservan las restricciones de otros perfiles y las reglas de estado.
+- Configuración del almacén y consumos por combustible desde administración; parámetros editables al iniciar una base vacía.
+- Laboratorio aislado de rutas con móviles X/Y, pedidos, capacidades y ventanas configurables, cálculo real y plano de resultados.
+- Tabla de roles derivada de la política compartida y navegación de pestañas con teclado.
+- Composición de servicios separada, tipos de vehículo dentro del dominio y dobles demo agrupados; se retiraron archivos vacíos sin uso y una entrada de submódulo vacía sin configuración en la raíz.
+- CI y Tests en todas las ramas, regresión de interfaz con artefactos, E2E de creación de pedidos por formulario y recorrido administrativo de simulación.
+- Movimiento breve con respeto por movimiento reducido, controles legibles y tablas adaptadas a móvil.
+
+La validación remota y la aceptación del sprint requieren sus propias ejecuciones y evidencia. Los resultados históricos se conservan con su versión.

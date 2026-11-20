@@ -19,6 +19,8 @@ class Order:
     status: OrderStatus = OrderStatus.IN_TRANSIT
     confirmed_at: datetime | None = None
     version: int = 1
+    latitude: float | None = None
+    longitude: float | None = None
 
     def confirm_delivery(self, now: datetime) -> "Order":
         if self.status == OrderStatus.DELIVERED:

@@ -1,4 +1,4 @@
-import type { FuelType, Vehicle, VehicleStatus } from '../types/vehicle'
+import type { FuelType, Vehicle, VehicleStatus } from '../domain/vehicle'
 
 export type FleetTab = 'ALL' | VehicleStatus
 

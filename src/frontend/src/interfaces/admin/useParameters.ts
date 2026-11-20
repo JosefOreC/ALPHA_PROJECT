@@ -13,6 +13,7 @@ export interface ParameterText {
   windowSlackMinutes: string
   autoReoptimize: boolean
   factors: Record<EmissionFuel, string>
+  consumption?: Record<EmissionFuel, string>
 }
 
 const toText = (parameters: AlgorithmParameters): ParameterText => ({
@@ -21,6 +22,7 @@ const toText = (parameters: AlgorithmParameters): ParameterText => ({
   maxLoadPercent: String(parameters.maxLoadPercent),
   windowSlackMinutes: String(parameters.windowSlackMinutes),
   autoReoptimize: parameters.autoReoptimize,
+  ...(parameters.fuelConsumption ? { consumption: Object.fromEntries(EMISSION_FUELS.map(fuel => [fuel, parameters.fuelConsumption?.[fuel] == null ? '' : String(parameters.fuelConsumption[fuel])])) as Record<EmissionFuel, string> } : {}),
   factors: Object.fromEntries(EMISSION_FUELS.map((fuel) => [fuel, parameters.emissionFactors[fuel] === null ? '' : String(parameters.emissionFactors[fuel]).replace('.', ',')])) as Record<EmissionFuel, string>,
 })
 
@@ -34,6 +36,7 @@ export function parseParameters(text: ParameterText): AlgorithmParameters {
     maxLoadPercent: number(text.maxLoadPercent),
     windowSlackMinutes: number(text.windowSlackMinutes),
     autoReoptimize: text.autoReoptimize,
+    ...(text.consumption ? { fuelConsumption: Object.fromEntries(EMISSION_FUELS.map(fuel => [fuel, text.consumption![fuel].trim() === '' ? null : number(text.consumption![fuel])])) as AlgorithmParameters['emissionFactors'] } : {}),
     emissionFactors: Object.fromEntries(EMISSION_FUELS.map((fuel) => [fuel, text.factors[fuel].trim() === '' ? null : number(text.factors[fuel])])) as AlgorithmParameters['emissionFactors'],
   }
 }

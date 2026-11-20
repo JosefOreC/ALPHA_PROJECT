@@ -1,0 +1,92 @@
+name: Tests
+on:
+  push:
+    branches: ['**']
+  pull_request:
+    branches: [main, develop]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    uses: ./.github/workflows/ci.yml
+  test:
+    needs: validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    services:
+      postgis:
+        image: postgis/postgis:17-3.5
+        env:
+          POSTGRES_PASSWORD: inspection-local-db
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s --health-timeout 5s --health-retries 12
+    env:
+      DATABASE_URL: postgresql://postgres:inspection-local-db@127.0.0.1:5432/inspection5_test
+      ECOLOGISTICA_VERIFY_DATABASE: '1'
+      E2E_BASE_URL: http://127.0.0.1:8000
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: src/frontend/package-lock.json
+      - run: 'python -m pip install --only-binary=:all: --require-hashes -r scripts/requirements-ci.lock'
+      - run: npm ci --ignore-scripts --prefix src/frontend
+      - name: Preparar base aislada
+        run: |
+          E2E_PASSWORD="$(openssl rand -hex 24)"
+          echo "::add-mask::$E2E_PASSWORD"
+          printf "E2E_PASSWORD=%s\nSEED_PASSWORD=%s\n" "$E2E_PASSWORD" "$E2E_PASSWORD" >> "$GITHUB_ENV"
+          config="$RUNNER_TEMP/inspection5.env"
+          printf 'DB_ENV=test\nDATABASE_URL=%s\nDB_CREATE_IF_MISSING=true\nSEED_DATE=%s\nSEED_DAYS=1\nSEED_ORDERS_PER_DAY=60\nSEED_PASSWORD=%s\n' "$DATABASE_URL" "$(TZ=America/Lima date +%F)" "$E2E_PASSWORD" > "$config"
+          echo "ECOLOGISTICA_TEST_ENV_FILE=$config" >> "$GITHUB_ENV"
+          echo "ECOLOGISTICA_ENV_FILE=$config" >> "$GITHUB_ENV"
+          python scripts/create_test_db.py --env-file "$config"
+          python scripts/migrate.py
+      - name: Unitarias e integración backend
+        run: python -m pytest src/backend/tests -q --junitxml=reports/tests/backend-inspection5.xml
+      - run: npm run build --prefix src/frontend
+      - name: Ejecutar pruebas contra el producto
+        working-directory: src/frontend
+        run: |
+          SESSION_COOKIE_SECURE=false FRONTEND_DIST="$PWD/dist" python -m uvicorn interfaces.api.main:app --app-dir ../backend --host 127.0.0.1 --port 8000 > "$RUNNER_TEMP/inspection5-api.log" 2>&1 &
+          api_pid=$!
+          trap 'kill "$api_pid" 2>/dev/null || true' EXIT
+          curl --fail --retry 20 --retry-all-errors --retry-delay 1 http://127.0.0.1:8000/health
+          docker run --rm --network host --ipc host \
+            --user "$(id -u):$(id -g)" --env HOME=/tmp --env CI=true \
+            --env E2E_BASE_URL --env E2E_PASSWORD \
+            --volume "$GITHUB_WORKSPACE:/workspace" --workdir /workspace/src/frontend \
+            mcr.microsoft.com/playwright:v1.61.1-noble \
+            node node_modules/@playwright/test/cli.js test --config playwright.e2e.config.ts
+      - name: Regresión de interfaz en escritorio y móvil
+        working-directory: src/frontend
+        run: |
+          docker run --rm --network host --ipc host \
+            --user "$(id -u):$(id -g)" --env HOME=/tmp --env CI=true --env PLAYWRIGHT_CHANNEL=chromium \
+            --volume "$GITHUB_WORKSPACE:/workspace" --workdir /workspace/src/frontend \
+            mcr.microsoft.com/playwright:v1.61.1-noble \
+            node node_modules/@playwright/test/cli.js test --config playwright.config.ts
+      - name: Unitarias frontend
+        run: npm run test:coverage --prefix src/frontend
+      - name: Subir evidencias
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: inspection5-test-evidence
+          path: |
+            reports/tests/backend-inspection5.xml
+            src/frontend/playwright-report/
+            src/frontend/test-results/
+            src/frontend/.test-deps/playwright-results/
+            src/frontend/coverage/coverage-summary.json
+            ${{ runner.temp }}/inspection5-api.log

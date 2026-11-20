@@ -1,3 +1,4 @@
+import { orderReference } from '../../../domain/order'
 import { Banner, List, ListRow, PaqueteIcon, RutaIcon, TripStatus } from '../../../shared/ui'
 import type { InsightsStatus } from '../application/useDashboardInsights'
 import type { DashboardInsights } from '../domain/types'
@@ -37,7 +38,7 @@ export function RiskList({ status, insights, selectedId, onSelect }: Props) {
         <List label="Pedidos en riesgo">
           {insights.atRisk.map((order) => (
             <ListRow key={order.id} columns={COLUMNS} twoLines selected={order.id === selectedId} onSelect={() => onSelect(order.id)}>
-              <span className="eco-code">{order.id}</span>
+              <span className="eco-code">{orderReference(order.id) ?? '—'}</span>
               <span className="eco-row__cell">
                 <span className="eco-row__title">{order.customer}</span>
                 <span className="eco-row__sub">

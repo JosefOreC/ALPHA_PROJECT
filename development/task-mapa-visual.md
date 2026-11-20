@@ -43,7 +43,7 @@ Esta entrega comprende Leaflet/OpenStreetMap, límites/zoom/encuadre, geometría
 | [LeafletCanvas.tsx](../src/frontend/src/interfaces/map/LeafletCanvas.tsx) | Tiles OSM, líneas, marcadores y popup; falta límite Lima y encuadre de camiones independientes. |
 | [markers.ts](../src/frontend/src/interfaces/map/markers.ts) | Formas de pedido y escaping; el vehículo usa un anillo, falta símbolo reconocible de camión. |
 | [mapData.ts](../src/frontend/src/domain/mapData.ts) | Coordenadas, pedidos y rutas; los vehículos se derivan de rutas mediante done_until. |
-| [demoMapData.ts](../src/frontend/src/infrastructure/demoMapData.ts) | Fuente demo aislada; rutas que conectan pocos puntos, pendientes de fidelidad vial. |
+| [demoMapData.ts](../src/frontend/src/infrastructure/demo/demoMapData.ts) | Fuente demo aislada; rutas que conectan pocos puntos, pendientes de fidelidad vial. |
 | [Tests del mapa](../src/frontend/src/interfaces/map/RouteMap.test.tsx), [tests UI](../src/frontend/tests/ui/map.spec.ts) | Selección, búsqueda, capas, zoom y fallo; falta validación de perfiles/límites/cartografía fiel. |
 
 Actualmente las tres capas se inician activas y el almacén siempre se dibuja. `compact` cambia presentación/interacción, pero no el alcance de datos/capas de cada vista. Las pruebas UI usan tiles transparentes: comprueban comportamiento, no fidelidad geográfica.

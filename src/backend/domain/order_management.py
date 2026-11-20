@@ -3,6 +3,7 @@ from dataclasses import dataclass, replace
 from datetime import datetime
 from decimal import Decimal, InvalidOperation
 import re
+import math
 
 from domain.entities.order import Order
 from domain.exceptions.order_conflict import OrderConflict
@@ -51,6 +52,8 @@ class OrderData:
     window_end: str
     weight_kg: float
     instructions: str = ""
+    latitude: float | None = None
+    longitude: float | None = None
 
     def validated(self) -> "OrderData":
         customer = text_field(self.customer, "Destinatario", 200)
@@ -70,7 +73,14 @@ class OrderData:
                 raise InvalidOrder("El peso debe ser positivo, finito, con hasta dos decimales y máximo 99999999.99 kg.")
         except InvalidOperation as error:
             raise InvalidOrder("Peso inválido.") from error
-        return OrderData(customer, address, district, start.isoformat(), end.isoformat(), float(weight), instructions)
+        if (self.latitude is None) != (self.longitude is None):
+            raise InvalidOrder("Completa la latitud y la longitud de la entrega.")
+        for coordinate, limit in ((self.latitude, 90), (self.longitude, 180)):
+            if coordinate is not None and (isinstance(coordinate, bool) or not isinstance(coordinate, (int, float))
+                                           or not math.isfinite(coordinate) or abs(coordinate) > limit):
+                raise InvalidOrder("Las coordenadas de entrega no son válidas.")
+        return OrderData(customer, address, district, start.isoformat(), end.isoformat(), float(weight), instructions,
+                         self.latitude, self.longitude)
 
 
 def require_editable(order: Order, expected_version: int) -> None:

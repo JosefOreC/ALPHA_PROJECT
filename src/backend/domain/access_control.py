@@ -110,7 +110,8 @@ GRANTS = {
         "driver": "own"
     },
     "routes.generate": {
-        "planner": "all"
+        "planner": "all",
+        "admin": "all"
     },
     "reoptimization.read": {
         "admin": "all",
@@ -118,7 +119,8 @@ GRANTS = {
         "logistics": "all"
     },
     "reoptimization.execute": {
-        "planner": "all"
+        "planner": "all",
+        "admin": "all"
     },
     "map.read": {
         "admin": "all",
@@ -130,13 +132,16 @@ GRANTS = {
         "planner": "all",
         "logistics": "all",
         "auditor": "all",
-        "driver": "own"
+        "driver": "own",
+        "admin": "all"
     },
     "deliveries.create": {
-        "driver": "own"
+        "driver": "own",
+        "admin": "all"
     },
     "deliveries.update": {
-        "driver": "own"
+        "driver": "own",
+        "admin": "all"
     },
     "incidents.read": {
         "admin": "all",
@@ -145,7 +150,8 @@ GRANTS = {
         "auditor": "all"
     },
     "incidents.create": {
-        "driver": "own"
+        "driver": "own",
+        "admin": "all"
     },
     "dashboard.read": {
         "admin": "all",
@@ -161,7 +167,8 @@ GRANTS = {
     "reports.export": {
         "planner": "all",
         "logistics": "all",
-        "auditor": "all"
+        "auditor": "all",
+        "admin": "all"
     },
     "audit.read": {
         "admin": "all",

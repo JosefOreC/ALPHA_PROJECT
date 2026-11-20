@@ -2,7 +2,7 @@ import type { AdminUser, Integration, NewUser, UserPage } from '../domain/admin'
 import type { AlgorithmParameters } from '../domain/algorithmSettings'
 import type { DriverRoute } from '../domain/driverRoute'
 import type { MapData } from '../domain/mapData'
-import type { PlanningProgress, PlanningScope, RouteProposal, RouteSettings } from '../domain/routePlan'
+import type { ApprovedRoutes, PlanningProgress, PlanningScope, RouteProposal, RouteSettings } from '../domain/routePlan'
 import type { ReportPeriod, SustainabilityReport } from '../domain/sustainability'
 import type { DashboardInsights } from '../features/dashboard/domain/types'
 import type { SummaryParams } from '../features/dashboard/domain/gateway'
@@ -23,6 +23,9 @@ export class HttpIntegrationCatalog {
 export class HttpMapData {
   load() { return requestJson<MapData>('/api/map') }
 }
+export class HttpRouteMapData {
+  load() { return requestJson<MapData>('/api/routes/map') }
+}
 export class HttpDriverRoute {
   route() { return requestJson<DriverRoute>('/api/conductor/ruta') }
 }
@@ -33,6 +36,9 @@ export class HttpPlanningSource {
   scope() { return requestJson<PlanningScope>('/api/routes/scope') }
 }
 export class HttpRouteOptimizer {
+  approve(settings: RouteSettings, fingerprint: string) {
+    return requestJson<ApprovedRoutes>('/api/routes/approve', { method: 'POST', body: { settings, fingerprint } })
+  }
   async optimize(_scope: PlanningScope, settings: RouteSettings, onProgress?: (progress: PlanningProgress) => void) {
     // El servidor responde en una sola petición: no hay avance por pasos que informar.
     onProgress?.({ step: 0, fraction: null })

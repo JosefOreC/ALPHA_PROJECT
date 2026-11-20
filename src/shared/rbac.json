@@ -1,5 +1,5 @@
 {
-  "source": "docs/01 Inicio/08. Usuarios V_1_0_0.md, sección 4",
+  "source": "Política operativa: administrador con acceso completo; roles restantes según documento 08.",
   "excludedActor": {
     "code": "ROL-06",
     "label": "Docente Evaluador",
@@ -10,7 +10,7 @@
       "code": "ROL-01",
       "backend": "ADMIN",
       "label": "Administrador",
-      "description": "Configuración, usuarios y acceso a los módulos según la matriz RBAC."
+      "description": "Acceso completo: usuarios, configuración, pedidos, flota, conductores, rutas, entregas, incidencias y exportaciones."
     },
     "planner": {
       "code": "ROL-02",
@@ -128,7 +128,8 @@
       "driver": "own"
     },
     "routes.generate": {
-      "planner": "all"
+      "planner": "all",
+      "admin": "all"
     },
     "reoptimization.read": {
       "admin": "all",
@@ -136,7 +137,8 @@
       "logistics": "all"
     },
     "reoptimization.execute": {
-      "planner": "all"
+      "planner": "all",
+      "admin": "all"
     },
     "map.read": {
       "admin": "all",
@@ -148,13 +150,16 @@
       "planner": "all",
       "logistics": "all",
       "auditor": "all",
-      "driver": "own"
+      "driver": "own",
+      "admin": "all"
     },
     "deliveries.create": {
-      "driver": "own"
+      "driver": "own",
+      "admin": "all"
     },
     "deliveries.update": {
-      "driver": "own"
+      "driver": "own",
+      "admin": "all"
     },
     "incidents.read": {
       "admin": "all",
@@ -163,7 +168,8 @@
       "auditor": "all"
     },
     "incidents.create": {
-      "driver": "own"
+      "driver": "own",
+      "admin": "all"
     },
     "dashboard.read": {
       "admin": "all",
@@ -179,7 +185,8 @@
     "reports.export": {
       "planner": "all",
       "logistics": "all",
-      "auditor": "all"
+      "auditor": "all",
+      "admin": "all"
     },
     "audit.read": {
       "admin": "all",

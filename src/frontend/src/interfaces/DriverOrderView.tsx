@@ -5,7 +5,7 @@ import { currentStop, routeProgress, stopNumber } from '../domain/driverRoute'
 import type { DriverRoute } from '../domain/driverRoute'
 import { formatDecimal } from '../domain/format'
 import { formatClock, formatKg, formatWindow, statusLabels } from '../domain/managedOrder'
-import { canConfirm } from '../domain/order'
+import { canConfirm, orderReference } from '../domain/order'
 import type { Order } from '../domain/order'
 import { Banner, DriverBar, DriverTabBar, EntregaIcon, HojaCo2Icon, IncidenciaIcon, TripStatus } from '../shared/ui'
 import type { ModuleId } from '../shared/ui'
@@ -20,7 +20,7 @@ type DriverOrderViewProps = {
   onOpenOrder?: (orderId: string) => void
 }
 
-// «Pedido actual» del conductor: datos de la entrega y confirmación. Solo móvil, objetivos táctiles de 48 px.
+// «Pedido actual» del conductor: datos de la entrega y confirmación. Controles táctiles de 48 px.
 export function DriverOrderView({ service, routeService, orderId, onNavigate, onOpenOrder }: DriverOrderViewProps) {
   const [order, setOrder] = useState<Order | null>(null)
   const [route, setRoute] = useState<DriverRoute | null>(null)
@@ -89,7 +89,7 @@ export function DriverOrderView({ service, routeService, orderId, onNavigate, on
 
   return (
     <div className="eco-root eco-phone-root eco-phone-root--forest">
-      <div className="eco-phone eco-phone--forest">
+      <div className="eco-phone eco-phone--forest eco-driver-order">
         <DriverBar plate={route?.plate} initials={route?.initials ?? ''}>
           <a
             className="eco-phone__back"
@@ -164,8 +164,7 @@ export function DriverOrderView({ service, routeService, orderId, onNavigate, on
 
               <div className="eco-phone__line">
                 <span className="eco-code eco-muted">
-                  {order.id}
-                  {stop ? ` · parada ${stop}` : ''}
+                  {[orderReference(order.id), stop ? `parada ${stop}` : null].filter(Boolean).join(' · ')}
                 </span>
                 <TripStatus status={tripOf[order.status]} label={statusLabels[order.status]} />
               </div>
@@ -197,8 +196,9 @@ export function DriverOrderView({ service, routeService, orderId, onNavigate, on
         </main>
 
         <div className="eco-phone__footer">
-          <button className="eco-btn eco-btn--secondary eco-btn--icon" type="button" aria-label="Reportar incidencia" onClick={() => onNavigate?.('incidencias', '/?vista=incidencias')}>
+          <button className="eco-btn eco-btn--secondary eco-btn--icon eco-driver-order__incident" type="button" aria-label="Reportar incidencia" onClick={() => onNavigate?.('incidencias', '/?vista=incidencias')}>
             <IncidenciaIcon size="md" />
+            <span className="eco-driver-order__incident-label">Reportar incidencia</span>
           </button>
           {delivered ? (
             next && next.order_id !== order?.id ? (

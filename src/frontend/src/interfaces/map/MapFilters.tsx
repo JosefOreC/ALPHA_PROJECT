@@ -1,3 +1,4 @@
+import { orderReference } from '../../domain/order'
 import { useId } from 'react'
 import type { MapOrder } from '../../domain/mapData'
 import type { MapOrderStatus } from '../../domain/mapPresentation'
@@ -15,10 +16,11 @@ type Props = {
   visibleOrders: number; totalOrders: number; visibleRoutes: number; loading: boolean; filtered: boolean
   onQuery: (value: string) => void; onStatus: (value: MapOrderStatus) => void
   onOrder: (value: string) => void; onClear: () => void
+  statuses?: MapOrderStatus[]
 }
 
 export function MapFilters({ query, status, orderId, orders, visibleOrders, totalOrders, visibleRoutes,
-  loading, filtered, onQuery, onStatus, onOrder, onClear }: Props) {
+  loading, filtered, onQuery, onStatus, onOrder, onClear, statuses }: Props) {
   const id = useId()
   return <div className="eco-map-filters" role="group" aria-label="Filtros del mapa">
     <div className="eco-map-filters__fields">
@@ -29,14 +31,14 @@ export function MapFilters({ query, status, orderId, orders, visibleOrders, tota
       <div className="eco-field"><label htmlFor={`${id}-status`}>Estado</label>
         <select id={`${id}-status`} className="eco-select" aria-label="Estado de los pedidos en el mapa" value={status}
           onChange={event => onStatus(event.target.value as MapOrderStatus)} disabled={loading}>
-          {STATES.map(state => <option key={state.value} value={state.value}>{state.label}</option>)}
+          {STATES.filter(state => !statuses || statuses.includes(state.value)).map(state => <option key={state.value} value={state.value}>{state.label}</option>)}
         </select>
       </div>
       <div className="eco-field eco-map-filters__order"><label htmlFor={`${id}-order`}>Pedido</label>
         <select id={`${id}-order`} className="eco-select" aria-label="Filtrar por pedido en el mapa" value={orderId}
           onChange={event => onOrder(event.target.value)} disabled={loading}>
           <option value="">Todos los pedidos</option>
-          {orders.map(order => <option key={order.id} value={order.id}>{order.customer} · {order.id}</option>)}
+          {orders.map(order => <option key={order.id} value={order.id}>{[order.customer, orderReference(order.id) ?? order.district].filter(Boolean).join(' · ')}</option>)}
         </select>
       </div>
     </div>

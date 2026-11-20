@@ -13,6 +13,9 @@ export function decodeOrder(value: unknown): ManagedOrder {
     || typeof value.weight_kg !== 'number' || !Number.isFinite(value.weight_kg) || value.weight_kg <= 0
     || typeof value.assigned !== 'boolean' || !Number.isSafeInteger(value.version) || Number(value.version) < 1
     || !readWindow(value.window_start) || !readWindow(value.window_end)
+    || (value.latitude != null && (typeof value.latitude !== 'number' || !Number.isFinite(value.latitude) || Math.abs(value.latitude) > 90))
+    || (value.longitude != null && (typeof value.longitude !== 'number' || !Number.isFinite(value.longitude) || Math.abs(value.longitude) > 180))
+    || ((value.latitude == null) !== (value.longitude == null))
     || (value.confirmed_at !== null && (typeof value.confirmed_at !== 'string' || !Number.isFinite(Date.parse(value.confirmed_at))))) {
     throw new ManagementError('La API devolvió un pedido inválido. Intenta volver a cargar.')
   }
@@ -21,7 +24,9 @@ export function decodeOrder(value: unknown): ManagedOrder {
     district: value.district as string, window_start: value.window_start as string, window_end: value.window_end as string,
     instructions: value.instructions as string, weight_kg: value.weight_kg,
     status: value.status as ManagedOrder['status'], confirmed_at: value.confirmed_at as string | null,
-    assigned: value.assigned, version: value.version as number }
+    assigned: value.assigned, version: value.version as number,
+    ...(value.latitude === undefined ? {} : { latitude: value.latitude as number | null }),
+    ...(value.longitude === undefined ? {} : { longitude: value.longitude as number | null }) }
 }
 
 export class HttpManagement implements ManagementPort {

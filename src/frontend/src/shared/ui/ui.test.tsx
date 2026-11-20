@@ -41,10 +41,10 @@ describe('módulos por rol', () => {
   const ids = (role: Role) => modulesForRole(role).map((m) => m.id)
 
   it('cada rol ve solo sus módulos', () => {
-    expect(ids('planner')).toEqual(['dashboard', 'pedidos', 'rutas', 'flota', 'conductores', 'sostenibilidad', 'admin', 'incidencias'])
+    expect(ids('planner')).toEqual(['dashboard', 'pedidos', 'rutas', 'ruta-demo', 'flota', 'conductores', 'sostenibilidad', 'admin', 'incidencias'])
     expect(ids('logistics')).toEqual(['dashboard', 'pedidos', 'rutas', 'flota', 'conductores', 'sostenibilidad', 'incidencias'])
     expect(ids('driver')).toEqual(['mi-ruta', 'pedido-actual', 'incidencias', 'pedidos', 'flota', 'conductores'])
-    expect(ids('admin')).toEqual(['dashboard', 'pedidos', 'rutas', 'flota', 'conductores', 'sostenibilidad', 'admin', 'auditoria', 'incidencias'])
+    expect(ids('admin')).toEqual(['dashboard', 'pedidos', 'rutas', 'ruta-demo', 'flota', 'conductores', 'sostenibilidad', 'admin', 'auditoria', 'incidencias'])
     expect(ids('auditor')).toEqual(['pedidos', 'flota', 'conductores', 'sostenibilidad', 'admin', 'auditoria', 'incidencias'])
   })
 
@@ -71,7 +71,7 @@ describe('módulos por rol', () => {
 
   it('AppShell muestra la meta de CO₂ del mes con miles separados por espacio', () => {
     render(
-      <AppShell role="planner" current="pedidos" user={{ name: 'Beto P.', initials: 'BP' }} title="Pedidos y rutas" co2={{ valueKg: 1284, goalKg: 1500 }}>
+      <AppShell role="planner" current="pedidos" user={{ name: 'Beto P.', initials: 'BP' }} title="Gestión de pedidos" co2={{ valueKg: 1284, goalKg: 1500 }}>
         <p>x</p>
       </AppShell>,
     )

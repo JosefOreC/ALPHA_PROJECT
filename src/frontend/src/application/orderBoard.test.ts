@@ -18,12 +18,12 @@ const orders = [
 ]
 
 describe('matchesQuery', () => {
-  it('busca por pedido, cliente, dirección, distrito y placa', () => {
+  it('busca por los datos del pedido sin depender de su vehículo', () => {
     expect(matchesQuery(orders[0], 'ped-1')).toBe(true)
     expect(matchesQuery(orders[0], 'panadería')).toBe(true)
     expect(matchesQuery(orders[0], 'dirección ficticia')).toBe(true)
     expect(matchesQuery(orders[0], 'santa anita')).toBe(true)
-    expect(matchesQuery(orders[0], 'abc-123')).toBe(true)
+    expect(matchesQuery(orders[0], 'abc-123')).toBe(false)
     expect(matchesQuery(orders[0], 'zzz')).toBe(false)
   })
 
@@ -36,13 +36,13 @@ describe('matchesQuery', () => {
 describe('filterOrders y tabCounts', () => {
   it('combina búsqueda, estado y distrito', () => {
     expect(filterOrders(orders, { query: '', status: 'EN_CAMINO', district: '' }).map(o => o.id)).toEqual(['PED-1', 'PED-5'])
-    expect(filterOrders(orders, { query: 'abc', status: 'ALL', district: '' }).map(o => o.id)).toEqual(['PED-1', 'PED-3'])
+    expect(filterOrders(orders, { query: 'panaderia', status: 'ALL', district: '' }).map(o => o.id)).toEqual(['PED-1'])
     expect(filterOrders(orders, { query: '', status: 'ALL', district: 'Santa Anita' }).map(o => o.id)).toEqual(['PED-1'])
   })
 
   it('cuenta por pestaña respetando búsqueda y distrito', () => {
     expect(tabCounts(orders, { query: '', district: '' })).toEqual({ ALL: 5, PENDIENTE: 1, EN_CAMINO: 2, ENTREGADO: 1, CANCELADO: 1 })
-    expect(tabCounts(orders, { query: 'abc', district: '' })).toMatchObject({ ALL: 2, EN_CAMINO: 1, ENTREGADO: 1, PENDIENTE: 0 })
+    expect(tabCounts(orders, { query: 'panaderia', district: '' })).toMatchObject({ ALL: 1, EN_CAMINO: 1, ENTREGADO: 0, PENDIENTE: 0 })
   })
 })
 
@@ -55,15 +55,12 @@ describe('groupByStatus', () => {
 })
 
 describe('summarize', () => {
-  it('resume estados, rutas, ventanas en riesgo y huella media sin contar cancelados', () => {
-    const { averageCo2Kg, ...rest } = summarize(orders)
-    expect(rest).toEqual({ pending: 1, inTransit: 2, routes: 2, delivered: 1, cancelled: 1, atRisk: ['PED-1'] })
-    expect(averageCo2Kg).toBeCloseTo(0.4, 5)
+  it('resume los estados del pedido sin métricas de rutas', () => {
+    expect(summarize(orders)).toEqual({ pending: 1, inTransit: 2, delivered: 1, cancelled: 1 })
   })
 
-  it('sin datos de ruta no inventa huella', () => {
+  it('funciona sin una asignación de ruta', () => {
     const summary = summarize([order('PED-9', 'PENDIENTE')])
-    expect(summary.averageCo2Kg).toBeNull()
-    expect(summary.atRisk).toEqual([])
+    expect(summary).toEqual({pending:1,inTransit:0,delivered:0,cancelled:0})
   })
 })

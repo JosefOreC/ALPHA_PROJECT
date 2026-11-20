@@ -2,7 +2,7 @@ import { render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { beforeAll, describe, expect, it, vi } from 'vitest'
 import { doneSegment, orderMatches, pendingSegment, vehiclePosition } from '../../domain/mapData'
-import { DemoMapData, UnavailableMapData } from '../../infrastructure/demoMapData'
+import { DemoMapData, UnavailableMapData } from '../../infrastructure/demo/demoMapData'
 import { depotHtml, pinHtml, vehicleHtml } from './markers'
 import { RouteMap } from './RouteMap'
 
@@ -63,9 +63,38 @@ describe('marcado de los pines', () => {
     expect(html).toContain('&lt;b&gt;&amp;')
     expect(depotHtml('A&B')).toContain('A&amp;B')
   })
+
+  it('un pedido usa el color de su ruta y conserva el número original de entrega', () => {
+    const html = pinHtml('EN_CAMINO',false,false,{color:2,stop:7})
+    expect(html).toContain('pin--assigned r2')
+    expect(html).toContain('text-anchor="middle">7</text>')
+    expect(pinHtml('PENDIENTE',false,false)).toContain('pin--unassigned')
+  })
 })
 
 describe('RouteMap', () => {
+  it('filtra por varios conductores y distingue sus tramos confirmados', async () => {
+    const onSelect = vi.fn()
+    const { container } = render(<RouteMap source={new DemoMapData()} onSelect={onSelect} />)
+    const user = userEvent.setup()
+    const choices = within(await screen.findByRole('group', { name: 'Rutas por conductor' }, SLOW))
+    const secondDriver = choices.getByRole('button', { name: /BCD-456/ })
+    await user.click(secondDriver)
+    expect(secondDriver).toHaveAttribute('aria-pressed', 'true')
+    expect(onSelect).not.toHaveBeenCalled()
+    await waitFor(() => expect(container.querySelectorAll('svg.pin')).toHaveLength(2), SLOW)
+    expect(within(screen.getByRole('list', { name: 'Paradas de BCD-456' })).getAllByRole('button')).toHaveLength(2)
+
+    await user.click(choices.getByRole('button', { name: /ABC-123/ }))
+    expect(container.querySelectorAll('svg.pin')).toHaveLength(5)
+    expect(container.querySelectorAll('svg.pin.is-dim')).toHaveLength(0)
+    await user.click(screen.getByRole('checkbox', { name: 'Solo tramo confirmado' }))
+    expect(container.querySelector('.eco-map')).toHaveClass('eco-map--confirmed')
+    expect(container.querySelectorAll('svg.pin--delivered')).toHaveLength(2)
+    expect(container.querySelectorAll('svg.pin--transit')).toHaveLength(0)
+    await user.click(screen.getByRole('button', { name: 'Limpiar filtros del mapa' }))
+    expect(container.querySelectorAll('svg.pin')).toHaveLength(data.orders.length)
+  })
   it('dibuja el mapa con las capas conmutables y los controles de zoom', { timeout: 30_000 }, async () => {
     const user = userEvent.setup()
     const { container } = render(<RouteMap source={new DemoMapData()} selectedId="PED-0026" />)

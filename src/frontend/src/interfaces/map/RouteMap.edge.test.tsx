@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react'
 import { expect, it, vi } from 'vitest'
 import { RouteMap } from './RouteMap'
 import type { MapData, MapSelection } from '../../domain/mapData'
@@ -37,7 +37,9 @@ it.each(['orders','routes','vehicles'] as const)('ofrece una lista accesible si 
   render(<RouteMap source={source()} profile={profile} />)
   fireEvent.click(await screen.findByRole('button',{name:'Fallar cartografía'}))
   expect(await screen.findByText('Cartografía no disponible',{exact:false})).toBeVisible()
-  const label=profile==='orders' ? /p1/ : profile==='routes' ? /r1/ : /v1/
+  expect(screen.getByText('Cartografía simulada')).toBeVisible()
+  expect(screen.getByRole('group',{name:'Mapa de rutas de Lima Este'})).toBeVisible()
+  const label=profile==='orders' ? /p1/ : profile==='routes' ? 'Ruta TST-001' : 'Camión TST-001'
   const pick=screen.getByRole('button',{name:label})
   fireEvent.click(pick)
   expect(pick.closest('li')).toHaveAttribute('aria-current','true')
@@ -74,4 +76,38 @@ it.each([false,true])('ignora respuestas de un mapa desmontado: error=%s',async 
   view.unmount()
   await act(async()=>{if(failed)reject('offline');else resolve(data)})
   expect(screen.queryByText('Cartografía simulada')).toBeNull()
+})
+
+it('agrupa por conductor, conserva el filtro al alternar capas y avisa cuando no hay tramos confirmados', async () => {
+  const first = { ...data.routes[0], driver: 'Ana', driver_id: 'd1' }
+  const second = { ...first, id: 'r2', plate: 'TST-002' }
+  const third = { ...first, id: 'r3', plate: 'TST-003', driver_id: 'd2' }
+  const invalid = { ...first, id: 'invalid', path: [{ lat: 0, lng: 0 }] }
+  const value = { ...data, routes: [first, second, third, invalid] }
+  render(<RouteMap source={{ load: async () => value }} />)
+  const choices = within(await screen.findByRole('group', { name: 'Rutas por conductor' }))
+  expect(await screen.findByText(/1 elementos omitidos/)).toBeVisible()
+  const sameDriver = choices.getByRole('button', { name: 'Ana · TST-001, TST-002' })
+  const otherDriver = choices.getByRole('button', { name: 'Ana · TST-003' })
+  fireEvent.click(screen.getByRole('button', { name: 'Capas' }))
+  const layers = screen.getByRole('group', { name: 'Capas del mapa' })
+  fireEvent.click(within(layers).getByRole('button', { name: 'Rutas' }))
+  fireEvent.keyDown(layers, { key: 'Tab' })
+  fireEvent.keyDown(layers, { key: 'Escape' })
+  expect(screen.queryByRole('group', { name: 'Capas del mapa' })).toBeNull()
+  fireEvent.click(sameDriver)
+  expect(sameDriver).toHaveAttribute('aria-pressed', 'true')
+  fireEvent.click(otherDriver)
+  expect(otherDriver).toHaveAttribute('aria-pressed', 'true')
+  fireEvent.click(otherDriver)
+  expect(otherDriver).toHaveAttribute('aria-pressed', 'false')
+  fireEvent.click(screen.getByRole('checkbox', { name: 'Solo tramo confirmado' }))
+  expect(await screen.findByText('Sin tramos confirmados para los filtros elegidos')).toBeVisible()
+  fireEvent.click(choices.getByRole('button', { name: /Todas las rutas/ }))
+  expect(sameDriver).toHaveAttribute('aria-pressed', 'false')
+})
+
+it.each(['routes', 'vehicles'] as const)('el error de datos indica qué lista sigue disponible en %s', async profile => {
+  render(<RouteMap source={{ load: async () => { throw new Error('Servicio no disponible') } }} profile={profile} />)
+  expect(await screen.findByText(new RegExp(profile === 'routes' ? 'la lista de rutas' : 'la lista de camiones'))).toBeVisible()
 })

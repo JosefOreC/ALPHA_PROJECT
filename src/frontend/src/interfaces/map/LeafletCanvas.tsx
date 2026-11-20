@@ -1,8 +1,9 @@
+import { orderReference } from '../../domain/order'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import { Fragment, useEffect } from 'react'
 import type { ComponentProps } from 'react'
-import { MapContainer, Marker, Pane, Polyline, Popup, useMap, useMapEvents } from 'react-leaflet'
+import { MapContainer, Marker, Pane, Polyline, Popup, Tooltip, useMap, useMapEvents } from 'react-leaflet'
 import { doneSegment, pendingSegment } from '../../domain/mapData'
 import type { MapData, MapSelection } from '../../domain/mapData'
 import { LIMA_REGION } from '../../domain/mapPresentation'
@@ -13,10 +14,11 @@ import { CloseIcon } from '../../shared/ui'
 import { depotHtml, pinHtml, vehicleHtml } from './markers'
 import { fitVisible, LIMA_BOUNDS, toTuple } from './viewport'
 import VectorBasemap from './VectorBasemap'
+import { RouteDirections } from './RouteDirections'
 
 type Props = {
   data: MapData; selection: MapSelection | null; layers: MapLayers
-  compact: boolean; card: boolean; onSelect: (selection: MapSelection) => void
+  compact: boolean; card: boolean; compareDrivers: boolean; onSelect: (selection: MapSelection) => void
   onDismiss: () => void
   onReady: (map: L.Map) => void; onBasemapError: (message: string) => void
 }
@@ -36,6 +38,12 @@ function MapPopup(props: ComponentProps<typeof Popup>) {
   return <Popup {...props} autoPan={size.x > 0 && size.y > 0} autoPanPadding={[16, 16]} />
 }
 
+function MapTooltip(props: ComponentProps<typeof Tooltip>) {
+  const map = useMap()
+  const size = map.getSize()
+  return size.x > 0 && size.y > 0 ? <Tooltip {...props} /> : null
+}
+
 /** Lista/Mapa cambia el contenedor aunque no cambie la ventana. */
 function MapLifecycle({ data, layers, onReady }: Pick<Props, 'data' | 'layers' | 'onReady'>) {
   const map = useMap()
@@ -45,6 +53,9 @@ function MapLifecycle({ data, layers, onReady }: Pick<Props, 'data' | 'layers' |
       const size = map.getSize()
       map.setMinZoom(size.x > 0 && size.y > 0 ? Math.max(LIMA_REGION.minZoom, Math.ceil(map.getBoundsZoom(L.latLngBounds(LIMA_BOUNDS), true))) : LIMA_REGION.minZoom)
       map.panInsideBounds(LIMA_BOUNDS, { animate: false })
+      if (size.x > 0 && size.y > 0) map.eachLayer(layer => {
+        if (layer instanceof L.Popup && layer.isOpen()) layer.update()
+      })
     }
     const inspect = () => {
       const center = map.getCenter()
@@ -70,11 +81,12 @@ function MapLifecycle({ data, layers, onReady }: Pick<Props, 'data' | 'layers' |
   return null
 }
 
-export default function LeafletCanvas({ data, selection, layers, compact, card, onSelect, onDismiss, onReady, onBasemapError }: Props) {
+export default function LeafletCanvas({ data, selection, layers, compact, card, compareDrivers, onSelect, onDismiss, onReady, onBasemapError }: Props) {
   const order = selection?.kind === 'order' ? data.orders.find(item => item.id === selection.id) : undefined
   const vehicle = selection?.kind === 'vehicle' ? data.vehicles?.find(item => item.id === selection.id) : undefined
   const route = selection?.kind === 'route' ? data.routes.find(item => item.id === selection.id) : undefined
   const focus = order?.route_id ?? vehicle?.route_id ?? route?.id ?? null
+  const dimOthers = focus !== null && !compareDrivers
   const popupPosition = order?.position ?? vehicle?.position ?? route?.path[0]
   const plate = data.routes.find(item => item.id === order?.route_id)?.plate
   return (
@@ -86,24 +98,32 @@ export default function LeafletCanvas({ data, selection, layers, compact, card, 
       <VectorBasemap onError={onBasemapError} />
       <Pane name="map-route-casing" style={{ zIndex: 400 }} />
       <Pane name="map-routes" style={{ zIndex: 410 }} />
+      <Pane name="map-focus-casing" style={{ zIndex: 420 }} />
+      <Pane name="map-focus-route" style={{ zIndex: 430 }} />
+      <Pane name="map-directions" style={{ zIndex: 440, pointerEvents: 'none' }} />
+      <Pane name="map-route-hit" style={{ zIndex: 450 }} />
       <Pane name="map-depot" style={{ zIndex: 520 }} />
       <Pane name="map-orders" style={{ zIndex: 540 }} />
       <Pane name="map-vehicles" style={{ zIndex: 560 }} />
       <Pane name="map-selection" style={{ zIndex: 610 }} />
 
       {layers.routes ? data.routes.map(item => {
-        const dim = focus !== null && item.id !== focus ? ' is-dim' : ''
+        const dim = dimOthers && item.id !== focus ? ' is-dim' : ''
         const active = route?.id === item.id ? ' is-sel' : ''
         const focused = focus === item.id ? ' is-focus' : ''
         const pending = 'route r' + item.color + dim + active + focused
         const done = 'route route--done r' + item.color + dim + active + focused
         return <Fragment key={item.id}>
-          <Polyline key={'casing' + dim} pane="map-route-casing" positions={item.path.map(toTuple)}
-            className={'route-casing' + dim} interactive={false} />
-          <Polyline key={pending} pane="map-routes" positions={pendingSegment(item).map(toTuple)} className={pending} bubblingMouseEvents={false}
+          <Polyline key={'casing' + dim + focused} pane={focused ? 'map-focus-casing' : 'map-route-casing'} positions={item.path.map(toTuple)}
+            className={'route-casing' + dim + focused} interactive={false} />
+          <Polyline key={pending} pane={focused ? 'map-focus-route' : 'map-routes'} positions={pendingSegment(item).map(toTuple)} className={pending} bubblingMouseEvents={false}
             eventHandlers={{ click: () => onSelect({ kind: 'route', id: item.id }) }} />
-          <Polyline key={done} pane="map-routes" positions={doneSegment(item).map(toTuple)} className={done} bubblingMouseEvents={false}
+          <Polyline key={done} pane={focused ? 'map-focus-route' : 'map-routes'} positions={doneSegment(item).map(toTuple)} className={done} bubblingMouseEvents={false}
             eventHandlers={{ click: () => onSelect({ kind: 'route', id: item.id }) }} />
+          <Polyline pane="map-route-hit" positions={item.path.map(toTuple)} className="route-hit" bubblingMouseEvents={false}
+            eventHandlers={{ click: () => onSelect({ kind: 'route', id: item.id }) }}>
+          </Polyline>
+          <RouteDirections route={item} dimmed={!!dim} showLabel={!compact && (!dimOthers || focus === item.id)} />
         </Fragment>
       }) : null}
 
@@ -111,15 +131,33 @@ export default function LeafletCanvas({ data, selection, layers, compact, card, 
         icon={L.divIcon({ className: 'eco-map__marker', html: depotHtml(data.depot.name), iconSize: [120, 28], iconAnchor: [14, 14] })}
         interactive={false} keyboard={false} /> : null}
 
-      {layers.pins ? data.orders.map(item => <Marker key={item.id + '-' + (order?.id === item.id)}
+      {layers.pins ? data.orders.map(item => {
+        const owner = data.routes.find(route => route.id === item.route_id)
+        const ref = orderReference(item.id)
+        const dimmed = dimOthers && item.route_id !== focus
+        return <Marker key={item.id + '-' + (order?.id === item.id) + '-' + dimmed}
         pane={order?.id === item.id ? 'map-selection' : 'map-orders'} position={toTuple(item.position)}
-        icon={L.divIcon({ className: 'eco-map__marker', html: pinHtml(item.status, order?.id === item.id, false), iconSize: [36, 44], iconAnchor: [18, 38] })}
-        title={item.id + ' · ' + item.customer + ' · ' + statusLabels[item.status]} alt={item.id + ', ' + item.customer + ', ' + statusLabels[item.status]}
-        keyboard eventHandlers={{ click: () => onSelect({ kind: 'order', id: item.id }) }} />) : null}
+        icon={L.divIcon({ className: 'eco-map__marker', html: pinHtml(item.status, order?.id === item.id, dimmed, owner ? {color: owner.color, stop: item.stop_number} : undefined), iconSize: [36, 44], iconAnchor: [18, 38] })}
+        title={(ref ? ref + ' · ' : '') + item.customer + ' · ' + statusLabels[item.status]} alt={(ref ? ref + ', ' : '') + item.customer + ', ' + statusLabels[item.status]}
+        keyboard eventHandlers={{ click: () => onSelect({ kind: 'order', id: item.id }) }}>
+          <MapTooltip direction="top" offset={[0,-32]} className="eco-map__stop-label">
+            <strong>{item.stop_number ? `Parada ${item.stop_number} · ` : ''}{item.customer}</strong>
+            <span>{owner ? `Vehículo ${owner.plate}` : 'Sin ruta asignada'}</span>
+          </MapTooltip>
+        </Marker>
+      }) : null}
 
+      {layers.vehicles ? data.routes.filter(item => item.done_until > 0
+        && !data.vehicles?.some(vehicle => vehicle.route_id === item.id)).map(item => (
+          <Marker key={`progress-${item.id}`} pane="map-vehicles" position={toTuple(item.path[item.done_until])}
+            icon={L.divIcon({ className: 'eco-map__marker', html: vehicleHtml(item, false), iconSize: [44, 44], iconAnchor: [22, 22] })}
+            title={`Última entrega confirmada · ${item.plate}`} alt={`Última entrega confirmada · ${item.plate}`}>
+            <Tooltip>Última entrega confirmada · {item.plate}</Tooltip>
+          </Marker>
+        )) : null}
       {layers.vehicles ? data.vehicles?.map(item => <Marker key={item.id + '-' + (vehicle?.id === item.id)}
         pane={vehicle?.id === item.id ? 'map-selection' : 'map-vehicles'} position={toTuple(item.position)}
-        icon={L.divIcon({ className: 'eco-map__marker', html: vehicleHtml(item, focus !== null && item.route_id !== focus, vehicle?.id === item.id), iconSize: [44, 44], iconAnchor: [22, 22] })}
+        icon={L.divIcon({ className: 'eco-map__marker', html: vehicleHtml(item, dimOthers && item.route_id !== focus, vehicle?.id === item.id), iconSize: [44, 44], iconAnchor: [22, 22] })}
         title={'Camión ' + item.plate + ' · ' + item.status} alt={'Camión ' + item.plate + ', ' + item.status} keyboard
         eventHandlers={{ click: () => onSelect({ kind: 'vehicle', id: item.id }) }} />) : null}
 
@@ -128,12 +166,14 @@ export default function LeafletCanvas({ data, selection, layers, compact, card, 
         <div className="eco-map__card" role="status">
           <button type="button" className="eco-map__card-close" aria-label="Cerrar tarjeta" title="Cerrar tarjeta" onClick={onDismiss}><CloseIcon /></button>
           {order ? <>
-            <span className="eco-code">{order.id} · {order.district}</span><strong>{order.customer}</strong>
+            <span className="eco-code">{[orderReference(order.id), order.district].filter(Boolean).join(' · ')}</span><strong>{order.customer}</strong>
+            {order.stop_number ? <span className="eco-map__stop-number">Parada {order.stop_number}</span> : null}
             <div className="eco-map__pop-row"><span>{statusLabels[order.status]}</span><span className="eco-code">{order.window}</span></div>
-            <div className="eco-map__pop-row"><span>{plate ? 'Vehículo ' + plate : 'Sin vehículo asignado'}</span>
+            <div className="eco-map__pop-row"><span>{plate ? 'Vehículo ' + plate : 'Sin ruta asignada'}</span>
               {order.co2_kg !== null ? <span className="eco-eco eco-strong">{formatDecimal(order.co2_kg, 0, 2)} kg CO₂</span> : null}</div>
-          </> : vehicle ? <><strong>Camión {vehicle.plate}</strong><span>{vehicle.status}</span><p>{data.routes.some(item => item.id === vehicle.route_id) ? 'Ruta ' + vehicle.route_id : 'Sin ruta asignada'}</p></>
-            : route ? <><strong>Ruta {route.id} · {route.plate}</strong><span>{data.orders.filter(item => item.route_id === route.id).length} pedidos</span></> : null}
+            {data.routes.find(item => item.id === order.route_id)?.driver ? <span>Conductor: {data.routes.find(item => item.id === order.route_id)!.driver}</span> : null}
+          </> : vehicle ? <><strong>Camión {vehicle.plate}</strong><span>{vehicle.status}</span><p>{data.routes.some(item => item.id === vehicle.route_id) ? 'Recorrido del vehículo ' + vehicle.plate : 'Sin ruta asignada'}</p></>
+            : route ? <><strong>Ruta {route.plate}</strong>{route.driver ? <span>Conductor: {route.driver}</span> : null}<span>{data.orders.filter(item => item.route_id === route.id).length} pedidos visibles</span></> : null}
         </div>
       </MapPopup> : null}
     </MapContainer>

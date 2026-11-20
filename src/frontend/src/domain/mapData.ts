@@ -16,11 +16,15 @@ export interface MapOrder {
   /** Ruta a la que pertenece, o null si aún no tiene vehículo. */
   route_id: string | null
   co2_kg: number | null
+  /** Orden real de entrega dentro de la ruta; no se recalcula al filtrar. */
+  stop_number?: number | null
 }
 
 export interface MapRoute {
   id: string
   plate: string
+  driver?: string
+  driver_id?: string
   /** Color de la ruta: 1 a 4 (`--route-1…4`). */
   color: 1 | 2 | 3 | 4
   /** Recorrido completo, del almacén a la última parada. */
@@ -69,3 +73,5 @@ export function orderMatches(order: MapOrder, routes: MapRoute[], query: string)
   const plate = routes.find(route => route.id === order.route_id)?.plate ?? ''
   return fold(`${order.id} ${order.customer} ${order.district} ${plate}`).includes(needle)
 }
+
+export const mapDriverKey = (route: MapRoute) => route.driver_id ? 'driver:' + route.driver_id : 'plate:' + route.plate

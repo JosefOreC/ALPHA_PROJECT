@@ -1,0 +1,83 @@
+
+> frontend@0.0.0 test:ui
+> tsc -p tsconfig.ui.json && playwright test
+
+[WebServer] (node:7432) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 61 tests using 1 worker
+
+(node:15028) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [escritorio] › tests\ui\accesibilidad.spec.ts:13:5 › /tests/ui/sostenibilidad.html: sin incumplimientos WCAG 2.2 AA (escritorio) (3.1s)
+  ok  2 [escritorio] › tests\ui\accesibilidad.spec.ts:13:5 › /tests/ui/map.html: sin incumplimientos WCAG 2.2 AA (escritorio) (3.2s)
+  ok  3 [escritorio] › tests\ui\accesibilidad.spec.ts:13:5 › /tests/ui/demo.html: sin incumplimientos WCAG 2.2 AA (escritorio) (8.9s)
+  -   4 [escritorio] › tests\ui\accesibilidad.spec.ts:13:5 › /tests/ui/driver.html: sin incumplimientos WCAG 2.2 AA (movil-390)
+  ok  5 [escritorio] › tests\ui\accesibilidad.spec.ts:30:1 › cada pin del mapa tiene su equivalente fuera del mapa (excepción «Equivalente» de WCAG 2.5.8) (1.9s)
+  ok  6 [escritorio] › tests\ui\components.spec.ts:6:1 › Pedidos y Rutas funcionan como módulos separados (2.6s)
+  ok  7 [escritorio] › tests\ui\components.spec.ts:32:1 › registro válido muestra éxito y los datos guardados (3.1s)
+  ok  8 [escritorio] › tests\ui\components.spec.ts:44:1 › el destino se elige por ubicación actual y se ajusta en el mapa antes de guardar (5.0s)
+  ok  9 [escritorio] › tests\ui\components.spec.ts:81:1 › el destino puede elegirse en el mapa sin permiso de ubicación y corregirse con teclado (4.5s)
+  ok 10 [escritorio] › tests\ui\components.spec.ts:103:1 › campos obligatorios y ventana inválida no envían y conservan el formulario (4.5s)
+  ok 11 [escritorio] › tests\ui\components.spec.ts:121:1 › edición precarga datos y guarda campos permitidos con versión (3.8s)
+  ok 12 [escritorio] › tests\ui\components.spec.ts:138:1 › cancelación: Volver conserva el pedido y confirmar lo cancela (2.7s)
+  ok 13 [escritorio] › tests\ui\components.spec.ts:156:1 › solo lectura no ofrece registro, edición ni cancelación (2.9s)
+  ok 14 [escritorio] › tests\ui\components.spec.ts:167:1 › error de API visible sin sustitución por demostración (2.9s)
+  ok 15 [escritorio] › tests\ui\components.spec.ts:176:1 › fallo al guardar conserva los campos y no muestra éxito (3.6s)
+  ok 16 [escritorio] › tests\ui\components.spec.ts:190:1 › demostración explícita permite registrar, editar y cancelar con datos ficticios (3.5s)
+  ok 17 [escritorio] › tests\ui\login.spec.ts:4:1 › la imagen de acceso selecciona AVIF, WebP y JPEG sin romper el formulario (1.8s)
+  ok 18 [escritorio] › tests\ui\login.spec.ts:21:1 › inicio, creación de usuario por administrador y cierre de sesión (2.9s)
+  ok 19 [escritorio] › tests\ui\map.spec.ts:18:1 › al filtrar un pedido conserva discretamente las otras paradas de su ruta (7.5s)
+  ok 20 [escritorio] › tests\ui\map.spec.ts:67:1 › un icono discreto explica los accesos de ida y vuelta aunque el pedido esté filtrado (6.0s)
+  ok 21 [escritorio] › tests\ui\map.spec.ts:96:1 › generar y aprobar dibuja la propuesta y conserva la ruta al recargar (5.9s)
+  ok 22 [escritorio] › tests\ui\map.spec.ts:138:1 › el mapa dibuja rutas, pedidos y vehículos sobre OpenStreetMap (3.2s)
+  ok 23 [escritorio] › tests\ui\map.spec.ts:156:1 › placas, colores, números y flechas permiten seguir una ruta y sus entregas (5.9s)
+  ok 24 [escritorio] › tests\ui\map.spec.ts:192:1 › elegir un pin selecciona el pedido, resalta su ruta y muestra la tarjeta (3.8s)
+  ok 25 [escritorio] › tests\ui\map.spec.ts:208:1 › elegir una fila de la lista lleva la selección al mapa (2.6s)
+  ok 26 [escritorio] › tests\ui\map.spec.ts:219:1 › la búsqueda oculta lo que no coincide y las capas se pueden apagar (3.7s)
+  ok 27 [escritorio] › tests\ui\map.spec.ts:237:1 › los botones de zoom acercan y alejan el mapa (4.7s)
+  ok 28 [escritorio] › tests\ui\map.spec.ts:256:1 › si los tiles no cargan avisa y deja usar la lista de pedidos (US-006) (2.5s)
+  ok 29 [escritorio] › tests\ui\map.spec.ts:269:1 › los filtros de estado y pedido ocultan rutas ajenas y se pueden limpiar (5.8s)
+  ok 30 [escritorio] › tests\ui\map.spec.ts:305:1 › los filtros de búsqueda, distrito y estado del listado también filtran el mapa (4.8s)
+  ok 31 [escritorio] › tests\ui\map.spec.ts:329:1 › las tarjetas de pedidos, camiones y rutas se cierran con el ratón y se pueden reabrir (8.5s)
+  ok 32 [escritorio] › tests\ui\map.spec.ts:385:1 › ocho combinaciones de capas y almacén independiente (11.9s)
+  ok 33 [escritorio] › tests\ui\map.spec.ts:412:1 › perfiles aislados, camión sin ruta y contexto del conductor (4.5s)
+  ok 34 [escritorio] › tests\ui\map.spec.ts:438:1 › el margen ampliado se puede explorar y restablecer conserva los pedidos de interés (22.9s)
+  ok 35 [escritorio] › tests\ui\map.spec.ts:470:1 › zoom restringido, reencuadre y recuperación de fuente (18.0s)
+  ok 36 [escritorio] › tests\ui\map.spec.ts:504:1 › contingencia de solo camiones y reintento cartográfico (2.3s)
+  ok 37 [escritorio] › tests\ui\map.spec.ts:516:1 › si falla el servidor vectorial conserva la lista operativa (2.8s)
+  ok 38 [escritorio] › tests\ui\map.spec.ts:529:1 › el mapa alternativo conserva rutas y pedidos si falla el proveedor vectorial (3.1s)
+  ok 39 [escritorio] › tests\ui\map.spec.ts:546:1 › un navegador sin gráficos compatibles muestra contingencia sin errores de página (4.0s)
+  ok 40 [escritorio] › tests\ui\roles.spec.ts:4:1 › la URL y una preferencia demo no elevan los permisos de un auditor en modo HTTP (6.1s)
+  ok 41 [escritorio] › tests\ui\roles.spec.ts:21:1 › una sesión ausente o de evaluador no monta módulos ni consulta pedidos (3.4s)
+[WebServer] 11:16:15 a. m. [vite] http proxy error: /api/admin/parameters
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:8000
+[WebServer]     at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+[WebServer] 11:16:15 a. m. [vite] http proxy error: /api/admin/parameters
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:8000
+[WebServer]     at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+  ok 42 [escritorio] › tests\ui\roles.spec.ts:35:1 › el planificador consulta parámetros y el administrador no obtiene controles de ejecución (4.2s)
+  ok 43 [escritorio] › tests\ui\roles.spec.ts:49:3 › logistics: consulta flota sin escrituras y no accede a administración (2.5s)
+  ok 44 [escritorio] › tests\ui\roles.spec.ts:49:3 › driver: consulta flota sin escrituras y no accede a administración (3.3s)
+  ok 45 [escritorio] › tests\ui\sostenibilidad.spec.ts:6:1 › Exportar CSV descarga un archivo real con los datos del periodo (2.3s)
+  ok 46 [escritorio] › tests\ui\sostenibilidad.spec.ts:25:1 › el gráfico cambia de escala con el periodo y las barras siguen dentro del lienzo (947ms)
+  ok 47 [escritorio] › tests\ui\sostenibilidad.spec.ts:45:3 › 390 px › el reporte cabe en pantalla sin desbordar la página (619ms)
+(node:19212) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  -  48 [movil-390] › tests\ui\accesibilidad.spec.ts:13:5 › /tests/ui/sostenibilidad.html: sin incumplimientos WCAG 2.2 AA (escritorio)
+  -  49 [movil-390] › tests\ui\accesibilidad.spec.ts:13:5 › /tests/ui/map.html: sin incumplimientos WCAG 2.2 AA (escritorio)
+  -  50 [movil-390] › tests\ui\accesibilidad.spec.ts:13:5 › /tests/ui/demo.html: sin incumplimientos WCAG 2.2 AA (escritorio)
+  ok 51 [movil-390] › tests\ui\accesibilidad.spec.ts:13:5 › /tests/ui/driver.html: sin incumplimientos WCAG 2.2 AA (movil-390) (2.5s)
+  -  52 [movil-390] › tests\ui\accesibilidad.spec.ts:30:1 › cada pin del mapa tiene su equivalente fuera del mapa (excepción «Equivalente» de WCAG 2.5.8)
+  ok 53 [movil-390] › tests\ui\driver.spec.ts:21:1 › 390 px: Mi ruta cabe en pantalla y sus controles miden 48 px (3.5s)
+  ok 54 [movil-390] › tests\ui\driver.spec.ts:32:1 › 390 px: confirmar la entrega actualiza el avance y lleva a la siguiente parada (4.9s)
+  ok 55 [movil-390] › tests\ui\driver.spec.ts:60:1 › 390 px: un nombre y una dirección muy largos no desbordan (1.6s)
+  ok 56 [movil-390] › tests\ui\login.spec.ts:4:1 › la imagen de acceso selecciona AVIF, WebP y JPEG sin romper el formulario (1.9s)
+  ok 57 [movil-390] › tests\ui\login.spec.ts:21:1 › inicio, creación de usuario por administrador y cierre de sesión (4.2s)
+  ok 58 [movil-390] › tests\ui\mobile.spec.ts:25:1 › 390 px: filtrar el mapa por estado y pedido conserva controles dentro de pantalla (3.0s)
+  ok 59 [movil-390] › tests\ui\mobile.spec.ts:43:1 › 390 px: listado, formulario, detalle y diálogo sin recortes ni desbordamiento de página (3.3s)
+  ok 60 [movil-390] › tests\ui\mobile.spec.ts:96:1 › 390 px: mensajes largos sin espacios no desbordan (665ms)
+  ok 61 [movil-390] › tests\ui\mobile.spec.ts:103:1 › 390 px: seleccionar destino en mapa conserva los controles dentro de la pantalla (1.6s)
+
+  5 skipped
+  56 passed (5.4m)

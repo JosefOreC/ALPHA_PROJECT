@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import type { FormEvent } from 'react'
 import { FUEL_LABELS, validateVehicleForm } from '../../application/fleetBoard'
 import { Banner, UNIT_LABELS } from '../../shared/ui'
-import type { CreateVehicleInput, FuelType, UpdateVehicleInput, Vehicle, VehicleStatus } from '../../types/vehicle'
+import type { CreateVehicleInput, FuelType, UpdateVehicleInput, Vehicle, VehicleStatus } from '../../domain/vehicle'
 
 type VehicleDialogProps = {
   open: boolean
