@@ -204,6 +204,8 @@ La API añade la cabecera `Server-Timing` a las respuestas correctas de Salud y 
 
 Desde la raíz del repositorio, ejecutar `python scripts/measure_render_latency.py --diagnostico --salida latencia-render-diagnostico.csv` con una cuenta de Planificación. El CSV separa el tiempo total, la espera hasta recibir las cabeceras y la duración que informó la API. La diferencia entre los dos últimos valores incluye la conexión, el tránsito y las esperas fuera de la aplicación. El campo de tiempo de API queda vacío si el servidor todavía no devuelve la cabecera. En la entrega se publican los tiempos de respuesta sin marcas horarias.
 
+El [despliegue del diagnóstico](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/44787470623) publicó la instrumentación del [PR #56](https://github.com/JosefOreC/ALPHA_PROJECT/pull/56). El medidor recibió el tiempo de la API en las seis respuestas HTTP 200 del sondeo público de salud. La primera consulta tardó **691,0 ms** en total y **1,4 ms** dentro de la API. En las otras cinco, el tiempo total estuvo entre **241,7 y 255,0 ms** y el tiempo en la API entre **0,9 y 5,0 ms**. La demora observada en la primera consulta se concentró fuera del tramo medido por la aplicación. Falta la nueva serie autenticada para determinar el origen de los picos de Pedidos.
+
 ## Corte técnico de main del 20/11/2026
 
 La suite del commit `64267bd` aprobó 12/12 E2E integrados en tres motores, con persistencia real. El backend integrado registra 534 pruebas y 36 subpruebas sin omisiones. Los reportes remotos, contadores de cobertura y métricas están conservados en el [paquete de cierre](evidencias/cierre-20261120/README.md); el [registro técnico](08%20Cierre%20tecnico%20y%20trazabilidad%20V_1_0_0.md) relaciona los criterios y sus límites.
