@@ -8,7 +8,7 @@
 
 **Actualización:** 20/11/2026, America/Lima (UTC−05:00).
 
-**Corte vigente:** [Cierre técnico y trazabilidad](08%20Cierre%20tecnico%20y%20trazabilidad%20V_1_0_0.md) y [evidencias verificables](evidencias/cierre-20261120/README.md). SUS y Render están excluidos de este cierre por indicación del usuario.
+**Corte vigente:** [Cierre técnico y trazabilidad](08%20Cierre%20tecnico%20y%20trazabilidad%20V_1_0_0.md) y [evidencias verificables](evidencias/cierre-20261120/README.md). Esta entrega incorpora el registro de cuentas del curso y actualiza el alcance de la evaluación SUS.
 
 Este índice reúne la auditoría técnica y las evidencias de la Inspección 5. Los resultados históricos se conservan con su entorno y su versión.
 
@@ -34,6 +34,7 @@ Este sprint reúne la optimización de consultas, paginación, recursos visuales
 - [Retrospectiva del sprint](02%20Retrospectiva%20del%20Sprint%20V_1_0_0.md)
 - [Playwright, rendimiento y disponibilidad](03%20Analisis%20PlayWrigth%20V_1_0_0.md)
 - [Usabilidad SUS](04%20Usabilidad%20V_1_0_0.md)
+- [Guion de exposición del criterio 1](Guion%20de%20exposici%C3%B3n%20del%20criterio%201.md)
 
 ## Estado de la Inspección 5
 
@@ -43,8 +44,8 @@ Corte del 20/11/2026 sobre `main`, commit productivo auditado `64267bd`. El [cie
 |---|---:|---|---|
 | Gestión ágil | 4 | Review con 3/3 tickets confirmados en captura, commits y pruebas; tres videos; retrospectiva SMART con responsables y fechas. | Aceptación documental cerrada: 3/3 historias aceptadas por el Líder del Proyecto en revisión asíncrona. [Acta](09%20Acta%20de%20revision%20y%20aceptacion%20V_1_0_0.md). El estado vivo de Jira permanece sin consultar. |
 | Calidad con Playwright | 5 | 12/12 E2E remotos en tres navegadores; persistencia real, recuperación 503, métricas y reportes conservados. La demostración posterior confirma entregas por interfaz. | Validado en entornos aislados. Se conserva un fallo de latencia de la corrida grabada junto a la repetición sin video; no se extrapola a producción. |
-| Usabilidad | 3 | Informe histórico: cinco cuestionarios, 72,5/100 (C+). | Fuera del trabajo actual por indicación del usuario; no se modifica ni se declara una nueva sesión. |
-| Automatización CI/CD | 4 | CI, Tests, documentación, Lighthouse y SonarCloud aprobados en main con reportes y artefactos. Credenciales de PostGIS efímeras. | CI acreditada. Render excluido y despliegue deshabilitado; no se afirma cumplimiento de despliegue continuo operativo. |
+| Usabilidad | 3 | Cinco cuestionarios completos, matriz reproducible y promedio de 72,5/100 (C+). | Se documentaron las seis cuentas de prueba. Para medir el efecto de las mejoras queda pendiente otra sesión SUS. |
+| Automatización CI/CD | 4 | CI, Tests, documentación, Lighthouse y SonarCloud aprobados en main con reportes y artefactos. Credenciales de PostGIS efímeras. | CI acreditada para el corte enlazado. La disponibilidad pública se comprobó tras un despliegue manual. Queda por acreditar un deploy automático desde Tests con su artefacto de disponibilidad. |
 | Arquitectura y trazabilidad | 4 | Capas separadas, enlaces bidireccionales, badges de main, matriz de historias y hashes de evidencias. | Validación documental reproducible con `scripts/check_docs.py`. |
 
 Los resultados de Lighthouse actuales están publicados con sus valores completos. La aprobación del workflow no implica cumplimiento de cada límite estricto de la serie histórica de Green IT. Véanse [las métricas](evidencias/cierre-20261120/lighthouse-remoto.json) y la acción A-05 de la retrospectiva.

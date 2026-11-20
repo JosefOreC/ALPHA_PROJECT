@@ -8,7 +8,7 @@
 
 ## ¿Qué aprendimos?
 
-La validación técnica y la experiencia de uso aportan información distinta. Playwright comprobó que el conductor podía consultar y confirmar un pedido. Dos de los cinco participantes declararon ese perfil y sus puntajes quedaron por debajo de 68. Uno de ellos describió una tarea de operador, por lo que el próximo registro debe distinguir el perfil asignado de las tareas que se ejecutaron. [Informe SUS](04%20Usabilidad%20V_1_0_0.md).
+La validación técnica y la experiencia de uso aportan información distinta. Playwright comprobó que el conductor podía consultar y confirmar un pedido. Dos respuestas que eligieron «Conductor» en el formulario quedaron por debajo de 68. En una de ellas se describió una tarea de operador. Para la siguiente evaluación se registrarán por separado el rol de acceso, el perfil declarado y las tareas realizadas. [Informe SUS](04%20Usabilidad%20V_1_0_0.md).
 
 La serie ambiental también mostró resultados diferentes según la pantalla. Pedidos redujo ligeramente la estimación de CO₂e por carga y Acceso aumentó su transferencia con la imagen. Una corrida posterior superó el límite de TBT de Acceso. Conservar las condiciones de medición y la versión facilita revisar ambas desviaciones. [Retrospectiva técnica](Hist%C3%B3rico/02%20Retrospectiva%20del%20Sprint%20V_1_2_0.md) · [Auditoría de métricas](06%20Auditor%C3%ADa%20consolidada%20de%20m%C3%A9tricas%20V_1_0_0.md).
 

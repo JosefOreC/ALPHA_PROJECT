@@ -10,11 +10,11 @@
 | Instrumento | Formulario SUS en español de diez afirmaciones, escala Likert de 1 a 5 y una pregunta abierta independiente. |
 | Fecha de la encuesta | 19/11/2026, según las marcas temporales de la exportación. |
 | Muestra | Cinco cuestionarios completos con códigos únicos. Dos respuestas de Conductor, dos de Supervisión y una de Operador, según el perfil declarado. |
-| Alcance | Los tres perfiles cubren los flujos del curso. El tamaño y la selección de la muestra permiten un diagnóstico exploratorio y limitan su generalización a la operación de DistriRápido. |
+| Alcance | Los perfiles se autodeclararon en el formulario. La muestra académica de cinco participantes permite un diagnóstico exploratorio del uso del sistema. |
 | Fuente y privacidad | Exportación del formulario facilitada al equipo. Las filas conservan su orden y se identifican como P01–P05. |
 | Registro de la sesión | El formulario recoge perfil, respuestas y comentarios. La versión exacta, el dispositivo y los tiempos o resultados de las tareas no se registraron por participante. |
 
-El protocolo planteó que el conductor consultara su ruta y confirmara una entrega, que el operador localizara un pedido y revisara su ruta, y que Supervisión consultara el resumen operativo. Estas tareas sirven de contexto para interpretar las respuestas. P03 seleccionó **Conductor**, pero describió una consulta de rutas como operador. Se conservó su respuesta en el promedio global y se tomó en cuenta la discrepancia al interpretar los perfiles.
+El protocolo planteó que el conductor consultara su ruta y confirmara una entrega, que el operador localizara un pedido y revisara su ruta, y que Supervisión consultara el resumen operativo. Estas tareas sirven de contexto para interpretar las respuestas. P03 seleccionó **Conductor**, pero describió una consulta de rutas como operador. Se conservó su respuesta en el promedio global.
 
 ## Cuestionario de aplicación
 
@@ -32,6 +32,8 @@ El protocolo planteó que el conductor consultara su ruta y confirmara una entre
 La escala abarca de **1, totalmente en desacuerdo**, a **5, totalmente de acuerdo**. La pregunta abierta consultó qué paso resultó difícil y qué ocurrió. Su respuesta se analizó por separado.
 
 ## Aplicación con el equipo del curso
+
+En las pruebas manuales se usaron seis cuentas institucionales con roles asignados por el equipo. El formulario recogió cinco respuestas. Se mantuvieron los perfiles declarados y los identificadores P01–P05 de la matriz. Las diferencias entre el perfil declarado y el rol de acceso limitan la interpretación al conjunto de respuestas. [Cuentas utilizadas por el equipo](03%20Analisis%20PlayWrigth%20V_1_0_0.md#cuentas-utilizadas-por-el-equipo).
 
 Se comprobó que cada fila tenía las diez respuestas y que todos los valores eran enteros entre 1 y 5. Para repetir el cálculo se pueden copiar los valores de la matriz a un CSV de trabajo con encabezado `id,perfil,q1,q2,q3,q4,q5,q6,q7,q8,q9,q10` y procesarlo con el [calculador del repositorio](../../../scripts/score_sus.py).
 
@@ -57,7 +59,7 @@ En P01, los ítems impares aportaron `(3−1) + (2−1) + (4−1) + (5−1) + (3
 
 ## Interpretación y seguimiento
 
-Tres participantes superaron 68 y dos quedaron por debajo. Los puntajes inferiores pertenecen al perfil declarado de Conductor, con la salvedad de P03. En facilidad de uso (P3) la media fue **2,6 de 5** y cuatro participantes marcaron entre 1 y 3. La expectativa de aprendizaje rápido (P7) obtuvo **4,2**. La diferencia orienta el seguimiento hacia los primeros pasos de uso. P02 y P04 describieron una experiencia favorable y P05 señaló que pudo adaptarse después de un inicio más lento.
+Tres participantes superaron 68 y dos quedaron por debajo. Los dos puntajes inferiores corresponden a respuestas que marcaron «Conductor» en el formulario. La discrepancia con los roles de acceso impide atribuir esos puntajes al flujo de conducción. En facilidad de uso (P3) la media fue **2,6 de 5** y cuatro participantes marcaron entre 1 y 3. La expectativa de aprendizaje rápido (P7) obtuvo **4,2**. La diferencia orienta el seguimiento hacia los primeros pasos de uso. P02 y P04 describieron una experiencia favorable y P05 señaló que pudo adaptarse después de un inicio más lento.
 
 | Dificultad observada | Evidencia | Cambio y verificación |
 |---|---|---|
@@ -72,5 +74,6 @@ Las pruebas automatizadas comprueban el comportamiento de la interfaz. Para medi
 |---|---|---|
 | V_1_0_0 | 19/11/2026 | Estructura de evaluación para la Inspección 5. |
 | V_1_0_1 | 20/11/2026 | Incorporación de los cinco cuestionarios, cálculo reproducible y seguimiento de las dificultades. |
+| V_1_0_2 | 20/11/2026 | Registro de cuentas de prueba y precisión del alcance de los perfiles declarados. |
 
 [← Volver al README principal](../../../README.md) · [Volver al Sprint 4](README.md)

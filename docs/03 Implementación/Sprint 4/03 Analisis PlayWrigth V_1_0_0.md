@@ -23,12 +23,27 @@ El workflow de despliegue comprueba la app sobre HTTPS y registra observaciones 
 El [Blueprint de Render](../../../render.yaml) provisiona un servicio web Docker y PostgreSQL 17 con conexión privada. El [arranque](../../../scripts/start_render.sh) inicializa el esquema, aplica las migraciones y crea el primer administrador. PostGIS está disponible en Render PostgreSQL. Para la revisión del curso, ambos recursos están configurados con plan gratuito. La base gratuita expira a los 30 días y el servicio web puede suspenderse por inactividad. Registrar si cada medición corresponde a un arranque en frío o a una instancia activa. [Blueprints](https://render.com/docs/blueprint-spec) · [Planes gratuitos](https://render.com/docs/free) · [Extensiones de PostgreSQL](https://render.com/docs/postgresql-extensions).
 
 1. Tras incorporar los archivos a GitHub, un integrante con acceso al repositorio registra el Blueprint en el panel de Render. Proporciona `ADMIN_INITIAL_EMAIL` y una contraseña inicial de al menos 12 caracteres en los campos privados del panel.
-2. Registrar la URL HTTPS y el identificador del servicio. Un administrador del repositorio configura en GitHub el entorno `production`: secreto `RENDER_API_KEY` y variables `RENDER_SERVICE_ID` y `PRODUCTION_URL`. El workflow solicita el despliegue del commit exacto que pasó Tests. [API de despliegue](https://api-docs.render.com/reference/create-deploy).
+2. Registrar la URL HTTPS y el identificador del servicio. Un administrador del repositorio configura en GitHub el entorno `production`: secreto `RENDER_API_KEY` y variables `RENDER_SERVICE_ID` y `PRODUCTION_URL`. La variable de repositorio `PRODUCTION_DEPLOY_ENABLED=true` habilita el flujo tras un Tests aprobado por un push a `main`. El workflow solicita el despliegue del commit exacto que pasó Tests. [API de despliegue](https://api-docs.render.com/reference/create-deploy).
 3. Comprobar el acceso con la cuenta de administración y preparar cuentas de rol y datos ficticios para la demo. El esquema inicial se crea vacío de pedidos y rutas. Para la demo del curso, agregar `COURSE_DEMO_DATA=true` en **Environment** de Render y volver a desplegar. El arranque agrega un almacén ficticio si la base está vacía de almacenes y completa los factores de emisión sintéticos ausentes sin reemplazar registros existentes. Con el rol Operador, generar la propuesta y pulsar **Aprobar y guardar rutas**. La asignación se toma del conductor activo vinculado al vehículo seleccionado por el planificador. Antes de la demo, comprobar el motor vial y los recorridos que se van a mostrar.
 4. Tras el despliegue automático, conservar el enlace a los workflows y sus artefactos. El despliegue comprueba la página de entrada y guarda cinco observaciones de salud espaciadas aproximadamente 15 segundos. Si la versión deja de responder, revisar el registro del proveedor y restaurar la última versión operativa desde el panel.
 
 
-### Datos para la demostración
+### Cuentas utilizadas por el equipo
+
+El equipo utilizó seis cuentas institucionales durante las pruebas manuales del curso. Los códigos de acceso y los roles asignados fueron los siguientes.
+
+| Cuenta | Rol asignado |
+|---|---|
+| `admin` | Administrador |
+| `g2101` | Planificador |
+| `g2102` | Conductor |
+| `g2105` | Responsable de logística |
+| `g2107` | Auditor externo |
+| `g2108` | Planificador |
+
+Las cuentas comparten el dominio institucional `continental.edu.pe`. El inventario registra los accesos utilizados por el equipo. El [informe SUS](04%20Usabilidad%20V_1_0_0.md#aplicación-con-el-equipo-del-curso) conserva los perfiles declarados en el formulario y los resultados de los cinco cuestionarios.
+
+### Datos sintéticos para reproducir la demostración
 
 Con `COURSE_DEMO_DATA=true`, establecer `COURSE_DEMO_PASSWORD` en Render con una contraseña nueva de 12 a 256 caracteres y desplegar el último commit. La carga agrega cuentas separadas de las cuentas operativas y tres pedidos ficticios para la fecha de Lima. Cada reinicio durante el mismo día conserva las asignaciones y entregas ya registradas.
 
@@ -108,7 +123,7 @@ La suite del commit `64267bd` aprobó 12/12 E2E integrados en tres motores, con 
 
 El arnés posterior convierte la confirmación del conductor en un recorrido por interfaz, comprueba el diálogo y la persistencia, y adjunta capturas del pedido, ruta, entrega y roles. La variable `E2E_RECORD_DEMO=1` habilita video; permanece apagada en la medición ordinaria. Se publican tres videos de Chromium como evidencia técnica, sin atribuir asistencia de stakeholders. La primera corrida grabada aprobó 11/12: `/health` tardó 6202,893 ms en Chromium. Se conserva el fallo y se repite sin video con el mismo umbral, sin usar la repetición para borrar el resultado inicial.
 
-La integración del motor vial usa un proveedor de prueba explícito; la API de simulación usa el motor de asignación y costos euclidianos. Ninguna de estas pruebas acredita exactitud de calles reales ni latencia de producción. Render y una nueva evaluación SUS quedan fuera del cierre solicitado.
+La integración del motor vial usa un proveedor de prueba explícito; la API de simulación usa el motor de asignación y costos euclidianos. Ninguna de estas pruebas acredita exactitud de calles reales ni latencia de producción. La disponibilidad pública observada y las cuentas manuales se registran en los apartados anteriores.
 
 
 La [repetici?n sin grabaci?n](evidencias/cierre-20261120/medicion-sin-video.json) aprob? **12/12**, sin omisiones ni reintentos, en Chromium, Firefox y WebKit. El [recibo de limpieza](evidencias/cierre-20261120/recibo-medicion.json) confirma la eliminaci?n de los recursos temporales.
