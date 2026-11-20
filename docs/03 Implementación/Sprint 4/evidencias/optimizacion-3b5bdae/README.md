@@ -10,7 +10,7 @@
 
 **Rama:** `refactor/mern`.
 
-**Antes:** `3b5bdae3930856101e8f8d7955813bc9ddaa9619`. **Implementación:** `9f953d6acc79d569d3896ab1e2a161d8321b3720`.
+**Antes:** [versión anterior a la optimización](https://github.com/JosefOreC/ALPHA_PROJECT/commit/3b5bdae3930856101e8f8d7955813bc9ddaa9619). **Implementación:** [versión optimizada](https://github.com/JosefOreC/ALPHA_PROJECT/commit/9f953d6acc79d569d3896ab1e2a161d8321b3720).
 
 ## Procedencia y resultados
 
@@ -36,7 +36,7 @@ El ahorro energético y de CO₂e es una estimación SWDM v4 a partir de bytes, 
 
 ## Informes originales Lighthouse
 
-Se probaron login y pedidos con build de producción, FastAPI real y 150 pedidos ficticios en memoria. Lighthouse 13.6.0, Edge 157, perfil móvil y throttling simulado. Se bloquearon por igual fuentes externas y la inyección de recursos kaspersky-labs.com; no se desactivó el antivirus. Los logs del servidor vacíos significan que no emitió mensajes durante la captura.
+Se probaron login y pedidos con build de producción, FastAPI real y 150 pedidos ficticios en memoria. Lighthouse 13.6.0, Edge 157, perfil móvil y limitación de red aplicada por Lighthouse. Se bloquearon por igual fuentes externas y la inyección de recursos kaspersky-labs.com; no se desactivó el antivirus. Los logs del servidor vacíos significan que no emitió mensajes durante la captura.
 
 | Estado | Página | Ejecución 1 | Ejecución 2 | Ejecución 3 |
 |---|---|---|---|---|

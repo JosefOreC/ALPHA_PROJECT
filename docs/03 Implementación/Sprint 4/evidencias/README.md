@@ -8,7 +8,7 @@
 
 **Fecha y hora del corte de código:** 12/11/2026, 20:56:09, America/Lima (UTC−05:00).
 
-**Rama y commit:** `refactor/mern`, `7ea33a185619d5c06ab8ce8c090b3e334b45a9ce`.
+**Rama y commit:** `refactor/mern`, [versión del diagnóstico inicial](https://github.com/JosefOreC/ALPHA_PROJECT/commit/7ea33a185619d5c06ab8ce8c090b3e334b45a9ce).
 
 ## Evidencia vigente de métricas
 
@@ -16,7 +16,7 @@ El corte actual corresponde al código 1d52506 y a los umbrales originales ya ve
 
 ## Evidencia de la optimización anterior
 
-El diagnóstico que sigue es histórico y conserva sus fallos originales. Las correcciones y resultados actuales corresponden al commit `9f953d6acc79d569d3896ab1e2a161d8321b3720`: [índice de optimización](optimizacion-3b5bdae/README.md). No deben interpretarse las cifras de este diagnóstico como el estado final del software.
+El diagnóstico que sigue es histórico y conserva sus fallos originales. Las correcciones y resultados actuales corresponden a la [versión optimizada](https://github.com/JosefOreC/ALPHA_PROJECT/commit/9f953d6acc79d569d3896ab1e2a161d8321b3720): [índice de optimización](optimizacion-3b5bdae/README.md). No deben interpretarse las cifras de este diagnóstico como el estado final del software.
 
 ## 1. Procedencia y resultados
 

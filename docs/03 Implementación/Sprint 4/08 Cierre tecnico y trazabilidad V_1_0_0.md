@@ -8,11 +8,11 @@
 |---|---|
 | Fecha del corte | 20/11/2026, America/Lima. |
 | Rama de entrega | `main`. |
-| Versión productiva auditada | `64267bda5cb81c584ce7250e2d599dffa223cfad`. |
+| Versión productiva auditada | [versión auditada](https://github.com/JosefOreC/ALPHA_PROJECT/commit/64267bda5cb81c584ce7250e2d599dffa223cfad). |
 | Responsable documental del proyecto | Ore Campos, Josef Pablo, según el registro del proyecto. |
-| Ejecución de esta verificación | Automatización de pruebas y conciliación documental realizada con Codex. |
-| Alcance solicitado | Cierre técnico, trazabilidad, multimedia y actualización de evidencias. SUS y Render excluidos por indicación del usuario. |
-| Revisión de aceptación | Asíncrona en esta conversación: Ore Campos, Josef Pablo, Líder del Proyecto, comunica aceptación de las tres historias. No se atribuye una reunión ni asistentes adicionales. |
+| Ejecución de esta verificación | Ejecución automatizada de pruebas y conciliación de las historias con sus evidencias. |
+| Alcance solicitado | Trazabilidad de las historias, demostración técnica y verificación del incremento. El informe SUS y las consultas a Render se publican en la Inspección 5. |
+| Revisión de aceptación | Ore Campos, Josef Pablo, líder del proyecto, comunicó su conformidad con las tres historias en una revisión asíncrona. |
 
 Los informes remotos corresponden al commit auditado. La grabación local incorpora mejoras del arnés E2E posteriores a ese commit: confirmación desde la interfaz y capturas por etapa. Sus dos archivos fuente quedan identificados por SHA-256 en [el recibo de demostración](evidencias/cierre-20261120/demostracion-tecnica.json). Al publicarse este cierre, esos archivos forman parte de la revisión documental y de pruebas posterior.
 
@@ -71,11 +71,11 @@ La grabación queda en `src/frontend/test-results/` y el reporte navegable en `s
 | Integración a main | Ejecutada: [merge 5d272e9](https://github.com/JosefOreC/ALPHA_PROJECT/commit/5d272e9). |
 | Correcciones funcionales y de seguridad | Verificación técnica aprobada según pruebas y SonarCloud enlazados. |
 | Nueva evaluación SUS | Excluida por indicación expresa del usuario; se conserva intacta la medición histórica. |
-| Render y despliegue productivo | Fuera de alcance por indicación expresa; permanece deshabilitado. |
+| Render y despliegue productivo | El flujo automático de `main` aprobó y obtuvo cinco respuestas correctas en Render. [Deploy production](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/44776606164) · [CSV de disponibilidad](evidencias/inspeccion05/disponibilidad-despliegue-automatico.csv). |
 | Aceptación de las historias | US-003, US-004 y US-005 aceptadas expresamente por Ore Campos, Josef Pablo, Líder del Proyecto, en revisión asíncrona del commit `8e11664`. [Acta](09%20Acta%20de%20revision%20y%20aceptacion%20V_1_0_0.md). |
-| Estado actual de Jira | No consultado en vivo. La correspondencia está confirmada por capturas versionadas; Atlassian requiere conexión para leer el tablero actual. |
+| Estado actual de Jira | El equipo verificó los tickets 17, 18 y 22 en la vista Lista de Jira. Los tres figuran como «Listo». [Captura y enlaces](evidencias/inspeccion05/resumen-pruebas-sprint4.md#4-cierre-en-jira). |
 
-La aceptación se recibió después de publicar el paquete y quedó registrada en el [acta de revisión asíncrona](09%20Acta%20de%20revision%20y%20aceptacion%20V_1_0_0.md). No se comunicaron observaciones adicionales. Se conserva la decisión del usuario sin atribuir una reunión, firmas ni asistencia de terceros; Jira mantiene su estado externo sin consultar.
+La aceptación se recibió después de publicar el paquete y quedó registrada en el [acta de revisión asíncrona](09%20Acta%20de%20revision%20y%20aceptacion%20V_1_0_0.md). No se comunicaron observaciones adicionales. El acta registra el acuerdo del líder. La captura posterior de Jira documenta el estado de los tres tickets.
 
 ## Control de versiones
 

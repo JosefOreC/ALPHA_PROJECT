@@ -24,7 +24,9 @@ La optimización transversal conserva sus series de transferencia y CO₂e antes
 
 El banco técnico ejecutó el acceso, el registro de pedidos y la confirmación de entregas sobre FastAPI y PostGIS. El código de prueba comprueba la lectura posterior del pedido. La captura del reporte deja el resultado por navegador. La prueba adicional de mapa recorre la aprobación de la propuesta y la selección de conductores con una API interceptada. [Captura del reporte](evidencias/inspeccion05/reporte-playwright.png) · [Alcance y resultados](03%20Analisis%20PlayWrigth%20V_1_0_0.md).
 
-En la evaluación de uso se recogieron cinco cuestionarios de los perfiles de Conductor, Operador y Supervisión. El promedio SUS fue 72,5. Las observaciones sobre el acceso y la lectura de rutas se incorporan al informe para orientar la siguiente revisión. El cuestionario aporta retroalimentación de uso y el acta de la reunión queda como evidencia independiente. [Informe de usabilidad](04%20Usabilidad%20V_1_0_0.md).
+La evaluación de uso reunió cinco cuestionarios y obtuvo un promedio SUS actualizado de 83,0. El informe conserva los perfiles declarados, las observaciones sobre el acceso y la lectura de rutas. Los roles asignados a las cuentas institucionales figuran en el análisis de pruebas. [Informe de usabilidad](04%20Usabilidad%20V_1_0_0.md) · [Cuentas utilizadas](03%20Analisis%20PlayWrigth%20V_1_0_0.md#cuentas-utilizadas-por-el-equipo).
+
+La comprobación manual en Render asignó dos pedidos al mismo conductor y siguió uno de ellos hasta su entrega. El estado «Entregado» quedó visible desde Planificación y el avance del conductor pasó a 1 de 2. [Recorrido y capturas](evidencias/inspeccion05/resumen-pruebas-sprint4.md).
 
 ### Guion para la sesión de cierre
 
@@ -44,9 +46,9 @@ El [registro de cierre](08%20Cierre%20tecnico%20y%20trazabilidad%20V_1_0_0.md) r
 | Trazabilidad de las tres historias | Conciliada con la captura del backlog: tickets 17, 18 y 22, criterios, commits y pruebas. |
 | Multimedia del incremento | Videos del registro de pedidos, entrega del conductor, roles y laboratorio X/Y; capturas de cada etapa. Demostración técnica automatizada. |
 | Aceptación de las historias | **3/3 aceptadas** por Ore Campos, Josef Pablo, Líder del Proyecto, en revisión asíncrona del commit `8e11664`. [Acta](09%20Acta%20de%20revision%20y%20aceptacion%20V_1_0_0.md). |
-| SUS y Render | Excluidos de este cierre por indicación del usuario. |
+| SUS y Render | El registro de cuentas y el sondeo público corresponden a la actualización de la rama de entrega. [Verificación de la versión integrada](03%20Analisis%20PlayWrigth%20V_1_0_0.md#verificación-de-la-versión-integrada). |
 
-La conformidad recibida después de publicar el paquete se conserva en el acta y en su transcripción; los videos documentan la demostración técnica disponible para revisión. No se atribuye una reunión presencial ni se modifican estados de Jira.
+El líder confirmó por escrito la aceptación de las tres historias. Los videos muestran los recorridos de las pruebas automatizadas. El equipo comprobó que los tickets 17, 18 y 22 aparecen como «Listo» en la vista Lista de Jira. [Captura y enlaces de las historias](evidencias/inspeccion05/resumen-pruebas-sprint4.md#4-cierre-en-jira).
 
 ## Control de versiones
 

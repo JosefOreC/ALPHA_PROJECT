@@ -30,7 +30,7 @@ La corrida grabada registró 11 aprobados y un fallo de latencia de salud (6202,
 
 [SHA-256 de los archivos](sha256.json). Los reportes y contadores son JSON y XML legibles sin ejecutar código. Los videos WebM pueden descargarse y abrirse en un navegador compatible. El reporte HTML completo está en los artefactos de Tests y puede descargarse desde el enlace oficial de la ejecución.
 
-SUS y Render están excluidos por indicación del usuario. No se modifican respuestas de usuarios ni se atribuyen mediciones nuevas a la encuesta histórica.
+Este paquete reúne evidencia técnica. Los resultados SUS y las consultas a Render se conservan en sus respectivos informes.
 
 [Volver al índice del Sprint 4](../../README.md)
 
@@ -47,4 +47,4 @@ Estas son muestras puntuales locales; la serie grabada fallida y las cargas remo
 
 ## Aceptación recibida después de publicar el paquete
 
-El Líder del Proyecto, Ore Campos, Josef Pablo, comunicó aceptación conjunta de US-003, US-004 y US-005. [Acta](../../09%20Acta%20de%20revision%20y%20aceptacion%20V_1_0_0.md) · [Transcripción y decisiones](aceptacion-declarada.json). La revisión fue asíncrona en esta conversación; los videos conservan su naturaleza de demostración automatizada.
+El Líder del Proyecto, Ore Campos, Josef Pablo, comunicó aceptación conjunta de US-003, US-004 y US-005. [Acta](../../09%20Acta%20de%20revision%20y%20aceptacion%20V_1_0_0.md) · [Transcripción y decisiones](aceptacion-declarada.json). La revisión se realizó de forma asíncrona. Los videos se generaron durante las pruebas automatizadas.

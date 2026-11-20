@@ -6,7 +6,7 @@
 
 **Índice actualizado:** 2026-11-13T01:40:49-05:00, America/Lima (UTC−05:00).
 
-**Rama:** refactor/mern. **Código:** `1d525069686ad1222a1bbe8b58a018bdae2542a2`. **Base frontend:** `bd95dc9315c9e2526fcb06add520e982f8310cf6`.
+**Rama:** refactor/mern. **Código:** [versión 1d52506](https://github.com/JosefOreC/ALPHA_PROJECT/commit/1d525069686ad1222a1bbe8b58a018bdae2542a2). **Base frontend:** [versión anterior a la optimización](https://github.com/JosefOreC/ALPHA_PROJECT/commit/bd95dc9315c9e2526fcb06add520e982f8310cf6).
 
 ## 1. Resultado y procedencia
 
@@ -21,7 +21,7 @@ Los recibos conservan HEAD, árbol de trabajo y fechas de ejecución reales. Se 
 
 ## 2. Doce reportes originales de la comparación controlada
 
-Lighthouse 13.6.0, Chromium headless 145.0.7632.6, móvil simulado 412 × 823, RTT 150 ms, throughput 1638,4 Kbps y CPU ×4. Ambos estados usan HTTPS/HTTP/2, el mismo banco FastAPI y 150 pedidos ficticios en memoria. La configuración completa está en cada JSON; la identidad ficticia no se usa fuera del ejecutor local.
+Lighthouse 13.6.0, Chromium headless 145.0.7632.6, perfil móvil de 412 × 823, RTT 150 ms, throughput 1638,4 Kbps y CPU ×4. Ambos estados usan HTTPS/HTTP/2, el mismo banco FastAPI y 150 pedidos ficticios en memoria. La configuración completa está en cada JSON; la identidad ficticia no se usa fuera del ejecutor local.
 
 | Estado | Página | Corrida 1 | Corrida 2 | Corrida 3 |
 |---|---|---|---|---|
@@ -46,7 +46,7 @@ Resúmenes de fase: [antes](https://github.com/JosefOreC/ALPHA_PROJECT/blob/6e36
 | Documentación | [JSON](https://github.com/JosefOreC/ALPHA_PROJECT/blob/6e36e355e0d39c83c5700a83eb0987b6fd849a10/docs/03%20Implementaci%C3%B3n/Sprint%204/evidencias/metricas-bd95dc9/documentacion.json) | [TXT](https://github.com/JosefOreC/ALPHA_PROJECT/blob/6e36e355e0d39c83c5700a83eb0987b6fd849a10/docs/03%20Implementaci%C3%B3n/Sprint%204/evidencias/metricas-bd95dc9/documentacion.txt) | Enlaces, navegación y versiones comprobados. |
 | Markdown | [JSON](https://github.com/JosefOreC/ALPHA_PROJECT/blob/6e36e355e0d39c83c5700a83eb0987b6fd849a10/docs/03%20Implementaci%C3%B3n/Sprint%204/evidencias/metricas-bd95dc9/markdown.json) | [TXT](https://github.com/JosefOreC/ALPHA_PROJECT/blob/6e36e355e0d39c83c5700a83eb0987b6fd849a10/docs/03%20Implementaci%C3%B3n/Sprint%204/evidencias/metricas-bd95dc9/markdown.txt) | Lint de los documentos actuales. |
 
-Las omisiones de backend son integración PostgreSQL/PostGIS explícita, no fallos disimulados. Las pruebas reales de vistas de la entrega anterior siguen en su carpeta histórica. Playwright completó sus casos; para terminar el ejecutor en Windows se detuvo únicamente su Vite PID 24048, puerto 5178, iniciado a las 01:29:32 Lima. La salida final y el código 0 se preservan.
+Los casos omitidos del backend requieren una conexión de pruebas a PostgreSQL/PostGIS. Las pruebas reales de vistas de la entrega anterior siguen en su carpeta histórica. Playwright completó sus casos; para terminar el ejecutor en Windows se detuvo únicamente su Vite PID 24048, puerto 5178, iniciado a las 01:29:32 Lima. La salida final y el código 0 se preservan.
 
 ## 4. Diagnóstico Edge y experimentos
 
@@ -82,7 +82,7 @@ El entorno original usa Node 24.11.1 y Python 3.14.2. Preparar las herramientas 
 
 ```powershell
 npm.cmd install --prefix .test-deps/green-it --ignore-scripts --no-audit --no-fund --save-exact lighthouse@13.6.0 chrome-launcher@1.2.3
-git archive --format=zip --output=.test-deps/metricas-antes.zip bd95dc9315c9e2526fcb06add520e982f8310cf6 src/frontend
+git archive --format=zip --output=.test-deps/metricas-antes.zip bd95dc9 src/frontend
 Expand-Archive -LiteralPath '.test-deps/metricas-antes.zip' -DestinationPath '.test-deps/metricas-antes' -Force
 npm.cmd --prefix .test-deps/metricas-antes/src/frontend ci
 npm.cmd --prefix .test-deps/metricas-antes/src/frontend run build
@@ -106,7 +106,7 @@ node scripts/measure_green_it.mjs final-after src/frontend/dist $evidence
 .\.venv\Scripts\python.exe "$evidence/consolidar_metricas.py"
 ```
 
-Para preparar el build anterior, exportar src/frontend del commit bd95dc9315c9e2526fcb06add520e982f8310cf6 mediante git archive a una carpeta local separada, instalar con npm ci, compilar y preservar su dist en .test-deps/metricas-bd95dc9-dist. No sustituirlo por el dist actual. El [inventario](https://github.com/JosefOreC/ALPHA_PROJECT/blob/6e36e355e0d39c83c5700a83eb0987b6fd849a10/docs/03%20Implementaci%C3%B3n/Sprint%204/evidencias/metricas-bd95dc9/builds.json) permite comprobar los artefactos usados en esta entrega.
+Para preparar el build anterior, exportar la carpeta del frontend de la [versión anterior](https://github.com/JosefOreC/ALPHA_PROJECT/commit/bd95dc9315c9e2526fcb06add520e982f8310cf6) mediante git archive a una carpeta local separada, instalar con npm ci, compilar y preservar su dist en .test-deps/metricas-bd95dc9-dist. No sustituirlo por el dist actual. El [inventario](https://github.com/JosefOreC/ALPHA_PROJECT/blob/6e36e355e0d39c83c5700a83eb0987b6fd849a10/docs/03%20Implementaci%C3%B3n/Sprint%204/evidencias/metricas-bd95dc9/builds.json) permite comprobar los artefactos usados en esta entrega.
 
 La ruta de Chromium indica el binario realmente utilizado (Playwright revisión 1208). En otro equipo debe instalarse un binario equivalente y volver a medir ambos estados; no se supone que una versión distinta reproduzca los números exactos. Para preparar TLS local se generaron certificado/clave efímeros con OpenSSL, CN localhost y SAN localhost/127.0.0.1, dentro de .test-deps. El ejecutor añade la excepción de validación solo al navegador del banco local; no debe trasladarse a producción.
 

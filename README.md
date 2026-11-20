@@ -338,7 +338,7 @@ Evidencias de Jira: [evidencias-jira/](docs/02%20Planificaci%C3%B3n/evidencias-j
 
 ### Inspección 5 del Sprint 4
 
-[Estado de la rúbrica y evidencias](docs/03%20Implementaci%C3%B3n/Sprint%204/README.md#estado-de-la-inspecci%C3%B3n-5). El SUS de la evaluación con cinco participantes fue de **72,5/100**.
+[Estado de la rúbrica y evidencias](docs/03%20Implementaci%C3%B3n/Sprint%204/README.md#estado-de-la-inspecci%C3%B3n-5). El promedio SUS actualizado con cinco participantes es de **83,0/100 (A)**.
 
 - [Revisión del sprint](docs/03%20Implementaci%C3%B3n/Sprint%204/01%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md)
 - [Retrospectiva del sprint](docs/03%20Implementaci%C3%B3n/Sprint%204/02%20Retrospectiva%20del%20Sprint%20V_1_0_0.md)

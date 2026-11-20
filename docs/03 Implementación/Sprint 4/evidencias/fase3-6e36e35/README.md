@@ -1,6 +1,6 @@
 # Evidencias del incremento adaptado sobre 6e36e35
 
-**Rama:** `refactor/mern`. **Base:** `6e36e355e0d39c83c5700a83eb0987b6fd849a10`.
+**Rama:** `refactor/mern`. **Base:** [referencia de la auditoría](https://github.com/JosefOreC/ALPHA_PROJECT/commit/6e36e355e0d39c83c5700a83eb0987b6fd849a10).
 
 Los cambios permanecen sin commit. Los recibos identifican HEAD, estado del árbol, hash del diff de fuentes, comando, horas Lima y huella de la salida. El HEAD de las mediciones identifica su base, no la totalidad del incremento local. La matriz y las comparaciones por área están en la sección 7 del [documento 04](../../04%20Est%C3%A1ndares%20arquitectura%20y%20gu%C3%ADa%20de%20desarrollo%20verde%20V_1_2_0.md). La implementación seleccionada usa el prefijo de medición **fase3-arranque**.
 

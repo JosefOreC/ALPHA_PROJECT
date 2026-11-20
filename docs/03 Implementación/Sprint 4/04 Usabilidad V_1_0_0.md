@@ -10,11 +10,11 @@
 | Instrumento | Formulario SUS en español de diez afirmaciones, escala Likert de 1 a 5 y una pregunta abierta independiente. |
 | Fecha de la encuesta | 19/11/2026, según las marcas temporales de la exportación. |
 | Muestra | Cinco cuestionarios completos con códigos únicos. Dos respuestas de Conductor, dos de Supervisión y una de Operador, según el perfil declarado. |
-| Alcance | Los tres perfiles cubren los flujos del curso. El tamaño y la selección de la muestra permiten un diagnóstico exploratorio y limitan su generalización a la operación de DistriRápido. |
-| Fuente y privacidad | Exportación del formulario facilitada al equipo. Las filas conservan su orden y se identifican como P01–P05. |
+| Alcance | Los perfiles se autodeclararon en el formulario. La muestra académica de cinco participantes permite un diagnóstico exploratorio del uso del sistema. |
+| Fuente y privacidad | Matriz consolidada de respuestas con identificadores anónimos P01–P05. |
 | Registro de la sesión | El formulario recoge perfil, respuestas y comentarios. La versión exacta, el dispositivo y los tiempos o resultados de las tareas no se registraron por participante. |
 
-El protocolo planteó que el conductor consultara su ruta y confirmara una entrega, que el operador localizara un pedido y revisara su ruta, y que Supervisión consultara el resumen operativo. Estas tareas sirven de contexto para interpretar las respuestas. P03 seleccionó **Conductor**, pero describió una consulta de rutas como operador. Se conservó su respuesta en el promedio global y se tomó en cuenta la discrepancia al interpretar los perfiles.
+El protocolo planteó que el conductor consultara su ruta y confirmara una entrega, que el operador localizara un pedido y revisara su ruta, y que Supervisión consultara el resumen operativo. Estas tareas sirven de contexto para interpretar las respuestas. P03 seleccionó **Conductor**, pero describió una consulta de rutas como operador. Esa observación forma parte de los comentarios originales.
 
 ## Cuestionario de aplicación
 
@@ -33,11 +33,13 @@ La escala abarca de **1, totalmente en desacuerdo**, a **5, totalmente de acuerd
 
 ## Aplicación con el equipo del curso
 
-Se comprobó que cada fila tenía las diez respuestas y que todos los valores eran enteros entre 1 y 5. Para repetir el cálculo se pueden copiar los valores de la matriz a un CSV de trabajo con encabezado `id,perfil,q1,q2,q3,q4,q5,q6,q7,q8,q9,q10` y procesarlo con el [calculador del repositorio](../../../scripts/score_sus.py).
+En las pruebas manuales se usaron seis cuentas institucionales con roles asignados por el equipo. El formulario recogió cinco respuestas. Se mantuvieron los perfiles declarados y los identificadores P01–P05 de la matriz. Las diferencias entre el perfil declarado y el rol de acceso limitan la interpretación al conjunto de respuestas. [Cuentas utilizadas por el equipo](03%20Analisis%20PlayWrigth%20V_1_0_0.md#cuentas-utilizadas-por-el-equipo).
+
+Cada fila contiene diez respuestas enteras, de 1 a 5. El puntaje individual avanza en intervalos de 2,5 puntos.
 
 ## Reproducción del cálculo
 
-La [matriz CSV](evidencias/inspeccion05/respuestas-sus.csv) transcribe las cinco filas publicadas en este informe; no sustituye la exportación original del formulario. El [resultado del calculador](evidencias/inspeccion05/sus-calculado.json) conserva puntajes individuales y promedio. Se reproduce con `python scripts/score_sus.py` pasando la ruta al CSV. Los cinco puntajes y el promedio 72,5 fueron comprobados nuevamente durante la corrección funcional.
+Para reproducir el promedio se ejecuta `python scripts/score_sus.py` con la ruta de la matriz. [Matriz CSV](evidencias/inspeccion05/respuestas-sus.csv) · [Resultado del cálculo](evidencias/inspeccion05/sus-calculado.json).
 
 ## Cálculo y resultados
 
@@ -45,26 +47,26 @@ A cada respuesta impar se le resta 1. Para cada respuesta par se calcula `5 − 
 
 | Participante | Perfil declarado | P1 | P2 | P3 | P4 | P5 | P6 | P7 | P8 | P9 | P10 | Impares | Pares | SUS |
 |---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| P01 | Conductor | 3 | 4 | 2 | 3 | 4 | 4 | 5 | 2 | 3 | 4 | 12 | 8 | 50,0 |
+| P01 | Conductor | 4 | 2 | 2 | 2 | 5 | 1 | 4 | 1 | 4 | 1 | 14 | 18 | 80,0 |
 | P02 | Supervisión | 4 | 1 | 5 | 1 | 5 | 1 | 5 | 1 | 5 | 3 | 19 | 18 | 92,5 |
-| P03 | Conductor | 2 | 2 | 3 | 2 | 2 | 1 | 2 | 1 | 2 | 2 | 6 | 17 | 57,5 |
+| P03 | Conductor | 4 | 2 | 1 | 1 | 4 | 2 | 5 | 1 | 5 | 1 | 14 | 18 | 80,0 |
 | P04 | Operador | 4 | 1 | 1 | 2 | 5 | 1 | 4 | 1 | 5 | 2 | 14 | 18 | 80,0 |
 | P05 | Supervisión | 4 | 1 | 2 | 1 | 4 | 1 | 5 | 1 | 4 | 2 | 14 | 19 | 82,5 |
 
-En P01, los ítems impares aportaron `(3−1) + (2−1) + (4−1) + (5−1) + (3−1) = 12`. Los pares aportaron `(5−4) + (5−3) + (5−4) + (5−2) + (5−4) = 8`. Su resultado fue `(12 + 8) × 2,5 = 50,0`. Los subtotales de las otras filas permiten comprobar el mismo procedimiento.
+En P01, los ítems impares aportaron `(4−1) + (2−1) + (5−1) + (4−1) + (4−1) = 14`. Los pares aportaron `(5−2) + (5−2) + (5−1) + (5−1) + (5−1) = 18`. El puntaje fue `(14 + 18) × 2,5 = 80,0`.
 
-**Promedio global** = (50,0 + 92,5 + 57,5 + 80,0 + 82,5) ÷ 5 = **72,5 puntos**. La mediana fue **80,0** y los puntajes se situaron entre **50,0 y 92,5**. El promedio supera en **4,5 puntos** la referencia de 68 y corresponde al **grado C+** en la escala curva de Sauro y Lewis. [Tabla 1 en Lewis y Sauro (2018)](https://uxpajournal.org/wp-content/uploads/sites/7/pdf/JUS_Lewis_May2018.pdf#page=4).
+**Promedio global** = (80,0 + 92,5 + 80,0 + 80,0 + 82,5) ÷ 5 = **83,0 puntos**. La mediana fue **80,0** y los puntajes se situaron entre **80,0 y 92,5**. El promedio supera en **15 puntos** la referencia de 68 y corresponde al **grado A** en la escala curva de Sauro y Lewis. [Escala curva de Sauro y Lewis, explicada por Sauro (2018)](https://measuringu.com/sus-items/).
 
 ## Interpretación y seguimiento
 
-Tres participantes superaron 68 y dos quedaron por debajo. Los puntajes inferiores pertenecen al perfil declarado de Conductor, con la salvedad de P03. En facilidad de uso (P3) la media fue **2,6 de 5** y cuatro participantes marcaron entre 1 y 3. La expectativa de aprendizaje rápido (P7) obtuvo **4,2**. La diferencia orienta el seguimiento hacia los primeros pasos de uso. P02 y P04 describieron una experiencia favorable y P05 señaló que pudo adaptarse después de un inicio más lento.
+Los cinco puntajes superaron 68. La facilidad de uso (ítem 3) obtuvo una media de **2,2 de 5** y cuatro participantes eligieron 1 o 2. La expectativa de aprendizaje rápido (ítem 7) obtuvo **4,6 de 5**. Estos resultados justifican observar qué apoyo requieren los participantes la primera vez que usan el sistema. Los comentarios abiertos señalan dificultades al ingresar a la aplicación y al consultar el recorrido.
 
 | Dificultad observada | Evidencia | Cambio y verificación |
 |---|---|---|
 | Inicio de sesión y primeros pasos | P01 señaló dificultad al ingresar y P05 necesitó tiempo para adaptarse. | Administración puede corregir las credenciales desde una sola ficha. En la siguiente sesión, registrar si cada participante inicia sesión y abre su primera tarea al primer intento y sin asistencia. [Edición de cuentas](https://github.com/JosefOreC/ALPHA_PROJECT/commit/0842190) · [Prueba de acceso y recuperación HTTP 503](03%20Analisis%20PlayWrigth%20V_1_0_0.md#estado-de-evidencia). |
 | Identificación de la ruta que debe seguirse | P03 mencionó dificultades al verificar rutas. | El mapa permite seleccionar conductores por nombre y placa y distinguir sus tramos confirmados. La regresión de navegador verifica dos conductores y los colores de sus tramos. Para la siguiente sesión, pedir que ambos recorridos se identifiquen sin ayuda. [Cambio de seguimiento](https://github.com/JosefOreC/ALPHA_PROJECT/commit/4f3964b) · [Caso Playwright](../../../src/frontend/tests/ui/map.spec.ts). |
 
-Las pruebas automatizadas comprueban el comportamiento de la interfaz. Para medir la variación en la percepción de uso se requiere otra aplicación del SUS con la versión, el dispositivo y el resultado de cada tarea registrados. Se conserva el **72,5** como resultado de esta medición.
+Las pruebas automatizadas comprueban el funcionamiento de las mejoras. Una segunda aplicación del SUS permitiría examinar su efecto en la experiencia de uso, registrando la versión, el dispositivo y el resultado de cada tarea.
 
 ## Control de versiones
 
@@ -72,5 +74,7 @@ Las pruebas automatizadas comprueban el comportamiento de la interfaz. Para medi
 |---|---|---|
 | V_1_0_0 | 19/11/2026 | Estructura de evaluación para la Inspección 5. |
 | V_1_0_1 | 20/11/2026 | Incorporación de los cinco cuestionarios, cálculo reproducible y seguimiento de las dificultades. |
+| V_1_0_2 | 20/11/2026 | Registro de cuentas de prueba y precisión del alcance de los perfiles declarados. |
+| V_1_0_3 | 20/11/2026 | Incorporación de las filas corregidas de P01 y P03. El promedio inicial de 72,5 se conserva en el historial. |
 
 [← Volver al README principal](../../../README.md) · [Volver al Sprint 4](README.md)

@@ -35,7 +35,7 @@ jobs:
           [[ "$PRODUCTION_URL" == https://* ]]
           current="$(gh api "repos/$GITHUB_REPOSITORY/commits/main" --jq .sha)"
           if [[ "$CANDIDATE" != "$current" ]]; then
-            echo "La rama main avanzó. El candidato posterior debe superar sus propias pruebas."
+            echo "La rama main avanzó. Esta ejecución no desplegó ninguna versión." >> "$GITHUB_STEP_SUMMARY"
             exit 0
           fi
           api="https://api.render.com/v1/services/$RENDER_SERVICE_ID/deploys"
@@ -58,6 +58,11 @@ jobs:
             echo "Se agotó la espera del despliegue $deploy"
             exit 1
           fi
+          {
+            printf 'Versión desplegada [%s](%s/%s/commit/%s)\n\n' "${CANDIDATE:0:7}" "$GITHUB_SERVER_URL" "$GITHUB_REPOSITORY" "$CANDIDATE"
+            printf 'Servicio verificado [%s](%s)\n\n' "$PRODUCTION_URL" "$PRODUCTION_URL"
+            printf 'Registro de Render `%s`\n\n' "$deploy"
+          } >> "$GITHUB_STEP_SUMMARY"
           printf 'utc,check,http,time_seconds,result\n' > availability.csv
           successes=0
           for sample in {1..5}; do

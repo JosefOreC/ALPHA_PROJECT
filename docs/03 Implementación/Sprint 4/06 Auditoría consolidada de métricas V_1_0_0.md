@@ -18,11 +18,11 @@
 
 **Base de comparación vigente:** `6e36e35`.
 
-**Alcance de publicación:** actualización de documentación Markdown. Las implementaciones y las mediciones descritas corresponden al incremento local auditado; sus archivos productivos y nuevos artefactos no se incorporan con esta publicación.
+La auditoría reúne mediciones locales del 13/11/2026 para las pantallas de Acceso y Pedidos. Las pruebas de disponibilidad pública y los tiempos de API se consultan por separado en el [informe Playwright](03%20Analisis%20PlayWrigth%20V_1_0_0.md).
 
 ## 1. Objetivo y versiones comparadas
 
-Esta auditoría comprueba los límites de rendimiento de Acceso y Pedidos y consolida las condiciones, resultados y evidencias del Sprint 4. La base vigente es `6e36e355e0d39c83c5700a83eb0987b6fd849a10`; la implementación medida corresponde al incremento local identificado por las huellas de sus fuentes y recursos.
+Esta auditoría comprueba los límites de rendimiento de Acceso y Pedidos y consolida las condiciones, resultados y evidencias del Sprint 4. La comparación parte de la [referencia de la auditoría](https://github.com/JosefOreC/ALPHA_PROJECT/commit/6e36e355e0d39c83c5700a83eb0987b6fd849a10). La implementación medida corresponde al incremento local identificado por las huellas de sus fuentes y recursos.
 
 El HEAD registrado identifica la base del repositorio. Los cambios medidos todavía no están incluidos en un nuevo commit; por ello el manifiesto conserva también el estado de trabajo y hashes de archivos, incluidos los recursos nuevos. Esta distinción permite reproducir el estado analizado sin atribuirlo a un commit que no lo contiene.
 
@@ -35,7 +35,7 @@ El HEAD registrado identifica la base del repositorio. Los cambios medidos todav
 | Navegador | Chromium headless 153.0.8010.12 |
 | Servidor | Hypercorn 0.18.0; HTTPS/HTTP/2 local |
 | Aplicación | Build de producción; API FastAPI real con sesión y 150 pedidos ficticios en memoria |
-| Pantalla simulada | Móvil, 412 × 823 |
+| Perfil de pantalla | Móvil, 412 × 823 |
 | Red / CPU | RTT 150 ms; 1638,4 Kbps; CPU ×4 |
 | Caché | Restablecida por Lighthouse en cada carga |
 | Réplicas | Tres cargas por pantalla y estado: doce reportes para el antes/después |

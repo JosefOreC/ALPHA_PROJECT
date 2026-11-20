@@ -18,7 +18,7 @@
 
 **Base de comparación vigente:** `6e36e35`.
 
-**Alcance de publicación:** actualización de documentación Markdown. Las implementaciones y las mediciones descritas corresponden al incremento local auditado; sus archivos productivos y nuevos artefactos no se incorporan con esta publicación.
+Este informe conserva el corte de la Inspección 4 del 13/11/2026. La rúbrica de la Inspección 5 y el estado de sus evidencias se consultan en el [índice del Sprint 4](README.md#estado-de-la-inspección-5).
 
 ## 1. Propósito y alcance de la evaluación
 
