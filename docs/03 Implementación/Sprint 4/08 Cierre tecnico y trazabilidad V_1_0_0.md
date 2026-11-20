@@ -18,7 +18,7 @@ Los informes remotos corresponden al commit auditado. La grabación local incorp
 
 ## Conciliación de historias
 
-La [captura del backlog de Jira](../../02%20Planificaci%C3%B3n/evidencias-jira/02-backlog.png) muestra literalmente los tres títulos y sus tickets. La [captura del tablero](../../02%20Planificaci%C3%B3n/evidencias-jira/04-tablero-scrum.png) conserva US-003 «En curso» y US-004 «Por hacer» en la sesión histórica. La captura no prueba el estado actual del servicio ni el cierre de los tickets. La numeración se toma del [backlog del proyecto](../../02%20Planificaci%C3%B3n/01%20Transformando%20a%20%C3%A1gil%20V_1_0_0.md).
+La [captura del backlog de Jira](../../02%20Planificaci%C3%B3n/evidencias-jira/02-backlog.png) muestra literalmente los tres títulos y sus tickets. La [captura del tablero](../../02%20Planificaci%C3%B3n/evidencias-jira/04-tablero-scrum.png) conserva US-003 «LISTO» y US-004 «LISTO». La numeración se toma del [backlog del proyecto](../../02%20Planificaci%C3%B3n/01%20Transformando%20a%20%C3%A1gil%20V_1_0_0.md).
 
 | Historia y ticket confirmado en captura | Implementación trazable | Comprobación y evidencia | Resultado técnico |
 |---|---|---|---|
