@@ -110,11 +110,10 @@ def create_management_router(service: ManageOrders, authenticate: Callable,
                     offset: Annotated[int, Query(ge=0, le=100000)] = 0,
                     status: OrderStatus | None = None,
                     district: Annotated[str | None, Query(max_length=80)] = None):
-        # Puerto limitado: obtener uno adicional solo cuando no excede el máximo.
-        orders = execute(service.list, principal, limit=limit, offset=offset, status=status, district=district)
-        more = execute(service.list, principal, limit=1, offset=offset + limit,
-                       status=status, district=district) if offset + limit <= 100000 else []
-        return OrderPage(items=[read_order(order) for order in orders], limit=limit, offset=offset, has_more=bool(more))
+        orders = execute(service.list, principal, limit=limit, offset=offset, status=status,
+                         district=district, include_next=True)
+        return OrderPage(items=[read_order(order) for order in orders[:limit]], limit=limit,
+                         offset=offset, has_more=len(orders) > limit)
 
     @router.get("/permisos", response_model=PermissionsRead)
     def permissions(principal: principal_dependency):

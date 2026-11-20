@@ -32,7 +32,8 @@ class ManageOrders:
         return order
 
     def list(self, principal: ManagementPrincipal, *, limit: int = 20, offset: int = 0,
-             status: OrderStatus | None = None, district: str | None = None) -> list[Order]:
+             status: OrderStatus | None = None, district: str | None = None,
+             include_next: bool = False) -> list[Order]:
         self.authorize(principal)
         if type(limit) is not int or not 1 <= limit <= 100 or type(offset) is not int or not 0 <= offset <= 100000:
             raise InvalidOrder("Paginación inválida: límite de 1 a 100 y desplazamiento de 0 a 100000.")
@@ -40,6 +41,8 @@ class ManageOrders:
             raise InvalidOrder("Estado de filtro inválido.")
         if district is not None and district not in DISTRICTS:
             raise InvalidOrder("Distrito de filtro inválido.")
+        if include_next and offset + limit <= 100000:
+            limit += 1
         return self.repository.list(limit=limit, offset=offset, status=status, district=district)
 
     def view(self, order_id: str, principal: ManagementPrincipal) -> Order:

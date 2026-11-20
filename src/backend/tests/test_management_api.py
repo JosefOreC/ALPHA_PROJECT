@@ -1,6 +1,7 @@
 import unittest
 import json
 from dataclasses import asdict, replace
+from unittest.mock import patch
 
 from fastapi.testclient import TestClient
 
@@ -135,6 +136,26 @@ class ManagementApiTests(unittest.TestCase):
         self.assertEqual(self.client.get("/api/pedidos/missing").status_code, 404)
         self.assertEqual(self.client.put("/api/pedidos/missing", json={**self.body, "expected_version": 1}).status_code, 404)
         self.assertEqual(self.client.post("/api/pedidos/missing/cancelacion", json={"expected_version": 1}).status_code, 404)
+
+    def test_pagination_reads_the_page_and_lookahead_in_one_query(self):
+        self.create()
+        self.create()
+        with patch.object(self.repo, "list", wraps=self.repo.list) as read:
+            first = self.client.get("/api/pedidos", params={"limit": 1, "status": "PENDIENTE"})
+            read.assert_called_once_with(limit=2, offset=0, status=OrderStatus.PENDING, district=None)
+        self.assertEqual(first.status_code, 200)
+        self.assertEqual(len(first.json()["items"]), 1)
+        self.assertTrue(first.json()["has_more"])
+
+    def test_pagination_preserves_the_maximum_limit_and_offset(self):
+        with patch.object(self.repo, "list", wraps=self.repo.list) as read:
+            first = self.client.get("/api/pedidos?limit=100")
+            read.assert_called_once_with(limit=101, offset=0, status=None, district=None)
+            read.reset_mock()
+            boundary = self.client.get("/api/pedidos?limit=100&offset=100000")
+            read.assert_called_once_with(limit=100, offset=100000, status=None, district=None)
+        self.assertEqual(first.json()["limit"], 100)
+        self.assertEqual(boundary.json(), {"items": [], "limit": 100, "offset": 100000, "has_more": False})
 
     def test_driver_and_management_use_same_source(self):
         created = self.create()

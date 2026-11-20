@@ -156,6 +156,14 @@ El equipo ejecutó el medidor en Render con una cuenta de Planificación entre l
 
 La serie acredita la disponibilidad durante esa ventana y deja pendiente el objetivo de latencia. Los tiempos incluyen el recorrido de red. Para determinar dónde se produce la demora, se requiere contrastar el CSV con los registros de Render. [Muestras del equipo](evidencias/inspeccion05/latencia-render.csv).
 
+### Separación del tiempo de conexión y respuesta
+
+A las 11:14 del 20/11/2026, hora de Lima, se consultó salud seis veces desde un mismo cliente HTTP. La conexión inicial completó TLS en **172,7 ms**, recibió el primer byte a los **27,46 s** y devolvió HTTP 200. Las otras cinco consultas reutilizaron la conexión, devolvieron HTTP 200 y tardaron entre **188,1 y 201,1 ms**. El retraso inicial se concentró antes del primer byte. La secuencia es compatible con la reactivación del servicio gratuito y requiere confirmación en los registros de Render. [Comportamiento de las instancias gratuitas](https://render.com/docs/free#spinning-down-on-idle).
+
+### Reducción de consultas en Pedidos
+
+El listado ahora solicita la página y un pedido adicional en una sola consulta a la base. La interfaz recibe el mismo número máximo de pedidos y el registro adicional permite indicar que hay otra página. Se mantienen los permisos, los filtros y los límites de paginación. Las pruebas verifican el número de consultas, los filtros y los límites. La reducción de consultas se comprobará en Render repitiendo la medición autenticada después del despliegue de esta versión. [Implementación del listado](../../../src/backend/application/use_cases/manage_orders.py) · [Pruebas de paginación](../../../src/backend/tests/test_management_api.py).
+
 ## Corte técnico de main del 20/11/2026
 
 La suite del commit `64267bd` aprobó 12/12 E2E integrados en tres motores, con persistencia real. El backend integrado registra 534 pruebas y 36 subpruebas sin omisiones. Los reportes remotos, contadores de cobertura y métricas están conservados en el [paquete de cierre](evidencias/cierre-20261120/README.md); el [registro técnico](08%20Cierre%20tecnico%20y%20trazabilidad%20V_1_0_0.md) relaciona los criterios y sus límites.
