@@ -144,22 +144,47 @@ class PostgresPortal:
             WHERE fecha_operacion=%s''') + sql.SQL(' AND r.conductor_id=%s' if driver_id else '') + sql.SQL(' ORDER BY v.placa'),
             (day or now().date(),driver_id) if driver_id else (day or now().date(),))
 
+    @staticmethod
+    def confirmed_path_index(path, stops):
+        if len(path) < 2:
+            return 0
+        # A later out-of-order confirmation must not hide an earlier open stop.
+        index = 0
+        for stop in sorted(stops, key=lambda item: item['orden_entrega']):
+            if stop['estado'] == 'CANCELADO':
+                continue
+            if stop['estado'] != 'ENTREGADO':
+                break
+            lat, lng = float(stop['latitud']), float(stop['longitud'])
+            index = min(
+                range(index, len(path)),
+                key=lambda i: (path[i]['lat'] - lat) ** 2 + (path[i]['lng'] - lng) ** 2,
+            )
+        return index
+
     def map(self, driver_id=None, active_only=False):
         route_rows = self.route_rows(driver_id=driver_id)
         route_ids = [row['ruta_id'] for row in route_rows]
         depots = rows('SELECT nombre,latitud,longitud FROM almacenes ORDER BY nombre LIMIT 1')
         orders = rows(sql.SQL('''SELECT p.*,rp.ruta_id,rp.orden_entrega FROM pedidos p LEFT JOIN ruta_pedido rp USING(pedido_id)
             WHERE (ventana_inicio AT TIME ZONE 'America/Lima')::date=%s AND latitud IS NOT NULL AND longitud IS NOT NULL''')
-            + sql.SQL(" AND p.estado IN ('PENDIENTE','EN_CAMINO')" if active_only else '')
             + sql.SQL(' AND p.conductor_id=%s' if driver_id else ''),(now().date(),driver_id) if driver_id else (now().date(),))
+        by_route = {}
+        for order in orders:
+            if order['ruta_id'] is not None:
+                by_route.setdefault(order['ruta_id'], []).append(order)
         if active_only:
-            active_ids = {row['ruta_id'] for row in orders if row['estado'] in ('PENDIENTE','EN_CAMINO')}
-            route_rows = [row for row in route_rows if row['estado']!='COMPLETADA' and row['ruta_id'] in active_ids]
+            active_ids = {row['ruta_id'] for row in orders if row['estado'] in ('PENDIENTE','EN_CAMINO','ENTREGADO')}
+            route_rows = [row for row in route_rows if row['ruta_id'] in active_ids]
             route_ids = [row['ruta_id'] for row in route_rows]
             orders = [row for row in orders if row['estado'] in ('PENDIENTE','EN_CAMINO')
                       and (row['ruta_id'] in route_ids or (row['ruta_id'] is None and depots))]
-        routes = [{'id':str(row['ruta_id']),'plate':row['placa'],'driver':row['nombre_completo'],'color':i%4+1,
-                   'path':[{'lat':point[1],'lng':point[0]} for point in row['geo']['coordinates']], 'done_until':0} for i,row in enumerate(route_rows)]
+        routes = []
+        for index,row in enumerate(route_rows):
+            path = [{'lat':point[1],'lng':point[0]} for point in row['geo']['coordinates']]
+            routes.append({'id':str(row['ruta_id']),'plate':row['placa'],'driver':row['nombre_completo'],
+                           'color':index%4+1,'path':path,
+                           'done_until':self.confirmed_path_index(path,by_route.get(row['ruta_id'],[]))})
         vehicles = rows(sql.SQL('''SELECT DISTINCT ON (p.vehiculo_id) p.*,v.placa,v.estado FROM posiciones_vehiculos p JOIN vehiculos v USING(vehiculo_id)
             WHERE (p.registrada_en AT TIME ZONE 'America/Lima')::date=%s''')+sql.SQL(' AND p.ruta_id=ANY(%s)' if driver_id else '')+sql.SQL(' ORDER BY p.vehiculo_id,p.registrada_en DESC'),
             (now().date(),route_ids) if driver_id else (now().date(),))

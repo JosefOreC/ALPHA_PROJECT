@@ -977,4 +977,15 @@ dialog.eco-dialog--sheet { width: 100%; max-width: 480px; margin: auto auto 0; b
 .eco-record-actions summary { cursor: pointer; padding: 4px 0; width: fit-content; }
 .eco-record-actions > div { display: flex; flex-wrap: wrap; gap: 4px; }
 
-.eco-driver-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
+.eco-driver-actions { display: flex; align-items: center; gap: 8px; }
+.eco-driver-actions .eco-btn { white-space: nowrap; }
+.eco-account-actions { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+.eco-account-actions .eco-btn { justify-content: flex-start; }
+
+@media (min-width: 900px) {
+  .eco-phone.eco-driver-route { max-width: 1280px; min-height: min(880px, 100vh); margin: 20px auto; border-radius: 20px; overflow: clip; }
+  .eco-driver-route .eco-phone__body { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(270px, 1fr); align-content: start; padding: 24px; gap: 24px; }
+  .eco-driver-route .eco-phone__body > :not(.eco-driver-route__map, .eco-stops) { grid-column: 1 / -1; }
+  .eco-driver-route .eco-map--strip { aspect-ratio: auto; min-height: clamp(380px, 50vh, 620px); }
+  .eco-driver-route .eco-tabbar { position: static; }
+}

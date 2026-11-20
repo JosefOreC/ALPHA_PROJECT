@@ -51,7 +51,7 @@ export function DriverRouteView({ service, mapSource, onNavigate, onOpenOrder }:
 
   return (
     <div className="eco-root eco-phone-root">
-      <div className="eco-phone">
+      <div className="eco-phone eco-driver-route">
         <DriverBar plate={route?.plate} initials={route?.initials ?? ''}>
           <span className="eco-phone__title">Mi ruta</span>
         </DriverBar>
@@ -105,7 +105,9 @@ export function DriverRouteView({ service, mapSource, onNavigate, onOpenOrder }:
                 </Banner>
               ) : null}
 
-              <RouteMap source={mapSource} profile="driver" scopePlate={route.plate} selectedId={currentStop(route)?.order_id} compact strip card={false} showLayerControls={false} />
+              <div className="eco-driver-route__map">
+                <RouteMap source={mapSource} profile="driver" scopePlate={route.plate} selectedId={currentStop(route)?.order_id} compact strip card={false} showLayerControls={false} />
+              </div>
 
               <ol className="eco-stops" aria-label="Paradas de hoy">
                 {route.stops.map((stop, index) => (

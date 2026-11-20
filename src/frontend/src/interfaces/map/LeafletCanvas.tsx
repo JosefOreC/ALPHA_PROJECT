@@ -144,6 +144,14 @@ export default function LeafletCanvas({ data, selection, layers, compact, card, 
         </Marker>
       }) : null}
 
+      {layers.vehicles ? data.routes.filter(item => item.done_until > 0
+        && !data.vehicles?.some(vehicle => vehicle.route_id === item.id)).map(item => (
+          <Marker key={`progress-${item.id}`} pane="map-vehicles" position={toTuple(item.path[item.done_until])}
+            icon={L.divIcon({ className: 'eco-map__marker', html: vehicleHtml(item, false), iconSize: [44, 44], iconAnchor: [22, 22] })}
+            title={`Última entrega confirmada · ${item.plate}`} alt={`Última entrega confirmada · ${item.plate}`}>
+            <Tooltip>Última entrega confirmada · {item.plate}</Tooltip>
+          </Marker>
+        )) : null}
       {layers.vehicles ? data.vehicles?.map(item => <Marker key={item.id + '-' + (vehicle?.id === item.id)}
         pane={vehicle?.id === item.id ? 'map-selection' : 'map-vehicles'} position={toTuple(item.position)}
         icon={L.divIcon({ className: 'eco-map__marker', html: vehicleHtml(item, focus !== null && item.route_id !== focus, vehicle?.id === item.id), iconSize: [44, 44], iconAnchor: [22, 22] })}

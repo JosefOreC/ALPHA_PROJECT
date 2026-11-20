@@ -271,6 +271,10 @@ def test_generate_preview_approve_and_reload_routes_with_real_postgis(database_c
     delivered = client.post(f'/api/conductor/pedidos/{order_id}/confirmacion', headers=driver_headers)
     assert delivered.status_code == 200, delivered.text
     assert delivered.json()['status'] == 'ENTREGADO'
+    progress = client.get('/api/map')
+    assert progress.status_code == 200
+    mapped = next(route for route in progress.json()['routes'] if route['id'] == route_id)
+    assert 0 < mapped['done_until'] < len(mapped['path']) - 1
     assert client.post('/api/routes/approve',headers={'X-CSRF-Token':logged.json()['csrf_token']},json=approval).status_code==403
 
 

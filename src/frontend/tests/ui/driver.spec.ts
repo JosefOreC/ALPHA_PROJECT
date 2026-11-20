@@ -67,3 +67,15 @@ test('390 px: un nombre y una dirección muy largos no desbordan', async ({ page
   })
   await fitsPage(page)
 })
+
+test('Mi ruta aprovecha el ancho de escritorio con el mapa junto a las paradas', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 })
+  await stubTiles(page)
+  await page.goto('/tests/ui/driver.html')
+  const stops = page.getByRole('list', { name: 'Paradas de hoy' })
+  await expect(stops).toBeVisible()
+  const map = await page.locator('.eco-driver-route__map').boundingBox()
+  const list = await stops.boundingBox()
+  expect(map!.width).toBeGreaterThan(480)
+  expect(map!.x + map!.width).toBeLessThan(list!.x)
+})
