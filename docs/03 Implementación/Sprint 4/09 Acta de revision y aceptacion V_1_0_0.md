@@ -14,9 +14,6 @@
 | Material disponible | Matriz de historias, código, reportes, capturas y videos del [paquete de cierre](evidencias/cierre-20261120/README.md). |
 | Fuente del registro | Respuesta expresa del usuario a la pregunta de aceptación de US-003, US-004 y US-005. [Transcripción y decisiones](evidencias/cierre-20261120/aceptacion-declarada.json). |
 
-## Declaración recibida
-
-La pregunta solicitó nombre, rol y decisión para las tres historias, permitiendo una respuesta conjunta. El usuario identificó al Líder del Proyecto como **Ore Campos, Josef Pablo** y respondió **«ACEPTADA»**. Se registra esa conformidad para las tres historias incluidas en la pregunta.
 
 ## Decisiones por historia
 
