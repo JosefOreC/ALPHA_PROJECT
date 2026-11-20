@@ -1,0 +1,12 @@
+utc,endpoint,sample,http_status,milliseconds,valid,under_500_ms
+2026-11-20T17:18:41+00:00,salud_primera_consulta,1,200,667.277,True,False
+2026-11-20T17:18:41+00:00,salud_seguimiento,1,200,222.606,True,True
+2026-11-20T17:18:44+00:00,salud_seguimiento,2,200,252.511,True,True
+2026-11-20T17:18:46+00:00,salud_seguimiento,3,200,241.946,True,True
+2026-11-20T17:18:48+00:00,salud_seguimiento,4,200,250.417,True,True
+2026-11-20T17:18:50+00:00,salud_seguimiento,5,200,271.692,True,True
+2026-11-20T17:18:52+00:00,pedidos,1,200,300.805,True,True
+2026-11-20T17:18:54+00:00,pedidos,2,200,313.065,True,True
+2026-11-20T17:18:56+00:00,pedidos,3,200,693.430,True,False
+2026-11-20T17:18:59+00:00,pedidos,4,200,383.634,True,True
+2026-11-20T17:19:02+00:00,pedidos,5,200,389.797,True,True

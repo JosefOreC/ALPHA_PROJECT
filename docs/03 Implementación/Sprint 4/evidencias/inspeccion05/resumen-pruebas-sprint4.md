@@ -47,7 +47,7 @@ El resultado fue válido (HTTP 200 en las 11 muestras y cierre de sesión confir
 
 Después de la prueba manual, el equipo guardó la clave en GitHub Secrets y habilitó el flujo. Una ejecución exitosa de Tests en `main` disparó el despliegue. Render activó la versión validada y devolvió HTTP 200 en las cinco comprobaciones de salud de GitHub Actions. [Primer despliegue automático](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/44776606164) · [CSV inicial](disponibilidad-despliegue-automatico.csv).
 
-Tras fusionar el PR #52 se desplegó la mejora de Pedidos y las cinco consultas de salud volvieron a devolver HTTP 200. [Despliegue de la versión optimizada](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/44779614627) · [CSV de la versión optimizada](disponibilidad-version-optimizada.csv).
+Tras fusionar el PR #52 se desplegó la mejora de Pedidos y las cinco consultas de salud volvieron a devolver HTTP 200. El sondeo autenticado posterior registró una mediana de 383,6 ms y cuatro de cinco respuestas dentro del umbral. [CSV autenticado de la versión optimizada](latencia-render-optimizada-2.csv). [Despliegue de la versión optimizada](https://github.com/JosefOreC/ALPHA_PROJECT/actions/runs/44779614627) · [CSV de la versión optimizada](disponibilidad-version-optimizada.csv).
 
 ## 4. Cierre en Jira
 
@@ -68,6 +68,6 @@ Observaciones:
 
 ## 5. Pendiente de coordinar
 
-- Completar la medición de Pedidos con sesión iniciada. El [CSV del sondeo de salud](latencia-salud-version-optimizada.csv) registra seis respuestas HTTP 200 y cinco muestras de seguimiento dentro del umbral. La serie de Pedidos requiere un archivo con sus cinco consultas.
+- Revisar en los registros de Render la consulta de Pedidos de las 12:18:56, hora de Lima, que tardó 693,4 ms. Repetir la medición autenticada para comprobar si las cinco consultas quedan debajo de 500 ms.
 
 [← Volver al índice del Sprint 4](../../README.md)
