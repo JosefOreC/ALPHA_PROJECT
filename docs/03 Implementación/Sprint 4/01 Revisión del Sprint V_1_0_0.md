@@ -28,14 +28,6 @@ La evaluación de uso reunió cinco cuestionarios y obtuvo un promedio SUS actua
 
 La comprobación manual en Render asignó dos pedidos al mismo conductor y siguió uno de ellos hasta su entrega. El estado «Entregado» quedó visible desde Planificación y el avance del conductor pasó a 1 de 2. [Recorrido y capturas](evidencias/inspeccion05/resumen-pruebas-sprint4.md).
 
-### Guion para la sesión de cierre
-
-| Paso | Criterio de aceptación que se mostrará | Evidencia que se conservará |
-|---|---|---|
-| Registrar un pedido desde Operación | El pedido aparece en el listado y se puede consultar con la dirección, la ventana y el peso ingresados. | Captura del pedido y nota sobre el rol usado. |
-| Generar o consultar la ruta desde Planificación | La propuesta aprobada conserva el conductor y el vehículo. El mapa distingue los recorridos al seleccionar dos conductores. | Captura de la asignación y del mapa, con el commit que se demostró. |
-| Confirmar la entrega desde la cuenta de Conductor | El pedido figura como entregado al volver a consultarlo y la vista actualiza el tramo confirmado. | Captura del cambio de estado y del avance en el mapa. |
-| Revisar el incremento con los participantes | El responsable de producto registra la decisión sobre cada historia y acuerda el tratamiento de las observaciones. | Acta con fecha, rol de los asistentes, decisiones y enlace a la grabación o a las capturas. |
 
 ## Verificación de cierre del 20/11/2026
 
